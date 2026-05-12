@@ -1,0 +1,105 @@
+<table style="width:100%;border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th>Lead Name</th>
+      <th>Phone</th>
+      <th>TZ</th>
+      <th>Tag</th>
+      <th>Lang</th>
+      <th>Appt</th>
+      <th>Resort</th>
+      <th>Lead Status</th>
+      <th>Call Status</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+
+<script>
+let allRecs = [];
+
+// SAFE GETTER
+function g(arr, i){
+  return (i >= 0 && arr[i]) ? arr[i].trim() : '';
+}
+
+// FORMAT APPOINTMENT
+function fmtAppt(val){
+  if(!val) return '—';
+  return val;
+}
+
+// RENDER TABLE
+function renderTable(data){
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = data.map((r, i) => {
+    const tz = r[2] || '';
+    const firstTag = (r[2] || '').split(',')[0] || '';
+
+    return `
+      <tr onclick="showDetail(${i})" style="cursor:pointer;border-bottom:1px solid #eee;">
+        <td>${r[0] || ''}</td>
+        <td>${r[1] || ''}</td>
+        <td>${tz}</td>
+        <td>${firstTag}</td>
+        <td>${(r[3] || '').substring(0,3)}</td>
+        <td>${fmtAppt(r[4])}</td>
+        <td>${(r[5] || '').substring(0,28)}</td>
+        <td>${(r[6] || '').substring(0,22)}</td>
+        <td>${(r[7] || '').substring(0,14)}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+// FILTER PLACEHOLDER (SAFE)
+function applyFilters(){
+  renderTable(allRecs);
+}
+
+// DETAIL CLICK (SAFE PLACEHOLDER)
+function showDetail(i){
+  console.log("Clicked row:", allRecs[i]);
+}
+
+// IMPORT FUNCTION (FIXED)
+function importCSV(text, sep = ","){
+  const lines = text.split("\n").filter(l => l.trim() !== "");
+  if(lines.length < 2) return;
+
+  const headers = lines[0].split(sep).map(h => h.trim().toLowerCase());
+
+  const findIndex = (name) => headers.findIndex(h => h.includes(name));
+
+  const iName   = findIndex("name");
+  const iPhone  = findIndex("phone");
+  const iTag    = findIndex("tag");
+  const iLang   = findIndex("lang");
+  const iAppt   = findIndex("appt");
+  const iResort = findIndex("resort");
+  const iLead   = findIndex("lead");
+  const iCall   = findIndex("call");
+  const iEmail  = findIndex("email");
+
+  let newRecs = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split(sep);
+
+    newRecs.push([
+      g(cols, iName),
+      g(cols, iPhone),
+      g(cols, iTag),
+      g(cols, iLang),
+      g(cols, iAppt),
+      g(cols, iResort),
+      g(cols, iLead),
+      g(cols, iCall),
+      g(cols, iEmail)
+    ]);
+  }
+
+  allRecs = newRecs;
+  applyFilters();
+}
+</script>
