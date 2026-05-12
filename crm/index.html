@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CRM CSV Viewer</title>
+
+<style>
+
+/* =========================
+   COLOR SYSTEM (YOUR STYLE)
+========================= */
+:root{
+  --navy:#172a4f;
+  --blue:#2f6fed;
+  --gold:#d4a017;
+  --green:#2f8f3a;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --border:#e3e8f2;
+  --hover:#eaf2ff;
+  --text:#1f2a44;
+}
+
+/* =========================
+   BASE
+========================= */
+*{box-sizing:border-box;}
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+h1{
+    margin-bottom:14px;
+    color:var(--navy);
+}
+
+/* =========================
+   UPLOAD BAR
+========================= */
+.upload-box{
+    background:var(--card);
+    padding:16px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    box-shadow:0 6px 16px rgba(0,0,0,0.05);
+    margin-bottom:14px;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+.table-container{
+    max-height:80vh;
+    overflow:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+/* =========================
+   TABLE
+========================= */
+table{
+    border-collapse:collapse;
+    width:max-content;
+    min-width:100%;
+    table-layout:fixed;
+}
+
+/* =========================
+   HEADER
+========================= */
+th{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--navy);
+    color:white;
+    padding:12px;
+    text-align:left;
+    cursor:pointer;
+    user-select:none;
+    min-width:140px;
+    border-right:1px solid rgba(255,255,255,0.08);
+}
+
+/* =========================
+   CELLS
+========================= */
+td{
+    padding:10px;
+    border-bottom:1px solid var(--border);
+    border-right:1px solid var(--border);
+
+    white-space:normal;
+    word-break:break-word;
+    overflow-wrap:break-word;
+}
+
+/* hover */
+tbody tr:hover{
+    background:var(--hover);
+}
+
+/* =========================
+   SORT ICON
+========================= */
+.sort-indicator{
+    margin-left:6px;
+    color:var(--gold);
+    font-size:11px;
+}
+
+/* =========================
+   RESIZE HANDLE
+========================= */
+.resizer{
+    position:absolute;
+    right:0;
+    top:0;
+    width:6px;
+    height:100%;
+    cursor:col-resize;
+}
+
+/* =========================
+   HIDDEN COLUMN
+========================= */
+.hidden{
+    display:none;
+}
+
+th{
+    position:relative;
+}
+
+/* =========================
+   DRAG STATES
+========================= */
+.dragging{
+    opacity:0.5;
+}
+
+.drag-over{
+    outline:2px dashed var(--blue);
+}
+
+/* =========================
+   MENU
+========================= */
+#menu{
+    margin-bottom:10px;
+}
+
+.menu-box{
+    background:#fff;
+    border:1px solid var(--border);
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>CRM CSV Viewer</h1>
+
+<div class="upload-box">
+    <input type="file" id="file" />
+    <button onclick="toggleMenu()">Hide / Show Columns</button>
+</div>
+
+<div id="menu"></div>
+
+<div class="table-container">
+<table id="table"></table>
+</div>
+
+<script>
+
+let state = {
+    headers:[],
+    rows:[],
+    hidden:{},
+    sort:{col:null,asc:true}
+};
+
+document.getElementById("file").addEventListener("change", e=>{
+    const r = new FileReader();
+    r.onload = ev=>{
+        const data = parseCSV(ev.target.result);
+        state.headers = data[0];
+        state.rows = data.slice(1);
+        render();
+    };
+    r.readAsText(e.target.files[0]);
+});
+
+/* =========================
+   CSV PARSER
+========================= */
+function parseCSV(t){
+    return t.trim().split(/\r?\n/).map(r=>r.split(","));
+}
+
+/* =========================
+   RENDER TABLE
+========================= */
+function render(){
+
+    const table=document.getElementById("table");
+    table.innerHTML="";
+
+    const thead=document.createElement("thead");
+    const tr=document.createElement("tr");
+
+    state.headers.forEach((h,i)=>{
+
+        const th=document.createElement("th");
+        th.draggable=true;
+
+        if(state.hidden[i]) th.classList.add("hidden");
+
+        th.innerHTML = `
+            ${h}
+            <span class="sort-indicator"></span>
+        `;
+
+        /* SORT */
+        th.onclick=()=>sort(i);
+
+        /* RESIZE */
+        const r=document.createElement("div");
+        r.className="resizer";
+        r.onmousedown=e=>startResize(e,i);
+        th.appendChild(r);
+
+        /* DRAG */
+        th.ondragstart=dragStart;
+        th.ondragover=dragOver;
+        th.ondrop=drop;
+        th.ondragend=dragEnd;
+
+        tr.appendChild(th);
+    });
+
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    const tbody=document.createElement("tbody");
+
+    state.rows.forEach(row=>{
+
+        const tr=document.createElement("tr");
+
+        row.forEach((c,i)=>{
+
+            const td=document.createElement("td");
+
+            if(state.hidden[i]) td.classList.add("hidden");
+
+            td.textContent=c||"";
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+}
+
+/* =========================
+   SORT
+========================= */
+function sort(i){
+
+    const rows=[...document.querySelectorAll("tbody tr")];
+
+    state.sort.asc = state.sort.col===i ? !state.sort.asc : true;
+    state.sort.col=i;
+
+    document.querySelectorAll(".sort-indicator").forEach((el,idx)=>{
+        el.textContent = idx===i ? (state.sort.asc?"▲":"▼") : "";
+    });
+
+    rows.sort((a,b)=>{
+
+        const A=a.children[i].textContent.trim();
+        const B=b.children[i].textContent.trim();
+
+        const nA=parseFloat(A), nB=parseFloat(B);
+
+        if(!isNaN(nA)&&!isNaN(nB)){
+            return state.sort.asc?nA-nB:nB-nA;
+        }
+
+        return state.sort.asc
+            ? A.localeCompare(B)
+            : B.localeCompare(A);
+    });
+
+    const tbody=document.querySelector("tbody");
+    rows.forEach(r=>tbody.appendChild(r));
+}
+
+/* =========================
+   RESIZE (FIXED)
+========================= */
+let startX,startW,col;
+
+function startResize(e,i){
+    col=i;
+    startX=e.pageX;
+    startW=e.target.parentElement.offsetWidth;
+
+    document.onmousemove=resize;
+    document.onmouseup=stop;
+}
+
+function resize(e){
+
+    const w=Math.max(80,startW+(e.pageX-startX));
+
+    document.querySelectorAll("tr").forEach(tr=>{
+        if(tr.children[col]){
+            tr.children[col].style.width=w+"px";
+        }
+    });
+}
+
+function stop(){
+    document.onmousemove=null;
+}
+
+/* =========================
+   DRAG COLUMNS
+========================= */
+let dragIndex=null;
+
+function dragStart(){
+    dragIndex=[...this.parentNode.children].indexOf(this);
+    this.classList.add("dragging");
+}
+
+function dragOver(e){
+    e.preventDefault();
+    this.classList.add("drag-over");
+}
+
+function dragEnd(){
+    document.querySelectorAll("th").forEach(t=>{
+        t.classList.remove("dragging","drag-over");
+    });
+}
+
+function drop(){
+    const target=[...this.parentNode.children].indexOf(this);
+    move(dragIndex,target);
+}
+
+function move(from,to){
+
+    if(from===to) return;
+
+    document.querySelectorAll("tr").forEach(tr=>{
+        const cells=tr.children;
+
+        tr.insertBefore(
+            cells[from],
+            from<to?cells[to].nextSibling:cells[to]
+        );
+    });
+}
+
+/* =========================
+   COLUMN MENU
+========================= */
+function toggleMenu(){
+
+    const m=document.getElementById("menu");
+
+    m.classList.toggle("menu-box");
+
+    m.innerHTML=state.headers.map((h,i)=>`
+        <label style="display:block;margin:4px 0;">
+            <input type="checkbox"
+            ${state.hidden[i]?"":"checked"}
+            onchange="toggle(${i})">
+            ${h}
+        </label>
+    `).join("");
+}
+
+function toggle(i){
+    state.hidden[i]=!state.hidden[i];
+    render();
+}
+
+</script>
+
+</body>
+</html>
