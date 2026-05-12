@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
-<head>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<!-- saved from url=(0048)file:///C:/Users/sebas/Downloads/calculator.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="./calculator_files/css2" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--N:#1B2A4A;--N2:#22345c;--G:#C8960C;--G2:#d4a821;--bd:#d0d8e8;--pale:#EAF0F8;--off:#f4f5f8;--mu:#7a859a;--tx2:#3d4d63;--red:#c0392b}
@@ -85,12 +85,12 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
         <div style="text-align:center">
           <div class="cg" style="font-size:28px;color:var(--G);font-weight:700;line-height:1">$<span id="saveMonth">675</span></div>
           <div class="bc" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-top:4px">Total / Month</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px">every month</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;font-family:&#39;Barlow Condensed&#39;,sans-serif;letter-spacing:1px">every month</div>
         </div>
         <div style="text-align:center">
           <div class="cg" style="font-size:28px;color:var(--G);font-weight:700;line-height:1">$<span id="saveYear">8,100</span></div>
           <div class="bc" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-top:4px">Total / Year</div>
-          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px">until you exit</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;font-family:&#39;Barlow Condensed&#39;,sans-serif;letter-spacing:1px">until you exit</div>
         </div>
       </div>
 
@@ -106,7 +106,7 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
       </div>
       <div style="margin-top:8px">
         <div class="lbl" style="margin-bottom:4px">Est. Loan Payoff Year</div>
-        <input type="text" id="c_payoff" value="2028" disabled>
+        <input type="text" id="c_payoff" value="2028" disabled="">
       </div>
     </div>
   </div>
@@ -119,16 +119,16 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
     </div>
 
     <!-- 3 / 5 / 7 yr — Barlow small -->
-    <div class="pr"><div class="pr-yr">3 Years</div><div class="pv-sm" id="y3">—</div></div>
-    <div class="pr alt"><div class="pr-yr">5 Years</div><div class="pv-sm" id="y5">—</div></div>
-    <div class="pr"><div class="pr-yr">7 Years</div><div class="pv-sm" id="y7">—</div></div>
+    <div class="pr"><div class="pr-yr">3 Years</div><div class="pv-sm" id="y3">$17,322</div></div>
+    <div class="pr alt"><div class="pr-yr">5 Years</div><div class="pv-sm" id="y5">$19,680</div></div>
+    <div class="pr"><div class="pr-yr">7 Years</div><div class="pv-sm" id="y7">$22,431</div></div>
 
     <!-- 10 / 20 / 30 yr — ALL Cormorant Garamond 28px, SAME as $675/$8,100 -->
-    <div class="pr alt big"><div class="pr-yr">10 Years</div><div class="pv-big" id="y10">—</div></div>
-    <div class="pr big"><div class="pr-yr">20 Years</div><div class="pv-big" id="y20">—</div></div>
+    <div class="pr alt big"><div class="pr-yr">10 Years</div><div class="pv-big" id="y10">$27,438</div></div>
+    <div class="pr big"><div class="pr-yr">20 Years</div><div class="pv-big" id="y20">$55,586</div></div>
     <div class="pr hero">
       <div class="pr-yr wh">30 Years</div>
-      <div class="pv-big gold" id="y30">—</div>
+      <div class="pv-big gold" id="y30">$116,355</div>
     </div>
   </div>
 
@@ -144,23 +144,21 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
       <div style="background:var(--off);border:2px solid var(--bd);border-radius:8px;padding:10px 13px;margin-bottom:10px">
         <div style="display:flex;align-items:baseline;gap:4px">
           <span class="cg" style="font-size:22px;color:var(--mu)">$</span>
-          <input type="number" id="c_fee" placeholder="e.g. 5200" oninput="calcP()"
-            style="flex:1;background:transparent;border:none;outline:none;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--N);min-width:0;padding:0">
+          <input type="number" id="c_fee" placeholder="e.g. 5200" oninput="calcP()" style="flex:1;background:transparent;border:none;outline:none;font-family:&#39;Cormorant Garamond&#39;,serif;font-size:34px;font-weight:700;color:var(--N);min-width:0;padding:0">
         </div>
       </div>
 
       <div class="lbl" style="margin-bottom:5px">
         Discount <span style="font-weight:400;opacity:.6">(rep sets)</span>
         <span style="display:inline-flex;border:1.5px solid var(--bd);border-radius:5px;overflow:hidden;vertical-align:middle;margin-left:6px">
-          <button id="dD" class="dt-btn" onclick="setDT('$')" style="background:var(--N);color:var(--G)">$</button>
-          <button id="dP" class="dt-btn" onclick="setDT('%')" style="background:transparent;color:var(--mu)">%</button>
+          <button id="dD" class="dt-btn" onclick="setDT(&#39;$&#39;)" style="background:var(--N);color:var(--G)">$</button>
+          <button id="dP" class="dt-btn" onclick="setDT(&#39;%&#39;)" style="background:transparent;color:var(--mu)">%</button>
         </span>
       </div>
       <div style="background:var(--off);border:2px solid var(--bd);border-radius:8px;padding:10px 13px;margin-bottom:10px">
         <div style="display:flex;align-items:baseline;gap:4px">
           <span id="dpfx" class="cg" style="font-size:22px;color:var(--mu)">$</span>
-          <input type="number" id="c_disc" placeholder="0" oninput="calcP()"
-            style="flex:1;background:transparent;border:none;outline:none;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--N);min-width:0;padding:0">
+          <input type="number" id="c_disc" placeholder="0" oninput="calcP()" style="flex:1;background:transparent;border:none;outline:none;font-family:&#39;Cormorant Garamond&#39;,serif;font-size:34px;font-weight:700;color:var(--N);min-width:0;padding:0">
         </div>
       </div>
 
@@ -187,7 +185,7 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
       <!-- Pay in Full -->
       <div id="pif_card" style="display:none;background:linear-gradient(135deg,var(--N),#1e3060);border:2px solid var(--G);border-radius:10px;padding:14px 16px;margin-bottom:12px;position:relative;overflow:hidden">
         <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--G),var(--G2),var(--G))"></div>
-        <div style="position:absolute;top:11px;right:12px;background:var(--G);color:var(--N);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;text-transform:uppercase">Best Value</div>
+        <div style="position:absolute;top:11px;right:12px;background:var(--G);color:var(--N);font-family:&#39;Barlow Condensed&#39;,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;text-transform:uppercase">Best Value</div>
         <div class="bc" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px">Pay in Full Today</div>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
           <span class="cg" style="font-size:20px;color:rgba(255,255,255,.35);text-decoration:line-through">$<span id="p_pifb">—</span></span>
@@ -203,9 +201,9 @@ input:disabled{background:var(--pale);color:var(--mu);cursor:default}
 
         <div style="display:flex;gap:5px;background:var(--N);border-radius:8px;padding:8px;margin-bottom:10px">
           <button class="term-btn on" id="t12" onclick="setTerm(12)">12 Mo</button>
-          <button class="term-btn"   id="t24" onclick="setTerm(24)">24 Mo</button>
-          <button class="term-btn"   id="t36" onclick="setTerm(36)">36 Mo</button>
-          <button class="term-btn"   id="t60" onclick="setTerm(60)">60 Mo</button>
+          <button class="term-btn" id="t24" onclick="setTerm(24)">24 Mo</button>
+          <button class="term-btn" id="t36" onclick="setTerm(36)">36 Mo</button>
+          <button class="term-btn" id="t60" onclick="setTerm(60)">60 Mo</button>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
@@ -315,5 +313,6 @@ function calcP(){
 
 calc(); setTerm(12);
 </script>
-</body>
-</html>
+
+
+</body></html>
