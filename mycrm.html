@@ -1,4 +1,62 @@
-<table style="width:100%;border-collapse:collapse;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CRM</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  padding:20px;
+  background:#f7f7f7;
+}
+
+h2{
+  margin-bottom:15px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+}
+
+th, td{
+  border:1px solid #ddd;
+  padding:10px;
+  font-size:13px;
+  text-align:left;
+}
+
+th{
+  background:#185FA5;
+  color:white;
+  position:sticky;
+  top:0;
+}
+
+tr:nth-child(even){
+  background:#f2f6ff;
+}
+
+.badge{
+  padding:3px 8px;
+  border-radius:10px;
+  font-size:11px;
+  display:inline-block;
+}
+.hot{ background:#FCEBEB; color:#791F1F; }
+.warm{ background:#EAF3DE; color:#27500A; }
+.cold{ background:#E6F1FB; color:#0C447C; }
+</style>
+
+</head>
+
+<body>
+
+<h2>Lead CRM</h2>
+
+<table>
   <thead>
     <tr>
       <th>Lead Name</th>
@@ -12,94 +70,53 @@
       <th>Call Status</th>
     </tr>
   </thead>
+
   <tbody id="tbody"></tbody>
 </table>
 
 <script>
-let allRecs = [];
+const data = [
+  ["John Smith","555-1234","ET","HOT","EN","Mar 10","Hilton VB","New","No Answer"],
+  ["Maria Lopez","555-8888","CT","WARM","ES","Mar 12","Marriott","Contacted","Follow-up"],
+  ["David Lee","555-2222","PT","COLD","EN","Mar 15","Westgate","Nurture","Pending"]
+];
 
-// SAFE GETTER
-function g(arr, i){
-  return (i >= 0 && arr[i]) ? arr[i].trim() : '';
+function tagClass(tag){
+  tag = (tag||"").toUpperCase();
+  if(tag.includes("HOT")) return "hot";
+  if(tag.includes("WARM")) return "warm";
+  return "cold";
 }
 
-// FORMAT APPOINTMENT
-function fmtAppt(val){
-  if(!val) return '—';
-  return val;
-}
-
-// RENDER TABLE
-function renderTable(data){
+function render(){
   const tbody = document.getElementById("tbody");
-  tbody.innerHTML = data.map((r, i) => {
-    const tz = r[2] || '';
-    const firstTag = (r[2] || '').split(',')[0] || '';
+  let html = "";
 
-    return `
-      <tr onclick="showDetail(${i})" style="cursor:pointer;border-bottom:1px solid #eee;">
-        <td>${r[0] || ''}</td>
-        <td>${r[1] || ''}</td>
-        <td>${tz}</td>
-        <td>${firstTag}</td>
-        <td>${(r[3] || '').substring(0,3)}</td>
-        <td>${fmtAppt(r[4])}</td>
-        <td>${(r[5] || '').substring(0,28)}</td>
-        <td>${(r[6] || '').substring(0,22)}</td>
-        <td>${(r[7] || '').substring(0,14)}</td>
-      </tr>
-    `;
-  }).join("");
-}
+  for(let i=0;i<data.length;i++){
+    const r = data[i];
 
-// FILTER PLACEHOLDER (SAFE)
-function applyFilters(){
-  renderTable(allRecs);
-}
+    html += "<tr>";
 
-// DETAIL CLICK (SAFE PLACEHOLDER)
-function showDetail(i){
-  console.log("Clicked row:", allRecs[i]);
-}
+    html += "<td>"+r[0]+"</td>";
+    html += "<td>"+r[1]+"</td>";
+    html += "<td>"+r[2]+"</td>";
 
-// IMPORT FUNCTION (FIXED)
-function importCSV(text, sep = ","){
-  const lines = text.split("\n").filter(l => l.trim() !== "");
-  if(lines.length < 2) return;
+    html += "<td><span class='badge "+tagClass(r[3])+"'>"+r[3]+"</span></td>";
 
-  const headers = lines[0].split(sep).map(h => h.trim().toLowerCase());
+    html += "<td>"+r[4]+"</td>";
+    html += "<td>"+r[5]+"</td>";
+    html += "<td>"+r[6]+"</td>";
+    html += "<td>"+r[7]+"</td>";
+    html += "<td>"+r[8]+"</td>";
 
-  const findIndex = (name) => headers.findIndex(h => h.includes(name));
-
-  const iName   = findIndex("name");
-  const iPhone  = findIndex("phone");
-  const iTag    = findIndex("tag");
-  const iLang   = findIndex("lang");
-  const iAppt   = findIndex("appt");
-  const iResort = findIndex("resort");
-  const iLead   = findIndex("lead");
-  const iCall   = findIndex("call");
-  const iEmail  = findIndex("email");
-
-  let newRecs = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const cols = lines[i].split(sep);
-
-    newRecs.push([
-      g(cols, iName),
-      g(cols, iPhone),
-      g(cols, iTag),
-      g(cols, iLang),
-      g(cols, iAppt),
-      g(cols, iResort),
-      g(cols, iLead),
-      g(cols, iCall),
-      g(cols, iEmail)
-    ]);
+    html += "</tr>";
   }
 
-  allRecs = newRecs;
-  applyFilters();
+  tbody.innerHTML = html;
 }
+
+render();
 </script>
+
+</body>
+</html>
