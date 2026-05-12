@@ -1,8 +1,4 @@
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1326,160 +1322,107 @@ body{font-family:'Barlow',sans-serif;font-size:17px;background:var(--off);color:
     <p style="font-size:17px;color:var(--text);line-height:1.7;">Our risk management team is reviewing the circumstances of your case — comparing it with previous <strong id="holdResortName" style="color:var(--navy);">resort</strong> owners we have helped, and identifying commonalities with participants in our next target group filing. Take a moment to read the next page while we evaluate your file.</p>
   </div>
 </section>
+
 <section class="slide bg-white" id="slide-17" data-slide="17" style="align-items:center;text-align:center;">
   <div style="position:absolute;top:70px;right:28px;background:var(--gold);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:4px 14px;border-radius:20px;z-index:10;">Page 18</div>
-  
+
   <div style="max-width:720px;width:100%;margin:0 auto;">
 
-    <div class="slide-label" style="text-align:center;">Page 18 — Same Day Discounts</div>
-    <div class="slide-headline fade-up" style="text-align:center;">Service Fee &amp;<br><b>Same Day Incentives</b></div>
+    <div class="slide-label" style="text-align:center;">Page 18 — Review</div>
+    <div class="slide-headline fade-up" style="text-align:center;">
+      Finalizing Your File
+    </div>
 
-    <!-- STEP 1: Enter original price -->
-    <div class="fade-up" id="feeStep1">
-      <p style="font-size:17px;color:var(--text2);margin-bottom:20px;line-height:1.65;">First, let's enter the service fee for your case.</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:10px;flex-wrap:wrap;">
-        <label style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0;">Original Service Fee ($)</label>
-        <input type="number" id="c_fee" value="" placeholder="e.g. 4800" oninput="calcFee()" style="width:180px;background:var(--off);border:2px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--text);font-family:'Barlow',sans-serif;font-size:22px;font-weight:700;outline:none;text-align:center;transition:border-color .2s;" onfocus="this.style.borderColor='var(--navy)';" onblur="this.style.borderColor='var(--border)';">
+    <!-- SCROLL LOCK CONTENT -->
+    <div id="scrollBlock" style="margin-top:20px;text-align:left;max-height:220px;overflow-y:auto;padding-right:10px;">
+      <p style="font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:16px;">
+        Before we finalize everything, take a moment to review how your file is being structured and processed internally.
+      </p>
+
+      <p style="font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:16px;">
+        Our team prepares your case for immediate submission, verifies documentation, and assigns your resolution path.
+      </p>
+
+      <p style="font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:16px;">
+        This ensures there are no delays once your file is officially opened and locked in.
+      </p>
+
+      <p style="font-size:16px;color:var(--text2);line-height:1.7;">
+        Scroll to the bottom once you’ve reviewed everything below.
+      </p>
+    </div>
+
+    <!-- QUESTION (HIDDEN UNTIL SCROLL) -->
+    <div id="questionBlock" style="display:none;margin-top:28px;" class="fade-up">
+      <p style="font-size:17px;color:var(--text);margin-bottom:14px;text-align:center;">
+        Does everything here make sense so far?
+      </p>
+
+      <div style="display:flex;gap:12px;justify-content:center;">
+        <button onclick="unlockDelay()" style="background:var(--navy);color:var(--gold);border:none;border-radius:8px;padding:12px 26px;font-weight:700;cursor:pointer;">
+          Yes
+        </button>
+        <button onclick="unlockDelay()" style="background:#ddd;color:#333;border:none;border-radius:8px;padding:12px 26px;font-weight:700;cursor:pointer;">
+          I have a question
+        </button>
       </div>
-      <div id="feeEnteredDisplay" style="display:none;font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--navy);font-weight:700;margin:10px 0;" ></div>
-      <button id="feeStep1Btn" onclick="showSameDaySection()" style="display:none;margin-top:16px;background:var(--navy);color:var(--gold);border:none;border-radius:10px;padding:14px 36px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='var(--navy2)'" onmouseout="this.style.background='var(--navy)'">
-        <span style="margin-right:8px;">⚡</span> Same Day Discounts Available — Click Here
+    </div>
+
+    <!-- DELAY STATE -->
+    <div id="processingBlock" style="display:none;margin-top:30px;text-align:center;">
+      <p style="font-size:15px;color:var(--muted);">
+        Reviewing your file...
+      </p>
+    </div>
+
+    <!-- FINAL REVEAL -->
+    <div id="finalReveal" style="display:none;margin-top:30px;text-align:center;" class="fade-up">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:42px;color:var(--navy);font-weight:700;margin-bottom:10px;">
+        Approved
+      </div>
+
+      <p style="font-size:16px;color:var(--text2);margin-bottom:20px;">
+        Your file qualifies for same-day processing and internal approval.
+      </p>
+
+      <button onclick="goTo(18)" style="background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px 40px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">
+        Continue →
       </button>
     </div>
 
-    <!-- STEP 2: The dramatic reveal — hidden until button clicked -->
-    <div id="sameDaySection" style="display:none;text-align:left;" class="fade-up">
-
-      <!-- TODAY ONLY BANNER -->
-      <div style="background:var(--red);border-radius:12px;padding:14px 22px;margin-bottom:22px;text-align:center;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,.3);"></div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.9);font-weight:700;">⏰ Today Only — Same Day Assessment Incentives</div>
-      </div>
-
-      <!-- ① PAY IN FULL — HERO FIRST ─────────────────────────── -->
-      <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border:2px solid var(--gold);border-radius:14px;padding:24px 26px;margin-bottom:14px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));"></div>
-        <div style="position:absolute;top:14px;right:16px;background:var(--gold);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;padding:3px 12px;border-radius:20px;text-transform:uppercase;">Best Value</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;">Pay in Full Today</div>
-        <!-- Price waterfall: original → 20% off → final PIF -->
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;">
-          <span style="font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(255,255,255,.4);text-decoration:line-through;">$<span id="revRegular">0</span></span>
-          <span style="font-size:13px;color:rgba(255,255,255,.4);">−20%</span>
-          <span style="font-family:'Cormorant Garamond',serif;font-size:24px;color:rgba(255,255,255,.55);text-decoration:line-through;">$<span id="revDiscounted2">0</span></span>
-          <span style="font-size:13px;color:var(--gold);">−$500</span>
-          <span style="font-family:'Cormorant Garamond',serif;font-size:56px;color:var(--gold2);font-weight:700;line-height:1;">$<span id="payFull">—</span></span>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <span style="background:rgba(201,162,74,.2);color:var(--gold2);border:1px solid rgba(201,162,74,.4);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;">Save $<span id="revSaved">0</span> (20% off)</span>
-          <span style="background:rgba(201,162,74,.2);color:var(--gold2);border:1px solid rgba(201,162,74,.4);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;">+ $500 Cash Discount</span>
-          <span style="background:rgba(39,174,96,.2);color:#7dde9f;border:1px solid rgba(39,174,96,.4);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 12px;border-radius:20px;">$0 Down — Normally $<span id="revDown">0</span></span>
-        </div>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:15px;color:rgba(255,255,255,.65);">
-          90 Days Same as Cash — 0% interest if paid by <strong style="color:var(--gold2);"><span id="revNinetyDay">—</span></strong>
-        </div>
-      </div>
-
-      <!-- ② WHAT THEY'RE PAYING NOW ─────────────────────────── -->
-      <div style="background:#fff;border:2px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:14px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:var(--red);border-radius:3px 0 0 3px;"></div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">What You're Paying The Resort Right Now</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;">
-          <div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Mortgage / Mo</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--navy);font-weight:700;">$<span id="priceSaveMtg">0</span></div>
-          </div>
-          <div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Maint. Fee / Mo</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--navy);font-weight:700;">$<span id="priceSaveMF">0</span></div>
-          </div>
-          <div style="background:var(--red-bg);border-radius:8px;padding:6px;">
-            <div style="font-size:12px;color:var(--red);margin-bottom:4px;font-weight:600;">Total / Mo</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--red);font-weight:700;">$<span id="priceSaveMonth">0</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ③ WHAT THEY SAVE PER YEAR ─────────────────────────── -->
-      <div style="background:linear-gradient(135deg,rgba(39,174,96,.08),rgba(39,174,96,.03));border:2px solid #27ae60;border-radius:12px;padding:20px 24px;margin-bottom:14px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#27ae60;margin-bottom:12px;">What Stops Leaving Your Pocket After Exit</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:center;">
-          <div style="background:#fff;border-radius:8px;padding:14px;">
-            <div style="font-size:13px;color:var(--muted);margin-bottom:6px;">Per Year Saved</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:40px;color:#27ae60;font-weight:700;">$<span id="priceSaveYear">0</span></div>
-          </div>
-          <div style="background:var(--navy);border-radius:8px;padding:14px;">
-            <div style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:6px;">Alpha Fee Recovered In</div>
-            <div style="font-family:'Cormorant Garamond',serif;font-size:40px;color:var(--gold);font-weight:700;"><span id="priceMonthsBack">—</span> <span style="font-size:20px;color:rgba(255,255,255,.5);">mo</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ④ CREDIT PROTECTION — FULL DETAIL ─────────────────── -->
-      <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <span style="font-size:28px;">🛡</span>
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);font-weight:700;">Complimentary Credit Protection &amp; Repair</div>
-            <div style="font-size:14px;color:var(--muted);">Included with your service — never an upsell</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#27ae60;font-weight:700;flex-shrink:0;">✓</span><span style="font-size:15px;color:var(--text2);">In-house Credit Solutions Team monitors and works across all three bureaus — Equifax, Experian, TransUnion</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#27ae60;font-weight:700;flex-shrink:0;">✓</span><span style="font-size:15px;color:var(--text2);">Any timeshare-related derogatory marks, late payments, or collections addressed on your behalf</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#27ae60;font-weight:700;flex-shrink:0;">✓</span><span style="font-size:15px;color:var(--text2);">Credit impact during the process is typically temporary — our team works to restore your score throughout</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:#27ae60;font-weight:700;flex-shrink:0;">✓</span><span style="font-size:15px;color:var(--text2);">We pursue a clean written release — not managed foreclosure — so there is no foreclosure entry on your credit file</span></div>
-          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--muted);font-size:13px;flex-shrink:0;">*</span><span style="font-size:14px;color:var(--muted);">Optional continuous monitoring through the platform is available for $19.99/mo — Alpha does not benefit from this.</span></div>
-        </div>
-      </div>
-
-      <!-- ⑤ FINANCING — COLLAPSED BY DEFAULT ──────────────────── -->
-      <div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
-        <button onclick="toggleFinancing()" style="width:100%;background:var(--off);border:none;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--navy);font-weight:700;">
-          <span>Financing Available — Ask Me About Monthly Payment Options</span>
-          <span id="finArrow" style="color:var(--gold);font-size:18px;transition:transform .3s;">▾</span>
-        </button>
-        <div id="financingPanel" style="display:none;padding:18px 20px;background:#fff;border-top:1px solid var(--border);">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;text-align:center;">
-            <div style="background:var(--off);border-radius:8px;padding:14px;">
-              <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Monthly Payment</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--navy);font-weight:700;">$<span id="mPay">—</span><span style="font-size:15px;color:var(--muted);">/mo</span></div>
-            </div>
-            <div style="background:var(--off);border-radius:8px;padding:14px;">
-              <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Down Payment</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:#27ae60;font-weight:700;">$0</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">Waived today</div>
-            </div>
-            <div style="background:var(--off);border-radius:8px;padding:14px;">
-              <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">First Payment</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--navy);font-weight:700;" id="revFirstPay">—</div>
-              <div style="font-size:12px;color:var(--muted);margin-top:2px;">30 days from today</div>
-            </div>
-          </div>
-          <div style="background:var(--gold-pale);border-radius:8px;padding:12px 16px;font-size:14px;color:var(--text2);">
-            <strong>90 Days Same as Cash</strong> — 0% interest if paid in full by <strong id="revFirstPay2">—</strong>. After 90 days, 21% APR applies on remaining balance.
-          </div>
-        </div>
-      </div>
-
-      <!-- QUALIFIER REMINDER -->
-      <div id="qualReminder" style="display:none;background:rgba(39,174,96,.1);border:2px solid #27ae60;border-radius:10px;padding:16px 22px;margin-bottom:20px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#27ae60;margin-bottom:8px;font-weight:700;">✓ You Said YES Earlier Today</div>
-        <p style="font-size:16px;color:var(--text);line-height:1.65;">If we could offer a <strong>guaranteed service and timeline, $0 down today, fair installment payments, and complimentary credit protection</strong> — you confirmed you are ready to move forward.</p>
-      </div>
-
-      <div style="text-align:center;">
-        <button onclick="goTo(18)" style="background:var(--gold);color:var(--navy);border:none;border-radius:10px;padding:14px 40px;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='var(--gold2)'" onmouseout="this.style.background='var(--gold)'">
-          Continue →
-        </button>
-      </div>
-
-    </div>
   </div>
-
-  <style>
-  @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-  </style>
 </section>
+
+<script>
+  const scrollBlock = document.getElementById("scrollBlock");
+  const questionBlock = document.getElementById("questionBlock");
+  const processingBlock = document.getElementById("processingBlock");
+  const finalReveal = document.getElementById("finalReveal");
+
+  scrollBlock.addEventListener("scroll", function () {
+    if (scrollBlock.scrollTop + scrollBlock.clientHeight >= scrollBlock.scrollHeight - 5) {
+      questionBlock.style.display = "block";
+    }
+  });
+
+  function unlockDelay() {
+    questionBlock.style.display = "none";
+    processingBlock.style.display = "block";
+
+    setTimeout(() => {
+      processingBlock.style.display = "none";
+      finalReveal.style.display = "block";
+    }, 1800);
+  }
+</script>
+
+
+
+
+
+
+
+
 <section class="slide bg-pale" id="slide-18" data-slide="18" style="padding-bottom:100px;">
   <div style="position:absolute;top:70px;right:28px;background:var(--gold);color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:4px 14px;border-radius:20px;z-index:10;">Page 19</div>
   
@@ -3333,3 +3276,134 @@ function submitSchedule(){
     Everything you've shared today has been documented. Your case is strong. The only question left is — 
     <strong style="color:var(--navy);">which direction do you want those payments to go from here?</strong>
   </p>
+
+  <!-- Value recap pills -->
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;">
+    <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:20px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--navy);font-weight:700;">✓ 100% Written Guarantee</div>
+    <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:20px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--navy);font-weight:700;">✓ $0 Down Today</div>
+    <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:20px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--navy);font-weight:700;">✓ First Payment in 30 Days</div>
+    <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:20px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--navy);font-weight:700;">✓ Complimentary Credit Protection</div>
+    <div style="background:var(--blue-pale);border:1.5px solid var(--border);border-radius:20px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1px;color:var(--navy);font-weight:700;">✓ 6–18 Month Avg Resolution</div>
+  </div>
+
+  <!-- THE TWO BUTTONS -->
+  <div class="decision-bar">
+    <button class="btn-transfer" onclick="openTransfer()">
+      ✓ &nbsp; I'm Ready — Let's Get Started
+    </button>
+    <button class="btn-schedule" onclick="openSchedule()">
+      Schedule a Follow-Up
+    </button>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ═══════════════ TRANSFER MODAL ═══════════════ -->
+<div class="modal-overlay" id="transferModal">
+  <div class="modal-box" style="text-align:center;">
+    <button class="modal-close" onclick="closeModal('transferModal')">✕</button>
+    <div class="transfer-check">🎉</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--navy);font-weight:700;margin-bottom:10px;">
+      Welcome to Alpha Timeshare Consultants
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;">Thank You for Choosing Us</div>
+    <p style="font-size:17px;color:var(--text2);line-height:1.8;max-width:440px;margin:0 auto 22px;">
+      You've made the right decision. Your case is being transferred to your dedicated team right now. You will be hearing from your Case Manager shortly.
+    </p>
+    <div style="background:var(--blue-pale);border-radius:10px;padding:18px 22px;text-align:left;margin-bottom:22px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);margin-bottom:10px;font-weight:700;">What to Expect</div>
+      <div style="font-size:15px;color:var(--text2);line-height:1.9;">
+        📞 Your Case Manager will reach out within 1 business day<br>
+        📄 Your Document Coordinator will request your paperwork<br>
+        🛡 Your Credit Solutions Team will be on standby<br>
+        ⏰ Your first payment is not due for 30 days
+      </div>
+    </div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);">Alpha Timeshare Consultants — Est. 1985 — A+ BBB Rated</div>
+    <div class="transfer-confetti">
+      <strong>Sebastian Short</strong> — Account Specialist<br>
+      <a href="tel:18778483948" style="color:var(--navy2);">1 (877) 848-3948 Ext. 134</a> &nbsp;·&nbsp;
+      <a href="mailto:Sebastian@AlphaTimeshareConsultants.com" style="color:var(--navy2);">Sebastian@AlphaTimeshareConsultants.com</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ SCHEDULE MODAL ═══════════════ -->
+<div class="modal-overlay" id="scheduleModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--navy);font-weight:700;margin-bottom:6px;">Schedule a Follow-Up</div>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:20px;">Let's find a time that works. Before we do — help us understand what's on your mind.</p>
+
+    <!-- REASON DROPDOWN -->
+    <label class="sched-label">What would you like more time for?</label>
+    <select class="sched-input" id="schedReason" onchange="handleObjReason()">
+      <option value="">— Select a reason —</option>
+      <option value="think">I need a little more time to think about it</option>
+      <option value="spouse">I need to speak with my spouse / partner first</option>
+      <option value="finances">I want to take a closer look at my finances</option>
+      <option value="contract">I'd like to review the contract more carefully</option>
+      <option value="compare">I want to compare my options before deciding</option>
+      <option value="timing">The timing just doesn't feel right today</option>
+      <option value="other">Something else</option>
+    </select>
+
+    <!-- OBJECTION FOLLOW-UP CARD -->
+    <div class="obj-card" id="objCard">
+      <div class="obj-q" id="objQuestion"></div>
+      <div class="obj-options" id="objOptions"></div>
+    </div>
+
+    <!-- RESPONSE / BRIDGE -->
+    <div class="response-box" id="responseBox">
+      <div class="rb-label">One thing worth considering</div>
+      <p id="responseText"></p>
+    </div>
+
+    <!-- DATE / TIME FIELDS (shown after objection handled) -->
+    <div id="schedFields" style="display:none;">
+      <div class="sched-row">
+        <div>
+          <label class="sched-label">Preferred Date</label>
+          <input type="date" class="sched-input" id="schedDate">
+        </div>
+        <div>
+          <label class="sched-label">Preferred Time</label>
+          <select class="sched-input" id="schedTime">
+            <option value="">— Select —</option>
+            <option>9:00 AM</option><option>9:30 AM</option>
+            <option>10:00 AM</option><option>10:30 AM</option>
+            <option>11:00 AM</option><option>11:30 AM</option>
+            <option>12:00 PM</option><option>12:30 PM</option>
+            <option>1:00 PM</option><option>1:30 PM</option>
+            <option>2:00 PM</option><option>2:30 PM</option>
+            <option>3:00 PM</option><option>3:30 PM</option>
+            <option>4:00 PM</option><option>4:30 PM</option>
+            <option>5:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="sched-label">Best callback number</label>
+        <input type="tel" class="sched-input" id="schedPhone" placeholder="(000) 000-0000">
+      </div>
+      <div>
+        <label class="sched-label">Notes for the follow-up call</label>
+        <textarea class="sched-input" id="schedNotes" rows="2" placeholder="Anything specific you'd like to cover..."></textarea>
+      </div>
+      <button class="sched-submit" onclick="submitSchedule()">Confirm Follow-Up →</button>
+      <div id="schedConfirm" style="display:none;margin-top:14px;background:var(--blue-pale);border-radius:8px;padding:14px;font-size:15px;color:var(--navy);text-align:center;font-weight:600;"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════ CLOSING JS ═══════════════ -->
+
+</body>
+</html>
