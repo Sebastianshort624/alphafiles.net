@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CRM CSV Viewer</title>
 
+<style>
+body {
+    font-family: Arial;
+    margin: 20px;
+    background: #f4f4f4;
+}
+
+h2 { margin-bottom: 10px; }
+
+.toolbar {
+    background: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    padding: 8px;
+    margin: 5px;
+}
+
+#dropzone {
+    border: 2px dashed #aaa;
+    padding: 10px;
+    margin-top: 10px;
+    background: #fff;
+    text-align: center;
+}
+
+#dropzone.drag {
+    background: #e8f4ff;
+    border-color: #3399ff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    resize: horizontal;
+    overflow: auto;
+}
+
+th {
+    background: #eee;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>CRM System</h2>
+
+<div class="toolbar">
+
+<input type="file" id="fileInput" accept=".csv,.json">
+
+<input id="search" placeholder="Search..." oninput="render()">
+
+<select id="filter" onchange="render()">
+    <option>All</option>
+    <option>Lead</option>
+    <option>Active</option>
+    <option>Closed</option>
+</select>
+
+<button onclick="exportData()">Export</button>
+<button onclick="clearAll()">Clear</button>
+
+<div id="dropzone">Drop CSV or JSON here</div>
+
+</div>
+
+<table>
+<thead>
+<tr>
+    <th onclick="sort('id')">ID</th>
+    <th onclick="sort('status')">Status</th>
+    <th>Notes</th>
+    <th onclick="sort('updated')">Updated</th>
+    <th>Action</th>
+</tr>
+</thead>
+
+<tbody id="list"></tbody>
+</table>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("crm") || "[]");
+
+let sortKey = "updated";
+let dir = 1;
+
+// SAVE
+function save() {
+    localStorage.setItem("crm", JSON.stringify(data));
+}
+
+// IMPORT FILE
+document.getElementById("fileInput").addEventListener("change", handleFile);
+
+// DROP ZONE
+const dz = document.getElementById("dropzone");
+
+dz.addEventListener("dragover", e => {
+    e.preventDefault();
+    dz.classList.add("drag");
+});
+
+dz.addEventListener("dragleave", () => dz.classList.remove("drag"));
+
+dz.addEventListener("drop", e => {
+    e.preventDefault();
+    dz.classList.remove("drag");
+    handleFile({ target: { files: e.dataTransfer.files } });
+});
+
+// FILE HANDLER
+function handleFile(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = evt => {
+        const text = evt.target.result;
+
+        try {
+            if (file.name.endsWith(".json")) {
+                data = JSON.parse(text);
+            } else {
+                data = csv(text);
+            }
+
+            save();
+            render();
+        } catch {
+            alert("Invalid file");
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+// CSV PARSER
+function csv(str) {
+    return str.split("\n")
+        .filter(r => r.trim())
+        .map(r => {
+            const c = r.split(",");
+            return {
+                id: c[0] || "",
+                status: c[1] || "Lead",
+                notes: c[2] || "",
+                updated: new Date().toISOString()
+            };
+        });
+}
+
+// SORT
+function sort(k) {
+    sortKey = k;
+    dir *= -1;
+    render();
+}
+
+// DELETE
+function del(id) {
+    data = data.filter(x => x.id !== id);
+    save();
+    render();
+}
+
+// RENDER
+function render() {
+    const s = search.value.toLowerCase();
+    const f = filter.value;
+
+    let out = data
+        .filter(x => (x.id || "").toLowerCase().includes(s))
+        .filter(x => f === "All" ? true : x.status === f)
+        .sort((a,b) => {
+            if (a[sortKey] > b[sortKey]) return dir;
+            if (a[sortKey] < b[sortKey]) return -dir;
+            return 0;
+        });
+
+    list.innerHTML = out.map(c => `
+        <tr>
+            <td>${c.id}</td>
+            <td>${c.status}</td>
+            <td>${c.notes}</td>
+            <td>${c.updated}</td>
+            <td><button onclick="del('${c.id}')">Delete</button></td>
+        </tr>
+    `).join("");
+}
+
+// EXPORT
+function exportData() {
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json"
+    });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "crm.json";
+    a.click();
+}
+
+// CLEAR
+function clearAll() {
+    if (!confirm("Clear all?")) return;
+    data = [];
+    save();
+    render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
