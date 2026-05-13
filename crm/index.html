@@ -1,208 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<title>CRM System</title>
+<meta charset="UTF-8">
+<title>CRM CSV Viewer</title>
 
 <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     margin: 20px;
-    background: #f7f7f7;
+    background: #f4f4f4;
 }
 
-h1 { margin-bottom: 10px; }
+h2 { margin-bottom: 10px; }
 
-input, textarea, select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-}
-
-button {
-    padding: 10px;
-    margin: 5px 3px;
-    cursor: pointer;
-}
-
-.card {
+.toolbar {
     background: white;
     padding: 10px;
+    margin-bottom: 10px;
+}
+
+input, select, button {
+    padding: 8px;
+    margin: 5px;
+}
+
+#dropzone {
+    border: 2px dashed #aaa;
+    padding: 10px;
     margin-top: 10px;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background: #fff;
+    text-align: center;
+}
+
+#dropzone.drag {
+    background: #e8f4ff;
+    border-color: #3399ff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    resize: horizontal;
+    overflow: auto;
+}
+
+th {
+    background: #eee;
+    cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>CRM Dashboard</h1>
+<h2>CRM System</h2>
 
-<input id="clientId" placeholder="Client ID (e.g. 7706336318)">
-<textarea id="notes" placeholder="Notes"></textarea>
+<div class="toolbar">
 
-<select id="status">
-    <option value="Lead">Lead</option>
-    <option value="Active">Active</option>
-    <option value="Closed">Closed</option>
+<input type="file" id="fileInput" accept=".csv,.json">
+
+<input id="search" placeholder="Search..." oninput="render()">
+
+<select id="filter" onchange="render()">
+    <option>All</option>
+    <option>Lead</option>
+    <option>Active</option>
+    <option>Closed</option>
 </select>
 
-<button onclick="saveClient()">Save / Update Client</button>
-<button onclick="exportData()">Export CRM Data</button>
+<button onclick="exportData()">Export</button>
+<button onclick="clearAll()">Clear</button>
 
-<hr>
+<div id="dropzone">Drop CSV or JSON here</div>
 
-<input id="search" placeholder="Search client ID..." oninput="renderList()">
+</div>
 
-<select id="filter" onchange="renderList()">
-    <option value="All">All</option>
-    <option value="Lead">Lead</option>
-    <option value="Active">Active</option>
-    <option value="Closed">Closed</option>
-</select>
+<table>
+<thead>
+<tr>
+    <th onclick="sort('id')">ID</th>
+    <th onclick="sort('status')">Status</th>
+    <th>Notes</th>
+    <th onclick="sort('updated')">Updated</th>
+    <th>Action</th>
+</tr>
+</thead>
 
-<button onclick="clearAll()">Clear ALL DATA</button>
-
-<h2>Clients</h2>
-<div id="list"></div>
+<tbody id="list"></tbody>
+</table>
 
 <script>
 
-// =========================
-// SAVE / UPDATE CLIENT
-// =========================
-function saveClient() {
-    const id = document.getElementById("clientId").value.trim();
-    const notes = document.getElementById("notes").value;
-    const status = document.getElementById("status").value;
+let data = JSON.parse(localStorage.getItem("crm") || "[]");
 
-    if (!id) return alert("Client ID required");
+let sortKey = "updated";
+let dir = 1;
 
-    const data = {
-        id,
-        notes,
-        status,
-        updated: new Date().toISOString()
+// SAVE
+function save() {
+    localStorage.setItem("crm", JSON.stringify(data));
+}
+
+// IMPORT FILE
+document.getElementById("fileInput").addEventListener("change", handleFile);
+
+// DROP ZONE
+const dz = document.getElementById("dropzone");
+
+dz.addEventListener("dragover", e => {
+    e.preventDefault();
+    dz.classList.add("drag");
+});
+
+dz.addEventListener("dragleave", () => dz.classList.remove("drag"));
+
+dz.addEventListener("drop", e => {
+    e.preventDefault();
+    dz.classList.remove("drag");
+    handleFile({ target: { files: e.dataTransfer.files } });
+});
+
+// FILE HANDLER
+function handleFile(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = evt => {
+        const text = evt.target.result;
+
+        try {
+            if (file.name.endsWith(".json")) {
+                data = JSON.parse(text);
+            } else {
+                data = csv(text);
+            }
+
+            save();
+            render();
+        } catch {
+            alert("Invalid file");
+        }
     };
 
-    localStorage.setItem("client_" + id, JSON.stringify(data));
-
-    renderList();
-    alert("Saved");
+    reader.readAsText(file);
 }
 
-// =========================
-// SAFE GET ALL CLIENTS
-// =========================
-function getAllClients() {
-    const clients = [];
-
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith("client_")) {
-            try {
-                const raw = localStorage.getItem(key);
-                if (!raw) return;
-
-                clients.push(JSON.parse(raw));
-            } catch (e) {
-                console.log("Bad data skipped:", key);
-            }
-        }
-    });
-
-    return clients;
+// CSV PARSER
+function csv(str) {
+    return str.split("\n")
+        .filter(r => r.trim())
+        .map(r => {
+            const c = r.split(",");
+            return {
+                id: c[0] || "",
+                status: c[1] || "Lead",
+                notes: c[2] || "",
+                updated: new Date().toISOString()
+            };
+        });
 }
 
-// =========================
-// RENDER LIST
-// =========================
-function renderList() {
-    const list = document.getElementById("list");
-    list.innerHTML = "";
-
-    const search = document.getElementById("search").value.toLowerCase();
-    const filter = document.getElementById("filter").value;
-
-    getAllClients()
-    .filter(c => (c.id || "").toLowerCase().includes(search))
-    .filter(c => filter === "All" ? true : c.status === filter)
-    .forEach(c => {
-
-        const div = document.createElement("div");
-        div.className = "card";
-
-        div.innerHTML = `
-            <b>ID:</b> ${c.id}<br>
-            <b>Status:</b> ${c.status}<br>
-            <b>Notes:</b> ${c.notes}<br>
-            <small>${c.updated}</small><br>
-
-            <button onclick="loadClient('${c.id}')">Load</button>
-            <button onclick="deleteClient('${c.id}')">Delete</button>
-        `;
-
-        list.appendChild(div);
-    });
+// SORT
+function sort(k) {
+    sortKey = k;
+    dir *= -1;
+    render();
 }
 
-// =========================
-// LOAD CLIENT (SAFE)
-// =========================
-function loadClient(id) {
-    const raw = localStorage.getItem("client_" + id);
-    if (!raw) return alert("Client not found");
-
-    const data = JSON.parse(raw);
-
-    document.getElementById("clientId").value = data.id;
-    document.getElementById("notes").value = data.notes;
-    document.getElementById("status").value = data.status;
-}
-
-// =========================
 // DELETE
-// =========================
-function deleteClient(id) {
-    if (!confirm("Delete client " + id + "?")) return;
-
-    localStorage.removeItem("client_" + id);
-    renderList();
+function del(id) {
+    data = data.filter(x => x.id !== id);
+    save();
+    render();
 }
 
-// =========================
-// EXPORT
-// =========================
-function exportData() {
-    const data = getAllClients();
+// RENDER
+function render() {
+    const s = search.value.toLowerCase();
+    const f = filter.value;
 
+    let out = data
+        .filter(x => (x.id || "").toLowerCase().includes(s))
+        .filter(x => f === "All" ? true : x.status === f)
+        .sort((a,b) => {
+            if (a[sortKey] > b[sortKey]) return dir;
+            if (a[sortKey] < b[sortKey]) return -dir;
+            return 0;
+        });
+
+    list.innerHTML = out.map(c => `
+        <tr>
+            <td>${c.id}</td>
+            <td>${c.status}</td>
+            <td>${c.notes}</td>
+            <td>${c.updated}</td>
+            <td><button onclick="del('${c.id}')">Delete</button></td>
+        </tr>
+    `).join("");
+}
+
+// EXPORT
+function exportData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: "application/json"
     });
 
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "crm-export.json";
+    a.download = "crm.json";
     a.click();
 }
 
-// =========================
-// CLEAR ALL
-// =========================
+// CLEAR
 function clearAll() {
-    if (!confirm("Delete ALL CRM data?")) return;
-
-    Object.keys(localStorage).forEach(key => {
-        if (key.startsWith("client_")) {
-            localStorage.removeItem(key);
-        }
-    });
-
-    renderList();
+    if (!confirm("Clear all?")) return;
+    data = [];
+    save();
+    render();
 }
 
-// INIT
-renderList();
+render();
 
 </script>
 
