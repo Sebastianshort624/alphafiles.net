@@ -2,12 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>CRM</title>
+<title>CRM System</title>
+
 <style>
-body { font-family: Arial; margin: 20px; }
-input, textarea { width: 100%; margin: 5px 0; padding: 8px; }
-button { padding: 10px; margin-top: 10px; cursor: pointer; }
-.card { border: 1px solid #ddd; padding: 10px; margin-top: 10px; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f7f7f7;
+}
+
+h1 { margin-bottom: 10px; }
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 10px;
+    margin: 5px 3px;
+    cursor: pointer;
+}
+
+.card {
+    background: white;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.small {
+    font-size: 12px;
+    color: gray;
+}
 </style>
 </head>
 
@@ -15,66 +50,166 @@ button { padding: 10px; margin-top: 10px; cursor: pointer; }
 
 <h1>CRM Dashboard</h1>
 
+<!-- INPUT AREA -->
 <input id="clientId" placeholder="Client ID (e.g. 7706336318)">
-<textarea id="notes" placeholder="Client Notes"></textarea>
+<textarea id="notes" placeholder="Notes"></textarea>
 
-<button onclick="saveClient()">Save Client</button>
-<button onclick="loadClient()">Load Client</button>
+<select id="status">
+    <option value="Lead">Lead</option>
+    <option value="Active">Active</option>
+    <option value="Closed">Closed</option>
+</select>
 
-<h2>Saved Clients</h2>
+<button onclick="saveClient()">Save / Update Client</button>
+<button onclick="exportData()">Export CRM Data</button>
+
+<hr>
+
+<!-- SEARCH + FILTER -->
+<div class="row">
+    <input id="search" placeholder="Search client ID..." oninput="renderList()">
+
+    <select id="filter" onchange="renderList()">
+        <option value="All">All</option>
+        <option value="Lead">Lead</option>
+        <option value="Active">Active</option>
+        <option value="Closed">Closed</option>
+    </select>
+
+    <button onclick="clearAll()">Clear ALL DATA</button>
+</div>
+
+<h2>Clients</h2>
 <div id="list"></div>
 
 <script>
-// 🧠 SAVE CLIENT (local browser storage)
-function saveClient() {
-    const id = document.getElementById("clientId").value;
-    const notes = document.getElementById("notes").value;
 
-    if (!id) return alert("Enter Client ID");
+// =========================
+// SAVE / UPDATE CLIENT
+// =========================
+function saveClient() {
+    const id = document.getElementById("clientId").value.trim();
+    const notes = document.getElementById("notes").value;
+    const status = document.getElementById("status").value;
+
+    if (!id) return alert("Client ID required");
 
     const data = {
         id,
         notes,
+        status,
         updated: new Date().toISOString()
     };
 
     localStorage.setItem("client_" + id, JSON.stringify(data));
+
     renderList();
-    alert("Saved locally");
+    alert("Saved");
 }
 
-// 📥 LOAD CLIENT
-function loadClient() {
-    const id = document.getElementById("clientId").value;
-    const data = JSON.parse(localStorage.getItem("client_" + id));
+// =========================
+// LOAD DATA INTO LIST
+// =========================
+function getAllClients() {
+    const clients = [];
 
-    if (!data) return alert("Client not found");
+    for (let key in localStorage) {
+        if (key.startsWith("client_")) {
+            clients.push(JSON.parse(localStorage.getItem(key)));
+        }
+    }
 
-    document.getElementById("notes").value = data.notes;
+    return clients;
 }
 
-// 📋 SHOW ALL CLIENTS
+// =========================
+// RENDER LIST (SEARCH + FILTER)
+// =========================
 function renderList() {
     const list = document.getElementById("list");
     list.innerHTML = "";
 
+    const search = document.getElementById("search").value.toLowerCase();
+    const filter = document.getElementById("filter").value;
+
+    const clients = getAllClients();
+
+    clients
+    .filter(c => c.id.toLowerCase().includes(search))
+    .filter(c => filter === "All" ? true : c.status === filter)
+    .forEach(c => {
+
+        const div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `
+            <b>ID:</b> ${c.id}<br>
+            <b>Status:</b> ${c.status}<br>
+            <b>Notes:</b> ${c.notes}<br>
+            <div class="small">Updated: ${c.updated}</div>
+
+            <button onclick="loadClient('${c.id}')">Load</button>
+            <button onclick="deleteClient('${c.id}')">Delete</button>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+// =========================
+// LOAD SINGLE CLIENT
+// =========================
+function loadClient(id) {
+    const data = JSON.parse(localStorage.getItem("client_" + id));
+
+    document.getElementById("clientId").value = data.id;
+    document.getElementById("notes").value = data.notes;
+    document.getElementById("status").value = data.status;
+}
+
+// =========================
+// DELETE CLIENT
+// =========================
+function deleteClient(id) {
+    if (!confirm("Delete client " + id + "?")) return;
+
+    localStorage.removeItem("client_" + id);
+    renderList();
+}
+
+// =========================
+// EXPORT DATA
+// =========================
+function exportData() {
+    const data = getAllClients();
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json"
+    });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "crm-export.json";
+    a.click();
+}
+
+// =========================
+// CLEAR ALL DATA
+// =========================
+function clearAll() {
+    if (!confirm("Delete ALL CRM data?")) return;
+
     for (let key in localStorage) {
         if (key.startsWith("client_")) {
-            const data = JSON.parse(localStorage.getItem(key));
-
-            const div = document.createElement("div");
-            div.className = "card";
-            div.innerHTML = `
-                <b>ID:</b> ${data.id}<br>
-                <b>Notes:</b> ${data.notes}<br>
-                <small>${data.updated}</small>
-            `;
-            list.appendChild(div);
+            localStorage.removeItem(key);
         }
     }
+
+    renderList();
 }
 
 renderList();
+
 </script>
 
 </body>
