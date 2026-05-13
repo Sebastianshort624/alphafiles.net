@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>CRM</title>
+<meta charset="UTF-8" />
+<title>CRM System</title>
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     margin: 20px;
-    background: #f5f5f5;
+    background: #f7f7f7;
 }
 
 h1 { margin-bottom: 10px; }
@@ -39,47 +39,45 @@ button {
 
 <h1>CRM Dashboard</h1>
 
-<!-- INPUT -->
-<input id="clientId" placeholder="Client ID">
+<input id="clientId" placeholder="Client ID (e.g. 7706336318)">
 <textarea id="notes" placeholder="Notes"></textarea>
 
 <select id="status">
-    <option>Lead</option>
-    <option>Active</option>
-    <option>Closed</option>
+    <option value="Lead">Lead</option>
+    <option value="Active">Active</option>
+    <option value="Closed">Closed</option>
 </select>
 
-<button onclick="saveClient()">Save</button>
-<button onclick="exportData()">Export</button>
+<button onclick="saveClient()">Save / Update Client</button>
+<button onclick="exportData()">Export CRM Data</button>
 
 <hr>
 
-<!-- SEARCH + FILTER -->
-<input id="search" placeholder="Search..." oninput="render()">
+<input id="search" placeholder="Search client ID..." oninput="renderList()">
 
-<select id="filter" onchange="render()">
-    <option>All</option>
-    <option>Lead</option>
-    <option>Active</option>
-    <option>Closed</option>
+<select id="filter" onchange="renderList()">
+    <option value="All">All</option>
+    <option value="Lead">Lead</option>
+    <option value="Active">Active</option>
+    <option value="Closed">Closed</option>
 </select>
 
-<button onclick="clearAll()">Clear All</button>
+<button onclick="clearAll()">Clear ALL DATA</button>
 
 <h2>Clients</h2>
 <div id="list"></div>
 
 <script>
 
-// =====================
-// SAVE CLIENT
-// =====================
+// =========================
+// SAVE / UPDATE CLIENT
+// =========================
 function saveClient() {
     const id = document.getElementById("clientId").value.trim();
     const notes = document.getElementById("notes").value;
     const status = document.getElementById("status").value;
 
-    if (!id) return alert("Enter Client ID");
+    if (!id) return alert("Client ID required");
 
     const data = {
         id,
@@ -88,39 +86,46 @@ function saveClient() {
         updated: new Date().toISOString()
     };
 
-    localStorage.setItem("crm_" + id, JSON.stringify(data));
+    localStorage.setItem("client_" + id, JSON.stringify(data));
 
-    render();
+    renderList();
     alert("Saved");
 }
 
-// =====================
-// GET ALL CLIENTS
-// =====================
-function getClients() {
-    const arr = [];
+// =========================
+// SAFE GET ALL CLIENTS
+// =========================
+function getAllClients() {
+    const clients = [];
 
-    for (let key in localStorage) {
-        if (key.startsWith("crm_")) {
-            arr.push(JSON.parse(localStorage.getItem(key)));
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("client_")) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return;
+
+                clients.push(JSON.parse(raw));
+            } catch (e) {
+                console.log("Bad data skipped:", key);
+            }
         }
-    }
+    });
 
-    return arr;
+    return clients;
 }
 
-// =====================
+// =========================
 // RENDER LIST
-// =====================
-function render() {
+// =========================
+function renderList() {
     const list = document.getElementById("list");
     list.innerHTML = "";
 
     const search = document.getElementById("search").value.toLowerCase();
     const filter = document.getElementById("filter").value;
 
-    getClients()
-    .filter(c => c.id.toLowerCase().includes(search))
+    getAllClients()
+    .filter(c => (c.id || "").toLowerCase().includes(search))
     .filter(c => filter === "All" ? true : c.status === filter)
     .forEach(c => {
 
@@ -141,33 +146,35 @@ function render() {
     });
 }
 
-// =====================
-// LOAD CLIENT
-// =====================
+// =========================
+// LOAD CLIENT (SAFE)
+// =========================
 function loadClient(id) {
-    const data = JSON.parse(localStorage.getItem("crm_" + id));
-    if (!data) return alert("Not found");
+    const raw = localStorage.getItem("client_" + id);
+    if (!raw) return alert("Client not found");
+
+    const data = JSON.parse(raw);
 
     document.getElementById("clientId").value = data.id;
     document.getElementById("notes").value = data.notes;
     document.getElementById("status").value = data.status;
 }
 
-// =====================
-// DELETE CLIENT
-// =====================
+// =========================
+// DELETE
+// =========================
 function deleteClient(id) {
-    if (!confirm("Delete " + id + "?")) return;
+    if (!confirm("Delete client " + id + "?")) return;
 
-    localStorage.removeItem("crm_" + id);
-    render();
+    localStorage.removeItem("client_" + id);
+    renderList();
 }
 
-// =====================
-// EXPORT DATA
-// =====================
+// =========================
+// EXPORT
+// =========================
 function exportData() {
-    const data = getClients();
+    const data = getAllClients();
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: "application/json"
@@ -179,22 +186,23 @@ function exportData() {
     a.click();
 }
 
-// =====================
+// =========================
 // CLEAR ALL
-// =====================
+// =========================
 function clearAll() {
-    if (!confirm("Delete ALL data?")) return;
+    if (!confirm("Delete ALL CRM data?")) return;
 
-    for (let key in localStorage) {
-        if (key.startsWith("crm_")) {
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("client_")) {
             localStorage.removeItem(key);
         }
-    }
+    });
 
-    render();
+    renderList();
 }
 
-render();
+// INIT
+renderList();
 
 </script>
 
