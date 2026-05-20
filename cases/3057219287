@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costo Real de Propiedad</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Cormorant+Garamond:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:     #1B2A4A;
+    --navy-lt:  #2E4472;
+    --gold:     #C8960C;
+    --ice:      #EAF0F8;
+    --white:    #FFFFFF;
+    --charcoal: #2D2D2D;
+    --border:   #CBD6E8;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--ice);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .card {
+    background: var(--white);
+    width: 100%;
+    max-width: 820px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(27,42,74,0.13);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 28px 36px 20px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .owner-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .main-title {
+    font-family: 'Barlow', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .main-title span { color: var(--gold); font-weight: 700; }
+  .subtitle {
+    font-size: 13px;
+    color: #6B7A99;
+    font-weight: 400;
+  }
+
+  /* ── BODY GRID ── */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    padding: 28px 28px 28px 36px;
+    background: var(--ice);
+    border-right: 1px solid var(--border);
+  }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+    padding: 6px 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+    border-radius: 2px;
+  }
+
+  .field-group { margin-bottom: 20px; }
+  .field-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6B7A99;
+    margin-bottom: 6px;
+    display: block;
+  }
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 15px;
+    font-family: 'Barlow', sans-serif;
+    color: var(--navy);
+    background: var(--white);
+    outline: none;
+    transition: border-color .2s;
+  }
+  input:focus { border-color: var(--navy); }
+
+  .mini-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .mini-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 8px 10px;
+  }
+  .mini-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8A9ABB;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .mini-val {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* ── TOTAL BOX ── */
+  .total-box {
+    background: var(--navy);
+    border-radius: 3px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .total-item {}
+  .total-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+  .total-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8AA0C8;
+    margin-top: 2px;
+    display: block;
+  }
+  .total-sub {
+    font-size: 10px;
+    color: #5A7AAA;
+    display: block;
+  }
+
+  /* ── BOTTOM FIELDS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ── RIGHT PANEL ── */
+  .right-panel {
+    background: var(--navy);
+    padding: 28px 28px 28px 28px;
+  }
+  .right-header {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .right-subheader {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #5A7AAA;
+    margin-bottom: 20px;
+  }
+
+  .cost-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background .15s;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-year {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8AA0C8;
+  }
+  .cost-amt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .cost-row.highlight-10 .cost-amt { font-size: 28px; color: var(--white); }
+  .cost-row.highlight-20 .cost-amt { font-size: 32px; color: var(--gold); }
+  .cost-row.highlight-30 {
+    background: rgba(200,150,12,0.12);
+    border-radius: 3px;
+    padding: 14px 10px;
+    margin: 0 -10px;
+  }
+  .cost-row.highlight-30 .cost-year { color: var(--gold); font-size: 15px; font-weight: 700; }
+  .cost-row.highlight-30 .cost-amt {
+    font-size: 38px;
+    color: var(--gold);
+  }
+
+  @media (max-width: 600px) {
+    .body-grid { grid-template-columns: 1fr; }
+    .right-panel { border-top: none; }
+    .main-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="owner-name" id="ownerLabel">Evert Ramirez</div>
+    <h1 class="main-title">Costo real de <span>propiedad</span></h1>
+    <p class="subtitle">Descubre cuánto cuesta realmente quedarse y cuánto vale realmente la libertad.</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-grid">
+
+    <!-- LEFT -->
+    <div class="left-panel">
+      <div class="section-label">Tus Números</div>
+
+      <!-- MTF -->
+      <div class="field-group">
+        <label class="field-label">Cuota de Mantenimiento Anual ($)</label>
+        <input type="number" id="mtfAnnual" value="3000" oninput="calc()">
+        <div class="mini-row">
+          <div class="mini-box">
+            <span class="mini-label">Mensual</span>
+            <span class="mini-val" id="mtfMo">$ 250</span>
+          </div>
+          <div class="mini-box">
+            <span class="mini-label">Anual</span>
+            <span class="mini-val" id="mtfYr">$ 3,000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MORTGAGE -->
+      <div class="field-group">
+        <label class="field-label">Pago Mensual de la Hipoteca ($)</label>
+        <input type="number" id="mtgMo" value="2300" oninput="calc()">
+        <div class="mini-row">
+          <div class="mini-box">
+            <span class="mini-label">Mensual</span>
+            <span class="mini-val" id="mtgMoDisp">$ 2,300</span>
+          </div>
+          <div class="mini-box">
+            <span class="mini-label">Anual</span>
+            <span class="mini-val" id="mtgYr">$ 27,600</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTAL BOX -->
+      <div class="total-box">
+        <div class="total-item">
+          <span class="total-val" id="totalMo">$ 2,550</span>
+          <span class="total-label">Total / Mes</span>
+          <span class="total-sub">cada mes</span>
+        </div>
+        <div class="total-item">
+          <span class="total-val" id="totalYr">$ 30,600</span>
+          <span class="total-label">Total / Año</span>
+          <span class="total-sub">hasta que salgas</span>
+        </div>
+      </div>
+
+      <!-- BOTTOM FIELDS -->
+      <div class="two-col" style="margin-bottom:14px">
+        <div class="field-group" style="margin-bottom:0">
+          <label class="field-label">Año de Compra</label>
+          <input type="number" id="yearBought" value="2018" oninput="calc()">
+        </div>
+        <div class="field-group" style="margin-bottom:0">
+          <label class="field-label">Tasa de Crecimiento (%/año)</label>
+          <input type="number" id="growthRate" value="8" oninput="calc()">
+        </div>
+      </div>
+      <div class="field-group" style="margin-bottom:0">
+        <label class="field-label">Año Estimado de Amortización del Préstamo</label>
+        <input type="number" id="payoffYear" value="2028" oninput="calc()">
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-panel">
+      <div class="right-header">Costo a lo Largo del Tiempo</div>
+      <div class="right-subheader">Si nada cambia</div>
+
+      <div class="cost-row">
+        <span class="cost-year">3 años</span>
+        <span class="cost-amt" id="c3">$64,939</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-year">5 años</span>
+        <span class="cost-amt" id="c5">$72,800</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-year">7 años</span>
+        <span class="cost-amt" id="c7">$81,968</span>
+      </div>
+      <div class="cost-row highlight-10">
+        <span class="cost-year">10 años</span>
+        <span class="cost-amt" id="c10">$98,660</span>
+      </div>
+      <div class="cost-row highlight-20">
+        <span class="cost-year">20 años</span>
+        <span class="cost-amt" id="c20">$192,486</span>
+      </div>
+      <div class="cost-row highlight-30">
+        <span class="cost-year">30 años</span>
+        <span class="cost-amt" id="c30">$395,050</span>
+      </div>
+    </div>
+
+  </div><!-- end body-grid -->
+</div><!-- end card -->
+
+<script>
+function fmt(n){
+  return '$'+Math.round(n).toLocaleString('en-US');
+}
+
+function calcProjection(annualTotal, years, rate){
+  // Compound growth on fees over years
+  let total = 0;
+  let annual = annualTotal;
+  for(let y = 1; y <= years; y++){
+    total += annual;
+    annual *= (1 + rate/100);
+  }
+  return total;
+}
+
+function calc(){
+  const mtfA  = parseFloat(document.getElementById('mtfAnnual').value) || 0;
+  const mtgM  = parseFloat(document.getElementById('mtgMo').value)     || 0;
+  const rate  = parseFloat(document.getElementById('growthRate').value) || 0;
+
+  const mtfM  = mtfA / 12;
+  const mtgA  = mtgM * 12;
+  const totalM = mtfM + mtgM;
+  const totalA = mtfA + mtgA;
+
+  document.getElementById('mtfMo').textContent   = '$ '+mtfM.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('mtfYr').textContent   = '$ '+mtfA.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('mtgMoDisp').textContent = '$ '+mtgM.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('mtgYr').textContent   = '$ '+mtgA.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('totalMo').textContent = '$ '+totalM.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('totalYr').textContent = '$ '+totalA.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+
+  // Projections — MTF grows, mortgage stays fixed until payoff then drops
+  const yearBought = parseInt(document.getElementById('yearBought').value) || 2018;
+  const payoffYear = parseInt(document.getElementById('payoffYear').value) || 2028;
+  const currentYear = new Date().getFullYear();
+  const yearsOwned = currentYear - yearBought;
+
+  function totalForYears(yrs){
+    let total = 0;
+    let mtf = mtfA;
+    for(let y = 1; y <= yrs; y++){
+      const yearNum = yearsOwned + y;
+      const calYear = yearBought + yearNum;
+      const hasMortgage = calYear <= payoffYear ? 1 : 0;
+      total += mtf + (mtgA * hasMortgage);
+      mtf *= (1 + rate / 100);
+    }
+    return total;
+  }
+
+  document.getElementById('c3').textContent  = fmt(totalForYears(3));
+  document.getElementById('c5').textContent  = fmt(totalForYears(5));
+  document.getElementById('c7').textContent  = fmt(totalForYears(7));
+  document.getElementById('c10').textContent = fmt(totalForYears(10));
+  document.getElementById('c20').textContent = fmt(totalForYears(20));
+  document.getElementById('c30').textContent = fmt(totalForYears(30));
+}
+
+calc();
+</script>
+</body>
+</html>
