@@ -1,0 +1,159 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,'Times New Roman',serif}
+.wrap{max-width:600px;margin:0 auto;background:#fff;padding:20px;font-family:Georgia,serif}
+.logo-bar{text-align:center;margin-bottom:16px}
+.logo-bar img{max-width:200px}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:6px 16px;font-size:11px;letter-spacing:.3px;margin-bottom:16px}
+.right-section{margin-bottom:14px;border:1px solid #ddd;border-radius:4px;overflow:hidden}
+.right-header{background:#1B2A4A;color:#fff;padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.right-num{background:#C8960C;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
+.right-title{font-size:13px;font-weight:700;letter-spacing:.3px;flex:1}
+.right-toggle{font-size:11px;opacity:.7;margin-left:auto;flex-shrink:0}
+.right-subtitle{background:#f4f0e8;border-bottom:1px solid #ddd;padding:8px 14px;font-size:11px;color:#5a4a1a;font-style:italic;line-height:1.4}
+.items-list{padding:10px 14px}
+.item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f0}
+.item:last-child{border-bottom:none}
+.cb{width:13px;height:13px;border:1.5px solid #1B2A4A;border-radius:2px;flex-shrink:0;margin-top:1px;cursor:pointer;background:#fff;appearance:none;-webkit-appearance:none}
+.cb:checked{background:#1B2A4A;border-color:#1B2A4A}
+.cb:checked::after{content:'✓';display:block;color:#fff;font-size:9px;line-height:12px;text-align:center}
+.item-label{font-size:12px;color:#1B2A4A;line-height:1.45;cursor:pointer}
+.notes-row{margin-top:8px;border-top:1px solid #eee;padding-top:8px}
+.notes-label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.notes-area{width:100%;border:1px solid #ccc;border-radius:3px;padding:6px 8px;font-size:11px;font-family:Georgia,serif;color:#333;resize:vertical;min-height:48px}
+.save-bar{text-align:center;margin-top:14px}
+.save-btn{background:#1B2A4A;color:#fff;border:none;padding:9px 28px;font-size:12px;font-weight:700;letter-spacing:.5px;border-radius:3px;cursor:pointer}
+.save-btn:hover{background:#C8960C}
+.ref-line{text-align:center;font-size:9px;color:#888;margin-top:12px;font-style:italic}
+</style>
+<div class="wrap">
+<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+<div class="page-title">Page 10 — Consumer Bill of Rights Assessment</div>
+<div class="page-sub">"Before I send your file over, I need to ask some specific questions. If you're unsure about anything, just say so — we never build a case on anything inaccurate."</div>
+
+<div class="right-section">
+<div class="right-header" onclick="toggle(this)">
+<span class="right-num">1</span>
+<span class="right-title">Right to Be Informed</span>
+<span class="right-toggle">▾</span>
+</div>
+<div class="right-subtitle">"You have the right to receive sufficient information to make a fully informed decision. Failing to provide it is a direct violation."</div>
+<div class="items-list">
+<div class="item"><input type="checkbox" class="cb" id="i1"><label class="item-label" for="i1">I was misled or lied to during the sales presentation</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i2"><label class="item-label" for="i2">I was told it was an investment that would appreciate in value</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i3"><label class="item-label" for="i3">The true long-term cost of ownership was never shown to me</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i4"><label class="item-label" for="i4">Maintenance fees would increase 6–12% annually — never disclosed</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i5"><label class="item-label" for="i5">I did not know the contract was perpetual — no end date</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i6"><label class="item-label" for="i6">I was not told it has little to no resale value</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i7"><label class="item-label" for="i7">I was not told I could cancel within the rescission period (3–10 days)</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i8"><label class="item-label" for="i8">Oral promises were made that did not appear in the contract</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i9"><label class="item-label" for="i9">The contract is perpetual — my children or heirs would inherit it unwillingly</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i10"><label class="item-label" for="i10">The salesperson was a 1099 contractor earning commission — never disclosed</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i11"><label class="item-label" for="i11">Resort management or quality has declined significantly since purchase</label></div>
+<div class="item"><input type="checkbox" class="cb" id="i12"><label class="item-label" for="i12">I was pressured to sign on the spot — I felt I had no choice</label></div>
+<div class="notes-row">
+<div class="notes-label">📝 Notes — Right to Be Informed</div>
+<textarea class="notes-area" placeholder="Notes..."></textarea>
+</div>
+</div>
+</div>
+
+<div class="right-section">
+<div class="right-header" onclick="toggle(this)">
+<span class="right-num">2</span>
+<span class="right-title">Right to Choose</span>
+<span class="right-toggle">▾</span>
+</div>
+<div class="right-subtitle">"You have the right to stop paying for something that no longer meets your needs. Restrictions that prevent practical use are a direct violation."</div>
+<div class="items-list">
+<div class="item"><input type="checkbox" class="cb" id="c1"><label class="item-label" for="c1">Availability is restricted — blackout dates prevent use when I want</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c2"><label class="item-label" for="c2">Non-owners can book the same dates I cannot get as an owner</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c3"><label class="item-label" for="c3">I was told owners have priority access and better privileges — that was not true</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c4"><label class="item-label" for="c4">Limited locations — I cannot get to resorts convenient to me</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c5"><label class="item-label" for="c5">The presentation ran far longer than the 60–90 minutes I was told</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c6"><label class="item-label" for="c6">I was pressured to sign before I had a chance to read the contract</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c7"><label class="item-label" for="c7">Multiple salespeople were used — I felt trapped and unable to leave</label></div>
+<div class="item"><input type="checkbox" class="cb" id="c8"><label class="item-label" for="c8">I was offered gifts contingent on purchasing — I felt obligated to stay</label></div>
+<div class="notes-row" style="margin-bottom:6px">
+<label style="font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;display:block;margin-bottom:4px">Actual presentation length</label>
+<input type="text" placeholder="e.g. 4 hours" style="width:100%;border:1px solid #ccc;border-radius:3px;padding:5px 8px;font-size:11px">
+</div>
+<div class="notes-row" style="margin-bottom:6px">
+<label style="font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;display:block;margin-bottom:4px">Usage frequency?</label>
+<select style="width:100%;border:1px solid #ccc;border-radius:3px;padding:5px 8px;font-size:11px">
+<option value="">— Select —</option>
+<option>Never used</option>
+<option>Used 1–2 times total</option>
+<option>Rarely — less than once/year</option>
+<option>Sometimes</option>
+</select>
+</div>
+<div class="notes-row">
+<div class="notes-label">📝 Notes — Right to Choose</div>
+<textarea class="notes-area" placeholder="Notes..."></textarea>
+</div>
+</div>
+</div>
+
+<div class="right-section">
+<div class="right-header" onclick="toggle(this)">
+<span class="right-num">3</span>
+<span class="right-title">Right to Safety — Financial &amp; Physical</span>
+<span class="right-toggle">▾</span>
+</div>
+<div class="right-subtitle">"The Right to Safety — protection against marketing of products hazardous to your health, life, or financial wellbeing."</div>
+<div class="items-list">
+<div class="item"><input type="checkbox" class="cb" id="s1"><label class="item-label" for="s1">I experienced a significant loss of income or financial hardship since signing</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s2"><label class="item-label" for="s2">I am getting older and no longer want or can carry this obligation</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s3"><label class="item-label" for="s3">I am concerned about this passing to my children / estate after I'm gone</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s4"><label class="item-label" for="s4">Health issues prevent me from traveling or using this ownership</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s5"><label class="item-label" for="s5">Death or illness of a spouse or co-owner has changed our situation</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s6"><label class="item-label" for="s6">Divorce or separation — this ownership is now a disputed asset</label></div>
+<div class="item"><input type="checkbox" class="cb" id="s7"><label class="item-label" for="s7">The presentation used intimidation or high-pressure tactics — I did not feel safe saying no</label></div>
+<div class="notes-row">
+<div class="notes-label">📝 Notes — Right to Safety</div>
+<textarea class="notes-area" placeholder="Notes..."></textarea>
+</div>
+</div>
+</div>
+
+<div class="right-section">
+<div class="right-header" onclick="toggle(this)">
+<span class="right-num">4</span>
+<span class="right-title">Right to Be Heard</span>
+<span class="right-toggle">▾</span>
+</div>
+<div class="right-subtitle">"Consumers have the right to voice concerns and have them properly addressed. Failure to do so is a direct violation."</div>
+<div class="items-list">
+<div class="item"><input type="checkbox" class="cb" id="h1"><label class="item-label" for="h1">I reached out to the resort with my concerns</label></div>
+<div class="item"><input type="checkbox" class="cb" id="h2"><label class="item-label" for="h2">My concerns were not addressed in a timely or meaningful manner</label></div>
+<div class="item"><input type="checkbox" class="cb" id="h3"><label class="item-label" for="h3">My questions were dismissed, deflected, or transferred without resolution</label></div>
+<div class="item"><input type="checkbox" class="cb" id="h4"><label class="item-label" for="h4">The resort did not provide a clear process or mechanism for resolving my issues</label></div>
+<div class="notes-row" style="margin-bottom:6px">
+<label style="font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;display:block;margin-bottom:4px">Resort's response when contacted</label>
+<input type="text" placeholder="Describe response..." style="width:100%;border:1px solid #ccc;border-radius:3px;padding:5px 8px;font-size:11px">
+</div>
+<div class="notes-row">
+<div class="notes-label">📝 Notes — Right to Be Heard</div>
+<textarea class="notes-area" placeholder="Notes..."></textarea>
+</div>
+</div>
+</div>
+
+<div class="save-bar"><button class="save-btn">💾 Save Assessment Notes</button></div>
+<div class="ref-line">Reference: mass.gov — Consumer Bill of Rights · President Kennedy, March 15, 1962</div>
+</div>
+<script>
+function toggle(hdr){
+const sec=hdr.closest('.right-section');
+const body=sec.querySelector('.items-list');
+const sub=sec.querySelector('.right-subtitle');
+const arrow=hdr.querySelector('.right-toggle');
+const open=body.style.display!=='none';
+body.style.display=open?'none':'block';
+if(sub)sub.style.display=open?'none':'block';
+arrow.textContent=open?'▸':'▾';
+}
+</script>
