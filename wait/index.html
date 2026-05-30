@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)file:///C:/Users/sebas/Downloads/walkaway-consequences-email_5.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resort Relentless Pursuit</title>
+<link href="./wait_files/css2" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Barlow', sans-serif; background: #F2F5FA; color: #2D2D2D; }
+.email-wrap { max-width: 680px; margin: 0 auto; background: #ffffff; }
+
+.email-header { background: #1B2A4A; padding: 32px 40px 28px; border-bottom: 4px solid #C8960C; }
+.email-header .co-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: #C8960C; margin-bottom: 8px; }
+.email-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: #ffffff; line-height: 1.25; }
+.email-header .sub { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 5px; font-weight: 300; }
+
+.email-body { padding: 28px 40px 0; }
+.greeting { font-size: 14px; line-height: 1.85; color: #3A4A5A; margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid #E4EAF2; }
+.greeting p + p { margin-top: 10px; }
+
+.section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #C8960C; margin-bottom: 14px; }
+
+/* FORK BOX */
+.fork-wrap { margin: 0 0 22px; border: 1px solid #D8E2EE; border-radius: 10px; overflow: hidden; }
+.fork-header { background: #1B2A4A; padding: 11px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #C8960C; }
+.fork-grid { display: grid; grid-template-columns: 1fr 1px 1fr; }
+.fork-col { padding: 16px 18px; }
+.fork-col .fc-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.fc-label.orange { color: #C85A00; }
+.fc-label.red { color: #8B1A1A; }
+.fork-col p { font-size: 12.5px; line-height: 1.7; color: #4A5A6A; }
+.fork-col p strong { color: #2D2D2D; font-weight: 500; }
+.fork-divider { background: #D8E2EE; }
+
+/* TIMELINE */
+.timeline { margin-bottom: 22px; }
+.tl-item { display: grid; grid-template-columns: 80px 1px 1fr; gap: 0 14px; }
+.tl-time { text-align: right; padding-top: 12px; padding-bottom: 16px; }
+.tl-time .t-main { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: #1B2A4A; line-height: 1.2; }
+.tl-time .t-sub { font-size: 10px; color: #8A9BB0; margin-top: 2px; }
+.tl-line { display: flex; flex-direction: column; align-items: center; }
+.tl-dot { width: 9px; height: 9px; border-radius: 50%; margin-top: 15px; flex-shrink: 0; margin-left: -4px; }
+.tl-line-seg { width: 1px; flex: 1; min-height: 14px; }
+.tl-content { padding: 10px 0 16px; }
+.tl-title { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; margin-bottom: 4px; }
+.tl-body { font-size: 12.5px; line-height: 1.68; color: #4A5A6A; }
+.tl-body strong { color: #2D2D2D; font-weight: 500; }
+
+.sev-3 .tl-dot { background: #C84040; }
+.sev-3 .tl-line-seg { background: #E09090; }
+.sev-3 .tl-title { color: #8A1A1A; }
+.sev-4 .tl-dot { background: #8B1A1A; }
+.sev-4 .tl-line-seg { background: #C06060; }
+.sev-4 .tl-title { color: #6A0000; }
+.sev-5 .tl-dot { background: #1B2A4A; }
+.sev-5 .tl-line-seg { background: transparent; }
+.sev-5 .tl-title { color: #1B2A4A; }
+
+/* CTA */
+.cta-box { background: #1B2A4A; margin: 0 40px 28px; border-radius: 10px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.cta-head { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: #ffffff; font-weight: 500; margin-bottom: 3px; }
+.cta-sub { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+.cta-btn { background: #C8960C; color: #1B2A4A; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 11px 20px; border-radius: 6px; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+.email-footer { background: #F4F7FB; border-top: 1px solid #D8E2EE; padding: 20px 40px; }
+.sig-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 500; color: #1B2A4A; margin-bottom: 2px; }
+.sig-title { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #C8960C; margin-bottom: 8px; }
+.sig-details { font-size: 12px; color: #6A7A8A; line-height: 1.9; }
+.sig-details a { color: #1B2A4A; text-decoration: none; }
+.disclaimer { margin-top: 14px; font-size: 11px; color: #9AABB8; line-height: 1.6; border-top: 1px solid #D8E2EE; padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class="email-wrap">
+
+  <div class="email-header">
+    <div class="co-label">Alpha Timeshare Consultants — Client Advisory</div>
+    <h1>Resort Relentless Pursuit</h1>
+    <div class="sub">From the first missed payment to garnished wages — what this looks like, start to finish</div>
+  </div>
+
+  <div class="email-body">
+
+    <div class="greeting">
+      <p>Jason and Andrea,</p>
+      <p>I want to make sure you have a clear picture of what the resort will do if you decide to simply stop paying maintenance fees — even though your mortgage is paid off. A lot of owners assume being paid in full puts them in a safer position. It does not.</p>
+      <p>The moment you miss a payment the resort begins automated calls, certified letters, and past-due notices. Within 30 days all three credit bureaus are notified — Equifax, Experian, and TransUnion simultaneously — and most owners see a 100–150 point credit drop almost immediately. Shortly after, the account is sold to a collections agency, which adds a second independent negative mark to your report. Formal foreclosure notices follow in writing. None of this is a bluff. Here is where it goes from there.</p>
+    </div>
+
+    <div class="fork-wrap">
+      <div class="fork-header">Where it splits — determined by your age and financial profile</div>
+      <div class="fork-grid">
+        <div class="fork-col">
+          <div class="fc-label orange">Near or at retirement age (55+)</div>
+          <p>Resorts often <strong>skip full foreclosure</strong> — not out of mercy, but strategy. Instead they destroy the credit, keep collections active, and wait. A timeshare is <strong>real property attached to your estate.</strong> When you pass, <strong>your heirs inherit the obligation</strong> — the debt, the fees, the legal liability — automatically. The resort counts on this.</p>
+        </div>
+        <div class="fork-divider"></div>
+        <div class="fork-col">
+          <div class="fc-label red">Still in working years (under 55)</div>
+          <p>Resorts are <strong>far more aggressive</strong> here. They complete the foreclosure. It <strong>stays on your credit for 10 years</strong> — worse in practice than most bankruptcies — and comes attached to an active civil judgment. Home loans, car financing, business credit: effectively frozen for a decade.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">What comes after foreclosure — the part most owners never anticipate</div>
+
+    <div class="timeline">
+
+      <div class="tl-item sev-3">
+        <div class="tl-time"><div class="t-main">Post-Foreclosure</div><div class="t-sub">Stage 6</div></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-line-seg"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Resort files a deficiency judgment in court</div>
+          <div class="tl-body">They don't stop at foreclosure. They return to court for a <strong>deficiency judgment</strong> — all future maintenance fees owed for the remaining life of the contract. Typically <strong>$10,000–$40,000 or more.</strong> Contract terms favor the resort. Judges grant these routinely. It shows on your credit separately as an active civil lawsuit you lost.</div>
+        </div>
+      </div>
+
+      <div class="tl-item sev-4">
+        <div class="tl-time"><div class="t-main">Judgment Stage</div><div class="t-sub">Stage 7</div></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-line-seg"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">No exit company will accept your case at this point</div>
+          <div class="tl-body">Once an active judgment or foreclosure is on record, <strong>virtually no timeshare exit firm — including attorneys who specialize in this area — will take your case.</strong> The cost to reverse a judgment far exceeds what any firm can profitably charge. The clean exit window closes well before this stage.</div>
+        </div>
+      </div>
+
+      <div class="tl-item sev-4">
+        <div class="tl-time"><div class="t-main">Enforcement</div><div class="t-sub">Stage 8</div></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-line-seg"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">Wage garnishment and property liens</div>
+          <div class="tl-body">With a judgment in hand, resort attorneys move to <strong>garnish your wages</strong> — your employer withholds a portion of every paycheck and sends it directly to the resort. Simultaneously they file <strong>liens against your home and any property you own.</strong> You cannot sell, refinance, or leverage anything with an active lien in place.</div>
+        </div>
+      </div>
+
+      <div class="tl-item sev-5">
+        <div class="tl-time"><div class="t-main">The Exit</div><div class="t-sub">The alternative</div></div>
+        <div class="tl-line"><div class="tl-dot"></div><div class="tl-line-seg"></div></div>
+        <div class="tl-content">
+          <div class="tl-title">A proper exit closes every one of these doors permanently</div>
+          <div class="tl-body">None of the above can proceed once your name is legally off the deed and off the resort's records. <strong>That is the only outcome that ends this completely</strong> — not ignoring it, not making partial payments, not waiting. A clean, documented transfer removes all standing the resort has to pursue you. That is exactly what this process is designed to accomplish.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="cta-box">
+    <div>
+      <div class="cta-head">The window to exit cleanly is still open</div>
+      <div class="cta-sub">Once a judgment is filed, that window closes. Call or reply to get this resolved now.</div>
+    </div>
+    <a href="mailto:Sebastian@AlphaTimeshareConsultants.com" class="cta-btn">Let's Talk</a>
+  </div>
+
+  <div class="email-footer">
+    <div class="sig-name">Sebastian Short</div>
+    <div class="sig-title">Senior Consultant — Alpha Timeshare Consultants</div>
+    <div class="sig-details">
+      <a href="tel:7862020010">(786) 202-0010</a> mobile &nbsp;·&nbsp;
+      <a href="tel:8645012068">(864) 501-2068</a> office Ext. 134<br>
+      <a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a>
+    </div>
+    <div class="disclaimer">
+      This communication is for informational purposes only and does not constitute legal advice. The consequences described reflect general industry practices documented across major timeshare resort operators. Individual outcomes vary based on contract terms and jurisdiction. Alpha Timeshare Consultants is not a law firm. We recommend consulting with a licensed attorney for specific legal questions about your ownership.
+    </div>
+  </div>
+
+</div>
+
+
+</body></html>
