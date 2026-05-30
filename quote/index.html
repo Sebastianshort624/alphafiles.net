@@ -3,743 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATC Quote Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Your Service Quote — Alpha Timeshare Consultants</title>
 <style>
-/* ═══════════════════ RESET + ROOT ═══════════════════ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --N:#1B2A4A;--G:#C8960C;--G2:#d4a821;
-  --pale:#EAF0F8;--bd:#c4cfe0;--off:#edf1f7;
-  --tx:#1B2A4A;--mu:#7a859a
-}
-body{font-family:'Barlow',sans-serif;background:#dce4f0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
+.wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
+.logo-bar{text-align:center;margin-bottom:20px}
+.logo-bar img{max-width:200px}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:14px 16px;font-size:16px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:10px 16px;font-size:13px;line-height:1.6;margin-bottom:24px;border-radius:0 0 3px 3px}
 
-/* ═══════════════════ TOOL HEADER ═══════════════════ */
-.tool-hdr{background:var(--N);padding:11px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:3px solid var(--G)}
-.hdr-l .lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--G);font-weight:700}
-.hdr-l .ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#fff;line-height:1}
-.hdr-btns{display:flex;gap:8px}
-.btn{border:none;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;cursor:pointer;transition:all .15s}
-.btn-gold{background:var(--G);color:var(--N)}
-.btn-gold:hover{background:var(--G2)}
-.btn-out{background:transparent;color:rgba(255,255,255,.65);border:1.5px solid rgba(255,255,255,.25)}
-.btn-out:hover{color:#fff;border-color:rgba(255,255,255,.55)}
+.client-banner{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:12px 16px;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.banner-field strong{display:block;font-size:10px;color:#888;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
+.banner-field span{font-size:13px;color:#1B2A4A;font-weight:700}
 
-/* ═══════════════════ LAYOUT ═══════════════════ */
-.tool-body{display:flex;flex:1;overflow:hidden}
+.section-hdr{background:#1B2A4A;color:#fff;padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:20px}
+.section-body{border:1px solid #ddd;border-top:none;padding:18px;border-radius:0 0 3px 3px;margin-bottom:4px}
 
-/* ═══════════════════ INPUT PANEL ═══════════════════ */
-.inp{width:320px;flex-shrink:0;background:#fff;border-right:2px solid var(--bd);overflow-y:auto;display:flex;flex-direction:column}
-.isec{border-bottom:2px solid var(--bd)}
-.isec-hdr{background:var(--N);padding:9px 18px}
-.isec-hdr span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--G);font-weight:700}
-.ifields{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg.r2{flex-direction:row;gap:10px}
-.fg.r2>*{flex:1}
+/* EDITABLE FEE INPUT */
+.fee-input-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.fee-label{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
+.fee-input{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:180px;text-align:center}
+.fee-input:focus{outline:none;border-color:#1B2A4A}
+.fee-note{font-size:11px;color:#888;line-height:1.4;flex:1}
 
-/* Labels — dark, bold, readable */
-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--N);
-  font-weight:700;
-  display:block;
-}
+.quote-cards{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.quote-card{flex:1;min-width:150px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
+.quote-card.featured{border-color:#C8960C;background:#fff8e8}
+.quote-card .qc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin-bottom:6px}
+.quote-card .qc-amount{font-size:30px;font-weight:700;color:#1B2A4A;line-height:1;font-family:Georgia,serif}
+.quote-card .qc-sub{font-size:11px;color:#888;margin-top:4px}
+.quote-card.featured .qc-label{color:#C8960C}
+.quote-card.featured .qc-amount{color:#C8960C}
 
-/* Inputs */
-input[type=text],input[type=number]{
-  width:100%;
-  background:var(--off);
-  border:2px solid var(--bd);
-  border-radius:5px;
-  padding:9px 12px;
-  font-size:15px;
-  font-family:'Barlow',sans-serif;
-  font-weight:500;
-  color:var(--N);
-  outline:none;
-  transition:border-color .15s;
-}
-input:focus{border-color:var(--N);background:#fff}
+.savings-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:16px;margin-bottom:0}
+.savings-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:12px}
+.savings-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px}
+.savings-row:last-child{border-bottom:none;font-size:16px;font-weight:700;padding-top:10px}
+.savings-label{opacity:.85}
+.savings-val{color:#C8960C;font-weight:700}
+.savings-val.white{color:#fff}
 
-/* Chips */
-.chips{display:flex;gap:6px;margin-top:4px}
-.chip{
-  flex:1;
-  background:var(--pale);
-  border:1.5px solid #c4d4e8;
-  border-radius:5px;
-  padding:7px 10px;
-  text-align:center;
-}
-.chip.wide{flex:none;width:100%}
-.chip .cl{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:9.5px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--G);
-  font-weight:700;
-  display:block;
-  margin-bottom:2px;
-}
-.chip .cv{
-  font-family:'Cormorant Garamond',serif;
-  font-size:20px;
-  font-weight:700;
-  color:var(--N);
-  line-height:1;
-}
-.chip.red .cv{color:#b07e00}
-.chip.grn .cv{color:#1e8449}
+.finance-tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab-btn{flex:1;padding:8px;font-size:11px;font-weight:700;border:2px solid #1B2A4A;border-radius:3px;background:#fff;color:#1B2A4A;cursor:pointer;font-family:Georgia,serif}
+.tab-btn.active{background:#1B2A4A;color:#fff}
+.tab-content{display:none;background:#f5f5f5;border-radius:3px;padding:12px 14px}
+.tab-content.active{display:block}
+.tab-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e5e5e5;font-size:13px}
+.tab-row:last-child{border-bottom:none;font-weight:700;font-size:14px;padding-top:8px}
 
-/* Term buttons */
-.term-row{display:flex;gap:5px}
-.tb{
-  flex:1;padding:8px 0;
-  border:2px solid var(--bd);
-  background:var(--off);
-  color:var(--N);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;font-weight:700;
-  cursor:pointer;border-radius:5px;
-  transition:all .15s;
-}
-.tb.on{background:var(--N);color:var(--G);border-color:var(--N)}
-
-/* ═══════════════════ PREVIEW PANEL ═══════════════════ */
-.prev{flex:1;overflow-y:auto;background:#dce4f0;padding:20px}
-
-/* ═══════════════════ QUOTE STYLES ═══════════════════ */
-.qw{max-width:680px;margin:0 auto;background:#fff;border-top:5px solid #C8960C;box-shadow:0 4px 32px rgba(27,42,74,.12);font-family:'Barlow',sans-serif;color:#2D2D2D}
-/* Header */
-.qhdr{background:#1B2A4A;padding:36px 40px 28px;text-align:center}
-.qhdr .qlogo{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#C8960C;margin-bottom:6px}
-.qhdr h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#fff;letter-spacing:.5px;line-height:1.2}
-.qhdr .qsub{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(200,150,12,.75);margin-top:8px}
-/* Body */
-.qbody{padding:36px 40px}
-.qgreet{font-size:15.5px;line-height:1.75;color:#2D2D2D;margin-bottom:30px}
-.qgreet strong{color:#1B2A4A}
-/* Section labels — LARGER + BOLDER */
-.qsl{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:13px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#C8960C;
-  font-weight:700;
-  margin-bottom:13px;
-}
-/* Cards */
-.qcrow{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
-.qcard{flex:1;min-width:130px;background:#EAF0F8;border-left:3px solid #1B2A4A;padding:16px 18px}
-.qcard.alt{border-left-color:#C8960C}
-.qcard .qclbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#1B2A4A;opacity:.65;margin-bottom:6px}
-.qcard .qcnum{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#1B2A4A;line-height:1}
-.qcard.alt .qcnum{color:#b07e00}
-.qcard .qcsub{font-size:11px;color:#555;margin-top:4px}
-/* Total bar */
-.qtbar{background:#1B2A4A;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:10px}
-.qtgrp{text-align:center}
-.qtlbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55)}
-.qtval{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;line-height:1}
-.qtnote{font-size:9.5px;color:rgba(255,255,255,.4);margin-top:2px;font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase}
-.qtdiv{width:1px;height:38px;background:rgba(255,255,255,.15)}
-/* Cost table */
-.qctbl{width:100%;border-collapse:collapse;margin-bottom:8px}
-.qctbl thead tr{background:#1B2A4A}
-.qctbl thead th{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.7);padding:9px 14px;text-align:left;font-weight:500}
-.qctbl thead th:last-child{text-align:right}
-.qctbl tbody tr{border-bottom:1px solid #e8edf4}
-.qctbl tbody tr:last-child{border-bottom:none}
-.qctbl tbody tr:nth-child(odd){background:#fff}
-.qctbl tbody tr:nth-child(even){background:#f7f9fc}
-/* Standard rows (3/5/7yr) */
-.qctbl td{padding:11px 14px;font-size:14px;color:#2D2D2D}
-.qctbl td.ylbl{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#1B2A4A;font-weight:600}
-.qctbl td.yamt{text-align:right;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#1B2A4A}
-/* Bold rows (10/20/30yr) — SEPARATED with top border */
-.qctbl tr.bigrow{border-top:2.5px solid #1B2A4A}
-.qctbl tr.bigrow td{padding:13px 14px;background:#EAF0F8}
-.qctbl tr.bigrow:nth-child(even) td{background:#e0e9f4}
-.qctbl tr.bigrow td.ylbl{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;font-weight:700;color:#1B2A4A}
-.qctbl tr.bigrow td.yamt{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#1B2A4A}
-.qctbl tbody tr:last-child td.yamt{color:#C8960C}
-/* Growth note */
-.qgnote{font-size:11px;color:#888;margin-top:8px;font-style:italic;margin-bottom:28px}
-/* Gold divider */
-.qdiv{height:1px;background:linear-gradient(to right,#C8960C,transparent);margin:26px 0}
-/* Fee box */
-.qfbox{background:#1B2A4A;padding:22px 26px;margin-bottom:14px;position:relative;overflow:hidden}
-.qfbox::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:rgba(200,150,12,.07);border-radius:50%;transform:translate(20px,-20px)}
-.qfbox .qflbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:#C8960C;margin-bottom:6px;font-weight:700}
-.qfbox .qfamt{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:#fff;line-height:1}
-.qfbox .qfsub{font-size:12px;color:rgba(255,255,255,.55);margin-top:6px}
-/* Same day */
-.qsdbox{background:#EAF0F8;border-left:4px solid #C8960C;padding:16px 20px;margin-bottom:12px}
-.qsdbox .qsdlbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8960C;margin-bottom:3px;font-weight:700}
-.qsdbox .qsdhl{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#1B2A4A;margin-bottom:3px}
-.qsdbox .qsddt{font-size:12.5px;color:#555;line-height:1.6}
-/* Best value */
-.qbvbox{background:#1B2A4A;border-left:4px solid #C8960C;padding:16px 20px;margin-bottom:26px}
-.qbvbox .qbvlbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8960C;margin-bottom:3px;font-weight:700}
-.qbvbox .qbvhl{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:#fff;margin-bottom:3px}
-.qbvbox .qbvdt{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.6}
-/* Fin grid */
-.qfgrid{display:flex;gap:12px;margin-bottom:26px;flex-wrap:wrap}
-.qfc{flex:1;min-width:130px;border:1.5px solid #dde3ed;padding:15px 16px}
-.qfc.feat{border-color:#C8960C;background:#fffdf5}
-.qfc .qftag{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;margin-bottom:7px;font-weight:700}
-.qfc .qfamt2{font-family:'Cormorant Garamond',serif;font-size:29px;font-weight:700;color:#1B2A4A;line-height:1}
-.qfc .qfnote{font-size:11px;color:#666;margin-top:5px;line-height:1.5}
-.qfc .qfbadge{display:inline-block;background:#C8960C;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;margin-top:7px;font-weight:700}
-/* Alpha process */
-.qproc{margin-bottom:26px}
-.qsteps{display:flex;flex-direction:column;gap:9px;margin-top:12px}
-.qstep{display:flex;align-items:flex-start;gap:13px}
-.qsnum{min-width:28px;height:28px;background:#1B2A4A;color:#C8960C;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.qstxt{font-size:13.5px;color:#2D2D2D;padding-top:4px;line-height:1.5}
-.qstxt strong{color:#1B2A4A}
-/* Exit guarantee */
-.qexbox{background:#EAF0F8;padding:20px 22px;margin-bottom:26px;border-top:2px solid #1B2A4A}
-.qexbox p{font-size:13.5px;line-height:1.7;color:#2D2D2D}
-.qexbox p strong{color:#1B2A4A}
-/* Pull quote */
-.qpq{border-left:3px solid #C8960C;padding:13px 18px;margin-bottom:26px;font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:#1B2A4A;line-height:1.5}
-.qpq cite{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;font-style:normal;margin-top:7px;font-weight:700}
-/* Signature */
-.qsig{padding:22px 0 10px;border-top:1px solid #dde3ed;margin-bottom:18px}
-.qsigname{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#1B2A4A}
-.qsigtitle{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;margin-top:3px;font-weight:700}
-.qsigct{font-size:12.5px;color:#555;margin-top:8px;line-height:1.7}
-.qsigct a{color:#1B2A4A;text-decoration:none}
-/* Footer */
-.qdisc{font-size:10px;color:#aaa;line-height:1.6;padding:14px 40px 22px;border-top:1px solid #eee;background:#f9fafb}
-.qftr{background:#1B2A4A;padding:14px 40px;text-align:center}
-.qftr p{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #ddd}
+.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;cursor:pointer;border:none;font-family:Georgia,serif}
+.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nav-btn.next{background:#C8960C;color:#fff}
+.nav-btn.next:hover{background:#a87a08}
+.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
 </style>
 </head>
 <body>
+<div class="wrap">
+<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+<div class="page-title">Your Service Quote</div>
+<div class="page-sub">Based on your assessment — your personalized exit investment.</div>
 
-<!-- ══════ HEADER ══════ -->
-<div class="tool-hdr">
-  <div class="hdr-l">
-    <div class="lbl">Alpha Timeshare Consultants</div>
-    <div class="ttl">Quote Generator</div>
+<div class="client-banner" id="client-banner">
+  <div class="banner-field"><strong>Client</strong><span id="b-name">—</span></div>
+  <div class="banner-field"><strong>Resort</strong><span id="b-resort">—</span></div>
+  <div class="banner-field"><strong>Date</strong><span id="b-date">—</span></div>
+</div>
+
+<div class="section-hdr">Alpha Service Fee</div>
+<div class="section-body">
+  <div class="fee-input-row">
+    <span class="fee-label">Service Fee $</span>
+    <input type="number" class="fee-input" id="fee-input" value="4800" oninput="updateAll()">
+    <span class="fee-note">Default = 3-year cost of ownership. Edit to adjust.</span>
   </div>
-  <div class="hdr-btns">
-    <button class="btn btn-out" onclick="copyHTML()">Copy HTML</button>
-    <button class="btn btn-gold" onclick="openEmail()">⬡ Open as Email</button>
+  <div class="quote-cards">
+    <div class="quote-card featured">
+      <div class="qc-label">Pay in Full</div>
+      <div class="qc-amount" id="q-full">$4,800</div>
+      <div class="qc-sub">One-time — best value</div>
+    </div>
+    <div class="quote-card">
+      <div class="qc-label">36-Month Plan</div>
+      <div class="qc-amount" id="q-monthly">$128/mo</div>
+      <div class="qc-sub">at 20% annual interest</div>
+    </div>
+    <div class="quote-card">
+      <div class="qc-label">12-Month 0%</div>
+      <div class="qc-amount" id="q-12mo">$400/mo</div>
+      <div class="qc-sub">interest-free EasyPay</div>
+    </div>
   </div>
 </div>
 
-<!-- ══════ BODY ══════ -->
-<div class="tool-body">
+<div class="section-hdr">What You Stop Paying After Exit</div>
+<div class="section-body">
+  <div class="savings-box">
+    <div class="savings-title">Monthly &amp; Yearly Savings</div>
+    <div class="savings-row"><span class="savings-label">Current monthly obligation</span><span class="savings-val white" id="s-current-mo">—</span></div>
+    <div class="savings-row"><span class="savings-label">After exit</span><span class="savings-val white">$0 / month</span></div>
+    <div class="savings-row"><span class="savings-label">Monthly savings</span><span class="savings-val" id="s-save-mo">—</span></div>
+    <div class="savings-row"><span class="savings-label">Yearly savings</span><span class="savings-val" id="s-save-yr">—</span></div>
+  </div>
+</div>
 
-  <!-- ════ INPUT PANEL ════ -->
-  <div class="inp">
+<div class="section-hdr">Financing Options</div>
+<div class="section-body">
+  <div class="finance-tabs">
+    <button class="tab-btn active" onclick="showTab('t12',this)">12 Mo — 0%</button>
+    <button class="tab-btn" onclick="showTab('t24',this)">24 Months</button>
+    <button class="tab-btn" onclick="showTab('t36',this)">36 Months</button>
+  </div>
+  <div class="tab-content active" id="t12">
+    <div class="tab-row"><span>Term</span><span>12 months</span></div>
+    <div class="tab-row"><span>Interest</span><span>0% (EasyPay)</span></div>
+    <div class="tab-row"><span>Monthly payment</span><span id="fi12-mo">—</span></div>
+    <div class="tab-row"><span>Total paid</span><span id="fi12-total">—</span></div>
+  </div>
+  <div class="tab-content" id="t24">
+    <div class="tab-row"><span>Term</span><span>24 months</span></div>
+    <div class="tab-row"><span>Interest</span><span>20% annual</span></div>
+    <div class="tab-row"><span>Monthly payment</span><span id="fi24-mo">—</span></div>
+    <div class="tab-row"><span>Total paid</span><span id="fi24-total">—</span></div>
+  </div>
+  <div class="tab-content" id="t36">
+    <div class="tab-row"><span>Term</span><span>36 months</span></div>
+    <div class="tab-row"><span>Interest</span><span>20% annual</span></div>
+    <div class="tab-row"><span>Monthly payment</span><span id="fi36-mo">—</span></div>
+    <div class="tab-row"><span>Total paid</span><span id="fi36-total">—</span></div>
+  </div>
+</div>
 
-    <!-- CLIENT INFO -->
-    <div class="isec">
-      <div class="isec-hdr"><span>Client Info</span></div>
-      <div class="ifields">
-        <div class="fg">
-          <label>Owner Full Name</label>
-          <input type="text" id="owner" placeholder="e.g. Michael Haywood" oninput="go()">
-        </div>
-        <div class="fg">
-          <label>Co-Owner Full Name</label>
-          <input type="text" id="coowner" placeholder="e.g. Sarah Haywood (optional)" oninput="go()">
-        </div>
-        <div class="fg">
-          <label>Resort</label>
-          <input type="text" id="resort" placeholder="e.g. Marriott Vacation Club" oninput="go()">
-        </div>
-      </div>
-    </div>
-
-    <!-- OWNERSHIP DETAILS -->
-    <div class="isec">
-      <div class="isec-hdr"><span>Ownership Details</span></div>
-      <div class="ifields">
-        <div class="fg">
-          <label>Annual Maintenance Fee ($)</label>
-          <input type="number" id="mf" value="900" min="0" oninput="go()">
-          <div class="chips">
-            <div class="chip"><span class="cl">Monthly</span><span class="cv" id="d_mfmo">$75</span></div>
-            <div class="chip"><span class="cl">Annual</span><span class="cv" id="d_mfyr">$900</span></div>
-          </div>
-        </div>
-        <div class="fg">
-          <label>Months Behind</label>
-          <input type="number" id="beh" value="0" min="0" oninput="go()">
-          <div class="chips">
-            <div class="chip wide"><span class="cl">Amount Behind</span><span class="cv" id="d_beh">$0</span></div>
-          </div>
-        </div>
-        <div class="fg">
-          <label>Monthly Mortgage ($) — 0 if paid off</label>
-          <input type="number" id="mtg" value="0" min="0" oninput="go()">
-          <div class="chips">
-            <div class="chip"><span class="cl">Monthly</span><span class="cv" id="d_mtgmo">$0</span></div>
-            <div class="chip"><span class="cl">Annual</span><span class="cv" id="d_mtgyr">$0</span></div>
-          </div>
-        </div>
-        <div class="fg r2">
-          <div>
-            <label>Growth Rate (%/yr)</label>
-            <input type="number" id="gr" value="8" min="0" oninput="go()">
-          </div>
-          <div>
-            <label>Year Purchased</label>
-            <input type="number" id="yr" value="2015" oninput="go()">
-          </div>
-        </div>
-        <div class="chips">
-          <div class="chip"><span class="cl">Total / Month</span><span class="cv" id="d_totmo">$75</span></div>
-          <div class="chip"><span class="cl">Total / Year</span><span class="cv" id="d_totyr">$900</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SERVICE FEE & FINANCING -->
-    <div class="isec">
-      <div class="isec-hdr"><span>Service Fee &amp; Financing</span></div>
-      <div class="ifields">
-        <div class="fg">
-          <label>Service Fee ($)</label>
-          <input type="number" id="fee" value="3500" min="0" oninput="go()">
-        </div>
-        <div class="fg">
-          <label>Annual Interest Rate (%)</label>
-          <input type="number" id="rate" value="20" min="0" oninput="go()">
-        </div>
-        <div class="fg">
-          <label>Financing Term (months)</label>
-          <div class="term-row">
-            <button class="tb" id="tb12" onclick="setTerm(12)">12 Mo</button>
-            <button class="tb" id="tb24" onclick="setTerm(24)">24 Mo</button>
-            <button class="tb" id="tb36" onclick="setTerm(36)">36 Mo</button>
-            <button class="tb on" id="tb60" onclick="setTerm(60)">60 Mo</button>
-          </div>
-          <div class="chips" style="margin-top:6px">
-            <div class="chip"><span class="cl">Monthly Payment</span><span class="cv" id="d_pmt">$93</span></div>
-            <div class="chip" id="chip_diff"><span class="cl">vs. Maint Fee</span><span class="cv" id="d_diff">—</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /inp -->
-
-  <!-- ════ PREVIEW PANEL ════ -->
-  <div class="prev" id="prev"></div>
-
-</div><!-- /tool-body -->
+<div class="nav-bar">
+  <a href="/cost/" class="nav-btn prev">← Cost of Ownership</a>
+  <span class="nav-step">What Makes Alpha Better →</span>
+  <a href="/better/" class="nav-btn next">Next →</a>
+</div>
+</div>
 
 <script>
-var _term = 60;
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function fmtd(n){return '$'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
 
-function el(id){ return document.getElementById(id); }
-function fmtI(n){ return Math.round(n).toLocaleString('en-US'); }
-function fmtD(n){ return Number(n.toFixed(2)).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-
-function setTerm(t){
-  _term = t;
-  [12,24,36,60].forEach(function(n){ el('tb'+n).className='tb'+(n===t?' on':''); });
-  go();
+function calcFinance(principal,months,rate){
+  if(rate===0)return{monthly:principal/months,total:principal};
+  var r=rate/12;
+  var payment=principal*(r*Math.pow(1+r,months))/(Math.pow(1+r,months)-1);
+  return{monthly:payment,total:payment*months};
 }
 
-function calcPayment(principal, annualRate, months){
-  if(!principal||!months) return 0;
-  if(!annualRate) return principal/months;
-  var r = annualRate/100/12;
-  return principal*(r*Math.pow(1+r,months))/(Math.pow(1+r,months)-1);
+function updateAll(){
+  var fee=parseFloat(document.getElementById('fee-input').value)||4800;
+  // Pay in full
+  document.getElementById('q-full').textContent=fmt(fee);
+  // 36mo at 20%
+  var r36=calcFinance(fee,36,0.20);
+  document.getElementById('q-monthly').textContent=fmtd(r36.monthly)+'/mo';
+  // 12mo 0%
+  document.getElementById('q-12mo').textContent=fmtd(fee/12)+'/mo';
+  // Finance tabs
+  var r12={monthly:fee/12,total:fee};
+  var r24=calcFinance(fee,24,0.20);
+  document.getElementById('fi12-mo').textContent=fmtd(r12.monthly)+'/mo';
+  document.getElementById('fi12-total').textContent=fmt(r12.total);
+  document.getElementById('fi24-mo').textContent=fmtd(r24.monthly)+'/mo';
+  document.getElementById('fi24-total').textContent=fmt(r24.total);
+  document.getElementById('fi36-mo').textContent=fmtd(r36.monthly)+'/mo';
+  document.getElementById('fi36-total').textContent=fmt(r36.total);
 }
 
-function calcProj(annualFee, mtgMo, years, growthRate, purchaseYear){
-  var payoff = purchaseYear+10;
-  var cur = new Date().getFullYear();
-  var total = 0;
-  for(var i=0;i<years;i++){
-    var y = cur+i;
-    total += annualFee * Math.pow(1+growthRate/100, i);
-    if(y < payoff && mtgMo>0) total += mtgMo*12;
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+
+// Load from session
+try{
+  var d=JSON.parse(sessionStorage.getItem('atc_resort'));
+  if(d){
+    // Client banner
+    var name=(d.name||'')+(d.lastName?' '+d.lastName:'');
+    if(name||d.resort){
+      document.getElementById('b-name').textContent=name||'—';
+      document.getElementById('b-resort').textContent=d.resort||'—';
+      document.getElementById('b-date').textContent=d.date||'—';
+    }
+    // Savings
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    if(mo>0){
+      document.getElementById('s-current-mo').textContent=fmt(mo)+'/mo';
+      document.getElementById('s-save-mo').textContent=fmt(mo)+'/mo';
+      document.getElementById('s-save-yr').textContent=fmt(mo*12)+'/yr';
+    }
+    // Default fee = 3-year cost of ownership
+    var annualMtf=parseFloat(d.maitFees)||0;
+    var annualMtg=(parseFloat(d.monthlyMortgage)||0)*12;
+    var yr1=annualMtf+annualMtg;
+    var yr2=annualMtf*1.08+annualMtg;
+    var yr3=annualMtf*Math.pow(1.08,2)+annualMtg;
+    var threeYearCost=yr1+yr2+yr3;
+    if(threeYearCost>500){
+      // Round to nearest $100
+      var suggested=Math.round(threeYearCost/100)*100;
+      document.getElementById('fee-input').value=suggested;
+    }
+    // Save quote seen
+    d.quoteSeen=true;
+    sessionStorage.setItem('atc_resort',JSON.stringify(d));
   }
-  return total;
-}
+}catch(e){}
 
-function getVals(){
-  return {
-    owner:  (el('owner').value||'').trim(),
-    coowner:(el('coowner').value||'').trim(),
-    resort: (el('resort').value||'').trim(),
-    mf:     Math.max(0, +el('mf').value||0),
-    beh:    Math.max(0, +el('beh').value||0),
-    mtg:    Math.max(0, +el('mtg').value||0),
-    gr:     Math.max(0, +el('gr').value||8),
-    yr:     +el('yr').value||2015,
-    fee:    Math.max(0, +el('fee').value||0),
-    rate:   Math.max(0, +el('rate').value||20)
-  };
-}
-
-function go(){
-  var d = getVals();
-  var mfMo   = d.mf/12;
-  var behind = mfMo * d.beh;
-  var totMo  = mfMo + d.mtg;
-  var totYr  = d.mf + d.mtg*12;
-  var pmt    = calcPayment(d.fee, d.rate, _term);
-  var diff   = mfMo - pmt;
-
-  var p3  = calcProj(d.mf,d.mtg,3, d.gr,d.yr);
-  var p5  = calcProj(d.mf,d.mtg,5, d.gr,d.yr);
-  var p7  = calcProj(d.mf,d.mtg,7, d.gr,d.yr);
-  var p10 = calcProj(d.mf,d.mtg,10,d.gr,d.yr);
-  var p20 = calcProj(d.mf,d.mtg,20,d.gr,d.yr);
-  var p30 = calcProj(d.mf,d.mtg,30,d.gr,d.yr);
-
-  /* ── update left panel chips ── */
-  el('d_mfmo').textContent  = '$'+fmtI(mfMo);
-  el('d_mfyr').textContent  = '$'+fmtI(d.mf);
-  el('d_beh').textContent   = '$'+fmtI(behind);
-  el('d_mtgmo').textContent = '$'+fmtI(d.mtg);
-  el('d_mtgyr').textContent = '$'+fmtI(d.mtg*12);
-  el('d_totmo').textContent = '$'+fmtI(totMo);
-  el('d_totyr').textContent = '$'+fmtI(totYr);
-  el('d_pmt').textContent   = '$'+Math.round(pmt);
-  var dc = el('d_diff'), cp = el('chip_diff');
-  if(diff>=0){ dc.textContent='+$'+Math.round(diff)+'/mo'; cp.className='chip grn'; }
-  else        { dc.textContent='$'+Math.round(Math.abs(diff))+'/mo more'; cp.className='chip red'; }
-
-  /* ── salutation ── */
-  var owner   = d.owner  || 'Valued Client';
-  var coowner = d.coowner;
-  var sal = owner + (coowner ? ' &amp; ' + coowner : '');
-
-  /* ── resort line for greeting ── */
-  var resortLine = d.resort
-    ? 'regarding your <strong>'+d.resort+'</strong> ownership. '
-    : '';
-
-  /* ── conditional HTML blocks ── */
-  var behCard = behind>0
-    ? '<div class="qcard alt"><div class="qclbl">Currently Behind</div><div class="qcnum">$'+fmtI(behind)+'</div><div class="qcsub">'+d.beh+' months past due</div></div>'
-    : '';
-  var mtgCard = d.mtg>0
-    ? '<div class="qcard"><div class="qclbl">Monthly Mortgage</div><div class="qcnum">$'+fmtI(d.mtg)+'</div><div class="qcsub">$'+fmtI(d.mtg*12)+' annually</div></div>'
-    : '<div class="qcard"><div class="qclbl">Mortgage Balance</div><div class="qcnum">$0</div><div class="qcsub">Paid in full</div></div>';
-  var behBar = behind>0
-    ? '<div class="qtdiv"></div><div class="qtgrp"><div class="qtlbl">Amount Behind</div><div class="qtval">$'+fmtI(behind)+'</div><div class="qtnote">'+d.beh+' Months</div></div>'
-    : '';
-  var finNote = _term+'-month term &nbsp;&middot;&nbsp; 0% interest if paid within 90 days &nbsp;&middot;&nbsp; No prepayment penalty';
-
-  /* ══════════════════ BUILD QUOTE HTML ══════════════════ */
-  var html =
-  '<div class="qw">'+
-
-  /* HEADER */
-  '<div class="qhdr">'+
-  '<div class="qlogo">Alpha Timeshare Consultants</div>'+
-  '<h1>Your True Cost of Ownership</h1>'+
-  '<div class="qsub">Personalized Exit Analysis &nbsp;&middot;&nbsp; Confidential</div>'+
-  '</div>'+
-
-  /* BODY */
-  '<div class="qbody">'+
-
-  '<p class="qgreet">Dear '+sal+',<br><br>'+
-  'Thank you for speaking with us today '+resortLine+
-  'Below is a full breakdown of what your timeshare is actually costing you — and what a complete, permanent exit looks like through <strong>Alpha Timeshare Consultants</strong>.'+
-  '</p>'+
-
-  /* YOUR NUMBERS */
-  '<div class="qsl">Your Numbers</div>'+
-  '<div class="qcrow">'+
-  '<div class="qcard"><div class="qclbl">Monthly Maintenance Fee</div><div class="qcnum">$'+fmtI(mfMo)+'</div><div class="qcsub">Per month / ongoing</div></div>'+
-  '<div class="qcard"><div class="qclbl">Annual Maintenance Fee</div><div class="qcnum">$'+fmtI(d.mf)+'</div><div class="qcsub">Growing at '+d.gr+'% per year</div></div>'+
-  behCard+'</div>'+
-  '<div class="qcrow">'+mtgCard+'</div>'+
-
-  /* TOTAL BAR */
-  '<div class="qtbar">'+
-  '<div class="qtgrp"><div class="qtlbl">Monthly Exposure</div><div class="qtval">$'+fmtD(totMo)+'</div><div class="qtnote">Per Month</div></div>'+
-  '<div class="qtdiv"></div>'+
-  '<div class="qtgrp"><div class="qtlbl">Annual Exposure</div><div class="qtval">$'+fmtD(totYr)+'</div><div class="qtnote">Per Year</div></div>'+
-  behBar+'</div>'+
-
-  /* COST TABLE */
-  '<div class="qsl">If Nothing Changes — Cost Over Time</div>'+
-  '<table class="qctbl"><thead><tr><th>Time Frame</th><th style="text-align:right">Total You Would Pay</th></tr></thead><tbody>'+
-  /* 3 / 5 / 7 — standard */
-  '<tr><td class="ylbl">3 Years</td><td class="yamt">$'+fmtD(p3)+'</td></tr>'+
-  '<tr><td class="ylbl">5 Years</td><td class="yamt">$'+fmtD(p5)+'</td></tr>'+
-  '<tr><td class="ylbl">7 Years</td><td class="yamt">$'+fmtD(p7)+'</td></tr>'+
-  /* 10 / 20 / 30 — bold + separator */
-  '<tr class="bigrow"><td class="ylbl">10 Years</td><td class="yamt">$'+fmtD(p10)+'</td></tr>'+
-  '<tr class="bigrow"><td class="ylbl">20 Years</td><td class="yamt">$'+fmtD(p20)+'</td></tr>'+
-  '<tr class="bigrow"><td class="ylbl">30 Years</td><td class="yamt">$'+fmtD(p30)+'</td></tr>'+
-  '</tbody></table>'+
-  '<p class="qgnote">* Projections reflect '+d.gr+'% annual fee escalation compounded over time. Does not include special assessments, resort levies, or transfer-on-death liability.</p>'+
-
-  '<div class="qdiv"></div>'+
-
-  /* SERVICE FEE */
-  '<div class="qsl">Alpha Service Fee</div>'+
-  '<div class="qfbox">'+
-  '<div class="qflbl">One-Time Exit Fee</div>'+
-  '<div class="qfamt">$'+fmtI(d.fee)+'</div>'+
-  '<div class="qfsub">Full-service timeshare exit &nbsp;&middot;&nbsp; No recurring charges &nbsp;&middot;&nbsp; No surprise fees</div>'+
-  '</div>'+
-
-  /* SAME DAY */
-  '<div class="qsdbox">'+
-  '<div class="qsdlbl">Same-Day Incentive</div>'+
-  '<div class="qsdhl">0% Interest — Pay-In-Full Within 90 Days</div>'+
-  '<div class="qsddt">Pay your balance in full within 90 days of enrollment and pay <strong>zero interest</strong>. No prepayment penalty. Start the exit process immediately — your case is submitted same day.</div>'+
-  '</div>'+
-
-  /* BEST VALUE */
-  '<div class="qbvbox">'+
-  '<div class="qbvlbl">Best Value Option</div>'+
-  '<div class="qbvhl">Pay in Full Today — Same-Day Processing</div>'+
-  '<div class="qbvdt">Lock in your fee, eliminate all timeshare liability, and get your case submitted today. The sooner you act, the sooner the clock stops on those escalating fees.</div>'+
-  '</div>'+
-
-  /* FINANCING */
-  '<div class="qsl">Financing Options</div>'+
-  '<div class="qfgrid">'+
-  '<div class="qfc feat">'+
-  '<div class="qftag">Monthly Plan — Best Option</div>'+
-  '<div class="qfamt2">$'+Math.round(pmt)+'<span style="font-size:15px;font-family:Barlow,sans-serif;font-weight:400;color:#888">/mo</span></div>'+
-  '<div class="qfnote">'+finNote+'</div>'+
-  '<div class="qfbadge">Flexible &amp; Affordable</div>'+
-  '</div>'+
-  '<div class="qfc">'+
-  '<div class="qftag">Pay In Full</div>'+
-  '<div class="qfamt2">$'+fmtI(d.fee)+'</div>'+
-  '<div class="qfnote">One payment. No financing. Case submitted same day.</div>'+
-  '<div class="qfbadge" style="background:#1B2A4A">Recommended</div>'+
-  '</div>'+
-  '</div>'+
-
-  '<div class="qdiv"></div>'+
-
-  /* ALPHA PROCESS */
-  '<div class="qproc">'+
-  '<div class="qsl">The Alpha Process</div>'+
-  '<div class="qsteps">'+
-  '<div class="qstep"><div class="qsnum">1</div><div class="qstxt"><strong>Enrollment &amp; Case Submission</strong> — Your file is opened and submitted to our legal team the same day you enroll.</div></div>'+
-  '<div class="qstep"><div class="qsnum">2</div><div class="qstxt"><strong>Resort Communication</strong> — We handle all contact with the resort and developer on your behalf. You stop dealing with them entirely.</div></div>'+
-  '<div class="qstep"><div class="qsnum">3</div><div class="qstxt"><strong>Legal Transfer &amp; Exit</strong> — Our attorneys facilitate the permanent transfer and termination of your timeshare obligation.</div></div>'+
-  '<div class="qstep"><div class="qsnum">4</div><div class="qstxt"><strong>Confirmation &amp; Closure</strong> — You receive written confirmation that your timeshare has been legally exited. Done.</div></div>'+
-  '</div></div>'+
-
-  /* EXIT GUARANTEE */
-  '<div class="qexbox">'+
-  '<div class="qsl" style="margin-bottom:8px">Our Exit Guarantee</div>'+
-  '<p>Alpha Timeshare Consultants works exclusively with clients who qualify for a <strong>permanent, legal exit</strong>. We do not resell, rent, or transfer ownership to a third party. Our team handles every step of the process — from resort communication to legal documentation — so you can move forward with complete confidence. <strong>Your name off the deed. Your liability gone. For good.</strong></p>'+
-  '</div>'+
-
-  /* PULL QUOTE */
-  '<div class="qpq">"The best time to exit a timeshare was the day you bought it. The second best time is today."'+
-  '<cite>— Alpha Timeshare Consultants</cite></div>'+
-
-  /* SIGNATURE */
-  '<div class="qsig">'+
-  '<div class="qsigname">Sebastian Short</div>'+
-  '<div class="qsigtitle">Account Specialist &nbsp;&middot;&nbsp; Alpha Timeshare Consultants</div>'+
-  '<div class="qsigct">Phone: <a href="tel:+18005550100">(800) 555-0100</a><br>Email: <a href="mailto:sebastian@alphatimeshareconsultants.com">sebastian@alphatimeshareconsultants.com</a><br><a href="https://alphatimeshareconsultants.com" style="color:#C8960C">alphatimeshareconsultants.com</a></div>'+
-  '</div>'+
-
-  '</div>'+ /* /qbody */
-
-  /* DISCLOSURE */
-  '<div class="qdisc">This document is intended solely for the named recipient and contains confidential financial projections based on information provided during consultation. Maintenance fee projections assume a compounding annual increase of '+d.gr+'% and are estimates only — actual costs may vary. Alpha Timeshare Consultants does not guarantee specific exit timelines. Results depend on the terms of your individual ownership and cooperation of the resort. This is not legal advice. All fees are subject to your signed service agreement.</div>'+
-
-  /* FOOTER */
-  '<div class="qftr"><p>Alpha Timeshare Consultants &nbsp;&middot;&nbsp; Confidential Client Document &nbsp;&middot;&nbsp; Not for Distribution</p></div>'+
-
-  '</div>'; /* /qw */
-
-  el('prev').innerHTML = html;
-  window._sa = buildSA(d, mfMo, behind, totMo, totYr, pmt, p3, p5, p7, p10, p20, p30, sal, resortLine, finNote, behCard, mtgCard, behBar);
-}
-
-/* ═══════════════════ STANDALONE EXPORT ═══════════════════ */
-function buildSA(d, mfMo, behind, totMo, totYr, pmt, p3, p5, p7, p10, p20, p30, sal, resortLine, finNote, behCard, mtgCard, behBar){
-  /* swap preview-scoped class names for export-class names (same styling, standalone CSS) */
-  var b = behCard.replace(/qcard/g,'card').replace(/qclbl/g,'card-label').replace(/qcnum/g,'card-number').replace(/qcsub/g,'card-sub').replace(/ alt/g,' alt');
-  var m = mtgCard.replace(/qcard/g,'card').replace(/qclbl/g,'card-label').replace(/qcnum/g,'card-number').replace(/qcsub/g,'card-sub');
-  var bb = behBar.replace(/qtdiv/g,'divider').replace(/qtgrp/g,'t-group').replace(/qtlbl/g,'t-label').replace(/qtval/g,'t-value').replace(/qtnote/g,'t-note');
-  var fn2 = finNote.replace(/&amp;/g,'&');
-  var owner = d.owner||'Valued Client';
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Alpha Timeshare Consultants \u2013 ${owner}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:#f4f6f9;font-family:'Barlow',sans-serif;color:#2D2D2D;padding:32px 16px}
-.email-wrap{max-width:680px;margin:0 auto;background:#fff;border-top:5px solid #C8960C;box-shadow:0 4px 32px rgba(27,42,74,.10)}
-.header{background:#1B2A4A;padding:36px 40px 28px;text-align:center}
-.header .logo-name{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#C8960C;margin-bottom:6px}
-.header h1{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#fff;letter-spacing:.5px;line-height:1.2}
-.header .sub{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:rgba(200,150,12,.75);margin-top:8px}
-.body{padding:36px 40px}
-.greeting{font-size:15.5px;line-height:1.75;color:#2D2D2D;margin-bottom:30px}
-.greeting strong{color:#1B2A4A}
-.section-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#C8960C;font-weight:700;margin-bottom:13px}
-.cards-row{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
-.card{flex:1;min-width:140px;background:#EAF0F8;border-left:3px solid #1B2A4A;padding:18px 20px}
-.card .card-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#1B2A4A;opacity:.65;margin-bottom:6px}
-.card .card-number{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:#1B2A4A;line-height:1}
-.card .card-sub{font-size:11.5px;color:#555;margin-top:4px}
-.card.alt{border-left-color:#C8960C}
-.card.alt .card-number{color:#b07e00}
-.total-bar{background:#1B2A4A;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px}
-.total-bar .t-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55)}
-.total-bar .t-group{text-align:center}
-.total-bar .t-value{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;line-height:1}
-.total-bar .t-note{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;font-family:'Barlow Condensed',sans-serif;letter-spacing:2px;text-transform:uppercase}
-.total-bar .divider{width:1px;height:40px;background:rgba(255,255,255,.15)}
-.cost-table{width:100%;border-collapse:collapse;margin-bottom:8px}
-.cost-table thead tr{background:#1B2A4A}
-.cost-table thead th{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.7);padding:10px 14px;text-align:left;font-weight:500}
-.cost-table thead th:last-child{text-align:right}
-.cost-table tbody tr{border-bottom:1px solid #e8edf4}
-.cost-table tbody tr:last-child{border-bottom:none}
-.cost-table td{padding:12px 14px;font-size:14px;color:#2D2D2D}
-.cost-table td.year-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#1B2A4A;font-weight:600}
-.cost-table td.amount{text-align:right;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#1B2A4A}
-.cost-table tr.bigrow{border-top:2.5px solid #1B2A4A}
-.cost-table tr.bigrow td{padding:14px;background:#EAF0F8}
-.cost-table tr.bigrow td.year-label{font-size:14px;letter-spacing:2px;font-weight:700;color:#1B2A4A}
-.cost-table tr.bigrow td.amount{font-size:24px;font-weight:700;color:#1B2A4A}
-.cost-table tbody tr:last-child td.amount{color:#C8960C}
-.growth-note{font-size:11px;color:#888;margin-top:8px;font-style:italic}
-.gold-divider{height:1px;background:linear-gradient(to right,#C8960C,transparent);margin:28px 0}
-.fee-box{background:#1B2A4A;padding:24px 28px;margin-bottom:14px;position:relative;overflow:hidden}
-.fee-box::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:rgba(200,150,12,.07);border-radius:50%;transform:translate(20px,-20px)}
-.fee-box .fee-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:#C8960C;margin-bottom:6px;font-weight:700}
-.fee-box .fee-amount{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:#fff;line-height:1}
-.fee-box .fee-sub{font-size:12.5px;color:rgba(255,255,255,.55);margin-top:6px}
-.sameday-box{background:#EAF0F8;border-left:4px solid #C8960C;padding:18px 22px;margin-bottom:14px}
-.sameday-box .sd-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8960C;margin-bottom:4px;font-weight:700}
-.sameday-box .sd-headline{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#1B2A4A;margin-bottom:4px}
-.sameday-box .sd-detail{font-size:12.5px;color:#555;line-height:1.6}
-.bestval-box{background:#1B2A4A;border-left:4px solid #C8960C;padding:18px 22px;margin-bottom:28px}
-.bestval-box .bv-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C8960C;margin-bottom:4px;font-weight:700}
-.bestval-box .bv-headline{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:4px}
-.bestval-box .bv-detail{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.6}
-.fin-grid{display:flex;gap:14px;margin-bottom:28px;flex-wrap:wrap}
-.fin-card{flex:1;min-width:140px;border:1.5px solid #dde3ed;padding:16px 18px}
-.fin-card.featured{border-color:#C8960C;background:#fffdf5}
-.fin-card .fin-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;margin-bottom:8px;font-weight:700}
-.fin-card .fin-amount{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#1B2A4A;line-height:1}
-.fin-card .fin-note{font-size:11.5px;color:#666;margin-top:6px;line-height:1.5}
-.fin-card .fin-badge{display:inline-block;background:#C8960C;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;margin-top:8px;font-weight:700}
-.process-section{margin-bottom:28px}
-.process-steps{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.step{display:flex;align-items:flex-start;gap:14px}
-.step-num{min-width:28px;height:28px;background:#1B2A4A;color:#C8960C;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-text{font-size:13.5px;color:#2D2D2D;padding-top:5px;line-height:1.5}
-.step-text strong{color:#1B2A4A}
-.exit-section{background:#EAF0F8;padding:22px 24px;margin-bottom:28px;border-top:2px solid #1B2A4A}
-.exit-section p{font-size:13.5px;line-height:1.7;color:#2D2D2D}
-.exit-section p strong{color:#1B2A4A}
-.pull-quote{border-left:3px solid #C8960C;padding:14px 20px;margin-bottom:28px;font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:#1B2A4A;line-height:1.5}
-.pull-quote cite{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;font-style:normal;margin-top:8px;font-weight:700}
-.signature{padding:24px 0 10px;border-top:1px solid #dde3ed;margin-bottom:20px}
-.sig-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#1B2A4A}
-.sig-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#C8960C;margin-top:3px;font-weight:700}
-.sig-contact{font-size:12.5px;color:#555;margin-top:8px;line-height:1.7}
-.sig-contact a{color:#1B2A4A;text-decoration:none}
-.disclosure{font-size:10px;color:#aaa;line-height:1.6;padding:16px 40px 24px;border-top:1px solid #eee;background:#f9fafb}
-.footer{background:#1B2A4A;padding:16px 40px;text-align:center}
-.footer p{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.3)}
-</style>
-</head>
-<body>
-<div class="email-wrap">
-<div class="header"><div class="logo-name">Alpha Timeshare Consultants</div><h1>Your True Cost of Ownership</h1><div class="sub">Personalized Exit Analysis &nbsp;&middot;&nbsp; Confidential</div></div>
-<div class="body">
-<p class="greeting">Dear ${sal},<br><br>Thank you for speaking with us today ${resortLine}Below is a full breakdown of what your timeshare is actually costing you \u2014 and what a complete, permanent exit looks like through <strong>Alpha Timeshare Consultants</strong>.</p>
-<div class="section-label">Your Numbers</div>
-<div class="cards-row">
-<div class="card"><div class="card-label">Monthly Maintenance Fee</div><div class="card-number">$${fmtI(mfMo)}</div><div class="card-sub">Per month / ongoing</div></div>
-<div class="card"><div class="card-label">Annual Maintenance Fee</div><div class="card-number">$${fmtI(d.mf)}</div><div class="card-sub">Growing at ${d.gr}% per year</div></div>
-${b}
-</div>
-<div class="cards-row">${m}</div>
-<div class="total-bar">
-<div class="t-group"><div class="t-label">Monthly Exposure</div><div class="t-value">$${fmtD(totMo)}</div><div class="t-note">Per Month</div></div>
-<div class="divider"></div>
-<div class="t-group"><div class="t-label">Annual Exposure</div><div class="t-value">$${fmtD(totYr)}</div><div class="t-note">Per Year</div></div>
-${bb}
-</div>
-<div class="section-label">If Nothing Changes \u2014 Cost Over Time</div>
-<table class="cost-table">
-<thead><tr><th>Time Frame</th><th style="text-align:right">Total You Would Pay</th></tr></thead>
-<tbody>
-<tr><td class="year-label">3 Years</td><td class="amount">$${fmtD(p3)}</td></tr>
-<tr><td class="year-label">5 Years</td><td class="amount">$${fmtD(p5)}</td></tr>
-<tr><td class="year-label">7 Years</td><td class="amount">$${fmtD(p7)}</td></tr>
-<tr class="bigrow"><td class="year-label">10 Years</td><td class="amount">$${fmtD(p10)}</td></tr>
-<tr class="bigrow"><td class="year-label">20 Years</td><td class="amount">$${fmtD(p20)}</td></tr>
-<tr class="bigrow"><td class="year-label">30 Years</td><td class="amount">$${fmtD(p30)}</td></tr>
-</tbody></table>
-<p class="growth-note">* Projections reflect ${d.gr}% annual fee escalation compounded over time. Does not include special assessments, resort levies, or transfer-on-death liability.</p>
-<div class="gold-divider"></div>
-<div class="section-label">Alpha Service Fee</div>
-<div class="fee-box"><div class="fee-label">One-Time Exit Fee</div><div class="fee-amount">$${fmtI(d.fee)}</div><div class="fee-sub">Full-service timeshare exit &nbsp;&middot;&nbsp; No recurring charges &nbsp;&middot;&nbsp; No surprise fees</div></div>
-<div class="sameday-box"><div class="sd-label">Same-Day Incentive</div><div class="sd-headline">0% Interest \u2014 Pay-In-Full Within 90 Days</div><div class="sd-detail">Pay your balance in full within 90 days of enrollment and pay <strong>zero interest</strong>. No prepayment penalty. Start the exit process immediately \u2014 your case is submitted same day.</div></div>
-<div class="bestval-box"><div class="bv-label">Best Value Option</div><div class="bv-headline">Pay in Full Today \u2014 Same-Day Processing</div><div class="bv-detail">Lock in your fee, eliminate all timeshare liability, and get your case submitted today. The sooner you act, the sooner the clock stops on those escalating fees.</div></div>
-<div class="section-label">Financing Options</div>
-<div class="fin-grid">
-<div class="fin-card featured"><div class="fin-tag">Monthly Plan \u2014 Best Option</div><div class="fin-amount">$${Math.round(pmt)}<span style="font-size:16px;font-family:'Barlow',sans-serif;font-weight:400;color:#888">/mo</span></div><div class="fin-note">${fn2}</div><div class="fin-badge">Flexible &amp; Affordable</div></div>
-<div class="fin-card"><div class="fin-tag">Pay In Full</div><div class="fin-amount">$${fmtI(d.fee)}</div><div class="fin-note">One payment. No financing. Case submitted same day.</div><div class="fin-badge" style="background:#1B2A4A">Recommended</div></div>
-</div>
-<div class="gold-divider"></div>
-<div class="process-section"><div class="section-label">The Alpha Process</div><div class="process-steps">
-<div class="step"><div class="step-num">1</div><div class="step-text"><strong>Enrollment &amp; Case Submission</strong> \u2014 Your file is opened and submitted to our legal team the same day you enroll.</div></div>
-<div class="step"><div class="step-num">2</div><div class="step-text"><strong>Resort Communication</strong> \u2014 We handle all contact with the resort and developer on your behalf. You stop dealing with them entirely.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><strong>Legal Transfer &amp; Exit</strong> \u2014 Our attorneys facilitate the permanent transfer and termination of your timeshare obligation.</div></div>
-<div class="step"><div class="step-num">4</div><div class="step-text"><strong>Confirmation &amp; Closure</strong> \u2014 You receive written confirmation that your timeshare has been legally exited. Done.</div></div>
-</div></div>
-<div class="exit-section"><div class="section-label" style="margin-bottom:8px">Our Exit Guarantee</div><p>Alpha Timeshare Consultants works exclusively with clients who qualify for a <strong>permanent, legal exit</strong>. We do not resell, rent, or transfer ownership to a third party. Our team handles every step of the process \u2014 from resort communication to legal documentation \u2014 so you can move forward with complete confidence. <strong>Your name off the deed. Your liability gone. For good.</strong></p></div>
-<div class="pull-quote">\u201cThe best time to exit a timeshare was the day you bought it. The second best time is today.\u201d<cite>\u2014 Alpha Timeshare Consultants</cite></div>
-<div class="signature"><div class="sig-name">Sebastian Short</div><div class="sig-title">Account Specialist &nbsp;&middot;&nbsp; Alpha Timeshare Consultants</div><div class="sig-contact">Phone: <a href="tel:+18005550100">(800) 555-0100</a><br>Email: <a href="mailto:sebastian@alphatimeshareconsultants.com">sebastian@alphatimeshareconsultants.com</a><br><a href="https://alphatimeshareconsultants.com" style="color:#C8960C">alphatimeshareconsultants.com</a></div></div>
-</div>
-<div class="disclosure">This document is intended solely for the named recipient and contains confidential financial projections based on information provided during consultation. Maintenance fee projections assume a compounding annual increase of ${d.gr}% and are estimates only \u2014 actual costs may vary. Alpha Timeshare Consultants does not guarantee specific exit timelines. Results depend on the terms of your individual ownership and cooperation of the resort. This is not legal advice. All fees are subject to your signed service agreement.</div>
-<div class="footer"><p>Alpha Timeshare Consultants &nbsp;&middot;&nbsp; Confidential Client Document &nbsp;&middot;&nbsp; Not for Distribution</p></div>
-</div>
-</body></html>`;
-}
-
-function openEmail(){
-  if(!window._sa) go();
-  window.open(URL.createObjectURL(new Blob([window._sa],{type:'text/html'})),'_blank');
-}
-function copyHTML(){
-  if(!window._sa) go();
-  navigator.clipboard.writeText(window._sa).then(function(){
-    var b=document.querySelector('.btn-out'), o=b.textContent;
-    b.textContent='\u2713 Copied!'; setTimeout(function(){b.textContent=o;},2000);
-  });
-}
-
-go();
+updateAll();
 </script>
 </body>
 </html>
