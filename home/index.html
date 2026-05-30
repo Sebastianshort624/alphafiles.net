@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha Timeshare Consultants — Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;min-height:100vh}
+.header{background:#1B2A4A;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.header img{height:40px}
+.header-right{display:flex;align-items:center;gap:12px}
+.client-selector{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 12px;font-size:12px;border-radius:3px;font-family:Georgia,serif;min-width:220px}
+.client-selector option{background:#1B2A4A}
+.btn-new{background:#C8960C;color:#fff;border:none;padding:7px 14px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;letter-spacing:.3px}
+.btn-new:hover{background:#a87a08}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px}
+.welcome-block{text-align:center;margin-bottom:32px}
+.welcome-block h1{font-size:28px;color:#1B2A4A;font-weight:700;margin-bottom:6px}
+.welcome-block h1 span{color:#C8960C}
+.welcome-block p{font-size:14px;color:#555;line-height:1.7;max-width:560px;margin:0 auto 10px}
+.guarantee-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 20px;display:flex;align-items:center;gap:14px;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
+.guarantee-strip .gi{font-size:22px;flex-shrink:0}
+.guarantee-strip p{font-size:12px;line-height:1.5;opacity:.9}
+.guarantee-strip strong{color:#C8960C}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.card{background:#fff;border:2px solid #e8e8e8;border-radius:6px;padding:22px 16px;text-align:center;cursor:pointer;text-decoration:none;transition:all .2s;position:relative;display:block}
+.card:hover{border-color:#C8960C;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.card .icon{font-size:32px;margin-bottom:10px;display:block}
+.card .label{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px;letter-spacing:.2px}
+.card .desc{font-size:11px;color:#888;line-height:1.4}
+.card .status{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.3px;text-transform:uppercase}
+.status.done{background:#e8f5ee;color:#1a7a3c}
+.status.progress{background:#fff8e8;color:#8a6200}
+.status.new{background:#EAF0F8;color:#1B2A4A}
+.card.highlight{border-color:#C8960C;background:#fff8e8}
+.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:10px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:16px}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:420px;margin:20px}
+.modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:16px}
+.modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px;margin-top:10px}
+.modal input,.modal select{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
+.modal-btn.primary{background:#C8960C;color:#fff}
+.modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+</style>
+</head>
+<body>
+<div class="header">
+  <img src="./home2_files/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
+  <div class="header-right">
+    <select class="client-selector" id="client-dd" onchange="loadClient()"><option value="">— Select Client —</option></select>
+    <button class="btn-new" onclick="showNewModal()">+ New Client</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="toast" class="toast"></div>
+
+  <div class="welcome-block">
+    <h1>Welcome to <span>Alpha</span></h1>
+    <p>You are about to begin a 15–30 minute assessment. Your answers will help our Risk Management Team determine if your case qualifies for one of our existing group filings scheduled to be submitted to your resort.</p>
+    <p>If approved for a group filing, you will be joining other owners who have documented the same violations against the same resort. Together, you carry far more leverage than any single case. We will start by reviewing your ownership details, then walk through the reasons you want out.</p>
+  </div>
+
+  <div class="guarantee-strip">
+    <div class="gi">🛡</div>
+    <p><strong>100% Money-Back Written Guarantee.</strong> If approved for a group filing, we guarantee a successful exit within the Guarantee Term — or a full refund. No exceptions.</p>
+  </div>
+
+  <div class="grid">
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/owner.html" class="card" id="card-owner">
+      <span class="status new" id="st-owner">New</span>
+      <span class="icon">🏠</span>
+      <div class="label">Owner &amp; Resort Info</div>
+      <div class="desc">Personal details, resort, mortgage &amp; fees</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/whyout.html" class="card" id="card-whyout">
+      <span class="status new" id="st-whyout">New</span>
+      <span class="icon">❓</span>
+      <div class="label">Why Do You Want Out?</div>
+      <div class="desc">Reasons, violations &amp; motivation scale</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/history.html" class="card" id="card-history">
+      <span class="status new" id="st-history">New</span>
+      <span class="icon">⭐</span>
+      <div class="label">Our Track Record</div>
+      <div class="desc">BBB A+, 41 years, 5-star reviews</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/rights.html" class="card" id="card-rights">
+      <span class="status new" id="st-rights">New</span>
+      <span class="icon">⚖️</span>
+      <div class="label">Consumer Rights Assessment</div>
+      <div class="desc">Violations, statutes &amp; estimated fines</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/cost.html" class="card" id="card-cost">
+      <span class="status new" id="st-cost">New</span>
+      <span class="icon">💰</span>
+      <div class="label">True Cost of Ownership</div>
+      <div class="desc">30-year projection &amp; total exposure</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/quote.html" class="card highlight" id="card-quote">
+      <span class="status new" id="st-quote">New</span>
+      <span class="icon">📄</span>
+      <div class="label">Your Service Quote</div>
+      <div class="desc">Investment, savings &amp; financing options</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/better.html" class="card" id="card-better">
+      <span class="status new" id="st-better">New</span>
+      <span class="icon">🏆</span>
+      <div class="label">What Makes Alpha Better</div>
+      <div class="desc">Group filings, Q&amp;A, guarantees</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/recap.html" class="card" id="card-recap">
+      <span class="status new" id="st-recap">New</span>
+      <span class="icon">📋</span>
+      <div class="label">Recap &amp; Next Steps</div>
+      <div class="desc">What happens after you sign</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/guarantee.html" class="card" id="card-guarantee">
+      <span class="status new" id="st-guarantee">New</span>
+      <span class="icon">🛡</span>
+      <div class="label">Certificate of Guarantee</div>
+      <div class="desc">100% money-back written guarantee</div>
+    </a>
+    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/checklist.html" class="card" id="card-checklist">
+      <span class="status new" id="st-checklist">New</span>
+      <span class="icon">✅</span>
+      <div class="label">Client Acknowledgment</div>
+      <div class="desc">Review &amp; initial each item</div>
+    </a>
+    <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="card">
+      <span class="icon">📝</span>
+      <div class="label">Alpha Contract</div>
+      <div class="desc">Open &amp; sign enrollment agreement</div>
+    </a>
+  </div>
+</div>
+
+<!-- NEW CLIENT MODAL -->
+<div class="modal-overlay" id="new-modal">
+  <div class="modal">
+    <h3>New Client</h3>
+    <label>Client Name</label>
+    <input type="text" id="m-name" placeholder="First and Last Name">
+    <label>Resort / Developer</label>
+    <input type="text" id="m-resort" placeholder="e.g. Westgate — Orlando FL">
+    <label>Date</label>
+    <input type="text" id="m-date">
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="createClient()">Create &amp; Start</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var STORAGE_KEY='atc_clients_v2';
+var EXPIRY_MS=24*60*60*1000; // 24 hours
+
+function getClients(){
+  try{
+    var raw=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};
+    var now=Date.now();
+    var pruned={};
+    Object.keys(raw).forEach(function(k){
+      if(!raw[k]._created||(now-raw[k]._created)<EXPIRY_MS)pruned[k]=raw[k];
+    });
+    return pruned;
+  }catch(e){return {};}
+}
+function saveClients(obj){localStorage.setItem(STORAGE_KEY,JSON.stringify(obj));}
+function getCurrentKey(){return sessionStorage.getItem('atc_current_client')||'';}
+function setCurrentKey(k){sessionStorage.setItem('atc_current_client',k);}
+
+function refreshDropdown(){
+  var clients=getClients();
+  var dd=document.getElementById('client-dd');
+  var current=getCurrentKey();
+  dd.innerHTML='<option value="">— Select Client —</option>';
+  Object.keys(clients).sort().forEach(function(k){
+    var o=document.createElement('option');
+    o.value=k;
+    var d=clients[k];
+    o.textContent=(d.name||'Unknown')+(d.resort?' — '+d.resort:'');
+    dd.appendChild(o);
+  });
+  if(current)dd.value=current;
+}
+
+function loadClient(){
+  var k=document.getElementById('client-dd').value;
+  if(!k)return;
+  setCurrentKey(k);
+  var d=getClients()[k];
+  if(d)sessionStorage.setItem('atc_resort',JSON.stringify(d));
+  showToast('✓ Loaded: '+(d.name||k));
+  updateCardStatuses(d);
+}
+
+function updateCardStatuses(d){
+  if(!d)return;
+  function setStatus(id,done){
+    var el=document.getElementById('st-'+id);
+    if(!el)return;
+    el.textContent=done?'Done':'New';
+    el.className='status '+(done?'done':'new');
+  }
+  setStatus('owner',!!(d.name||d.resort));
+  setStatus('whyout',!!(d.whyout&&d.whyout.length));
+  setStatus('rights',!!(d.rights&&d.rights.length));
+  setStatus('cost',!!d.costCalculated);
+  setStatus('quote',!!d.quoteSeen);
+}
+
+function showNewModal(){
+  var today=new Date();
+  document.getElementById('m-date').value=(today.getMonth()+1)+'/'+(today.getDate())+'/'+today.getFullYear();
+  document.getElementById('m-name').value='';
+  document.getElementById('m-resort').value='';
+  document.getElementById('new-modal').classList.add('active');
+}
+function closeModal(){document.getElementById('new-modal').classList.remove('active');}
+
+function createClient(){
+  var name=document.getElementById('m-name').value.trim();
+  var resort=document.getElementById('m-resort').value.trim();
+  var date=document.getElementById('m-date').value;
+  if(!name&&!resort){alert('Please enter a name or resort.');return;}
+  var k=(name||'Unknown')+(resort?' — '+resort:'')+(date?' ('+date+')':'');
+  var clients=getClients();
+  clients[k]={name:name,resort:resort,date:date,_created:Date.now()};
+  saveClients(clients);
+  setCurrentKey(k);
+  sessionStorage.setItem('atc_resort',JSON.stringify(clients[k]));
+  closeModal();
+  refreshDropdown();
+  document.getElementById('client-dd').value=k;
+  showToast('✓ New client created: '+k);
+  setTimeout(function(){window.location.href='owner.html';},800);
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2500);
+}
+
+refreshDropdown();
+var cur=getCurrentKey();
+if(cur){
+  var d=getClients()[cur];
+  if(d)updateCardStatuses(d);
+}
+</script>
+
+
+</body></html>
