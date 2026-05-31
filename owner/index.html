@@ -6,154 +6,117 @@
 <title>Owner & Resort Info — Alpha Timeshare Consultants</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
+body{background:#f0f2f5;font-family:Georgia,serif;padding:20px}
 .wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
 .logo-bar{text-align:center;margin-bottom:16px}
 .logo-bar img{max-width:180px}
 .page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;line-height:1.5;margin-bottom:20px;border-radius:0 0 3px 3px}
-.section-hdr{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
-.section-body{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px}
-.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.field-row:last-child{margin-bottom:0}
-.field{flex:1;min-width:180px}
-.field.full{flex:100%}
-.field label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px}
-.field input,.field select,.field textarea{width:100%;border:2px solid #e0e0e0;border-radius:3px;padding:9px 11px;font-size:13px;font-family:Georgia,serif;background:#fff;color:#1B2A4A;transition:border-color .2s}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C8960C}
-.field textarea{resize:vertical;min-height:72px}
-.totals-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.total-card{flex:1;min-width:100px;background:#1B2A4A;color:#fff;border-radius:3px;padding:10px;text-align:center}
-.total-card .tn{font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif;line-height:1}
-.total-card .tl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px}
-.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:20px;letter-spacing:.3px}
-.save-btn:hover{background:#a87a08}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
+.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
+.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px}
+.fr{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.fr:last-child{margin-bottom:0}
+.f{flex:1;min-width:180px}
+.ff{flex:100%}
+.f label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px}
+.f input,.f select,.f textarea{width:100%;border:2px solid #e0e0e0;border-radius:3px;padding:9px 11px;font-size:13px;font-family:Georgia,serif;background:#fff;color:#1B2A4A}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#C8960C}
+.f textarea{resize:vertical;min-height:72px}
+.totals{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tc{flex:1;min-width:100px;background:#1B2A4A;color:#fff;border-radius:3px;padding:10px;text-align:center}
+.tc .tn{font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif;line-height:1}
+.tc .tl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px}
+.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:20px}
 .toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:12px}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
-.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
-.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nav-btn.next{background:#C8960C;color:#fff}
-.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
+.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
+.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nb.next{background:#C8960C;color:#fff}
+.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
 <div class="page-title">Owner & Resort Info</div>
-<div class="page-sub">Fill in what applies. Every field saves automatically.</div>
+<div class="page-sub">Fill in what applies — saves automatically to all pages</div>
 <div id="toast" class="toast"></div>
 
-<div class="section-hdr">Owner Information</div>
-<div class="section-body">
-  <div class="field-row">
-    <div class="field"><label>First Name</label><input type="text" id="f-first" placeholder="First name"></div>
-    <div class="field"><label>Last Name</label><input type="text" id="f-last" placeholder="Last name"></div>
-  </div>
-  <div class="field-row">
-    <div class="field"><label>Co-Owner First Name</label><input type="text" id="f-cofirst" placeholder="If applicable"></div>
-    <div class="field"><label>Co-Owner Last Name</label><input type="text" id="f-colast" placeholder="If applicable"></div>
-  </div>
-  <div class="field-row">
-    <div class="field"><label>Phone</label><input type="tel" id="f-phone" placeholder="Primary phone"></div>
-    <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="Email address"></div>
-  </div>
-  <div class="field-row">
-    <div class="field full"><label>Address</label><input type="text" id="f-address" placeholder="Street address, city, state, zip"></div>
-  </div>
+<div class="sh">Owner Information</div>
+<div class="sb">
+<div class="fr"><div class="f"><label>First Name</label><input id="f-first" placeholder="First name"></div><div class="f"><label>Last Name</label><input id="f-last" placeholder="Last name"></div></div>
+<div class="fr"><div class="f"><label>Co-Owner First</label><input id="f-cofirst" placeholder="If applicable"></div><div class="f"><label>Co-Owner Last</label><input id="f-colast" placeholder="If applicable"></div></div>
+<div class="fr"><div class="f"><label>Phone</label><input type="tel" id="f-phone" placeholder="Primary phone"></div><div class="f"><label>Email</label><input type="email" id="f-email" placeholder="Email address"></div></div>
+<div class="fr"><div class="f ff"><label>Address</label><input id="f-address" placeholder="Street, city, state, zip"></div></div>
 </div>
 
-<div class="section-hdr">Resort Details</div>
-<div class="section-body">
-  <div class="field-row">
-    <div class="field"><label>Resort Name</label><input type="text" id="f-resort" placeholder="e.g. Westgate"></div>
-    <div class="field"><label>Resort City / State</label><input type="text" id="f-location" placeholder="e.g. Orlando, FL"></div>
-  </div>
-  <div class="field-row">
-    <div class="field"><label>Year Purchased</label><input type="number" id="f-year" placeholder="e.g. 2015" min="1980" max="2030"></div>
-    <div class="field"><label>Purchase Price</label><input type="number" id="f-purchase" placeholder="e.g. 18000"></div>
-  </div>
+<div class="sh">Resort Details</div>
+<div class="sb">
+<div class="fr"><div class="f"><label>Resort Name</label><input id="f-resort" placeholder="e.g. Westgate"></div><div class="f"><label>Resort City / State</label><input id="f-location" placeholder="e.g. Orlando, FL"></div></div>
+<div class="fr"><div class="f"><label>Year Purchased</label><input type="number" id="f-year" placeholder="e.g. 2015"></div><div class="f"><label>Purchase Price</label><input type="number" id="f-purchase" placeholder="e.g. 18000"></div></div>
 </div>
 
-<div class="section-hdr">Mortgage</div>
-<div class="section-body">
-  <div class="field-row">
-    <div class="field"><label>Mortgage Status</label>
-      <select id="f-mstatus">
-        <option value="">— Select —</option>
-        <option>Still owes — actively paying</option>
-        <option>Paid off in full</option>
-        <option>Paid cash / no mortgage</option>
-      </select>
-    </div>
-    <div class="field"><label>Current Balance</label><input type="number" id="f-balance" placeholder="e.g. 18000"></div>
-  </div>
-  <div class="field-row">
-    <div class="field"><label>Monthly Mortgage Payment</label><input type="number" id="f-mtg" placeholder="e.g. 340" oninput="updateTotals()"></div>
-    <div class="field"><label>Months Behind</label><input type="number" id="f-mtg-behind" placeholder="0" min="0" oninput="updateTotals()"></div>
-  </div>
+<div class="sh">Mortgage</div>
+<div class="sb">
+<div class="fr">
+<div class="f"><label>Mortgage Status</label><select id="f-mstatus"><option value="">— Select —</option><option>Still owes</option><option>Paid off</option><option>Paid cash</option></select></div>
+<div class="f"><label>Current Balance</label><input type="number" id="f-balance" placeholder="e.g. 18000"></div>
+</div>
+<div class="fr">
+<div class="f"><label>Monthly Mortgage Payment</label><input type="number" id="f-mtg" placeholder="e.g. 340" oninput="upd()"></div>
+<div class="f"><label>Months Behind on Mortgage</label><input type="number" id="f-mtg-behind" placeholder="0" oninput="upd()"></div>
+</div>
 </div>
 
-<div class="section-hdr">Maintenance Fees</div>
-<div class="section-body">
-  <div class="field-row">
-    <div class="field"><label>Annual Maintenance Fees</label><input type="number" id="f-mtf" placeholder="e.g. 1600" oninput="updateTotals()"></div>
-    <div class="field"><label>Months Behind on MTF</label><input type="number" id="f-mtf-behind" placeholder="0" min="0" oninput="updateTotals()"></div>
-  </div>
-  <div class="field-row">
-    <div class="field"><label>Current on Fees?</label>
-      <select id="f-mtf-current">
-        <option value="">— Select —</option>
-        <option>Yes — current</option>
-        <option>No — behind</option>
-      </select>
-    </div>
-    <div class="field"><label>Amount Currently Charging</label><input type="number" id="f-charging" placeholder="e.g. 5995"></div>
-  </div>
-  <div class="totals-row">
-    <div class="total-card"><div class="tn" id="t-monthly">$0</div><div class="tl">Monthly Total</div></div>
-    <div class="total-card"><div class="tn" id="t-yearly">$0</div><div class="tl">Yearly Total</div></div>
-    <div class="total-card"><div class="tn" id="t-arrears">$0</div><div class="tl">Total Arrears</div></div>
-  </div>
+<div class="sh">Maintenance Fees</div>
+<div class="sb">
+<div class="fr">
+<div class="f"><label>Annual Maintenance Fees</label><input type="number" id="f-mtf" placeholder="e.g. 1600" oninput="upd()"></div>
+<div class="f"><label>Months Behind on MTF</label><input type="number" id="f-mtf-behind" placeholder="0" oninput="upd()"></div>
+</div>
+<div class="fr">
+<div class="f"><label>Current on Fees?</label><select id="f-mtf-current"><option value="">— Select —</option><option>Yes</option><option>No</option></select></div>
+<div class="f"><label>Amount Charging</label><input type="number" id="f-charging" placeholder="e.g. 5995"></div>
+</div>
+<div class="totals">
+<div class="tc"><div class="tn" id="t-mo">$0</div><div class="tl">Monthly Total</div></div>
+<div class="tc"><div class="tn" id="t-yr">$0</div><div class="tl">Yearly Total</div></div>
+<div class="tc"><div class="tn" id="t-ar">$0</div><div class="tl">Total Arrears</div></div>
+</div>
 </div>
 
-<div class="section-hdr">Additional Notes</div>
-<div class="section-body">
-  <div class="field-row">
-    <div class="field full"><label>Why Do They Want Out? (brief)</label><textarea id="f-why" placeholder="Summarize the main reason..."></textarea></div>
-  </div>
-  <div class="field-row">
-    <div class="field full"><label>Notes</label><textarea id="f-notes" placeholder="Any other relevant details..."></textarea></div>
-  </div>
+<div class="sh">Notes</div>
+<div class="sb">
+<div class="fr"><div class="f ff"><label>Why Do They Want Out?</label><textarea id="f-why" placeholder="Main reason..."></textarea></div></div>
+<div class="fr"><div class="f ff"><label>Additional Notes</label><textarea id="f-notes" placeholder="Other details..."></textarea></div></div>
 </div>
 
-<button class="save-btn" onclick="saveOwner()">💾 Save & Continue</button>
+<button class="save-btn" onclick="save()">💾 Save & Continue to Why You Want Out</button>
 
 <div class="nav-bar">
-  <a href="/home/" class="nav-btn prev">← Dashboard</a>
-  <span class="nav-step">Why You Want Out →</span>
-  <a href="/whyout/" class="nav-btn next">Next →</a>
+<a href="/home/" class="nb prev">← Dashboard</a>
+<span class="ns">Why You Want Out →</span>
+<a href="/whyout/" class="nb next">Next →</a>
 </div>
 </div>
-
 <script>
+var SK='atc_clients_v2', AK='atc_active';
 function fmt(n){return '$'+Math.round(n).toLocaleString();}
-
-function updateTotals(){
+function upd(){
   var mtg=parseFloat(document.getElementById('f-mtg').value)||0;
   var mtf=(parseFloat(document.getElementById('f-mtf').value)||0)/12;
-  var monthly=mtg+mtf;
-  var mtgBehind=(parseInt(document.getElementById('f-mtg-behind').value)||0)*mtg;
-  var mtfBehind=(parseInt(document.getElementById('f-mtf-behind').value)||0)*mtf;
-  document.getElementById('t-monthly').textContent=fmt(monthly);
-  document.getElementById('t-yearly').textContent=fmt(monthly*12);
-  document.getElementById('t-arrears').textContent=fmt(mtgBehind+mtfBehind);
+  var mo=mtg+mtf;
+  var mb=(parseInt(document.getElementById('f-mtg-behind').value)||0)*mtg;
+  var fb=(parseInt(document.getElementById('f-mtf-behind').value)||0)*mtf;
+  document.getElementById('t-mo').textContent=fmt(mo);
+  document.getElementById('t-yr').textContent=fmt(mo*12);
+  document.getElementById('t-ar').textContent=fmt(mb+fb);
 }
-
-function getFormData(){
+function getData(){
   return{
-    name:document.getElementById('f-first').value.trim()+' '+document.getElementById('f-last').value.trim(),
     firstName:document.getElementById('f-first').value.trim(),
     lastName:document.getElementById('f-last').value.trim(),
+    name:document.getElementById('f-first').value.trim()+' '+document.getElementById('f-last').value.trim(),
     coFirst:document.getElementById('f-cofirst').value.trim(),
     coLast:document.getElementById('f-colast').value.trim(),
     phone:document.getElementById('f-phone').value.trim(),
@@ -172,59 +135,43 @@ function getFormData(){
     mtfCurrent:document.getElementById('f-mtf-current').value,
     amountCharging:document.getElementById('f-charging').value,
     whyOut:document.getElementById('f-why').value.trim(),
-    notes:document.getElementById('f-notes').value.trim(),
-    date:new Date().toLocaleDateString()
+    notes:document.getElementById('f-notes').value.trim()
   };
 }
-
-function saveOwner(){
-  var data=getFormData();
-  if(!data.firstName&&!data.resort){alert('Please enter at least a name or resort.');return;}
-  sessionStorage.setItem('atc_resort',JSON.stringify(data));
-  // Also save to localStorage client record
-  var SK='atc_clients_v2';
-  try{
-    var clients=JSON.parse(localStorage.getItem(SK))||{};
-    var cur=sessionStorage.getItem('atc_cc');
-    if(cur&&clients[cur]){
-      Object.assign(clients[cur],data);
-      localStorage.setItem(SK,JSON.stringify(clients));
-    }
-  }catch(e){}
+function save(){
+  var d=getData();
+  if(!d.firstName&&!d.resort){alert('Please enter at least a name or resort.');return;}
+  var key=localStorage.getItem(AK)||((d.firstName||'Client')+' '+(d.resort||'')+'_'+Date.now());
+  localStorage.setItem(AK,key);
+  var clients=JSON.parse(localStorage.getItem(SK)||'{}');
+  clients[key]=Object.assign(clients[key]||{_c:Date.now()},d);
+  localStorage.setItem(SK,JSON.stringify(clients));
   var t=document.getElementById('toast');
-  t.textContent='✓ Saved — '+( data.firstName||data.resort||'Client');
-  t.style.display='block';
-  setTimeout(function(){t.style.display='none';},2000);
+  t.textContent='Saved — '+( d.firstName||d.resort);t.style.display='block';
+  setTimeout(function(){t.style.display='none';window.location.href='/whyout/';},1000);
 }
-
-// Load existing data if available
-try{
-  var d=JSON.parse(sessionStorage.getItem('atc_resort'));
-  if(d){
-    if(d.firstName)document.getElementById('f-first').value=d.firstName;
-    if(d.lastName)document.getElementById('f-last').value=d.lastName;
-    if(d.coFirst)document.getElementById('f-cofirst').value=d.coFirst;
-    if(d.coLast)document.getElementById('f-colast').value=d.coLast;
-    if(d.phone)document.getElementById('f-phone').value=d.phone;
-    if(d.email)document.getElementById('f-email').value=d.email;
-    if(d.address)document.getElementById('f-address').value=d.address;
-    if(d.resort)document.getElementById('f-resort').value=d.resort;
-    if(d.location)document.getElementById('f-location').value=d.location;
-    if(d.yearPurchased)document.getElementById('f-year').value=d.yearPurchased;
-    if(d.purchasePrice)document.getElementById('f-purchase').value=d.purchasePrice;
-    if(d.mortgageStatus)document.getElementById('f-mstatus').value=d.mortgageStatus;
-    if(d.balanceAmount)document.getElementById('f-balance').value=d.balanceAmount;
-    if(d.monthlyMortgage)document.getElementById('f-mtg').value=d.monthlyMortgage;
-    if(d.mtgBehind)document.getElementById('f-mtg-behind').value=d.mtgBehind;
-    if(d.maitFees)document.getElementById('f-mtf').value=d.maitFees;
-    if(d.mtfBehind)document.getElementById('f-mtf-behind').value=d.mtfBehind;
-    if(d.mtfCurrent)document.getElementById('f-mtf-current').value=d.mtfCurrent;
-    if(d.amountCharging)document.getElementById('f-charging').value=d.amountCharging;
-    if(d.whyOut)document.getElementById('f-why').value=d.whyOut;
-    if(d.notes)document.getElementById('f-notes').value=d.notes;
-    updateTotals();
-  }
-}catch(e){}
+function load(){
+  var key=localStorage.getItem(AK);
+  if(!key)return;
+  var clients=JSON.parse(localStorage.getItem(SK)||'{}');
+  var d=clients[key];
+  if(!d)return;
+  var map={
+    'f-first':'firstName','f-last':'lastName','f-cofirst':'coFirst','f-colast':'coLast',
+    'f-phone':'phone','f-email':'email','f-address':'address','f-resort':'resort',
+    'f-location':'location','f-year':'yearPurchased','f-purchase':'purchasePrice',
+    'f-mstatus':'mortgageStatus','f-balance':'balanceAmount','f-mtg':'monthlyMortgage',
+    'f-mtg-behind':'mtgBehind','f-mtf':'maitFees','f-mtf-behind':'mtfBehind',
+    'f-mtf-current':'mtfCurrent','f-charging':'amountCharging',
+    'f-why':'whyOut','f-notes':'notes'
+  };
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&d[map[id]])el.value=d[map[id]];
+  });
+  upd();
+}
+load();
 </script>
 </body>
 </html>
