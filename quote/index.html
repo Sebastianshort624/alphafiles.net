@@ -6,218 +6,216 @@
 <title>Your Service Quote — Alpha Timeshare Consultants</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
+body{background:#f0f2f5;font-family:Georgia,serif;padding:20px}
 .wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-.logo-bar{text-align:center;margin-bottom:20px}
-.logo-bar img{max-width:200px}
-.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:14px 16px;font-size:16px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:10px 16px;font-size:13px;line-height:1.6;margin-bottom:24px;border-radius:0 0 3px 3px}
-
-.client-banner{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:12px 16px;margin-bottom:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.banner-field strong{display:block;font-size:10px;color:#888;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
-.banner-field span{font-size:13px;color:#1B2A4A;font-weight:700}
-
-.section-hdr{background:#1B2A4A;color:#fff;padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:20px}
-.section-body{border:1px solid #ddd;border-top:none;padding:18px;border-radius:0 0 3px 3px;margin-bottom:4px}
-
-/* EDITABLE FEE INPUT */
-.fee-input-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.fee-label{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
-.fee-input{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:180px;text-align:center}
-.fee-input:focus{outline:none;border-color:#1B2A4A}
+.logo-bar{text-align:center;margin-bottom:16px}
+.logo-bar img{max-width:180px}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
+.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
+.cb-field strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
+.cb-field span{font-size:13px;color:#1B2A4A;font-weight:700}
+.msrp-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.mc{flex:1;min-width:160px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
+.mc.resort{background:#fdf0ef;border-color:#e8a09a}
+.mc.alpha{background:#e8f5ee;border-color:#1a7a3c}
+.mc .ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.mc.resort .ml{color:#c0392b}
+.mc.alpha .ml{color:#1a7a3c}
+.mc .ma{font-size:28px;font-weight:700;line-height:1;font-family:Georgia,serif}
+.mc.resort .ma{color:#c0392b}
+.mc.alpha .ma{color:#1a7a3c}
+.mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
+.vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
+.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
+.save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
+.save-strip .sa{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif}
+.save-strip .ss{font-size:11px;opacity:.7;margin-top:2px}
+.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
+.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
+.fee-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.fee-lbl{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
+.fee-inp{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:160px;text-align:center}
+.fee-inp:focus{outline:none;border-color:#1B2A4A}
 .fee-note{font-size:11px;color:#888;line-height:1.4;flex:1}
-
-.quote-cards{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.quote-card{flex:1;min-width:150px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
-.quote-card.featured{border-color:#C8960C;background:#fff8e8}
-.quote-card .qc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin-bottom:6px}
-.quote-card .qc-amount{font-size:30px;font-weight:700;color:#1B2A4A;line-height:1;font-family:Georgia,serif}
-.quote-card .qc-sub{font-size:11px;color:#888;margin-top:4px}
-.quote-card.featured .qc-label{color:#C8960C}
-.quote-card.featured .qc-amount{color:#C8960C}
-
-.savings-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:16px;margin-bottom:0}
-.savings-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:12px}
-.savings-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px}
-.savings-row:last-child{border-bottom:none;font-size:16px;font-weight:700;padding-top:10px}
-.savings-label{opacity:.85}
-.savings-val{color:#C8960C;font-weight:700}
-.savings-val.white{color:#fff}
-
-.finance-tabs{display:flex;gap:6px;margin-bottom:10px}
-.tab-btn{flex:1;padding:8px;font-size:11px;font-weight:700;border:2px solid #1B2A4A;border-radius:3px;background:#fff;color:#1B2A4A;cursor:pointer;font-family:Georgia,serif}
-.tab-btn.active{background:#1B2A4A;color:#fff}
-.tab-content{display:none;background:#f5f5f5;border-radius:3px;padding:12px 14px}
-.tab-content.active{display:block}
-.tab-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e5e5e5;font-size:13px}
-.tab-row:last-child{border-bottom:none;font-weight:700;font-size:14px;padding-top:8px}
-
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #ddd}
-.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;cursor:pointer;border:none;font-family:Georgia,serif}
-.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nav-btn.next{background:#C8960C;color:#fff}
-.nav-btn.next:hover{background:#a87a08}
-.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
+.qcards{display:flex;gap:10px;flex-wrap:wrap}
+.qc{flex:1;min-width:130px;border-radius:4px;padding:14px;text-align:center;border:2px solid #ddd}
+.qc.ft{border-color:#C8960C;background:#fff8e8}
+.qc .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin-bottom:6px}
+.qc .qa{font-size:22px;font-weight:700;color:#1B2A4A;line-height:1;font-family:Georgia,serif}
+.qc .qs{font-size:11px;color:#888;margin-top:4px}
+.qc.ft .ql{color:#C8960C}
+.qc.ft .qa{color:#C8960C}
+.sav-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:14px}
+.sav-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:10px}
+.sr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+.sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
+.sv{color:#C8960C;font-weight:700}
+.sv.w{color:#fff}
+.ftabs{display:flex;gap:6px;margin-bottom:8px}
+.tb{flex:1;padding:8px;font-size:11px;font-weight:700;border:2px solid #1B2A4A;border-radius:3px;background:#fff;color:#1B2A4A;cursor:pointer;font-family:Georgia,serif}
+.tb.active{background:#1B2A4A;color:#fff}
+.tc{display:none;background:#f5f5f5;border-radius:3px;padding:12px 14px}
+.tc.active{display:block}
+.tr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e5e5e5;font-size:13px}
+.tr:last-child{border-bottom:none;font-weight:700;font-size:14px;padding-top:8px}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
+.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
+.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nb.next{background:#C8960C;color:#fff}
+.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
 <div class="page-title">Your Service Quote</div>
-<div class="page-sub">Based on your assessment — your personalized exit investment.</div>
+<div class="page-sub">What you'll keep paying — vs. what it costs to stop.</div>
 
-<div class="client-banner" id="client-banner">
-  <div class="banner-field"><strong>Client</strong><span id="b-name">—</span></div>
-  <div class="banner-field"><strong>Resort</strong><span id="b-resort">—</span></div>
-  <div class="banner-field"><strong>Date</strong><span id="b-date">—</span></div>
+<div class="client-bar">
+<div class="cb-field"><strong>Client</strong><span id="b-name">—</span></div>
+<div class="cb-field"><strong>Resort</strong><span id="b-resort">—</span></div>
 </div>
 
-<div class="section-hdr">Alpha Service Fee</div>
-<div class="section-body">
-  <div class="fee-input-row">
-    <span class="fee-label">Service Fee $</span>
-    <input type="number" class="fee-input" id="fee-input" value="4800" oninput="updateAll()">
-    <span class="fee-note">Default = 3-year cost of ownership. Edit to adjust.</span>
-  </div>
-  <div class="quote-cards">
-    <div class="quote-card featured">
-      <div class="qc-label">Pay in Full</div>
-      <div class="qc-amount" id="q-full">$4,800</div>
-      <div class="qc-sub">One-time — best value</div>
-    </div>
-    <div class="quote-card">
-      <div class="qc-label">36-Month Plan</div>
-      <div class="qc-amount" id="q-monthly">$128/mo</div>
-      <div class="qc-sub">at 20% annual interest</div>
-    </div>
-    <div class="quote-card">
-      <div class="qc-label">12-Month 0%</div>
-      <div class="qc-amount" id="q-12mo">$400/mo</div>
-      <div class="qc-sub">interest-free EasyPay</div>
-    </div>
-  </div>
+<div class="msrp-row">
+<div class="mc resort"><div class="ml">🏨 Resort — 3-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 3 yrs (8%/yr)</div></div>
+<div class="vs">VS</div>
+<div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">One time — then $0 forever</div></div>
+</div>
+<div class="save-strip">
+<div class="sl">You save over 3 years</div>
+<div class="sa" id="sh-diff">—</div>
+<div class="ss">and every year after that</div>
 </div>
 
-<div class="section-hdr">What You Stop Paying After Exit</div>
-<div class="section-body">
-  <div class="savings-box">
-    <div class="savings-title">Monthly &amp; Yearly Savings</div>
-    <div class="savings-row"><span class="savings-label">Current monthly obligation</span><span class="savings-val white" id="s-current-mo">—</span></div>
-    <div class="savings-row"><span class="savings-label">After exit</span><span class="savings-val white">$0 / month</span></div>
-    <div class="savings-row"><span class="savings-label">Monthly savings</span><span class="savings-val" id="s-save-mo">—</span></div>
-    <div class="savings-row"><span class="savings-label">Yearly savings</span><span class="savings-val" id="s-save-yr">—</span></div>
-  </div>
+<div class="sh">Alpha Service Fee</div>
+<div class="sb">
+<div class="fee-row">
+<span class="fee-lbl">Service Fee $</span>
+<input type="number" class="fee-inp" id="fee-inp" value="0" oninput="upd()">
+<span class="fee-note">Type your fee — default suggested = 3-year resort cost</span>
+</div>
+<div class="qcards">
+<div class="qc ft"><div class="ql">Pay in Full</div><div class="qa" id="q-full">—</div><div class="qs">Best value</div></div>
+<div class="qc"><div class="ql">36 Months</div><div class="qa" id="q-36">—</div><div class="qs">20% annual</div></div>
+<div class="qc"><div class="ql">12 Mo 0%</div><div class="qa" id="q-12">—</div><div class="qs">EasyPay</div></div>
+</div>
 </div>
 
-<div class="section-hdr">Financing Options</div>
-<div class="section-body">
-  <div class="finance-tabs">
-    <button class="tab-btn active" onclick="showTab('t12',this)">12 Mo — 0%</button>
-    <button class="tab-btn" onclick="showTab('t24',this)">24 Months</button>
-    <button class="tab-btn" onclick="showTab('t36',this)">36 Months</button>
-  </div>
-  <div class="tab-content active" id="t12">
-    <div class="tab-row"><span>Term</span><span>12 months</span></div>
-    <div class="tab-row"><span>Interest</span><span>0% (EasyPay)</span></div>
-    <div class="tab-row"><span>Monthly payment</span><span id="fi12-mo">—</span></div>
-    <div class="tab-row"><span>Total paid</span><span id="fi12-total">—</span></div>
-  </div>
-  <div class="tab-content" id="t24">
-    <div class="tab-row"><span>Term</span><span>24 months</span></div>
-    <div class="tab-row"><span>Interest</span><span>20% annual</span></div>
-    <div class="tab-row"><span>Monthly payment</span><span id="fi24-mo">—</span></div>
-    <div class="tab-row"><span>Total paid</span><span id="fi24-total">—</span></div>
-  </div>
-  <div class="tab-content" id="t36">
-    <div class="tab-row"><span>Term</span><span>36 months</span></div>
-    <div class="tab-row"><span>Interest</span><span>20% annual</span></div>
-    <div class="tab-row"><span>Monthly payment</span><span id="fi36-mo">—</span></div>
-    <div class="tab-row"><span>Total paid</span><span id="fi36-total">—</span></div>
-  </div>
+<div class="sh">What You Stop Paying</div>
+<div class="sb">
+<div class="sav-box">
+<div class="sav-title">Monthly & Yearly Savings After Exit</div>
+<div class="sr"><span>Current monthly obligation</span><span class="sv w" id="s-mo">—</span></div>
+<div class="sr"><span>After exit</span><span class="sv w">$0 / month</span></div>
+<div class="sr"><span>Monthly savings</span><span class="sv" id="s-save-mo">—</span></div>
+<div class="sr"><span>Yearly savings</span><span class="sv" id="s-save-yr">—</span></div>
+</div>
+</div>
+
+<div class="sh">Financing Options</div>
+<div class="sb">
+<div class="ftabs">
+<button class="tb active" onclick="tab('t12',this)">12 Mo — 0%</button>
+<button class="tb" onclick="tab('t24',this)">24 Months</button>
+<button class="tb" onclick="tab('t36',this)">36 Months</button>
+</div>
+<div class="tc active" id="t12">
+<div class="tr"><span>Term</span><span>12 months</span></div>
+<div class="tr"><span>Interest</span><span>0% EasyPay</span></div>
+<div class="tr"><span>Monthly</span><span id="fi12-mo">—</span></div>
+<div class="tr"><span>Total paid</span><span id="fi12-tot">—</span></div>
+</div>
+<div class="tc" id="t24">
+<div class="tr"><span>Term</span><span>24 months</span></div>
+<div class="tr"><span>Interest</span><span>20% annual</span></div>
+<div class="tr"><span>Monthly</span><span id="fi24-mo">—</span></div>
+<div class="tr"><span>Total paid</span><span id="fi24-tot">—</span></div>
+</div>
+<div class="tc" id="t36">
+<div class="tr"><span>Term</span><span>36 months</span></div>
+<div class="tr"><span>Interest</span><span>20% annual</span></div>
+<div class="tr"><span>Monthly</span><span id="fi36-mo">—</span></div>
+<div class="tr"><span>Total paid</span><span id="fi36-tot">—</span></div>
+</div>
 </div>
 
 <div class="nav-bar">
-  <a href="/cost/" class="nav-btn prev">← Cost of Ownership</a>
-  <span class="nav-step">What Makes Alpha Better →</span>
-  <a href="/better/" class="nav-btn next">Next →</a>
+<a href="/cost/" class="nb prev">← True Cost</a>
+<span class="ns">What Makes Alpha Better →</span>
+<a href="/better/" class="nb next">Next →</a>
 </div>
 </div>
-
 <script>
+var SK='atc_clients_v2', AK='atc_active';
+var _msrp=0;
 function fmt(n){return '$'+Math.round(n).toLocaleString();}
 function fmtd(n){return '$'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-
-function calcFinance(principal,months,rate){
-  if(rate===0)return{monthly:principal/months,total:principal};
-  var r=rate/12;
-  var payment=principal*(r*Math.pow(1+r,months))/(Math.pow(1+r,months)-1);
-  return{monthly:payment,total:payment*months};
-}
-
-function updateAll(){
-  var fee=parseFloat(document.getElementById('fee-input').value)||4800;
-  // Pay in full
-  document.getElementById('q-full').textContent=fmt(fee);
-  // 36mo at 20%
-  var r36=calcFinance(fee,36,0.20);
-  document.getElementById('q-monthly').textContent=fmtd(r36.monthly)+'/mo';
-  // 12mo 0%
-  document.getElementById('q-12mo').textContent=fmtd(fee/12)+'/mo';
-  // Finance tabs
-  var r12={monthly:fee/12,total:fee};
-  var r24=calcFinance(fee,24,0.20);
-  document.getElementById('fi12-mo').textContent=fmtd(r12.monthly)+'/mo';
-  document.getElementById('fi12-total').textContent=fmt(r12.total);
-  document.getElementById('fi24-mo').textContent=fmtd(r24.monthly)+'/mo';
-  document.getElementById('fi24-total').textContent=fmt(r24.total);
-  document.getElementById('fi36-mo').textContent=fmtd(r36.monthly)+'/mo';
-  document.getElementById('fi36-total').textContent=fmt(r36.total);
-}
-
-function showTab(id,btn){
-  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+function fi(p,m,r){if(r===0)return{mo:p/m,tot:p};var x=r/12;var pmt=p*(x*Math.pow(1+x,m))/(Math.pow(1+x,m)-1);return{mo:pmt,tot:pmt*m};}
+function tab(id,btn){
+  document.querySelectorAll('.tc').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('active');});
   document.getElementById(id).classList.add('active');
   if(btn)btn.classList.add('active');
 }
-
-// Load from session
-try{
-  var d=JSON.parse(sessionStorage.getItem('atc_resort'));
-  if(d){
-    // Client banner
-    var name=(d.name||'')+(d.lastName?' '+d.lastName:'');
-    if(name||d.resort){
-      document.getElementById('b-name').textContent=name||'—';
-      document.getElementById('b-resort').textContent=d.resort||'—';
-      document.getElementById('b-date').textContent=d.date||'—';
-    }
-    // Savings
-    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-    if(mo>0){
-      document.getElementById('s-current-mo').textContent=fmt(mo)+'/mo';
-      document.getElementById('s-save-mo').textContent=fmt(mo)+'/mo';
-      document.getElementById('s-save-yr').textContent=fmt(mo*12)+'/yr';
-    }
-    // Default fee = 3-year cost of ownership
-    var annualMtf=parseFloat(d.maitFees)||0;
-    var annualMtg=(parseFloat(d.monthlyMortgage)||0)*12;
-    var yr1=annualMtf+annualMtg;
-    var yr2=annualMtf*1.08+annualMtg;
-    var yr3=annualMtf*Math.pow(1.08,2)+annualMtg;
-    var threeYearCost=yr1+yr2+yr3;
-    if(threeYearCost>500){
-      // Round to nearest $100
-      var suggested=Math.round(threeYearCost/100)*100;
-      document.getElementById('fee-input').value=suggested;
-    }
-    // Save quote seen
-    d.quoteSeen=true;
-    sessionStorage.setItem('atc_resort',JSON.stringify(d));
+function upd(){
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  document.getElementById('q-full').textContent=fee?fmt(fee):'—';
+  document.getElementById('alpha-display').textContent=fee?fmt(fee):'—';
+  var r36=fi(fee,36,0.20);
+  document.getElementById('q-36').textContent=fee?fmtd(r36.mo)+'/mo':'—';
+  document.getElementById('q-12').textContent=fee?fmtd(fee/12)+'/mo':'—';
+  var r12={mo:fee/12,tot:fee}, r24=fi(fee,24,0.20);
+  document.getElementById('fi12-mo').textContent=fee?fmtd(r12.mo)+'/mo':'—';
+  document.getElementById('fi12-tot').textContent=fee?fmt(r12.tot):'—';
+  document.getElementById('fi24-mo').textContent=fee?fmtd(r24.mo)+'/mo':'—';
+  document.getElementById('fi24-tot').textContent=fee?fmt(r24.tot):'—';
+  document.getElementById('fi36-mo').textContent=fee?fmtd(r36.mo)+'/mo':'—';
+  document.getElementById('fi36-tot').textContent=fee?fmt(r36.tot):'—';
+  if(_msrp>0&&fee>0){
+    var diff=_msrp-fee;
+    document.getElementById('sh-diff').textContent=diff>0?fmt(diff)+' saved':'—';
   }
-}catch(e){}
-
-updateAll();
+  // Save fee to client record
+  var key=localStorage.getItem(AK);
+  if(key){
+    var c=JSON.parse(localStorage.getItem(SK)||'{}');
+    if(c[key]){c[key].alphaFee=fee;localStorage.setItem(SK,JSON.stringify(c));}
+  }
+}
+function init(){
+  var key=localStorage.getItem(AK);
+  if(!key)return;
+  var c=JSON.parse(localStorage.getItem(SK)||'{}');
+  var d=c[key]||{};
+  if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name;
+  if(d.resort)document.getElementById('b-resort').textContent=d.resort;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  if(mo>0){
+    document.getElementById('s-mo').textContent=fmt(mo)+'/mo';
+    document.getElementById('s-save-mo').textContent=fmt(mo)+'/mo';
+    document.getElementById('s-save-yr').textContent=fmt(mo*12)+'/yr';
+  }
+  var three=parseFloat(d.threeYearCost)||0;
+  if(!three){
+    var mtf=parseFloat(d.maitFees)||0, mtg=(parseFloat(d.monthlyMortgage)||0)*12;
+    three=(mtf+mtg)+(mtf*1.08+mtg)+(mtf*Math.pow(1.08,2)+mtg);
+  }
+  if(three>0){
+    _msrp=three;
+    document.getElementById('msrp').textContent=fmt(three);
+    var mtfAnn=parseFloat(d.maitFees)||0, mtgAnn=(parseFloat(d.monthlyMortgage)||0)*12;
+    if(mtfAnn||mtgAnn)document.getElementById('msrp-detail').textContent=fmt(mtfAnn)+'/yr MTF + '+fmt(mtgAnn)+'/yr mortgage × 3 yrs';
+  }
+  // Load saved fee or suggest 3yr cost
+  if(d.alphaFee&&d.alphaFee>0){
+    document.getElementById('fee-inp').value=d.alphaFee;
+  } else if(three>0){
+    document.getElementById('fee-inp').value=Math.round(three/100)*100;
+  }
+  upd();
+}
+init();
 </script>
 </body>
 </html>
