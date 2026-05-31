@@ -24,21 +24,32 @@ body{background:#f0f2f5;font-family:Georgia,serif;padding:20px}
 .f input{width:100%;border:2px solid #C8960C;border-radius:3px;padding:9px 11px;font-size:14px;font-weight:700;font-family:Georgia,serif;color:#1B2A4A;background:#fff}
 .f input:focus{outline:none;border-color:#1B2A4A}
 .calc-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin:16px 0}
-.results{display:none;background:#1B2A4A;color:#fff;border-radius:4px;padding:18px;margin-bottom:16px}
-.r-title{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:12px;text-align:center}
-.totals{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.tc{flex:1;min-width:120px;background:rgba(255,255,255,.08);border-radius:3px;padding:12px;text-align:center}
-.tc .tn{font-size:26px;font-weight:700;color:#C8960C;line-height:1;font-family:Georgia,serif}
-.tc .tl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px}
-table{width:100%;border-collapse:collapse;margin-top:8px}
-th{font-size:10px;text-transform:uppercase;letter-spacing:.3px;color:#C8960C;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.15);text-align:left}
-th:last-child{text-align:right}
-td{font-size:12px;padding:6px;border-bottom:1px solid rgba(255,255,255,.07);color:#fff}
-td:last-child{text-align:right;font-weight:700;color:#C8960C}
-.arrears{background:#f9f2e8;border:1px solid #e8c96a;border-radius:3px;padding:12px 14px;margin-bottom:16px}
-.arrears h4{font-size:11px;font-weight:700;color:#8a6200;letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
-.ar{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0e0c0;font-size:13px}
-.ar:last-child{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px}
+
+/* RESULTS */
+.results{display:none}
+.totals-big{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.tb{flex:1;min-width:120px;background:#1B2A4A;color:#fff;border-radius:4px;padding:14px 10px;text-align:center}
+.tb .tn{font-size:26px;font-weight:700;color:#C8960C;line-height:1;font-family:Georgia,serif}
+.tb .tl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:4px}
+
+/* COST TABLE - clean */
+.cost-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.cost-table thead tr{background:#1B2A4A}
+.cost-table th{color:#C8960C;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:10px 12px;text-align:left}
+.cost-table th:last-child{text-align:right}
+.cost-table td{padding:12px;font-size:14px;border-bottom:1px solid #eee;color:#1B2A4A;vertical-align:middle}
+.cost-table td:last-child{text-align:right;font-weight:700;font-size:16px;color:#1B2A4A}
+.cost-table tr.divider td{background:#f0f2f5;height:8px;padding:0;border:none}
+.cost-table .year-label{font-weight:700;color:#1B2A4A}
+.cost-table .year-sub{font-size:11px;color:#888;margin-top:2px}
+
+/* ARREARS */
+.arrears{background:#f9f2e8;border:1px solid #e8c96a;border-radius:3px;padding:14px 16px;margin-bottom:16px}
+.arrears h4{font-size:11px;font-weight:700;color:#8a6200;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px}
+.ar{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0e0c0;font-size:14px}
+.ar:last-child{border-bottom:none;font-weight:700;font-size:16px;padding-top:10px}
+.ar-label{color:#555}
+
 .nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
 .nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
 .nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
@@ -50,7 +61,7 @@ td:last-child{text-align:right;font-weight:700;color:#C8960C}
 <div class="wrap">
 <div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
 <div class="page-title">True Cost of Ownership</div>
-<div class="page-sub">See exactly what this ownership is costing you — and will continue to cost.</div>
+<div class="page-sub">Total amount paid to the resort — at each point in time.</div>
 
 <div class="client-bar">
 <div class="cb-field"><strong>Client</strong><span id="b-name">—</span></div>
@@ -72,27 +83,29 @@ td:last-child{text-align:right;font-weight:700;color:#C8960C}
 </div>
 </div>
 
-<button class="calc-btn" onclick="calc()">Calculate My True Cost</button>
+<button class="calc-btn" onclick="calc()">Calculate</button>
 
 <div class="results" id="results">
-<div class="r-title">True Cost of Ownership</div>
-<div class="totals">
-<div class="tc"><div class="tn" id="r-mo">$0</div><div class="tl">Monthly Total</div></div>
-<div class="tc"><div class="tn" id="r-yr">$0</div><div class="tl">Yearly Total</div></div>
-<div class="tc"><div class="tn" id="r-yrs">0</div><div class="tl">Years Owned</div></div>
-</div>
-<table>
-<thead><tr><th>Year</th><th>Monthly MTF</th><th>Annual MTF</th><th>Annual Mortgage</th><th>Total/Year</th></tr></thead>
-<tbody id="tbody"></tbody>
-</table>
+
+<div class="totals-big">
+<div class="tb"><div class="tn" id="r-mo">$0</div><div class="tl">Monthly Total</div></div>
+<div class="tb"><div class="tn" id="r-yr">$0</div><div class="tl">Yearly Total</div></div>
+<div class="tb"><div class="tn" id="r-yrs">0</div><div class="tl">Years Owned</div></div>
 </div>
 
+<table class="cost-table">
+<thead><tr><th>Time Frame</th><th>Total Paid to Resort</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+
 <div class="arrears" id="arrears" style="display:none">
-<h4>Amount Currently in Arrears</h4>
-<div class="ar"><span>Mortgage past due</span><span id="a-mtg">$0</span></div>
-<div class="ar"><span>Maintenance fees past due</span><span id="a-mtf">$0</span></div>
-<div class="ar"><span>Total arrears</span><span id="a-total">$0</span></div>
-<div class="ar"><span>If paid over 12 months</span><span id="a-12mo">$0/mo</span></div>
+<h4>Currently Past Due</h4>
+<div class="ar"><span class="ar-label">Mortgage past due</span><span id="a-mtg">$0</span></div>
+<div class="ar"><span class="ar-label">Maintenance fees past due</span><span id="a-mtf">$0</span></div>
+<div class="ar"><span class="ar-label">Total past due</span><span id="a-total">$0</span></div>
+<div class="ar"><span class="ar-label">If paid over 12 months</span><span id="a-12mo">$0/mo</span></div>
+</div>
+
 </div>
 
 <div class="nav-bar">
@@ -104,12 +117,95 @@ td:last-child{text-align:right;font-weight:700;color:#C8960C}
 <script>
 var SK='atc_clients_v2', AK='atc_active';
 function fmt(n){return '$'+Math.round(n).toLocaleString();}
+
 function load(){
   var key=localStorage.getItem(AK);
   if(!key)return{};
-  var c=JSON.parse(localStorage.getItem(SK)||'{}');
-  return c[key]||{};
+  return JSON.parse(localStorage.getItem(SK)||'{}')[key]||{};
 }
+
+function saveThreeYear(val){
+  var key=localStorage.getItem(AK);if(!key)return;
+  var c=JSON.parse(localStorage.getItem(SK)||'{}');
+  if(c[key]){c[key].threeYearCost=val;localStorage.setItem(SK,JSON.stringify(c));}
+}
+
+function calc(){
+  var yr=parseInt(document.getElementById('f-year').value)||new Date().getFullYear();
+  var mtf=parseFloat(document.getElementById('f-mtf').value)||0;
+  var mtg=parseFloat(document.getElementById('f-mtg').value)||0;
+  var mtfB=parseInt(document.getElementById('f-mtf-behind').value)||0;
+  var mtgB=parseInt(document.getElementById('f-mtg-behind').value)||0;
+  if(!mtf&&!mtg)return;
+
+  var mo=mtg+(mtf/12);
+  var yrsOwned=new Date().getFullYear()-yr;
+  if(yrsOwned<0)yrsOwned=0;
+
+  document.getElementById('r-mo').textContent=fmt(mo);
+  document.getElementById('r-yr').textContent=fmt(mo*12);
+  document.getElementById('r-yrs').textContent=yrsOwned+' yr'+(yrsOwned!==1?'s':'');
+
+  // Build rows: 1mo, 1yr, 3yr | 5yr | 10yr, 20yr, 30yr
+  var rows=[
+    {label:'1 Month', sub:'First month', months:1},
+    {label:'1 Year', sub:'End of year 1', months:12},
+    {label:'3 Years', sub:'End of year 3', months:36, isThree:true},
+    {label:'DIVIDER'},
+    {label:'5 Years', sub:'End of year 5', months:60},
+    {label:'DIVIDER'},
+    {label:'10 Years', sub:'End of year 10', months:120},
+    {label:'20 Years', sub:'End of year 20', months:240},
+    {label:'30 Years', sub:'End of year 30', months:360},
+  ];
+
+  var tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
+  var threeYr=0;
+
+  rows.forEach(function(r){
+    if(r.label==='DIVIDER'){
+      var tr=document.createElement('tr');
+      tr.className='divider';
+      tr.innerHTML='<td colspan="2"></td>';
+      tbody.appendChild(tr);
+      return;
+    }
+    // Calculate total paid = sum of each year's (MTF * 1.08^y + annual mortgage)
+    var totalPaid=0;
+    var totalMonths=r.months;
+    var fullYears=Math.floor(totalMonths/12);
+    var remMonths=totalMonths%12;
+    for(var y=0;y<fullYears;y++){
+      var annMtf=mtf*Math.pow(1.08,y);
+      var annMtg=mtg*12;
+      totalPaid+=annMtf+annMtg;
+    }
+    // Partial year
+    if(remMonths>0){
+      var annMtfPartial=mtf*Math.pow(1.08,fullYears);
+      totalPaid+=(annMtfPartial/12)*remMonths+(mtg*remMonths);
+    }
+    if(r.isThree)threeYr=totalPaid;
+
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><div class="year-label">'+r.label+'</div><div class="year-sub">'+r.sub+'</div></td>'
+      +'<td>'+fmt(totalPaid)+'</td>';
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('results').style.display='block';
+  saveThreeYear(threeYr);
+
+  // Arrears
+  var am=mtgB*mtg, af=mtfB*(mtf/12), tot=am+af;
+  document.getElementById('a-mtg').textContent=fmt(am);
+  document.getElementById('a-mtf').textContent=fmt(af);
+  document.getElementById('a-total').textContent=fmt(tot);
+  document.getElementById('a-12mo').textContent=fmt(tot/12)+'/mo';
+  document.getElementById('arrears').style.display=tot>0?'block':'none';
+}
+
 function init(){
   var d=load();
   if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name||'—';
@@ -120,43 +216,6 @@ function init(){
   if(d.mtfBehind)document.getElementById('f-mtf-behind').value=d.mtfBehind;
   if(d.mtgBehind)document.getElementById('f-mtg-behind').value=d.mtgBehind;
   calc();
-}
-function saveThreeYear(val){
-  var key=localStorage.getItem(AK);if(!key)return;
-  var c=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(c[key]){c[key].threeYearCost=val;localStorage.setItem(SK,JSON.stringify(c));}
-}
-function calc(){
-  var yr=parseInt(document.getElementById('f-year').value)||new Date().getFullYear();
-  var mtf=parseFloat(document.getElementById('f-mtf').value)||0;
-  var mtg=parseFloat(document.getElementById('f-mtg').value)||0;
-  var mtfB=parseInt(document.getElementById('f-mtf-behind').value)||0;
-  var mtgB=parseInt(document.getElementById('f-mtg-behind').value)||0;
-  if(!mtf&&!mtg)return;
-  var yrsOwned=new Date().getFullYear()-yr;if(yrsOwned<0)yrsOwned=0;
-  var mo=mtg+(mtf/12);
-  document.getElementById('r-mo').textContent=fmt(mo);
-  document.getElementById('r-yr').textContent=fmt(mo*12);
-  document.getElementById('r-yrs').textContent=yrsOwned+' yrs';
-  var tbody=document.getElementById('tbody');tbody.innerHTML='';
-  var three=0;
-  [1,2,3,5,10,15,20,25,30].forEach(function(y){
-    var m=mtf*Math.pow(1.08,y-1);
-    var am=mtg*12;
-    var tot=m+am;
-    if(y<=3)three+=tot;
-    var tr=document.createElement('tr');
-    tr.innerHTML='<td>Year '+y+'</td><td>'+fmt(m/12)+'/mo</td><td>'+fmt(m)+'</td><td>'+fmt(am)+'</td><td>'+fmt(tot)+'</td>';
-    tbody.appendChild(tr);
-  });
-  document.getElementById('results').style.display='block';
-  saveThreeYear(three);
-  var am=mtgB*mtg, af=mtfB*(mtf/12), tot=am+af;
-  document.getElementById('a-mtg').textContent=fmt(am);
-  document.getElementById('a-mtf').textContent=fmt(af);
-  document.getElementById('a-total').textContent=fmt(tot);
-  document.getElementById('a-12mo').textContent=fmt(tot/12)+'/mo';
-  if(tot>0)document.getElementById('arrears').style.display='block';
 }
 init();
 </script>
