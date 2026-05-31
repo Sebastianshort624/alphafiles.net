@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>True Cost of Ownership — Alpha Timeshare Consultants</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
+.wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
+.logo-bar{text-align:center;margin-bottom:20px}
+.logo-bar img{max-width:200px}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:10px 16px;font-size:13px;line-height:1.6;margin-bottom:20px;border-radius:0 0 3px 3px}
+.progress{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+.dot{width:10px;height:10px;border-radius:50%;background:#ddd}
+.dot.active{background:#C8960C}
+.dot.done{background:#1B2A4A}
+.step-box{border:1px solid #ddd;border-radius:4px;margin-bottom:20px;overflow:hidden}
+.step-hdr{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;display:flex;align-items:center;gap:10px}
+.step-hdr-num{background:#C8960C;color:#fff;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-body{padding:16px}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.field-row:last-child{margin-bottom:0}
+.field{flex:1;min-width:180px}
+.field label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:5px}
+.field input{width:100%;border:2px solid #C8960C;border-radius:3px;padding:8px 10px;font-size:14px;font-family:Georgia,serif;background:#fff;color:#1B2A4A;font-weight:700}
+.field input:focus{outline:none;border-color:#1B2A4A}
+.field input::placeholder{color:#bbb;font-weight:400}
+.results-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:20px;margin-bottom:20px}
+.results-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:14px;text-align:center}
+.totals-row{display:flex;gap:10px;margin-bottom:14px}
+.total-card{flex:1;background:rgba(255,255,255,.08);border-radius:3px;padding:14px 10px;text-align:center}
+.total-card .tc-num{font-size:28px;font-weight:700;color:#C8960C;line-height:1;font-family:Georgia,serif}
+.total-card .tc-label{font-size:10px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:4px}
+.cost-table{width:100%;border-collapse:collapse;margin-top:8px}
+.cost-table th{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#C8960C;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.15);text-align:left}
+.cost-table th:last-child{text-align:right}
+.cost-table td{font-size:12px;padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.08);color:#fff;vertical-align:top}
+.cost-table td:last-child{text-align:right;font-weight:700;color:#C8960C}
+.cost-table tr:last-child td{border-bottom:none}
+.arrears-box{background:#f9f2e8;border:1px solid #e8c96a;border-radius:3px;padding:12px 14px;margin-bottom:16px}
+.arrears-box h4{font-size:11px;font-weight:700;color:#8a6200;letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+.arrears-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #f0e0c0}
+.arrears-row:last-child{border-bottom:none;font-weight:700;color:#1B2A4A;font-size:14px;padding-top:8px}
+.arrears-label{color:#555}
+.calc-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;letter-spacing:.3px;margin-bottom:16px}
+.calc-btn:hover{background:#a87a08}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #ddd}
+.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;cursor:pointer;border:none;font-family:Georgia,serif}
+.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nav-btn.next{background:#C8960C;color:#fff}
+.nav-btn.next:hover{background:#a87a08}
+.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
+.step-note{text-align:center;font-size:11px;color:#888;margin-bottom:16px;font-style:italic}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="Alpha Timeshare Consultants"></div>
+
+<div class="progress">
+<div class="dot done"></div>
+<div class="dot done"></div>
+<div class="dot done"></div>
+<div class="dot active"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+
+<div class="page-title">True Cost of Ownership</div>
+<div class="page-sub">See exactly what this ownership has cost you — and what it will continue to cost if nothing changes.</div>
+
+<div class="step-box">
+<div class="step-hdr"><div class="step-hdr-num">1</div>Mortgage Details</div>
+<div class="step-body">
+<div class="field-row">
+<div class="field"><label>Year Purchased</label><input type="number" id="f-year" placeholder="e.g. 2015" min="1980" max="2030"></div>
+<div class="field"><label>Original Purchase Price</label><input type="number" id="f-purchase" placeholder="e.g. 18000"></div>
+</div>
+<div class="field-row">
+<div class="field"><label>Current Mortgage Balance</label><input type="number" id="f-balance" placeholder="e.g. 18000"></div>
+<div class="field"><label>Monthly Mortgage Payment</label><input type="number" id="f-monthly-mtg" placeholder="e.g. 340"></div>
+</div>
+<div class="field-row">
+<div class="field"><label>Months Behind on Mortgage</label><input type="number" id="f-mtg-behind" placeholder="0" min="0"></div>
+<div class="field"><label>Mortgage Status</label><input type="text" id="f-mtg-status" placeholder="e.g. Still owes / Paid off"></div>
+</div>
+</div>
+</div>
+
+<div class="step-box">
+<div class="step-hdr"><div class="step-hdr-num">2</div>Maintenance Fee Details</div>
+<div class="step-body">
+<div class="field-row">
+<div class="field"><label>Annual Maintenance Fees</label><input type="number" id="f-annual-mtf" placeholder="e.g. 1600"></div>
+<div class="field"><label>Monthly Maintenance Fee</label><input type="number" id="f-monthly-mtf" placeholder="e.g. 133"></div>
+</div>
+<div class="field-row">
+<div class="field"><label>Months Behind on Maint. Fees</label><input type="number" id="f-mtf-behind" placeholder="0" min="0"></div>
+<div class="field"><label>Maint. Fee Status</label><input type="text" id="f-mtf-status" placeholder="e.g. Current / Behind"></div>
+</div>
+</div>
+</div>
+
+<button class="calc-btn" onclick="calculate()">Calculate My True Cost of Ownership</button>
+
+<div class="results-box hidden" id="results">
+<div class="results-title">True Cost of Ownership Results</div>
+<div class="totals-row">
+<div class="total-card"><div class="tc-num" id="r-monthly">$0</div><div class="tc-label">Monthly Total</div></div>
+<div class="total-card"><div class="tc-num" id="r-yearly">$0</div><div class="tc-label">Yearly Total</div></div>
+<div class="total-card"><div class="tc-num" id="r-years">0</div><div class="tc-label">Years Owned</div></div>
+</div>
+<table class="cost-table">
+<thead><tr><th>Year</th><th>Monthly MTF</th><th>Annual MTF</th><th>Annual Mortgage</th><th>Total/Year</th></tr></thead>
+<tbody id="cost-tbody"></tbody>
+</table>
+</div>
+
+<div class="arrears-box hidden" id="arrears">
+<h4>Amount Currently in Arrears</h4>
+<div class="arrears-row"><span class="arrears-label">Mortgage past due</span><span id="a-mtg">$0</span></div>
+<div class="arrears-row"><span class="arrears-label">Maintenance fees past due</span><span id="a-mtf">$0</span></div>
+<div class="arrears-row"><span class="arrears-label">Total arrears</span><span id="a-total">$0</span></div>
+<div class="arrears-row" style="margin-top:8px"><span class="arrears-label">If paid over 12 months</span><span id="a-12mo">$0/mo</span></div>
+</div>
+
+<div class="step-note">Step 4 of 6 — Next: Your Service Quote</div>
+<div class="nav-bar">
+<a href="/rights" class="nav-btn prev">← Back</a>
+<span class="nav-step">Your Quote →</span>
+<a href="/quote" class="nav-btn next">Next →</a>
+</div>
+</div>
+
+<script>
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function calculate(){
+  var year=parseInt(document.getElementById('f-year').value)||new Date().getFullYear();
+  var balance=parseFloat(document.getElementById('f-balance').value)||0;
+  var monthlyMtg=parseFloat(document.getElementById('f-monthly-mtg').value)||0;
+  var annualMtf=parseFloat(document.getElementById('f-annual-mtf').value)||0;
+  var monthlyMtf=parseFloat(document.getElementById('f-monthly-mtf').value)||(annualMtf/12);
+  if(!annualMtf&&monthlyMtf)annualMtf=monthlyMtf*12;
+  var mtgBehind=parseInt(document.getElementById('f-mtg-behind').value)||0;
+  var mtfBehind=parseInt(document.getElementById('f-mtf-behind').value)||0;
+  var yearsOwned=new Date().getFullYear()-year;
+  if(yearsOwned<0)yearsOwned=0;
+  var totalMonthly=monthlyMtg+monthlyMtf;
+  var totalYearly=totalMonthly*12;
+  document.getElementById('r-monthly').textContent=fmt(totalMonthly);
+  document.getElementById('r-yearly').textContent=fmt(totalYearly);
+  document.getElementById('r-years').textContent=yearsOwned+' yrs';
+  var tbody=document.getElementById('cost-tbody');
+  tbody.innerHTML='';
+  var currentMtf=annualMtf;
+  var years=[1,2,3,5,10,15,20,25,30];
+  years.forEach(function(y){
+    var mtfAtYear=annualMtf*Math.pow(1.08,y-1);
+    var monthlyMtfAtYear=mtfAtYear/12;
+    var annualMortgage=monthlyMtg*12;
+    var total=mtfAtYear+annualMortgage;
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>Year '+y+'</td><td>'+fmt(monthlyMtfAtYear)+'/mo</td><td>'+fmt(mtfAtYear)+'</td><td>'+fmt(annualMortgage)+'</td><td>'+fmt(total)+'</td>';
+    tbody.appendChild(tr);
+  });
+  document.getElementById('results').classList.remove('hidden');
+  var arrearsMtg=mtgBehind*monthlyMtg;
+  var arrearsMtf=mtfBehind*(annualMtf/12);
+  var totalArrears=arrearsMtg+arrearsMtf;
+  document.getElementById('a-mtg').textContent=fmt(arrearsMtg);
+  document.getElementById('a-mtf').textContent=fmt(arrearsMtf);
+  document.getElementById('a-total').textContent=fmt(totalArrears);
+  document.getElementById('a-12mo').textContent=fmt(totalArrears/12)+'/mo';
+  document.getElementById('arrears').classList.remove('hidden');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+// Auto-fill from sessionStorage if available
+try{
+  var d=JSON.parse(sessionStorage.getItem('atc_resort'));
+  if(d){
+    if(d.balanceAmount)document.getElementById('f-balance').value=d.balanceAmount;
+    if(d.monthlyMortgage)document.getElementById('f-monthly-mtg').value=d.monthlyMortgage;
+    if(d.maitFees)document.getElementById('f-annual-mtf').value=d.maitFees;
+    if(d.purchasePrice)document.getElementById('f-purchase').value=d.purchasePrice;
+    if(d.datePurchased){var yr=new Date(d.datePurchased).getFullYear();if(yr>1980)document.getElementById('f-year').value=yr;}
+  }
+}catch(e){}
+</script>
+</body>
+</html>
