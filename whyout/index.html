@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Do You Want Out — Alpha Timeshare Consultants</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
+.wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
+.logo-bar{text-align:center;margin-bottom:16px}
+.logo-bar img{max-width:180px}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;line-height:1.5;margin-bottom:20px;border-radius:0 0 3px 3px}
+.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:12px}
+.group{margin-bottom:14px;border:1px solid #ddd;border-radius:4px;overflow:hidden}
+.group-hdr{background:#1B2A4A;color:#fff;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;gap:8px}
+.group-hdr .gh-icon{font-size:16px}
+.group-hdr .gh-right{font-size:10px;font-weight:700;color:#C8960C;background:rgba(200,150,12,.15);padding:2px 8px;border-radius:10px;margin-left:auto}
+.group-items{padding:10px 14px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0}
+.item:last-child{border-bottom:none}
+.cb{width:14px;height:14px;border:2px solid #1B2A4A;border-radius:2px;flex-shrink:0;margin-top:2px;cursor:pointer;background:#fff;appearance:none;-webkit-appearance:none}
+.cb:checked{background:#1B2A4A;border-color:#1B2A4A}
+.item-label{font-size:13px;color:#2D2D2D;line-height:1.45;cursor:pointer;flex:1}
+.item-law{font-size:10px;color:#C8960C;font-weight:700;margin-top:2px}
+
+/* MOTIVATION SCALE */
+.motivation-section{margin-bottom:14px;border:1px solid #ddd;border-radius:4px;overflow:hidden}
+.motivation-hdr{background:#1B2A4A;color:#fff;padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.3px}
+.motivation-body{padding:14px}
+.scale-quote{font-size:13px;color:#555;font-style:italic;margin-bottom:14px;line-height:1.6;border-left:3px solid #C8960C;padding-left:12px}
+.scale-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.scale-btn{flex:1;min-width:44px;padding:10px 4px;text-align:center;border:2px solid #ddd;border-radius:4px;cursor:pointer;background:#fff;font-family:Georgia,serif;transition:all .15s}
+.scale-btn:hover{border-color:#C8960C}
+.scale-btn.selected{background:#1B2A4A;border-color:#1B2A4A;color:#fff}
+.scale-btn.selected.high{background:#C8960C;border-color:#C8960C}
+.scale-num{font-size:18px;font-weight:700;display:block}
+.scale-label{font-size:9px;color:inherit;opacity:.8;display:block;margin-top:2px}
+.scale-result{text-align:center;font-size:14px;font-weight:700;color:#1B2A4A;margin-top:8px;min-height:22px}
+
+.other-row{padding:14px;border-top:1px solid #eee}
+.other-label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:5px}
+.other-input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif;resize:vertical;min-height:56px}
+
+.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:16px;letter-spacing:.3px}
+.save-btn:hover{background:#a87a08}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
+.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
+.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nav-btn.next{background:#C8960C;color:#fff}
+.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+<div class="page-title">Why Do You Want Out?</div>
+<div class="page-sub">Select everything that applies. Every answer strengthens your case file.</div>
+<div id="toast" class="toast"></div>
+
+<!-- RIGHT TO SAFETY -->
+<div class="group">
+<div class="group-hdr"><span class="gh-icon">🛡</span>Right to Safety — Financial & Physical<span class="gh-right" id="cnt-safety"></span></div>
+<div class="group-items">
+<div class="item"><input type="checkbox" class="cb" id="s1" data-group="safety" onchange="upd()"><label class="item-label" for="s1">This is causing serious financial hardship or debt<div class="item-law">FTC Act §5 / CFPB — predatory financial product</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s2" data-group="safety" onchange="upd()"><label class="item-label" for="s2">Maintenance fees are too expensive and keep rising<div class="item-law">FTC Act §5 — undisclosed escalating obligation</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s3" data-group="safety" onchange="upd()"><label class="item-label" for="s3">I am retired or on a fixed income<div class="item-law">Elder Financial Abuse statutes — targeting vulnerable consumers</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s4" data-group="safety" onchange="upd()"><label class="item-label" for="s4">Health issues prevent me from traveling<div class="item-law">ADA / State Consumer Protection — failure to accommodate</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s5" data-group="safety" onchange="upd()"><label class="item-label" for="s5">I am getting older and no longer want this obligation<div class="item-law">Elder Financial Abuse statutes</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s6" data-group="safety" onchange="upd()"><label class="item-label" for="s6">Death or illness of a spouse or co-owner<div class="item-law">State Consumer Protection — failure to release hardship-based owner</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s7" data-group="safety" onchange="upd()"><label class="item-label" for="s7">I am concerned about this passing to my children<div class="item-law">State Timeshare Act — undisclosed perpetual inheritance liability</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="s8" data-group="safety" onchange="upd()"><label class="item-label" for="s8">The total monthly cost is no longer manageable<div class="item-law">FTC Act §5 — material omission of true ongoing cost</div></label></div>
+</div>
+</div>
+
+<!-- RIGHT TO BE HEARD -->
+<div class="group">
+<div class="group-hdr"><span class="gh-icon">📣</span>Right to Be Heard<span class="gh-right" id="cnt-heard"></span></div>
+<div class="group-items">
+<div class="item"><input type="checkbox" class="cb" id="h1" data-group="heard" onchange="upd()"><label class="item-label" for="h1">The resort refuses to help me exit<div class="item-law">State Consumer Protection — failure to respond to consumer complaint</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="h2" data-group="heard" onchange="upd()"><label class="item-label" for="h2">Poor management or customer service<div class="item-law">CFPB Regulation — failure to acknowledge and resolve dispute</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="h3" data-group="heard" onchange="upd()"><label class="item-label" for="h3">Unexpected fee increases or special assessments<div class="item-law">State UDAP — undisclosed cost escalation</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="h4" data-group="heard" onchange="upd()"><label class="item-label" for="h4">Resort has closed, been sold, or changed hands<div class="item-law">State Consumer Protection — material change to contracted product</div></label></div>
+</div>
+</div>
+
+<!-- RIGHT TO CHOOSE -->
+<div class="group">
+<div class="group-hdr"><span class="gh-icon">🗓</span>Right to Choose — Access & Availability<span class="gh-right" id="cnt-choose"></span></div>
+<div class="group-items">
+<div class="item"><input type="checkbox" class="cb" id="c1" data-group="choose" onchange="upd()"><label class="item-label" for="c1">I rarely or never use it — I'm paying for nothing<div class="item-law">FTC Act §5 — misrepresentation of usable value</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="c2" data-group="choose" onchange="upd()"><label class="item-label" for="c2">Availability is terrible — can never get what I want<div class="item-law">FTC Act §5 — misrepresentation of access and availability</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="c3" data-group="choose" onchange="upd()"><label class="item-label" for="c3">I was told owners have priority access — that was not true<div class="item-law">FTC Act §5 — false promise of preferential access</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="c4" data-group="choose" onchange="upd()"><label class="item-label" for="c4">My travel preferences or lifestyle have changed<div class="item-law">Right to Choose — restrictions prevent practical use</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="c5" data-group="choose" onchange="upd()"><label class="item-label" for="c5">I tried to exit through the resort — they refused<div class="item-law">State Consumer Protection — denial of consumer's right to exit</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="c6" data-group="choose" onchange="upd()"><label class="item-label" for="c6">I tried to sell it — no buyers at any price<div class="item-law">FTC Act §5 — misrepresentation of resale value</div></label></div>
+</div>
+</div>
+
+<!-- RIGHT TO BE INFORMED -->
+<div class="group">
+<div class="group-hdr"><span class="gh-icon">⚖️</span>Right to Be Informed — Deception & Misrepresentation<span class="gh-right" id="cnt-informed"></span></div>
+<div class="group-items">
+<div class="item"><input type="checkbox" class="cb" id="i1" data-group="informed" onchange="upd()"><label class="item-label" for="i1">I was misled during the sales presentation<div class="item-law">FTC Act §5 — deceptive trade practice</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="i2" data-group="informed" onchange="upd()"><label class="item-law" for="i2"><label class="item-label" for="i2">I was told it was an investment that would appreciate<div class="item-law">FTC Act §5 — fraudulent misrepresentation of value</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="i3" data-group="informed" onchange="upd()"><label class="item-label" for="i3">I did not know the contract was perpetual — no end date<div class="item-law">State Timeshare Act — failure to disclose perpetual obligation</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="i4" data-group="informed" onchange="upd()"><label class="item-label" for="i4">The true long-term cost was never disclosed to me<div class="item-law">TILA / FTC Disclosure Rule — failure to disclose total cost</div></label></div>
+<div class="item"><input type="checkbox" class="cb" id="i5" data-group="informed" onchange="upd()"><label class="item-label" for="i5">I can vacation better and cheaper without it<div class="item-law">FTC Act §5 — misrepresentation of comparative value</div></label></div>
+</div>
+</div>
+
+<!-- MOTIVATION SCALE -->
+<div class="motivation-section">
+<div class="motivation-hdr">🔥 Motivation Scale</div>
+<div class="motivation-body">
+<div class="scale-quote">"On a scale from 1 to 10 — how strong is your desire to get out of this as quickly as possible?"</div>
+<div class="scale-wrap" id="scale-wrap">
+<button class="scale-btn" onclick="setScale(1)"><span class="scale-num">1</span><span class="scale-label">Not urgent</span></button>
+<button class="scale-btn" onclick="setScale(2)"><span class="scale-num">2</span><span class="scale-label">Low</span></button>
+<button class="scale-btn" onclick="setScale(3)"><span class="scale-num">3</span><span class="scale-label">Somewhat</span></button>
+<button class="scale-btn" onclick="setScale(4)"><span class="scale-num">4</span><span class="scale-label">Moderate</span></button>
+<button class="scale-btn" onclick="setScale(5)"><span class="scale-num">5</span><span class="scale-label">Motivated</span></button>
+<button class="scale-btn" onclick="setScale(6)"><span class="scale-num">6</span><span class="scale-label">Clear desire</span></button>
+<button class="scale-btn" onclick="setScale(7)"><span class="scale-num">7</span><span class="scale-label">Strong</span></button>
+<button class="scale-btn" onclick="setScale(8)"><span class="scale-num">8</span><span class="scale-label">Very strong</span></button>
+<button class="scale-btn" onclick="setScale(9)"><span class="scale-num">9</span><span class="scale-label">Urgent</span></button>
+<button class="scale-btn" onclick="setScale(10)"><span class="scale-num">🔥</span><span class="scale-label">Get me out NOW</span></button>
+</div>
+<div class="scale-result" id="scale-result"></div>
+</div>
+</div>
+
+<div class="other-row">
+<label class="other-label">Other reason(s)</label>
+<textarea class="other-input" id="other-reasons" placeholder="Any additional reasons..."></textarea>
+</div>
+
+<button class="save-btn" onclick="saveWhyout()">💾 Save & Continue</button>
+
+<div class="nav-bar">
+<a href="/owner/" class="nav-btn prev">← Owner Info</a>
+<span class="nav-step">If You Do Nothing →</span>
+<a href="/wait/" class="nav-btn next">Next →</a>
+</div>
+</div>
+
+<script>
+var _scale=0;
+var SCALE_LABELS=['','Not urgent','Low','Somewhat','Moderate','Motivated','Clear desire','Strong','Very strong','Urgent','Get me out NOW'];
+
+function setScale(n){
+  _scale=n;
+  document.querySelectorAll('.scale-btn').forEach(function(b,i){
+    b.classList.remove('selected','high');
+    if(i+1===n){b.classList.add('selected');if(n>=8)b.classList.add('high');}
+  });
+  document.getElementById('scale-result').textContent=n+' out of 10 — '+SCALE_LABELS[n];
+}
+
+function upd(){
+  ['safety','heard','choose','informed'].forEach(function(g){
+    var cnt=document.querySelectorAll('.cb[data-group="'+g+'"]:checked').length;
+    var el=document.getElementById('cnt-'+g);
+    if(el)el.textContent=cnt>0?cnt+' selected':'';
+  });
+}
+
+function saveWhyout(){
+  var checks=[];
+  document.querySelectorAll('.cb:checked').forEach(function(b){checks.push(b.id);});
+  var other=document.getElementById('other-reasons').value.trim();
+  try{
+    var d=JSON.parse(sessionStorage.getItem('atc_resort'))||{};
+    d.whyout=checks;
+    d.whyoutOther=other;
+    d.motivation=_scale;
+    sessionStorage.setItem('atc_resort',JSON.stringify(d));
+    // Save to localStorage too
+    var SK='atc_clients_v2';
+    var clients=JSON.parse(localStorage.getItem(SK))||{};
+    var cur=sessionStorage.getItem('atc_cc');
+    if(cur&&clients[cur]){Object.assign(clients[cur],{whyout:checks,motivation:_scale});localStorage.setItem(SK,JSON.stringify(clients));}
+  }catch(e){}
+  var t=document.getElementById('toast');
+  t.textContent='✓ Saved — '+checks.length+' reason'+(checks.length!==1?'s':'')+' selected';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2000);
+}
+
+// Load existing
+try{
+  var d=JSON.parse(sessionStorage.getItem('atc_resort'));
+  if(d){
+    if(d.whyout&&d.whyout.length){
+      d.whyout.forEach(function(id){var el=document.getElementById(id);if(el)el.checked=true;});
+      upd();
+    }
+    if(d.motivation)setScale(d.motivation);
+    if(d.whyoutOther)document.getElementById('other-reasons').value=d.whyoutOther;
+  }
+}catch(e){}
+</script>
+</body>
+</html>
