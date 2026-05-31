@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0130)file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/index.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alpha Timeshare Consultants — Dashboard</title>
 <style>
@@ -49,9 +49,11 @@ body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;min-height:1
 </head>
 <body>
 <div class="header">
-  <img src="./home2_files/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
+  <img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
   <div class="header-right">
-    <select class="client-selector" id="client-dd" onchange="loadClient()"><option value="">— Select Client —</option></select>
+    <select class="client-selector" id="client-dd" onchange="loadClient()">
+      <option value="">— Select Client —</option>
+    </select>
     <button class="btn-new" onclick="showNewModal()">+ New Client</button>
   </div>
 </div>
@@ -71,70 +73,76 @@ body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;min-height:1
   </div>
 
   <div class="grid">
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/owner.html" class="card" id="card-owner">
+    <a href="owner.html" class="card" id="card-owner">
       <span class="status new" id="st-owner">New</span>
       <span class="icon">🏠</span>
-      <div class="label">Owner &amp; Resort Info</div>
-      <div class="desc">Personal details, resort, mortgage &amp; fees</div>
+      <div class="label">Owner & Resort Info</div>
+      <div class="desc">Personal details, resort, mortgage & fees</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/whyout.html" class="card" id="card-whyout">
+    <a href="whyout.html" class="card" id="card-whyout">
       <span class="status new" id="st-whyout">New</span>
       <span class="icon">❓</span>
       <div class="label">Why Do You Want Out?</div>
-      <div class="desc">Reasons, violations &amp; motivation scale</div>
+      <div class="desc">Reasons, violations & motivation scale</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/history.html" class="card" id="card-history">
+    <a href="wait.html" class="card" id="card-wait">
+      <span class="status new" id="st-wait">New</span>
+      <span class="icon">⚠️</span>
+      <div class="label">If You Do Nothing</div>
+      <div class="desc">Resort pursuit — stages 6, 7 &amp; 8</div>
+    </a>
+    <a href="history.html" class="card" id="card-history">
       <span class="status new" id="st-history">New</span>
       <span class="icon">⭐</span>
       <div class="label">Our Track Record</div>
       <div class="desc">BBB A+, 41 years, 5-star reviews</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/rights.html" class="card" id="card-rights">
+    <a href="rights.html" class="card" id="card-rights">
       <span class="status new" id="st-rights">New</span>
       <span class="icon">⚖️</span>
       <div class="label">Consumer Rights Assessment</div>
-      <div class="desc">Violations, statutes &amp; estimated fines</div>
+      <div class="desc">Violations, statutes & estimated fines</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/cost.html" class="card" id="card-cost">
+    <a href="cost.html" class="card" id="card-cost">
       <span class="status new" id="st-cost">New</span>
       <span class="icon">💰</span>
       <div class="label">True Cost of Ownership</div>
-      <div class="desc">30-year projection &amp; total exposure</div>
+      <div class="desc">30-year projection & total exposure</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/quote.html" class="card highlight" id="card-quote">
+    <a href="quote.html" class="card highlight" id="card-quote">
       <span class="status new" id="st-quote">New</span>
       <span class="icon">📄</span>
       <div class="label">Your Service Quote</div>
-      <div class="desc">Investment, savings &amp; financing options</div>
+      <div class="desc">Investment, savings & financing options</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/better.html" class="card" id="card-better">
+    <a href="better.html" class="card" id="card-better">
       <span class="status new" id="st-better">New</span>
       <span class="icon">🏆</span>
       <div class="label">What Makes Alpha Better</div>
-      <div class="desc">Group filings, Q&amp;A, guarantees</div>
+      <div class="desc">Group filings, Q&A, guarantees</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/recap.html" class="card" id="card-recap">
+    <a href="recap.html" class="card" id="card-recap">
       <span class="status new" id="st-recap">New</span>
       <span class="icon">📋</span>
-      <div class="label">Recap &amp; Next Steps</div>
+      <div class="label">Recap & Next Steps</div>
       <div class="desc">What happens after you sign</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/guarantee.html" class="card" id="card-guarantee">
+    <a href="guarantee.html" class="card" id="card-guarantee">
       <span class="status new" id="st-guarantee">New</span>
       <span class="icon">🛡</span>
       <div class="label">Certificate of Guarantee</div>
       <div class="desc">100% money-back written guarantee</div>
     </a>
-    <a href="file:///C:/Users/sebas/AppData/Local/Temp/a8d28c7a-673e-4519-bb6b-421fa34edc0d_Dashboard%20Presentation%20Files.zip.c0d/checklist.html" class="card" id="card-checklist">
+    <a href="checklist.html" class="card" id="card-checklist">
       <span class="status new" id="st-checklist">New</span>
       <span class="icon">✅</span>
       <div class="label">Client Acknowledgment</div>
-      <div class="desc">Review &amp; initial each item</div>
+      <div class="desc">Review & initial each item</div>
     </a>
     <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="card">
       <span class="icon">📝</span>
       <div class="label">Alpha Contract</div>
-      <div class="desc">Open &amp; sign enrollment agreement</div>
+      <div class="desc">Open & sign enrollment agreement</div>
     </a>
   </div>
 </div>
@@ -151,7 +159,7 @@ body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;min-height:1
     <input type="text" id="m-date">
     <div class="modal-btns">
       <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-      <button class="modal-btn primary" onclick="createClient()">Create &amp; Start</button>
+      <button class="modal-btn primary" onclick="createClient()">Create & Start</button>
     </div>
   </div>
 </div>
@@ -255,6 +263,5 @@ if(cur){
   if(d)updateCardStatuses(d);
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
