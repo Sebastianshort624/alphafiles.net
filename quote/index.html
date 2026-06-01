@@ -5,67 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Service Quote — Alpha Timeshare Consultants</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f2f5;font-family:Georgia,serif;padding:20px}
-.wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-.logo-bar{text-align:center;margin-bottom:16px}
-.logo-bar img{max-width:180px}
-.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
-.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
-.cb-field strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
-.cb-field span{font-size:13px;color:#1B2A4A;font-weight:700}
-.msrp-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
-.mc{flex:1;min-width:160px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
-.mc.resort{background:#fdf0ef;border-color:#e8a09a}
-.mc.alpha{background:#e8f5ee;border-color:#1a7a3c}
-.mc .ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
-.mc.resort .ml{color:#c0392b}
-.mc.alpha .ml{color:#1a7a3c}
-.mc .ma{font-size:28px;font-weight:700;line-height:1;font-family:Georgia,serif}
-.mc.resort .ma{color:#c0392b}
-.mc.alpha .ma{color:#1a7a3c}
-.mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
-.vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
-.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
-.save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
-.save-strip .sa{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif}
-.save-strip .ss{font-size:11px;opacity:.7;margin-top:2px}
-.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
-.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
-.fee-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.fee-lbl{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
-.fee-inp{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:160px;text-align:center}
-.fee-inp:focus{outline:none;border-color:#1B2A4A}
-.fee-note{font-size:11px;color:#888;line-height:1.4;flex:1}
-.qcards{display:flex;gap:10px;flex-wrap:wrap}
-.qc{flex:1;min-width:130px;border-radius:4px;padding:14px;text-align:center;border:2px solid #ddd}
-.qc.ft{border-color:#C8960C;background:#fff8e8}
-.qc .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#888;margin-bottom:6px}
-.qc .qa{font-size:22px;font-weight:700;color:#1B2A4A;line-height:1;font-family:Georgia,serif}
-.qc .qs{font-size:11px;color:#888;margin-top:4px}
-.qc.ft .ql{color:#C8960C}
-.qc.ft .qa{color:#C8960C}
-.sav-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:14px}
-.sav-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:10px}
-.sr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
-.sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
-.sv{color:#C8960C;font-weight:700}
-.sv.w{color:#fff}
-.ftabs{display:flex;gap:6px;margin-bottom:8px}
-.tb{flex:1;padding:8px;font-size:11px;font-weight:700;border:2px solid #1B2A4A;border-radius:3px;background:#fff;color:#1B2A4A;cursor:pointer;font-family:Georgia,serif}
-.tb.active{background:#1B2A4A;color:#fff}
-.tc{display:none;background:#f5f5f5;border-radius:3px;padding:12px 14px}
-.tc.active{display:block}
-.tr{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #e5e5e5;font-size:13px}
-.tr:last-child{border-bottom:none;font-weight:700;font-size:14px;padding-top:8px}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
-.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
-.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nb.next{background:#C8960C;color:#fff}
-.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
-</style>
-<style>
 body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
 .sidenav{width:220px;min-height:100vh;background:#1B2A4A;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;box-shadow:3px 0 12px rgba(0,0,0,.25);overflow-y:auto}
 .sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -94,9 +33,79 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
 .sn-modal-btn.primary{background:#C8960C;color:#fff}
 .sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+/* PAGE STYLES */
+*{box-sizing:border-box}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
+.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
+.cb-f strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
+.cb-f span{font-size:13px;color:#1B2A4A;font-weight:700}
+.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
+.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
+/* MSRP COMPARE */
+.msrp-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.mc{flex:1;min-width:160px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
+.mc.resort{background:#fdf0ef;border-color:#e8a09a}
+.mc.alpha{background:#e8f5ee;border-color:#1a7a3c}
+.mc .ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.mc.resort .ml{color:#c0392b}
+.mc.alpha .ml{color:#1a7a3c}
+.mc .ma{font-size:28px;font-weight:700;line-height:1;font-family:Georgia,serif}
+.mc.resort .ma{color:#c0392b}
+.mc.alpha .ma{color:#1a7a3c}
+.mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
+.vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
+.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
+.save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
+.save-strip .sa{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif}
+.save-strip .ss{font-size:11px;opacity:.7;margin-top:2px}
+/* FEE INPUT */
+.fee-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.fee-lbl{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
+.fee-inp{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:160px;text-align:center}
+.fee-inp:focus{outline:none;border-color:#1B2A4A}
+.fee-note{font-size:11px;color:#888;line-height:1.4;flex:1}
+/* PAY IN FULL */
+.pif-card{background:#fff8e8;border:2px solid #C8960C;border-radius:4px;padding:14px;text-align:center;margin-bottom:16px}
+.pif-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#C8960C;margin-bottom:4px}
+.pif-amount{font-size:32px;font-weight:700;color:#C8960C;font-family:Georgia,serif;line-height:1}
+.pif-sub{font-size:11px;color:#888;margin-top:4px}
+/* FINANCING CARDS - the big interactive ones */
+.fin-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}
+.fin-card{border:2px solid #ddd;border-radius:6px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .25s;background:#fff;position:relative;overflow:hidden}
+.fin-card:hover{border-color:#1B2A4A;transform:translateY(-2px)}
+.fin-card.selected{border-color:#1B2A4A;background:#1B2A4A;color:#fff;transform:translateY(-4px);box-shadow:0 6px 20px rgba(27,42,74,.3);z-index:2}
+.fin-card .fc-term{font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px;opacity:.7}
+.fin-card.selected .fc-term{opacity:1;color:#C8960C}
+.fin-card .fc-mo{font-size:18px;font-weight:700;line-height:1;font-family:Georgia,serif;color:#1B2A4A;transition:font-size .25s}
+.fin-card.selected .fc-mo{font-size:26px;color:#fff}
+.fin-card .fc-sub{font-size:9px;color:#888;margin-top:4px;line-height:1.3}
+.fin-card.selected .fc-sub{color:rgba(255,255,255,.7)}
+.fin-card .fc-total{font-size:10px;color:#aaa;margin-top:3px}
+.fin-card.selected .fc-total{color:rgba(255,255,255,.6)}
+/* SELECTED DETAIL */
+.sel-detail{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:4px;padding:14px;margin-top:10px;display:none}
+.sel-detail.show{display:block}
+.sd-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px}
+.sd-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #d0dcea;font-size:13px}
+.sd-row:last-child{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px;color:#1B2A4A}
+.sd-val{font-weight:700;color:#1B2A4A}
+/* SAVINGS */
+.sav-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:14px}
+.sav-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:10px}
+.sr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+.sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
+.sv{color:#C8960C;font-weight:700}
+.sv.w{color:#fff}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
+.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
+.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nb.next{background:#C8960C;color:#fff}
+.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
 </style>
 </head>
 <body>
+
 <div class="sidenav">
 <div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
 <div class="sn-client-box">
@@ -135,19 +144,21 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 </div>
 </div>
 </div>
-<div class="main-content"><div class="page-wrap">
-<div class="wrap">
-<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+
+<div class="main-content">
+<div class="page-wrap">
+
 <div class="page-title">Your Service Quote</div>
 <div class="page-sub">What you'll keep paying — vs. what it costs to stop.</div>
 
 <div class="client-bar">
-<div class="cb-field"><strong>Client</strong><span id="b-name">—</span></div>
-<div class="cb-field"><strong>Resort</strong><span id="b-resort">—</span></div>
+<div class="cb-f"><strong>Client</strong><span id="b-name">—</span></div>
+<div class="cb-f"><strong>Resort</strong><span id="b-resort">—</span></div>
 </div>
 
+<!-- MSRP COMPARISON -->
 <div class="msrp-row">
-<div class="mc resort"><div class="ml">🏨 Resort — 3-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 3 yrs (8%/yr)</div></div>
+<div class="mc resort"><div class="ml">🏨 Resort — 3-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 3 yrs</div></div>
 <div class="vs">VS</div>
 <div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">One time — then $0 forever</div></div>
 </div>
@@ -157,55 +168,76 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 <div class="ss">and every year after that</div>
 </div>
 
+<!-- SERVICE FEE -->
 <div class="sh">Alpha Service Fee</div>
 <div class="sb">
 <div class="fee-row">
 <span class="fee-lbl">Service Fee $</span>
 <input type="number" class="fee-inp" id="fee-inp" value="0" oninput="upd()">
-<span class="fee-note">Type your fee — default suggested = 3-year resort cost</span>
+<span class="fee-note">Type your fee — default = 3-year resort cost</span>
 </div>
-<div class="qcards">
-<div class="qc ft"><div class="ql">Pay in Full</div><div class="qa" id="q-full">—</div><div class="qs">Best value</div></div>
-<div class="qc"><div class="ql">36 Months</div><div class="qa" id="q-36">—</div><div class="qs">20% annual</div></div>
-<div class="qc"><div class="ql">12 Mo 0%</div><div class="qa" id="q-12">—</div><div class="qs">EasyPay</div></div>
+<div class="pif-card">
+<div class="pif-label">Pay in Full — Best Value</div>
+<div class="pif-amount" id="q-full">—</div>
+<div class="pif-sub">One-time payment — no interest, no monthly obligations</div>
 </div>
 </div>
 
-<div class="sh">What You Stop Paying</div>
+<!-- FINANCING OPTIONS -->
+<div class="sh">Financing Options — Select a Plan</div>
+<div class="sb">
+<div class="fin-grid" id="fin-grid">
+<div class="fin-card" id="fc-12" onclick="selPlan(12,0)">
+<div class="fc-term">12 Mo</div>
+<div class="fc-mo" id="fm-12">—</div>
+<div class="fc-sub">0% Interest</div>
+<div class="fc-total" id="ft-12">—</div>
+</div>
+<div class="fin-card" id="fc-24" onclick="selPlan(24,0.20)">
+<div class="fc-term">24 Mo</div>
+<div class="fc-mo" id="fm-24">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-24">—</div>
+</div>
+<div class="fin-card" id="fc-36" onclick="selPlan(36,0.20)">
+<div class="fc-term">36 Mo</div>
+<div class="fc-mo" id="fm-36">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-36">—</div>
+</div>
+<div class="fin-card" id="fc-48" onclick="selPlan(48,0.20)">
+<div class="fc-term">48 Mo</div>
+<div class="fc-mo" id="fm-48">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-48">—</div>
+</div>
+<div class="fin-card" id="fc-64" onclick="selPlan(64,0.20)">
+<div class="fc-term">64 Mo</div>
+<div class="fc-mo" id="fm-64">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-64">—</div>
+</div>
+</div>
+
+<div class="sel-detail" id="sel-detail">
+<div class="sd-title" id="sd-title">Selected Plan</div>
+<div class="sd-row"><span>Service Fee</span><span class="sd-val" id="sd-fee">—</span></div>
+<div class="sd-row"><span>Term</span><span class="sd-val" id="sd-term">—</span></div>
+<div class="sd-row"><span>Interest Rate</span><span class="sd-val" id="sd-rate">—</span></div>
+<div class="sd-row"><span>Monthly Payment</span><span class="sd-val" id="sd-mo">—</span></div>
+<div class="sd-row"><span>Total Paid</span><span class="sd-val" id="sd-tot">—</span></div>
+</div>
+</div>
+
+<!-- SAVINGS -->
+<div class="sh">What You Stop Paying After Exit</div>
 <div class="sb">
 <div class="sav-box">
-<div class="sav-title">Monthly & Yearly Savings After Exit</div>
+<div class="sav-title">Monthly & Yearly Savings</div>
 <div class="sr"><span>Current monthly obligation</span><span class="sv w" id="s-mo">—</span></div>
 <div class="sr"><span>After exit</span><span class="sv w">$0 / month</span></div>
 <div class="sr"><span>Monthly savings</span><span class="sv" id="s-save-mo">—</span></div>
 <div class="sr"><span>Yearly savings</span><span class="sv" id="s-save-yr">—</span></div>
-</div>
-</div>
-
-<div class="sh">Financing Options</div>
-<div class="sb">
-<div class="ftabs">
-<button class="tb active" onclick="tab('t12',this)">12 Mo — 0%</button>
-<button class="tb" onclick="tab('t24',this)">24 Months</button>
-<button class="tb" onclick="tab('t36',this)">36 Months</button>
-</div>
-<div class="tc active" id="t12">
-<div class="tr"><span>Term</span><span>12 months</span></div>
-<div class="tr"><span>Interest</span><span>0% EasyPay</span></div>
-<div class="tr"><span>Monthly</span><span id="fi12-mo">—</span></div>
-<div class="tr"><span>Total paid</span><span id="fi12-tot">—</span></div>
-</div>
-<div class="tc" id="t24">
-<div class="tr"><span>Term</span><span>24 months</span></div>
-<div class="tr"><span>Interest</span><span>20% annual</span></div>
-<div class="tr"><span>Monthly</span><span id="fi24-mo">—</span></div>
-<div class="tr"><span>Total paid</span><span id="fi24-tot">—</span></div>
-</div>
-<div class="tc" id="t36">
-<div class="tr"><span>Term</span><span>36 months</span></div>
-<div class="tr"><span>Interest</span><span>20% annual</span></div>
-<div class="tr"><span>Monthly</span><span id="fi36-mo">—</span></div>
-<div class="tr"><span>Total paid</span><span id="fi36-tot">—</span></div>
 </div>
 </div>
 
@@ -214,50 +246,63 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 <span class="ns">What Makes Alpha Better →</span>
 <a href="/better/" class="nb next">Next →</a>
 </div>
-</div>
+
+</div></div>
+
 <script>
-var SK='atc_clients_v2', AK='atc_active';
-var _msrp=0;
+var SK='atc_clients_v2',AK='atc_active';
+var _msrp=0,_selMo=null;
 function fmt(n){return '$'+Math.round(n).toLocaleString();}
 function fmtd(n){return '$'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-function fi(p,m,r){if(r===0)return{mo:p/m,tot:p};var x=r/12;var pmt=p*(x*Math.pow(1+x,m))/(Math.pow(1+x,m)-1);return{mo:pmt,tot:pmt*m};}
-function tab(id,btn){
-  document.querySelectorAll('.tc').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-  if(btn)btn.classList.add('active');
-}
+function fi(p,mo,r){if(r===0)return{mo:p/mo,tot:p};var x=r/12;var pmt=p*(x*Math.pow(1+x,mo))/(Math.pow(1+x,mo)-1);return{mo:pmt,tot:pmt*mo};}
+
 function upd(){
   var fee=parseFloat(document.getElementById('fee-inp').value)||0;
   document.getElementById('q-full').textContent=fee?fmt(fee):'—';
   document.getElementById('alpha-display').textContent=fee?fmt(fee):'—';
-  var r36=fi(fee,36,0.20);
-  document.getElementById('q-36').textContent=fee?fmtd(r36.mo)+'/mo':'—';
-  document.getElementById('q-12').textContent=fee?fmtd(fee/12)+'/mo':'—';
-  var r12={mo:fee/12,tot:fee}, r24=fi(fee,24,0.20);
-  document.getElementById('fi12-mo').textContent=fee?fmtd(r12.mo)+'/mo':'—';
-  document.getElementById('fi12-tot').textContent=fee?fmt(r12.tot):'—';
-  document.getElementById('fi24-mo').textContent=fee?fmtd(r24.mo)+'/mo':'—';
-  document.getElementById('fi24-tot').textContent=fee?fmt(r24.tot):'—';
-  document.getElementById('fi36-mo').textContent=fee?fmtd(r36.mo)+'/mo':'—';
-  document.getElementById('fi36-tot').textContent=fee?fmt(r36.tot):'—';
+  var plans=[{mo:12,r:0},{mo:24,r:0.20},{mo:36,r:0.20},{mo:48,r:0.20},{mo:64,r:0.20}];
+  plans.forEach(function(p){
+    var r=fi(fee,p.mo,p.r);
+    document.getElementById('fm-'+p.mo).textContent=fee?fmtd(r.mo)+'/mo':'—';
+    document.getElementById('ft-'+p.mo).textContent=fee?'Total: '+fmt(r.tot):'—';
+  });
   if(_msrp>0&&fee>0){
     var diff=_msrp-fee;
     document.getElementById('sh-diff').textContent=diff>0?fmt(diff)+' saved':'—';
   }
-  // Save fee to client record
-  var key=localStorage.getItem(AK);
-  if(key){
-    var c=JSON.parse(localStorage.getItem(SK)||'{}');
-    if(c[key]){c[key].alphaFee=fee;localStorage.setItem(SK,JSON.stringify(c));}
-  }
+  if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
+  save(fee);
 }
+
+var _selMo=null;
+function selPlan(mo,rate){
+  _selMo=mo;
+  document.querySelectorAll('.fin-card').forEach(function(c){c.classList.remove('selected');});
+  document.getElementById('fc-'+mo).classList.add('selected');
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var r=fi(fee,mo,rate);
+  var det=document.getElementById('sel-detail');
+  det.classList.add('show');
+  document.getElementById('sd-title').textContent=mo+'-Month Plan — Selected';
+  document.getElementById('sd-fee').textContent=fee?fmt(fee):'—';
+  document.getElementById('sd-term').textContent=mo+' months';
+  document.getElementById('sd-rate').textContent=rate===0?'0% Interest':'20% Annual';
+  document.getElementById('sd-mo').textContent=fee?fmtd(r.mo)+' / month':'—';
+  document.getElementById('sd-tot').textContent=fee?fmt(r.tot)+' total paid':'—';
+  save(fee,mo);
+}
+
+function save(fee,selMo){
+  var key=localStorage.getItem(AK);if(!key)return;
+  var c=JSON.parse(localStorage.getItem(SK)||'{}');
+  if(c[key]){c[key].alphaFee=fee||0;if(selMo)c[key].selectedTerm=selMo;localStorage.setItem(SK,JSON.stringify(c));}
+}
+
 function init(){
-  var key=localStorage.getItem(AK);
-  if(!key)return;
+  var key=localStorage.getItem(AK);if(!key)return;
   var c=JSON.parse(localStorage.getItem(SK)||'{}');
   var d=c[key]||{};
-  if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name;
+  if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name||'—';
   if(d.resort)document.getElementById('b-resort').textContent=d.resort;
   var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
   if(mo>0){
@@ -266,39 +311,32 @@ function init(){
     document.getElementById('s-save-yr').textContent=fmt(mo*12)+'/yr';
   }
   var three=parseFloat(d.threeYearCost)||0;
-  if(!three){
-    var mtf=parseFloat(d.maitFees)||0, mtg=(parseFloat(d.monthlyMortgage)||0)*12;
-    three=(mtf+mtg)+(mtf*1.08+mtg)+(mtf*Math.pow(1.08,2)+mtg);
-  }
+  if(!three){var mtf=parseFloat(d.maitFees)||0,mtg=(parseFloat(d.monthlyMortgage)||0)*12;three=(mtf+mtg)+(mtf*1.08+mtg)+(mtf*Math.pow(1.08,2)+mtg);}
   if(three>0){
     _msrp=three;
     document.getElementById('msrp').textContent=fmt(three);
-    var mtfAnn=parseFloat(d.maitFees)||0, mtgAnn=(parseFloat(d.monthlyMortgage)||0)*12;
-    if(mtfAnn||mtgAnn)document.getElementById('msrp-detail').textContent=fmt(mtfAnn)+'/yr MTF + '+fmt(mtgAnn)+'/yr mortgage × 3 yrs';
+    var ma=parseFloat(d.maitFees)||0,mg=(parseFloat(d.monthlyMortgage)||0)*12;
+    if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 3 yrs';
   }
-  // Load saved fee or suggest 3yr cost
-  if(d.alphaFee&&d.alphaFee>0){
-    document.getElementById('fee-inp').value=d.alphaFee;
-  } else if(three>0){
-    document.getElementById('fee-inp').value=Math.round(three/100)*100;
-  }
+  var fee=parseFloat(d.alphaFee)||0;
+  document.getElementById('fee-inp').value=fee||'';
+  if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
 }
-init();
-</script>
-</div></div>
-<script>
+
+/* ── SIDEBAR NAV ── */
 var _SK='atc_clients_v2',_AK='atc_active';
 function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return{};}}
 function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
-function _gk(){return localStorage.getItem(_AK)||'';}
-function snRefresh(){var c=_gc(),dd=document.getElementById('sn-client-dd'),cur=_gk();if(!dd)return;dd.innerHTML='<option value="">— Select Client —</option>';Object.keys(c).sort(function(a,b){return(c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){var o=document.createElement('option');o.value=k;var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');dd.appendChild(o);});if(cur)dd.value=cur;}
-function snLoadClient(){var k=document.getElementById('sn-client-dd').value;if(!k)return;localStorage.setItem(_AK,k);snToast('Loaded: '+(_gc()[k]?.firstName||k));setTimeout(function(){window.location.reload();},600);}
+function snRefresh(){var c=_gc(),dd=document.getElementById('sn-client-dd'),cur=localStorage.getItem(_AK)||'';if(!dd)return;dd.innerHTML='<option value="">— Select Client —</option>';Object.keys(c).sort(function(a,b){return(c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){var o=document.createElement('option');o.value=k;var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');dd.appendChild(o);});if(cur)dd.value=cur;}
+function snLoadClient(){var k=document.getElementById('sn-client-dd').value;if(!k)return;localStorage.setItem(_AK,k);snToast('Loaded');setTimeout(function(){window.location.reload();},600);}
 function snShowModal(){var t=new Date();document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();document.getElementById('sn-name').value='';document.getElementById('sn-resort').value='';document.getElementById('sn-modal').classList.add('active');}
 function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
 function snCreateClient(){var name=document.getElementById('sn-name').value.trim();var resort=document.getElementById('sn-resort').value.trim();var date=document.getElementById('sn-date').value;if(!name&&!resort){alert('Please enter a name or resort.');return;}var parts=name.split(' ');var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();var c=_gc();c[k]={firstName:parts[0]||'',lastName:parts.slice(1).join(' ')||'',name:name,resort:resort,date:date,_c:Date.now()};_sc(c);localStorage.setItem(_AK,k);snCloseModal();snRefresh();document.getElementById('sn-client-dd').value=k;snToast('Created: '+name);setTimeout(function(){window.location.href='/owner/';},700);}
 function snToast(msg){var t=document.getElementById('sn-toast');if(!t)return;t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 (function(){var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';document.querySelectorAll('.sn-item[data-page]').forEach(function(el){if(el.dataset.page===path)el.classList.add('active');});snRefresh();})();
+
+init();
 </script>
 </body>
 </html>
