@@ -51,8 +51,77 @@ body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px
 .nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
 .step-note{text-align:center;font-size:11px;color:#888;margin-bottom:16px;font-style:italic}
 </style>
+<style>
+body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
+.sidenav{width:220px;min-height:100vh;background:#1B2A4A;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;box-shadow:3px 0 12px rgba(0,0,0,.25);overflow-y:auto}
+.sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidenav .sn-logo img{max-width:140px}
+.sn-client-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-client-label{font-size:9px;font-weight:700;color:#C8960C;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px}
+.sn-client-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:11px;border-radius:3px;font-family:Georgia,serif}
+.sn-client-select option{background:#1B2A4A}
+.sn-new-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;margin-top:5px;font-family:Georgia,serif}
+.sn-menu{flex:1;padding:8px 0}
+.sn-item{display:flex;align-items:center;gap:8px;padding:8px 14px;text-decoration:none;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;letter-spacing:.2px;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#C8960C}
+.sn-item.active{background:rgba(200,150,12,.15);color:#C8960C;border-left-color:#C8960C}
+.sn-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 12px}
+.main-content{margin-left:220px;flex:1;padding:20px;min-height:100vh}
+.page-wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
+.sn-toast{display:none;position:fixed;bottom:20px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;border-radius:4px;z-index:300}
+.sn-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center}
+.sn-modal-overlay.active{display:flex}
+.sn-modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:380px;margin:20px}
+.sn-modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
+.sn-modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:3px;margin-top:10px}
+.sn-modal input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
+.sn-modal-btns{display:flex;gap:8px;margin-top:14px}
+.sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
+.sn-modal-btn.primary{background:#C8960C;color:#fff}
+.sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+</style>
 </head>
 <body>
+<div class="sidenav">
+<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+<div class="sn-client-box">
+<div class="sn-client-label">Active Client</div>
+<select class="sn-client-select" id="sn-client-dd" onchange="snLoadClient()"><option value="">— Select Client —</option></select>
+<button class="sn-new-btn" onclick="snShowModal()">+ New Client</button>
+</div>
+<nav class="sn-menu">
+<a href="/home/" class="sn-item" data-page="home"><span class="sn-icon">🏠</span>Dashboard</a>
+<div class="sn-divider"></div>
+<a href="/owner/" class="sn-item" data-page="owner"><span class="sn-icon">📋</span>Owner & Resort Info</a>
+<a href="/whyout/" class="sn-item" data-page="whyout"><span class="sn-icon">❓</span>Why Do You Want Out</a>
+<a href="/wait/" class="sn-item" data-page="wait"><span class="sn-icon">⚠️</span>If You Do Nothing</a>
+<a href="/history/" class="sn-item" data-page="history"><span class="sn-icon">⭐</span>Our Track Record</a>
+<a href="/rights/" class="sn-item" data-page="rights"><span class="sn-icon">⚖️</span>Consumer Rights</a>
+<a href="/cost/" class="sn-item" data-page="cost"><span class="sn-icon">💰</span>True Cost</a>
+<a href="/quote/" class="sn-item" data-page="quote"><span class="sn-icon">📄</span>Your Quote</a>
+<div class="sn-divider"></div>
+<a href="/better/" class="sn-item" data-page="better"><span class="sn-icon">🏆</span>What Makes Alpha Better</a>
+<a href="/recap/" class="sn-item" data-page="recap"><span class="sn-icon">📋</span>Recap & Next Steps</a>
+<a href="/guarantee/" class="sn-item" data-page="guarantee"><span class="sn-icon">🛡</span>Guarantee</a>
+<a href="/checklist/" class="sn-item" data-page="checklist"><span class="sn-icon">✅</span>Acknowledgment</a>
+<a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="sn-item"><span class="sn-icon">📝</span>Alpha Contract</a>
+</nav>
+</div>
+<div class="sn-toast" id="sn-toast"></div>
+<div class="sn-modal-overlay" id="sn-modal">
+<div class="sn-modal">
+<h3>New Client</h3>
+<label>Client Name</label><input type="text" id="sn-name" placeholder="Full name">
+<label>Resort / Developer</label><input type="text" id="sn-resort" placeholder="e.g. Westgate — Orlando FL">
+<label>Date</label><input type="text" id="sn-date">
+<div class="sn-modal-btns">
+<button class="sn-modal-btn secondary" onclick="snCloseModal()">Cancel</button>
+<button class="sn-modal-btn primary" onclick="snCreateClient()">Create & Start</button>
+</div>
+</div>
+</div>
+<div class="main-content"><div class="page-wrap">
 <div class="wrap">
 <div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="Alpha Timeshare Consultants"></div>
 
@@ -139,5 +208,19 @@ In business since 1985 &nbsp;|&nbsp; BBB File opened: 2022<br>
 <a href="/rights" class="nav-btn next">Next →</a>
 </div>
 </div>
+</div></div>
+<script>
+var _SK='atc_clients_v2',_AK='atc_active';
+function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return{};}}
+function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
+function _gk(){return localStorage.getItem(_AK)||'';}
+function snRefresh(){var c=_gc(),dd=document.getElementById('sn-client-dd'),cur=_gk();if(!dd)return;dd.innerHTML='<option value="">— Select Client —</option>';Object.keys(c).sort(function(a,b){return(c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){var o=document.createElement('option');o.value=k;var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');dd.appendChild(o);});if(cur)dd.value=cur;}
+function snLoadClient(){var k=document.getElementById('sn-client-dd').value;if(!k)return;localStorage.setItem(_AK,k);snToast('Loaded: '+(_gc()[k]?.firstName||k));setTimeout(function(){window.location.reload();},600);}
+function snShowModal(){var t=new Date();document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();document.getElementById('sn-name').value='';document.getElementById('sn-resort').value='';document.getElementById('sn-modal').classList.add('active');}
+function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
+function snCreateClient(){var name=document.getElementById('sn-name').value.trim();var resort=document.getElementById('sn-resort').value.trim();var date=document.getElementById('sn-date').value;if(!name&&!resort){alert('Please enter a name or resort.');return;}var parts=name.split(' ');var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();var c=_gc();c[k]={firstName:parts[0]||'',lastName:parts.slice(1).join(' ')||'',name:name,resort:resort,date:date,_c:Date.now()};_sc(c);localStorage.setItem(_AK,k);snCloseModal();snRefresh();document.getElementById('sn-client-dd').value=k;snToast('Created: '+name);setTimeout(function(){window.location.href='/owner/';},700);}
+function snToast(msg){var t=document.getElementById('sn-toast');if(!t)return;t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+(function(){var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';document.querySelectorAll('.sn-item[data-page]').forEach(function(el){if(el.dataset.page===path)el.classList.add('active');});snRefresh();})();
+</script>
 </body>
 </html>
