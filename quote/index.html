@@ -211,11 +211,11 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 <div class="fc-sub">20% Annual</div>
 <div class="fc-total" id="ft-48">—</div>
 </div>
-<div class="fin-card" id="fc-64" onclick="selPlan(64,0.20)">
-<div class="fc-term">64 Mo</div>
-<div class="fc-mo" id="fm-64">—</div>
+<div class="fin-card" id="fc-60" onclick="selPlan(60,0.20)">
+<div class="fc-term">60 Mo</div>
+<div class="fc-mo" id="fm-60">—</div>
 <div class="fc-sub">20% Annual</div>
-<div class="fc-total" id="ft-64">—</div>
+<div class="fc-total" id="ft-60">—</div>
 </div>
 </div>
 
@@ -260,7 +260,7 @@ function upd(){
   var fee=parseFloat(document.getElementById('fee-inp').value)||0;
   document.getElementById('q-full').textContent=fee?fmt(fee):'—';
   document.getElementById('alpha-display').textContent=fee?fmt(fee):'—';
-  var plans=[{mo:12,r:0},{mo:24,r:0.20},{mo:36,r:0.20},{mo:48,r:0.20},{mo:64,r:0.20}];
+  var plans=[{mo:12,r:0},{mo:24,r:0.20},{mo:36,r:0.20},{mo:48,r:0.20},{mo:60,r:0.20}];
   plans.forEach(function(p){
     var r=fi(fee,p.mo,p.r);
     document.getElementById('fm-'+p.mo).textContent=fee?fmtd(r.mo)+'/mo':'—';
