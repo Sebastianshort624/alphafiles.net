@@ -67,6 +67,41 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .cb-field strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
 .cb-field span{font-size:13px;color:#1B2A4A;font-weight:700}
 </style>
+
+<style>
+@media print {
+  .sidenav, .sn-toast, .sn-modal-overlay, .save-btn, .nav-bar, .print-btn-bar { display: none !important; }
+  .main-content { margin-left: 0 !important; padding: 0 !important; }
+  .page-wrap { box-shadow: none !important; border-radius: 0 !important; padding: 16px !important; max-width: 100% !important; }
+  .print-summary { display: block !important; }
+  .page-wrap > *:not(.print-summary) { display: none !important; }
+}
+.print-btn-bar { text-align: center; margin-top: 12px; display: flex; gap: 10px; }
+.print-btn { flex: 1; background: #1B2A4A; color: #fff; border: none; padding: 11px; font-size: 13px; font-weight: 700; border-radius: 3px; cursor: pointer; font-family: Georgia, serif; }
+.print-btn.gold { background: #C8960C; }
+.print-btn:hover { opacity: .85; }
+.print-summary { display: none; font-family: Georgia, serif; }
+.ps-header { text-align: center; margin-bottom: 16px; border-bottom: 3px solid #1B2A4A; padding-bottom: 12px; }
+.ps-logo { max-width: 160px; margin-bottom: 8px; }
+.ps-title { font-size: 18px; font-weight: 700; color: #1B2A4A; margin-bottom: 2px; }
+.ps-date { font-size: 11px; color: #888; }
+.ps-section { margin-bottom: 14px; }
+.ps-section-title { background: #1B2A4A; color: #fff; padding: 5px 10px; font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; margin-bottom: 6px; }
+.ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.ps-field { font-size: 12px; padding: 3px 0; border-bottom: 1px solid #f0f0f0; }
+.ps-field strong { display: block; font-size: 9px; color: #C8960C; text-transform: uppercase; letter-spacing: .3px; }
+.ps-field span { color: #1B2A4A; font-weight: 700; }
+.ps-violation { font-size: 11px; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+.ps-violation .vt { color: #1B2A4A; font-weight: 700; }
+.ps-violation .vr { color: #C8960C; font-size: 10px; }
+.ps-notes { font-size: 12px; color: #333; line-height: 1.6; white-space: pre-wrap; background: #f9f9f9; padding: 8px; border-radius: 3px; }
+.ps-totals { display: flex; gap: 10px; margin-top: 8px; }
+.ps-total { flex: 1; background: #1B2A4A; color: #fff; border-radius: 3px; padding: 8px; text-align: center; }
+.ps-total .ptn { font-size: 18px; font-weight: 700; color: #C8960C; }
+.ps-total .ptl { font-size: 9px; text-transform: uppercase; letter-spacing: .4px; opacity: .8; margin-top: 2px; }
+.ps-footer { text-align: center; font-size: 10px; color: #888; margin-top: 16px; border-top: 1px solid #ddd; padding-top: 8px; }
+</style>
+
 </head>
 <body>
 
@@ -172,6 +207,161 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 </div>
 
 <button class="save-btn" onclick="save()">💾 Save & Continue</button>
+
+<div class="print-btn-bar">
+  <button class="print-btn gold" onclick="buildAndPrint()">🖨 Print / Save as PDF</button>
+</div>
+
+<!-- PRINT SUMMARY (hidden on screen, visible when printing) -->
+<div class="print-summary" id="print-summary">
+  <div class="ps-header">
+    <img class="ps-logo" src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
+    <div class="ps-title">Client Assessment Summary</div>
+    <div class="ps-date" id="ps-date"></div>
+  </div>
+
+  <div class="ps-section">
+    <div class="ps-section-title">Owner Information</div>
+    <div class="ps-grid">
+      <div class="ps-field"><strong>Client Name</strong><span id="ps-name">—</span></div>
+      <div class="ps-field"><strong>Co-Owner</strong><span id="ps-coowner">—</span></div>
+      <div class="ps-field"><strong>Phone</strong><span id="ps-phone">—</span></div>
+      <div class="ps-field"><strong>Email</strong><span id="ps-email">—</span></div>
+      <div class="ps-field" style="grid-column:1/-1"><strong>Address</strong><span id="ps-address">—</span></div>
+    </div>
+  </div>
+
+  <div class="ps-section">
+    <div class="ps-section-title">Resort Details</div>
+    <div class="ps-grid">
+      <div class="ps-field"><strong>Resort Name</strong><span id="ps-resort">—</span></div>
+      <div class="ps-field"><strong>Location</strong><span id="ps-location">—</span></div>
+      <div class="ps-field"><strong>Year Purchased</strong><span id="ps-year">—</span></div>
+      <div class="ps-field"><strong>Purchase Price</strong><span id="ps-price">—</span></div>
+      <div class="ps-field"><strong>Mortgage Status</strong><span id="ps-mstatus">—</span></div>
+      <div class="ps-field"><strong>Balance</strong><span id="ps-balance">—</span></div>
+      <div class="ps-field"><strong>Monthly Mortgage</strong><span id="ps-mtg">—</span></div>
+      <div class="ps-field"><strong>Annual MTF</strong><span id="ps-mtf">—</span></div>
+    </div>
+    <div class="ps-totals">
+      <div class="ps-total"><div class="ptn" id="ps-mo">—</div><div class="ptl">Monthly Total</div></div>
+      <div class="ps-total"><div class="ptn" id="ps-yr">—</div><div class="ptl">Yearly Total</div></div>
+      <div class="ps-total"><div class="ptn" id="ps-ar">—</div><div class="ptl">Arrears</div></div>
+    </div>
+  </div>
+
+  <div class="ps-section">
+    <div class="ps-section-title">Why They Want Out — Documented Violations</div>
+    <div id="ps-violations">—</div>
+  </div>
+
+  <div class="ps-section" id="ps-notes-section" style="display:none">
+    <div class="ps-section-title">Notes</div>
+    <div class="ps-notes" id="ps-notes"></div>
+  </div>
+
+  <div class="ps-footer">
+    Alpha Timeshare Consultants, Inc. &nbsp;|&nbsp; (877) 848-3948 &nbsp;|&nbsp; alphatimeshareconsultants.com &nbsp;|&nbsp; Confidential — For Internal Use
+  </div>
+</div>
+
+<script>
+var VIOLATION_LABELS = {
+  s1:'I reached out to the resort — my concerns were ignored',s2:'My concerns were not addressed in a timely or meaningful manner',s3:'My questions were dismissed, deflected, or transferred without resolution',s4:'The resort provided no clear process to resolve my issues',
+  h1:'I experienced significant financial hardship since signing',h2:'I am getting older and can no longer carry this obligation',h3:'I am concerned about this passing to my children after I\'m gone',h4:'Health issues prevent me from traveling',h5:'Death or illness of a spouse or co-owner',h6:'Divorce or separation — ownership is now a disputed asset',h7:'The presentation used intimidation or high-pressure tactics',
+  c1:'Availability restricted — blackout dates prevent use when I want',c2:'Non-owners can book the same dates I cannot get as an owner',c3:'I was told owners have priority access — that was not true',c4:'Limited locations — I cannot get to resorts convenient to me',c5:'The presentation ran far longer than the 60–90 minutes I was told',c6:'I was pressured to sign before I had a chance to read the contract',c7:'Multiple salespeople were used — I felt trapped',c8:'I was offered gifts contingent on purchasing',
+  i1:'I was misled or lied to during the sales presentation',i2:'I was told it was an investment that would appreciate in value',i3:'The true long-term cost of ownership was never shown to me',i4:'Maintenance fees would increase 6–12% annually — never disclosed',i5:'I did not know the contract was perpetual — no end date',i6:'I was not told it has little to no resale value',i7:'I was not told I could cancel within the rescission period',i8:'Oral promises were made that did not appear in the contract',i9:'The contract is perpetual — my heirs would inherit it unwillingly',i10:'The salesperson was a 1099 contractor earning commission — never disclosed',i11:'Resort quality has declined significantly since purchase',i12:'I was pressured to sign on the spot — I felt I had no choice'
+};
+var VIOLATION_REFS = {
+  s1:'15 U.S.C. §45 / State Consumer Protection',s2:'12 C.F.R. §1024 — CFPB Regulation X',s3:'State UDAP',s4:'15 U.S.C. §45(a)',
+  h1:'15 U.S.C. §45 / 12 C.F.R. §1031',h2:'State Elder Abuse Statutes',h3:'State Timeshare Act',h4:'42 U.S.C. §12101 ADA',h5:'State Consumer Protection',h6:'State Property / Family Law',h7:'15 U.S.C. §45(n)',
+  c1:'15 U.S.C. §45(a)',c2:'15 U.S.C. §45(a)',c3:'15 U.S.C. §45(a)',c4:'State Timeshare Act',c5:'15 U.S.C. §45(a)',c6:'16 C.F.R. §429',c7:'State UDAP',c8:'15 U.S.C. §45(a)',
+  i1:'15 U.S.C. §45(a)',i2:'15 U.S.C. §45(a)',i3:'15 U.S.C. §1638 TILA / 12 C.F.R. §226',i4:'15 U.S.C. §45(a)',i5:'State Timeshare Act',i6:'15 U.S.C. §45(a)',i7:'16 C.F.R. §429.1',i8:'State UDAP',i9:'State Timeshare Act',i10:'15 U.S.C. §45(a)',i11:'State CPA',i12:'15 U.S.C. §45(a)'
+};
+
+function fmt(n){return n?'$'+Math.round(n).toLocaleString():'$0';}
+
+function buildAndPrint(){
+  var key=localStorage.getItem('atc_active');
+  var d={};
+  if(key){var c=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');d=c[key]||{};}
+
+  // Also grab current form values (may not be saved yet)
+  var live={
+    firstName:document.getElementById('f-first').value.trim(),
+    lastName:document.getElementById('f-last').value.trim(),
+    coFirst:document.getElementById('f-cofirst').value.trim(),
+    coLast:document.getElementById('f-colast').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    address:document.getElementById('f-address').value.trim(),
+    resort:document.getElementById('f-resort').value.trim(),
+    location:document.getElementById('f-location').value.trim(),
+    yearPurchased:document.getElementById('f-year').value,
+    purchasePrice:document.getElementById('f-purchase').value,
+    mortgageStatus:document.getElementById('f-mstatus').value,
+    balanceAmount:document.getElementById('f-balance').value,
+    monthlyMortgage:document.getElementById('f-mtg').value,
+    maitFees:document.getElementById('f-mtf').value,
+    mtgBehind:document.getElementById('f-mtg-behind').value,
+    mtfBehind:document.getElementById('f-mtf-behind').value,
+    whyOut:document.getElementById('f-why').value.trim(),
+    notes:document.getElementById('f-notes').value.trim()
+  };
+  // Merge live over saved
+  Object.keys(live).forEach(function(k){if(live[k])d[k]=live[k];});
+
+  // Populate print summary
+  document.getElementById('ps-date').textContent='Assessment Date: '+new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('ps-name').textContent=(d.firstName||'')+(d.lastName?' '+d.lastName:'') || '—';
+  document.getElementById('ps-coowner').textContent=(d.coFirst||'')+(d.coLast?' '+d.coLast:'') || '—';
+  document.getElementById('ps-phone').textContent=d.phone||'—';
+  document.getElementById('ps-email').textContent=d.email||'—';
+  document.getElementById('ps-address').textContent=d.address||'—';
+  document.getElementById('ps-resort').textContent=d.resort||'—';
+  document.getElementById('ps-location').textContent=d.location||'—';
+  document.getElementById('ps-year').textContent=d.yearPurchased||'—';
+  document.getElementById('ps-price').textContent=d.purchasePrice?'$'+parseInt(d.purchasePrice).toLocaleString():'—';
+  document.getElementById('ps-mstatus').textContent=d.mortgageStatus||'—';
+  document.getElementById('ps-balance').textContent=d.balanceAmount?'$'+parseInt(d.balanceAmount).toLocaleString():'—';
+  document.getElementById('ps-mtg').textContent=d.monthlyMortgage?'$'+parseInt(d.monthlyMortgage).toLocaleString()+'/mo':'—';
+  document.getElementById('ps-mtf').textContent=d.maitFees?'$'+parseInt(d.maitFees).toLocaleString()+'/yr':'—';
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var mb=(parseInt(d.mtgBehind)||0)*(parseFloat(d.monthlyMortgage)||0);
+  var fb=(parseInt(d.mtfBehind)||0)*((parseFloat(d.maitFees)||0)/12);
+  document.getElementById('ps-mo').textContent=fmt(mo);
+  document.getElementById('ps-yr').textContent=fmt(mo*12);
+  document.getElementById('ps-ar').textContent=fmt(mb+fb);
+
+  // Violations from saved data OR from whyout checkboxes
+  var vids=d.violations||d.whyout||[];
+  var vhtml='';
+  if(vids.length){
+    vids.forEach(function(id){
+      var lbl=VIOLATION_LABELS[id];
+      var ref=VIOLATION_REFS[id];
+      if(lbl)vhtml+='<div class="ps-violation"><div class="vt">'+lbl+'</div>'+(ref?'<div class="vr">'+ref+'</div>':'')+'</div>';
+    });
+  } else if(d.whyOut){
+    vhtml='<div class="ps-violation"><div class="vt">'+d.whyOut+'</div></div>';
+  }
+  document.getElementById('ps-violations').innerHTML=vhtml||'<div style="font-size:12px;color:#888">No violations recorded yet — complete the Consumer Rights Assessment</div>';
+
+  // Notes
+  var notes=(d.notes||'').trim();
+  if(notes){
+    document.getElementById('ps-notes').textContent=notes;
+    document.getElementById('ps-notes-section').style.display='block';
+  } else {
+    document.getElementById('ps-notes-section').style.display='none';
+  }
+
+  // Show print summary and trigger print
+  document.getElementById('print-summary').style.display='block';
+  setTimeout(function(){window.print();},200);
+}
+</script>
+
 <div class="nav-bar">
 <a href="/home/" class="nb prev">← Dashboard</a>
 <span class="ns">Why You Want Out →</span>
