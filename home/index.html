@@ -2,266 +2,455 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alpha Timeshare Consultants — Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;min-height:100vh}
-.header{background:#1B2A4A;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.header img{height:40px}
-.header-right{display:flex;align-items:center;gap:12px}
-.client-selector{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 12px;font-size:12px;border-radius:3px;font-family:Georgia,serif;min-width:220px}
-.client-selector option{background:#1B2A4A}
-.btn-new{background:#C8960C;color:#fff;border:none;padding:7px 14px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;letter-spacing:.3px}
-.btn-new:hover{background:#a87a08}
-.wrap{max-width:780px;margin:0 auto;padding:28px 20px}
-.welcome-block{text-align:center;margin-bottom:32px}
-.welcome-block h1{font-size:28px;color:#1B2A4A;font-weight:700;margin-bottom:6px}
-.welcome-block h1 span{color:#C8960C}
-.welcome-block p{font-size:14px;color:#555;line-height:1.7;max-width:560px;margin:0 auto 10px}
-.guarantee-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 20px;display:flex;align-items:center;gap:14px;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
-.guarantee-strip .gi{font-size:22px;flex-shrink:0}
-.guarantee-strip p{font-size:12px;line-height:1.5;opacity:.9}
-.guarantee-strip strong{color:#C8960C}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
-.card{background:#fff;border:2px solid #e8e8e8;border-radius:6px;padding:22px 16px;text-align:center;cursor:pointer;text-decoration:none;transition:all .2s;position:relative;display:block}
-.card:hover{border-color:#C8960C;transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
-.card .icon{font-size:32px;margin-bottom:10px;display:block}
-.card .label{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px;letter-spacing:.2px}
-.card .desc{font-size:11px;color:#888;line-height:1.4}
-.card .status{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.3px;text-transform:uppercase}
-.status.done{background:#e8f5ee;color:#1a7a3c}
-.status.progress{background:#fff8e8;color:#8a6200}
-.status.new{background:#EAF0F8;color:#1B2A4A}
-.card.highlight{border-color:#C8960C;background:#fff8e8}
-.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:10px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:16px}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
-.modal-overlay.active{display:flex}
-.modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:420px;margin:20px}
-.modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:16px}
-.modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px;margin-top:10px}
-.modal input,.modal select{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
-.modal-btns{display:flex;gap:8px;margin-top:16px}
-.modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
-.modal-btn.primary{background:#C8960C;color:#fff}
-.modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+body{font-family:var(--font);font-size:14px;background:var(--bg);display:flex;min-height:100vh}
+.sidenav{width:200px;min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-logo img{max-width:130px}
+.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:4px}
+.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:1px}
+.ct-row strong{color:#fff}
+.ct-progress{margin-top:6px}
+.ct-prog-label{font-size:10px;color:rgba(255,255,255,.5);margin-bottom:3px}
+.ct-prog-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px}
+.ct-prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-menu{flex:1;padding:4px 0}
+.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:12px;font-weight:500;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--gold)}
+.sn-item.active{background:rgba(200,150,12,.15);color:var(--gold);border-left-color:var(--gold);font-weight:700}
+.sn-item.done::after{content:'✓';margin-left:auto;color:var(--gold);font-size:10px}
+.sn-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:3px;padding:1px 5px;flex-shrink:0;min-width:20px;text-align:center}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 8px;font-size:11px;border-radius:4px;font-family:var(--font);margin-bottom:4px}
+.sn-cal-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:5px;font-size:11px;font-weight:600;border-radius:4px;cursor:pointer;font-family:var(--font)}
+.main-content{margin-left:200px;flex:1;padding:20px}
+.page-wrap{max-width:580px;margin:0 auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.page-hdr{background:var(--navy);border-radius:8px 8px 0 0;padding:20px 24px;margin:-28px -28px 24px;color:#fff}
+.page-hdr-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.page-hdr h1{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.page-hdr p{font-size:14px;color:rgba(255,255,255,.75)}
+.sec-block{border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+.sec-hdr{background:var(--navy);color:#fff;padding:12px 16px;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.sec-hdr .plus{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:24px;height:24px;border-radius:4px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-body{padding:16px}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.field-row:last-child{margin-bottom:0}
+.f{flex:1;min-width:180px}
+.f-full{flex:100%}
+.f label{display:block;font-size:12px;font-weight:500;color:#666;margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 12px;font-size:14px;font-family:var(--font);background:#fff;color:var(--navy);transition:border-color .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f input.hi{border-color:var(--gold);font-weight:600;font-size:16px}
+.f textarea{resize:vertical;min-height:80px}
+.f.hidden{display:none}
+.btn{padding:12px 24px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#a87a08}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:#142038}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+.btn-email{background:#EAF0F8;color:var(--navy);border:1.5px solid #c5d5e8}
+.btn-full{width:100%;justify-content:center}
+.btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.blue{color:var(--blue);cursor:pointer;text-decoration:underline;font-weight:500}
+.blue:hover{color:#1d4ed8}
+.popup-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.popup-ov.on{display:flex}
+.popup-box{background:#fff;border-radius:12px;padding:28px;max-width:460px;width:90%;max-height:80vh;overflow-y:auto;position:relative}
+.popup-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.popup-box p{font-size:14px;line-height:1.65;color:#333;margin-bottom:10px}
+.popup-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#888}
+.submit-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
+.submit-ov.on{display:flex}
+.submit-box{background:#fff;border-radius:12px;padding:28px;max-width:400px;width:90%}
+.submit-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.submit-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+.submit-item:last-child{border-bottom:none}
+.si-check{color:var(--green);font-size:16px}
+.si-empty{color:#ccc;font-size:16px}
+.toast{display:none;position:fixed;bottom:24px;left:224px;background:var(--green);color:#fff;padding:12px 20px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.stage-badge{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:20px}
+.stage-icon{font-size:28px}
+.stage-info h3{font-size:18px;font-weight:700;color:var(--navy)}
+.stage-info p{font-size:12px;color:#888;margin-top:2px}
+.quote-banner{background:var(--navy);color:#fff;border-radius:6px;padding:8px 14px;font-size:12px;display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.qb-item strong{display:block;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.qb-item span{font-size:14px;font-weight:600}
+@media print{.sidenav,.btn-row,.toast,.popup-ov,.submit-ov{display:none!important}.main-content{margin-left:0!important}}
 </style>
 </head>
 <body>
-<div class="header">
-  <img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
-  <div class="header-right">
-    <select class="client-selector" id="client-dd" onchange="loadClient()">
-      <option value="">— Select Client —</option>
-    </select>
-    <button class="btn-new" onclick="showNewModal()">+ New Client</button>
+
+<div class="sidenav">
+  <div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+  <div class="client-ticker" id="client-ticker">
+    <div class="ct-no-client">⚠️ No client selected</div>
+  </div>
+  <nav class="sn-menu">
+    <div class="sn-section">Pages</div>
+    <a href="/home/" class="sn-item active" data-page="home"><span class="sn-num">0</span>🏠 Dashboard</a>
+<a href="/owner/" class="sn-item " data-page="owner"><span class="sn-num">1</span>📋 Owner & Resort Info</a>
+<a href="/whyout/" class="sn-item " data-page="whyout"><span class="sn-num">2</span>❓ Why Do You Want Out</a>
+<a href="/wait/" class="sn-item " data-page="wait"><span class="sn-num">3</span>⚠️ If You Do Nothing</a>
+<a href="/group/" class="sn-item " data-page="group"><span class="sn-num">4</span>🔍 Finding Your Group</a>
+<a href="/approval/" class="sn-item " data-page="approval"><span class="sn-num">4a</span>✅ Money-Back Approval</a>
+<a href="/heirs/" class="sn-item " data-page="heirs"><span class="sn-num">4b</span>👨‍👩‍👧 Heirs & Estate Liability</a>
+<a href="/compensation/" class="sn-item " data-page="compensation"><span class="sn-num">4c</span>💵 Resort Compensation</a>
+<a href="/credit/" class="sn-item " data-page="credit"><span class="sn-num">4d</span>💳 To Pay or Not to Pay</a>
+<a href="/letter/" class="sn-item " data-page="letter"><span class="sn-num">4e</span>✉️ Mutual Release Letter</a>
+<a href="/guarantee/" class="sn-item " data-page="guarantee"><span class="sn-num">5</span>🛡 Certificate of Guarantee</a>
+<a href="/history/" class="sn-item " data-page="history"><span class="sn-num">6</span>⭐ Our Track Record</a>
+<a href="/rights/" class="sn-item " data-page="rights"><span class="sn-num">7</span>⚖️ Consumer Rights</a>
+<a href="/cost/" class="sn-item " data-page="cost"><span class="sn-num">8</span>💰 True Cost</a>
+<a href="/quote/" class="sn-item " data-page="quote"><span class="sn-num">9</span>📄 Your Quote</a>
+<a href="/followup/" class="sn-item " data-page="followup"><span class="sn-num">10</span>⏰ 30 & 90 Day Follow-Up</a>
+<a href="/better/" class="sn-item " data-page="better"><span class="sn-num">11</span>🏆 What Makes Alpha Better</a>
+<a href="/included/" class="sn-item " data-page="included"><span class="sn-num">12</span>📦 What's Included</a>
+<a href="/recap/" class="sn-item " data-page="recap"><span class="sn-num">13</span>📋 Recap</a>
+<a href="/checklist/" class="sn-item " data-page="checklist"><span class="sn-num">14</span>✅ Client Acknowledgment</a>
+<a href="/contract/" class="sn-item " data-page="contract"><span class="sn-num">15</span>📝 Alpha Contract</a>
+<a href="/free/" class="sn-item " data-page="free"><span class="sn-num">16</span>🎉 Let's Be Timeshare Free</a>
+
+    <div class="sn-divider"></div>
+    <div class="sn-section">📧 Email Sections</div>
+    <a href="/owner/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Owner & Resort Info</a>
+<a href="/whyout/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Why Do You Want Out</a>
+<a href="/rights/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Consumer Rights</a>
+<a href="/cost/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 True Cost</a>
+<a href="/quote/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Your Quote</a>
+<a href="/better/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 What Makes Alpha Better</a>
+<a href="/recap/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Recap</a>
+<a href="/guarantee/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Certificate of Guarantee</a>
+
+    <div class="sn-divider"></div>
+    <a href="/admin/" class="sn-item">⚙️ Admin</a>
+  </nav>
+  <div class="sn-cal">
+    <div class="sn-cal-lbl">📅 Today's Appointment</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-today">
+    <div class="sn-cal-lbl" style="margin-top:8px">📅 Follow-Up</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-followup">
+    <button class="sn-cal-btn" onclick="saveCalendar()">Save & Add to Calendar</button>
   </div>
 </div>
+<div class="toast" id="toast"></div>
 
-<div class="wrap">
-  <div id="toast" class="toast"></div>
-
-  <div class="welcome-block">
-    <h1>Welcome to <span>Alpha</span></h1>
-    <p>You are about to begin a 15–30 minute assessment. Your answers will help our Risk Management Team determine if your case qualifies for one of our existing group filings scheduled to be submitted to your resort.</p>
-    <p>If approved for a group filing, you will be joining other owners who have documented the same violations against the same resort. Together, you carry far more leverage than any single case. We will start by reviewing your ownership details, then walk through the reasons you want out.</p>
-  </div>
-
-  <div class="guarantee-strip">
-    <div class="gi">🛡</div>
-    <p><strong>100% Money-Back Written Guarantee.</strong> If approved for a group filing, we guarantee a successful exit within the Guarantee Term — or a full refund. No exceptions.</p>
-  </div>
-
-  <div class="grid">
-    <a href="/owner/" class="card" id="card-owner">
-      <span class="status new" id="st-owner">New</span>
-      <span class="icon">🏠</span>
-      <div class="label">Owner & Resort Info</div>
-      <div class="desc">Personal details, resort, mortgage & fees</div>
-    </a>
-    <a href="/whyout/" class="card" id="card-whyout">
-      <span class="status new" id="st-whyout">New</span>
-      <span class="icon">❓</span>
-      <div class="label">Why Do You Want Out?</div>
-      <div class="desc">Reasons, violations & motivation scale</div>
-    </a>
-    <a href="/wait/" class="card" id="card-wait">
-      <span class="status new" id="st-wait">New</span>
-      <span class="icon">⚠️</span>
-      <div class="label">If You Do Nothing</div>
-      <div class="desc">Resort pursuit — stages 6, 7 &amp; 8</div>
-    </a>
-    <a href="/history/" class="card" id="card-history">
-      <span class="status new" id="st-history">New</span>
-      <span class="icon">⭐</span>
-      <div class="label">Our Track Record</div>
-      <div class="desc">BBB A+, 41 years, 5-star reviews</div>
-    </a>
-    <a href="/rights/" class="card" id="card-rights">
-      <span class="status new" id="st-rights">New</span>
-      <span class="icon">⚖️</span>
-      <div class="label">Consumer Rights Assessment</div>
-      <div class="desc">Violations, statutes & estimated fines</div>
-    </a>
-    <a href="/cost/" class="card" id="card-cost">
-      <span class="status new" id="st-cost">New</span>
-      <span class="icon">💰</span>
-      <div class="label">True Cost of Ownership</div>
-      <div class="desc">30-year projection & total exposure</div>
-    </a>
-    <a href="/quote/" class="card highlight" id="card-quote">
-      <span class="status new" id="st-quote">New</span>
-      <span class="icon">📄</span>
-      <div class="label">Your Service Quote</div>
-      <div class="desc">Investment, savings & financing options</div>
-    </a>
-    <a href="/better/" class="card" id="card-better">
-      <span class="status new" id="st-better">New</span>
-      <span class="icon">🏆</span>
-      <div class="label">What Makes Alpha Better</div>
-      <div class="desc">Group filings, Q&A, guarantees</div>
-    </a>
-    <a href="/recap/" class="card" id="card-recap">
-      <span class="status new" id="st-recap">New</span>
-      <span class="icon">📋</span>
-      <div class="label">Recap & Next Steps</div>
-      <div class="desc">What happens after you sign</div>
-    </a>
-    <a href="/guarantee/" class="card" id="card-guarantee">
-      <span class="status new" id="st-guarantee">New</span>
-      <span class="icon">🛡</span>
-      <div class="label">Certificate of Guarantee</div>
-      <div class="desc">100% money-back written guarantee</div>
-    </a>
-    <a href="/checklist/" class="card" id="card-checklist">
-      <span class="status new" id="st-checklist">New</span>
-      <span class="icon">✅</span>
-      <div class="label">Client Acknowledgment</div>
-      <div class="desc">Review & initial each item</div>
-    </a>
-    <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="card">
-      <span class="icon">📝</span>
-      <div class="label">Alpha Contract</div>
-      <div class="desc">Open & sign enrollment agreement</div>
-    </a>
-  </div>
+<div class="main-content">
+<div class="page-wrap">
+<div class="page-hdr">
+  <div class="page-hdr-badge">🏠 Stage 0</div>
+  <h1>Dashboard</h1>
+  <p>Select a client or create a new one to begin</p>
 </div>
 
-<!-- NEW CLIENT MODAL -->
-<div class="modal-overlay" id="new-modal">
-  <div class="modal">
-    <h3>New Client</h3>
-    <label>Client Name</label>
-    <input type="text" id="m-name" placeholder="First and Last Name">
-    <label>Resort / Developer</label>
-    <input type="text" id="m-resort" placeholder="e.g. Westgate — Orlando FL">
-    <label>Date</label>
-    <input type="text" id="m-date">
-    <div class="modal-btns">
-      <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-      <button class="modal-btn primary" onclick="createClient()">Create & Start</button>
-    </div>
+<style>
+.home-intro{margin-bottom:24px}
+.home-steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.home-step{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;align-items:flex-start;gap:10px}
+.hs-num{background:var(--navy);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hs-text h3{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.hs-text p{font-size:12px;color:#666;line-height:1.4}
+.icon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.icon-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-align:center;text-decoration:none;cursor:pointer;transition:all .2s;position:relative;display:block}
+.icon-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.icon-card.done{border-color:var(--green)}
+.icon-card.done::after{content:'✓';position:absolute;top:6px;right:8px;color:var(--green);font-size:12px;font-weight:700}
+.ic-num{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;color:#aaa}
+.ic-icon{font-size:26px;margin-bottom:6px;display:block}
+.ic-label{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px;line-height:1.3}
+.ic-desc{font-size:11px;color:#888;line-height:1.3}
+.guarantee-bar{background:var(--navy);color:#fff;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.gb-icon{font-size:22px;flex-shrink:0}
+.gb-text{font-size:14px;line-height:1.5}
+.gb-text strong{color:var(--gold)}
+.client-selector-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:20px}
+.csb-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.csb-row{display:flex;gap:8px}
+.csb-select{flex:1;border:1.5px solid var(--border);border-radius:6px;padding:10px 12px;font-size:14px;font-family:var(--font);background:#fff;color:var(--navy)}
+.duration-badge{display:inline-flex;align-items:center;gap:6px;background:#EAF0F8;border:1px solid #c5d5e8;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--navy);margin-bottom:14px}
+</style>
+
+<div class="client-selector-box">
+  <div class="csb-title">Active Client</div>
+  <div class="csb-row">
+    <select class="csb-select" id="home-client-dd" onchange="homeLoadClient()"><option value="">— Select existing client —</option></select>
+    <button class="btn btn-gold" onclick="homeNewClient()">+ New Client</button>
   </div>
+  <div id="home-active-display" style="margin-top:10px;font-size:14px;color:#666;display:none"></div>
+</div>
+
+<div class="home-intro">
+  <div class="duration-badge">⏱ 15–30 min assessment</div>
+  <h2 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:8px">Welcome to Alpha Timeshare Consultants</h2>
+  <p style="font-size:14px;color:#333;line-height:1.65;margin-bottom:12px">Your answers help our Risk Management Team determine if your case qualifies for one of our active group filings. If approved, you join other owners documenting the same violations — together carrying far more leverage than any individual case.</p>
+</div>
+
+<div class="home-steps">
+  <div class="home-step"><div class="hs-num">1</div><div class="hs-text"><h3>Determine Eligibility</h3><p>Review your ownership, violations, and case strength</p></div></div>
+  <div class="home-step"><div class="hs-num">2</div><div class="hs-text"><h3>Violations & Fines</h3><p>Document each infraction with its federal or state statute</p></div></div>
+  <div class="home-step"><div class="hs-num">3</div><div class="hs-text"><h3>Our Services</h3><p>Group filing placement, negotiation, credit protection</p></div></div>
+  <div class="home-step"><div class="hs-num">4</div><div class="hs-text"><h3>Fee & Financing</h3><p>Your personalized quote with same-day options</p></div></div>
+</div>
+
+<div class="guarantee-bar">
+  <div class="gb-icon">🛡</div>
+  <div class="gb-text"><strong>100% Money-Back Written Guarantee.</strong> If approved and we don't obtain your exit within the Guarantee Term — full refund, no exceptions.</div>
+</div>
+
+<div class="icon-grid" id="icon-grid">
 </div>
 
 <script>
-var STORAGE_KEY='atc_clients_v2';
-var EXPIRY_MS=24*60*60*1000; // 24 hours
-
-function getClients(){
-  try{
-    var raw=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};
-    var now=Date.now();
-    var pruned={};
-    Object.keys(raw).forEach(function(k){
-      if(!raw[k]._created||(now-raw[k]._created)<EXPIRY_MS)pruned[k]=raw[k];
-    });
-    return pruned;
-  }catch(e){return {};}
+var PAGES_HOME=[
+  {n:'1',icon:'📋',label:'Owner & Resort Info',desc:'Personal details, resort, mortgage & fees',url:'/owner/'},
+  {n:'2',icon:'❓',label:'Why Do You Want Out',desc:'Reasons & motivation scale',url:'/whyout/'},
+  {n:'3',icon:'⚠️',label:'If You Do Nothing',desc:'Resort pursuit — what happens next',url:'/wait/'},
+  {n:'4',icon:'🔍',label:'Finding Your Group',desc:'Group filing matching & criteria',url:'/group/'},
+  {n:'4a',icon:'✅',label:'Money-Back Approval',desc:'Risk assessment & qualification',url:'/approval/'},
+  {n:'4b',icon:'👨‍👩‍👧',label:'Heirs & Estate Liability',desc:'Perpetuity clause, MTF compounding',url:'/heirs/'},
+  {n:'4c',icon:'💵',label:'Resort Compensation',desc:'$8k–$24k range, how it works',url:'/compensation/'},
+  {n:'4d',icon:'💳',label:'To Pay or Not to Pay',desc:'Your choice & credit protection',url:'/credit/'},
+  {n:'4e',icon:'✉️',label:'Mutual Release Letter',desc:'What it means, how it works',url:'/letter/'},
+  {n:'5',icon:'🛡',label:'Certificate of Guarantee',desc:'100% money-back written guarantee',url:'/guarantee/'},
+  {n:'6',icon:'⭐',label:'Our Track Record',desc:'BBB A+, 41 years, 5-star reviews',url:'/history/'},
+  {n:'7',icon:'⚖️',label:'Consumer Rights',desc:'Violations, statutes & fines',url:'/rights/'},
+  {n:'8',icon:'💰',label:'True Cost',desc:'What you've paid & will pay',url:'/cost/'},
+  {n:'9',icon:'📄',label:'Your Quote',desc:'Fee, financing & savings',url:'/quote/'},
+  {n:'10',icon:'⏰',label:'30 & 90 Day Follow-Up',desc:'Scheduled next steps',url:'/followup/'},
+  {n:'11',icon:'🏆',label:'What Makes Alpha Better',desc:'Group filings — no one else does this',url:'/better/'},
+  {n:'12',icon:'📦',label:'What's Included',desc:'Service & results overview',url:'/included/'},
+  {n:'13',icon:'📋',label:'Recap',desc:'What happens after you sign',url:'/recap/'},
+  {n:'14',icon:'✅',label:'Client Acknowledgment',desc:'Review & check each item',url:'/checklist/'},
+  {n:'15',icon:'📝',label:'Alpha Contract',desc:'Open & sign enrollment agreement',url:'/contract/'},
+  {n:'16',icon:'🎉',label:"Let's Be Timeshare Free",desc:'Your celebration summary',url:'/free/'},
+];
+function buildGrid(){
+  var d=getClient()||{};
+  var g=document.getElementById('icon-grid');
+  if(!g)return;
+  g.innerHTML=PAGES_HOME.map(function(p){
+    var done=d['_done_'+p.n]?'done':'';
+    return '<a href="'+p.url+'" class="icon-card '+done+'">'+
+      '<span class="ic-num">'+p.n+'</span>'+
+      '<span class="ic-icon">'+p.icon+'</span>'+
+      '<div class="ic-label">'+p.label+'</div>'+
+      '<div class="ic-desc">'+p.desc+'</div>'+
+      '</a>';
+  }).join('');
 }
-function saveClients(obj){localStorage.setItem(STORAGE_KEY,JSON.stringify(obj));}
-function getCurrentKey(){return sessionStorage.getItem('atc_current_client')||'';}
-function setCurrentKey(k){sessionStorage.setItem('atc_current_client',k);}
-
-function refreshDropdown(){
-  var clients=getClients();
-  var dd=document.getElementById('client-dd');
-  var current=getCurrentKey();
-  dd.innerHTML='<option value="">— Select Client —</option>';
-  Object.keys(clients).sort().forEach(function(k){
+function homeLoadClient(){
+  var k=document.getElementById('home-client-dd').value;
+  if(!k)return;
+  sk(k);incrementVisits();updateTicker();buildGrid();
+  var d=gc()[k]||{};
+  var disp=document.getElementById('home-active-display');
+  if(disp){
+    disp.style.display='block';
+    disp.innerHTML='<strong style="color:var(--navy)">'+(d.firstName||'')+(d.lastName?' '+d.lastName:'')+'</strong>'+(d.resort?' — '+d.resort:'');
+  }
+  showToast('Loaded: '+(d.firstName||k));
+}
+function homeNewClient(){
+  var name=prompt('Client full name:');
+  if(!name)return;
+  var resort=prompt('Resort name:');
+  var parts=name.trim().split(' ');
+  var k=name.replace(/\s+/g,'_')+'_'+Date.now();
+  var c=gc();
+  c[k]={firstName:parts[0],lastName:parts.slice(1).join(' '),name:name,resort:resort||'',_c:Date.now(),_visits:1,_updated:Date.now()};
+  sc(c);sk(k);
+  homeRefreshDropdown();
+  document.getElementById('home-client-dd').value=k;
+  homeLoadClient();
+  showToast('New client created: '+name);
+  setTimeout(function(){window.location.href='/owner/';},800);
+}
+function homeRefreshDropdown(){
+  var c=gc();
+  var dd=document.getElementById('home-client-dd');
+  if(!dd)return;
+  var cur=gk();
+  dd.innerHTML='<option value="">— Select existing client —</option>';
+  Object.keys(c).sort(function(a,b){return(c[b]._updated||0)-(c[a]._updated||0);}).forEach(function(k){
+    var d=c[k];
     var o=document.createElement('option');
     o.value=k;
-    var d=clients[k];
-    o.textContent=(d.name||'Unknown')+(d.resort?' — '+d.resort:'');
+    o.textContent=(d.firstName||'')+(d.lastName?' '+d.lastName:'')+(d.resort?' — '+d.resort:'');
     dd.appendChild(o);
   });
-  if(current)dd.value=current;
+  if(cur)dd.value=cur;
 }
-
-function loadClient(){
-  var k=document.getElementById('client-dd').value;
-  if(!k)return;
-  setCurrentKey(k);
-  var d=getClients()[k];
-  if(d)sessionStorage.setItem('atc_resort',JSON.stringify(d));
-  showToast('✓ Loaded: '+(d.name||k));
-  updateCardStatuses(d);
-}
-
-function updateCardStatuses(d){
-  if(!d)return;
-  function setStatus(id,done){
-    var el=document.getElementById('st-'+id);
-    if(!el)return;
-    el.textContent=done?'Done':'New';
-    el.className='status '+(done?'done':'new');
-  }
-  setStatus('owner',!!(d.name||d.resort));
-  setStatus('whyout',!!(d.whyout&&d.whyout.length));
-  setStatus('rights',!!(d.rights&&d.rights.length));
-  setStatus('cost',!!d.costCalculated);
-  setStatus('quote',!!d.quoteSeen);
-}
-
-function showNewModal(){
-  var today=new Date();
-  document.getElementById('m-date').value=(today.getMonth()+1)+'/'+(today.getDate())+'/'+today.getFullYear();
-  document.getElementById('m-name').value='';
-  document.getElementById('m-resort').value='';
-  document.getElementById('new-modal').classList.add('active');
-}
-function closeModal(){document.getElementById('new-modal').classList.remove('active');}
-
-function createClient(){
-  var name=document.getElementById('m-name').value.trim();
-  var resort=document.getElementById('m-resort').value.trim();
-  var date=document.getElementById('m-date').value;
-  if(!name&&!resort){alert('Please enter a name or resort.');return;}
-  var k=(name||'Unknown')+(resort?' — '+resort:'')+(date?' ('+date+')':'');
-  var clients=getClients();
-  clients[k]={name:name,resort:resort,date:date,_created:Date.now()};
-  saveClients(clients);
-  setCurrentKey(k);
-  sessionStorage.setItem('atc_resort',JSON.stringify(clients[k]));
-  closeModal();
-  refreshDropdown();
-  document.getElementById('client-dd').value=k;
-  showToast('✓ New client created: '+k);
-  setTimeout(function(){window.location.href='owner.html';},800);
-}
-
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.style.display='block';
-  setTimeout(function(){t.style.display='none';},2500);
-}
-
-refreshDropdown();
-var cur=getCurrentKey();
+homeRefreshDropdown();
+buildGrid();
+var cur=gk();
 if(cur){
-  var d=getClients()[cur];
-  if(d)updateCardStatuses(d);
+  var d=gc()[cur]||{};
+  var disp=document.getElementById('home-active-display');
+  if(disp&&(d.firstName||d.resort)){
+    disp.style.display='block';
+    disp.innerHTML='<strong style="color:var(--navy)">'+(d.firstName||'')+(d.lastName?' '+d.lastName:'')+'</strong>'+(d.resort?' — '+d.resort:'');
+  }
 }
+function submitPage(){}
+function emailSection(){}
 </script>
+
+</div>
+</div>
+
+<script>
+var SK='atc_v2',AK='atc_active';
+var PAGES=[
+  {n:'0',icon:'🏠',label:'Dashboard',url:'/home/'},
+  {n:'1',icon:'📋',label:'Owner & Resort Info',url:'/owner/'},
+  {n:'2',icon:'❓',label:'Why Do You Want Out',url:'/whyout/'},
+  {n:'3',icon:'⚠️',label:'If You Do Nothing',url:'/wait/'},
+  {n:'4',icon:'🔍',label:'Finding Your Group',url:'/group/'},
+  {n:'4a',icon:'✅',label:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',icon:'👨‍👩‍👧',label:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',icon:'💵',label:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',icon:'💳',label:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',icon:'✉️',label:'Mutual Release Letter',url:'/letter/'},
+  {n:'5',icon:'🛡',label:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:'6',icon:'⭐',label:'Our Track Record',url:'/history/'},
+  {n:'7',icon:'⚖️',label:'Consumer Rights',url:'/rights/'},
+  {n:'8',icon:'💰',label:'True Cost',url:'/cost/'},
+  {n:'9',icon:'📄',label:'Your Quote',url:'/quote/'},
+  {n:'10',icon:'⏰',label:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:'11',icon:'🏆',label:'What Makes Alpha Better',url:'/better/'},
+  {n:'12',icon:'📦',label:'What's Included',url:'/included/'},
+  {n:'13',icon:'📋',label:'Recap',url:'/recap/'},
+  {n:'14',icon:'✅',label:'Client Acknowledgment',url:'/checklist/'},
+  {n:'15',icon:'📝',label:'Alpha Contract',url:'/contract/'},
+  {n:'16',icon:'🎉',label:'Let's Be Timeshare Free',url:'/free/'}
+];
+
+function gc(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sc(o){localStorage.setItem(SK,JSON.stringify(o));}
+function gk(){return localStorage.getItem(AK)||'';}
+function sk(k){localStorage.setItem(AK,k);}
+function getClient(){var k=gk();if(!k)return null;return gc()[k]||null;}
+function saveField(field,val){var k=gk();if(!k)return;var c=gc();if(!c[k])return;c[k][field]=val;c[k]._updated=Date.now();sc(c);}
+function fmt(n){return n?'$'+Math.round(n).toLocaleString():'—';}
+
+function updateTicker(){
+  var d=getClient();
+  var t=document.getElementById('client-ticker');
+  if(!t)return;
+  if(!d){t.innerHTML='<div class="ct-no-client">⚠️ No client selected</div>';return;}
+  var name=(d.firstName||'')+(d.lastName?' '+d.lastName:'');
+  var resort=d.resort||'';
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var yr=mo*12;
+  var updated=d._updated?new Date(d._updated).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+  var visits=d._visits||1;
+  var quote=d.alphaFee?fmt(d.alphaFee):'—';
+  var stagesDone=0;
+  PAGES.forEach(function(p){if(d['_done_'+p.n])stagesDone++;});
+  var pct=Math.round((stagesDone/PAGES.length)*100);
+  
+  // Build client URL slug
+  var slug='';
+  if(d.firstName)slug=d.firstName[0].toLowerCase()+'-'+(d.lastName||'').toLowerCase().replace(/\s+/g,'-');
+  
+  t.innerHTML=
+    '<div class="ct-name">'+name+'</div>'+
+    (resort?'<div class="ct-resort">🏨 '+resort+'</div>':'')+
+    '<div class="ct-row"><span>Monthly</span><strong>'+fmt(mo)+'</strong></div>'+
+    '<div class="ct-row"><span>Yearly</span><strong>'+fmt(yr)+'</strong></div>'+
+    (d.alphaFee?'<div class="ct-row"><span>Quote</span><strong>'+quote+'</strong></div>':'')+
+    '<div class="ct-row"><span>Last visit</span><strong class="'+(d._updated&&(Date.now()-d._updated)<86400000?'ct-fresh':'ct-stale')+'">'+updated+'</strong></div>'+
+    '<div class="ct-row"><span>Contacts</span><strong>'+visits+'</strong></div>'+
+    '<div class="ct-progress">'+
+    '<div class="ct-prog-label">Stage progress — '+pct+'%</div>'+
+    '<div class="ct-prog-bar"><div class="ct-prog-fill" style="width:'+pct+'%"></div></div>'+
+    '</div>';
+}
+
+function showToast(msg,color){
+  var t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=msg;
+  t.style.background=color||'#16A34A';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2800);
+}
+
+function openPopup(id){document.getElementById(id).classList.add('on');}
+function closePopup(id){document.getElementById(id).classList.remove('on');}
+
+function saveCalendar(){
+  var today=document.getElementById('cal-today');
+  var fu=document.getElementById('cal-followup');
+  var d=getClient();
+  if(d&&gk()){
+    if(today&&today.value)saveField('apptToday',today.value);
+    if(fu&&fu.value){
+      saveField('apptFollowup',fu.value);
+      var dt=new Date(fu.value);
+      var gurl='https://calendar.google.com/calendar/render?action=TEMPLATE&text=ATC+Follow-Up+'+(d.firstName||'')+'+'+encodeURIComponent(d.resort||'')+'&dates='+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z/'+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z';
+      window.open(gurl,'_blank');
+    }
+  }
+  showToast('Calendar saved');
+}
+
+function markStageDone(stageN){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]['_done_'+stageN]=Date.now();
+  c[k]._updated=Date.now();
+  sc(c);
+  updateTicker();
+}
+
+function incrementVisits(){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]._visits=(c[k]._visits||0)+1;
+  c[k]._updated=Date.now();
+  sc(c);
+}
+
+function showSubmitPopup(savedItems,nextUrl){
+  var el=document.getElementById('submit-popup');
+  var body=document.getElementById('submit-items');
+  if(!el||!body)return;
+  body.innerHTML=savedItems.map(function(item){
+    return '<div class="submit-item"><span class="si-check">✓</span><span>'+item+'</span></div>';
+  }).join('');
+  document.getElementById('submit-next-btn').onclick=function(){window.location.href=nextUrl;};
+  el.classList.add('on');
+}
+
+// Load calendar values
+(function(){
+  var d=getClient();
+  if(!d)return;
+  var ct=document.getElementById('cal-today');
+  var cf=document.getElementById('cal-followup');
+  if(ct&&d.apptToday)ct.value=d.apptToday;
+  if(cf&&d.apptFollowup)cf.value=d.apptFollowup;
+  if(ct&&!d.apptToday){
+    var now=new Date();
+    ct.value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  }
+  incrementVisits();
+  updateTicker();
+})();
+</script>
+
 </body>
 </html>
