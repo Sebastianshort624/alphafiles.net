@@ -2,376 +2,307 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Owner & Resort Info — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ── SIDEBAR NAV ── */
-body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
-.sidenav{width:220px;min-height:100vh;background:#1B2A4A;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;box-shadow:3px 0 12px rgba(0,0,0,.25);overflow-y:auto}
-.sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sidenav .sn-logo img{max-width:140px}
-.sn-client-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sn-client-label{font-size:9px;font-weight:700;color:#C8960C;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px}
-.sn-client-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:11px;border-radius:3px;font-family:Georgia,serif;cursor:pointer}
-.sn-client-select option{background:#1B2A4A;color:#fff}
-.sn-new-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;margin-top:5px;font-family:Georgia,serif}
-.sn-new-btn:hover{background:#a87a08}
-.sn-menu{flex:1;padding:8px 0}
-.sn-item{display:flex;align-items:center;gap:8px;padding:8px 14px;text-decoration:none;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;letter-spacing:.2px;transition:all .15s;border-left:3px solid transparent}
-.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#C8960C}
-.sn-item.active{background:rgba(200,150,12,.15);color:#C8960C;border-left-color:#C8960C}
-.sn-item .sn-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
-.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 12px}
-.main-content{margin-left:220px;flex:1;padding:20px;min-height:100vh}
-.page-wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-/* Toast */
-.sn-toast{display:none;position:fixed;bottom:20px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;border-radius:4px;z-index:300;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-/* New client modal */
-.sn-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center}
-.sn-modal-overlay.active{display:flex}
-.sn-modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:380px;margin:20px}
-.sn-modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
-.sn-modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:3px;margin-top:10px}
-.sn-modal input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
-.sn-modal-btns{display:flex;gap:8px;margin-top:14px}
-.sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
-.sn-modal-btn.primary{background:#C8960C;color:#fff}
-.sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-@media(max-width:600px){.sidenav{width:180px}.main-content{margin-left:180px}}
-</style>
-
-<style>
-.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
-.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
-.fr{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.fr:last-child{margin-bottom:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-size:14px;background:var(--bg);display:flex;min-height:100vh}
+.sidenav{width:200px;min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-logo img{max-width:130px}
+.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:4px}
+.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:1px}
+.ct-row strong{color:#fff}
+.ct-progress{margin-top:6px}
+.ct-prog-label{font-size:10px;color:rgba(255,255,255,.5);margin-bottom:3px}
+.ct-prog-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px}
+.ct-prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-menu{flex:1;padding:4px 0}
+.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:12px;font-weight:500;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--gold)}
+.sn-item.active{background:rgba(200,150,12,.15);color:var(--gold);border-left-color:var(--gold);font-weight:700}
+.sn-item.done::after{content:'✓';margin-left:auto;color:var(--gold);font-size:10px}
+.sn-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:3px;padding:1px 5px;flex-shrink:0;min-width:20px;text-align:center}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 8px;font-size:11px;border-radius:4px;font-family:var(--font);margin-bottom:4px}
+.sn-cal-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:5px;font-size:11px;font-weight:600;border-radius:4px;cursor:pointer;font-family:var(--font)}
+.main-content{margin-left:200px;flex:1;padding:20px}
+.page-wrap{max-width:580px;margin:0 auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.page-hdr{background:var(--navy);border-radius:8px 8px 0 0;padding:20px 24px;margin:-28px -28px 24px;color:#fff}
+.page-hdr-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.page-hdr h1{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.page-hdr p{font-size:14px;color:rgba(255,255,255,.75)}
+.sec-block{border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+.sec-hdr{background:var(--navy);color:#fff;padding:12px 16px;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.sec-hdr .plus{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:24px;height:24px;border-radius:4px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-body{padding:16px}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.field-row:last-child{margin-bottom:0}
 .f{flex:1;min-width:180px}
-.ff{flex:100%}
-.f label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px}
-.f input,.f select,.f textarea{width:100%;border:2px solid #e0e0e0;border-radius:3px;padding:9px 11px;font-size:13px;font-family:Georgia,serif;background:#fff;color:#1B2A4A}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#C8960C}
-.f textarea{resize:vertical;min-height:72px}
-.fi{border-color:#C8960C!important;font-size:14px!important;font-weight:700!important}
-.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:12px}
-.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:20px}
-.calc-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin:16px 0}
-.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
-.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nb.next{background:#C8960C;color:#fff}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
-.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
-.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
-.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
-.cb-field strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
-.cb-field span{font-size:13px;color:#1B2A4A;font-weight:700}
+.f-full{flex:100%}
+.f label{display:block;font-size:12px;font-weight:500;color:#666;margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 12px;font-size:14px;font-family:var(--font);background:#fff;color:var(--navy);transition:border-color .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f input.hi{border-color:var(--gold);font-weight:600;font-size:16px}
+.f textarea{resize:vertical;min-height:80px}
+.f.hidden{display:none}
+.btn{padding:12px 24px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#a87a08}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:#142038}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+.btn-email{background:#EAF0F8;color:var(--navy);border:1.5px solid #c5d5e8}
+.btn-full{width:100%;justify-content:center}
+.btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.blue{color:var(--blue);cursor:pointer;text-decoration:underline;font-weight:500}
+.blue:hover{color:#1d4ed8}
+.popup-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.popup-ov.on{display:flex}
+.popup-box{background:#fff;border-radius:12px;padding:28px;max-width:460px;width:90%;max-height:80vh;overflow-y:auto;position:relative}
+.popup-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.popup-box p{font-size:14px;line-height:1.65;color:#333;margin-bottom:10px}
+.popup-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#888}
+.submit-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
+.submit-ov.on{display:flex}
+.submit-box{background:#fff;border-radius:12px;padding:28px;max-width:400px;width:90%}
+.submit-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.submit-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+.submit-item:last-child{border-bottom:none}
+.si-check{color:var(--green);font-size:16px}
+.si-empty{color:#ccc;font-size:16px}
+.toast{display:none;position:fixed;bottom:24px;left:224px;background:var(--green);color:#fff;padding:12px 20px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.stage-badge{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:20px}
+.stage-icon{font-size:28px}
+.stage-info h3{font-size:18px;font-weight:700;color:var(--navy)}
+.stage-info p{font-size:12px;color:#888;margin-top:2px}
+.quote-banner{background:var(--navy);color:#fff;border-radius:6px;padding:8px 14px;font-size:12px;display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.qb-item strong{display:block;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.qb-item span{font-size:14px;font-weight:600}
+@media print{.sidenav,.btn-row,.toast,.popup-ov,.submit-ov{display:none!important}.main-content{margin-left:0!important}}
 </style>
-
-<style>
-@media print {
-  .sidenav, .sn-toast, .sn-modal-overlay, .save-btn, .nav-bar, .print-btn-bar { display: none !important; }
-  .main-content { margin-left: 0 !important; padding: 0 !important; }
-  .page-wrap { box-shadow: none !important; border-radius: 0 !important; padding: 16px !important; max-width: 100% !important; }
-  .print-summary { display: block !important; }
-  .page-wrap > *:not(.print-summary) { display: none !important; }
-}
-.print-btn-bar { text-align: center; margin-top: 12px; display: flex; gap: 10px; }
-.print-btn { flex: 1; background: #1B2A4A; color: #fff; border: none; padding: 11px; font-size: 13px; font-weight: 700; border-radius: 3px; cursor: pointer; font-family: Georgia, serif; }
-.print-btn.gold { background: #C8960C; }
-.print-btn:hover { opacity: .85; }
-.print-summary { display: none; font-family: Georgia, serif; }
-.ps-header { text-align: center; margin-bottom: 16px; border-bottom: 3px solid #1B2A4A; padding-bottom: 12px; }
-.ps-logo { max-width: 160px; margin-bottom: 8px; }
-.ps-title { font-size: 18px; font-weight: 700; color: #1B2A4A; margin-bottom: 2px; }
-.ps-date { font-size: 11px; color: #888; }
-.ps-section { margin-bottom: 14px; }
-.ps-section-title { background: #1B2A4A; color: #fff; padding: 5px 10px; font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; margin-bottom: 6px; }
-.ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
-.ps-field { font-size: 12px; padding: 3px 0; border-bottom: 1px solid #f0f0f0; }
-.ps-field strong { display: block; font-size: 9px; color: #C8960C; text-transform: uppercase; letter-spacing: .3px; }
-.ps-field span { color: #1B2A4A; font-weight: 700; }
-.ps-violation { font-size: 11px; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
-.ps-violation .vt { color: #1B2A4A; font-weight: 700; }
-.ps-violation .vr { color: #C8960C; font-size: 10px; }
-.ps-notes { font-size: 12px; color: #333; line-height: 1.6; white-space: pre-wrap; background: #f9f9f9; padding: 8px; border-radius: 3px; }
-.ps-totals { display: flex; gap: 10px; margin-top: 8px; }
-.ps-total { flex: 1; background: #1B2A4A; color: #fff; border-radius: 3px; padding: 8px; text-align: center; }
-.ps-total .ptn { font-size: 18px; font-weight: 700; color: #C8960C; }
-.ps-total .ptl { font-size: 9px; text-transform: uppercase; letter-spacing: .4px; opacity: .8; margin-top: 2px; }
-.ps-footer { text-align: center; font-size: 10px; color: #888; margin-top: 16px; border-top: 1px solid #ddd; padding-top: 8px; }
-</style>
-
 </head>
 <body>
 
 <div class="sidenav">
   <div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-  <div class="sn-client-box">
-    <div class="sn-client-label">Active Client</div>
-    <select class="sn-client-select" id="sn-client-dd" onchange="snLoadClient()">
-      <option value="">— Select Client —</option>
-    </select>
-    <button class="sn-new-btn" onclick="snShowModal()">+ New Client</button>
+  <div class="client-ticker" id="client-ticker">
+    <div class="ct-no-client">⚠️ No client selected</div>
   </div>
   <nav class="sn-menu">
-    <a href="/home/" class="sn-item" data-page="home"><span class="sn-icon">🏠</span>Dashboard</a>
+    <div class="sn-section">Pages</div>
+    <a href="/home/" class="sn-item " data-page="home"><span class="sn-num">0</span>🏠 Dashboard</a>
+<a href="/owner/" class="sn-item active" data-page="owner"><span class="sn-num">1</span>📋 Owner & Resort Info</a>
+<a href="/whyout/" class="sn-item " data-page="whyout"><span class="sn-num">2</span>❓ Why Do You Want Out</a>
+<a href="/wait/" class="sn-item " data-page="wait"><span class="sn-num">3</span>⚠️ If You Do Nothing</a>
+<a href="/group/" class="sn-item " data-page="group"><span class="sn-num">4</span>🔍 Finding Your Group</a>
+<a href="/approval/" class="sn-item " data-page="approval"><span class="sn-num">4a</span>✅ Money-Back Approval</a>
+<a href="/heirs/" class="sn-item " data-page="heirs"><span class="sn-num">4b</span>👨‍👩‍👧 Heirs & Estate Liability</a>
+<a href="/compensation/" class="sn-item " data-page="compensation"><span class="sn-num">4c</span>💵 Resort Compensation</a>
+<a href="/credit/" class="sn-item " data-page="credit"><span class="sn-num">4d</span>💳 To Pay or Not to Pay</a>
+<a href="/letter/" class="sn-item " data-page="letter"><span class="sn-num">4e</span>✉️ Mutual Release Letter</a>
+<a href="/guarantee/" class="sn-item " data-page="guarantee"><span class="sn-num">5</span>🛡 Certificate of Guarantee</a>
+<a href="/history/" class="sn-item " data-page="history"><span class="sn-num">6</span>⭐ Our Track Record</a>
+<a href="/rights/" class="sn-item " data-page="rights"><span class="sn-num">7</span>⚖️ Consumer Rights</a>
+<a href="/cost/" class="sn-item " data-page="cost"><span class="sn-num">8</span>💰 True Cost</a>
+<a href="/quote/" class="sn-item " data-page="quote"><span class="sn-num">9</span>📄 Your Quote</a>
+<a href="/followup/" class="sn-item " data-page="followup"><span class="sn-num">10</span>⏰ 30 & 90 Day Follow-Up</a>
+<a href="/better/" class="sn-item " data-page="better"><span class="sn-num">11</span>🏆 What Makes Alpha Better</a>
+<a href="/included/" class="sn-item " data-page="included"><span class="sn-num">12</span>📦 What's Included</a>
+<a href="/recap/" class="sn-item " data-page="recap"><span class="sn-num">13</span>📋 Recap</a>
+<a href="/checklist/" class="sn-item " data-page="checklist"><span class="sn-num">14</span>✅ Client Acknowledgment</a>
+<a href="/contract/" class="sn-item " data-page="contract"><span class="sn-num">15</span>📝 Alpha Contract</a>
+<a href="/free/" class="sn-item " data-page="free"><span class="sn-num">16</span>🎉 Let's Be Timeshare Free</a>
+
     <div class="sn-divider"></div>
-    <a href="/owner/" class="sn-item" data-page="owner"><span class="sn-icon">📋</span>Owner & Resort Info</a>
-    <a href="/whyout/" class="sn-item" data-page="whyout"><span class="sn-icon">❓</span>Why Do You Want Out</a>
-    <a href="/wait/" class="sn-item" data-page="wait"><span class="sn-icon">⚠️</span>If You Do Nothing</a>
-    <a href="/history/" class="sn-item" data-page="history"><span class="sn-icon">⭐</span>Our Track Record</a>
-    <a href="/rights/" class="sn-item" data-page="rights"><span class="sn-icon">⚖️</span>Consumer Rights</a>
-    <a href="/cost/" class="sn-item" data-page="cost"><span class="sn-icon">💰</span>True Cost</a>
-    <a href="/quote/" class="sn-item" data-page="quote"><span class="sn-icon">📄</span>Your Quote</a>
+    <div class="sn-section">📧 Email Sections</div>
+    <a href="/owner/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Owner & Resort Info</a>
+<a href="/whyout/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Why Do You Want Out</a>
+<a href="/rights/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Consumer Rights</a>
+<a href="/cost/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 True Cost</a>
+<a href="/quote/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Your Quote</a>
+<a href="/better/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 What Makes Alpha Better</a>
+<a href="/recap/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Recap</a>
+<a href="/guarantee/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Certificate of Guarantee</a>
+
     <div class="sn-divider"></div>
-    <a href="/better/" class="sn-item" data-page="better"><span class="sn-icon">🏆</span>What Makes Alpha Better</a>
-    <a href="/recap/" class="sn-item" data-page="recap"><span class="sn-icon">📋</span>Recap & Next Steps</a>
-    <a href="/guarantee/" class="sn-item" data-page="guarantee"><span class="sn-icon">🛡</span>Guarantee</a>
-    <a href="/checklist/" class="sn-item" data-page="checklist"><span class="sn-icon">✅</span>Acknowledgment</a>
-    <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="sn-item"><span class="sn-icon">📝</span>Alpha Contract</a>
+    <a href="/admin/" class="sn-item">⚙️ Admin</a>
   </nav>
-</div>
-
-<div class="sn-toast" id="sn-toast"></div>
-
-<div class="sn-modal-overlay" id="sn-modal">
-  <div class="sn-modal">
-    <h3>New Client</h3>
-    <label>Client Name</label><input type="text" id="sn-name" placeholder="Full name">
-    <label>Resort / Developer</label><input type="text" id="sn-resort" placeholder="e.g. Westgate — Orlando FL">
-    <label>Date</label><input type="text" id="sn-date">
-    <div class="sn-modal-btns">
-      <button class="sn-modal-btn secondary" onclick="snCloseModal()">Cancel</button>
-      <button class="sn-modal-btn primary" onclick="snCreateClient()">Create & Start</button>
-    </div>
+  <div class="sn-cal">
+    <div class="sn-cal-lbl">📅 Today's Appointment</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-today">
+    <div class="sn-cal-lbl" style="margin-top:8px">📅 Follow-Up</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-followup">
+    <button class="sn-cal-btn" onclick="saveCalendar()">Save & Add to Calendar</button>
   </div>
 </div>
+<div class="toast" id="toast"></div>
 
 <div class="main-content">
 <div class="page-wrap">
-
-<div class="page-title">Owner & Resort Info</div>
-<div class="page-sub">Fill in what applies — saves automatically to all pages</div>
-
-<div id="toast" class="toast"></div>
-<div class="client-bar"><div class="cb-field"><strong>Active Client</strong><span id="b-active">—</span></div></div>
-
-<div class="sh">Owner Information</div>
-<div class="sb">
-<div class="fr"><div class="f"><label>First Name</label><input id="f-first" placeholder="First name"></div><div class="f"><label>Last Name</label><input id="f-last" placeholder="Last name"></div></div>
-<div class="fr"><div class="f"><label>Co-Owner First</label><input id="f-cofirst" placeholder="If applicable"></div><div class="f"><label>Co-Owner Last</label><input id="f-colast" placeholder="If applicable"></div></div>
-<div class="fr"><div class="f"><label>Phone</label><input type="tel" id="f-phone" placeholder="Primary phone"></div><div class="f"><label>Email</label><input type="email" id="f-email" placeholder="Email address"></div></div>
-<div class="fr"><div class="f ff"><label>Address</label><input id="f-address" placeholder="Street, city, state, zip"></div></div>
+<div class="page-hdr">
+  <div class="page-hdr-badge">📋 Stage 1</div>
+  <h1>Owner & Resort Info</h1>
+  <p>Saves automatically — every field updates your client record</p>
 </div>
 
-<div class="sh">Resort Details</div>
-<div class="sb">
-<div class="fr"><div class="f"><label>Resort Name</label><input id="f-resort" placeholder="e.g. Westgate"></div><div class="f"><label>Resort City / State</label><input id="f-location" placeholder="e.g. Orlando, FL"></div></div>
-<div class="fr"><div class="f"><label>Year Purchased</label><input type="number" id="f-year" placeholder="e.g. 2015"></div><div class="f"><label>Purchase Price</label><input type="number" id="f-purchase" placeholder="e.g. 18000"></div></div>
-</div>
+<style>
+.paid-full-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:10px 16px;font-size:14px;font-weight:500;color:var(--navy);cursor:pointer;width:100%;text-align:left;margin-top:6px;font-family:var(--font)}
+.paid-full-btn.selected{background:#e8f5ee;border-color:var(--green);color:var(--green);font-weight:700}
+.totals-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ts-card{flex:1;min-width:100px;background:var(--navy);color:#fff;border-radius:6px;padding:10px;text-align:center}
+.ts-card .tsn{font-size:18px;font-weight:700;color:var(--gold);font-family:var(--font)}
+.ts-card .tsl{font-size:11px;opacity:.75;margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.expand-section{display:none}
+.expand-section.open{display:block}
+</style>
 
-<div class="sh">Mortgage</div>
-<div class="sb">
-<div class="fr">
-<div class="f"><label>Mortgage Status</label><select id="f-mstatus"><option value="">— Select —</option><option>Still owes</option><option>Paid off</option><option>Paid cash</option></select></div>
-<div class="f"><label>Current Balance</label><input type="number" id="f-balance" placeholder="e.g. 18000"></div>
-</div>
-<div class="fr">
-<div class="f"><label>Monthly Mortgage Payment</label><input type="number" class="fi" id="f-mtg" placeholder="e.g. 340" oninput="upd()"></div>
-<div class="f"><label>Months Behind on Mortgage</label><input type="number" id="f-mtg-behind" placeholder="0" oninput="upd()"></div>
-</div>
-</div>
+<div id="toast-inner" style="display:none;background:#e8f5ee;border:1px solid var(--green);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:14px;color:var(--green);font-weight:600"></div>
 
-<div class="sh">Maintenance Fees</div>
-<div class="sb">
-<div class="fr">
-<div class="f"><label>Annual Maintenance Fees</label><input type="number" class="fi" id="f-mtf" placeholder="e.g. 1600" oninput="upd()"></div>
-<div class="f"><label>Months Behind on MTF</label><input type="number" id="f-mtf-behind" placeholder="0" oninput="upd()"></div>
-</div>
-<div class="fr">
-<div class="f"><label>Current on Fees?</label><select id="f-mtf-current"><option value="">— Select —</option><option>Yes</option><option>No</option></select></div>
-<div class="f"><label>Amount Charging</label><input type="number" id="f-charging" placeholder="e.g. 5995"></div>
-</div>
-<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-<div style="flex:1;min-width:100px;background:#1B2A4A;color:#fff;border-radius:3px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif" id="t-mo">$0</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px">Monthly Total</div></div>
-<div style="flex:1;min-width:100px;background:#1B2A4A;color:#fff;border-radius:3px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif" id="t-yr">$0</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px">Yearly Total</div></div>
-<div style="flex:1;min-width:100px;background:#1B2A4A;color:#fff;border-radius:3px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif" id="t-ar">$0</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-top:3px">Total Arrears</div></div>
-</div>
-</div>
-
-<div class="sh">Notes</div>
-<div class="sb">
-<div class="fr"><div class="f ff"><label>Why Do They Want Out?</label><textarea id="f-why" placeholder="Main reason..."></textarea></div></div>
-<div class="fr"><div class="f ff"><label>Additional Notes</label><textarea id="f-notes" placeholder="Other details..."></textarea></div></div>
-</div>
-
-<button class="save-btn" onclick="save()">💾 Save & Continue</button>
-
-<div class="print-btn-bar">
-  <button class="print-btn gold" onclick="buildAndPrint()">🖨 Print / Save as PDF</button>
-</div>
-
-<!-- PRINT SUMMARY (hidden on screen, visible when printing) -->
-<div class="print-summary" id="print-summary">
-  <div class="ps-header">
-    <img class="ps-logo" src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC">
-    <div class="ps-title">Client Assessment Summary</div>
-    <div class="ps-date" id="ps-date"></div>
+<!-- OWNER NAME — always visible -->
+<div class="sec-block">
+  <div class="sec-hdr">Owner
+    <button class="plus" onclick="toggleSection('sec-2owner')" title="Add 2nd Owner">+</button>
   </div>
-
-  <div class="ps-section">
-    <div class="ps-section-title">Owner Information</div>
-    <div class="ps-grid">
-      <div class="ps-field"><strong>Client Name</strong><span id="ps-name">—</span></div>
-      <div class="ps-field"><strong>Co-Owner</strong><span id="ps-coowner">—</span></div>
-      <div class="ps-field"><strong>Phone</strong><span id="ps-phone">—</span></div>
-      <div class="ps-field"><strong>Email</strong><span id="ps-email">—</span></div>
-      <div class="ps-field" style="grid-column:1/-1"><strong>Address</strong><span id="ps-address">—</span></div>
+  <div class="sec-body">
+    <div class="field-row">
+      <div class="f"><label>First Name</label><input id="f-first" placeholder="First name" oninput="autoSave()"></div>
+      <div class="f"><label>Last Name</label><input id="f-last" placeholder="Last name" oninput="autoSave()"></div>
+    </div>
+    <div class="expand-section" id="sec-2owner">
+      <div class="field-row">
+        <div class="f"><label>Co-Owner First</label><input id="f-cofirst" placeholder="If applicable" oninput="autoSave()"></div>
+        <div class="f"><label>Co-Owner Last</label><input id="f-colast" placeholder="If applicable" oninput="autoSave()"></div>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <button class="plus" onclick="toggleSection('sec-contact')" style="background:none;border:1px solid var(--border);color:var(--navy);padding:6px 12px;border-radius:4px;font-size:12px;cursor:pointer;font-family:var(--font)">+ Contact Info</button>
+    </div>
+    <div class="expand-section" id="sec-contact">
+      <div class="field-row" style="margin-top:10px">
+        <div class="f"><label>Phone</label><input type="tel" id="f-phone" placeholder="Primary phone" oninput="autoSave()"></div>
+        <div class="f"><label>2nd Phone</label><input type="tel" id="f-phone2" placeholder="Backup" oninput="autoSave()"></div>
+      </div>
+      <div class="field-row">
+        <div class="f"><label>Email</label><input type="email" id="f-email" placeholder="Email" oninput="autoSave()"></div>
+      </div>
+      <div class="field-row">
+        <div class="f f-full"><label>Address</label><input id="f-address" placeholder="Street, city, state, zip" oninput="autoSave()"></div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="ps-section">
-    <div class="ps-section-title">Resort Details</div>
-    <div class="ps-grid">
-      <div class="ps-field"><strong>Resort Name</strong><span id="ps-resort">—</span></div>
-      <div class="ps-field"><strong>Location</strong><span id="ps-location">—</span></div>
-      <div class="ps-field"><strong>Year Purchased</strong><span id="ps-year">—</span></div>
-      <div class="ps-field"><strong>Purchase Price</strong><span id="ps-price">—</span></div>
-      <div class="ps-field"><strong>Mortgage Status</strong><span id="ps-mstatus">—</span></div>
-      <div class="ps-field"><strong>Balance</strong><span id="ps-balance">—</span></div>
-      <div class="ps-field"><strong>Monthly Mortgage</strong><span id="ps-mtg">—</span></div>
-      <div class="ps-field"><strong>Annual MTF</strong><span id="ps-mtf">—</span></div>
+<!-- RESORT — always visible -->
+<div class="sec-block">
+  <div class="sec-hdr">Resort Details</div>
+  <div class="sec-body">
+    <div class="field-row">
+      <div class="f"><label>Resort Name</label><input id="f-resort" placeholder="e.g. Westgate" oninput="autoSave()"></div>
+      <div class="f"><label>City / State</label><input id="f-location" placeholder="e.g. Orlando, FL" oninput="autoSave()"></div>
     </div>
-    <div class="ps-totals">
-      <div class="ps-total"><div class="ptn" id="ps-mo">—</div><div class="ptl">Monthly Total</div></div>
-      <div class="ps-total"><div class="ptn" id="ps-yr">—</div><div class="ptl">Yearly Total</div></div>
-      <div class="ps-total"><div class="ptn" id="ps-ar">—</div><div class="ptl">Arrears</div></div>
+    <div class="field-row">
+      <div class="f"><label>Year Purchased</label><input type="number" id="f-year" placeholder="e.g. 2015" oninput="autoSave()"></div>
+      <div class="f"><label>Purchase Price</label><input type="number" class="hi" id="f-purchase" placeholder="e.g. 18000" oninput="autoSave()"></div>
     </div>
   </div>
+</div>
 
-  <div class="ps-section">
-    <div class="ps-section-title">Why They Want Out — Documented Violations</div>
-    <div id="ps-violations">—</div>
+<!-- MORTGAGE — collapsed by default -->
+<div class="sec-block">
+  <div class="sec-hdr">Mortgage
+    <button class="plus" onclick="toggleSection('sec-mtg')" title="Expand">+</button>
   </div>
-
-  <div class="ps-section" id="ps-notes-section" style="display:none">
-    <div class="ps-section-title">Notes</div>
-    <div class="ps-notes" id="ps-notes"></div>
+  <div class="sec-body">
+    <button class="paid-full-btn" id="paid-full-btn" onclick="setPaidFull()">✓ Paid in Full — No Mortgage</button>
+    <div class="expand-section" id="sec-mtg">
+      <div class="field-row" style="margin-top:12px">
+        <div class="f"><label>Monthly Payment</label><input type="number" class="hi" id="f-mtg" placeholder="e.g. 340" oninput="autoSave();calcTotals()"></div>
+        <div class="f"><label>Current Balance</label><input type="number" id="f-balance" placeholder="e.g. 18000" oninput="autoSave()"></div>
+      </div>
+      <div class="field-row">
+        <div class="f"><label>Months Behind</label><input type="number" id="f-mtg-behind" placeholder="0" oninput="autoSave();calcTotals()"></div>
+        <div class="f"><label>Mortgage Status</label>
+          <select id="f-mstatus" onchange="autoSave()">
+            <option value="">— Select —</option>
+            <option>Still owes</option>
+            <option>Paid off</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="ps-footer">
-    Alpha Timeshare Consultants, Inc. &nbsp;|&nbsp; (877) 848-3948 &nbsp;|&nbsp; alphatimeshareconsultants.com &nbsp;|&nbsp; Confidential — For Internal Use
+<!-- MAINTENANCE FEES -->
+<div class="sec-block">
+  <div class="sec-hdr">Maintenance Fees</div>
+  <div class="sec-body">
+    <div class="field-row">
+      <div class="f"><label>Annual MTF</label><input type="number" class="hi" id="f-mtf" placeholder="e.g. 1600" oninput="autoSave();calcTotals()"></div>
+      <div class="f"><label>Months Behind</label><input type="number" id="f-mtf-behind" placeholder="0" oninput="autoSave();calcTotals()"></div>
+    </div>
+    <div class="field-row">
+      <div class="f"><label>Current on Fees?</label>
+        <select id="f-mtf-current" onchange="autoSave()">
+          <option value="">— Select —</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div class="f"><label>Amount Charging</label><input type="number" id="f-charging" placeholder="e.g. 5995" oninput="autoSave()"></div>
+    </div>
+    <div class="totals-strip">
+      <div class="ts-card"><div class="tsn" id="t-mo">$0</div><div class="tsl">Monthly</div></div>
+      <div class="ts-card"><div class="tsn" id="t-yr">$0</div><div class="tsl">Yearly</div></div>
+      <div class="ts-card"><div class="tsn" id="t-ar">$0</div><div class="tsl">Arrears</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="sec-block">
+  <div class="sec-hdr">Notes
+    <button class="plus" onclick="toggleSection('sec-notes')" title="Expand">+</button>
+  </div>
+  <div class="expand-section" id="sec-notes">
+    <div class="sec-body">
+      <div class="field-row">
+        <div class="f f-full"><label>Why Do They Want Out?</label><textarea id="f-why" placeholder="Brief summary..." oninput="autoSave()"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="f f-full"><label>Additional Notes</label><textarea id="f-notes" placeholder="Internal notes..." oninput="autoSave()"></textarea></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-var VIOLATION_LABELS = {
-  s1:'I reached out to the resort — my concerns were ignored',s2:'My concerns were not addressed in a timely or meaningful manner',s3:'My questions were dismissed, deflected, or transferred without resolution',s4:'The resort provided no clear process to resolve my issues',
-  h1:'I experienced significant financial hardship since signing',h2:'I am getting older and can no longer carry this obligation',h3:'I am concerned about this passing to my children after I\'m gone',h4:'Health issues prevent me from traveling',h5:'Death or illness of a spouse or co-owner',h6:'Divorce or separation — ownership is now a disputed asset',h7:'The presentation used intimidation or high-pressure tactics',
-  c1:'Availability restricted — blackout dates prevent use when I want',c2:'Non-owners can book the same dates I cannot get as an owner',c3:'I was told owners have priority access — that was not true',c4:'Limited locations — I cannot get to resorts convenient to me',c5:'The presentation ran far longer than the 60–90 minutes I was told',c6:'I was pressured to sign before I had a chance to read the contract',c7:'Multiple salespeople were used — I felt trapped',c8:'I was offered gifts contingent on purchasing',
-  i1:'I was misled or lied to during the sales presentation',i2:'I was told it was an investment that would appreciate in value',i3:'The true long-term cost of ownership was never shown to me',i4:'Maintenance fees would increase 6–12% annually — never disclosed',i5:'I did not know the contract was perpetual — no end date',i6:'I was not told it has little to no resale value',i7:'I was not told I could cancel within the rescission period',i8:'Oral promises were made that did not appear in the contract',i9:'The contract is perpetual — my heirs would inherit it unwillingly',i10:'The salesperson was a 1099 contractor earning commission — never disclosed',i11:'Resort quality has declined significantly since purchase',i12:'I was pressured to sign on the spot — I felt I had no choice'
-};
-var VIOLATION_REFS = {
-  s1:'15 U.S.C. §45 / State Consumer Protection',s2:'12 C.F.R. §1024 — CFPB Regulation X',s3:'State UDAP',s4:'15 U.S.C. §45(a)',
-  h1:'15 U.S.C. §45 / 12 C.F.R. §1031',h2:'State Elder Abuse Statutes',h3:'State Timeshare Act',h4:'42 U.S.C. §12101 ADA',h5:'State Consumer Protection',h6:'State Property / Family Law',h7:'15 U.S.C. §45(n)',
-  c1:'15 U.S.C. §45(a)',c2:'15 U.S.C. §45(a)',c3:'15 U.S.C. §45(a)',c4:'State Timeshare Act',c5:'15 U.S.C. §45(a)',c6:'16 C.F.R. §429',c7:'State UDAP',c8:'15 U.S.C. §45(a)',
-  i1:'15 U.S.C. §45(a)',i2:'15 U.S.C. §45(a)',i3:'15 U.S.C. §1638 TILA / 12 C.F.R. §226',i4:'15 U.S.C. §45(a)',i5:'State Timeshare Act',i6:'15 U.S.C. §45(a)',i7:'16 C.F.R. §429.1',i8:'State UDAP',i9:'State Timeshare Act',i10:'15 U.S.C. §45(a)',i11:'State CPA',i12:'15 U.S.C. §45(a)'
-};
-
-function fmt(n){return n?'$'+Math.round(n).toLocaleString():'$0';}
-
-function buildAndPrint(){
-  var key=localStorage.getItem('atc_active');
-  var d={};
-  if(key){var c=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');d=c[key]||{};}
-
-  // Also grab current form values (may not be saved yet)
-  var live={
-    firstName:document.getElementById('f-first').value.trim(),
-    lastName:document.getElementById('f-last').value.trim(),
-    coFirst:document.getElementById('f-cofirst').value.trim(),
-    coLast:document.getElementById('f-colast').value.trim(),
-    phone:document.getElementById('f-phone').value.trim(),
-    email:document.getElementById('f-email').value.trim(),
-    address:document.getElementById('f-address').value.trim(),
-    resort:document.getElementById('f-resort').value.trim(),
-    location:document.getElementById('f-location').value.trim(),
-    yearPurchased:document.getElementById('f-year').value,
-    purchasePrice:document.getElementById('f-purchase').value,
-    mortgageStatus:document.getElementById('f-mstatus').value,
-    balanceAmount:document.getElementById('f-balance').value,
-    monthlyMortgage:document.getElementById('f-mtg').value,
-    maitFees:document.getElementById('f-mtf').value,
-    mtgBehind:document.getElementById('f-mtg-behind').value,
-    mtfBehind:document.getElementById('f-mtf-behind').value,
-    whyOut:document.getElementById('f-why').value.trim(),
-    notes:document.getElementById('f-notes').value.trim()
-  };
-  // Merge live over saved
-  Object.keys(live).forEach(function(k){if(live[k])d[k]=live[k];});
-
-  // Populate print summary
-  document.getElementById('ps-date').textContent='Assessment Date: '+new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('ps-name').textContent=(d.firstName||'')+(d.lastName?' '+d.lastName:'') || '—';
-  document.getElementById('ps-coowner').textContent=(d.coFirst||'')+(d.coLast?' '+d.coLast:'') || '—';
-  document.getElementById('ps-phone').textContent=d.phone||'—';
-  document.getElementById('ps-email').textContent=d.email||'—';
-  document.getElementById('ps-address').textContent=d.address||'—';
-  document.getElementById('ps-resort').textContent=d.resort||'—';
-  document.getElementById('ps-location').textContent=d.location||'—';
-  document.getElementById('ps-year').textContent=d.yearPurchased||'—';
-  document.getElementById('ps-price').textContent=d.purchasePrice?'$'+parseInt(d.purchasePrice).toLocaleString():'—';
-  document.getElementById('ps-mstatus').textContent=d.mortgageStatus||'—';
-  document.getElementById('ps-balance').textContent=d.balanceAmount?'$'+parseInt(d.balanceAmount).toLocaleString():'—';
-  document.getElementById('ps-mtg').textContent=d.monthlyMortgage?'$'+parseInt(d.monthlyMortgage).toLocaleString()+'/mo':'—';
-  document.getElementById('ps-mtf').textContent=d.maitFees?'$'+parseInt(d.maitFees).toLocaleString()+'/yr':'—';
-  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-  var mb=(parseInt(d.mtgBehind)||0)*(parseFloat(d.monthlyMortgage)||0);
-  var fb=(parseInt(d.mtfBehind)||0)*((parseFloat(d.maitFees)||0)/12);
-  document.getElementById('ps-mo').textContent=fmt(mo);
-  document.getElementById('ps-yr').textContent=fmt(mo*12);
-  document.getElementById('ps-ar').textContent=fmt(mb+fb);
-
-  // Violations from saved data OR from whyout checkboxes
-  var vids=d.violations||d.whyout||[];
-  var vhtml='';
-  if(vids.length){
-    vids.forEach(function(id){
-      var lbl=VIOLATION_LABELS[id];
-      var ref=VIOLATION_REFS[id];
-      if(lbl)vhtml+='<div class="ps-violation"><div class="vt">'+lbl+'</div>'+(ref?'<div class="vr">'+ref+'</div>':'')+'</div>';
-    });
-  } else if(d.whyOut){
-    vhtml='<div class="ps-violation"><div class="vt">'+d.whyOut+'</div></div>';
-  }
-  document.getElementById('ps-violations').innerHTML=vhtml||'<div style="font-size:12px;color:#888">No violations recorded yet — complete the Consumer Rights Assessment</div>';
-
-  // Notes
-  var notes=(d.notes||'').trim();
-  if(notes){
-    document.getElementById('ps-notes').textContent=notes;
-    document.getElementById('ps-notes-section').style.display='block';
-  } else {
-    document.getElementById('ps-notes-section').style.display='none';
-  }
-
-  // Show print summary and trigger print
-  document.getElementById('print-summary').style.display='block';
-  setTimeout(function(){window.print();},200);
+function toggleSection(id){
+  var el=document.getElementById(id);
+  if(el)el.classList.toggle('open');
 }
-</script>
-
-<div class="nav-bar">
-<a href="/home/" class="nb prev">← Dashboard</a>
-<span class="ns">Why You Want Out →</span>
-<a href="/whyout/" class="nb next">Next →</a>
-</div>
-
-<script>
-var SK='atc_clients_v2',AK='atc_active';
-function fmt(n){return '$'+Math.round(n).toLocaleString();}
-function upd(){
+function setPaidFull(){
+  var btn=document.getElementById('paid-full-btn');
+  btn.classList.toggle('selected');
+  var mtg=document.getElementById('f-mtg');
+  var bal=document.getElementById('f-balance');
+  if(btn.classList.contains('selected')){
+    if(mtg)mtg.value='0';
+    if(bal)bal.value='0';
+    autoSave();calcTotals();
+  }
+}
+function calcTotals(){
   var mtg=parseFloat(document.getElementById('f-mtg').value)||0;
   var mtf=(parseFloat(document.getElementById('f-mtf').value)||0)/12;
   var mo=mtg+mtf;
@@ -381,105 +312,256 @@ function upd(){
   document.getElementById('t-yr').textContent=fmt(mo*12);
   document.getElementById('t-ar').textContent=fmt(mb+fb);
 }
-function getData(){
-  return{firstName:document.getElementById('f-first').value.trim(),lastName:document.getElementById('f-last').value.trim(),name:(document.getElementById('f-first').value+' '+document.getElementById('f-last').value).trim(),coFirst:document.getElementById('f-cofirst').value.trim(),coLast:document.getElementById('f-colast').value.trim(),phone:document.getElementById('f-phone').value.trim(),email:document.getElementById('f-email').value.trim(),address:document.getElementById('f-address').value.trim(),resort:document.getElementById('f-resort').value.trim(),location:document.getElementById('f-location').value.trim(),yearPurchased:document.getElementById('f-year').value,purchasePrice:document.getElementById('f-purchase').value,mortgageStatus:document.getElementById('f-mstatus').value,balanceAmount:document.getElementById('f-balance').value,monthlyMortgage:document.getElementById('f-mtg').value,mtgBehind:document.getElementById('f-mtg-behind').value,maitFees:document.getElementById('f-mtf').value,mtfBehind:document.getElementById('f-mtf-behind').value,mtfCurrent:document.getElementById('f-mtf-current').value,amountCharging:document.getElementById('f-charging').value,whyOut:document.getElementById('f-why').value.trim(),notes:document.getElementById('f-notes').value.trim()};
+function getFormData(){
+  return{
+    firstName:document.getElementById('f-first').value.trim(),
+    lastName:document.getElementById('f-last').value.trim(),
+    name:(document.getElementById('f-first').value+' '+document.getElementById('f-last').value).trim(),
+    coFirst:document.getElementById('f-cofirst').value.trim(),
+    coLast:document.getElementById('f-colast').value.trim(),
+    phone:document.getElementById('f-phone').value.trim(),
+    phone2:document.getElementById('f-phone2').value.trim(),
+    email:document.getElementById('f-email').value.trim(),
+    address:document.getElementById('f-address').value.trim(),
+    resort:document.getElementById('f-resort').value.trim(),
+    location:document.getElementById('f-location').value.trim(),
+    yearPurchased:document.getElementById('f-year').value,
+    purchasePrice:document.getElementById('f-purchase').value,
+    mortgageStatus:document.getElementById('f-mstatus').value,
+    balanceAmount:document.getElementById('f-balance').value,
+    monthlyMortgage:document.getElementById('f-mtg').value,
+    mtgBehind:document.getElementById('f-mtg-behind').value,
+    maitFees:document.getElementById('f-mtf').value,
+    mtfBehind:document.getElementById('f-mtf-behind').value,
+    mtfCurrent:document.getElementById('f-mtf-current').value,
+    amountCharging:document.getElementById('f-charging').value,
+    whyOut:document.getElementById('f-why').value.trim(),
+    notes:document.getElementById('f-notes').value.trim()
+  };
 }
-function save(){
-  var d=getData();
+function autoSave(){
+  var d=getFormData();
+  var k=gk();
+  if(!k){
+    if(d.firstName||d.resort){
+      k=(d.firstName||'Client').replace(/\s+/g,'_')+'_'+Date.now();
+      sk(k);
+      var c=gc();c[k]={_c:Date.now(),_visits:1};sc(c);
+    } else return;
+  }
+  var c=gc();
+  if(!c[k])c[k]={_c:Date.now()};
+  Object.assign(c[k],d,{_updated:Date.now()});
+  sc(c);
+  updateTicker();
+  // Update URL slug
+  if(d.firstName&&d.lastName){
+    var slug=d.firstName[0].toLowerCase()+'-'+d.lastName.toLowerCase();
+    history.replaceState(null,'','/owner/'+slug);
+  }
+}
+function submitPage(){
+  var d=getFormData();
   if(!d.firstName&&!d.resort){alert('Please enter at least a name or resort.');return;}
-  var key=localStorage.getItem(AK);
-  if(!key){key=(d.firstName||'Client')+'_'+Date.now();localStorage.setItem(AK,key);}
-  var c=JSON.parse(localStorage.getItem(SK)||'{}');
-  c[key]=Object.assign(c[key]||{_c:Date.now()},d);
-  localStorage.setItem(SK,JSON.stringify(c));
-  snRefresh();
-  var t=document.getElementById('toast');t.textContent='Saved — '+(d.firstName||d.resort);t.style.display='block';
-  setTimeout(function(){t.style.display='none';window.location.href='/whyout/';},900);
+  autoSave();
+  markStageDone('1');
+  var saved=['Owner: '+(d.firstName||'')+(d.lastName?' '+d.lastName:'')];
+  if(d.resort)saved.push('Resort: '+d.resort);
+  if(d.monthlyMortgage)saved.push('Monthly mortgage: '+fmt(parseFloat(d.monthlyMortgage)));
+  if(d.maitFees)saved.push('Annual MTF: '+fmt(parseFloat(d.maitFees)));
+  showSubmitPopup(saved,'/whyout/');
+}
+function emailSection(){
+  var d=getClient()||{};
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var html='<div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto">'+
+    '<div style="background:#1B2A4A;padding:16px 20px;border-radius:6px 6px 0 0">'+
+    '<div style="color:#C8960C;font-size:18px;font-weight:700">'+(d.firstName||'')+(d.lastName?' '+d.lastName:'')+'</div>'+
+    '<div style="color:rgba(255,255,255,.75);font-size:14px">'+(d.resort||'')+(d.location?' — '+d.location:'')+'</div>'+
+    '</div>'+
+    '<div style="background:#fff;border:1px solid #E0E4ED;padding:16px 20px;border-radius:0 0 6px 6px">'+
+    '<table style="width:100%;font-size:14px;border-collapse:collapse">'+
+    '<tr><td style="padding:5px 0;color:#666;border-bottom:1px solid #f0f0f0">Year Purchased</td><td style="text-align:right;font-weight:600;color:#1B2A4A;border-bottom:1px solid #f0f0f0">'+(d.yearPurchased||'—')+'</td></tr>'+
+    '<tr><td style="padding:5px 0;color:#666;border-bottom:1px solid #f0f0f0">Purchase Price</td><td style="text-align:right;font-weight:600;color:#1B2A4A;border-bottom:1px solid #f0f0f0">'+(d.purchasePrice?fmt(parseFloat(d.purchasePrice)):'—')+'</td></tr>'+
+    '<tr><td style="padding:5px 0;color:#666;border-bottom:1px solid #f0f0f0">Monthly Mortgage</td><td style="text-align:right;font-weight:600;color:#1B2A4A;border-bottom:1px solid #f0f0f0">'+(d.monthlyMortgage?fmt(parseFloat(d.monthlyMortgage))+'/mo':'Paid off')+'</td></tr>'+
+    '<tr><td style="padding:5px 0;color:#666;border-bottom:1px solid #f0f0f0">Annual MTF</td><td style="text-align:right;font-weight:600;color:#1B2A4A;border-bottom:1px solid #f0f0f0">'+(d.maitFees?fmt(parseFloat(d.maitFees))+'/yr':'—')+'</td></tr>'+
+    '<tr style="background:#1B2A4A"><td style="padding:8px;color:#C8960C;font-weight:700;font-size:16px">Monthly Total</td><td style="text-align:right;color:#fff;font-weight:700;font-size:16px;padding:8px">'+fmt(mo)+'/mo</td></tr>'+
+    '</table></div></div>';
+  var w=window.open('','_blank','width=620,height=500');
+  w.document.write('<html><head><title>Owner Summary — '+(d.firstName||'Client')+'</title></head><body style="margin:20px;font-family:sans-serif">'+html+'<br><button onclick="document.execCommand('selectAll');document.execCommand('copy');alert('Copied!')">Copy HTML</button></body></html>');
+  w.document.close();
 }
 function load(){
-  var key=localStorage.getItem(AK);if(!key)return;
-  var d=(JSON.parse(localStorage.getItem(SK)||'{}'))[key];if(!d)return;
-  var el=document.getElementById('b-active');
-  if(el)el.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'—')+(d.resort?' — '+d.resort:'');
-  var m={'f-first':'firstName','f-last':'lastName','f-cofirst':'coFirst','f-colast':'coLast','f-phone':'phone','f-email':'email','f-address':'address','f-resort':'resort','f-location':'location','f-year':'yearPurchased','f-purchase':'purchasePrice','f-mstatus':'mortgageStatus','f-balance':'balanceAmount','f-mtg':'monthlyMortgage','f-mtg-behind':'mtgBehind','f-mtf':'maitFees','f-mtf-behind':'mtfBehind','f-mtf-current':'mtfCurrent','f-charging':'amountCharging','f-why':'whyOut','f-notes':'notes'};
+  var d=getClient();if(!d)return;
+  var m={'f-first':'firstName','f-last':'lastName','f-cofirst':'coFirst','f-colast':'coLast','f-phone':'phone','f-phone2':'phone2','f-email':'email','f-address':'address','f-resort':'resort','f-location':'location','f-year':'yearPurchased','f-purchase':'purchasePrice','f-mstatus':'mortgageStatus','f-balance':'balanceAmount','f-mtg':'monthlyMortgage','f-mtg-behind':'mtgBehind','f-mtf':'maitFees','f-mtf-behind':'mtfBehind','f-mtf-current':'mtfCurrent','f-charging':'amountCharging','f-why':'whyOut','f-notes':'notes'};
   Object.keys(m).forEach(function(id){var el=document.getElementById(id);if(el&&d[m[id]])el.value=d[m[id]];});
-  upd();
+  if(d.firstName||d.resort){
+    document.getElementById('sec-notes').classList.add('open');
+  }
+  calcTotals();
 }
 load();
 </script>
 
+<div class="btn-row">
+  <a href="/home/" class="btn btn-outline">← Dashboard</a>
+  <button class="btn btn-email" onclick="emailSection()">📧 Email This Section</button>
+  <button class="btn btn-gold" onclick="submitPage()">Save & Continue →</button>
+</div>
+</div>
+</div>
 
-</div></div>
+<div class="submit-ov" id="submit-popup">
+  <div class="submit-box">
+    <h2>✓ Saved</h2>
+    <div id="submit-items"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-outline btn-full" onclick="document.getElementById('submit-popup').classList.remove('on')">Edit</button>
+      <button class="btn btn-gold btn-full" id="submit-next-btn">Continue →</button>
+    </div>
+  </div>
+</div>
 
 
 <script>
-/* ── SHARED NAV JS ── */
-var _SK='atc_clients_v2', _AK='atc_active';
+var SK='atc_v2',AK='atc_active';
+var PAGES=[
+  {n:'0',icon:'🏠',label:'Dashboard',url:'/home/'},
+  {n:'1',icon:'📋',label:'Owner & Resort Info',url:'/owner/'},
+  {n:'2',icon:'❓',label:'Why Do You Want Out',url:'/whyout/'},
+  {n:'3',icon:'⚠️',label:'If You Do Nothing',url:'/wait/'},
+  {n:'4',icon:'🔍',label:'Finding Your Group',url:'/group/'},
+  {n:'4a',icon:'✅',label:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',icon:'👨‍👩‍👧',label:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',icon:'💵',label:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',icon:'💳',label:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',icon:'✉️',label:'Mutual Release Letter',url:'/letter/'},
+  {n:'5',icon:'🛡',label:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:'6',icon:'⭐',label:'Our Track Record',url:'/history/'},
+  {n:'7',icon:'⚖️',label:'Consumer Rights',url:'/rights/'},
+  {n:'8',icon:'💰',label:'True Cost',url:'/cost/'},
+  {n:'9',icon:'📄',label:'Your Quote',url:'/quote/'},
+  {n:'10',icon:'⏰',label:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:'11',icon:'🏆',label:'What Makes Alpha Better',url:'/better/'},
+  {n:'12',icon:'📦',label:'What's Included',url:'/included/'},
+  {n:'13',icon:'📋',label:'Recap',url:'/recap/'},
+  {n:'14',icon:'✅',label:'Client Acknowledgment',url:'/checklist/'},
+  {n:'15',icon:'📝',label:'Alpha Contract',url:'/contract/'},
+  {n:'16',icon:'🎉',label:'Let's Be Timeshare Free',url:'/free/'}
+];
 
-function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return {};}}
-function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
-function _gk(){return localStorage.getItem(_AK)||'';}
-function _sk(k){localStorage.setItem(_AK,k);}
+function gc(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sc(o){localStorage.setItem(SK,JSON.stringify(o));}
+function gk(){return localStorage.getItem(AK)||'';}
+function sk(k){localStorage.setItem(AK,k);}
+function getClient(){var k=gk();if(!k)return null;return gc()[k]||null;}
+function saveField(field,val){var k=gk();if(!k)return;var c=gc();if(!c[k])return;c[k][field]=val;c[k]._updated=Date.now();sc(c);}
+function fmt(n){return n?'$'+Math.round(n).toLocaleString():'—';}
 
-function snRefresh(){
-  var c=_gc(), dd=document.getElementById('sn-client-dd'), cur=_gk();
-  if(!dd)return;
-  dd.innerHTML='<option value="">— Select Client —</option>';
-  Object.keys(c).sort(function(a,b){return (c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){
-    var o=document.createElement('option');o.value=k;
-    var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');
-    dd.appendChild(o);
-  });
-  if(cur)dd.value=cur;
-}
-
-function snLoadClient(){
-  var k=document.getElementById('sn-client-dd').value;
-  if(!k)return;
-  _sk(k);
-  snToast('✓ Loaded: '+(_gc()[k]?.firstName||k));
-  setTimeout(function(){window.location.reload();},600);
-}
-
-function snShowModal(){
-  var t=new Date();
-  document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();
-  document.getElementById('sn-name').value='';
-  document.getElementById('sn-resort').value='';
-  document.getElementById('sn-modal').classList.add('active');
-}
-function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
-
-function snCreateClient(){
-  var name=document.getElementById('sn-name').value.trim();
-  var resort=document.getElementById('sn-resort').value.trim();
-  var date=document.getElementById('sn-date').value;
-  if(!name&&!resort){alert('Please enter a name or resort.');return;}
-  var parts=name.split(' ');
-  var firstName=parts[0]||'';var lastName=parts.slice(1).join(' ')||'';
-  var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();
-  var c=_gc();
-  c[k]={firstName:firstName,lastName:lastName,name:name,resort:resort,date:date,_c:Date.now()};
-  _sc(c);_sk(k);snCloseModal();snRefresh();
-  document.getElementById('sn-client-dd').value=k;
-  snToast('✓ Created: '+name);
-  setTimeout(function(){window.location.href='/owner/';},700);
-}
-
-function snToast(msg){
-  var t=document.getElementById('sn-toast');
+function updateTicker(){
+  var d=getClient();
+  var t=document.getElementById('client-ticker');
   if(!t)return;
-  t.textContent=msg;t.style.display='block';
-  setTimeout(function(){t.style.display='none';},2500);
+  if(!d){t.innerHTML='<div class="ct-no-client">⚠️ No client selected</div>';return;}
+  var name=(d.firstName||'')+(d.lastName?' '+d.lastName:'');
+  var resort=d.resort||'';
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var yr=mo*12;
+  var updated=d._updated?new Date(d._updated).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+  var visits=d._visits||1;
+  var quote=d.alphaFee?fmt(d.alphaFee):'—';
+  var stagesDone=0;
+  PAGES.forEach(function(p){if(d['_done_'+p.n])stagesDone++;});
+  var pct=Math.round((stagesDone/PAGES.length)*100);
+  
+  // Build client URL slug
+  var slug='';
+  if(d.firstName)slug=d.firstName[0].toLowerCase()+'-'+(d.lastName||'').toLowerCase().replace(/\s+/g,'-');
+  
+  t.innerHTML=
+    '<div class="ct-name">'+name+'</div>'+
+    (resort?'<div class="ct-resort">🏨 '+resort+'</div>':'')+
+    '<div class="ct-row"><span>Monthly</span><strong>'+fmt(mo)+'</strong></div>'+
+    '<div class="ct-row"><span>Yearly</span><strong>'+fmt(yr)+'</strong></div>'+
+    (d.alphaFee?'<div class="ct-row"><span>Quote</span><strong>'+quote+'</strong></div>':'')+
+    '<div class="ct-row"><span>Last visit</span><strong class="'+(d._updated&&(Date.now()-d._updated)<86400000?'ct-fresh':'ct-stale')+'">'+updated+'</strong></div>'+
+    '<div class="ct-row"><span>Contacts</span><strong>'+visits+'</strong></div>'+
+    '<div class="ct-progress">'+
+    '<div class="ct-prog-label">Stage progress — '+pct+'%</div>'+
+    '<div class="ct-prog-bar"><div class="ct-prog-fill" style="width:'+pct+'%"></div></div>'+
+    '</div>';
 }
 
-// Highlight active page
+function showToast(msg,color){
+  var t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=msg;
+  t.style.background=color||'#16A34A';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2800);
+}
+
+function openPopup(id){document.getElementById(id).classList.add('on');}
+function closePopup(id){document.getElementById(id).classList.remove('on');}
+
+function saveCalendar(){
+  var today=document.getElementById('cal-today');
+  var fu=document.getElementById('cal-followup');
+  var d=getClient();
+  if(d&&gk()){
+    if(today&&today.value)saveField('apptToday',today.value);
+    if(fu&&fu.value){
+      saveField('apptFollowup',fu.value);
+      var dt=new Date(fu.value);
+      var gurl='https://calendar.google.com/calendar/render?action=TEMPLATE&text=ATC+Follow-Up+'+(d.firstName||'')+'+'+encodeURIComponent(d.resort||'')+'&dates='+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z/'+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z';
+      window.open(gurl,'_blank');
+    }
+  }
+  showToast('Calendar saved');
+}
+
+function markStageDone(stageN){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]['_done_'+stageN]=Date.now();
+  c[k]._updated=Date.now();
+  sc(c);
+  updateTicker();
+}
+
+function incrementVisits(){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]._visits=(c[k]._visits||0)+1;
+  c[k]._updated=Date.now();
+  sc(c);
+}
+
+function showSubmitPopup(savedItems,nextUrl){
+  var el=document.getElementById('submit-popup');
+  var body=document.getElementById('submit-items');
+  if(!el||!body)return;
+  body.innerHTML=savedItems.map(function(item){
+    return '<div class="submit-item"><span class="si-check">✓</span><span>'+item+'</span></div>';
+  }).join('');
+  document.getElementById('submit-next-btn').onclick=function(){window.location.href=nextUrl;};
+  el.classList.add('on');
+}
+
+// Load calendar values
 (function(){
-  var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';
-  document.querySelectorAll('.sn-item[data-page]').forEach(function(el){
-    if(el.dataset.page===path)el.classList.add('active');
-  });
-  snRefresh();
+  var d=getClient();
+  if(!d)return;
+  var ct=document.getElementById('cal-today');
+  var cf=document.getElementById('cal-followup');
+  if(ct&&d.apptToday)ct.value=d.apptToday;
+  if(cf&&d.apptFollowup)cf.value=d.apptFollowup;
+  if(ct&&!d.apptToday){
+    var now=new Date();
+    ct.value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  }
+  incrementVisits();
+  updateTicker();
 })();
 </script>
 
