@@ -434,12 +434,7 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
     </div>
     <table class="tt">
       <thead><tr>
-        <th>Page</th>
-        <th>📧</th>
-        <th>💬</th>
-        <th>🗣</th>
-        <th>👍</th>
-        <th>Show More</th>
+        <th style="font-size:12px">Section</th><th style="width:40px;text-align:center">📧</th><th style="width:40px;text-align:center">💬</th><th style="width:40px;text-align:center">🗣</th><th style="width:40px;text-align:center">✓</th><th style="width:80px">Detail</th>
       </tr></thead>
       <tbody id="tasks-body"></tbody>
     </table>
@@ -476,16 +471,28 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
   </div>
 </div>
 
-<!-- LIKELIHOOD CARD -->
+<!-- MOTIVATION SCALE CARD -->
 <div class="card">
-  <div class="card-hdr">⭐ Likelihood to Book</div>
+  <div class="card-hdr">🎯 Motivation Scale</div>
   <div class="card-body">
-    <div style="font-size:13px;color:#6b7280;margin-bottom:10px">Select the description that best matches this client:</div>
-    <div id="like-list"></div>
+    <div style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:14px;background:#EAF0F8;border-radius:6px;padding:12px;font-style:italic">"Last question before we get into the assessment — on a scale from 1 to 10, how strong is your desire to get out of this as quickly as possible?"</div>
+    <div id="mot-scale" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px"></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:16px">
+      <span>Not urgent</span><span>🔥 Get me out NOW</span>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px">Qualifying Question</div>
+      <div style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;background:#f9fafb;border-radius:6px;padding:10px;font-style:italic">"If we could offer you a guaranteed service and timeline, $0 down today, fair installment payments, and complimentary credit protection — would you be ready to move forward?"</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button id="qual-yes" onclick="setQualify('yes')" style="flex:1;padding:12px;font-size:14px;font-weight:700;border-radius:6px;border:2px solid var(--green);background:#fff;color:var(--green);cursor:pointer;font-family:'Inter',sans-serif">✓ YES</button>
+        <button id="qual-no" onclick="setQualify('no')" style="flex:1;padding:12px;font-size:14px;font-weight:700;border-radius:6px;border:2px solid #9ca3af;background:#fff;color:#9ca3af;cursor:pointer;font-family:'Inter',sans-serif">✗ NOT YET</button>
+      </div>
+      <div style="font-size:13px;color:var(--gold);font-style:italic;font-weight:600;text-align:center">"Would you rather be putting those payments toward the problem — or toward the solution?"</div>
+    </div>
   </div>
 </div>
 
-<!-- APPOINTMENT CARD -->
+<!-- APPOINTMENT<!-- APPOINTMENT CARD -->
 <div class="card">
   <div class="card-hdr">📅 Appointment Center</div>
   <div class="card-body">
@@ -801,18 +808,21 @@ function buildTasks(){
   var html='';
   TASKS.forEach(function(t,i){
     var em=tc['e'+i]||false,tx=tc['t'+i]||false,vb=tc['v'+i]||false,ag=tc['a'+i]||false;
-    var isDone=vb&&ag;if(isDone)done++;
-    var smOpts=SHOW_MORE_OPTIONS[i]?('<option value="">Show me more about...</option><option value="'+SHOW_MORE_OPTIONS[i]+'">'+SHOW_MORE_OPTIONS[i]+'</option>'):'<option>—</option>';
+    var allDone=em&&vb&&ag;if(allDone)done++;
+    var smUrl=t.url||'';
+    var smOpts=smUrl
+      ?('<option value="">More about this section...</option><option value="'+smUrl+'">Go to '+t.lb+'</option>')
+      :'<option value="">—</option>';
     var emCell=t.email
-      ?'<td><input type="checkbox" class="tcb"'+(em?' checked':'')+' onchange="savTask('+i+','e',this.checked)"></td>'
-      :'<td style="color:#d1d5db;font-size:12px">—</td>';
-    html+='<tr class="'+(isDone?'done':'')+'">'
-      +'<td style="font-size:12px">'+(t.email?'<span class="em-icon">📧</span> ':'')+t.lb+'</td>'
+      ?('<td><input type="checkbox" class="tcb" data-i="'+i+'" data-type="e"'+(em?' checked':'')+' onchange="savTask(this)"></td>')
+      :'<td style="color:#d1d5db;font-size:12px;text-align:center">—</td>';
+    html+='<tr>'
+      +'<td style="font-size:12px;color:#374151">'+(t.email?'<span style="color:var(--gold);font-size:11px;margin-right:3px">📧</span>':'')+t.lb+'</td>'
       +emCell
-      +'<td><input type="checkbox" class="tcb"'+(tx?' checked':'')+' onchange="savTask('+i+','t',this.checked)"></td>'
-      +'<td><input type="checkbox" class="tcb"'+(vb?' checked':'')+' onchange="savTask('+i+','v',this.checked)"></td>'
-      +'<td><input type="checkbox" class="tcb"'+(ag?' checked':'')+' onchange="savTask('+i+','a',this.checked)"></td>'
-      +'<td><select class="show-more" onchange="goToPage(this.value,this)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:2px 4px;color:var(--gold);background:#fff;cursor:pointer;width:100%;max-width:90px">'+smOpts+'</select></td>'
+      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-type="t"'+(tx?' checked':'')+' onchange="savTask(this)"></td>'
+      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-type="v"'+(vb?' checked':'')+' onchange="savTask(this)"></td>'
+      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-type="a"'+(ag?' checked':'')+' onchange="savTask(this)"></td>'
+      +'<td><select onchange="goToPage(this.value,this)" style="font-size:11px;border:1px solid #e5e7eb;border-radius:3px;padding:2px 4px;color:var(--gold);background:#fff;cursor:pointer;max-width:80px">'+smOpts+'</select></td>'
     +'</tr>';
   });
   body.innerHTML=html;
@@ -820,28 +830,64 @@ function buildTasks(){
   if(badgeEl)badgeEl.textContent=done+' done';
 }
 
-function savTask(idx,type,val){
+function savTask(cb){
+  var idx=parseInt(cb.getAttribute('data-i'));
+  var type=cb.getAttribute('data-type');
+  var val=cb.checked;
   var s=ac();if(!s)return;var all=ga();if(!all[s])return;
   if(!all[s].taskChecks)all[s].taskChecks={};
+  all[s].taskChecks[type+idx]=val;sa(all);buildTasks();updateProgress();
+}
+;
   all[s].taskChecks[type+idx]=val;sa(all);buildTasks();updateProgress();
 }
 
 function goToPage(url,sel){if(url&&url!=='—')window.location.href=url;if(sel)sel.value='';}
 
-// LIKELIHOOD
-var LIKELIHOODS=[
-  {stars:'★★★★★',txt:'Hot — Fee given, follow-up confirmed, multiple emails opened'},
-  {stars:'★★★★★',txt:'Very Likely — Multiple sections confirmed, highly engaged'},
-  {stars:'★★★★',txt:'Strong — Fee presented, verbal confirmation received'},
-  {stars:'★★★★',txt:'Interested — Several emails sent, agreeable on key points'},
-  {stars:'★★★',txt:'Moderate — Understands value, financial concerns remain'},
-  {stars:'★★★',txt:'Considering — Engaged but needs follow-up to decide'},
-  {stars:'★★',txt:'Lukewarm — Limited engagement, objections unresolved'},
-  {stars:'★',txt:'Low — Minimal response, objections strong, needs re-nurturing'},
-];
 
-function buildLikelihood(){
+// MOTIVATION SCALE
+var _motLabels=['Not urgent','Low','Somewhat','Moderate','Motivated','Clear desire','Strong','Very strong','Urgent','🔥 Get me out NOW'];
+function buildMotScale(){
   var d=ad()||{};
+  var saved=d.motivation||0;
+  var container=document.getElementById('mot-scale');
+  if(!container)return;
+  container.innerHTML=_motLabels.map(function(lbl,i){
+    var num=i+1;
+    var isHot=num>=9;
+    var isSel=num===saved;
+    var bg=isSel?(isHot?'var(--red)':num>=7?'var(--gold)':'var(--navy)'):'#fff';
+    var color=isSel?'#fff':(isHot?'var(--red)':num>=7?'var(--gold)':'var(--navy)');
+    var border=isSel?(isHot?'var(--red)':num>=7?'var(--gold)':'var(--navy)'):'var(--border)';
+    return '<div onclick="setMot('+num+',this)" style="border:2px solid '+border+';border-radius:6px;padding:8px 4px;text-align:center;cursor:pointer;background:'+bg+';transition:all .15s">'
+      +'<div style="font-size:16px;font-weight:700;color:'+color+'">'+num+'</div>'
+      +'<div style="font-size:11px;color:'+(isSel?'rgba(255,255,255,.8)':isHot?'var(--red)':'#9ca3af')+';margin-top:2px;line-height:1.2">'+(num===10?'🔥':lbl)+'</div>'
+    +'</div>';
+  }).join('');
+}
+function setMot(num,el){
+  var s=ac();if(!s)return;var all=ga();if(!all[s])return;
+  all[s].motivation=num;all[s]._updated=Date.now();sa(all);
+  buildMotScale();
+  document.getElementById('sh-stage').textContent='Motivation: '+num+'/10';
+}
+function setQualify(val){
+  var s=ac();if(!s)return;var all=ga();if(!all[s])return;
+  all[s].qualifyAnswer=val;all[s]._updated=Date.now();sa(all);
+  var yes=document.getElementById('qual-yes');
+  var no=document.getElementById('qual-no');
+  if(val==='yes'){
+    if(yes){yes.style.background='var(--green)';yes.style.color='#fff';yes.style.borderColor='var(--green)';}
+    if(no){no.style.background='#fff';no.style.color='#9ca3af';no.style.borderColor='#9ca3af';}
+  } else {
+    if(no){no.style.background='#374151';no.style.color='#fff';no.style.borderColor='#374151';}
+    if(yes){yes.style.background='#fff';yes.style.color='var(--green)';yes.style.borderColor='var(--green)';}
+  }
+}
+
+
+
+function buildLikelihood(){buildMotScale();};
   var saved=d.likelihood||0;
   var container=document.getElementById('like-list');
   if(!container)return;
@@ -1042,7 +1088,8 @@ function loadData(){
   if(d.firstName||d.lastName)document.getElementById('sh-name').textContent=((d.firstName||'')+' '+(d.lastName||'')).trim();
   if(d.resort)document.getElementById('sh-resort').textContent=d.resort;
 
-  calcTotals();updateBanner();updateCRM();buildTasks();buildLikelihood();
+  calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();
+  if(d.qualifyAnswer)setQualify(d.qualifyAnswer);
   showThreatAlert();checkCreditAlert();updateProgress();
 }
 
