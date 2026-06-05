@@ -12,256 +12,326 @@ html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;background:#
 .sidebar{width:240px;min-height:100vh;background:#1B2A4A;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
 .main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
 .page{max-width:680px;margin:0 auto}
+/* SIDEBAR */
 .sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
 .sb-logo img{max-width:130px}
 .sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
-.sb-no-client{padding:12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
-.sb-stage{display:inline-flex;align-items:center;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
+.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
 .sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
-.sb-resort{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:8px}
+.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:8px}
 .sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px}
-.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
-.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
-.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
-.sb-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:5px 7px;margin-top:5px;font-size:11px;color:#C8960C;font-weight:600}
+.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:5px 7px}
+.sb-stat .sl{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
+.sb-stat .sv{font-size:13px;font-weight:600;color:#C8960C}
+.sb-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:5px 7px;margin-top:5px;font-size:12px;color:#C8960C;font-weight:600}
 .sb-meta{font-size:10px;color:rgba(255,255,255,.35);margin-top:5px}
 .sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
+.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:12px;border-radius:3px;font-family:'Inter',sans-serif}
 .sb-select option{background:#1B2A4A}
 .sb-brow{display:flex;gap:5px;margin-top:5px}
-.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
+.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
 .sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
 .sb-b:hover{opacity:.85}
 .sb-nav{flex:1;padding:6px 0}
-.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent}
+.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:12px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
 .sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
 .sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
-.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center}
+.sb-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 5px;border-radius:6px;min-width:20px;text-align:center;flex-shrink:0}
 .sb-link.active .sb-num{background:rgba(200,150,12,.25);color:#C8960C}
 .sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
 .sb-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.1)}
-.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.sb-cal-in{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif;margin-bottom:3px}
+.sb-cal-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sb-cal-in{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;font-family:'Inter',sans-serif;margin-bottom:3px}
 .sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
-.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
+.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:11px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
 .sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
+/* PAGE */
 .page-hdr{background:#1B2A4A;color:#fff;border-radius:8px 8px 0 0;padding:20px 24px}
-.page-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.page-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
-.page-sub{font-size:14px;color:rgba(255,255,255,.65)}
+.pg-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.pg-sub{font-size:14px;color:rgba(255,255,255,.65)}
 .page-body{background:#fff;border-radius:0 0 8px 8px;border:1px solid #e5e7eb;border-top:none;padding:24px}
-.btn{padding:10px 20px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-.btn.primary{background:#C8960C;color:#fff}
-.btn.outline{background:#fff;color:#1B2A4A;border:1.5px solid #1B2A4A}
-.popup-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
-.popup-overlay.active{display:flex}
-.popup{background:#fff;border-radius:12px;padding:28px;width:100%;max-width:440px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.popup h3{font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
-.nc-field{margin-bottom:10px}
-.nc-field label{display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
-.nc-field input{width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:'Inter',sans-serif}
-.nc-field input:focus{outline:none;border-color:#C8960C}
+/* ICON GRID */
+.icon-card{display:block;background:#fff;border:1.5px solid #e5e7eb;border-radius:8px;padding:14px;text-align:center;text-decoration:none;position:relative;transition:border-color .2s,transform .2s,box-shadow .2s}
+.icon-card:hover{border-color:#C8960C;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.icon-card.saved{border-color:#1a7a3c}
+.ic-num{position:absolute;top:6px;left:8px;font-size:10px;font-weight:700;color:#9ca3af}
+.ic-check{position:absolute;top:6px;right:8px;color:#1a7a3c;font-size:11px;font-weight:700}
+.ic-icon{font-size:26px;margin-bottom:7px;display:block}
+.ic-label{font-size:12px;font-weight:700;color:#1B2A4A;margin-bottom:3px;line-height:1.3}
+.ic-desc{font-size:11px;color:#6b7280;line-height:1.3}
+/* MODAL */
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:24px;width:100%;max-width:400px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
+.mf{margin-bottom:10px}
+.mf label{display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.mf input{width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:'Inter',sans-serif}
+.mf input:focus{outline:none;border-color:#C8960C}
+.mrow{display:flex;gap:8px;margin-top:14px}
+.btn{padding:10px 20px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;flex:1}
+.btn.p{background:#C8960C;color:#fff}
+.btn.o{background:#fff;color:#1B2A4A;border:1.5px solid #1B2A4A}
+/* TOAST */
 .toast{display:none;position:fixed;bottom:24px;left:260px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:600;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="sidebar" id="sidebar"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sb"></div>
+
+<!-- MAIN -->
 <div class="main">
 <div class="page">
-
-<div class="page-hdr">
-  <div class="page-num">Page 0</div>
-  <div class="page-title">Dashboard</div>
-  <div class="page-sub">15–30 min assessment · Select or create a client to begin</div>
-</div>
-<div class="page-body">
-
-<div style="background:#EAF0F8;border-radius:8px;padding:18px;margin-bottom:20px">
-  <div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">Welcome to Alpha</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-    <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 1</div><div style="font-size:14px;font-weight:600">Determine Eligibility</div></div>
-    <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 2</div><div style="font-size:14px;font-weight:600">Violations & Fines</div></div>
-    <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 3</div><div style="font-size:14px;font-weight:600">Our Services</div></div>
-    <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 4</div><div style="font-size:14px;font-weight:600">Fee & Financing</div></div>
+  <div class="page-hdr">
+    <div class="pg-num">Page 0</div>
+    <div class="pg-title">Dashboard</div>
+    <div class="pg-sub">15–30 min assessment &nbsp;·&nbsp; Select or create a client to begin</div>
+  </div>
+  <div class="page-body">
+    <div style="background:#EAF0F8;border-radius:8px;padding:18px;margin-bottom:20px">
+      <div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:10px">Welcome to Alpha</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 1</div><div style="font-size:14px;font-weight:600">Determine Eligibility</div></div>
+        <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 2</div><div style="font-size:14px;font-weight:600">Violations &amp; Fines</div></div>
+        <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 3</div><div style="font-size:14px;font-weight:600">Our Services</div></div>
+        <div style="background:#1B2A4A;color:#fff;border-radius:6px;padding:12px"><div style="font-size:11px;color:#C8960C;font-weight:700;margin-bottom:3px">STEP 4</div><div style="font-size:14px;font-weight:600">Fee &amp; Financing</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="grid"></div>
   </div>
 </div>
-
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="icon-grid"></div>
-
-</div>
-</div>
 </div>
 </div>
 
-<div class="toast" id="global-toast"></div>
+<!-- TOAST -->
+<div class="toast" id="tst"></div>
 
 <!-- NEW CLIENT MODAL -->
-<div class="popup-overlay" id="nc-overlay">
-<div class="popup nc-modal">
-  <h3>New Client</h3>
-  <div class="nc-field"><label>First Name</label><input id="nc-first" placeholder="First name"></div>
-  <div class="nc-field"><label>Last Name</label><input id="nc-last" placeholder="Last name"></div>
-  <div class="nc-field"><label>Resort</label><input id="nc-resort" placeholder="e.g. Westgate — Orlando FL"></div>
-  <div style="display:flex;gap:8px;margin-top:14px">
-    <button class="btn outline" onclick="document.getElementById('nc-overlay').classList.remove('active')" style="flex:1">Cancel</button>
-    <button class="btn primary" onclick="createClient()" style="flex:1">Create & Start</button>
+<div class="overlay" id="nc-ov">
+  <div class="modal">
+    <h3>New Client</h3>
+    <div class="mf"><label>First Name</label><input id="nc-f" placeholder="First name"></div>
+    <div class="mf"><label>Last Name</label><input id="nc-l" placeholder="Last name"></div>
+    <div class="mf"><label>Resort</label><input id="nc-r" placeholder="e.g. Westgate — Orlando, FL"></div>
+    <div class="mrow">
+      <button class="btn o" onclick="closeNC()">Cancel</button>
+      <button class="btn p" onclick="createC()">Create &amp; Start</button>
+    </div>
   </div>
-</div>
 </div>
 
 <script>
-// ── DATA LAYER ─────────────────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────────────────────────────────
 var SK='atc_clients_v2', AK='atc_active';
-var ATC = {
-  getAll:function(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}},
-  get:function(slug){return this.getAll()[slug]||null;},
-  set:function(slug,data){var all=this.getAll();all[slug]=Object.assign(all[slug]||{_created:Date.now(),_visits:0,_slug:slug},data,{_updated:Date.now()});localStorage.setItem(SK,JSON.stringify(all));return all[slug];},
-  active:function(){return localStorage.getItem(AK)||null;},
-  setActive:function(slug){localStorage.setItem(AK,slug);var d=this.get(slug);if(d)this.set(slug,{_visits:(d._visits||0)+1,_lastVisit:Date.now()});},
-  activeData:function(){var slug=this.active();return slug?this.get(slug):null;},
-  save:function(updates){var slug=this.active();if(!slug)return null;return this.set(slug,updates);},
-  markPageSaved:function(pg){var slug=this.active();if(!slug)return;var d=this.get(slug)||{};var s=d._savedPages||[];if(!s.includes(pg))s.push(pg);this.set(slug,{_savedPages:s});},
-  slug:function(f,l){return ((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');},
-  formatCurrency:function(n){return '$'+Math.round(n||0).toLocaleString();},
-  formatDate:function(ts){if(!ts)return '—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
-};
-window.ATC=ATC;
+function getAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return {};}}
+function saveAll(o){localStorage.setItem(SK,JSON.stringify(o));}
+function active(){return localStorage.getItem(AK)||null;}
+function setActive(slug){
+  localStorage.setItem(AK,slug);
+  var all=getAll();
+  if(all[slug]){all[slug]._visits=(all[slug]._visits||0)+1;all[slug]._updated=Date.now();saveAll(all);}
+}
+function activeData(){var s=active();return s?getAll()[s]||null:null;}
+function fmtC(n){return '$'+Math.round(n||0).toLocaleString();}
+function fmtD(ts){if(!ts)return '—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function makeSlug(f,l){return ((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');}
 
-// ── PAGES ──────────────────────────────────────────────────────────────
-var PAGES=[
-  {num:0,icon:'🏠',label:'Dashboard',url:'/home/'},
-  {num:1,icon:'📋',label:'Owner & Resort Info',url:'/owner/'},
-  {num:2,icon:'❓',label:'Why Do You Want Out',url:'/whyout/'},
-  {num:3,icon:'⚠️',label:'If You Do Nothing',url:'/wait/'},
-  {num:4,icon:'🔍',label:'Finding Your Group',url:'/group/'},
-  {num:'4a',icon:'✅',label:'Money-Back Approval',url:'/approval/'},
-  {num:'4b',icon:'👨‍👩‍👧',label:'Heirs & Estate Liability',url:'/heirs/'},
-  {num:'4c',icon:'💵',label:'Resort Compensation',url:'/compensation/'},
-  {num:'4d',icon:'💳',label:'To Pay or Not to Pay',url:'/credit/'},
-  {num:'4e',icon:'✉️',label:'Mutual Release Letter',url:'/letter/'},
-  {num:5,icon:'🛡',label:'Certificate of Guarantee',url:'/guarantee/'},
-  {num:6,icon:'⭐',label:'Our Track Record',url:'/history/'},
-  {num:7,icon:'⚖️',label:'Consumer Rights',url:'/rights/'},
-  {num:8,icon:'💰',label:'True Cost',url:'/cost/'},
-  {num:9,icon:'📄',label:'Your Quote',url:'/quote/'},
-  {num:10,icon:'⏰',label:'30 & 90 Day Follow-Up',url:'/followup/'},
-  {num:11,icon:'🏆',label:'What Makes Alpha Better',url:'/better/'},
-  {num:12,icon:'📦',label:"What's Included",url:'/included/'},
-  {num:13,icon:'📋',label:'Recap',url:'/recap/'},
-  {num:14,icon:'✅',label:'Client Acknowledgment',url:'/checklist/'},
-  {num:15,icon:'📝',label:'Alpha Contract',url:'/contract/'},
-  {num:16,icon:'🎉',label:"Let's Be Timeshare Free",url:'/free/'}
+// ── PAGES ─────────────────────────────────────────────────────────────────
+var PG=[
+  {n:0, ic:'🏠', lb:'Dashboard', ds:'You are here', url:'/home/'},
+  {n:1, ic:'📋', lb:'Owner & Resort Info', ds:'Names, resort, mortgage & fees', url:'/owner/'},
+  {n:2, ic:'❓', lb:'Why Do You Want Out', ds:'Select your main reasons', url:'/whyout/'},
+  {n:3, ic:'⚠️', lb:'If You Do Nothing', ds:'Resort pursuit explained', url:'/wait/'},
+  {n:4, ic:'🔍', lb:'Finding Your Group', ds:'How group filings work', url:'/group/'},
+  {n:'4a',ic:'✅', lb:'Money-Back Approval', ds:'Criteria & risk assessment', url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧', lb:'Heirs & Estate Liability', ds:'Perpetuity & inheritance', url:'/heirs/'},
+  {n:'4c',ic:'💵', lb:'Resort Compensation', ds:'What owners may recover', url:'/compensation/'},
+  {n:'4d',ic:'💳', lb:'To Pay or Not to Pay', ds:'Credit & payment explained', url:'/credit/'},
+  {n:'4e',ic:'✉️', lb:'Mutual Release Letter', ds:'What a release means', url:'/letter/'},
+  {n:5, ic:'🛡', lb:'Certificate of Guarantee', ds:'100% money-back guarantee', url:'/guarantee/'},
+  {n:6, ic:'⭐', lb:'Our Track Record', ds:'BBB A+, 41 years, 5-star reviews', url:'/history/'},
+  {n:7, ic:'⚖️', lb:'Consumer Rights', ds:'Violations, statutes & fines', url:'/rights/'},
+  {n:8, ic:'💰', lb:'True Cost', ds:'30-year projection', url:'/cost/'},
+  {n:9, ic:'📄', lb:'Your Quote', ds:'Fee, term & financing', url:'/quote/'},
+  {n:10,ic:'⏰', lb:'30 & 90 Day Follow-Up', ds:'Next contact dates', url:'/followup/'},
+  {n:11,ic:'🏆', lb:'What Makes Alpha Better', ds:'Group filings & guarantees', url:'/better/'},
+  {n:12,ic:'📦', lb:"What's Included", ds:'Services & results', url:'/included/'},
+  {n:13,ic:'📋', lb:'Recap', ds:'After you sign', url:'/recap/'},
+  {n:14,ic:'✅', lb:'Client Acknowledgment', ds:'Review & confirm', url:'/checklist/'},
+  {n:15,ic:'📝', lb:'Alpha Contract', ds:'Open enrollment agreement', url:'/contract/'},
+  {n:16,ic:'🎉', lb:"Let's Be Timeshare Free", ds:'Celebration summary', url:'/free/'},
 ];
 
-// ── SIDEBAR ────────────────────────────────────────────────────────────
-function buildSidebar(){
-  var d=ATC.activeData(), slug=ATC.active();
-  var clientHTML='';
+// ── SIDEBAR ────────────────────────────────────────────────────────────────
+function buildSB(){
+  var d=activeData(), slug=active(), all=getAll();
+  var cHTML='';
   if(d){
     var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-    var stage=d.alphaFee?'Quoted':'Assessment';
-    clientHTML='<div class="sb-client"><div class="sb-stage">'+stage+'</div><div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div><div class="sb-resort">'+(d.resort||'No resort')+'</div><div class="sb-stats"><div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+ATC.formatCurrency(mo)+'</div></div><div class="sb-stat"><div class="sl">Yearly</div><div class="sv">'+ATC.formatCurrency(mo*12)+'</div></div><div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+ATC.formatCurrency(d.maitFees)+'</div></div><div class="sb-stat"><div class="sl">Visits</div><div class="sv">'+(d._visits||1)+'</div></div></div>'+(d.alphaFee?'<div class="sb-quote">📄 Quote: '+ATC.formatCurrency(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')+'<div class="sb-meta">Last: '+ATC.formatDate(d._updated)+'</div></div>';
+    cHTML='<div class="sb-client">'
+      +'<div class="sb-stage">'+(d.alphaFee?'Quoted':'Assessment')+'</div>'
+      +'<div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div>'
+      +'<div class="sb-resort">'+(d.resort||'No resort')+'</div>'
+      +'<div class="sb-stats">'
+        +'<div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+fmtC(mo)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Yearly</div><div class="sv">'+fmtC(mo*12)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+fmtC(parseFloat(d.maitFees)||0)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Visits</div><div class="sv">'+(d._visits||1)+'</div></div>'
+      +'</div>'
+      +(d.alphaFee?'<div class="sb-quote">📄 '+fmtC(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')
+      +'<div class="sb-meta">Last: '+fmtD(d._updated)+'</div>'
+    +'</div>';
   } else {
-    clientHTML='<div class="sb-no-client">⚠️ No client selected</div>';
+    cHTML='<div class="sb-no-client">⚠️ No client selected</div>';
   }
-  var all=ATC.getAll();
-  var opts=Object.keys(all).map(function(k){var c=all[k];return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
-  var navLinks=PAGES.map(function(p){
-    var isActive=window.location.pathname.startsWith(p.url.replace(/\/$/,''));
-    var saved=d&&d._savedPages&&d._savedPages.includes(p.url);
-    var href=slug?p.url.replace(/\/$/,'/'+slug+'/'):p.url;
-    return '<a href="'+href+'" class="sb-link'+(isActive?' active':'')+'"><span class="sb-num">'+p.num+'</span><span style="flex:1">'+p.icon+' '+p.label+'</span>'+(saved?'<span style="color:#1a7a3c;font-size:10px">✓</span>':'')+'</a>';
+
+  var opts=Object.keys(all).map(function(k){
+    var c=all[k];
+    return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'
+      +(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';
   }).join('');
-  var calVals=d?('<input type="datetime-local" class="sb-cal-in" id="sb-ta" value="'+(d._todayAppt||'')+'" onchange="saveAppt('today',this.value)"><div class="sb-cal-lbl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sb-cal-in" id="sb-fa" value="'+(d._fuAppt||'')+'" onchange="saveAppt('fu',this.value)"><button class="sb-b" style="margin-top:4px;font-size:9px" onclick="addCal()">+ Google Calendar</button>'):'<div style="font-size:10px;color:rgba(255,255,255,.35);padding:4px">Select a client first</div>';
-  document.getElementById('sidebar').innerHTML='<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'+clientHTML+'<div class="sb-sel"><select class="sb-select" onchange="switchClient(this.value)"><option value="">— Select client —</option>'+opts+'</select><div class="sb-brow"><button class="sb-b" onclick="showNew()">+ New</button><button class="sb-b out" onclick="saveClear()">Save & Clear</button></div></div><nav class="sb-nav">'+navLinks+'</nav><div class="sb-cal"><div class="sb-cal-lbl">📅 Today</div>'+calVals+'</div><div class="sb-rpts"><div class="sb-cal-lbl">📋 Reports</div><button class="sb-rpt" onclick="rpt('vero')">📋 Vero</button><button class="sb-rpt" onclick="rpt('crm')">📋 CRM Note</button><button class="sb-rpt" onclick="rpt('sms')">💬 SMS</button><button class="sb-rpt" onclick="rpt('summary')">📄 Full Summary</button></div>';
+
+  var nav=PG.map(function(p){
+    var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;
+    var href=p.url;
+    return '<a href="'+href+'" class="sb-link" data-url="'+p.url+'">'
+      +'<span class="sb-num">'+p.n+'</span>'
+      +'<span style="flex:1">'+p.ic+' '+p.lb+'</span>'
+      +(saved?'<span style="color:#1a7a3c;font-size:10px;flex-shrink:0">✓</span>':'')
+    +'</a>';
+  }).join('');
+
+  var calV=d?('<input type="datetime-local" class="sb-cal-in" id="sb-ta" value="'+(d._todayAppt||'')+'" onchange="saveAppt('t',this.value)">'
+    +'<div class="sb-cal-lbl" style="margin-top:6px">📅 Follow-Up</div>'
+    +'<input type="datetime-local" class="sb-cal-in" id="sb-fa" value="'+(d._fuAppt||'')+'" onchange="saveAppt('f',this.value)">'
+    +'<button class="sb-b" style="margin-top:4px;font-size:10px;width:100%" onclick="addCal()">+ Google Calendar</button>')
+    :'<div style="font-size:11px;color:rgba(255,255,255,.3);padding:4px">Select a client first</div>';
+
+  document.getElementById('sb').innerHTML=
+    '<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
+    +cHTML
+    +'<div class="sb-sel"><select class="sb-select" onchange="switchC(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div class="sb-brow"><button class="sb-b" onclick="openNC()">+ New</button><button class="sb-b out" onclick="saveClear()">Save &amp; Clear</button></div></div>'
+    +'<nav class="sb-nav">'+nav+'</nav>'
+    +'<div class="sb-cal"><div class="sb-cal-lbl">📅 Today</div>'+calV+'</div>'
+    +'<div class="sb-rpts"><div class="sb-cal-lbl">📋 Reports</div>'
+    +'<button class="sb-rpt" onclick="rpt('vero')">📋 Vero</button>'
+    +'<button class="sb-rpt" onclick="rpt('crm')">📋 CRM Note</button>'
+    +'<button class="sb-rpt" onclick="rpt('sms')">💬 SMS</button>'
+    +'<button class="sb-rpt" onclick="rpt('full')">📄 Full Summary</button>'
+    +'</div>';
 }
 
-function switchClient(slug){if(!slug)return;ATC.setActive(slug);toast('Loaded');setTimeout(function(){window.location.reload();},500);}
-function showNew(){document.getElementById('nc-overlay').classList.add('active');setTimeout(function(){document.getElementById('nc-first').focus();},100);}
-function createClient(){
-  var f=document.getElementById('nc-first').value.trim();
-  var l=document.getElementById('nc-last').value.trim();
-  var r=document.getElementById('nc-resort').value.trim();
+function switchC(slug){if(!slug)return;setActive(slug);toast('Loaded');setTimeout(function(){location.reload();},500);}
+function openNC(){document.getElementById('nc-ov').classList.add('on');setTimeout(function(){document.getElementById('nc-f').focus();},100);}
+function closeNC(){document.getElementById('nc-ov').classList.remove('on');}
+function createC(){
+  var f=document.getElementById('nc-f').value.trim();
+  var l=document.getElementById('nc-l').value.trim();
+  var r=document.getElementById('nc-r').value.trim();
   if(!f&&!l){alert('Please enter a name.');return;}
-  var slug=ATC.slug(f,l);
-  ATC.set(slug,{firstName:f,lastName:l,resort:r,_visits:1});
-  ATC.setActive(slug);
-  document.getElementById('nc-overlay').classList.remove('active');
+  var slug=makeSlug(f,l);
+  var all=getAll();
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});
+  saveAll(all);setActive(slug);closeNC();
   toast('Created: '+f+' '+l);
-  setTimeout(function(){window.location.href='/owner/';},700);
+  setTimeout(function(){location.href='/owner/';},700);
 }
 function saveClear(){
-  var d=ATC.activeData();if(!d){alert('No active client.');return;}
+  var d=activeData();if(!d){alert('No active client.');return;}
   var saved=d._savedPages||[];
-  var list=PAGES.map(function(p){var ok=saved.includes(p.url);return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:'+(ok?'#1a7a3c':'#d1d5db')+'">'+(ok?'✓':'○')+'</span>'+p.icon+' '+p.label+'</div>';}).join('');
-  var ov=document.createElement('div');ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center';
-  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:440px;width:100%;margin:20px;max-height:80vh;overflow-y:auto"><h3 style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</h3><div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A"><strong>'+(d.resort||'No resort')+'</strong></div>'+list+'<div style="display:flex;gap:8px;margin-top:14px"><button class="btn outline" onclick="this.closest('div[style]').remove()" style="flex:1">Cancel</button><button class="btn primary" onclick="doClear()" style="flex:1">Clear & New</button></div></div>';
+  var list=PG.map(function(p){
+    var ok=saved.indexOf(p.url)>-1;
+    return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px">'
+      +'<span style="color:'+(ok?'#1a7a3c':'#d1d5db')+';font-size:14px">'+(ok?'✓':'○')+'</span>'+p.ic+' '+p.lb+'</div>';
+  }).join('');
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:420px;width:100%;margin:20px;max-height:80vh;overflow-y:auto">'
+    +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</div>'
+    +'<div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A">'+(d.resort||'No resort')+'</div>'
+    +list
+    +'<div style="display:flex;gap:8px;margin-top:14px">'
+    +'<button onclick="this.closest('div[style]').remove()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button>'
+    +'<button onclick="doClear()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Clear &amp; New</button>'
+    +'</div></div>';
   document.body.appendChild(ov);
 }
-function doClear(){localStorage.removeItem(AK);toast('Cleared');setTimeout(function(){window.location.href='/home/';},700);}
-function saveAppt(t,v){ATC.save(t==='today'?{_todayAppt:v}:{_fuAppt:v});}
-function addCal(){var d=ATC.activeData();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}var dt=new Date(fu);var fmt=function(t){return t.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};var end=new Date(dt.getTime()+3600000);var name=(d.firstName||'Client')+' — ATC Follow-Up';window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(name)+'&dates='+fmt(dt)+'/'+fmt(end),'_blank');}
+function doClear(){localStorage.removeItem(AK);toast('Cleared');setTimeout(function(){location.href='/home/';},700);}
+function saveAppt(t,v){var s=active();if(!s)return;var all=getAll();if(!all[s])return;if(t==='t')all[s]._todayAppt=v;else all[s]._fuAppt=v;saveAll(all);}
+function addCal(){
+  var d=activeData();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}
+  var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
+  var end=new Date(dt.getTime()+3600000);
+  var name=(d.firstName||'Client')+' — ATC Follow-Up';
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(name)+'&dates='+fmt(dt)+'/'+fmt(end),'_blank');
+}
 function rpt(type){
-  var d=ATC.activeData();if(!d){toast('No active client','#c0392b');return;}
+  var d=activeData();if(!d){toast('No active client','#c0392b');return;}
   var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
-  var mo=ATC.formatCurrency((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
-  var text='';
-  if(type==='vero')text='Name: '+name+'
+  var mo=fmtC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
+  var txt='';
+  if(type==='vero')txt='Name: '+name+'
 Resort: '+(d.resort||'—')+'
 Phone: '+(d.phone||'—')+'
-2nd Phone: '+(d.phone2||'—')+'
+2nd: '+(d.phone2||'—')+'
 Email: '+(d.email||'—')+'
 Address: '+(d.address||'—');
-  else if(type==='crm')text='=== CALL NOTES — '+new Date().toLocaleDateString()+' ===
+  else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===
 Client: '+name+'
 Resort: '+(d.resort||'—')+'
 Phone: '+(d.phone||'—')+'
 Monthly: '+mo+'
-MTF: '+ATC.formatCurrency(d.maitFees)+'/yr
-Mortgage: '+ATC.formatCurrency(d.monthlyMortgage)+'/mo
-Quote: '+(d.alphaFee?ATC.formatCurrency(d.alphaFee):'Not given')+'
+MTF: '+fmtC(d.maitFees)+'/yr
+Mortgage: '+fmtC(d.monthlyMortgage)+'/mo
+Quote: '+(d.alphaFee?fmtC(d.alphaFee):'—')+'
 Term: '+(d.selectedTerm||'—')+' mo
 Motivation: '+(d.motivation||'—')+'/10
 Follow-Up: '+(d._fuAppt||'—')+'
 Notes: '+(d.notes||'—');
-  else if(type==='sms')text='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on our conversation about your '+(d.resort||'timeshare')+' ownership. When is a good time to connect? (877) 848-3948 Ext. 134';
-  else text='ALPHA TIMESHARE CONSULTANTS
-Case Summary — '+new Date().toLocaleDateString()+'
+  else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';
+  else txt='ALPHA TIMESHARE CONSULTANTS
+'+new Date().toLocaleDateString()+'
 
 Client: '+name+'
 Resort: '+(d.resort||'—')+'
 Phone: '+(d.phone||'—')+'
 Email: '+(d.email||'—')+'
 Monthly: '+mo+'
-MTF: '+ATC.formatCurrency(d.maitFees)+'/yr
-Mortgage: '+ATC.formatCurrency(d.monthlyMortgage)+'/mo
-Quote: '+(d.alphaFee?ATC.formatCurrency(d.alphaFee):'—')+'
-Term: '+(d.selectedTerm||'—')+' mo
+MTF: '+fmtC(d.maitFees)+'/yr
+Mortgage: '+fmtC(d.monthlyMortgage)+'/mo
+Quote: '+(d.alphaFee?fmtC(d.alphaFee):'—')+' / '+(d.selectedTerm||'—')+' mo
 Follow-Up: '+(d._fuAppt||'—')+'
 Notes: '+(d.notes||'—');
-  try{navigator.clipboard.writeText(text).then(function(){toast('✓ Copied');});}catch(e){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}
+  try{navigator.clipboard.writeText(txt).then(function(){toast('✓ Copied');});}
+  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}
 }
-function toast(msg,color){var t=document.getElementById('global-toast');t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+function toast(msg,color){var t=document.getElementById('tst');t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 
-// ── ICON GRID ──────────────────────────────────────────────────────────
+// ── ICON GRID ─────────────────────────────────────────────────────────────
 function buildGrid(){
-  var d=ATC.activeData(), slug=ATC.active();
+  var d=activeData();
   var saved=d?(d._savedPages||[]):[];
-  var grid=document.getElementById('icon-grid');
-  grid.innerHTML=PAGES.map(function(p){
-    var isSaved=saved.includes(p.url);
-    var href=slug?p.url.replace(/\/$/,'/'+slug+'/'):p.url;
-    return '<a href="'+href+'" style="display:block;background:#fff;border:1.5px solid '+(isSaved?'#1a7a3c':'#e5e7eb')+';border-radius:8px;padding:14px;text-align:center;text-decoration:none;position:relative" onmouseover="this.style.borderColor='#C8960C';this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.1)'" onmouseout="this.style.borderColor=''+(isSaved?'#1a7a3c':'#e5e7eb')+'';this.style.transform='none';this.style.boxShadow='none'">'
-      +'<div style="position:absolute;top:5px;left:7px;font-size:10px;font-weight:700;color:#9ca3af">'+p.num+'</div>'
-      +(isSaved?'<div style="position:absolute;top:5px;right:7px;color:#1a7a3c;font-size:11px;font-weight:700">✓</div>':'')
-      +'<div style="font-size:26px;margin-bottom:7px">'+p.icon+'</div>'
-      +'<div style="font-size:12px;font-weight:700;color:#1B2A4A;margin-bottom:3px;line-height:1.3">'+p.label+'</div>'
-      +'</a>';
-  }).join('');
+  var html='';
+  PG.forEach(function(p){
+    var isSaved=saved.indexOf(p.url)>-1;
+    html+='<a href="'+p.url+'" class="icon-card'+(isSaved?' saved':'')+'">'
+      +'<span class="ic-num">'+p.n+'</span>'
+      +(isSaved?'<span class="ic-check">✓</span>':'')
+      +'<span class="ic-icon">'+p.ic+'</span>'
+      +'<div class="ic-label">'+p.lb+'</div>'
+      +'<div class="ic-desc">'+p.ds+'</div>'
+    +'</a>';
+  });
+  document.getElementById('grid').innerHTML=html;
 }
 
-buildSidebar();
+buildSB();
 buildGrid();
 </script>
 </body>
