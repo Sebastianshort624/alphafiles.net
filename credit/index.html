@@ -13,13 +13,15 @@
 <title>PAGE_TITLE — Alpha Timeshare Consultants</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
+
 /* ══ RESET & BASE ══════════════════════════════════════════════════════════ */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;background:#f0f2f5;color:#1a1a1a}
 
 /* ══ LAYOUT ════════════════════════════════════════════════════════════════ */
 .app{display:flex;min-height:100vh}
-.sidebar{width:240px;height:100vh;background:#1B2A4A;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) rgba(255,255,255,.05)}
+
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
 .sidebar::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
@@ -255,17 +257,94 @@ html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;background:#
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .sidebar{width:200px}
+  
   .main{margin-left:200px;padding:16px}
   .wo-layout{grid-template-columns:1fr}
 }
+
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
+.sidenav{width:220px;height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) rgba(255,255,255,.05)}
+.sidenav::-webkit-scrollbar{width:4px}
+.sidenav::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
+.sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-logo img{max-width:130px}
+.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:6px}
+.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:2px}
+.ct-row strong{color:#fff}
+.ct-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:11px;color:var(--gold);font-weight:600}
+.ct-meta{font-size:10px;color:rgba(255,255,255,.3);margin-top:4px}
+.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font)}
+.sn-select option{background:var(--navy)}
+.sn-btnrow{display:flex;gap:5px;margin-top:5px}
+.sn-btn{flex:1;background:var(--gold);color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:var(--font)}
+.sn-btn.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sn-btn:hover{opacity:.85}
+.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-menu{flex:1;padding:4px 0}
+.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
+.sn-item:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sn-item.active{background:rgba(200,150,12,.12);color:var(--gold);border-left-color:var(--gold)}
+.sn-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:5px;padding:1px 4px;min-width:20px;text-align:center;flex-shrink:0;color:rgba(255,255,255,.5)}
+.sn-item.active .sn-num{background:rgba(200,150,12,.25);color:var(--gold)}
+.sn-saved{color:var(--green);font-size:10px;flex-shrink:0}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font);margin-bottom:3px}
+.sn-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:var(--font)}
+.sn-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
+.main-content{margin-left:220px;flex:1;padding:24px;min-height:100vh}
+
+body{font-family:'Inter',sans-serif;font-size:14px;background:#F4F6FA;color:#1a1a1a;display:flex;min-height:100vh;margin:0}
+.main-content{margin-left:220px;flex:1;padding:24px;min-height:100vh}
+.page-wrap{max-width:760px;margin:0 auto}
+.page-hdr{background:#1B2A4A;color:#fff;border-radius:8px 8px 0 0;padding:20px 24px;margin-bottom:0}
+.pg-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.2}
+.pg-sub{font-size:14px;color:rgba(255,255,255,.65);line-height:1.5}
+.page-body{background:#fff;border-radius:0 0 8px 8px;border:1px solid #E0E4ED;border-top:none;padding:24px}
+.section{margin-bottom:24px}
+.section-title{font-size:18px;font-weight:600;color:#1B2A4A;margin-bottom:12px}
+.card{background:#fff;border:1px solid #E0E4ED;border-radius:8px;padding:20px;margin-bottom:14px}
+.card.gold{border-color:#C8960C}
+.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn.primary{background:#C8960C;color:#fff}
+.btn.navy{background:#1B2A4A;color:#fff}
+.btn.outline{background:#fff;color:#1B2A4A;border:1.5px solid #1B2A4A}
+.btn.email-btn{background:#EAF0F8;color:#1B2A4A;border:1.5px solid #1B2A4A}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-row .btn{flex:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #E0E4ED}
+.nav-prev{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid #E0E4ED}
+.nav-next{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:#C8960C;color:#fff}
+.nav-step{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+.field-group{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.field{flex:1;min-width:190px}
+.field.full{flex:100%}
+.field label{display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:10px 12px;font-size:14px;font-family:'Inter',sans-serif;color:#1a1a1a;background:#fff}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C8960C;box-shadow:0 0 0 3px rgba(200,150,12,.1)}
+.field textarea{resize:vertical;min-height:80px}
+.blink{color:#2563EB;font-weight:600;cursor:pointer;border-bottom:1px dashed #2563EB;text-decoration:none}
+.plus-toggle{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;color:#C8960C;font-size:13px;font-weight:600;border-bottom:1px dashed #E0E4ED;margin-bottom:10px;user-select:none}
+.pt-icon{width:20px;height:20px;background:#C8960C;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.plus-section{display:none}
+.plus-section.open{display:block}
+
 </style>
 
 </head>
 <body>
 <div class="app">
-<div class="sidebar" id="sidebar"></div>
-<div class="main"><div class="page">
+<div class="sidenav"></div>
+<div class="main-content"><div class="page">
 
 <div class="page-header">
   <div class="page-num">Page 4d</div>
@@ -481,6 +560,193 @@ function _toast(msg,color){
 document.addEventListener('DOMContentLoaded',function(){buildSidebar();});
 
 </script>
+
+<script id="universal-sidebar-js">
+(function(){
+var SK='atc_clients_v2',AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function ad(){var s=ac();return s?ga()[s]||null:null;}
+function sf(k,v){var s=ac();if(!s)return;var a=ga();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();sa(a);}
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+function fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+var PG=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+
+function buildNav(){
+  // Find sidenav element
+  var sn=document.querySelector('.sidenav');
+  if(!sn)return;
+  var d=ad(),slug=ac(),all=ga();
+  var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+
+  // CLIENT TICKER
+  var ctHTML='';
+  if(d){
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    ctHTML='<div class="client-ticker">'
+      +'<div class="ct-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div>'
+      +'<div class="ct-resort">'+(d.resort||'No resort')+'</div>'
+      +'<div class="ct-row"><span>Monthly</span><strong>'+fc(mo)+'</strong></div>'
+      +'<div class="ct-row"><span>Yearly</span><strong>'+fc(mo*12)+'</strong></div>'
+      +'<div class="ct-row"><span>MTF/yr</span><strong>'+fc(parseFloat(d.maitFees)||0)+'</strong></div>'
+      +'<div class="ct-row"><span>Visits</span><strong>'+(d._visits||1)+'</strong></div>'
+      +(d.alphaFee?'<div class="ct-quote">📄 '+fc(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')
+      +'<div class="ct-meta">'+fd(d._updated)+'</div>'
+    +'</div>';
+  } else {
+    ctHTML='<div class="ct-no-client">⚠️ No client selected</div>';
+  }
+
+  // CLIENT SELECTOR
+  var opts=Object.keys(all).map(function(k){
+    var c=all[k];
+    return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'
+      +(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';
+  }).join('');
+
+  // NAV LINKS
+  var nav=PG.map(function(p){
+    var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;
+    return '<a href="'+p.url+'" class="sn-item'+(cur===p.url?' active':'')+'">'
+      +'<span class="sn-num">'+p.n+'</span>'
+      +'<span style="flex:1">'+p.ic+' '+p.lb+'</span>'
+      +(saved?'<span class="sn-saved">✓</span>':'')
+    +'</a>';
+  }).join('');
+
+  // CALENDAR
+  var calV=d
+    ?'<input type="datetime-local" class="sn-cal-inp" value="'+(d._todayAppt||'')+'" onchange="sf('_todayAppt',this.value)" placeholder="Today appt"><div class="sn-cal-lbl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sn-cal-inp" value="'+(d._fuAppt||'')+'" onchange="sf('_fuAppt',this.value)"><button class="sn-btn" style="margin-top:3px;width:100%;font-size:9px" onclick="addCal()">+ Google Calendar</button>'
+    :'<div style="font-size:10px;color:rgba(255,255,255,.3)">Select a client first</div>';
+
+  sn.innerHTML=
+    '<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
+    +ctHTML
+    +'<div class="sn-sel"><select class="sn-select" onchange="switchClient(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div class="sn-btnrow"><button class="sn-btn" onclick="newClient()">+ New</button><button class="sn-btn out" onclick="saveClear()">Save &amp; Clear</button></div></div>'
+    +'<div class="sn-section">Pages</div>'
+    +'<nav class="sn-menu">'+nav+'</nav>'
+    +'<div class="sn-cal"><div class="sn-cal-lbl">📅 Today</div>'+calV+'</div>'
+    +'<div class="sn-rpts"><div class="sn-cal-lbl">📋 Reports</div>'
+    +'<button class="sn-rpt" onclick="rpt('vero')">📋 Vero</button>'
+    +'<button class="sn-rpt" onclick="rpt('crm')">📋 CRM Note</button>'
+    +'<button class="sn-rpt" onclick="rpt('sms')">💬 SMS</button>'
+    +'<button class="sn-rpt" onclick="rpt('full')">📄 Full Summary</button>'
+    +'</div>';
+}
+
+window.switchClient=function(slug){if(!slug)return;localStorage.setItem(AK,slug);toast('Loaded');setTimeout(function(){location.reload();},500);};
+window.sf=sf;
+
+window.newClient=function(){
+  var m=document.getElementById('_nc');
+  if(!m){
+    m=document.createElement('div');m.id='_nc';
+    m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';
+    m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:360px;width:100%;margin:20px">'
+      +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client</div>'
+      +'<div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_ncf" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="First"></div>'
+      +'<div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_ncl" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Last"></div>'
+      +'<div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_ncr" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="e.g. Westgate — Orlando, FL"></div>'
+      +'<div style="display:flex;gap:8px"><button onclick="document.getElementById('_nc').style.display='none'" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button>'
+      +'<button onclick="createClient()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Create &amp; Start</button></div>'
+      +'</div>';
+    m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});
+    document.body.appendChild(m);
+  }
+  m.style.display='flex';setTimeout(function(){var f=document.getElementById('_ncf');if(f)f.focus();},100);
+};
+
+window.createClient=function(){
+  var f=(document.getElementById('_ncf')||{}).value||'';
+  var l=(document.getElementById('_ncl')||{}).value||'';
+  var r=(document.getElementById('_ncr')||{}).value||'';
+  f=f.trim();l=l.trim();r=r.trim();
+  if(!f&&!l){alert('Please enter a name.');return;}
+  var slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');
+  var all=ga();
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});
+  sa(all);localStorage.setItem(AK,slug);
+  var m=document.getElementById('_nc');if(m)m.style.display='none';
+  toast('Created: '+f+' '+l);
+  setTimeout(function(){location.href='/owner/';},700);
+};
+
+window.saveClear=function(){
+  var d=ad();if(!d){alert('No active client.');return;}
+  var saved=d._savedPages||[];
+  var list=PG.map(function(p){var ok=saved.indexOf(p.url)>-1;return'<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:'+(ok?'#1a7a3c':'#d1d5db')+'">'+(ok?'✓':'○')+'</span>'+p.ic+' '+p.lb+'</div>';}).join('');
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:420px;width:100%;margin:20px;max-height:85vh;overflow-y:auto">'
+    +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</div>'
+    +'<div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A">'+(d.resort||'No resort')+'</div>'
+    +list
+    +'<div style="display:flex;gap:8px;margin-top:14px">'
+    +'<button onclick="this.closest('div[style]').remove()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button>'
+    +'<button onclick="doClear()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Clear &amp; New</button>'
+    +'</div></div>';
+  document.body.appendChild(ov);
+};
+
+window.doClear=function(){localStorage.removeItem(AK);toast('Cleared');setTimeout(function(){location.href='/home/';},700);};
+
+window.addCal=function(){
+  var d=ad();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}
+  var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent((d.firstName||'Client')+' — ATC Follow-Up')+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');
+};
+
+window.rpt=function(type){
+  var d=ad();if(!d){toast('No active client','#c0392b');return;}
+  var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
+  var mo=fc((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
+  var txt='';
+  if(type==='vero')txt='Name: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n2nd Phone: '+(d.phone2||'—')+'\nEmail: '+(d.email||'—')+'\nAddress: '+(d.address||'—');
+  else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+fc(d.maitFees)+'/yr\nMortgage: '+fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\nMotivation: '+(d.motivation||'—')+'/10\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';
+  else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\n\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nEmail: '+(d.email||'—')+'\nMonthly: '+mo+'\nMTF: '+fc(d.maitFees)+'/yr\nMortgage: '+fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc(d.alphaFee):'—')+' / '+(d.selectedTerm||'—')+' mo\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  try{navigator.clipboard.writeText(txt).then(function(){toast('✓ Copied');});}
+  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}
+};
+
+function toast(msg,color){
+  var t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='display:none;position:fixed;bottom:24px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}
+  t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2500);
+}
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',buildNav);}
+else{buildNav();}
+})();
+</script>
+
 </body></html>`);}
 </script>
 
