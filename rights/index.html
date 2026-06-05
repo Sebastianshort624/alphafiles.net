@@ -6,611 +6,473 @@
 <title>Consumer Rights Assessment — Alpha Timeshare Consultants</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
-
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--blue:#2563EB;--font:'Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{font-family:'Inter',sans-serif;font-size:14px;background:#f0f2f5;color:#1a1a1a}
-.app{display:flex;min-height:100vh}
+body{font-family:var(--font);font-size:14px;background:var(--bg);color:#1a1a1a;display:flex;min-height:100vh}
 
-.sidebar::-webkit-scrollbar{width:4px}
-.sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
-.sidebar::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
-.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(200,150,12,.7)}
-.main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
-.sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
-.sb-logo img{max-width:130px}
-.sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
-.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
-.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
-.sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
-.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px}
-.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px}
-.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
-.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
-.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
-.sb-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:5px 7px;margin-top:5px;font-size:11px;color:#C8960C;font-weight:600}
-.sb-meta{font-size:10px;color:rgba(255,255,255,.35);margin-top:5px}
-.sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
-.sb-select option{background:#1B2A4A}
-.sb-brow{display:flex;gap:5px;margin-top:5px}
-.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
-.sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
-.sb-b:hover{opacity:.85}
-.sb-nav{flex:1;padding:6px 0}
-.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
-.sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
-.sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
-.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center;flex-shrink:0}
-.sb-link.active .sb-num{background:rgba(200,150,12,.25);color:#C8960C}
-.sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
-.sb-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.1)}
-.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.sb-cal-in{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif;margin-bottom:3px}
-.sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
-.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
-.sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
-
-.main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
-.page{max-width:900px;margin:0 auto}
-.sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
-.sb-logo img{max-width:130px}
-.sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
-.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
-.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase}
-.sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
-.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px}
-.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px}
-.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
-.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
-.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
-.sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
-.sb-select option{background:#1B2A4A}
-.sb-brow{display:flex;gap:5px;margin-top:5px}
-.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
-.sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
-.sb-nav{flex:1;padding:6px 0;overflow-y:visible}
-.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent}
-.sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
-.sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
-.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center;flex-shrink:0}
-.sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
-.sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
-.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
-.sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
-/* PAGE */
-.page-hdr{background:#1B2A4A;color:#fff;border-radius:8px 8px 0 0;padding:20px 24px}
-.pg-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
-.pg-sub{font-size:14px;color:rgba(255,255,255,.65)}
-.page-body{background:#fff;border-radius:0 0 8px 8px;border:1px solid #e5e7eb;border-top:none;padding:24px}
-/* COLLECTIVE INTRO */
-.collective-box{background:#1B2A4A;border-radius:8px;padding:20px;margin-bottom:20px;color:#fff}
-.collective-box h3{font-size:18px;font-weight:700;color:#C8960C;margin-bottom:10px}
-.collective-box p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
-.collective-box p:last-child{margin-bottom:0}
-/* AGENCIES */
-.agency-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.agency-card{background:rgba(255,255,255,.07);border-radius:6px;padding:10px 12px}
-.agency-card .ac-cat{font-size:10px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
-.agency-card .ac-name{font-size:12px;color:#fff;line-height:1.5}
-/* RIGHTS SECTION */
-.right-block{margin-bottom:16px;border:1.5px solid #e5e7eb;border-radius:8px;overflow:hidden}
-.right-hdr{background:#1B2A4A;color:#fff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
-.right-hdr-left{display:flex;align-items:center;gap:10px}
-.right-num{background:#C8960C;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0}
-.right-title{font-size:16px;font-weight:700}
-.right-count{background:rgba(200,150,12,.25);color:#C8960C;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
-.right-arrow{font-size:12px;opacity:.7}
-.right-sub{background:#f4f0e8;border-bottom:1px solid #e5e7eb;padding:10px 16px;font-size:13px;color:#5a4500;line-height:1.5;font-style:italic}
-/* VIOLATION TABLE */
-.viol-table{width:100%;border-collapse:collapse}
-.viol-table thead tr{background:#EAF0F8}
-.viol-table th{font-size:11px;font-weight:700;color:#1B2A4A;padding:8px 10px;text-align:left;border-bottom:2px solid #c5d5e8;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
-.viol-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;font-size:13px}
-.viol-table tr:hover td{background:#fafafa}
-.viol-table tr.checked-row td{background:#f0fdf4}
-/* VIOLATION CHECKBOX */
-.viol-cb{width:16px;height:16px;cursor:pointer;accent-color:#1B2A4A;flex-shrink:0}
-.viol-text{font-size:13px;color:#1a1a1a;line-height:1.4;font-weight:500}
-/* CONDITIONAL STATUTE ROW */
-.statute-row{display:none;background:#EAF0F8;border-radius:4px;padding:8px 10px;margin-top:6px}
-.statute-row.show{display:block}
-.statute-line{font-size:12px;color:#1B2A4A;font-weight:600;margin-bottom:2px}
-.fine-line{display:flex;justify-content:space-between;font-size:12px;color:#374151}
-.fine-amt{color:#c0392b;font-weight:700}
-/* DROPDOWN COLS */
-.yn-select{font-size:12px;border:1px solid #e5e7eb;border-radius:4px;padding:4px 6px;font-family:'Inter',sans-serif;background:#fff;color:#374151;width:100%}
-.yn-select:focus{outline:none;border-color:#C8960C}
-/* SUMMARY BAR */
-.summary-bar{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
-.sum-pill{flex:1;min-width:120px;background:#1B2A4A;color:#fff;border-radius:6px;padding:12px;text-align:center}
-.sum-val{font-size:22px;font-weight:700;color:#C8960C;line-height:1}
-.sum-lbl{font-size:10px;color:rgba(255,255,255,.6);margin-top:3px;text-transform:uppercase;letter-spacing:.3px}
-/* NOTES */
-.notes-area{width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:10px 12px;font-size:14px;font-family:'Inter',sans-serif;resize:vertical;min-height:72px;margin-top:8px}
-.notes-area:focus{outline:none;border-color:#C8960C}
-/* BUTTONS */
-.btn{padding:12px 24px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-.btn.primary{background:#C8960C;color:#fff}
-.btn.secondary{background:#1B2A4A;color:#fff}
-.btn.email{background:#EAF0F8;color:#1B2A4A;border:1.5px solid #1B2A4A}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.btn-row .btn{flex:1}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb}
-.nav-btn{padding:10px 24px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;border:none;font-family:'Inter',sans-serif;cursor:pointer}
-.nav-btn.prev{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
-.nav-btn.next{background:#C8960C;color:#fff}
-.nav-step{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-/* POPUP */
-.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
-.overlay.on{display:flex}
-.modal{background:#fff;border-radius:12px;padding:28px;width:100%;max-width:500px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative}
-.modal h3{font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:12px}
-.modal p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px;white-space:pre-wrap}
-.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af}
-.blink{color:#2563EB;font-weight:600;cursor:pointer;border-bottom:1px dashed #2563EB}
-.toast{display:none;position:fixed;bottom:24px;left:260px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:600}
-/* PLUS TOGGLE */
-.plus-toggle{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;color:#C8960C;font-size:13px;font-weight:600;border-bottom:1px dashed #e5e7eb;margin-bottom:10px;user-select:none}
-.pt-icon{width:20px;height:20px;background:#C8960C;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.plus-section{display:none}
-.plus-section.open{display:block}
-
-:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
-.sidenav{width:220px;height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) rgba(255,255,255,.05)}
+/* ── SIDEBAR ── */
+.sidenav{width:220px;height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) transparent}
 .sidenav::-webkit-scrollbar{width:4px}
-.sidenav::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
 .sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 .sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
 .sn-logo img{max-width:130px}
-.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
 .ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
-.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:6px}
-.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:4px}
+.ct-row{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65);margin-bottom:2px}
 .ct-row strong{color:#fff}
-.ct-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:11px;color:var(--gold);font-weight:600}
-.ct-meta{font-size:10px;color:rgba(255,255,255,.3);margin-top:4px}
-.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:12px;color:var(--gold);font-weight:600}
+.ct-none{padding:10px 12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)}
 .sn-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sn-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font)}
-.sn-select option{background:var(--navy)}
-.sn-btnrow{display:flex;gap:5px;margin-top:5px}
-.sn-btn{flex:1;background:var(--gold);color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:var(--font)}
-.sn-btn.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
-.sn-btn:hover{opacity:.85}
-.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
-.sn-menu{flex:1;padding:4px 0}
-.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
-.sn-item:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
-.sn-item.active{background:rgba(200,150,12,.12);color:var(--gold);border-left-color:var(--gold)}
-.sn-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:5px;padding:1px 4px;min-width:20px;text-align:center;flex-shrink:0;color:rgba(255,255,255,.5)}
-.sn-item.active .sn-num{background:rgba(200,150,12,.25);color:var(--gold)}
-.sn-saved{color:var(--green);font-size:10px;flex-shrink:0}
-.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-dd{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;font-family:var(--font)}
+.sn-dd option{background:var(--navy)}
+.sn-brow{display:flex;gap:5px;margin-top:5px}
+.sn-b{flex:1;background:var(--gold);color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer;font-family:var(--font)}
+.sn-b.o{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sn-sec{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-nav{flex:1;padding:4px 0}
+.sn-a{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:12px;font-weight:500;border-left:3px solid transparent}
+.sn-a:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sn-a.on{background:rgba(200,150,12,.12);color:var(--gold);border-left-color:var(--gold)}
+.sn-n{font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:18px;text-align:center;flex-shrink:0;color:rgba(255,255,255,.5)}
+.sn-a.on .sn-n{background:rgba(200,150,12,.25);color:var(--gold)}
+.sn-div{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
 .sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
-.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font);margin-bottom:3px}
+.sn-cl{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sn-ci{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;font-family:var(--font);margin-bottom:3px}
 .sn-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)}
-.sn-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:var(--font)}
+.sn-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:var(--font)}
 .sn-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
-.main-content{margin-left:220px;flex:1;padding:24px;min-height:100vh}
 
-body{font-family:'Inter',sans-serif;font-size:14px;background:#F4F6FA;color:#1a1a1a;display:flex;min-height:100vh;margin:0}
-.main-content{margin-left:220px;flex:1;padding:24px;min-height:100vh}
-.page-wrap{max-width:760px;margin:0 auto}
-.page-hdr{background:#1B2A4A;color:#fff;border-radius:8px 8px 0 0;padding:20px 24px;margin-bottom:0}
-.pg-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.2}
-.pg-sub{font-size:14px;color:rgba(255,255,255,.65);line-height:1.5}
-.page-body{background:#fff;border-radius:0 0 8px 8px;border:1px solid #E0E4ED;border-top:none;padding:24px}
-.section{margin-bottom:24px}
-.section-title{font-size:18px;font-weight:600;color:#1B2A4A;margin-bottom:12px}
-.card{background:#fff;border:1px solid #E0E4ED;border-radius:8px;padding:20px;margin-bottom:14px}
-.card.gold{border-color:#C8960C}
-.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .15s}
-.btn:hover{opacity:.88}
-.btn.primary{background:#C8960C;color:#fff}
-.btn.navy{background:#1B2A4A;color:#fff}
-.btn.outline{background:#fff;color:#1B2A4A;border:1.5px solid #1B2A4A}
-.btn.email-btn{background:#EAF0F8;color:#1B2A4A;border:1.5px solid #1B2A4A}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.btn-row .btn{flex:1}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #E0E4ED}
-.nav-prev{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid #E0E4ED}
-.nav-next{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:#C8960C;color:#fff}
-.nav-step{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-.field-group{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.field{flex:1;min-width:190px}
-.field.full{flex:100%}
-.field label{display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:10px 12px;font-size:14px;font-family:'Inter',sans-serif;color:#1a1a1a;background:#fff}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C8960C;box-shadow:0 0 0 3px rgba(200,150,12,.1)}
-.field textarea{resize:vertical;min-height:80px}
-.blink{color:#2563EB;font-weight:600;cursor:pointer;border-bottom:1px dashed #2563EB;text-decoration:none}
-.plus-toggle{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;color:#C8960C;font-size:13px;font-weight:600;border-bottom:1px dashed #E0E4ED;margin-bottom:10px;user-select:none}
-.pt-icon{width:20px;height:20px;background:#C8960C;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.plus-section{display:none}
-.plus-section.open{display:block}
+/* ── MAIN ── */
+.main{margin-left:220px;flex:1;padding:20px;min-height:100vh}
+.wrap{max-width:880px;margin:0 auto}
 
+/* ── PAGE HEADER ── */
+.ph{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px}
+.ph-num{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ph-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.ph-sub{font-size:14px;color:rgba(255,255,255,.65)}
 
 /* ── 4-CORNER VITALS BANNER ── */
-.vitals-banner{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid #E0E4ED;border-top:3px solid #C8960C;border-radius:0 0 8px 8px;margin-bottom:18px}
-.vb-corner{padding:9px 13px;border-right:1px solid #E0E4ED}
-.vb-corner:last-child{border-right:none}
-.vb-lbl{font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
-.vb-val{font-size:13px;font-weight:700;color:#1B2A4A;line-height:1.2}
-.vb-sub{font-size:11px;color:#6b7280;margin-top:2px}
-.vb-stage-badge{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.3px}
+.vb{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
+.vbc{padding:9px 13px;border-right:1px solid var(--border)}
+.vbc:last-child{border-right:none}
+.vbl{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.vbv{font-size:14px;font-weight:700;color:var(--navy);line-height:1.2}
+.vbs{font-size:12px;color:#6b7280;margin-top:2px}
 
+/* ── INTRO BOX ── */
+.intro{background:var(--navy);border-radius:8px;padding:20px;margin-bottom:18px;color:#fff}
+.intro h3{font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px}
+.intro p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
+.intro p:last-child{margin-bottom:0}
+
+/* AGENCIES TOGGLE */
+.ag-toggle{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;color:var(--gold);font-size:14px;font-weight:600;border-top:1px dashed rgba(200,150,12,.3);margin-top:12px;user-select:none}
+.ag-icon{width:20px;height:20px;background:rgba(200,150,12,.3);color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.ag-body{display:none;margin-top:10px}
+.ag-body.open{display:block}
+.ag-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ag-card{background:rgba(255,255,255,.07);border-radius:6px;padding:10px 12px}
+.ag-cat{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.ag-names{font-size:12px;color:#fff;line-height:1.6}
+
+/* ── SUMMARY BAR ── */
+.sum-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.sum-pill{flex:1;min-width:110px;background:var(--navy);color:#fff;border-radius:6px;padding:12px;text-align:center}
+.sum-val{font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.sum-lbl{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;text-transform:uppercase;letter-spacing:.3px}
+
+/* ── RIGHT BLOCK ── */
+.rb{margin-bottom:14px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
+.rh{background:var(--navy);color:#fff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.rh-left{display:flex;align-items:center;gap:10px}
+.rh-num{background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.rh-title{font-size:18px;font-weight:700}
+.rh-cnt{background:rgba(200,150,12,.25);color:var(--gold);font-size:12px;font-weight:700;padding:2px 8px;border-radius:10px;display:none}
+.rh-arr{font-size:14px;opacity:.7}
+.rsub{background:#f4f0e8;border-bottom:1px solid var(--border);padding:10px 16px;font-size:14px;color:#5a4500;line-height:1.5;font-style:italic}
+.rb-body{display:block}
+
+/* ── VIOLATION TABLE ── */
+.vt{width:100%;border-collapse:collapse}
+.vt thead tr{background:#EAF0F8}
+.vt th{font-size:12px;font-weight:700;color:var(--navy);padding:8px 10px;text-align:left;border-bottom:2px solid #c5d5e8;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.vt th:not(:first-child):not(:nth-child(2)){text-align:center;width:90px}
+.vt td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;font-size:14px}
+.vt tr:last-child td{border-bottom:none}
+.vt tr.ck td{background:#f0fdf4}
+.vcb{width:16px;height:16px;cursor:pointer;accent-color:var(--navy);flex-shrink:0}
+.vtext{font-size:14px;color:#1a1a1a;line-height:1.4;font-weight:500}
+
+/* STATUTE ROW (shows on check) */
+.stat-row{display:none;margin-top:6px;background:#EAF0F8;border-radius:4px;padding:8px 10px}
+.stat-row.show{display:block}
+.stat-line{font-size:12px;color:var(--navy);font-weight:600;margin-bottom:3px}
+.fine-row{display:flex;justify-content:space-between;font-size:12px;color:#374151;margin-top:2px}
+.fine-amt{color:var(--red);font-weight:700;font-size:14px}
+
+/* DROPDOWNS */
+.yn{font-size:12px;border:1px solid var(--border);border-radius:4px;padding:4px 6px;font-family:var(--font);background:#fff;color:#374151;width:100%}
+.yn:focus{outline:none;border-color:var(--gold)}
+
+/* NOTES */
+.notes-ta{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:8px 10px;font-size:14px;font-family:var(--font);resize:vertical;min-height:60px;margin-top:8px}
+.notes-ta:focus{outline:none;border-color:var(--gold)}
+
+/* BUTTONS */
+.btn{padding:12px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:var(--font)}
+.btn.p{background:var(--gold);color:#fff}
+.btn.n{background:var(--navy);color:#fff}
+.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-row .btn{flex:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
+.np{padding:10px 20px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 20px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+.blink{color:var(--blue);font-weight:600;cursor:pointer;border-bottom:1px dashed var(--blue);text-decoration:none}
+.toast{display:none;position:fixed;bottom:24px;left:240px;background:var(--green);color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+@media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
 </style>
 </head>
 <body>
-<div class="app">
-<div class="sidenav"></div>
-<div class="main-content">
-<div class="page">
+<div class="sidenav" id="sidenav"></div>
+<div class="main">
+<div class="wrap">
 
-<div class="page-hdr">
-  <div class="pg-num">Page 7</div>
-  <div class="pg-title">Consumer Rights Assessment</div>
-  <div class="pg-sub">Document every violation — this becomes your group filing evidence</div>
+<div class="ph">
+  <div class="ph-num">Page 7</div>
+  <div class="ph-title">Consumer Rights Assessment</div>
+  <div class="ph-sub">Document every violation — this becomes your group filing evidence</div>
 </div>
 
-<div class="vitals-banner" id="vitals-banner">
-  <div class="vb-corner"><div class="vb-lbl">👤 Client</div><div class="vb-val" id="vb-name">—</div><div class="vb-sub" id="vb-phone">—</div></div>
-  <div class="vb-corner"><div class="vb-lbl">🏨 Resort</div><div class="vb-val" id="vb-resort">—</div><div class="vb-sub" id="vb-location">—</div></div>
-  <div class="vb-corner"><div class="vb-lbl">💰 Monthly / Yearly</div><div class="vb-val" id="vb-mo">—</div><div class="vb-sub" id="vb-yr">—</div></div>
-  <div class="vb-corner"><div class="vb-lbl">📄 Quote / Stage</div><div class="vb-val" id="vb-quote">—</div><div class="vb-sub" id="vb-stage">—</div></div>
+<!-- 4-CORNER VITALS BANNER -->
+<div class="vb">
+  <div class="vbc"><div class="vbl">👤 Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
+  <div class="vbc"><div class="vbl">🏨 Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
+  <div class="vbc"><div class="vbl">💰 Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
+  <div class="vbc"><div class="vbl">📄 Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
 </div>
-
-<div class="page-body">
 
 <!-- COLLECTIVE INTRO -->
-<div class="collective-box">
+<div class="intro">
   <h3>Why This Assessment Matters</h3>
-  <p>Every violation you document here contributes to a <strong>shared case file</strong> with other owners from the same resort. You are not filing alone. Multiple participants documenting the same violations creates a legally recognized behavioral pattern — the foundation of a group filing.</p>
-  <p>Our software calculates the resort's total financial exposure across all participants. That number — often in the <strong>millions of dollars</strong> — is what we present when we negotiate your release. The more thoroughly this is documented, the stronger the leverage for everyone in your group.</p>
-  <p>Each violation below carries a specific fine under federal or state law. If we report these violations to the appropriate enforcement agencies, the resort faces those fines directly.</p>
-
-  <!-- AGENCIES COLLAPSIBLE -->
-  <div class="plus-toggle" onclick="togglePlus('agencies')" style="border-color:rgba(200,150,12,.3);margin-top:12px">
-    <div class="pt-icon" style="background:rgba(200,150,12,.3);color:#C8960C">+</div>
-    <span style="color:#C8960C">Enforcement Agencies That Would Act on These Violations</span>
+  <p>Every violation documented here contributes to a <strong>shared case file</strong> with other owners from the same resort. Multiple participants documenting the same violations creates a legally recognized behavioral pattern — the foundation of a group filing.</p>
+  <p>Our software calculates the resort's total financial exposure across all participants. That number — often in the <strong>millions of dollars</strong> — is what we present when we negotiate your release.</p>
+  <div class="ag-toggle" onclick="toggleAg()">
+    <div class="ag-icon" id="ag-icon">+</div>
+    <span>Enforcement Agencies That Would Act on These Violations</span>
   </div>
-  <div class="plus-section" id="agencies">
-    <div class="agency-grid">
-      <div class="agency-card"><div class="ac-cat">Federal</div><div class="ac-name">Federal Trade Commission (FTC)<br>Consumer Financial Protection Bureau (CFPB)<br>Department of Justice (DOJ)<br>HUD — Housing & Urban Development</div></div>
-      <div class="agency-card"><div class="ac-cat">TILA / Lending</div><div class="ac-name">CFPB — Reg Z Enforcement<br>OCC — Office of the Comptroller<br>Federal Reserve Board</div></div>
-      <div class="agency-card"><div class="ac-cat">ADA / Disability</div><div class="ac-name">U.S. Dept of Justice (ADA Division)<br>Equal Employment Opportunity Commission</div></div>
-      <div class="agency-card"><div class="ac-cat">Elder Abuse</div><div class="ac-name">Adult Protective Services (APS)<br>State Attorney General<br>National Elder Law Foundation</div></div>
-      <div class="agency-card"><div class="ac-cat">State Level</div><div class="ac-name">State Attorney General<br>Consumer Protection Office<br>Real Estate Commission<br>Dept. of Business Regulation</div></div>
-      <div class="agency-card"><div class="ac-cat">Whistleblower</div><div class="ac-name">FTC Complaint Portal<br>CFPB Complaint Database<br>State AG Consumer Hotline<br>Better Business Bureau</div></div>
+  <div class="ag-body" id="ag-body">
+    <div class="ag-grid">
+      <div class="ag-card"><div class="ag-cat">Federal</div><div class="ag-names">Federal Trade Commission (FTC)<br>CFPB — Consumer Financial Protection Bureau<br>Department of Justice (DOJ)<br>HUD</div></div>
+      <div class="ag-card"><div class="ag-cat">TILA / Lending</div><div class="ag-names">CFPB — Regulation Z Enforcement<br>OCC — Office of the Comptroller<br>Federal Reserve Board</div></div>
+      <div class="ag-card"><div class="ag-cat">ADA / Disability</div><div class="ag-names">U.S. DOJ — ADA Division<br>Equal Employment Opportunity Commission</div></div>
+      <div class="ag-card"><div class="ag-cat">Elder Abuse</div><div class="ag-names">Adult Protective Services (APS)<br>State Attorney General<br>CFPB — Office for Older Americans</div></div>
+      <div class="ag-card"><div class="ag-cat">State Level</div><div class="ag-names">State Attorney General<br>Consumer Protection Office<br>Real Estate Commission<br>Dept. of Business Regulation</div></div>
+      <div class="ag-card"><div class="ag-cat">Whistleblower</div><div class="ag-names">FTC Complaint Portal<br>CFPB Complaint Database<br>State AG Consumer Hotline<br>Better Business Bureau</div></div>
     </div>
-    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;font-style:italic">Alpha maintains working relationships with several of these agencies. A documented group filing complaint — submitted collectively — carries far more weight than individual reports. Resorts are aware of this dynamic.</div>
+    <p style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.7);font-style:italic">Alpha maintains working relationships with several of these agencies. A group filing complaint submitted collectively carries far more weight than individual reports.</p>
   </div>
 </div>
 
-<!-- RUNNING TOTALS -->
-<div class="summary-bar">
+<!-- SUMMARY BAR -->
+<div class="sum-bar">
   <div class="sum-pill"><div class="sum-val" id="tot-count">0</div><div class="sum-lbl">Violations</div></div>
   <div class="sum-pill"><div class="sum-val" id="tot-rights">0 of 4</div><div class="sum-lbl">Rights Violated</div></div>
   <div class="sum-pill"><div class="sum-val" id="tot-fine">$0</div><div class="sum-lbl">Est. Exposure</div></div>
-  <div class="sum-pill"><div class="sum-val" id="tot-shared">—</div><div class="sum-lbl">Shared w/ Group</div></div>
+  <div class="sum-pill"><div class="sum-val" id="tot-shared" style="font-size:14px">Shared</div><div class="sum-lbl">Group Filing</div></div>
 </div>
 
 <div id="rights-container"></div>
 
 <div class="btn-row">
-  <button class="btn primary" onclick="genReport()">⚖ Generate Violation Report</button>
-  <button class="btn email" onclick="emailRights()">📧 Email This Section</button>
-  <button class="btn secondary" onclick="saveAndContinue()">Save &amp; Continue →</button>
+  <button class="btn p" onclick="genReport()">⚖ Generate Violation Report</button>
+  <button class="btn o" onclick="emailRights()">📧 Email This Section</button>
+  <button class="btn n" onclick="saveAndContinue()">Save &amp; Continue →</button>
 </div>
 
 <div class="nav-bar">
-  <a href="/history/" class="nav-btn prev">← Our Track Record</a>
-  <span class="nav-step">Page 7 of 16</span>
-  <a href="/cost/" class="nav-btn next">True Cost →</a>
+  <a href="/history/" class="np">← Our Track Record</a>
+  <span class="ns">Page 7 of 16</span>
+  <a href="/cost/" class="nn">True Cost →</a>
 </div>
 
 </div>
 </div>
-</div>
-</div>
-
-<div class="toast" id="tst"></div>
-
-<!-- POPUP -->
-<div class="overlay" id="pop-ov">
-  <div class="modal">
-    <button class="modal-close" onclick="closePop()">×</button>
-    <h3 id="pop-title"></h3>
-    <div id="pop-body"></div>
-  </div>
-</div>
+<div class="toast" id="_toast"></div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
 var SK='atc_clients_v2',AK='atc_active';
-function getAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function saveAll(o){localStorage.setItem(SK,JSON.stringify(o));}
-function active(){return localStorage.getItem(AK)||null;}
-function activeData(){var s=active();return s?getAll()[s]||null:null;}
-function saveField(k,v){var s=active();if(!s)return;var all=getAll();if(!all[s])return;all[s][k]=v;all[s]._updated=Date.now();saveAll(all);}
-function fmtC(n){return '$'+Math.round(n||0).toLocaleString();}
-function fmtD(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function ad(){var s=ac();return s?ga()[s]||null:null;}
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
 
-function togglePlus(id){var el=document.getElementById(id);if(!el)return;el.classList.toggle('open');document.querySelectorAll('.plus-toggle').forEach(function(t){if(t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+id+"'")){var ic=t.querySelector('.pt-icon');if(ic)ic.textContent=el.classList.contains('open')?'−':'+';}});}
-
-// ── VIOLATION DEFINITIONS ─────────────────────────────────────────────────
-var RIGHTS = [
-  {
-    id:'heard', num:'1', title:'Right to Be Heard',
-    sub:'Consumers have the right to have their complaints and concerns properly addressed by the resort.',
-    violations:[
-      {id:'h1',text:'I contacted the resort about my concerns — they ignored me',statute:'15 U.S.C. §45 / FTC Act §5',fine:25000,cat:'federal',shared:'100%'},
-      {id:'h2',text:'My concerns were never addressed in a meaningful or timely way',statute:'12 C.F.R. §1024 — CFPB Regulation X',fine:25000,cat:'respa',shared:'95%'},
-      {id:'h3',text:'My questions were deflected, transferred, or dismissed without resolution',statute:'State UDAP — Unfair & Deceptive Acts',fine:25000,cat:'state',shared:'90%'},
-      {id:'h4',text:'The resort provided no clear process for resolving owner complaints',statute:'15 U.S.C. §45(a) — FTC Act: Unfair Practice',fine:25000,cat:'federal',shared:'85%'},
-    ]
-  },
-  {
-    id:'safety', num:'2', title:'Right to Safety — Financial & Physical',
-    sub:'Protection against products or marketing that are hazardous to your financial wellbeing or physical health.',
-    violations:[
-      {id:'s1',text:'I experienced significant financial hardship since signing this contract',statute:'15 U.S.C. §45 / 12 C.F.R. §1031 — CFPB Unfair Practice',fine:53088,cat:'federal',shared:'80%'},
-      {id:'s2',text:'I am retired or on a fixed income and can no longer carry this obligation',statute:'State Elder Financial Abuse Statutes',fine:25000,cat:'elder',shared:'75%'},
-      {id:'s3',text:'I am concerned this will pass to my children when I die',statute:'State Timeshare Act — Perpetuity Clause Violation',fine:53088,cat:'state',shared:'95%'},
-      {id:'s4',text:'Health issues prevent me from traveling or using this property',statute:'42 U.S.C. §12101 — ADA / State Consumer Protection Act',fine:25000,cat:'ada',shared:'70%'},
-      {id:'s5',text:'Death or illness of a spouse or co-owner changed our circumstances',statute:'State Consumer Protection — Failure to Release Hardship Owner',fine:25000,cat:'state',shared:'65%'},
-      {id:'s6',text:'Divorce or separation — this ownership is now a disputed marital asset',statute:'State Property / Family Law',fine:25000,cat:'state',shared:'60%'},
-      {id:'s7',text:'The sales presentation used intimidation, pressure, or coercive tactics',statute:'15 U.S.C. §45(n) — FTC Act: Unfair Coercive Practice',fine:53088,cat:'federal',shared:'90%'},
-    ]
-  },
-  {
-    id:'choose', num:'3', title:'Right to Choose',
-    sub:'You have the right to stop paying for something that no longer serves your needs.',
-    violations:[
-      {id:'c1',text:'Blackout dates make it impossible for me to book when I want',statute:'15 U.S.C. §45(a) — Misrepresentation of Access',fine:53088,cat:'federal',shared:'92%'},
-      {id:'c2',text:'Non-owners can book dates I cannot get as an owner',statute:'15 U.S.C. §45(a) — Deceptive Owner Priority Claims',fine:53088,cat:'federal',shared:'88%'},
-      {id:'c3',text:'I was told owners have priority access — that was false',statute:'15 U.S.C. §45(a) — False Promise of Preferential Access',fine:53088,cat:'federal',shared:'91%'},
-      {id:'c4',text:'Limited resort locations — I cannot reach any conveniently',statute:'State Timeshare Act — Misrepresentation of Exchange Network',fine:25000,cat:'state',shared:'78%'},
-      {id:'c5',text:'The presentation lasted far longer than the 60–90 minutes I was told',statute:'15 U.S.C. §45(a) — Deceptive Inducement to Attend',fine:53088,cat:'federal',shared:'85%'},
-      {id:'c6',text:'I was pressured to sign before I had a chance to read the contract',statute:'16 C.F.R. §429 — FTC Cooling-Off Rule Violation',fine:53088,cat:'federal',shared:'93%'},
-      {id:'c7',text:'Multiple salespeople were used — I felt I could not leave',statute:'State UDAP — Coercive Sales Environment',fine:53088,cat:'state',shared:'87%'},
-      {id:'c8',text:'I was offered gifts only if I purchased — felt obligated to stay',statute:'15 U.S.C. §45(a) — Conditional Gift as Coercive Inducement',fine:53088,cat:'federal',shared:'82%'},
-    ]
-  },
-  {
-    id:'informed', num:'4', title:'Right to Be Informed',
-    sub:'You have the right to receive complete, accurate information before making any purchasing decision.',
-    violations:[
-      {id:'i1',text:'I was misled or lied to during the sales presentation',statute:'15 U.S.C. §45(a) — FTC Act §5: Deceptive Trade Practice',fine:53088,cat:'federal',shared:'96%'},
-      {id:'i2',text:'I was told this was an investment that would appreciate in value',statute:'15 U.S.C. §45(a) — Fraudulent Misrepresentation of Value',fine:53088,cat:'federal',shared:'94%'},
-      {id:'i3',text:'The true long-term cost of ownership was never shown or explained',statute:'15 U.S.C. §1638 TILA / 12 C.F.R. §226 Regulation Z',fine:53088,cat:'tila',shared:'92%'},
-      {id:'i4',text:'I was never told maintenance fees increase 6–12% annually',statute:'15 U.S.C. §45(a) — Material Omission of Escalating Obligation',fine:53088,cat:'federal',shared:'97%'},
-      {id:'i5',text:'I did not know the contract was perpetual — no end date',statute:'State Timeshare Act — Failure to Disclose Perpetuity',fine:53088,cat:'state',shared:'98%'},
-      {id:'i6',text:'I was never told this has little to no resale value',statute:'15 U.S.C. §45(a) — Omission of Material Fact',fine:53088,cat:'federal',shared:'95%'},
-      {id:'i7',text:'I was not told I could cancel within the rescission period (3–10 days)',statute:'16 C.F.R. §429.1 — FTC Cooling-Off Rule: Cancellation Rights',fine:53088,cat:'federal',shared:'89%'},
-      {id:'i8',text:'Oral promises were made to me that never appeared in the contract',statute:'State UDAP — Verbal Misrepresentation / Oral Warranty Breach',fine:53088,cat:'state',shared:'88%'},
-      {id:'i9',text:'The contract is perpetual — my heirs would inherit this unwillingly',statute:'State Timeshare Act — Failure to Disclose Estate Liability',fine:53088,cat:'state',shared:'96%'},
-      {id:'i10',text:'The salesperson was a 1099 contractor earning commission — never disclosed',statute:'15 U.S.C. §45(a) — Failure to Disclose Sales Relationship',fine:53088,cat:'federal',shared:'80%'},
-      {id:'i11',text:'Resort management and quality have declined significantly since I purchased',statute:'State Consumer Protection Act — Breach of Implied Warranty',fine:25000,cat:'state',shared:'75%'},
-      {id:'i12',text:'I was pressured to sign immediately — told the offer was only available that day',statute:'15 U.S.C. §45(a) / State UDAP — High-Pressure Artificial Urgency',fine:53088,cat:'federal',shared:'91%'},
-    ]
-  }
+// VIOLATION DATA
+var RIGHTS=[
+  {id:'heard',num:'1',title:'Right to Be Heard',
+   sub:'"Consumers have the right to voice concerns and have them properly addressed."',
+   viols:[
+    {id:'h1',text:'I contacted the resort about my concerns — they ignored me',statute:'15 U.S.C. §45 / FTC Act §5',fine:25000,cat:'Federal',shared:'100%'},
+    {id:'h2',text:'My concerns were never addressed in a meaningful or timely way',statute:'12 C.F.R. §1024 — CFPB Regulation X',fine:25000,cat:'RESPA',shared:'95%'},
+    {id:'h3',text:'My questions were dismissed, deflected, or transferred without resolution',statute:'State UDAP — Unfair & Deceptive Acts',fine:25000,cat:'State',shared:'90%'},
+    {id:'h4',text:'The resort provided no clear process to resolve my complaints',statute:'15 U.S.C. §45(a) — FTC Unfair Practice',fine:25000,cat:'Federal',shared:'85%'},
+   ]},
+  {id:'safety',num:'2',title:'Right to Safety — Financial & Physical',
+   sub:'"Protection against marketing of products hazardous to your financial wellbeing or physical health."',
+   viols:[
+    {id:'s1',text:'I experienced significant financial hardship since signing',statute:'15 U.S.C. §45 / 12 C.F.R. §1031 — CFPB Unfair Practice',fine:53088,cat:'Federal / RESPA',shared:'80%'},
+    {id:'s2',text:'I am retired or on a fixed income and can no longer carry this obligation',statute:'State Elder Financial Abuse Statutes',fine:25000,cat:'Elder Abuse',shared:'75%'},
+    {id:'s3',text:'I am concerned this contract will pass to my children when I die',statute:'State Timeshare Act — Perpetuity Clause Violation',fine:53088,cat:'State',shared:'95%'},
+    {id:'s4',text:'Health issues prevent me from traveling or using this property',statute:'42 U.S.C. §12101 — ADA / State Consumer Protection',fine:25000,cat:'ADA',shared:'70%'},
+    {id:'s5',text:'Death or illness of a spouse or co-owner has changed our situation',statute:'State Consumer Protection — Failure to Release Hardship Owner',fine:25000,cat:'State',shared:'65%'},
+    {id:'s6',text:'Divorce or separation — this ownership is now a disputed asset',statute:'State Property / Family Law',fine:25000,cat:'State',shared:'60%'},
+    {id:'s7',text:'The sales presentation used intimidation or high-pressure tactics',statute:'15 U.S.C. §45(n) — FTC Act: Coercive Practice',fine:53088,cat:'Federal',shared:'90%'},
+   ]},
+  {id:'choose',num:'3',title:'Right to Choose',
+   sub:'"You have the right to stop paying for something that no longer meets your needs."',
+   viols:[
+    {id:'c1',text:'Blackout dates make it impossible to book when I want',statute:'15 U.S.C. §45(a) — Misrepresentation of Access',fine:53088,cat:'Federal',shared:'92%'},
+    {id:'c2',text:'Non-owners can book dates that I cannot get as an owner',statute:'15 U.S.C. §45(a) — Deceptive Owner Priority Claims',fine:53088,cat:'Federal',shared:'88%'},
+    {id:'c3',text:'I was promised priority access as an owner — that was false',statute:'15 U.S.C. §45(a) — False Promise of Preferential Access',fine:53088,cat:'Federal',shared:'91%'},
+    {id:'c4',text:'Limited resort locations — I cannot reach any conveniently',statute:'State Timeshare Act — Exchange Network Misrepresentation',fine:25000,cat:'State',shared:'78%'},
+    {id:'c5',text:'The presentation ran far longer than the 60–90 minutes I was promised',statute:'15 U.S.C. §45(a) — Deceptive Inducement to Attend',fine:53088,cat:'Federal',shared:'85%'},
+    {id:'c6',text:'I was pressured to sign before I had a chance to read the contract',statute:'16 C.F.R. §429 — FTC Cooling-Off Rule Violation',fine:53088,cat:'Federal',shared:'93%'},
+    {id:'c7',text:'Multiple salespeople were used — I felt I could not leave',statute:'State UDAP — Coercive Sales Environment',fine:53088,cat:'State',shared:'87%'},
+    {id:'c8',text:'I was offered gifts only if I purchased — I felt obligated to stay',statute:'15 U.S.C. §45(a) — Conditional Gift as Coercive Inducement',fine:53088,cat:'Federal',shared:'82%'},
+   ]},
+  {id:'informed',num:'4',title:'Right to Be Informed',
+   sub:'"You have the right to receive complete, accurate information before making any purchasing decision."',
+   viols:[
+    {id:'i1',text:'I was misled or lied to during the sales presentation',statute:'15 U.S.C. §45(a) — FTC Act §5: Deceptive Trade Practice',fine:53088,cat:'Federal',shared:'96%'},
+    {id:'i2',text:'I was told this was an investment that would appreciate in value',statute:'15 U.S.C. §45(a) — Fraudulent Misrepresentation of Value',fine:53088,cat:'Federal',shared:'94%'},
+    {id:'i3',text:'The true long-term cost of ownership was never shown or explained to me',statute:'15 U.S.C. §1638 TILA / 12 C.F.R. §226 — Reg Z',fine:53088,cat:'TILA',shared:'92%'},
+    {id:'i4',text:'I was never told maintenance fees increase 6–12% every year',statute:'15 U.S.C. §45(a) — Material Omission of Escalating Obligation',fine:53088,cat:'Federal',shared:'97%'},
+    {id:'i5',text:'I did not know the contract was perpetual — it has no end date',statute:'State Timeshare Act — Failure to Disclose Perpetuity',fine:53088,cat:'State',shared:'98%'},
+    {id:'i6',text:'I was never told this ownership has little to no resale value',statute:'15 U.S.C. §45(a) — Omission of Material Fact',fine:53088,cat:'Federal',shared:'95%'},
+    {id:'i7',text:'I was not told I could cancel within the rescission period (3–10 days)',statute:'16 C.F.R. §429.1 — FTC Cooling-Off Rule: Cancellation Rights',fine:53088,cat:'Federal',shared:'89%'},
+    {id:'i8',text:'Oral promises were made to me that did not appear in the written contract',statute:'State UDAP — Verbal Misrepresentation / Oral Warranty Breach',fine:53088,cat:'State',shared:'88%'},
+    {id:'i9',text:'The contract is perpetual — my heirs would inherit this unwillingly',statute:'State Timeshare Act — Failure to Disclose Estate Liability',fine:53088,cat:'State',shared:'96%'},
+    {id:'i10',text:'The salesperson was a 1099 commission contractor — that was never disclosed',statute:'15 U.S.C. §45(a) — Failure to Disclose Sales Relationship',fine:53088,cat:'Federal',shared:'80%'},
+    {id:'i11',text:'Resort management and quality have declined significantly since I purchased',statute:'State Consumer Protection Act — Breach of Implied Warranty',fine:25000,cat:'State',shared:'75%'},
+    {id:'i12',text:'I was pressured to sign on the spot — told the offer expired that day',statute:'15 U.S.C. §45(a) / State UDAP — Artificial Urgency',fine:53088,cat:'Federal',shared:'91%'},
+   ]},
 ];
 
-var CAT_LABELS = {
-  federal:'🇺🇸 Federal (FTC)',
-  tila:'💳 TILA / Lending',
-  respa:'🏠 RESPA / CFPB',
-  ada:'♿ ADA / Safety',
-  elder:'👵 Elder Abuse',
-  state:'🏛 State Law'
-};
+var _totalFine=0,_totalCount=0;
 
-// ── BUILD TABLE ───────────────────────────────────────────────────────────
+function toggleAg(){
+  var b=document.getElementById('ag-body'),ic=document.getElementById('ag-icon');
+  b.classList.toggle('open');ic.textContent=b.classList.contains('open')?'−':'+';
+}
+
 function buildRights(){
   var container=document.getElementById('rights-container');
   var html='';
   RIGHTS.forEach(function(r){
-    html+='<div class="right-block" id="rb-'+r.id+'">'
-      +'<div class="right-hdr" onclick="toggleRight(''+r.id+'')">'
-        +'<div class="right-hdr-left">'
-          +'<span class="right-num">'+r.num+'</span>'
-          +'<span class="right-title">'+r.title+'</span>'
-          +'<span class="right-count" id="rc-'+r.id+'" style="display:none">0</span>'
+    html+='<div class="rb" id="rb-'+r.id+'">'
+      +'<div class="rh" onclick="toggleR(\''+r.id+'\')">'
+        +'<div class="rh-left">'
+          +'<span class="rh-num">'+r.num+'</span>'
+          +'<span class="rh-title">'+r.title+'</span>'
+          +'<span class="rh-cnt" id="rc-'+r.id+'">0</span>'
         +'</div>'
-        +'<span class="right-arrow" id="ra-'+r.id+'">▾</span>'
+        +'<span class="rh-arr" id="ra-'+r.id+'">▾</span>'
       +'</div>'
-      +'<div class="right-sub">'+r.sub+'</div>'
-      +'<div id="rt-'+r.id+'">'
-      +'<table class="viol-table"><thead><tr>'
-        +'<th style="width:32px"></th>'
+      +'<div class="rsub">'+r.sub+'</div>'
+      +'<div class="rb-body" id="rt-'+r.id+'">'
+      +'<table class="vt"><thead><tr>'
+        +'<th style="width:24px"></th>'
         +'<th>Violation</th>'
-        +'<th style="width:80px;text-align:center">% in Group</th>'
-        +'<th style="width:90px;text-align:center">Knew Before Signing?</th>'
-        +'<th style="width:110px;text-align:center">Would Have Stopped You?</th>'
+        +'<th style="width:80px">% in Group</th>'
+        +'<th style="width:100px">Knew Before<br>Signing?</th>'
+        +'<th style="width:110px">Would Have<br>Stopped You?</th>'
       +'</tr></thead><tbody>';
-
-    r.violations.forEach(function(v){
+    r.viols.forEach(function(v){
       html+='<tr id="tr-'+v.id+'">'
-        +'<td><input type="checkbox" class="viol-cb" id="cb-'+v.id+'" onchange="onCheck(''+r.id+'',''+v.id+'','+v.fine+',''+v.statute+'',''+v.cat+'',''+v.shared+'',this)"></td>'
+        +'<td style="vertical-align:middle"><input type="checkbox" class="vcb" id="cb-'+v.id+'" onchange="onCheck(\''+r.id+'\',\''+v.id+'\','+v.fine+',\''+v.statute+'\',\''+v.cat+'\',\''+v.shared+'\',this)"></td>'
         +'<td>'
-          +'<div class="viol-text">'+v.text+'</div>'
-          +'<div class="statute-row" id="sr-'+v.id+'">'
-            +'<div class="statute-line">'+CAT_LABELS[v.cat]+' &nbsp;·&nbsp; '+v.statute+'</div>'
-            +'<div class="fine-line"><span>Fine per violation:</span><span class="fine-amt">'+fmtC(v.fine)+'</span></div>'
-            +'<div class="fine-line" style="margin-top:2px"><span>Running group total:</span><span class="fine-amt" id="rt-fine-'+v.id+'">—</span></div>'
+          +'<div class="vtext">'+v.text+'</div>'
+          +'<div class="stat-row" id="sr-'+v.id+'">'
+            +'<div class="stat-line">'+v.cat+' &nbsp;·&nbsp; '+v.statute+'</div>'
+            +'<div class="fine-row"><span style="font-size:14px">Fine per violation:</span><span class="fine-amt">'+fc(v.fine)+'</span></div>'
+            +'<div class="fine-row" style="margin-top:2px"><span style="font-size:12px;color:#888">Running group total:</span><span style="font-size:12px;color:var(--red);font-weight:700" id="rf-'+v.id+'">—</span></div>'
           +'</div>'
         +'</td>'
-        +'<td style="text-align:center"><span style="font-size:13px;font-weight:600;color:#C8960C">'+v.shared+'</span></td>'
-        +'<td><select class="yn-select" id="knew-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
-        +'<td><select class="yn-select" id="stop-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
+        +'<td style="text-align:center"><span style="font-size:14px;font-weight:700;color:var(--gold)">'+v.shared+'</span></td>'
+        +'<td><select class="yn" id="knew-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
+        +'<td><select class="yn" id="stop-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
       +'</tr>';
     });
-
-    html+='</tbody></table>';
-    html+='<div style="padding:10px 14px;border-top:1px solid #f3f4f6"><label style="font-size:11px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:4px">Section Notes</label><textarea class="notes-area" id="notes-'+r.id+'" placeholder="Additional notes for this right..." oninput="saveViolData()"></textarea></div>';
-    html+='</div></div>';
+    html+='</tbody></table>'
+      +'<div style="padding:10px 14px;border-top:1px solid #f3f4f6">'
+        +'<div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Notes</div>'
+        +'<textarea class="notes-ta" id="notes-'+r.id+'" placeholder="Additional notes..." oninput="saveViolData()"></textarea>'
+      +'</div>'
+    +'</div></div>';
   });
   container.innerHTML=html;
   loadSavedData();
 }
 
-function toggleRight(id){
+function toggleR(id){
   var body=document.getElementById('rt-'+id);
   var arrow=document.getElementById('ra-'+id);
-  var isOpen=body.style.display!=='none';
+  var isOpen=body.style.display!=='none'&&body.style.display!=='';
   body.style.display=isOpen?'none':'block';
   if(arrow)arrow.textContent=isOpen?'▸':'▾';
 }
 
-var _totalFine=0, _totalCount=0;
-var _rightsFines={};
-
-function onCheck(rightId,violId,fine,statute,cat,shared,cb){
-  var row=document.getElementById('tr-'+violId);
-  var sr=document.getElementById('sr-'+violId);
+var _rf={};
+function onCheck(rid,vid,fine,stat,cat,shared,cb){
+  var row=document.getElementById('tr-'+vid);
+  var sr=document.getElementById('sr-'+vid);
   if(cb.checked){
-    row.classList.add('checked-row');
-    sr.classList.add('show');
-    if(!_rightsFines[rightId])_rightsFines[rightId]=0;
-    _rightsFines[rightId]+=fine;
-    // Update running total display
-    var rtFineEl=document.getElementById('rt-fine-'+violId);
-    if(rtFineEl)rtFineEl.textContent=fmtC(_rightsFines[rightId]);
+    row.classList.add('ck');sr.classList.add('show');
+    if(!_rf[rid])_rf[rid]=0;_rf[rid]+=fine;
+    var el=document.getElementById('rf-'+vid);
+    if(el)el.textContent=fc(_rf[rid]);
   } else {
-    row.classList.remove('checked-row');
-    sr.classList.remove('show');
-    if(_rightsFines[rightId])_rightsFines[rightId]-=fine;
+    row.classList.remove('ck');sr.classList.remove('show');
+    if(_rf[rid])_rf[rid]-=fine;
   }
-  updateTotals();
-  saveViolData();
+  updateTotals();saveViolData();
 }
 
 function updateTotals(){
-  var count=document.querySelectorAll('.viol-cb:checked').length;
+  var count=document.querySelectorAll('.vcb:checked').length;
   var total=0;
-  document.querySelectorAll('.viol-cb:checked').forEach(function(cb){
+  document.querySelectorAll('.vcb:checked').forEach(function(cb){
     var id=cb.id.replace('cb-','');
-    RIGHTS.forEach(function(r){r.violations.forEach(function(v){if(v.id===id)total+=v.fine;});});
+    RIGHTS.forEach(function(r){r.viols.forEach(function(v){if(v.id===id)total+=v.fine;});});
   });
-  var rightsViolated=0;
+  var rv=0;
   RIGHTS.forEach(function(r){
-    var cnt=document.querySelectorAll('#rt-'+r.id+' .viol-cb:checked').length;
-    if(cnt>0){rightsViolated++;document.getElementById('rc-'+r.id).style.display='';document.getElementById('rc-'+r.id).textContent=cnt;}
-    else{document.getElementById('rc-'+r.id).style.display='none';}
+    var cnt=document.querySelectorAll('#rt-'+r.id+' .vcb:checked').length;
+    var cntEl=document.getElementById('rc-'+r.id);
+    if(cnt>0){rv++;if(cntEl){cntEl.style.display='';cntEl.textContent=cnt;}}
+    else{if(cntEl)cntEl.style.display='none';}
   });
   document.getElementById('tot-count').textContent=count;
-  document.getElementById('tot-rights').textContent=rightsViolated+' of 4';
-  document.getElementById('tot-fine').textContent=fmtC(total);
-  document.getElementById('tot-shared').textContent=count>0?'Yes':'—';
-  _totalFine=total; _totalCount=count;
+  document.getElementById('tot-rights').textContent=rv+' of 4';
+  document.getElementById('tot-fine').textContent=fc(total);
+  _totalFine=total;_totalCount=count;
 }
 
 function saveViolData(){
-  var s=active();if(!s)return;
-  var all=getAll();if(!all[s])return;
-  var checks={},knew={},stop={},notes={};
+  var s=ac();if(!s)return;var all=ga();if(!all[s])return;
+  var checks=[],knew={},stop={},notes={};
   RIGHTS.forEach(function(r){
-    r.violations.forEach(function(v){
+    r.viols.forEach(function(v){
       var cb=document.getElementById('cb-'+v.id);
       if(cb&&cb.checked){
-        checks[v.id]=true;
-        var kEl=document.getElementById('knew-'+v.id);
-        var sEl=document.getElementById('stop-'+v.id);
-        knew[v.id]=kEl?kEl.value:'';
-        stop[v.id]=sEl?sEl.value:'';
+        checks.push(v.id);
+        var k=document.getElementById('knew-'+v.id);
+        var st=document.getElementById('stop-'+v.id);
+        knew[v.id]=k?k.value:'';
+        stop[v.id]=st?st.value:'';
       }
     });
-    var nEl=document.getElementById('notes-'+r.id);
-    if(nEl&&nEl.value)notes[r.id]=nEl.value;
+    var n=document.getElementById('notes-'+r.id);
+    if(n&&n.value)notes[r.id]=n.value;
   });
-  all[s].violations=Object.keys(checks);
+  all[s].violations=checks;
   all[s].violationKnew=knew;
   all[s].violationStop=stop;
   all[s].violationNotes=notes;
   all[s].violationTotal=_totalFine;
   all[s].rightsSaved=true;
   all[s]._updated=Date.now();
-  saveAll(all);
+  sa(all);
 }
 
 function loadSavedData(){
-  var d=activeData();if(!d)return;
-  if(d.violations){
-    d.violations.forEach(function(vid){
-      var cb=document.getElementById('cb-'+vid);
-      if(cb){cb.checked=true;RIGHTS.forEach(function(r){r.violations.forEach(function(v){if(v.id===vid){var row=document.getElementById('tr-'+vid);var sr=document.getElementById('sr-'+vid);if(row)row.classList.add('checked-row');if(sr)sr.classList.add('show');if(!_rightsFines[r.id])_rightsFines[r.id]=0;_rightsFines[r.id]+=v.fine;}});});}
-    });
-    if(d.violationKnew)Object.keys(d.violationKnew).forEach(function(k){var el=document.getElementById('knew-'+k);if(el)el.value=d.violationKnew[k];});
-    if(d.violationStop)Object.keys(d.violationStop).forEach(function(k){var el=document.getElementById('stop-'+k);if(el)el.value=d.violationStop[k];});
-    if(d.violationNotes)Object.keys(d.violationNotes).forEach(function(k){var el=document.getElementById('notes-'+k);if(el)el.value=d.violationNotes[k];});
-    updateTotals();
-  }
+  var d=ad();if(!d||!d.violations)return;
+  d.violations.forEach(function(vid){
+    var cb=document.getElementById('cb-'+vid);
+    if(cb){
+      cb.checked=true;
+      RIGHTS.forEach(function(r){r.viols.forEach(function(v){
+        if(v.id===vid){
+          var row=document.getElementById('tr-'+vid);
+          var sr=document.getElementById('sr-'+vid);
+          if(row)row.classList.add('ck');if(sr)sr.classList.add('show');
+          if(!_rf[r.id])_rf[r.id]=0;_rf[r.id]+=v.fine;
+        }
+      });});
+    }
+  });
+  if(d.violationKnew)Object.keys(d.violationKnew).forEach(function(k){var el=document.getElementById('knew-'+k);if(el)el.value=d.violationKnew[k];});
+  if(d.violationStop)Object.keys(d.violationStop).forEach(function(k){var el=document.getElementById('stop-'+k);if(el)el.value=d.violationStop[k];});
+  if(d.violationNotes)Object.keys(d.violationNotes).forEach(function(k){var el=document.getElementById('notes-'+k);if(el)el.value=d.violationNotes[k];});
+  updateTotals();
 }
 
-function genReport(){
-  saveViolData();
-  var s=active();
-  var slug=s?'/'+s+'/':'';
-  window.location.href='/report/';
-}
+function genReport(){saveViolData();window.location.href='/report/';}
 
 function saveAndContinue(){
   saveViolData();
-  var d=activeData()||{};
-  var summary='<strong>'+_totalCount+' violations</strong> documented across '+document.getElementById('tot-rights').textContent+' consumer rights.<br>Estimated fine exposure: <strong>'+fmtC(_totalFine)+'</strong>';
-  markPageSaved('/rights/');
-  showSubmitPopup('Consumer Rights Assessment',summary,'/cost/');
+  var sum='<strong>'+_totalCount+' violations</strong> documented · '+document.getElementById('tot-rights').textContent+' rights violated · <strong>'+fc(_totalFine)+'</strong> estimated exposure';
+  markSaved('/rights/');
+  showPopup('Consumer Rights Assessment',sum,'/cost/');
 }
 
-function markPageSaved(pg){var s=active();if(!s)return;var all=getAll();if(!all[s])return;var saved=all[s]._savedPages||[];if(saved.indexOf(pg)<0)saved.push(pg);all[s]._savedPages=saved;saveAll(all);}
+function markSaved(pg){var s=ac();if(!s)return;var all=ga();if(!all[s])return;var sp=all[s]._savedPages||[];if(sp.indexOf(pg)<0)sp.push(pg);all[s]._savedPages=sp;sa(all);}
 
-function showSubmitPopup(title,summary,next){
+function showPopup(title,sum,next){
   var ov=document.createElement('div');
   ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center';
   ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px;max-width:480px;width:100%;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2)">'
-    +'<h3 style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:12px">✓ '+title+' Saved</h3>'
-    +'<div style="background:#EAF0F8;border-left:3px solid #1B2A4A;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.6;color:#1B2A4A;margin-bottom:16px">'+summary+'</div>'
+    +'<div style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px">✓ '+title+' Saved</div>'
+    +'<div style="background:#EAF0F8;border-left:3px solid var(--navy);border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.6;color:var(--navy);margin-bottom:16px">'+sum+'</div>'
     +'<div style="display:flex;gap:8px">'
-    +'<button onclick="this.closest('div[style]').remove()" style="flex:1;padding:11px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">← Edit</button>'
-    +(next?'<button onclick="window.location.href=''+next+''" style="flex:1;padding:11px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Continue →</button>':'')
+    +'<button onclick="this.closest(\'div[style]\').remove()" style="flex:1;padding:11px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid var(--navy);background:#fff;cursor:pointer">← Edit</button>'
+    +(next?'<button onclick="window.location.href=\''+next+'\'" style="flex:1;padding:11px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:var(--gold);color:#fff;cursor:pointer">Continue →</button>':'')
     +'</div></div>';
   document.body.appendChild(ov);
 }
 
 function emailRights(){
-  var d=activeData()||{};
-  var vids=d.violations||[];
+  var d=ad()||{};var vids=d.violations||[];
   var rows='';
   RIGHTS.forEach(function(r){
-    var rVids=r.violations.filter(function(v){return vids.indexOf(v.id)>-1;});
-    if(rVids.length){
-      rows+='<tr><td colspan="2" style="background:#1B2A4A;color:#C8960C;font-size:13px;font-weight:700;padding:8px 12px">'+r.title+'</td></tr>';
-      rVids.forEach(function(v){rows+='<tr><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:13px">'+v.text+'</td><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:11px;color:#C8960C;white-space:nowrap">'+v.statute+'</td></tr>';});
-    }
+    var rv=r.viols.filter(function(v){return vids.indexOf(v.id)>-1;});
+    if(!rv.length)return;
+    rows+='<tr><td colspan="2" style="background:var(--navy);color:var(--gold);font-size:14px;font-weight:700;padding:8px 12px">'+r.title+'</td></tr>';
+    rv.forEach(function(v){rows+='<tr><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:14px">'+v.text+'</td><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:12px;color:var(--gold);white-space:nowrap">'+v.statute+'</td></tr>';});
   });
   var win=window.open('','_blank');
-  win.document.write('<!DOCTYPE html><html><body style="margin:20px;font-family:Inter,sans-serif"><div style="max-width:600px;margin:0 auto;border:2px solid #1B2A4A;border-radius:8px;overflow:hidden"><div style="background:#1B2A4A;padding:20px;text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" style="max-width:140px;margin-bottom:10px"><br><div style="color:#fff;font-size:18px;font-weight:700">Consumer Rights Assessment</div><div style="color:rgba(255,255,255,.7);font-size:13px">'+(d.firstName||'')+' '+(d.lastName||'')+' · '+(d.resort||'')+'</div></div><div style="padding:20px"><table style="width:100%;border-collapse:collapse">'+rows+'</table><div style="margin-top:16px;background:#EAF0F8;border-radius:6px;padding:14px;font-size:14px;color:#1B2A4A"><strong>Total Violations: '+vids.length+'</strong><br>Estimated Fine Exposure: <strong>'+fmtC(d.violationTotal||0)+'</strong></div></div></div><button onclick="window.print()" style="margin-top:10px;padding:10px 20px;background:#1B2A4A;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer">🖨 Print</button>
-<script id="universal-sidebar-js">
-(function(){
-var SK='atc_clients_v2',AK='atc_active';
-function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
-function ac(){return localStorage.getItem(AK)||null;}
-function ad(){var s=ac();return s?ga()[s]||null:null;}
-function sf(k,v){var s=ac();if(!s)return;var a=ga();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();sa(a);}
-function fc(n){return '$'+Math.round(n||0).toLocaleString();}
-function fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+  win.document.write('<!DOCTYPE html><html><head><style>:root{--navy:#1B2A4A;--gold:#C8960C}body{margin:20px;font-family:Inter,sans-serif}</style></head><body><div style="max-width:600px;margin:0 auto;border:2px solid var(--navy);border-radius:8px;overflow:hidden"><div style="background:var(--navy);padding:20px;text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" style="max-width:140px;margin-bottom:10px"><br><div style="color:#fff;font-size:18px;font-weight:700">Consumer Rights Assessment</div><div style="color:rgba(255,255,255,.7);font-size:14px">'+(d.firstName||'')+' '+(d.lastName||'')+' · '+(d.resort||'')+'</div></div><div style="padding:20px"><table style="width:100%;border-collapse:collapse">'+rows+'</table><div style="margin-top:16px;background:#EAF0F8;border-radius:6px;padding:14px;font-size:14px;color:var(--navy)"><strong>Total Violations: '+vids.length+'</strong><br>Estimated Exposure: <strong>'+fc(d.violationTotal||0)+'</strong></div></div></div><button onclick="window.print()" style="margin-top:10px;padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer">🖨 Print</button></body></html>');
+}
 
+function toast(m,c){var t=document.getElementById('_toast');t.style.background=c||'var(--green)';t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+
+// VITALS BANNER
+function initBanner(){
+  var s=ac();if(!s)return;var d=ga()[s];if(!d)return;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+  var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set('vb-name',((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—');
+  set('vb-phone',d.phone||'—');
+  set('vb-resort',d.resort||'—');
+  set('vb-loc',d.location||'—');
+  set('vb-mo',mo>0?fc(mo)+'/mo':'—');
+  set('vb-yr',mo>0?fc(mo*12)+'/yr':'—');
+  set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');
+  set('vb-stg',stg);
+}
+
+// SIDEBAR
 var PG=[
   {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
   {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:'V1',ic:'⚾',lb:'Client Vitals',url:'/vitals/'},
   {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
   {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
   {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
@@ -633,216 +495,39 @@ var PG=[
   {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
 ];
 
-function buildNav(){
-  // Find sidenav element
-  var sn=document.querySelector('.sidenav');
-  if(!sn)return;
+function buildSB(){
   var d=ad(),slug=ac(),all=ga();
   var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
-
-  // CLIENT TICKER
-  var ctHTML='';
-  if(d){
-    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-    ctHTML='<div class="client-ticker">'
-      +'<div class="ct-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div>'
-      +'<div class="ct-resort">'+(d.resort||'No resort')+'</div>'
-      +'<div class="ct-row"><span>Monthly</span><strong>'+fc(mo)+'</strong></div>'
-      +'<div class="ct-row"><span>Yearly</span><strong>'+fc(mo*12)+'</strong></div>'
-      +'<div class="ct-row"><span>MTF/yr</span><strong>'+fc(parseFloat(d.maitFees)||0)+'</strong></div>'
-      +'<div class="ct-row"><span>Visits</span><strong>'+(d._visits||1)+'</strong></div>'
-      +(d.alphaFee?'<div class="ct-quote">📄 '+fc(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')
-      +'<div class="ct-meta">'+fd(d._updated)+'</div>'
-    +'</div>';
-  } else {
-    ctHTML='<div class="ct-no-client">⚠️ No client selected</div>';
-  }
-
-  // CLIENT SELECTOR
-  var opts=Object.keys(all).map(function(k){
-    var c=all[k];
-    return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'
-      +(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';
-  }).join('');
-
-  // NAV LINKS
-  var nav=PG.map(function(p){
-    var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;
-    return '<a href="'+p.url+'" class="sn-item'+(cur===p.url?' active':'')+'">'
-      +'<span class="sn-num">'+p.n+'</span>'
-      +'<span style="flex:1">'+p.ic+' '+p.lb+'</span>'
-      +(saved?'<span class="sn-saved">✓</span>':'')
-    +'</a>';
-  }).join('');
-
-  // CALENDAR
+  var mo=d?(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12):0;
+  var ctHTML=d
+    ?'<div class="ct"><div class="ct-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div><div class="ct-resort">'+(d.resort||'No resort')+'</div><div class="ct-row"><span>Monthly</span><strong>'+fc(mo)+'</strong></div><div class="ct-row"><span>MTF/yr</span><strong>'+fc(parseFloat(d.maitFees)||0)+'</strong></div>'+(d.alphaFee?'<div class="ct-quote">📄 '+fc(d.alphaFee)+'</div>':'')+'</div>'
+    :'<div class="ct-none">⚠️ No client selected</div>';
+  var opts=Object.keys(all).map(function(k){var c=all[k];return'<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
+  var nav=PG.map(function(p){var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;return'<a href="'+p.url+'" class="sn-a'+(cur===p.url?' on':'')+'"><span class="sn-n">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:var(--green);font-size:12px">✓</span>':'')+'</a>';}).join('');
   var calV=d
-    ?'<input type="datetime-local" class="sn-cal-inp" value="'+(d._todayAppt||'')+'" onchange="sf('_todayAppt',this.value)" placeholder="Today appt"><div class="sn-cal-lbl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sn-cal-inp" value="'+(d._fuAppt||'')+'" onchange="sf('_fuAppt',this.value)"><button class="sn-btn" style="margin-top:3px;width:100%;font-size:9px" onclick="addCal()">+ Google Calendar</button>'
-    :'<div style="font-size:10px;color:rgba(255,255,255,.3)">Select a client first</div>';
-
-  sn.innerHTML=
+    ?'<input type="datetime-local" class="sn-ci" value="'+(d._todayAppt||'')+'" onchange="sf(\'_todayAppt\',this.value)"><div class="sn-cl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sn-ci" value="'+(d._fuAppt||'')+'" onchange="sf(\'_fuAppt\',this.value)"><button class="sn-b" style="margin-top:3px;width:100%;font-size:12px" onclick="addCal()">+ Google Calendar</button>'
+    :'<div style="font-size:12px;color:rgba(255,255,255,.3)">Select a client first</div>';
+  document.getElementById('sidenav').innerHTML=
     '<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
     +ctHTML
-    +'<div class="sn-sel"><select class="sn-select" onchange="switchClient(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
-    +'<div class="sn-btnrow"><button class="sn-btn" onclick="newClient()">+ New</button><button class="sn-btn out" onclick="saveClear()">Save &amp; Clear</button></div></div>'
-    +'<div class="sn-section">Pages</div>'
-    +'<nav class="sn-menu">'+nav+'</nav>'
-    +'<div class="sn-cal"><div class="sn-cal-lbl">📅 Today</div>'+calV+'</div>'
-    +'<div class="sn-rpts"><div class="sn-cal-lbl">📋 Reports</div>'
-    +'<button class="sn-rpt" onclick="rpt('vero')">📋 Vero</button>'
-    +'<button class="sn-rpt" onclick="rpt('crm')">📋 CRM Note</button>'
-    +'<button class="sn-rpt" onclick="rpt('sms')">💬 SMS</button>'
-    +'<button class="sn-rpt" onclick="rpt('full')">📄 Full Summary</button>'
+    +'<div class="sn-sel"><select class="sn-dd" onchange="swC(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div class="sn-brow"><button class="sn-b" onclick="location.href=\'/owner/\'">+ New</button><button class="sn-b o" onclick="saveClear()">Save &amp; Clear</button></div></div>'
+    +'<div class="sn-sec">Pages</div><nav class="sn-nav">'+nav+'</nav>'
+    +'<div class="sn-cal"><div class="sn-cl">📅 Today</div>'+calV+'</div>'
+    +'<div class="sn-rpts"><div class="sn-cl">📋 Reports</div>'
+    +'<button class="sn-rpt" onclick="emailRights()">📧 Email Rights</button>'
+    +'<button class="sn-rpt" onclick="genReport()">⚖ View Report</button>'
+    +'<button class="sn-rpt" onclick="rptCRM()">📋 CRM Note</button>'
     +'</div>';
 }
 
-window.switchClient=function(slug){if(!slug)return;localStorage.setItem(AK,slug);toast('Loaded');setTimeout(function(){location.reload();},500);};
-window.sf=sf;
+function swC(s){if(!s)return;localStorage.setItem(AK,s);setTimeout(function(){location.reload();},400);}
+function sf(k,v){var s=ac();if(!s)return;var all=ga();if(!all[s])return;all[s][k]=v;all[s]._updated=Date.now();sa(all);}
+function addCal(){var d=ad();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent((d.firstName||'Client')+' — ATC Follow-Up')+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');}
+function saveClear(){var d=ad();if(!d){alert('No active client.');return;}localStorage.removeItem(AK);toast('Cleared');setTimeout(function(){location.href='/home/';},700);}
+function rptCRM(){var d=ad();if(!d){toast('No active client','var(--red)');return;}var name=((d.firstName||'')+' '+(d.lastName||'')).trim();var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);var txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+fc(mo)+'\nViolations: '+(d.violations?d.violations.length:0)+'\nExposure: '+fc(d.violationTotal||0)+'\nNotes: '+(d.notes||'—');try{navigator.clipboard.writeText(txt).then(function(){toast('✓ Copied');});}catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}}
 
-window.newClient=function(){
-  var m=document.getElementById('_nc');
-  if(!m){
-    m=document.createElement('div');m.id='_nc';
-    m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';
-    m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:360px;width:100%;margin:20px">'
-      +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client</div>'
-      +'<div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_ncf" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="First"></div>'
-      +'<div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_ncl" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Last"></div>'
-      +'<div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_ncr" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="e.g. Westgate — Orlando, FL"></div>'
-      +'<div style="display:flex;gap:8px"><button onclick="document.getElementById('_nc').style.display='none'" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button>'
-      +'<button onclick="createClient()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Create &amp; Start</button></div>'
-      +'</div>';
-    m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});
-    document.body.appendChild(m);
-  }
-  m.style.display='flex';setTimeout(function(){var f=document.getElementById('_ncf');if(f)f.focus();},100);
-};
-
-window.createClient=function(){
-  var f=(document.getElementById('_ncf')||{}).value||'';
-  var l=(document.getElementById('_ncl')||{}).value||'';
-  var r=(document.getElementById('_ncr')||{}).value||'';
-  f=f.trim();l=l.trim();r=r.trim();
-  if(!f&&!l){alert('Please enter a name.');return;}
-  var slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');
-  var all=ga();
-  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});
-  sa(all);localStorage.setItem(AK,slug);
-  var m=document.getElementById('_nc');if(m)m.style.display='none';
-  toast('Created: '+f+' '+l);
-  setTimeout(function(){location.href='/owner/';},700);
-};
-
-window.saveClear=function(){
-  var d=ad();if(!d){alert('No active client.');return;}
-  var saved=d._savedPages||[];
-  var list=PG.map(function(p){var ok=saved.indexOf(p.url)>-1;return'<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:'+(ok?'#1a7a3c':'#d1d5db')+'">'+(ok?'✓':'○')+'</span>'+p.ic+' '+p.lb+'</div>';}).join('');
-  var ov=document.createElement('div');
-  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center';
-  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:420px;width:100%;margin:20px;max-height:85vh;overflow-y:auto">'
-    +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</div>'
-    +'<div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A">'+(d.resort||'No resort')+'</div>'
-    +list
-    +'<div style="display:flex;gap:8px;margin-top:14px">'
-    +'<button onclick="this.closest('div[style]').remove()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button>'
-    +'<button onclick="doClear()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Clear &amp; New</button>'
-    +'</div></div>';
-  document.body.appendChild(ov);
-};
-
-window.doClear=function(){localStorage.removeItem(AK);toast('Cleared');setTimeout(function(){location.href='/home/';},700);};
-
-window.addCal=function(){
-  var d=ad();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}
-  var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
-  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent((d.firstName||'Client')+' — ATC Follow-Up')+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');
-};
-
-window.rpt=function(type){
-  var d=ad();if(!d){toast('No active client','#c0392b');return;}
-  var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
-  var mo=fc((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
-  var txt='';
-  if(type==='vero')txt='Name: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n2nd Phone: '+(d.phone2||'—')+'\nEmail: '+(d.email||'—')+'\nAddress: '+(d.address||'—');
-  else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+fc(d.maitFees)+'/yr\nMortgage: '+fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\nMotivation: '+(d.motivation||'—')+'/10\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
-  else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';
-  else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\n\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nEmail: '+(d.email||'—')+'\nMonthly: '+mo+'\nMTF: '+fc(d.maitFees)+'/yr\nMortgage: '+fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc(d.alphaFee):'—')+' / '+(d.selectedTerm||'—')+' mo\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
-  try{navigator.clipboard.writeText(txt).then(function(){toast('✓ Copied');});}
-  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}
-};
-
-function toast(msg,color){
-  var t=document.getElementById('_toast');
-  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='display:none;position:fixed;bottom:24px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}
-  t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';
-  setTimeout(function(){t.style.display='none';},2500);
-}
-
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',buildNav);}
-else{buildNav();}
-})();
-</script>
-
-
-<script id="vitals-banner-js">
-(function(){
-  function initVitalsBanner(){
-    var SK='atc_clients_v2',AK='atc_active';
-    function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-    function fc(n){return '$'+Math.round(n||0).toLocaleString();}
-    var s=localStorage.getItem(AK);
-    if(!s)return;
-    var d=ga()[s];if(!d)return;
-    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-    var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
-    var stage=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
-    function set(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
-    set('vb-name',((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—');
-    set('vb-phone',d.phone||'—');
-    set('vb-resort',d.resort||'—');
-    set('vb-location',d.location||'—');
-    set('vb-mo',mo>0?fc(mo)+'/mo':'—');
-    set('vb-yr',mo>0?fc(mo*12)+'/yr':'—');
-    set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');
-    set('vb-stage',stage);
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initVitalsBanner);}
-  else{initVitalsBanner();}
-})();
-</script>
-
-</body></html>');
-}
-
-function toast(msg,color){var t=document.getElementById('tst');t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
-function closePop(){document.getElementById('pop-ov').classList.remove('on');}
-
-// ── SIDEBAR ───────────────────────────────────────────────────────────────
-var PAGES=[
-  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},{n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
-  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},{n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
-  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},{n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
-  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},{n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
-  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},{n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
-  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},{n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
-  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},{n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
-  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},{n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
-  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},{n:12,ic:'📦',lb:"What's Included",url:'/included/'},
-  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},{n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
-  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},{n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
-];
-
-function buildSB(){
-  var d=activeData(),slug=active(),all=getAll();
-  var cHTML=d?'<div class="sb-client"><div class="sb-stage">'+(d.alphaFee?'Quoted':'Assessment')+'</div><div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div><div class="sb-resort">'+(d.resort||'No resort')+'</div><div class="sb-stats"><div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+fmtC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12))+'</div></div><div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+fmtC(parseFloat(d.maitFees)||0)+'</div></div></div></div>':'<div class="sb-no-client">⚠️ No client selected</div>';
-  var opts=Object.keys(all).map(function(k){var c=all[k];return'<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
-  var nav=PAGES.map(function(p){var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;return'<a href="'+p.url+'" class="sb-link'+(window.location.pathname.startsWith(p.url.replace(/\/$/,''))?' active':'')+'"><span class="sb-num">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#1a7a3c;font-size:10px">✓</span>':'')+'</a>';}).join('');
-  document.getElementById('sb').innerHTML='<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'+cHTML+'<div class="sb-sel"><select class="sb-select" onchange="switchC(this.value)"><option value="">— Select client —</option>'+opts+'</select><div class="sb-brow"><button class="sb-b" onclick="location.href='/owner/'">+ New</button></div></div><nav class="sb-nav">'+nav+'</nav><div class="sb-rpts"><div class="sb-cal-lbl">📋 Quick Reports</div><button class="sb-rpt" onclick="emailRights()">📧 Email Rights</button><button class="sb-rpt" onclick="genReport()">⚖ View Report</button></div>';
-}
-function switchC(slug){if(!slug)return;localStorage.setItem(AK,slug);toast('Loaded');setTimeout(function(){location.reload();},500);}
-
-buildSB();
-buildRights();
+document.addEventListener('DOMContentLoaded',function(){buildSB();buildRights();initBanner();});
 </script>
 </body>
 </html>
