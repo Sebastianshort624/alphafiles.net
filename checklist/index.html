@@ -2,289 +2,418 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Client Acknowledgment — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0f2f5;font-family:Georgia,'Times New Roman',serif;padding:20px}
-.wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-.logo-bar{text-align:center;margin-bottom:20px}
-.logo-bar img{max-width:200px}
-.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:14px 16px;font-size:16px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:10px 16px;font-size:13px;line-height:1.6;margin-bottom:24px;border-radius:0 0 3px 3px}
-.intro-text{font-size:13px;color:#555;margin-bottom:20px;line-height:1.6;font-style:italic}
-.ack-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #eee;align-items:flex-start}
-.ack-item:last-child{border-bottom:none}
-.ack-num{background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.ack-content h3{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px}
-.ack-content p{font-size:13px;color:#333;line-height:1.65}
-.initial-row{display:flex;align-items:center;gap:8px;margin-top:8px}
-.initial-row label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px}
-.initial-input{border:2px solid #C8960C;border-radius:3px;padding:4px 8px;font-size:13px;width:80px;font-family:Georgia,serif;text-align:center}
-.final-section{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:4px;padding:18px;margin-top:20px}
-.final-section h3{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:14px;letter-spacing:.3px}
-.final-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #d0dcea;font-size:13px}
-.final-item:last-child{border-bottom:none}
-.final-cb{width:15px;height:15px;border:2px solid #1B2A4A;border-radius:2px;flex-shrink:0;margin-top:2px;cursor:pointer;appearance:none;-webkit-appearance:none;background:#fff}
-.final-cb:checked{background:#1B2A4A}
-.final-label{color:#333;line-height:1.5;cursor:pointer}
-.sig-section{margin-top:20px}
-.sig-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.sig-field{flex:1;min-width:200px}
-.sig-field label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:5px}
-.sig-input{width:100%;border:2px solid #1B2A4A;border-radius:3px;padding:8px 10px;font-size:14px;font-family:Georgia,serif}
-.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:16px;letter-spacing:.3px}
-.save-btn:hover{background:#a87a08}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #ddd}
-.nav-btn{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;letter-spacing:.4px;border-radius:3px;text-decoration:none;cursor:pointer;border:none;font-family:Georgia,serif}
-.nav-btn.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nav-btn.next{background:#C8960C;color:#fff}
-.nav-btn.next:hover{background:#a87a08}
-.nav-step{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
-.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:12px}
-</style>
-<style>
-body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
-.sidenav{width:220px;min-height:100vh;background:#1B2A4A;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;box-shadow:3px 0 12px rgba(0,0,0,.25);overflow-y:auto}
-.sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sidenav .sn-logo img{max-width:140px}
-.sn-client-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sn-client-label{font-size:9px;font-weight:700;color:#C8960C;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px}
-.sn-client-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:11px;border-radius:3px;font-family:Georgia,serif}
-.sn-client-select option{background:#1B2A4A}
-.sn-new-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;margin-top:5px;font-family:Georgia,serif}
-.sn-menu{flex:1;padding:8px 0}
-.sn-item{display:flex;align-items:center;gap:8px;padding:8px 14px;text-decoration:none;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;letter-spacing:.2px;border-left:3px solid transparent}
-.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#C8960C}
-.sn-item.active{background:rgba(200,150,12,.15);color:#C8960C;border-left-color:#C8960C}
-.sn-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
-.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 12px}
-.main-content{margin-left:220px;flex:1;padding:20px;min-height:100vh}
-.page-wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-.sn-toast{display:none;position:fixed;bottom:20px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;border-radius:4px;z-index:300}
-.sn-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center}
-.sn-modal-overlay.active{display:flex}
-.sn-modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:380px;margin:20px}
-.sn-modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
-.sn-modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:3px;margin-top:10px}
-.sn-modal input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
-.sn-modal-btns{display:flex;gap:8px;margin-top:14px}
-.sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
-.sn-modal-btn.primary{background:#C8960C;color:#fff}
-.sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+body{font-family:var(--font);font-size:14px;background:var(--bg);display:flex;min-height:100vh}
+.sidenav{width:200px;min-height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-logo img{max-width:130px}
+.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:4px}
+.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:1px}
+.ct-row strong{color:#fff}
+.ct-progress{margin-top:6px}
+.ct-prog-label{font-size:10px;color:rgba(255,255,255,.5);margin-bottom:3px}
+.ct-prog-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px}
+.ct-prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-menu{flex:1;padding:4px 0}
+.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:12px;font-weight:500;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:var(--gold)}
+.sn-item.active{background:rgba(200,150,12,.15);color:var(--gold);border-left-color:var(--gold);font-weight:700}
+.sn-item.done::after{content:'✓';margin-left:auto;color:var(--gold);font-size:10px}
+.sn-num{font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:3px;padding:1px 5px;flex-shrink:0;min-width:20px;text-align:center}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 8px;font-size:11px;border-radius:4px;font-family:var(--font);margin-bottom:4px}
+.sn-cal-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:5px;font-size:11px;font-weight:600;border-radius:4px;cursor:pointer;font-family:var(--font)}
+.main-content{margin-left:200px;flex:1;padding:20px}
+.page-wrap{max-width:580px;margin:0 auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.page-hdr{background:var(--navy);border-radius:8px 8px 0 0;padding:20px 24px;margin:-28px -28px 24px;color:#fff}
+.page-hdr-badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.page-hdr h1{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.page-hdr p{font-size:14px;color:rgba(255,255,255,.75)}
+.sec-block{border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+.sec-hdr{background:var(--navy);color:#fff;padding:12px 16px;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.sec-hdr .plus{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:24px;height:24px;border-radius:4px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-body{padding:16px}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.field-row:last-child{margin-bottom:0}
+.f{flex:1;min-width:180px}
+.f-full{flex:100%}
+.f label{display:block;font-size:12px;font-weight:500;color:#666;margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 12px;font-size:14px;font-family:var(--font);background:#fff;color:var(--navy);transition:border-color .2s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+.f input.hi{border-color:var(--gold);font-weight:600;font-size:16px}
+.f textarea{resize:vertical;min-height:80px}
+.f.hidden{display:none}
+.btn{padding:12px 24px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#a87a08}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:#142038}
+.btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy)}
+.btn-email{background:#EAF0F8;color:var(--navy);border:1.5px solid #c5d5e8}
+.btn-full{width:100%;justify-content:center}
+.btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.blue{color:var(--blue);cursor:pointer;text-decoration:underline;font-weight:500}
+.blue:hover{color:#1d4ed8}
+.popup-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.popup-ov.on{display:flex}
+.popup-box{background:#fff;border-radius:12px;padding:28px;max-width:460px;width:90%;max-height:80vh;overflow-y:auto;position:relative}
+.popup-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.popup-box p{font-size:14px;line-height:1.65;color:#333;margin-bottom:10px}
+.popup-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#888}
+.submit-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;align-items:center;justify-content:center}
+.submit-ov.on{display:flex}
+.submit-box{background:#fff;border-radius:12px;padding:28px;max-width:400px;width:90%}
+.submit-box h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.submit-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+.submit-item:last-child{border-bottom:none}
+.si-check{color:var(--green);font-size:16px}
+.si-empty{color:#ccc;font-size:16px}
+.toast{display:none;position:fixed;bottom:24px;left:224px;background:var(--green);color:#fff;padding:12px 20px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.stage-badge{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:20px}
+.stage-icon{font-size:28px}
+.stage-info h3{font-size:18px;font-weight:700;color:var(--navy)}
+.stage-info p{font-size:12px;color:#888;margin-top:2px}
+.quote-banner{background:var(--navy);color:#fff;border-radius:6px;padding:8px 14px;font-size:12px;display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.qb-item strong{display:block;font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.qb-item span{font-size:14px;font-weight:600}
+@media print{.sidenav,.btn-row,.toast,.popup-ov,.submit-ov{display:none!important}.main-content{margin-left:0!important}}
 </style>
 </head>
 <body>
+
 <div class="sidenav">
-<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-<div class="sn-client-box">
-<div class="sn-client-label">Active Client</div>
-<select class="sn-client-select" id="sn-client-dd" onchange="snLoadClient()"><option value="">— Select Client —</option></select>
-<button class="sn-new-btn" onclick="snShowModal()">+ New Client</button>
-</div>
-<nav class="sn-menu">
-<a href="/home/" class="sn-item" data-page="home"><span class="sn-icon">🏠</span>Dashboard</a>
-<div class="sn-divider"></div>
-<a href="/owner/" class="sn-item" data-page="owner"><span class="sn-icon">📋</span>Owner & Resort Info</a>
-<a href="/whyout/" class="sn-item" data-page="whyout"><span class="sn-icon">❓</span>Why Do You Want Out</a>
-<a href="/wait/" class="sn-item" data-page="wait"><span class="sn-icon">⚠️</span>If You Do Nothing</a>
-<a href="/history/" class="sn-item" data-page="history"><span class="sn-icon">⭐</span>Our Track Record</a>
-<a href="/rights/" class="sn-item" data-page="rights"><span class="sn-icon">⚖️</span>Consumer Rights</a>
-<a href="/cost/" class="sn-item" data-page="cost"><span class="sn-icon">💰</span>True Cost</a>
-<a href="/quote/" class="sn-item" data-page="quote"><span class="sn-icon">📄</span>Your Quote</a>
-<div class="sn-divider"></div>
-<a href="/better/" class="sn-item" data-page="better"><span class="sn-icon">🏆</span>What Makes Alpha Better</a>
-<a href="/recap/" class="sn-item" data-page="recap"><span class="sn-icon">📋</span>Recap & Next Steps</a>
-<a href="/guarantee/" class="sn-item" data-page="guarantee"><span class="sn-icon">🛡</span>Guarantee</a>
-<a href="/checklist/" class="sn-item" data-page="checklist"><span class="sn-icon">✅</span>Acknowledgment</a>
-<a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="sn-item"><span class="sn-icon">📝</span>Alpha Contract</a>
-</nav>
-</div>
-<div class="sn-toast" id="sn-toast"></div>
-<div class="sn-modal-overlay" id="sn-modal">
-<div class="sn-modal">
-<h3>New Client</h3>
-<label>Client Name</label><input type="text" id="sn-name" placeholder="Full name">
-<label>Resort / Developer</label><input type="text" id="sn-resort" placeholder="e.g. Westgate — Orlando FL">
-<label>Date</label><input type="text" id="sn-date">
-<div class="sn-modal-btns">
-<button class="sn-modal-btn secondary" onclick="snCloseModal()">Cancel</button>
-<button class="sn-modal-btn primary" onclick="snCreateClient()">Create & Start</button>
-</div>
-</div>
-</div>
-<div class="main-content"><div class="page-wrap">
-<div class="wrap">
-<div class="logo-bar"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-<div class="page-title">Client Understanding & Acknowledgment</div>
-<div class="page-sub">Page 21 — Please review each item below. Initial where indicated, then sign at the bottom.</div>
+  <div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
+  <div class="client-ticker" id="client-ticker">
+    <div class="ct-no-client">⚠️ No client selected</div>
+  </div>
+  <nav class="sn-menu">
+    <div class="sn-section">Pages</div>
+    <a href="/home/" class="sn-item " data-page="home"><span class="sn-num">0</span>🏠 Dashboard</a>
+<a href="/owner/" class="sn-item " data-page="owner"><span class="sn-num">1</span>📋 Owner & Resort Info</a>
+<a href="/whyout/" class="sn-item " data-page="whyout"><span class="sn-num">2</span>❓ Why Do You Want Out</a>
+<a href="/wait/" class="sn-item " data-page="wait"><span class="sn-num">3</span>⚠️ If You Do Nothing</a>
+<a href="/group/" class="sn-item " data-page="group"><span class="sn-num">4</span>🔍 Finding Your Group</a>
+<a href="/approval/" class="sn-item " data-page="approval"><span class="sn-num">4a</span>✅ Money-Back Approval</a>
+<a href="/heirs/" class="sn-item " data-page="heirs"><span class="sn-num">4b</span>👨‍👩‍👧 Heirs & Estate Liability</a>
+<a href="/compensation/" class="sn-item " data-page="compensation"><span class="sn-num">4c</span>💵 Resort Compensation</a>
+<a href="/credit/" class="sn-item " data-page="credit"><span class="sn-num">4d</span>💳 To Pay or Not to Pay</a>
+<a href="/letter/" class="sn-item " data-page="letter"><span class="sn-num">4e</span>✉️ Mutual Release Letter</a>
+<a href="/guarantee/" class="sn-item " data-page="guarantee"><span class="sn-num">5</span>🛡 Certificate of Guarantee</a>
+<a href="/history/" class="sn-item " data-page="history"><span class="sn-num">6</span>⭐ Our Track Record</a>
+<a href="/rights/" class="sn-item " data-page="rights"><span class="sn-num">7</span>⚖️ Consumer Rights</a>
+<a href="/cost/" class="sn-item " data-page="cost"><span class="sn-num">8</span>💰 True Cost</a>
+<a href="/quote/" class="sn-item " data-page="quote"><span class="sn-num">9</span>📄 Your Quote</a>
+<a href="/followup/" class="sn-item " data-page="followup"><span class="sn-num">10</span>⏰ 30 & 90 Day Follow-Up</a>
+<a href="/better/" class="sn-item " data-page="better"><span class="sn-num">11</span>🏆 What Makes Alpha Better</a>
+<a href="/included/" class="sn-item " data-page="included"><span class="sn-num">12</span>📦 What's Included</a>
+<a href="/recap/" class="sn-item " data-page="recap"><span class="sn-num">13</span>📋 Recap</a>
+<a href="/checklist/" class="sn-item active" data-page="checklist"><span class="sn-num">14</span>✅ Client Acknowledgment</a>
+<a href="/contract/" class="sn-item " data-page="contract"><span class="sn-num">15</span>📝 Alpha Contract</a>
+<a href="/free/" class="sn-item " data-page="free"><span class="sn-num">16</span>🎉 Let's Be Timeshare Free</a>
 
-<div id="toast" class="toast"></div>
-<p class="intro-text">Please review each item below. Initial where indicated, then sign at the bottom.</p>
+    <div class="sn-divider"></div>
+    <div class="sn-section">📧 Email Sections</div>
+    <a href="/owner/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Owner & Resort Info</a>
+<a href="/whyout/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Why Do You Want Out</a>
+<a href="/rights/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Consumer Rights</a>
+<a href="/cost/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 True Cost</a>
+<a href="/quote/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Your Quote</a>
+<a href="/better/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 What Makes Alpha Better</a>
+<a href="/recap/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Recap</a>
+<a href="/guarantee/?email=1" class="sn-item" style="font-size:11px;padding:5px 10px;">📧 Certificate of Guarantee</a>
 
-<div class="ack-item">
-<div class="ack-num">1</div>
-<div class="ack-content">
-<h3>Third-Party / Not the Resort</h3>
-<p>Alpha Timeshare Consultants is a third-party consumer advocacy company. Alpha does not work for, represent, or partner with any resort or developer.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
+    <div class="sn-divider"></div>
+    <a href="/admin/" class="sn-item">⚙️ Admin</a>
+  </nav>
+  <div class="sn-cal">
+    <div class="sn-cal-lbl">📅 Today's Appointment</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-today">
+    <div class="sn-cal-lbl" style="margin-top:8px">📅 Follow-Up</div>
+    <input type="datetime-local" class="sn-cal-inp" id="cal-followup">
+    <button class="sn-cal-btn" onclick="saveCalendar()">Save & Add to Calendar</button>
+  </div>
 </div>
-</div>
+<div class="toast" id="toast"></div>
 
-<div class="ack-item">
-<div class="ack-num">2</div>
-<div class="ack-content">
-<h3>Not a Law Firm / No Legal Advice</h3>
-<p>Alpha Timeshare Consultants is not a law firm and does not provide legal advice. Their roles are advocacy, coordination, and documentation support.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
+<div class="main-content">
+<div class="page-wrap">
+<div class="page-hdr">
+  <div class="page-hdr-badge">✅ Stage 14</div>
+  <h1>Client Acknowledgment</h1>
+  <p>Review and check each item — not a commitment</p>
 </div>
 
-<div class="ack-item">
-<div class="ack-num">3</div>
-<div class="ack-content">
-<h3>Independent Attorneys (If Needed)</h3>
-<p>In some situations, independent attorneys may be involved if legal services are needed. If that happens, they are retained separately and governed by their own agreements.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
+<style>
+.ack-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.ack-item:last-child{border-bottom:none}
+.ack-cb{width:18px;height:18px;border:2px solid var(--navy);border-radius:3px;flex-shrink:0;margin-top:1px;cursor:pointer;appearance:none;-webkit-appearance:none;background:#fff}
+.ack-cb:checked{background:var(--navy);border-color:var(--navy)}
+.ack-text{font-size:14px;color:#333;line-height:1.65;cursor:pointer}
+.ack-text strong{color:var(--navy)}
+</style>
+
+<p style="font-size:14px;color:#555;margin-bottom:16px;line-height:1.6">Review each item and check the box to confirm you understand. This is <strong>not a commitment</strong> — it lets our next department know you reviewed these items.</p>
+
+<div class="sec-block">
+  <div class="sec-hdr">Client Understanding</div>
+  <div class="sec-body">
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a1" onchange="autoSaveAck()"><label class="ack-text" for="a1">Alpha Timeshare Consultants is a <strong>third-party consumer advocacy company</strong> — not affiliated with any resort or developer.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a2" onchange="autoSaveAck()"><label class="ack-text" for="a2">Alpha is <strong>not a law firm</strong> and does not provide legal advice. Our role is advocacy, coordination, and documentation.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a3" onchange="autoSaveAck()"><label class="ack-text" for="a3">Independent attorneys may be involved if legal services are needed — retained separately at no additional cost.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a4" onchange="autoSaveAck()"><label class="ack-text" for="a4">Alpha does <strong>not buy, sell, rent, or transfer</strong> my timeshare — we pursue a direct release from the developer.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a5" onchange="autoSaveAck()"><label class="ack-text" for="a5">Alpha cannot advise me to stop making payments. <strong>All payment decisions are mine alone.</strong></label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a6" onchange="autoSaveAck()"><label class="ack-text" for="a6">The process requires my participation — reviewing documents and responding to requests from my team.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a7" onchange="autoSaveAck()"><label class="ack-text" for="a7">I understand <span class="blue" onclick="openPopup('pop-pushback')">Normal Pushback</span> — routine negative responses from the resort are expected. My team handles them.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a8" onchange="autoSaveAck()"><label class="ack-text" for="a8">Credit solutions are complimentary — Alpha is <strong>not a credit company</strong> and does not guarantee credit results.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a9" onchange="autoSaveAck()"><label class="ack-text" for="a9"><span class="blue" onclick="openPopup('pop-reimburse')">Reimbursement</span> is not guaranteed. It is actively pursued but cannot be relied upon as an expected outcome.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a10" onchange="autoSaveAck()"><label class="ack-text" for="a10">The process may take up to the full <span class="blue" onclick="openPopup('pop-timeline')">Guarantee Term</span>. If no <span class="blue" onclick="openPopup('pop-fo2')">Favorable Outcome</span>, I may request a full refund or extend at no cost.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a11" onchange="autoSaveAck()"><label class="ack-text" for="a11">If I choose to finance, I understand a <strong>credit check</strong> will be run by the lender.</label></div>
+  </div>
 </div>
 
-<div class="ack-item">
-<div class="ack-num">4</div>
-<div class="ack-content">
-<h3>Paid-Off Owner Internal Options (Skip if Not Applicable)</h3>
-<p>If my timeshare is paid off, I understand some resorts may offer internal surrender or exit programs and Alpha will advise me of those options.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
-</div>
-
-<div class="ack-item">
-<div class="ack-num">5</div>
-<div class="ack-content">
-<h3>No Sale or Transfer</h3>
-<p>Alpha Timeshare Consultants does not buy, sell, rent, or transfer my timeshare to a new owner. Alpha pursues a direct release from the developer.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
+<div class="sec-block" style="border-color:var(--gold)">
+  <div class="sec-hdr">Final Confirmations</div>
+  <div class="sec-body">
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a12" onchange="autoSaveAck()"><label class="ack-text" for="a12">I am signing for myself and am legally able to make decisions without a Power of Attorney.</label></div>
+    <div class="ack-item"><input type="checkbox" class="ack-cb" id="a13" onchange="autoSaveAck()"><label class="ack-text" for="a13">I am prepared to move forward <strong>provided the payment terms and contract are to my satisfaction.</strong></label></div>
+  </div>
 </div>
 
-<div class="ack-item">
-<div class="ack-num">6</div>
-<div class="ack-content">
-<h3>No Payment Advice / No Coercion</h3>
-<p>Alpha Timeshare Consultants cannot advise me to stop making payments to my resort or lender. I acknowledge all payment decisions are my own.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
+<div style="background:#EAF0F8;border:1px solid #c5d5e8;border-radius:8px;padding:16px 20px;margin-top:4px;font-size:14px;color:#555;line-height:1.65">
+  Clicking the DocuSign link below is <strong>not a commitment to purchase</strong> — it simply lets our next department know you reviewed and understood these items.
+  <div style="margin-top:12px">
+    <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="btn btn-navy" style="text-decoration:none;display:inline-flex">📝 Open DocuSign to Initial</a>
+  </div>
 </div>
 
-<div class="ack-item">
-<div class="ack-num">7</div>
-<div class="ack-content">
-<h3>My Participation / Letters</h3>
-<p>I understand the process requires my participation. This includes reviewing and providing documents, letters received from the resort, and responding to requests from my team.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
+<!-- POPUPS -->
+<div class="popup-ov" id="pop-pushback" onclick="closePopup('pop-pushback')">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="closePopup('pop-pushback')">×</button>
+    <h2>Normal Pushback</h2>
+    <p>During the process you may receive letters, calls, or notices from the resort or collection agencies. <strong>This is routine and expected.</strong> Your team handles all of it — you do not respond directly.</p>
+    <p>By law, we must present every offer the resort makes. Their first offer is almost always "we'll let you out — with $0 back." You do not have to accept it. You have the full 36-month Guarantee Term. The rule: you must accept the best offer made, as long as exit is part of it.</p>
+  </div>
 </div>
+<div class="popup-ov" id="pop-reimburse" onclick="closePopup('pop-reimburse')">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="closePopup('pop-reimburse')">×</button>
+    <h2>Reimbursement</h2>
+    <p>Recovery of some or all funds you have paid into the timeshare. In some group filings, 20–40% of participants receive compensation checks directly from the resort.</p>
+    <p>It is <strong>not guaranteed</strong> and cannot be relied upon. But it is actively pursued in every case. Any funds recovered go directly from the resort to you — Alpha keeps no percentage.</p>
+  </div>
 </div>
-
-<div class="ack-item">
-<div class="ack-num">8</div>
-<div class="ack-content">
-<h3>Normal Pushback</h3>
-<p>I understand that during the process I may receive negative responses from resorts or agencies that are routine and expected — my team will handle them.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
+<div class="popup-ov" id="pop-timeline" onclick="closePopup('pop-timeline')">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="closePopup('pop-timeline')">×</button>
+    <h2>Guarantee Term & Timeline</h2>
+    <p><strong>With active mortgage:</strong> Average 6–18 months. The resort has more leverage while a balance exists.</p>
+    <p><strong>Paid in full:</strong> Typically resolves faster — the resort's primary leverage is removed once no balance is owed.</p>
+    <p>The Guarantee Term is 36 months. If no Favorable Outcome by then, you may request a full refund or extend at no cost.</p>
+  </div>
 </div>
-</div>
-
-<div class="ack-item">
-<div class="ack-num">9</div>
-<div class="ack-content">
-<h3>Credit Solutions Program</h3>
-<p>Alpha Timeshare Consultants is not a credit company and does not guarantee credit results. If credit solutions services are provided, they are complimentary.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
-</div>
-
-<div class="ack-item">
-<div class="ack-num">10</div>
-<div class="ack-content">
-<h3>Reimbursement</h3>
-<p>I understand reimbursement is not guaranteed. In some cases it may be possible, but it is never promised and cannot be relied upon as an expected outcome.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
-</div>
-
-<div class="ack-item">
-<div class="ack-num">11</div>
-<div class="ack-content">
-<h3>Timeline + Refund Guarantee</h3>
-<p>I understand the process may take up to the full Guarantee Term, although many matters resolve within 6–18 months. If no Favorable Outcome within the Guarantee Term, I may request a full refund or extend at no additional cost.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
-</div>
-
-<div class="ack-item">
-<div class="ack-num">12</div>
-<div class="ack-content">
-<h3>Financing / Credit Pull (If Financing Is Discussed)</h3>
-<p>If I choose to finance, I understand the lender will run a credit check to determine creditworthiness.</p>
-<div class="initial-row"><label>Initial</label><input type="text" class="initial-input" placeholder="____"></div>
-</div>
-</div>
-
-<div class="final-section">
-<h3>Final Confirmations — Check Each:</h3>
-<div class="final-item">
-<input type="checkbox" class="final-cb" id="fc1">
-<label class="final-label" for="fc1">I am signing for myself today and I am legally able to make decisions on my own without a Power of Attorney.</label>
-</div>
-<div class="final-item">
-<input type="checkbox" class="final-cb" id="fc2">
-<label class="final-label" for="fc2">I am prepared to commit to moving forward today (provided the payment terms and contract are to my satisfaction).</label>
-</div>
-</div>
-
-<div class="sig-section">
-<div class="sig-row">
-<div class="sig-field"><label>Client Signature (Type Full Name)</label><input type="text" class="sig-input" id="sig-name" placeholder="Full legal name"></div>
-<div class="sig-field"><label>Date of Agreement</label><input type="text" class="sig-input" id="sig-date"></div>
-</div>
-<button class="save-btn" onclick="saveChecklist()">✓ Confirm & Save</button>
-</div>
-
-<div class="nav-bar">
-<a href="/guarantee/" class="nav-btn prev">← Guarantee</a>
-<span class="nav-step">Alpha Contract →</span>
-<a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="nav-btn next">Alpha Contract →</a>
-</div>
+<div class="popup-ov" id="pop-fo2" onclick="closePopup('pop-fo2')">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="closePopup('pop-fo2')">×</button>
+    <h2>Favorable Outcome</h2>
+    <p>A written, verifiable resolution from the resort releasing the Client from all ownership obligations, deed liability, and ongoing financial responsibility.</p>
+    <p>Must be in writing, signed by the resort, with the deed removed from county records. Verbal agreements do not qualify.</p>
+  </div>
 </div>
 
 <script>
-var today=new Date();
-document.getElementById('sig-date').value=(today.getMonth()+1)+'/'+(today.getDate())+'/'+today.getFullYear();
-function saveChecklist(){
-  var sig=document.getElementById('sig-name').value.trim();
-  if(!sig){alert('Please type your full name to confirm.');return;}
-  try{
-    var d=JSON.parse(sessionStorage.getItem('atc_resort'))||{};
-    d.checklistSigned=true;d.checklistSig=sig;d.checklistDate=document.getElementById('sig-date').value;
-    sessionStorage.setItem('atc_resort',JSON.stringify(d));
-    var t=document.getElementById('toast');t.textContent='✓ Acknowledgment saved for '+sig;t.style.display='block';
-    setTimeout(function(){t.style.display='none';},3000);
-  }catch(e){}
+function autoSaveAck(){
+  var checks=[];
+  for(var i=1;i<=13;i++){var el=document.getElementById('a'+i);if(el&&el.checked)checks.push('a'+i);}
+  saveField('checklist',checks);
+  updateTicker();
 }
+function submitPage(){
+  autoSaveAck();
+  markStageDone('14');
+  showSubmitPopup(['Client Acknowledgment — completed'],'/contract/');
+}
+function emailSection(){showToast('Email version coming soon');}
+function load(){
+  var d=getClient();if(!d||!d.checklist)return;
+  d.checklist.forEach(function(id){var el=document.getElementById(id);if(el)el.checked=true;});
+}
+load();
 </script>
-</div></div>
+
+<div class="btn-row">
+  <a href="/recap/" class="btn btn-outline">← Recap</a>
+  <button class="btn btn-email" onclick="emailSection()">📧 Email This Section</button>
+  <button class="btn btn-gold" onclick="submitPage()">Save & Continue →</button>
+</div>
+</div>
+</div>
+
+<div class="submit-ov" id="submit-popup">
+  <div class="submit-box">
+    <h2>✓ Saved</h2>
+    <div id="submit-items"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-outline btn-full" onclick="document.getElementById('submit-popup').classList.remove('on')">Edit</button>
+      <button class="btn btn-gold btn-full" id="submit-next-btn">Continue →</button>
+    </div>
+  </div>
+</div>
+
+
 <script>
-var _SK='atc_clients_v2',_AK='atc_active';
-function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return{};}}
-function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
-function _gk(){return localStorage.getItem(_AK)||'';}
-function snRefresh(){var c=_gc(),dd=document.getElementById('sn-client-dd'),cur=_gk();if(!dd)return;dd.innerHTML='<option value="">— Select Client —</option>';Object.keys(c).sort(function(a,b){return(c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){var o=document.createElement('option');o.value=k;var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');dd.appendChild(o);});if(cur)dd.value=cur;}
-function snLoadClient(){var k=document.getElementById('sn-client-dd').value;if(!k)return;localStorage.setItem(_AK,k);snToast('Loaded: '+(_gc()[k]?.firstName||k));setTimeout(function(){window.location.reload();},600);}
-function snShowModal(){var t=new Date();document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();document.getElementById('sn-name').value='';document.getElementById('sn-resort').value='';document.getElementById('sn-modal').classList.add('active');}
-function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
-function snCreateClient(){var name=document.getElementById('sn-name').value.trim();var resort=document.getElementById('sn-resort').value.trim();var date=document.getElementById('sn-date').value;if(!name&&!resort){alert('Please enter a name or resort.');return;}var parts=name.split(' ');var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();var c=_gc();c[k]={firstName:parts[0]||'',lastName:parts.slice(1).join(' ')||'',name:name,resort:resort,date:date,_c:Date.now()};_sc(c);localStorage.setItem(_AK,k);snCloseModal();snRefresh();document.getElementById('sn-client-dd').value=k;snToast('Created: '+name);setTimeout(function(){window.location.href='/owner/';},700);}
-function snToast(msg){var t=document.getElementById('sn-toast');if(!t)return;t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
-(function(){var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';document.querySelectorAll('.sn-item[data-page]').forEach(function(el){if(el.dataset.page===path)el.classList.add('active');});snRefresh();})();
+var SK='atc_v2',AK='atc_active';
+var PAGES=[
+  {n:'0',icon:'🏠',label:'Dashboard',url:'/home/'},
+  {n:'1',icon:'📋',label:'Owner & Resort Info',url:'/owner/'},
+  {n:'2',icon:'❓',label:'Why Do You Want Out',url:'/whyout/'},
+  {n:'3',icon:'⚠️',label:'If You Do Nothing',url:'/wait/'},
+  {n:'4',icon:'🔍',label:'Finding Your Group',url:'/group/'},
+  {n:'4a',icon:'✅',label:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',icon:'👨‍👩‍👧',label:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',icon:'💵',label:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',icon:'💳',label:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',icon:'✉️',label:'Mutual Release Letter',url:'/letter/'},
+  {n:'5',icon:'🛡',label:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:'6',icon:'⭐',label:'Our Track Record',url:'/history/'},
+  {n:'7',icon:'⚖️',label:'Consumer Rights',url:'/rights/'},
+  {n:'8',icon:'💰',label:'True Cost',url:'/cost/'},
+  {n:'9',icon:'📄',label:'Your Quote',url:'/quote/'},
+  {n:'10',icon:'⏰',label:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:'11',icon:'🏆',label:'What Makes Alpha Better',url:'/better/'},
+  {n:'12',icon:'📦',label:'What's Included',url:'/included/'},
+  {n:'13',icon:'📋',label:'Recap',url:'/recap/'},
+  {n:'14',icon:'✅',label:'Client Acknowledgment',url:'/checklist/'},
+  {n:'15',icon:'📝',label:'Alpha Contract',url:'/contract/'},
+  {n:'16',icon:'🎉',label:'Let's Be Timeshare Free',url:'/free/'}
+];
+
+function gc(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sc(o){localStorage.setItem(SK,JSON.stringify(o));}
+function gk(){return localStorage.getItem(AK)||'';}
+function sk(k){localStorage.setItem(AK,k);}
+function getClient(){var k=gk();if(!k)return null;return gc()[k]||null;}
+function saveField(field,val){var k=gk();if(!k)return;var c=gc();if(!c[k])return;c[k][field]=val;c[k]._updated=Date.now();sc(c);}
+function fmt(n){return n?'$'+Math.round(n).toLocaleString():'—';}
+
+function updateTicker(){
+  var d=getClient();
+  var t=document.getElementById('client-ticker');
+  if(!t)return;
+  if(!d){t.innerHTML='<div class="ct-no-client">⚠️ No client selected</div>';return;}
+  var name=(d.firstName||'')+(d.lastName?' '+d.lastName:'');
+  var resort=d.resort||'';
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var yr=mo*12;
+  var updated=d._updated?new Date(d._updated).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+  var visits=d._visits||1;
+  var quote=d.alphaFee?fmt(d.alphaFee):'—';
+  var stagesDone=0;
+  PAGES.forEach(function(p){if(d['_done_'+p.n])stagesDone++;});
+  var pct=Math.round((stagesDone/PAGES.length)*100);
+  
+  // Build client URL slug
+  var slug='';
+  if(d.firstName)slug=d.firstName[0].toLowerCase()+'-'+(d.lastName||'').toLowerCase().replace(/\s+/g,'-');
+  
+  t.innerHTML=
+    '<div class="ct-name">'+name+'</div>'+
+    (resort?'<div class="ct-resort">🏨 '+resort+'</div>':'')+
+    '<div class="ct-row"><span>Monthly</span><strong>'+fmt(mo)+'</strong></div>'+
+    '<div class="ct-row"><span>Yearly</span><strong>'+fmt(yr)+'</strong></div>'+
+    (d.alphaFee?'<div class="ct-row"><span>Quote</span><strong>'+quote+'</strong></div>':'')+
+    '<div class="ct-row"><span>Last visit</span><strong class="'+(d._updated&&(Date.now()-d._updated)<86400000?'ct-fresh':'ct-stale')+'">'+updated+'</strong></div>'+
+    '<div class="ct-row"><span>Contacts</span><strong>'+visits+'</strong></div>'+
+    '<div class="ct-progress">'+
+    '<div class="ct-prog-label">Stage progress — '+pct+'%</div>'+
+    '<div class="ct-prog-bar"><div class="ct-prog-fill" style="width:'+pct+'%"></div></div>'+
+    '</div>';
+}
+
+function showToast(msg,color){
+  var t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=msg;
+  t.style.background=color||'#16A34A';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2800);
+}
+
+function openPopup(id){document.getElementById(id).classList.add('on');}
+function closePopup(id){document.getElementById(id).classList.remove('on');}
+
+function saveCalendar(){
+  var today=document.getElementById('cal-today');
+  var fu=document.getElementById('cal-followup');
+  var d=getClient();
+  if(d&&gk()){
+    if(today&&today.value)saveField('apptToday',today.value);
+    if(fu&&fu.value){
+      saveField('apptFollowup',fu.value);
+      var dt=new Date(fu.value);
+      var gurl='https://calendar.google.com/calendar/render?action=TEMPLATE&text=ATC+Follow-Up+'+(d.firstName||'')+'+'+encodeURIComponent(d.resort||'')+'&dates='+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z/'+dt.toISOString().replace(/[-:]/g,'').replace('.000','')+'Z';
+      window.open(gurl,'_blank');
+    }
+  }
+  showToast('Calendar saved');
+}
+
+function markStageDone(stageN){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]['_done_'+stageN]=Date.now();
+  c[k]._updated=Date.now();
+  sc(c);
+  updateTicker();
+}
+
+function incrementVisits(){
+  var k=gk();if(!k)return;
+  var c=gc();if(!c[k])return;
+  c[k]._visits=(c[k]._visits||0)+1;
+  c[k]._updated=Date.now();
+  sc(c);
+}
+
+function showSubmitPopup(savedItems,nextUrl){
+  var el=document.getElementById('submit-popup');
+  var body=document.getElementById('submit-items');
+  if(!el||!body)return;
+  body.innerHTML=savedItems.map(function(item){
+    return '<div class="submit-item"><span class="si-check">✓</span><span>'+item+'</span></div>';
+  }).join('');
+  document.getElementById('submit-next-btn').onclick=function(){window.location.href=nextUrl;};
+  el.classList.add('on');
+}
+
+// Load calendar values
+(function(){
+  var d=getClient();
+  if(!d)return;
+  var ct=document.getElementById('cal-today');
+  var cf=document.getElementById('cal-followup');
+  if(ct&&d.apptToday)ct.value=d.apptToday;
+  if(cf&&d.apptFollowup)cf.value=d.apptFollowup;
+  if(ct&&!d.apptToday){
+    var now=new Date();
+    ct.value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+'T'+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  }
+  incrementVisits();
+  updateTicker();
+})();
 </script>
+
 </body>
 </html>
