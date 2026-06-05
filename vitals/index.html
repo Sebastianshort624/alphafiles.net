@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Client Vitals — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--font:'Inter',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-size:14px;background:var(--bg);display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidenav{width:220px;height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) transparent}
+.sidenav::-webkit-scrollbar{width:4px}
+.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
+.sn-logo{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-logo img{max-width:130px}
+.client-ticker{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.ct-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.ct-resort{color:var(--gold);font-size:12px;font-weight:600;margin-bottom:4px}
+.ct-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.65);margin-bottom:2px}
+.ct-row strong{color:#fff}
+.ct-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:11px;color:var(--gold);font-weight:600}
+.ct-no-client{color:var(--red);font-size:12px;font-weight:600;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font)}
+.sn-select option{background:var(--navy)}
+.sn-btnrow{display:flex;gap:5px;margin-top:5px}
+.sn-btn{flex:1;background:var(--gold);color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:var(--font)}
+.sn-btn.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sn-section{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px}
+.sn-menu{flex:1;padding:4px 0}
+.sn-item{display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:500;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sn-item.active{background:rgba(200,150,12,.12);color:var(--gold);border-left-color:var(--gold)}
+.sn-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.12);border-radius:5px;padding:1px 4px;min-width:18px;text-align:center;flex-shrink:0;color:rgba(255,255,255,.5)}
+.sn-item.active .sn-num{background:rgba(200,150,12,.25);color:var(--gold)}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:3px 10px}
+.sn-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-cal-lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sn-cal-inp{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:var(--font);margin-bottom:3px}
+.sn-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)}
+.sn-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:var(--font)}
+.sn-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* ── MAIN ── */
+.main-content{margin-left:220px;flex:1;padding:20px}
+.page-wrap{max-width:960px;margin:0 auto}
+
+/* ── PAGE HEADER ── */
+.page-hdr{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.pg-left .pg-num{font-size:11px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pg-left .pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:2px}
+.pg-left .pg-sub{font-size:14px;color:rgba(255,255,255,.65)}
+.pg-stage{background:var(--gold);color:#fff;border-radius:6px;padding:8px 14px;text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.pg-stage .stage-num{font-size:22px;font-weight:700;display:block;line-height:1}
+
+/* ── 4-CORNER VITALS BANNER ── */
+.vitals-banner{background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid var(--gold);margin-bottom:20px}
+.vb-corner{padding:10px 14px;border-right:1px solid var(--border)}
+.vb-corner:last-child{border-right:none}
+.vb-label{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.vb-val{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3}
+.vb-sub{font-size:11px;color:#6b7280;margin-top:2px}
+.vb-stage-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--gold)}
+
+/* ── VITALS FULL PAGE ── */
+.vitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.v-card{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.v-card-hdr{background:var(--navy);color:#fff;padding:10px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.v-card-hdr .vh-icon{font-size:16px}
+.v-card-body{padding:14px}
+.v-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.v-row.full{grid-template-columns:1fr}
+.v-field label{font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:3px}
+.v-field input,.v-field select,.v-field textarea{width:100%;border:1.5px solid var(--border);border-radius:5px;padding:8px 10px;font-size:13px;font-family:var(--font);color:var(--navy);background:#fff}
+.v-field input:focus,.v-field select:focus,.v-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(200,150,12,.1)}
+.v-field textarea{resize:vertical;min-height:60px}
+.v-field input.hi{border-color:var(--gold);font-weight:700;font-size:14px}
+
+/* STAGE SELECTOR */
+.stage-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.stage-pill{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:#6b7280;transition:all .15s;font-family:var(--font)}
+.stage-pill.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.stage-pill.active.quoted{background:var(--gold);border-color:var(--gold)}
+.stage-pill.active.signed{background:var(--green);border-color:var(--green)}
+
+/* TASKS TABLE */
+.tasks-table{width:100%;border-collapse:collapse;font-size:12px}
+.tasks-table th{background:#f9fafb;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:7px 10px;text-align:left;border-bottom:2px solid var(--border);color:#374151}
+.tasks-table th:not(:first-child){text-align:center}
+.tasks-table td{padding:7px 10px;border-bottom:1px solid #f3f4f6;font-size:13px}
+.tasks-table td:not(:first-child){text-align:center}
+.task-cb{width:15px;height:15px;cursor:pointer;accent-color:var(--navy)}
+.task-done td{color:#9ca3af}
+.task-done td:first-child{text-decoration:line-through}
+
+/* OBJECTION */
+.obj-badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;background:#fef3cd;color:#8a6200;border:1px solid #fcd34d}
+.obj-badge.resolved{background:#dcfce7;color:#15803d;border-color:#86efac}
+.obj-badge.open{background:#fee2e2;color:#b91c1c;border-color:#fca5a5}
+
+/* CRM */
+.crm-entry{background:#f9fafb;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:10px 12px;margin-bottom:8px;font-size:13px;line-height:1.6;color:#374151}
+.crm-date{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+
+/* TOTALS */
+.total-row{display:flex;gap:8px;margin-top:10px}
+.total-pill{flex:1;background:var(--navy);color:#fff;border-radius:6px;padding:10px;text-align:center}
+.total-pill .tv{font-size:18px;font-weight:700;color:var(--gold);line-height:1}
+.total-pill .tl{font-size:10px;color:rgba(255,255,255,.6);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+
+/* BUTTONS */
+.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:var(--font)}
+.btn.primary{background:var(--gold);color:#fff}
+.btn.navy{background:var(--navy);color:#fff}
+.btn.outline{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn-row .btn{flex:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.nav-prev{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nav-next{padding:10px 20px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.nav-step{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+
+@media print{
+  .sidenav,.btn-row,.nav-bar{display:none!important}
+  .main-content{margin-left:0!important}
+  .vitals-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="sidenav" id="sidenav"></div>
+
+<div class="main-content">
+<div class="page-wrap">
+
+<!-- PAGE HEADER -->
+<div class="page-hdr">
+  <div class="pg-left">
+    <div class="pg-num">Page V1</div>
+    <div class="pg-title">Client Vitals</div>
+    <div class="pg-sub">Full client snapshot — one page, everything at a glance</div>
+  </div>
+  <div class="pg-stage" id="hdr-stage">
+    <span class="stage-num" id="hdr-stage-num">—</span>
+    <span id="hdr-stage-lbl">Stage</span>
+  </div>
+</div>
+
+<!-- 4-CORNER VITALS BANNER -->
+<div class="vitals-banner">
+  <div class="vb-corner">
+    <div class="vb-label">👤 Client</div>
+    <div class="vb-val" id="vb-name">—</div>
+    <div class="vb-sub" id="vb-phone">—</div>
+  </div>
+  <div class="vb-corner">
+    <div class="vb-label">🏨 Resort</div>
+    <div class="vb-val" id="vb-resort">—</div>
+    <div class="vb-sub" id="vb-location">—</div>
+  </div>
+  <div class="vb-corner">
+    <div class="vb-label">💰 Monthly / Yearly</div>
+    <div class="vb-val" id="vb-monthly">—</div>
+    <div class="vb-sub" id="vb-yearly">—</div>
+  </div>
+  <div class="vb-corner">
+    <div class="vb-label">📄 Quote / Stage</div>
+    <div class="vb-val" id="vb-quote">No quote yet</div>
+    <div class="vb-sub" id="vb-stage-sub">—</div>
+  </div>
+</div>
+
+<!-- VITALS GRID - 2 columns -->
+<div class="vitals-grid">
+
+  <!-- OWNER INFO -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">📋</span>Owner Information</div>
+    <div class="v-card-body">
+      <div class="v-row">
+        <div class="v-field"><label>First Name</label><input id="v-first" oninput="autoSave()"></div>
+        <div class="v-field"><label>Last Name</label><input id="v-last" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Co-Owner</label><input id="v-co" placeholder="If applicable" oninput="autoSave()"></div>
+        <div class="v-field"><label>Language</label><input id="v-lang" value="English" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Phone</label><input id="v-phone" type="tel" oninput="autoSave()"></div>
+        <div class="v-field"><label>2nd Phone</label><input id="v-phone2" type="tel" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Email</label><input id="v-email" type="email" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Lead Source</label>
+          <select id="v-source" onchange="autoSave()">
+            <option>Alpha 2.0</option><option>Referral</option><option>Web</option><option>Direct</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESORT INFO -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">🏨</span>Resort Information</div>
+    <div class="v-card-body">
+      <div class="v-row">
+        <div class="v-field"><label>Resort Name</label><input id="v-resort" class="hi" oninput="autoSave()"></div>
+        <div class="v-field"><label>City / State</label><input id="v-location" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Purchase Date</label><input id="v-pdate" type="date" oninput="autoSave()"></div>
+        <div class="v-field"><label>Purchase Price</label><input id="v-pprice" type="number" placeholder="e.g. 18000" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Mortgage Status</label>
+          <select id="v-mstat" onchange="autoSave()">
+            <option>Still Owes</option><option>Paid Off</option><option>Paid Cash</option>
+          </select>
+        </div>
+        <div class="v-field"><label>Balance</label><input id="v-balance" type="number" placeholder="0" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Why Do They Want Out?</label><textarea id="v-why" placeholder="Main reason..." oninput="autoSave()"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCIAL SNAPSHOT -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">💰</span>Financial Snapshot</div>
+    <div class="v-card-body">
+      <div class="v-row">
+        <div class="v-field"><label>Monthly Mortgage</label><input id="v-mtg" type="number" class="hi" placeholder="0" oninput="autoSave();calcTotals()"></div>
+        <div class="v-field"><label>Annual Maintenance</label><input id="v-mtf" type="number" class="hi" placeholder="0" oninput="autoSave();calcTotals()"></div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Months Behind — MTG</label><input id="v-mtgb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
+        <div class="v-field"><label>Months Behind — MTF</label><input id="v-mtfb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
+      </div>
+      <div class="total-row">
+        <div class="total-pill"><div class="tv" id="tv-mo">$0</div><div class="tl">Monthly</div></div>
+        <div class="total-pill"><div class="tv" id="tv-yr">$0</div><div class="tl">Yearly</div></div>
+        <div class="total-pill"><div class="tv" id="tv-ar">$0</div><div class="tl">Arrears</div></div>
+        <div class="total-pill"><div class="tv" id="tv-3yr">$0</div><div class="tl">3-Year Total</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALPHA SOLUTION -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">🛡</span>Alpha Solution</div>
+    <div class="v-card-body">
+      <div class="v-row">
+        <div class="v-field"><label>Alpha Fee</label><input id="v-fee" type="number" class="hi" placeholder="0" oninput="autoSave();updateBanner()"></div>
+        <div class="v-field"><label>Term (months)</label>
+          <select id="v-term" onchange="autoSave()">
+            <option value="">Pay in Full</option>
+            <option value="12">12 Mo — 0%</option>
+            <option value="24">24 Mo</option>
+            <option value="36">36 Mo</option>
+            <option value="48">48 Mo</option>
+            <option value="60">60 Mo</option>
+          </select>
+        </div>
+      </div>
+      <div class="v-row">
+        <div class="v-field"><label>Monthly Payment</label><input id="v-mopay" readonly style="background:#f9fafb;font-weight:700;color:var(--gold)"></div>
+        <div class="v-field"><label>Funding Status</label>
+          <select id="v-fund" onchange="autoSave()">
+            <option>Pending</option><option>Approved</option><option>Funded</option><option>Declined</option>
+          </select>
+        </div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Client's Expected Price</label><input id="v-exp" type="number" placeholder="What they expected" oninput="autoSave()"></div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Closer / Reviewer</label>
+          <select id="v-closer" onchange="autoSave()">
+            <option>Sebastian</option><option>Kai</option><option>Kaylani</option><option>Gaby</option><option>Brandon</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE TRACKER -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">🎯</span>Stage Tracker</div>
+    <div class="v-card-body">
+      <div class="stage-pills" id="stage-pills">
+        <button class="stage-pill" onclick="setStage(0,this)">1. Intro</button>
+        <button class="stage-pill" onclick="setStage(1,this)">2. Assessment</button>
+        <button class="stage-pill" onclick="setStage(2,this)">3. True Cost</button>
+        <button class="stage-pill quoted" onclick="setStage(3,this)">4. Quote</button>
+        <button class="stage-pill" onclick="setStage(4,this)">5. Acknowledgment</button>
+        <button class="stage-pill" onclick="setStage(5,this)">6. Contract</button>
+        <button class="stage-pill" onclick="setStage(6,this)">7. Funding</button>
+        <button class="stage-pill signed" onclick="setStage(7,this)">8. Completed</button>
+      </div>
+
+      <!-- TASKS TABLE -->
+      <table class="tasks-table" style="margin-top:14px">
+        <thead><tr><th>Section</th><th>Emailed</th><th>Texted</th><th>Verbal</th></tr></thead>
+        <tbody id="tasks-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- OBJECTION + CRM -->
+  <div class="v-card">
+    <div class="v-card-hdr"><span class="vh-icon">🚧</span>Objection & CRM</div>
+    <div class="v-card-body">
+      <div class="v-row">
+        <div class="v-field"><label>Objection Type</label>
+          <select id="v-obj" onchange="autoSave()">
+            <option>None</option><option>Money</option><option>Credit</option><option>Trust</option>
+            <option>Need to Think</option><option>Spouse</option><option>Other</option>
+          </select>
+        </div>
+        <div class="v-field"><label>Status</label>
+          <select id="v-objstat" onchange="autoSave()">
+            <option>Open</option><option>Resolved</option>
+          </select>
+        </div>
+      </div>
+      <div class="v-row full">
+        <div class="v-field"><label>Solution Used</label>
+          <select id="v-objsol" onchange="autoSave()">
+            <option>—</option><option>True Cost</option><option>Guarantee</option>
+            <option>Consumer Rights</option><option>Track Record</option><option>Group Filing</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <div style="font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">📝 CRM Note</div>
+        <div class="crm-entry" id="crm-auto"></div>
+        <div class="v-field" style="margin-top:8px"><label>Add Manual Note</label>
+          <textarea id="v-note" placeholder="Type notes here..." oninput="autoSave()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- APPOINTMENT -->
+<div class="v-card" style="margin-bottom:20px">
+  <div class="v-card-hdr"><span class="vh-icon">📅</span>Appointment Center</div>
+  <div class="v-card-body">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div class="v-field"><label>Today's Appt Date</label><input id="v-tdate" type="date" oninput="autoSave()"></div>
+      <div class="v-field"><label>Today's Appt Time</label><input id="v-ttime" type="time" oninput="autoSave()"></div>
+      <div class="v-field"><label>Follow-Up Date</label><input id="v-fudate" type="date" oninput="autoSave()"></div>
+      <div class="v-field"><label>Follow-Up Time</label><input id="v-futime" type="time" oninput="autoSave()"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px">
+      <div class="v-field"><label>Appt Type</label>
+        <select id="v-appttype" onchange="autoSave()">
+          <option>Firm Appointment</option><option>Follow Up</option><option>Quote Review</option>
+          <option>Contract Review</option><option>Funding Call</option>
+        </select>
+      </div>
+      <div class="v-field"><label>Result</label>
+        <select id="v-apptresult" onchange="autoSave()">
+          <option>Pending</option><option>Completed</option><option>Rescheduled</option><option>No Show</option>
+        </select>
+      </div>
+      <div class="v-field" style="display:flex;flex-direction:column;justify-content:flex-end">
+        <button class="btn primary" onclick="addToCalendar()" style="width:100%">+ Google Calendar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="btn-row">
+  <button class="btn primary" onclick="saveVitals()">💾 Save Client</button>
+  <button class="btn outline" onclick="window.print()">🖨 Print Vitals</button>
+  <button class="btn navy" onclick="copyVitals()">📋 Copy CRM Note</button>
+  <button class="btn primary" onclick="window.location.href='/whyout/'">Continue to Presentation →</button>
+</div>
+
+<div class="nav-bar">
+  <a href="/owner/" class="nav-prev">← Owner Info</a>
+  <span class="nav-step">V1 — Client Vitals</span>
+  <a href="/whyout/" class="nav-next">Why Do You Want Out →</a>
+</div>
+
+</div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────
+var SK='atc_clients_v2',AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function ad(){var s=ac();return s?ga()[s]||null:null;}
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+function fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+// ── STAGES ───────────────────────────────────────────────────────────────
+var STAGE_NAMES=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+var _stage=0;
+
+function setStage(idx,btn){
+  _stage=idx;
+  document.querySelectorAll('.stage-pill').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('hdr-stage-num').textContent=idx+1;
+  document.getElementById('hdr-stage-lbl').textContent=STAGE_NAMES[idx];
+  document.getElementById('vb-stage-sub').textContent='Stage '+(idx+1)+': '+STAGE_NAMES[idx];
+  autoSave();
+}
+
+// ── TASKS ─────────────────────────────────────────────────────────────────
+var TASKS=['Owner Info','Why You Want Out','If You Do Nothing','Finding Your Group',
+           'Heirs & Estate','Resort Compensation','Consumer Rights','True Cost','Your Quote',
+           'What Makes Alpha Better','Recap','Guarantee','Acknowledgment'];
+
+function buildTasks(){
+  var d=ad()||{};var tc=d.taskChecks||{};
+  var body=document.getElementById('tasks-body');
+  body.innerHTML=TASKS.map(function(t,i){
+    var em=tc['e'+i]||false,tx=tc['t'+i]||false,vb=tc['v'+i]||false;
+    var done=em&&tx&&vb;
+    return '<tr class="'+(done?'task-done':'')+'">'
+      +'<td>'+t+'</td>'
+      +'<td><input type="checkbox" class="task-cb"'+(em?' checked':'')+' onchange="saveTask('+i+',\'e\',this.checked)"></td>'
+      +'<td><input type="checkbox" class="task-cb"'+(tx?' checked':'')+' onchange="saveTask('+i+',\'t\',this.checked)"></td>'
+      +'<td><input type="checkbox" class="task-cb"'+(vb?' checked':'')+' onchange="saveTask('+i+',\'v\',this.checked)"></td>'
+    +'</tr>';
+  }).join('');
+}
+
+function saveTask(idx,type,val){
+  var s=ac();if(!s)return;var all=ga();if(!all[s])return;
+  if(!all[s].taskChecks)all[s].taskChecks={};
+  all[s].taskChecks[type+idx]=val;sa(all);buildTasks();
+}
+
+// ── FINANCIALS ────────────────────────────────────────────────────────────
+function calcTotals(){
+  var mtg=parseFloat(document.getElementById('v-mtg').value)||0;
+  var mtf=(parseFloat(document.getElementById('v-mtf').value)||0)/12;
+  var mo=mtg+mtf;
+  var mtgb=(parseInt(document.getElementById('v-mtgb').value)||0)*mtg;
+  var mtfb=(parseInt(document.getElementById('v-mtfb').value)||0)*mtf;
+  document.getElementById('tv-mo').textContent=fc(mo);
+  document.getElementById('tv-yr').textContent=fc(mo*12);
+  document.getElementById('tv-ar').textContent=fc(mtgb+mtfb);
+  // 3-year with 8% MTF growth
+  var annMtf=parseFloat(document.getElementById('v-mtf').value)||0;
+  var annMtg=mtg*12;
+  var three=(annMtf+annMtg)+(annMtf*1.08+annMtg)+(annMtf*1.08*1.08+annMtg);
+  document.getElementById('tv-3yr').textContent=fc(three);
+  // Update banner
+  document.getElementById('vb-monthly').textContent=fc(mo)+'/mo';
+  document.getElementById('vb-yearly').textContent=fc(mo*12)+'/yr';
+  // Calculate monthly payment for financing
+  updatePayment();
+}
+
+function updatePayment(){
+  var fee=parseFloat(document.getElementById('v-fee').value)||0;
+  var term=parseInt(document.getElementById('v-term').value)||0;
+  var pay='—';
+  if(fee>0){
+    if(!term){pay=fc(fee)+' (Full)';}
+    else if(term===12){pay=fc(fee/12)+'/mo (0%)';}
+    else{var r=0.20/12;var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1);pay=fc(pmt)+'/mo';}
+  }
+  document.getElementById('v-mopay').value=pay;
+}
+
+// ── BANNER UPDATE ─────────────────────────────────────────────────────────
+function updateBanner(){
+  var d=ad()||{};
+  var first=document.getElementById('v-first').value||d.firstName||'—';
+  var last=document.getElementById('v-last').value||d.lastName||'';
+  var resort=document.getElementById('v-resort').value||d.resort||'—';
+  var phone=document.getElementById('v-phone').value||d.phone||'—';
+  var loc=document.getElementById('v-location').value||d.location||'—';
+  var fee=document.getElementById('v-fee').value||d.alphaFee||'';
+  document.getElementById('vb-name').textContent=first+' '+last;
+  document.getElementById('vb-phone').textContent=phone;
+  document.getElementById('vb-resort').textContent=resort;
+  document.getElementById('vb-location').textContent=loc;
+  document.getElementById('vb-quote').textContent=fee?fc(parseFloat(fee)):'No quote yet';
+  updatePayment();
+}
+
+// ── CRM AUTO NOTE ─────────────────────────────────────────────────────────
+function updateCRM(){
+  var d=ad()||{};
+  var first=document.getElementById('v-first').value||d.firstName||'Client';
+  var resort=document.getElementById('v-resort').value||d.resort||'resort';
+  var mtf=document.getElementById('v-mtf').value||d.maitFees||'0';
+  var why=document.getElementById('v-why').value||d.whyOut||'—';
+  var mstat=document.getElementById('v-mstat').value||'—';
+  var stage=STAGE_NAMES[_stage];
+  var note=document.getElementById('v-note').value||'';
+  var crm='<div class="crm-date">'+new Date().toLocaleDateString()+'</div>';
+  crm+=first+' — '+resort+'.<br>';
+  crm+='MTF: $'+mtf+'/yr. Mortgage: '+mstat+'.<br>';
+  crm+='Reason for exit: '+why+'<br>';
+  crm+='Current stage: <strong>'+stage+'</strong>.<br>';
+  if(note)crm+='Notes: '+note;
+  document.getElementById('crm-auto').innerHTML=crm;
+}
+
+// ── AUTO SAVE ─────────────────────────────────────────────────────────────
+var _timer=null;
+function autoSave(){
+  updateBanner();updateCRM();
+  clearTimeout(_timer);
+  _timer=setTimeout(function(){
+    var s=ac();if(!s)return;
+    var all=ga();if(!all[s])return;
+    all[s]=Object.assign(all[s],{
+      firstName:document.getElementById('v-first').value.trim(),
+      lastName:document.getElementById('v-last').value.trim(),
+      phone:document.getElementById('v-phone').value.trim(),
+      phone2:document.getElementById('v-phone2').value.trim(),
+      email:document.getElementById('v-email').value.trim(),
+      resort:document.getElementById('v-resort').value.trim(),
+      location:document.getElementById('v-location').value.trim(),
+      purchasePrice:document.getElementById('v-pprice').value,
+      mortgageStatus:document.getElementById('v-mstat').value,
+      balanceAmount:document.getElementById('v-balance').value,
+      monthlyMortgage:document.getElementById('v-mtg').value,
+      maitFees:document.getElementById('v-mtf').value,
+      mtgBehind:document.getElementById('v-mtgb').value,
+      mtfBehind:document.getElementById('v-mtfb').value,
+      whyOut:document.getElementById('v-why').value.trim(),
+      alphaFee:document.getElementById('v-fee').value,
+      selectedTerm:document.getElementById('v-term').value,
+      vitalsStage:_stage,
+      notes:document.getElementById('v-note').value.trim(),
+      _updated:Date.now()
+    });
+    sa(all);
+  },600);
+}
+
+function saveVitals(){
+  autoSave();
+  showToast('✓ Saved');
+}
+
+function copyVitals(){
+  var d=ad()||{};
+  var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\n'
+    +'Client: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n'
+    +'Monthly: '+fc(mo)+'\nMTF: '+fc(d.maitFees)+'/yr\nMortgage: '+fc(d.monthlyMortgage)+'/mo\n'
+    +'Stage: '+STAGE_NAMES[_stage]+'\n'
+    +'Quote: '+(d.alphaFee?fc(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\n'
+    +'Why out: '+(d.whyOut||'—')+'\nNotes: '+(d.notes||'—');
+  try{navigator.clipboard.writeText(txt).then(function(){showToast('✓ Copied');});}
+  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✓ Copied');}
+}
+
+function addToCalendar(){
+  var fd=document.getElementById('v-fudate').value;
+  var ft=document.getElementById('v-futime').value||'09:00';
+  if(!fd){alert('Set a follow-up date first.');return;}
+  var d=ad()||{};
+  var name=(d.firstName||'Client')+' — ATC Follow-Up';
+  var dt=new Date(fd+'T'+ft);
+  var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(name)+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');
+}
+
+function showToast(msg){
+  var t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='display:none;position:fixed;bottom:24px;right:24px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}
+  t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);
+}
+
+// ── LOAD DATA ─────────────────────────────────────────────────────────────
+function loadData(){
+  var d=ad();if(!d)return;
+  var map={
+    'v-first':'firstName','v-last':'lastName','v-co':'coFirst','v-phone':'phone',
+    'v-phone2':'phone2','v-email':'email','v-resort':'resort','v-location':'location',
+    'v-pprice':'purchasePrice','v-mstat':'mortgageStatus','v-balance':'balanceAmount',
+    'v-mtg':'monthlyMortgage','v-mtf':'maitFees','v-mtgb':'mtgBehind','v-mtfb':'mtfBehind',
+    'v-why':'whyOut','v-fee':'alphaFee','v-term':'selectedTerm','v-note':'notes'
+  };
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&d[map[id]]!==undefined&&d[map[id]]!=='')el.value=d[map[id]];
+  });
+  if(typeof d.vitalsStage==='number'){
+    var pills=document.querySelectorAll('.stage-pill');
+    if(pills[d.vitalsStage])setStage(d.vitalsStage,pills[d.vitalsStage]);
+  }
+  calcTotals();updateBanner();updateCRM();buildTasks();
+}
+
+// ── SIDEBAR ───────────────────────────────────────────────────────────────
+var PG=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:'V1',ic:'⚾',lb:'Client Vitals',url:'/vitals/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+
+function buildSidebar(){
+  var d=ad(),slug=ac(),all=ga();
+  var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+  var ctHTML=d
+    ?'<div class="client-ticker"><div class="ct-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div><div class="ct-resort">'+(d.resort||'No resort')+'</div><div class="ct-row"><span>Monthly</span><strong>'+fc((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12))+'</strong></div><div class="ct-row"><span>MTF/yr</span><strong>'+fc(parseFloat(d.maitFees)||0)+'</strong></div>'+(d.alphaFee?'<div class="ct-quote">📄 '+fc(d.alphaFee)+'</div>':'')+'</div>'
+    :'<div class="ct-no-client">⚠️ No client selected</div>';
+  var opts=Object.keys(all).map(function(k){var c=all[k];return'<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
+  var nav=PG.map(function(p){var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;return'<a href="'+p.url+'" class="sn-item'+(cur===p.url?' active':'')+'"><span class="sn-num">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#16A34A;font-size:10px">✓</span>':'')+'</a>';}).join('');
+  document.getElementById('sidenav').innerHTML=
+    '<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
+    +ctHTML
+    +'<div class="sn-sel"><select class="sn-select" onchange="swClient(this.value)"><option value="">— Select client —</option>'+opts+'</select><div class="sn-btnrow"><button class="sn-btn" onclick="location.href=\'/owner/\'">+ New</button><button class="sn-btn out" onclick="saveVitals()">Save</button></div></div>'
+    +'<div class="sn-section">Pages</div><nav class="sn-menu">'+nav+'</nav>'
+    +'<div class="sn-rpts"><div class="sn-cal-lbl">📋 Reports</div><button class="sn-rpt" onclick="copyVitals()">📋 CRM Note</button></div>';
+}
+function swClient(s){if(!s)return;localStorage.setItem(AK,s);setTimeout(function(){location.reload();},400);}
+
+document.addEventListener('DOMContentLoaded',function(){buildSidebar();loadData();});
+</script>
+</body>
+</html>
