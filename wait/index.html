@@ -84,7 +84,7 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 <div class="ph">
   <div class="ph-num">Page 3</div>
   <div class="ph-title">If You Do Nothing</div>
-  <div class="ph-sub">What the resort does next — and where it ends</div>
+  <div class="ph-sub">What the resort does next — stage by stage</div>
 </div>
 
 <div class="vb">
@@ -95,11 +95,95 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 </div>
 
 
+<div class="pb">
+
+<div class="card" style="background:#fef2f2;border:1.5px solid var(--red);margin-bottom:14px">
+  <div style="font-size:18px;font-weight:700;color:var(--red);margin-bottom:8px">The Resort Will Not Help You Exit</div>
+  <div style="font-size:14px;color:#374151;line-height:1.7">The same company that misrepresented this ownership to you seldom offers any way out — and never if payments are behind. What they do is collect.</div>
+</div>
+
+<div class="sec">What Happens If You Do Nothing</div>
+
+<div class="con">
+  <div class="con-n">1</div>
+  <div>
+    <div class="con-title">Calls, Letters &amp; Immediate Credit Hit</div>
+    <div class="con-text">Automated collections begin within days of a missed payment. All three credit bureaus are notified within 30 days. Most owners see a <strong>100–150 point credit drop</strong> almost immediately.</div>
+  </div>
+</div>
+
+<div class="con">
+  <div class="con-n">2</div>
+  <div>
+    <div class="con-title">Two Paths — Based on Age</div>
+    <div class="con-text">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+        <div style="background:#fef2f2;border-radius:6px;padding:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px">Retirement Age (55+)</div>
+          <div style="font-size:13px;color:#374151;line-height:1.5">Resorts skip formal foreclosure intentionally — they wait. When you pass, <strong>your heirs inherit the obligation automatically.</strong></div>
+        </div>
+        <div style="background:#fff8f0;border-radius:6px;padding:12px">
+          <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:4px">Under 55</div>
+          <div style="font-size:13px;color:#374151;line-height:1.5">Full foreclosure proceeds. Stays on credit <strong>for 10 years</strong> — worse than most bankruptcies in practice.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="con">
+  <div class="con-n">3</div>
+  <div>
+    <div class="con-title">Deficiency Judgment — $10k to $40k+</div>
+    <div class="con-text">They return to court for all future maintenance fees owed for the life of the contract. Judges grant these routinely. It shows on credit separately as an active civil judgment.</div>
+  </div>
+</div>
+
+<div class="con">
+  <div class="con-n">4</div>
+  <div>
+    <div class="con-title">No Exit Company Will Take the Case</div>
+    <div class="con-text">Once active foreclosure or judgment is on record, virtually no timeshare exit firm — including Alpha — can accept the case. <strong>The clean exit window closes before this point.</strong></div>
+  </div>
+</div>
+
+<div class="con" style="border-bottom:none">
+  <div class="con-n">5</div>
+  <div>
+    <div class="con-title">Wage Garnishment &amp; Property Liens</div>
+    <div class="con-text">With a judgment in hand, resort attorneys move to garnish wages and file liens against your home and property. You cannot sell or refinance anything with an active lien.</div>
+  </div>
+</div>
+
+<div class="alert-box success" style="margin-top:16px">
+  <div class="alert-title">✅ The Exit Window Is Still Open</div>
+  A clean, documented release through a group filing removes all legal standing the resort has to pursue you — permanently. This window does not stay open forever.
+</div>
+
+<div class="btn-row">
+  <button class="btn p" onclick="saveWait()">I Understand — Continue →</button>
+</div>
+
+</div>
+
+<script>
+var SK='atc_clients_v2',AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function ac(){return localStorage.getItem(AK)||null;}
+function saveWait(){
+  var s=ac();if(!s){window.location.href='/group/';return;}
+  var all=ga();if(!all[s]){window.location.href='/group/';return;}
+  var sp=all[s]._savedPages||[];if(sp.indexOf('/wait/')<0)sp.push('/wait/');
+  all[s]._savedPages=sp;all[s]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(all));
+  window.location.href='/group/';
+}
+</script>
+
 
 <div class="nav-bar">
-  <a href="" class="np">← </a>
-  <span class="ns"></span>
-  <a href="" class="nn"> →</a>
+  <a href="/whyout/" class="np">← Why Do You Want Out</a>
+  <span class="ns">Page 3 of 16</span>
+  <a href="/group/" class="nn">Finding Your Group →</a>
 </div>
 
 </div></div>
