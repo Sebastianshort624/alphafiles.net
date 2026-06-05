@@ -338,6 +338,16 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:#F4F6FA;color:#1a1
 .plus-section{display:none}
 .plus-section.open{display:block}
 
+
+/* ── 4-CORNER VITALS BANNER ── */
+.vitals-banner{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid #E0E4ED;border-top:3px solid #C8960C;border-radius:0 0 8px 8px;margin-bottom:18px}
+.vb-corner{padding:9px 13px;border-right:1px solid #E0E4ED}
+.vb-corner:last-child{border-right:none}
+.vb-lbl{font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.vb-val{font-size:13px;font-weight:700;color:#1B2A4A;line-height:1.2}
+.vb-sub{font-size:11px;color:#6b7280;margin-top:2px}
+.vb-stage-badge{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.3px}
+
 </style>
 
 </head>
@@ -352,6 +362,14 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:#F4F6FA;color:#1a1
   <div class="page-title">Owner & Resort Info</div>
   <div class="page-sub">Fill in what applies — auto-saves as you type</div>
 </div>
+
+<div class="vitals-banner" id="vitals-banner">
+  <div class="vb-corner"><div class="vb-lbl">👤 Client</div><div class="vb-val" id="vb-name">—</div><div class="vb-sub" id="vb-phone">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">🏨 Resort</div><div class="vb-val" id="vb-resort">—</div><div class="vb-sub" id="vb-location">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">💰 Monthly / Yearly</div><div class="vb-val" id="vb-mo">—</div><div class="vb-sub" id="vb-yr">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">📄 Quote / Stage</div><div class="vb-val" id="vb-quote">—</div><div class="vb-sub" id="vb-stage">—</div></div>
+</div>
+
 <div class="page-body">
 
 <!-- ACTIVE CLIENT BAR -->
@@ -965,6 +983,34 @@ function toast(msg,color){
 
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',buildNav);}
 else{buildNav();}
+})();
+</script>
+
+
+<script id="vitals-banner-js">
+(function(){
+  function initVitalsBanner(){
+    var SK='atc_clients_v2',AK='atc_active';
+    function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+    function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+    var s=localStorage.getItem(AK);
+    if(!s)return;
+    var d=ga()[s];if(!d)return;
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+    var stage=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+    function set(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+    set('vb-name',((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—');
+    set('vb-phone',d.phone||'—');
+    set('vb-resort',d.resort||'—');
+    set('vb-location',d.location||'—');
+    set('vb-mo',mo>0?fc(mo)+'/mo':'—');
+    set('vb-yr',mo>0?fc(mo*12)+'/yr':'—');
+    set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');
+    set('vb-stage',stage);
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initVitalsBanner);}
+  else{initVitalsBanner();}
 })();
 </script>
 
