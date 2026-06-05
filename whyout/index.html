@@ -434,21 +434,16 @@ const WO_CATS = [
 var _selected = {};
 
 function buildCategories() {
-  const container = document.getElementById('wo-categories');
-  container.innerHTML = WO_CATS.map(cat => `
-    <div>
-      <div class="wo-category" onclick="toggleCat('${cat.id}')">
-        <span>${cat.icon} ${cat.label}</span>
-        <span style="color:#9ca3af;font-size:12px" id="ct-arrow-${cat.id}">▸</span>
-      </div>
-      <div class="wo-items" id="ct-items-${cat.id}">
-        ${cat.items.map((item,i) => `
-          <label class="wo-item">
-            <input type="checkbox" id="wi-${cat.id}-${i}" onchange="woToggle('${cat.id}','${item}','${cat.ref}',this.checked)">
-            ${item}
-          </label>`).join('')}
-      </div>
-    </div>`).join('');
+  var container = document.getElementById('wo-categories');
+  container.innerHTML = WO_CATS.map(function(cat) {
+    var items = cat.items.map(function(item, i) {
+      return '<label class="wo-item"><input type="checkbox" id="wi-' + cat.id + '-' + i + '" onchange="woToggle(\'' + cat.id + '\',\'' + item.replace(/'/g, "\\'") + '\',\'' + cat.ref + '\',this.checked)"> ' + item + '</label>';
+    }).join('');
+    return '<div><div class="wo-category" onclick="toggleCat(\'' + cat.id + '\')">'
+      + '<span>' + cat.icon + ' ' + cat.label + '</span>'
+      + '<span style="color:#9ca3af;font-size:12px" id="ct-arrow-' + cat.id + '">▸</span>'
+      + '</div><div class="wo-items" id="ct-items-' + cat.id + '">' + items + '</div></div>';
+  }).join('');
 }
 
 function toggleCat(id) {
