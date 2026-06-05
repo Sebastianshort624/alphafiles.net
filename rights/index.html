@@ -2,406 +2,496 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consumer Bill of Rights Assessment — Alpha Timeshare Consultants</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Consumer Rights Assessment — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── SIDEBAR NAV ── */
-body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
-.sidenav{width:220px;min-height:100vh;background:#1B2A4A;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;box-shadow:3px 0 12px rgba(0,0,0,.25);overflow-y:auto}
-.sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sidenav .sn-logo img{max-width:140px}
-.sn-client-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-.sn-client-label{font-size:9px;font-weight:700;color:#C8960C;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px}
-.sn-client-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:11px;border-radius:3px;font-family:Georgia,serif;cursor:pointer}
-.sn-client-select option{background:#1B2A4A;color:#fff}
-.sn-new-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;margin-top:5px;font-family:Georgia,serif}
-.sn-new-btn:hover{background:#a87a08}
-.sn-menu{flex:1;padding:8px 0}
-.sn-item{display:flex;align-items:center;gap:8px;padding:8px 14px;text-decoration:none;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;letter-spacing:.2px;transition:all .15s;border-left:3px solid transparent}
-.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#C8960C}
-.sn-item.active{background:rgba(200,150,12,.15);color:#C8960C;border-left-color:#C8960C}
-.sn-item .sn-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
-.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 12px}
-.main-content{margin-left:220px;flex:1;padding:20px;min-height:100vh}
-.page-wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
-/* Toast */
-.sn-toast{display:none;position:fixed;bottom:20px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;border-radius:4px;z-index:300;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-/* New client modal */
-.sn-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center}
-.sn-modal-overlay.active{display:flex}
-.sn-modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:380px;margin:20px}
-.sn-modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
-.sn-modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:3px;margin-top:10px}
-.sn-modal input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
-.sn-modal-btns{display:flex;gap:8px;margin-top:14px}
-.sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
-.sn-modal-btn.primary{background:#C8960C;color:#fff}
-.sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-@media(max-width:600px){.sidenav{width:180px}.main-content{margin-left:180px}}
-</style>
-
-<style>
-.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
-.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
-.fr{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.fr:last-child{margin-bottom:0}
-.f{flex:1;min-width:180px}
-.ff{flex:100%}
-.f label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:4px}
-.f input,.f select,.f textarea{width:100%;border:2px solid #e0e0e0;border-radius:3px;padding:9px 11px;font-size:13px;font-family:Georgia,serif;background:#fff;color:#1B2A4A}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#C8960C}
-.f textarea{resize:vertical;min-height:72px}
-.fi{border-color:#C8960C!important;font-size:14px!important;font-weight:700!important}
-.toast{display:none;background:#1a7a3c;color:#fff;text-align:center;padding:8px;font-size:12px;font-weight:700;border-radius:3px;margin-bottom:12px}
-.save-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin-top:20px}
-.calc-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin:16px 0}
-.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
-.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
-.nb.next{background:#C8960C;color:#fff}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
-.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
-.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
-.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
-.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
-.cb-field strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
-.cb-field span{font-size:13px;color:#1B2A4A;font-weight:700}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Inter',sans-serif;font-size:14px;background:#f0f2f5;color:#1a1a1a}
+.app{display:flex;min-height:100vh}
+.sidebar{width:240px;min-height:100vh;background:#1B2A4A;position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
+.page{max-width:900px;margin:0 auto}
+.sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
+.sb-logo img{max-width:130px}
+.sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
+.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
+.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase}
+.sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px}
+.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
+.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
+.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
+.sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
+.sb-select option{background:#1B2A4A}
+.sb-brow{display:flex;gap:5px;margin-top:5px}
+.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
+.sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sb-nav{flex:1;padding:6px 0}
+.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent}
+.sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
+.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center;flex-shrink:0}
+.sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
+.sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
+.sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
+/* PAGE */
+.page-hdr{background:#1B2A4A;color:#fff;border-radius:8px 8px 0 0;padding:20px 24px}
+.pg-num{font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pg-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.pg-sub{font-size:14px;color:rgba(255,255,255,.65)}
+.page-body{background:#fff;border-radius:0 0 8px 8px;border:1px solid #e5e7eb;border-top:none;padding:24px}
+/* COLLECTIVE INTRO */
+.collective-box{background:#1B2A4A;border-radius:8px;padding:20px;margin-bottom:20px;color:#fff}
+.collective-box h3{font-size:18px;font-weight:700;color:#C8960C;margin-bottom:10px}
+.collective-box p{font-size:14px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
+.collective-box p:last-child{margin-bottom:0}
+/* AGENCIES */
+.agency-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.agency-card{background:rgba(255,255,255,.07);border-radius:6px;padding:10px 12px}
+.agency-card .ac-cat{font-size:10px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.agency-card .ac-name{font-size:12px;color:#fff;line-height:1.5}
+/* RIGHTS SECTION */
+.right-block{margin-bottom:16px;border:1.5px solid #e5e7eb;border-radius:8px;overflow:hidden}
+.right-hdr{background:#1B2A4A;color:#fff;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.right-hdr-left{display:flex;align-items:center;gap:10px}
+.right-num{background:#C8960C;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.right-title{font-size:16px;font-weight:700}
+.right-count{background:rgba(200,150,12,.25);color:#C8960C;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.right-arrow{font-size:12px;opacity:.7}
+.right-sub{background:#f4f0e8;border-bottom:1px solid #e5e7eb;padding:10px 16px;font-size:13px;color:#5a4500;line-height:1.5;font-style:italic}
+/* VIOLATION TABLE */
+.viol-table{width:100%;border-collapse:collapse}
+.viol-table thead tr{background:#EAF0F8}
+.viol-table th{font-size:11px;font-weight:700;color:#1B2A4A;padding:8px 10px;text-align:left;border-bottom:2px solid #c5d5e8;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
+.viol-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;font-size:13px}
+.viol-table tr:hover td{background:#fafafa}
+.viol-table tr.checked-row td{background:#f0fdf4}
+/* VIOLATION CHECKBOX */
+.viol-cb{width:16px;height:16px;cursor:pointer;accent-color:#1B2A4A;flex-shrink:0}
+.viol-text{font-size:13px;color:#1a1a1a;line-height:1.4;font-weight:500}
+/* CONDITIONAL STATUTE ROW */
+.statute-row{display:none;background:#EAF0F8;border-radius:4px;padding:8px 10px;margin-top:6px}
+.statute-row.show{display:block}
+.statute-line{font-size:12px;color:#1B2A4A;font-weight:600;margin-bottom:2px}
+.fine-line{display:flex;justify-content:space-between;font-size:12px;color:#374151}
+.fine-amt{color:#c0392b;font-weight:700}
+/* DROPDOWN COLS */
+.yn-select{font-size:12px;border:1px solid #e5e7eb;border-radius:4px;padding:4px 6px;font-family:'Inter',sans-serif;background:#fff;color:#374151;width:100%}
+.yn-select:focus{outline:none;border-color:#C8960C}
+/* SUMMARY BAR */
+.summary-bar{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+.sum-pill{flex:1;min-width:120px;background:#1B2A4A;color:#fff;border-radius:6px;padding:12px;text-align:center}
+.sum-val{font-size:22px;font-weight:700;color:#C8960C;line-height:1}
+.sum-lbl{font-size:10px;color:rgba(255,255,255,.6);margin-top:3px;text-transform:uppercase;letter-spacing:.3px}
+/* NOTES */
+.notes-area{width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:10px 12px;font-size:14px;font-family:'Inter',sans-serif;resize:vertical;min-height:72px;margin-top:8px}
+.notes-area:focus{outline:none;border-color:#C8960C}
+/* BUTTONS */
+.btn{padding:12px 24px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn.primary{background:#C8960C;color:#fff}
+.btn.secondary{background:#1B2A4A;color:#fff}
+.btn.email{background:#EAF0F8;color:#1B2A4A;border:1.5px solid #1B2A4A}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-row .btn{flex:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb}
+.nav-btn{padding:10px 24px;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;border:none;font-family:'Inter',sans-serif;cursor:pointer}
+.nav-btn.prev{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+.nav-btn.next{background:#C8960C;color:#fff}
+.nav-step{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+/* POPUP */
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:28px;width:100%;max-width:500px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative}
+.modal h3{font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:12px}
+.modal p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px;white-space:pre-wrap}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af}
+.blink{color:#2563EB;font-weight:600;cursor:pointer;border-bottom:1px dashed #2563EB}
+.toast{display:none;position:fixed;bottom:24px;left:260px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:600}
+/* PLUS TOGGLE */
+.plus-toggle{display:flex;align-items:center;gap:8px;padding:8px 0;cursor:pointer;color:#C8960C;font-size:13px;font-weight:600;border-bottom:1px dashed #e5e7eb;margin-bottom:10px;user-select:none}
+.pt-icon{width:20px;height:20px;background:#C8960C;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.plus-section{display:none}
+.plus-section.open{display:block}
 </style>
 </head>
 <body>
+<div class="app">
+<div class="sidebar" id="sb"></div>
+<div class="main">
+<div class="page">
 
-<div class="sidenav">
-  <div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-  <div class="sn-client-box">
-    <div class="sn-client-label">Active Client</div>
-    <select class="sn-client-select" id="sn-client-dd" onchange="snLoadClient()">
-      <option value="">— Select Client —</option>
-    </select>
-    <button class="sn-new-btn" onclick="snShowModal()">+ New Client</button>
-  </div>
-  <nav class="sn-menu">
-    <a href="/home/" class="sn-item" data-page="home"><span class="sn-icon">🏠</span>Dashboard</a>
-    <div class="sn-divider"></div>
-    <a href="/owner/" class="sn-item" data-page="owner"><span class="sn-icon">📋</span>Owner & Resort Info</a>
-    <a href="/whyout/" class="sn-item" data-page="whyout"><span class="sn-icon">❓</span>Why Do You Want Out</a>
-    <a href="/wait/" class="sn-item" data-page="wait"><span class="sn-icon">⚠️</span>If You Do Nothing</a>
-    <a href="/history/" class="sn-item" data-page="history"><span class="sn-icon">⭐</span>Our Track Record</a>
-    <a href="/rights/" class="sn-item" data-page="rights"><span class="sn-icon">⚖️</span>Consumer Rights</a>
-    <a href="/cost/" class="sn-item" data-page="cost"><span class="sn-icon">💰</span>True Cost</a>
-    <a href="/quote/" class="sn-item" data-page="quote"><span class="sn-icon">📄</span>Your Quote</a>
-    <div class="sn-divider"></div>
-    <a href="/better/" class="sn-item" data-page="better"><span class="sn-icon">🏆</span>What Makes Alpha Better</a>
-    <a href="/recap/" class="sn-item" data-page="recap"><span class="sn-icon">📋</span>Recap & Next Steps</a>
-    <a href="/guarantee/" class="sn-item" data-page="guarantee"><span class="sn-icon">🛡</span>Guarantee</a>
-    <a href="/checklist/" class="sn-item" data-page="checklist"><span class="sn-icon">✅</span>Acknowledgment</a>
-    <a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="sn-item"><span class="sn-icon">📝</span>Alpha Contract</a>
-  </nav>
+<div class="page-hdr">
+  <div class="pg-num">Page 7</div>
+  <div class="pg-title">Consumer Rights Assessment</div>
+  <div class="pg-sub">Document every violation — this becomes your group filing evidence</div>
 </div>
+<div class="page-body">
 
-<div class="sn-toast" id="sn-toast"></div>
+<!-- COLLECTIVE INTRO -->
+<div class="collective-box">
+  <h3>Why This Assessment Matters</h3>
+  <p>Every violation you document here contributes to a <strong>shared case file</strong> with other owners from the same resort. You are not filing alone. Multiple participants documenting the same violations creates a legally recognized behavioral pattern — the foundation of a group filing.</p>
+  <p>Our software calculates the resort's total financial exposure across all participants. That number — often in the <strong>millions of dollars</strong> — is what we present when we negotiate your release. The more thoroughly this is documented, the stronger the leverage for everyone in your group.</p>
+  <p>Each violation below carries a specific fine under federal or state law. If we report these violations to the appropriate enforcement agencies, the resort faces those fines directly.</p>
 
-<div class="sn-modal-overlay" id="sn-modal">
-  <div class="sn-modal">
-    <h3>New Client</h3>
-    <label>Client Name</label><input type="text" id="sn-name" placeholder="Full name">
-    <label>Resort / Developer</label><input type="text" id="sn-resort" placeholder="e.g. Westgate — Orlando FL">
-    <label>Date</label><input type="text" id="sn-date">
-    <div class="sn-modal-btns">
-      <button class="sn-modal-btn secondary" onclick="snCloseModal()">Cancel</button>
-      <button class="sn-modal-btn primary" onclick="snCreateClient()">Create & Start</button>
+  <!-- AGENCIES COLLAPSIBLE -->
+  <div class="plus-toggle" onclick="togglePlus('agencies')" style="border-color:rgba(200,150,12,.3);margin-top:12px">
+    <div class="pt-icon" style="background:rgba(200,150,12,.3);color:#C8960C">+</div>
+    <span style="color:#C8960C">Enforcement Agencies That Would Act on These Violations</span>
+  </div>
+  <div class="plus-section" id="agencies">
+    <div class="agency-grid">
+      <div class="agency-card"><div class="ac-cat">Federal</div><div class="ac-name">Federal Trade Commission (FTC)<br>Consumer Financial Protection Bureau (CFPB)<br>Department of Justice (DOJ)<br>HUD — Housing & Urban Development</div></div>
+      <div class="agency-card"><div class="ac-cat">TILA / Lending</div><div class="ac-name">CFPB — Reg Z Enforcement<br>OCC — Office of the Comptroller<br>Federal Reserve Board</div></div>
+      <div class="agency-card"><div class="ac-cat">ADA / Disability</div><div class="ac-name">U.S. Dept of Justice (ADA Division)<br>Equal Employment Opportunity Commission</div></div>
+      <div class="agency-card"><div class="ac-cat">Elder Abuse</div><div class="ac-name">Adult Protective Services (APS)<br>State Attorney General<br>National Elder Law Foundation</div></div>
+      <div class="agency-card"><div class="ac-cat">State Level</div><div class="ac-name">State Attorney General<br>Consumer Protection Office<br>Real Estate Commission<br>Dept. of Business Regulation</div></div>
+      <div class="agency-card"><div class="ac-cat">Whistleblower</div><div class="ac-name">FTC Complaint Portal<br>CFPB Complaint Database<br>State AG Consumer Hotline<br>Better Business Bureau</div></div>
     </div>
+    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;font-style:italic">Alpha maintains working relationships with several of these agencies. A documented group filing complaint — submitted collectively — carries far more weight than individual reports. Resorts are aware of this dynamic.</div>
   </div>
 </div>
 
-<div class="main-content">
-<div class="page-wrap">
-
-<div class="page-title">Consumer Bill of Rights Assessment</div>
-<div class="page-sub">Every violation checked is a documented legal infraction.</div>
-
-<div style="background:#EAF0F8;border-left:4px solid #1B2A4A;border-radius:3px;padding:13px 15px;margin-bottom:16px">
-<div style="font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:5px">Did You Know Your Resort Can Be Fined for What They Did to You?</div>
-<div style="font-size:12px;color:#2D2D2D;line-height:1.6">Every violation documented on this page carries a specific financial penalty under state and federal consumer protection statutes. Our software calculates the resort's total exposure and uses these figures to negotiate your written release and pursue reimbursement on your behalf.</div>
+<!-- RUNNING TOTALS -->
+<div class="summary-bar">
+  <div class="sum-pill"><div class="sum-val" id="tot-count">0</div><div class="sum-lbl">Violations</div></div>
+  <div class="sum-pill"><div class="sum-val" id="tot-rights">0 of 4</div><div class="sum-lbl">Rights Violated</div></div>
+  <div class="sum-pill"><div class="sum-val" id="tot-fine">$0</div><div class="sum-lbl">Est. Exposure</div></div>
+  <div class="sum-pill"><div class="sum-val" id="tot-shared">—</div><div class="sum-lbl">Shared w/ Group</div></div>
 </div>
 
-<style>
-.rs{margin-bottom:12px;border:1px solid #ddd;border-radius:4px;overflow:hidden}
-.rh{background:#1B2A4A;color:#fff;padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
-.rn{background:#C8960C;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0}
-.rt{font-size:13px;font-weight:700;letter-spacing:.3px;flex:1}
-.rc{background:#fff;color:#1B2A4A;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;flex-shrink:0;min-width:22px;text-align:center}
-.rg{font-size:11px;opacity:.7;margin-left:6px;flex-shrink:0}
-.rsub{background:#f4f0e8;border-bottom:1px solid #ddd;padding:8px 14px;font-size:12px;color:#3a2e00;line-height:1.5}
-.il{padding:10px 14px}
-.it{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f0}
-.it:last-child{border-bottom:none}
-.cb{width:13px;height:13px;border:1.5px solid #1B2A4A;border-radius:2px;flex-shrink:0;margin-top:2px;cursor:pointer;background:#fff;appearance:none;-webkit-appearance:none}
-.cb:checked{background:#1B2A4A;border-color:#1B2A4A}
-.il-lbl{font-size:12px;color:#333;line-height:1.45;cursor:pointer}
-.il-ref{font-size:10px;color:#C8960C;font-weight:700;margin-top:1px}
-.na{width:100%;border:1px solid #ccc;border-radius:3px;padding:6px 8px;font-size:11px;font-family:Georgia,serif;resize:vertical;min-height:48px;margin-top:8px}
-.si{width:100%;border:1px solid #ccc;border-radius:3px;padding:5px 8px;font-size:11px;font-family:Georgia,serif;background:#fff;margin-top:4px}
-/* REPORT */
-.report{display:none;margin-top:16px;border:2px solid #1B2A4A;border-radius:4px;overflow:hidden}
-.rpt-hdr{background:#1B2A4A;color:#fff;padding:14px 16px;text-align:center}
-.rpt-title{font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:2px}
-.rpt-sub{font-size:10px;opacity:.7}
-.rpt-body{padding:14px}
-.ftbar{display:flex;gap:8px;margin-bottom:14px}
-.ftc{flex:1;border-radius:4px;padding:10px;text-align:center}
-.ftc.nv{background:#1B2A4A;color:#fff}
-.ftc.gd{background:#C8960C;color:#fff}
-.ftc .fn{font-size:22px;font-weight:700;line-height:1;font-family:Georgia,serif}
-.ftc .fl{font-size:9px;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;opacity:.85}
-.rs-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 14px;border-radius:4px;background:#EAF0F8;margin-bottom:6px;gap:8px;flex-wrap:wrap}
-.rs-name{font-size:13px;font-weight:700;color:#1B2A4A;flex:1;min-width:120px}
-.rs-cnt{font-size:20px;font-weight:700;color:#C8960C;font-family:Georgia,serif;flex-shrink:0}
-.rs-ref{font-size:9px;color:#888;flex-shrink:0;text-align:right;max-width:220px;line-height:1.4}
-.mot-label{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.4px;text-transform:uppercase;margin:14px 0 8px;text-align:center}
-.mot-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:4px;border:2px solid #ddd;margin-bottom:6px}
-.mot-opt.active{border-width:2px}
-.mot-opt.greyed{opacity:.3;border-color:#eee}
-.mot-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.mot-text{font-size:14px;font-weight:700;flex:1}
-.mot-sub{font-size:11px;color:#888}
-.vbox{border-radius:4px;padding:12px 14px;margin-top:12px}
-.vbox.strong{background:#e8f5ee;border-left:4px solid #1a7a3c}
-.vbox.mod{background:#fff8e8;border-left:4px solid #C8960C}
-.vt{font-size:13px;font-weight:700;margin-bottom:4px}
-.vt.strong{color:#1a7a3c}
-.vt.mod{color:#8a6200}
-.vtxt{font-size:12px;line-height:1.6;color:#444}
-.fb-box{background:#f5f5f5;border:1px solid #ddd;border-radius:3px;padding:10px 12px;margin-top:14px}
-.fb-title{font-size:9px;font-weight:700;color:#888;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px}
-.fb-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid #eee;color:#555}
-.fb-row:last-child{border-bottom:none;font-weight:700;color:#1B2A4A;font-size:12px;padding-top:5px}
-.submit-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:12px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif;margin:16px 0}
-</style>
+<div id="rights-container"></div>
 
-<div class="rs">
-<div class="rh" onclick="tog(this)"><span class="rn">1</span><span class="rt">Right to Be Heard</span><span class="rc" id="cnt-heard"></span><span class="rg">▾</span></div>
-<div class="rsub">"Consumers have the right to voice concerns and have them properly addressed."</div>
-<div class="il">
-<div class="it"><input type="checkbox" class="cb" id="h1" data-right="heard" data-fine="25000" data-statute="15 U.S.C. §45" onchange="upd()"><label class="il-lbl" for="h1">I reached out to the resort — my concerns were ignored<div class="il-ref">15 U.S.C. §45 — FTC Act §5 / State Consumer Protection</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="h2" data-right="heard" data-fine="25000" data-statute="12 C.F.R. §1024" onchange="upd()"><label class="il-lbl" for="h2">My concerns were not addressed in a timely or meaningful manner<div class="il-ref">12 C.F.R. §1024 — CFPB Regulation X</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="h3" data-right="heard" data-fine="25000" data-statute="State UDAP" onchange="upd()"><label class="il-lbl" for="h3">My questions were dismissed, deflected, or transferred without resolution<div class="il-ref">State UDAP — Unfair & Deceptive Acts and Practices</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="h4" data-right="heard" data-fine="25000" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="h4">The resort provided no clear process to resolve my issues<div class="il-ref">15 U.S.C. §45(a) — Failure to provide adequate consumer remedy</div></label></div>
-<textarea class="na" id="notes-heard" placeholder="Notes..."></textarea>
-</div>
-</div>
-
-<div class="rs">
-<div class="rh" onclick="tog(this)"><span class="rn">2</span><span class="rt">Right to Safety — Financial & Physical</span><span class="rc" id="cnt-safety"></span><span class="rg">▾</span></div>
-<div class="rsub">"Protection against marketing of products hazardous to your financial wellbeing or physical health."</div>
-<div class="il">
-<div class="it"><input type="checkbox" class="cb" id="s1" data-right="safety" data-fine="53088" data-statute="15 U.S.C. §45 / 12 C.F.R. §1031" onchange="upd()"><label class="il-lbl" for="s1">I experienced significant financial hardship since signing<div class="il-ref">15 U.S.C. §45 / 12 C.F.R. §1031 — CFPB Unfair Practice</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s2" data-right="safety" data-fine="25000" data-statute="State Elder Abuse §§" onchange="upd()"><label class="il-lbl" for="s2">I am getting older and can no longer carry this obligation<div class="il-ref">State Elder Financial Abuse Statutes — targeting vulnerable consumers</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s3" data-right="safety" data-fine="53088" data-statute="State Timeshare Act" onchange="upd()"><label class="il-lbl" for="s3">I am concerned about this passing to my children after I'm gone<div class="il-ref">State Timeshare Act — undisclosed perpetual inheritance liability</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s4" data-right="safety" data-fine="25000" data-statute="42 U.S.C. §12101" onchange="upd()"><label class="il-lbl" for="s4">Health issues prevent me from traveling or using this ownership<div class="il-ref">42 U.S.C. §12101 ADA / State Consumer Protection Act</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s5" data-right="safety" data-fine="25000" data-statute="State CPA" onchange="upd()"><label class="il-lbl" for="s5">Death or illness of a spouse or co-owner has changed our situation<div class="il-ref">State Consumer Protection — failure to release hardship-based owner</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s6" data-right="safety" data-fine="25000" data-statute="State Property Law" onchange="upd()"><label class="il-lbl" for="s6">Divorce or separation — this ownership is now a disputed asset<div class="il-ref">State Property / Family Law — contested asset tied to deceptive contract</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="s7" data-right="safety" data-fine="53088" data-statute="15 U.S.C. §45(n)" onchange="upd()"><label class="il-lbl" for="s7">The presentation used intimidation or high-pressure tactics<div class="il-ref">15 U.S.C. §45(n) — FTC Act: Unfair and coercive sales practice</div></label></div>
-<textarea class="na" id="notes-safety" placeholder="Notes..."></textarea>
-</div>
-</div>
-
-<div class="rs">
-<div class="rh" onclick="tog(this)"><span class="rn">3</span><span class="rt">Right to Choose</span><span class="rc" id="cnt-choose"></span><span class="rg">▾</span></div>
-<div class="rsub">"You have the right to stop paying for something that no longer meets your needs."</div>
-<div class="il">
-<div class="it"><input type="checkbox" class="cb" id="c1" data-right="choose" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="c1">Availability restricted — blackout dates prevent use when I want<div class="il-ref">15 U.S.C. §45(a) — FTC Act: Misrepresentation of access</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c2" data-right="choose" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="c2">Non-owners can book the same dates I cannot get as an owner<div class="il-ref">15 U.S.C. §45(a) — Deceptive claims of owner priority</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c3" data-right="choose" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="c3">I was told owners have priority access — that was not true<div class="il-ref">15 U.S.C. §45(a) — False promise of preferential access</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c4" data-right="choose" data-fine="25000" data-statute="State Timeshare Act" onchange="upd()"><label class="il-lbl" for="c4">Limited locations — I cannot get to resorts convenient to me<div class="il-ref">State Timeshare Act — misrepresentation of exchange network</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c5" data-right="choose" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="c5">The presentation ran far longer than the 60–90 minutes I was told<div class="il-ref">15 U.S.C. §45(a) — Deceptive inducement to attend</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c6" data-right="choose" data-fine="53088" data-statute="16 C.F.R. §429" onchange="upd()"><label class="il-lbl" for="c6">I was pressured to sign before I had a chance to read the contract<div class="il-ref">16 C.F.R. §429 — FTC Cooling-Off Rule: denial of review right</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c7" data-right="choose" data-fine="53088" data-statute="State UDAP" onchange="upd()"><label class="il-lbl" for="c7">Multiple salespeople were used — I felt trapped and unable to leave<div class="il-ref">State UDAP — coercive sales environment</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="c8" data-right="choose" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="c8">I was offered gifts contingent on purchasing — felt obligated to stay<div class="il-ref">15 U.S.C. §45(a) — Conditional gift as coercive inducement</div></label></div>
-<label style="font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin:8px 0 3px">Actual presentation length</label>
-<input type="text" class="si" id="pres-length" placeholder="e.g. 4 hours">
-<label style="font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin:8px 0 3px">Usage frequency?</label>
-<select class="si" id="usage-freq"><option value="">— Select —</option><option>Never used</option><option>Used 1–2 times total</option><option>Rarely — less than once/year</option><option>Sometimes</option></select>
-<textarea class="na" id="notes-choose" placeholder="Notes..."></textarea>
-</div>
-</div>
-
-<div class="rs">
-<div class="rh" onclick="tog(this)"><span class="rn">4</span><span class="rt">Right to Be Informed</span><span class="rc" id="cnt-informed"></span><span class="rg">▾</span></div>
-<div class="rsub">"You have the right to receive sufficient information to make a fully informed decision."</div>
-<div class="il">
-<div class="it"><input type="checkbox" class="cb" id="i1" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i1">I was misled or lied to during the sales presentation<div class="il-ref">15 U.S.C. §45(a) — FTC Act §5: Deceptive Trade Practice</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i2" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i2">I was told it was an investment that would appreciate in value<div class="il-ref">15 U.S.C. §45(a) — Fraudulent Misrepresentation of value</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i3" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §1638 / 12 C.F.R. §226" onchange="upd()"><label class="il-lbl" for="i3">The true long-term cost of ownership was never shown to me<div class="il-ref">15 U.S.C. §1638 TILA / 12 C.F.R. §226 Reg Z</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i4" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i4">Maintenance fees would increase 6–12% annually — never disclosed<div class="il-ref">15 U.S.C. §45(a) — Material omission of escalating obligation</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i5" data-right="informed" data-fine="53088" data-statute="State Timeshare Act" onchange="upd()"><label class="il-lbl" for="i5">I did not know the contract was perpetual — no end date<div class="il-ref">State Timeshare Act — failure to disclose perpetual obligation</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i6" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i6">I was not told it has little to no resale value<div class="il-ref">15 U.S.C. §45(a) — Omission of material fact</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i7" data-right="informed" data-fine="53088" data-statute="16 C.F.R. §429.1" onchange="upd()"><label class="il-lbl" for="i7">I was not told I could cancel within the rescission period (3–10 days)<div class="il-ref">16 C.F.R. §429.1 — FTC Cooling-Off Rule</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i8" data-right="informed" data-fine="53088" data-statute="State UDAP" onchange="upd()"><label class="il-lbl" for="i8">Oral promises were made that did not appear in the contract<div class="il-ref">State UDAP — verbal misrepresentation</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i9" data-right="informed" data-fine="53088" data-statute="State Timeshare Act" onchange="upd()"><label class="il-lbl" for="i9">The contract is perpetual — my heirs would inherit it unwillingly<div class="il-ref">State Timeshare Act — failure to disclose estate liability</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i10" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i10">The salesperson was a 1099 contractor earning commission — never disclosed<div class="il-ref">15 U.S.C. §45(a) — failure to disclose sales relationship</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i11" data-right="informed" data-fine="25000" data-statute="State CPA" onchange="upd()"><label class="il-lbl" for="i11">Resort quality has declined significantly since purchase<div class="il-ref">State Consumer Protection Act — breach of implied warranty</div></label></div>
-<div class="it"><input type="checkbox" class="cb" id="i12" data-right="informed" data-fine="53088" data-statute="15 U.S.C. §45(a)" onchange="upd()"><label class="il-lbl" for="i12">I was pressured to sign on the spot — I felt I had no choice<div class="il-ref">15 U.S.C. §45(a) / State UDAP — high-pressure tactics</div></label></div>
-<textarea class="na" id="notes-informed" placeholder="Notes..."></textarea>
-</div>
-</div>
-
-<button class="submit-btn" onclick="genReport()">⚖ Generate Violation & Fine Report</button>
-
-<div class="report" id="report">
-<div class="rpt-hdr"><div class="rpt-title">⚖ Violation & Estimated Fine Report</div><div class="rpt-sub">Maximum statutory penalties — FTC 2025</div></div>
-<div class="rpt-body">
-<div class="ftbar">
-<div class="ftc nv"><div class="fn" id="r-count">0</div><div class="fl">Total Violations</div></div>
-<div class="ftc nv"><div class="fn" id="r-rights">0 of 4</div><div class="fl">Rights Violated</div></div>
-<div class="ftc gd"><div class="fn" id="r-total">$0</div><div class="fl">Resort's Est. Exposure</div></div>
-</div>
-<div id="r-summary"></div>
-<div class="mot-label" id="mot-label">Based on documented violations — the resort is:</div>
-<div id="r-meter">
-<div class="mot-opt greyed" id="mot-highly"><div class="mot-dot" style="background:#1a7a3c"></div><span class="mot-text" style="color:#1a7a3c">HIGHLY Motivated to Settle</span><span class="mot-sub">Strong case — multiple rights violated</span></div>
-<div class="mot-opt greyed" id="mot-sig"><div class="mot-dot" style="background:#C8960C"></div><span class="mot-text" style="color:#C8960C">SIGNIFICANTLY Motivated</span><span class="mot-sub">Solid grounds — clear violations</span></div>
-<div class="mot-opt greyed" id="mot-pot"><div class="mot-dot" style="background:#1B2A4A"></div><span class="mot-text" style="color:#1B2A4A">POTENTIALLY Motivated</span><span class="mot-sub">Some violations — qualifying case</span></div>
-<div class="mot-opt greyed" id="mot-ins"><div class="mot-dot" style="background:#aaa"></div><span class="mot-text" style="color:#aaa">INSUFFICIENTLY Motivated</span><span class="mot-sub">Limited violations documented</span></div>
-</div>
-<div id="r-verdict"></div>
-<div class="fb-box" id="fb-box" style="display:none">
-<div class="fb-title">Individual Fine Breakdown</div>
-<div id="fb-rows"></div>
-<div class="fb-row"><span>Total Estimated Exposure</span><span id="fb-total">$0</span></div>
-</div>
-<div style="text-align:center;margin-top:16px">
-<button onclick="saveAndContinue()" style="background:#1a7a3c;color:#fff;border:none;padding:12px 32px;font-size:14px;font-weight:700;border-radius:3px;cursor:pointer;font-family:Georgia,serif">💾 Save & Continue to True Cost →</button>
-</div>
-</div>
+<div class="btn-row">
+  <button class="btn primary" onclick="genReport()">⚖ Generate Violation Report</button>
+  <button class="btn email" onclick="emailRights()">📧 Email This Section</button>
+  <button class="btn secondary" onclick="saveAndContinue()">Save &amp; Continue →</button>
 </div>
 
 <div class="nav-bar">
-<a href="/whyout/" class="nb prev">← Why You Want Out</a>
-<span class="ns">True Cost →</span>
-<a href="/cost/" class="nb next">Next →</a>
+  <a href="/history/" class="nav-btn prev">← Our Track Record</a>
+  <span class="nav-step">Page 7 of 16</span>
+  <a href="/cost/" class="nav-btn next">True Cost →</a>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="toast" id="tst"></div>
+
+<!-- POPUP -->
+<div class="overlay" id="pop-ov">
+  <div class="modal">
+    <button class="modal-close" onclick="closePop()">×</button>
+    <h3 id="pop-title"></h3>
+    <div id="pop-body"></div>
+  </div>
 </div>
 
 <script>
-var RIGHTS={heard:{label:'Right to Be Heard',refs:'15 U.S.C. §45 | 12 C.F.R. §1024 | State UDAP'},safety:{label:'Right to Safety',refs:'15 U.S.C. §45(n) | 42 U.S.C. §12101 | State Elder Abuse | 12 C.F.R. §1031'},choose:{label:'Right to Choose',refs:'15 U.S.C. §45(a) | 16 C.F.R. §429 | State UDAP | State Timeshare Act'},informed:{label:'Right to Be Informed',refs:'15 U.S.C. §45(a) | 15 U.S.C. §1638 | 16 C.F.R. §429.1 | 12 C.F.R. §226 | State UDAP'}};
+// ── DATA ──────────────────────────────────────────────────────────────────
 var SK='atc_clients_v2',AK='atc_active';
-function fmt(n){return '$'+n.toLocaleString();}
-function tog(hdr){var sec=hdr.closest('.rs');var body=sec.querySelector('.il');var sub=sec.querySelector('.rsub');var arrow=hdr.querySelector('.rg');var open=body.style.display!=='none';body.style.display=open?'none':'block';if(sub)sub.style.display=open?'none':'block';arrow.textContent=open?'▸':'▾';}
-function upd(){['heard','safety','choose','informed'].forEach(function(r){var cnt=document.querySelectorAll('.cb[data-right="'+r+'"]:checked').length;var el=document.getElementById('cnt-'+r);if(el)el.textContent=cnt>0?cnt:'';});}
-function genReport(){
-  var boxes=document.querySelectorAll('.cb:checked');
-  if(!boxes.length){alert('Please select at least one violation above.');return;}
-  var byCat={heard:{count:0,fines:[]},safety:{count:0,fines:[]},choose:{count:0,fines:[]},informed:{count:0,fines:[]}};
+function getAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function saveAll(o){localStorage.setItem(SK,JSON.stringify(o));}
+function active(){return localStorage.getItem(AK)||null;}
+function activeData(){var s=active();return s?getAll()[s]||null:null;}
+function saveField(k,v){var s=active();if(!s)return;var all=getAll();if(!all[s])return;all[s][k]=v;all[s]._updated=Date.now();saveAll(all);}
+function fmtC(n){return '$'+Math.round(n||0).toLocaleString();}
+function fmtD(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+function togglePlus(id){var el=document.getElementById(id);if(!el)return;el.classList.toggle('open');document.querySelectorAll('.plus-toggle').forEach(function(t){if(t.getAttribute('onclick')&&t.getAttribute('onclick').includes("'"+id+"'")){var ic=t.querySelector('.pt-icon');if(ic)ic.textContent=el.classList.contains('open')?'−':'+';}});}
+
+// ── VIOLATION DEFINITIONS ─────────────────────────────────────────────────
+var RIGHTS = [
+  {
+    id:'heard', num:'1', title:'Right to Be Heard',
+    sub:'Consumers have the right to have their complaints and concerns properly addressed by the resort.',
+    violations:[
+      {id:'h1',text:'I contacted the resort about my concerns — they ignored me',statute:'15 U.S.C. §45 / FTC Act §5',fine:25000,cat:'federal',shared:'100%'},
+      {id:'h2',text:'My concerns were never addressed in a meaningful or timely way',statute:'12 C.F.R. §1024 — CFPB Regulation X',fine:25000,cat:'respa',shared:'95%'},
+      {id:'h3',text:'My questions were deflected, transferred, or dismissed without resolution',statute:'State UDAP — Unfair & Deceptive Acts',fine:25000,cat:'state',shared:'90%'},
+      {id:'h4',text:'The resort provided no clear process for resolving owner complaints',statute:'15 U.S.C. §45(a) — FTC Act: Unfair Practice',fine:25000,cat:'federal',shared:'85%'},
+    ]
+  },
+  {
+    id:'safety', num:'2', title:'Right to Safety — Financial & Physical',
+    sub:'Protection against products or marketing that are hazardous to your financial wellbeing or physical health.',
+    violations:[
+      {id:'s1',text:'I experienced significant financial hardship since signing this contract',statute:'15 U.S.C. §45 / 12 C.F.R. §1031 — CFPB Unfair Practice',fine:53088,cat:'federal',shared:'80%'},
+      {id:'s2',text:'I am retired or on a fixed income and can no longer carry this obligation',statute:'State Elder Financial Abuse Statutes',fine:25000,cat:'elder',shared:'75%'},
+      {id:'s3',text:'I am concerned this will pass to my children when I die',statute:'State Timeshare Act — Perpetuity Clause Violation',fine:53088,cat:'state',shared:'95%'},
+      {id:'s4',text:'Health issues prevent me from traveling or using this property',statute:'42 U.S.C. §12101 — ADA / State Consumer Protection Act',fine:25000,cat:'ada',shared:'70%'},
+      {id:'s5',text:'Death or illness of a spouse or co-owner changed our circumstances',statute:'State Consumer Protection — Failure to Release Hardship Owner',fine:25000,cat:'state',shared:'65%'},
+      {id:'s6',text:'Divorce or separation — this ownership is now a disputed marital asset',statute:'State Property / Family Law',fine:25000,cat:'state',shared:'60%'},
+      {id:'s7',text:'The sales presentation used intimidation, pressure, or coercive tactics',statute:'15 U.S.C. §45(n) — FTC Act: Unfair Coercive Practice',fine:53088,cat:'federal',shared:'90%'},
+    ]
+  },
+  {
+    id:'choose', num:'3', title:'Right to Choose',
+    sub:'You have the right to stop paying for something that no longer serves your needs.',
+    violations:[
+      {id:'c1',text:'Blackout dates make it impossible for me to book when I want',statute:'15 U.S.C. §45(a) — Misrepresentation of Access',fine:53088,cat:'federal',shared:'92%'},
+      {id:'c2',text:'Non-owners can book dates I cannot get as an owner',statute:'15 U.S.C. §45(a) — Deceptive Owner Priority Claims',fine:53088,cat:'federal',shared:'88%'},
+      {id:'c3',text:'I was told owners have priority access — that was false',statute:'15 U.S.C. §45(a) — False Promise of Preferential Access',fine:53088,cat:'federal',shared:'91%'},
+      {id:'c4',text:'Limited resort locations — I cannot reach any conveniently',statute:'State Timeshare Act — Misrepresentation of Exchange Network',fine:25000,cat:'state',shared:'78%'},
+      {id:'c5',text:'The presentation lasted far longer than the 60–90 minutes I was told',statute:'15 U.S.C. §45(a) — Deceptive Inducement to Attend',fine:53088,cat:'federal',shared:'85%'},
+      {id:'c6',text:'I was pressured to sign before I had a chance to read the contract',statute:'16 C.F.R. §429 — FTC Cooling-Off Rule Violation',fine:53088,cat:'federal',shared:'93%'},
+      {id:'c7',text:'Multiple salespeople were used — I felt I could not leave',statute:'State UDAP — Coercive Sales Environment',fine:53088,cat:'state',shared:'87%'},
+      {id:'c8',text:'I was offered gifts only if I purchased — felt obligated to stay',statute:'15 U.S.C. §45(a) — Conditional Gift as Coercive Inducement',fine:53088,cat:'federal',shared:'82%'},
+    ]
+  },
+  {
+    id:'informed', num:'4', title:'Right to Be Informed',
+    sub:'You have the right to receive complete, accurate information before making any purchasing decision.',
+    violations:[
+      {id:'i1',text:'I was misled or lied to during the sales presentation',statute:'15 U.S.C. §45(a) — FTC Act §5: Deceptive Trade Practice',fine:53088,cat:'federal',shared:'96%'},
+      {id:'i2',text:'I was told this was an investment that would appreciate in value',statute:'15 U.S.C. §45(a) — Fraudulent Misrepresentation of Value',fine:53088,cat:'federal',shared:'94%'},
+      {id:'i3',text:'The true long-term cost of ownership was never shown or explained',statute:'15 U.S.C. §1638 TILA / 12 C.F.R. §226 Regulation Z',fine:53088,cat:'tila',shared:'92%'},
+      {id:'i4',text:'I was never told maintenance fees increase 6–12% annually',statute:'15 U.S.C. §45(a) — Material Omission of Escalating Obligation',fine:53088,cat:'federal',shared:'97%'},
+      {id:'i5',text:'I did not know the contract was perpetual — no end date',statute:'State Timeshare Act — Failure to Disclose Perpetuity',fine:53088,cat:'state',shared:'98%'},
+      {id:'i6',text:'I was never told this has little to no resale value',statute:'15 U.S.C. §45(a) — Omission of Material Fact',fine:53088,cat:'federal',shared:'95%'},
+      {id:'i7',text:'I was not told I could cancel within the rescission period (3–10 days)',statute:'16 C.F.R. §429.1 — FTC Cooling-Off Rule: Cancellation Rights',fine:53088,cat:'federal',shared:'89%'},
+      {id:'i8',text:'Oral promises were made to me that never appeared in the contract',statute:'State UDAP — Verbal Misrepresentation / Oral Warranty Breach',fine:53088,cat:'state',shared:'88%'},
+      {id:'i9',text:'The contract is perpetual — my heirs would inherit this unwillingly',statute:'State Timeshare Act — Failure to Disclose Estate Liability',fine:53088,cat:'state',shared:'96%'},
+      {id:'i10',text:'The salesperson was a 1099 contractor earning commission — never disclosed',statute:'15 U.S.C. §45(a) — Failure to Disclose Sales Relationship',fine:53088,cat:'federal',shared:'80%'},
+      {id:'i11',text:'Resort management and quality have declined significantly since I purchased',statute:'State Consumer Protection Act — Breach of Implied Warranty',fine:25000,cat:'state',shared:'75%'},
+      {id:'i12',text:'I was pressured to sign immediately — told the offer was only available that day',statute:'15 U.S.C. §45(a) / State UDAP — High-Pressure Artificial Urgency',fine:53088,cat:'federal',shared:'91%'},
+    ]
+  }
+];
+
+var CAT_LABELS = {
+  federal:'🇺🇸 Federal (FTC)',
+  tila:'💳 TILA / Lending',
+  respa:'🏠 RESPA / CFPB',
+  ada:'♿ ADA / Safety',
+  elder:'👵 Elder Abuse',
+  state:'🏛 State Law'
+};
+
+// ── BUILD TABLE ───────────────────────────────────────────────────────────
+function buildRights(){
+  var container=document.getElementById('rights-container');
+  var html='';
+  RIGHTS.forEach(function(r){
+    html+='<div class="right-block" id="rb-'+r.id+'">'
+      +'<div class="right-hdr" onclick="toggleRight(''+r.id+'')">'
+        +'<div class="right-hdr-left">'
+          +'<span class="right-num">'+r.num+'</span>'
+          +'<span class="right-title">'+r.title+'</span>'
+          +'<span class="right-count" id="rc-'+r.id+'" style="display:none">0</span>'
+        +'</div>'
+        +'<span class="right-arrow" id="ra-'+r.id+'">▾</span>'
+      +'</div>'
+      +'<div class="right-sub">'+r.sub+'</div>'
+      +'<div id="rt-'+r.id+'">'
+      +'<table class="viol-table"><thead><tr>'
+        +'<th style="width:32px"></th>'
+        +'<th>Violation</th>'
+        +'<th style="width:80px;text-align:center">% in Group</th>'
+        +'<th style="width:90px;text-align:center">Knew Before Signing?</th>'
+        +'<th style="width:110px;text-align:center">Would Have Stopped You?</th>'
+      +'</tr></thead><tbody>';
+
+    r.violations.forEach(function(v){
+      html+='<tr id="tr-'+v.id+'">'
+        +'<td><input type="checkbox" class="viol-cb" id="cb-'+v.id+'" onchange="onCheck(''+r.id+'',''+v.id+'','+v.fine+',''+v.statute+'',''+v.cat+'',''+v.shared+'',this)"></td>'
+        +'<td>'
+          +'<div class="viol-text">'+v.text+'</div>'
+          +'<div class="statute-row" id="sr-'+v.id+'">'
+            +'<div class="statute-line">'+CAT_LABELS[v.cat]+' &nbsp;·&nbsp; '+v.statute+'</div>'
+            +'<div class="fine-line"><span>Fine per violation:</span><span class="fine-amt">'+fmtC(v.fine)+'</span></div>'
+            +'<div class="fine-line" style="margin-top:2px"><span>Running group total:</span><span class="fine-amt" id="rt-fine-'+v.id+'">—</span></div>'
+          +'</div>'
+        +'</td>'
+        +'<td style="text-align:center"><span style="font-size:13px;font-weight:600;color:#C8960C">'+v.shared+'</span></td>'
+        +'<td><select class="yn-select" id="knew-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
+        +'<td><select class="yn-select" id="stop-'+v.id+'" onchange="saveViolData()"><option value="">—</option><option>Yes</option><option>No</option></select></td>'
+      +'</tr>';
+    });
+
+    html+='</tbody></table>';
+    html+='<div style="padding:10px 14px;border-top:1px solid #f3f4f6"><label style="font-size:11px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:4px">Section Notes</label><textarea class="notes-area" id="notes-'+r.id+'" placeholder="Additional notes for this right..." oninput="saveViolData()"></textarea></div>';
+    html+='</div></div>';
+  });
+  container.innerHTML=html;
+  loadSavedData();
+}
+
+function toggleRight(id){
+  var body=document.getElementById('rt-'+id);
+  var arrow=document.getElementById('ra-'+id);
+  var isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  if(arrow)arrow.textContent=isOpen?'▸':'▾';
+}
+
+var _totalFine=0, _totalCount=0;
+var _rightsFines={};
+
+function onCheck(rightId,violId,fine,statute,cat,shared,cb){
+  var row=document.getElementById('tr-'+violId);
+  var sr=document.getElementById('sr-'+violId);
+  if(cb.checked){
+    row.classList.add('checked-row');
+    sr.classList.add('show');
+    if(!_rightsFines[rightId])_rightsFines[rightId]=0;
+    _rightsFines[rightId]+=fine;
+    // Update running total display
+    var rtFineEl=document.getElementById('rt-fine-'+violId);
+    if(rtFineEl)rtFineEl.textContent=fmtC(_rightsFines[rightId]);
+  } else {
+    row.classList.remove('checked-row');
+    sr.classList.remove('show');
+    if(_rightsFines[rightId])_rightsFines[rightId]-=fine;
+  }
+  updateTotals();
+  saveViolData();
+}
+
+function updateTotals(){
+  var count=document.querySelectorAll('.viol-cb:checked').length;
   var total=0;
-  boxes.forEach(function(b){var r=b.dataset.right;if(!r)return;var fine=parseInt(b.dataset.fine)||0;total+=fine;byCat[r].count++;var lbl=b.nextElementSibling?b.nextElementSibling.textContent.trim().split('\n')[0]:'';byCat[r].fines.push({label:lbl,fine:fine,statute:b.dataset.statute});});
-  var count=boxes.length,rv=Object.values(byCat).filter(function(v){return v.count>0;}).length;
-  document.getElementById('r-count').textContent=count;
-  document.getElementById('r-rights').textContent=rv+' of 4';
-  document.getElementById('r-total').textContent=fmt(total);
-  var summ='';
-  Object.keys(byCat).forEach(function(r){if(!byCat[r].count)return;summ+='<div class="rs-row"><div class="rs-name">'+RIGHTS[r].label+'</div><div class="rs-cnt">'+byCat[r].count+' violation'+(byCat[r].count>1?'s':'')+'</div><div class="rs-ref">'+RIGHTS[r].refs+'</div></div>';});
-  document.getElementById('r-summary').innerHTML=summ;
-  ['mot-highly','mot-sig','mot-pot','mot-ins'].forEach(function(id){var el=document.getElementById(id);el.classList.add('greyed');el.classList.remove('active');});
-  var aid=count>=10||rv>=3?'mot-highly':count>=5||rv>=2?'mot-sig':count>=2?'mot-pot':'mot-ins';
-  var ael=document.getElementById(aid);ael.classList.remove('greyed');ael.classList.add('active');
-  var msgs={'mot-highly':'<div class="vbox strong"><div class="vt strong">Strong Case — The Resort Is HIGHLY Motivated to Settle</div><div class="vtxt">'+count+' documented violations across '+rv+' consumer rights with an estimated exposure of '+fmt(total)+'. The resort faces consolidated legal and financial pressure they cannot ignore. Alpha Timeshare Consultants is highly confident in securing your written release and pursuing reimbursement.</div></div>','mot-sig':'<div class="vbox strong"><div class="vt strong">Solid Case — The Resort Is SIGNIFICANTLY Motivated</div><div class="vtxt">'+count+' violations confirmed across '+rv+' consumer right'+(rv>1?'s':'')+' with an estimated exposure of '+fmt(total)+'. Clear and actionable grounds exist. The resort will be significantly motivated to resolve this quickly through a group filing negotiation.</div></div>','mot-pot':'<div class="vbox mod"><div class="vt mod">Qualifying Case — The Resort Is POTENTIALLY Motivated</div><div class="vtxt">'+count+' violation'+(count>1?'s':'')+' confirmed with an estimated exposure of '+fmt(total)+'. This client qualifies for our exit program.</div></div>','mot-ins':'<div class="vbox mod"><div class="vt mod">Continue Assessment — INSUFFICIENTLY Documented</div><div class="vtxt">Only '+count+' violation documented. Continue through all sections — additional violations are likely present.</div></div>'};
-  document.getElementById('r-verdict').innerHTML=msgs[aid];
-  var fbHTML='';Object.keys(byCat).forEach(function(r){byCat[r].fines.forEach(function(v){fbHTML+='<div class="fb-row"><span>'+v.statute+'</span><span>'+fmt(v.fine)+'</span></div>';});});
-  document.getElementById('fb-rows').innerHTML=fbHTML;document.getElementById('fb-total').textContent=fmt(total);document.getElementById('fb-box').style.display='block';
-  var rpt=document.getElementById('report');rpt.style.display='block';rpt.scrollIntoView({behavior:'smooth',block:'start'});
-  // Save to localStorage
-  saveViolations(boxes,total);
+  document.querySelectorAll('.viol-cb:checked').forEach(function(cb){
+    var id=cb.id.replace('cb-','');
+    RIGHTS.forEach(function(r){r.violations.forEach(function(v){if(v.id===id)total+=v.fine;});});
+  });
+  var rightsViolated=0;
+  RIGHTS.forEach(function(r){
+    var cnt=document.querySelectorAll('#rt-'+r.id+' .viol-cb:checked').length;
+    if(cnt>0){rightsViolated++;document.getElementById('rc-'+r.id).style.display='';document.getElementById('rc-'+r.id).textContent=cnt;}
+    else{document.getElementById('rc-'+r.id).style.display='none';}
+  });
+  document.getElementById('tot-count').textContent=count;
+  document.getElementById('tot-rights').textContent=rightsViolated+' of 4';
+  document.getElementById('tot-fine').textContent=fmtC(total);
+  document.getElementById('tot-shared').textContent=count>0?'Yes':'—';
+  _totalFine=total; _totalCount=count;
 }
-function saveViolations(boxes,total){
-  var key=localStorage.getItem(AK);if(!key)return;
-  var c=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(!c[key])return;
-  var ids=[];boxes.forEach(function(b){ids.push(b.id);});
-  c[key].violations=ids;c[key].violationTotal=total;c[key].rightsSaved=true;
-  localStorage.setItem(SK,JSON.stringify(c));
+
+function saveViolData(){
+  var s=active();if(!s)return;
+  var all=getAll();if(!all[s])return;
+  var checks={},knew={},stop={},notes={};
+  RIGHTS.forEach(function(r){
+    r.violations.forEach(function(v){
+      var cb=document.getElementById('cb-'+v.id);
+      if(cb&&cb.checked){
+        checks[v.id]=true;
+        var kEl=document.getElementById('knew-'+v.id);
+        var sEl=document.getElementById('stop-'+v.id);
+        knew[v.id]=kEl?kEl.value:'';
+        stop[v.id]=sEl?sEl.value:'';
+      }
+    });
+    var nEl=document.getElementById('notes-'+r.id);
+    if(nEl&&nEl.value)notes[r.id]=nEl.value;
+  });
+  all[s].violations=Object.keys(checks);
+  all[s].violationKnew=knew;
+  all[s].violationStop=stop;
+  all[s].violationNotes=notes;
+  all[s].violationTotal=_totalFine;
+  all[s].rightsSaved=true;
+  all[s]._updated=Date.now();
+  saveAll(all);
 }
+
+function loadSavedData(){
+  var d=activeData();if(!d)return;
+  if(d.violations){
+    d.violations.forEach(function(vid){
+      var cb=document.getElementById('cb-'+vid);
+      if(cb){cb.checked=true;RIGHTS.forEach(function(r){r.violations.forEach(function(v){if(v.id===vid){var row=document.getElementById('tr-'+vid);var sr=document.getElementById('sr-'+vid);if(row)row.classList.add('checked-row');if(sr)sr.classList.add('show');if(!_rightsFines[r.id])_rightsFines[r.id]=0;_rightsFines[r.id]+=v.fine;}});});}
+    });
+    if(d.violationKnew)Object.keys(d.violationKnew).forEach(function(k){var el=document.getElementById('knew-'+k);if(el)el.value=d.violationKnew[k];});
+    if(d.violationStop)Object.keys(d.violationStop).forEach(function(k){var el=document.getElementById('stop-'+k);if(el)el.value=d.violationStop[k];});
+    if(d.violationNotes)Object.keys(d.violationNotes).forEach(function(k){var el=document.getElementById('notes-'+k);if(el)el.value=d.violationNotes[k];});
+    updateTotals();
+  }
+}
+
+function genReport(){
+  saveViolData();
+  var s=active();
+  var slug=s?'/'+s+'/':'';
+  window.location.href='/report/';
+}
+
 function saveAndContinue(){
-  var boxes=document.querySelectorAll('.cb:checked');
-  var total=0;boxes.forEach(function(b){total+=parseInt(b.dataset.fine)||0;});
-  saveViolations(boxes,total);
-  window.location.href='/cost/';
+  saveViolData();
+  var d=activeData()||{};
+  var summary='<strong>'+_totalCount+' violations</strong> documented across '+document.getElementById('tot-rights').textContent+' consumer rights.<br>Estimated fine exposure: <strong>'+fmtC(_totalFine)+'</strong>';
+  markPageSaved('/rights/');
+  showSubmitPopup('Consumer Rights Assessment',summary,'/cost/');
 }
-upd();
-</script>
 
+function markPageSaved(pg){var s=active();if(!s)return;var all=getAll();if(!all[s])return;var saved=all[s]._savedPages||[];if(saved.indexOf(pg)<0)saved.push(pg);all[s]._savedPages=saved;saveAll(all);}
 
-</div></div>
+function showSubmitPopup(title,summary,next){
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px;max-width:480px;width:100%;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2)">'
+    +'<h3 style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:12px">✓ '+title+' Saved</h3>'
+    +'<div style="background:#EAF0F8;border-left:3px solid #1B2A4A;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.6;color:#1B2A4A;margin-bottom:16px">'+summary+'</div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button onclick="this.closest('div[style]').remove()" style="flex:1;padding:11px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">← Edit</button>'
+    +(next?'<button onclick="window.location.href=''+next+''" style="flex:1;padding:11px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Continue →</button>':'')
+    +'</div></div>';
+  document.body.appendChild(ov);
+}
 
-
-<script>
-/* ── SHARED NAV JS ── */
-var _SK='atc_clients_v2', _AK='atc_active';
-
-function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return {};}}
-function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
-function _gk(){return localStorage.getItem(_AK)||'';}
-function _sk(k){localStorage.setItem(_AK,k);}
-
-function snRefresh(){
-  var c=_gc(), dd=document.getElementById('sn-client-dd'), cur=_gk();
-  if(!dd)return;
-  dd.innerHTML='<option value="">— Select Client —</option>';
-  Object.keys(c).sort(function(a,b){return (c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){
-    var o=document.createElement('option');o.value=k;
-    var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');
-    dd.appendChild(o);
+function emailRights(){
+  var d=activeData()||{};
+  var vids=d.violations||[];
+  var rows='';
+  RIGHTS.forEach(function(r){
+    var rVids=r.violations.filter(function(v){return vids.indexOf(v.id)>-1;});
+    if(rVids.length){
+      rows+='<tr><td colspan="2" style="background:#1B2A4A;color:#C8960C;font-size:13px;font-weight:700;padding:8px 12px">'+r.title+'</td></tr>';
+      rVids.forEach(function(v){rows+='<tr><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:13px">'+v.text+'</td><td style="padding:7px 12px;border-bottom:1px solid #f3f4f6;font-size:11px;color:#C8960C;white-space:nowrap">'+v.statute+'</td></tr>';});
+    }
   });
-  if(cur)dd.value=cur;
+  var win=window.open('','_blank');
+  win.document.write('<!DOCTYPE html><html><body style="margin:20px;font-family:Inter,sans-serif"><div style="max-width:600px;margin:0 auto;border:2px solid #1B2A4A;border-radius:8px;overflow:hidden"><div style="background:#1B2A4A;padding:20px;text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" style="max-width:140px;margin-bottom:10px"><br><div style="color:#fff;font-size:18px;font-weight:700">Consumer Rights Assessment</div><div style="color:rgba(255,255,255,.7);font-size:13px">'+(d.firstName||'')+' '+(d.lastName||'')+' · '+(d.resort||'')+'</div></div><div style="padding:20px"><table style="width:100%;border-collapse:collapse">'+rows+'</table><div style="margin-top:16px;background:#EAF0F8;border-radius:6px;padding:14px;font-size:14px;color:#1B2A4A"><strong>Total Violations: '+vids.length+'</strong><br>Estimated Fine Exposure: <strong>'+fmtC(d.violationTotal||0)+'</strong></div></div></div><button onclick="window.print()" style="margin-top:10px;padding:10px 20px;background:#1B2A4A;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer">🖨 Print</button></body></html>');
 }
 
-function snLoadClient(){
-  var k=document.getElementById('sn-client-dd').value;
-  if(!k)return;
-  _sk(k);
-  snToast('✓ Loaded: '+(_gc()[k]?.firstName||k));
-  setTimeout(function(){window.location.reload();},600);
-}
+function toast(msg,color){var t=document.getElementById('tst');t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+function closePop(){document.getElementById('pop-ov').classList.remove('on');}
 
-function snShowModal(){
-  var t=new Date();
-  document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();
-  document.getElementById('sn-name').value='';
-  document.getElementById('sn-resort').value='';
-  document.getElementById('sn-modal').classList.add('active');
-}
-function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
+// ── SIDEBAR ───────────────────────────────────────────────────────────────
+var PAGES=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},{n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},{n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},{n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},{n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},{n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},{n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},{n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},{n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},{n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},{n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},{n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
 
-function snCreateClient(){
-  var name=document.getElementById('sn-name').value.trim();
-  var resort=document.getElementById('sn-resort').value.trim();
-  var date=document.getElementById('sn-date').value;
-  if(!name&&!resort){alert('Please enter a name or resort.');return;}
-  var parts=name.split(' ');
-  var firstName=parts[0]||'';var lastName=parts.slice(1).join(' ')||'';
-  var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();
-  var c=_gc();
-  c[k]={firstName:firstName,lastName:lastName,name:name,resort:resort,date:date,_c:Date.now()};
-  _sc(c);_sk(k);snCloseModal();snRefresh();
-  document.getElementById('sn-client-dd').value=k;
-  snToast('✓ Created: '+name);
-  setTimeout(function(){window.location.href='/owner/';},700);
+function buildSB(){
+  var d=activeData(),slug=active(),all=getAll();
+  var cHTML=d?'<div class="sb-client"><div class="sb-stage">'+(d.alphaFee?'Quoted':'Assessment')+'</div><div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div><div class="sb-resort">'+(d.resort||'No resort')+'</div><div class="sb-stats"><div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+fmtC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12))+'</div></div><div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+fmtC(parseFloat(d.maitFees)||0)+'</div></div></div></div>':'<div class="sb-no-client">⚠️ No client selected</div>';
+  var opts=Object.keys(all).map(function(k){var c=all[k];return'<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
+  var nav=PAGES.map(function(p){var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;return'<a href="'+p.url+'" class="sb-link'+(window.location.pathname.startsWith(p.url.replace(/\/$/,''))?' active':'')+'"><span class="sb-num">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#1a7a3c;font-size:10px">✓</span>':'')+'</a>';}).join('');
+  document.getElementById('sb').innerHTML='<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'+cHTML+'<div class="sb-sel"><select class="sb-select" onchange="switchC(this.value)"><option value="">— Select client —</option>'+opts+'</select><div class="sb-brow"><button class="sb-b" onclick="location.href='/owner/'">+ New</button></div></div><nav class="sb-nav">'+nav+'</nav><div class="sb-rpts"><div class="sb-cal-lbl">📋 Quick Reports</div><button class="sb-rpt" onclick="emailRights()">📧 Email Rights</button><button class="sb-rpt" onclick="genReport()">⚖ View Report</button></div>';
 }
+function switchC(slug){if(!slug)return;localStorage.setItem(AK,slug);toast('Loaded');setTimeout(function(){location.reload();},500);}
 
-function snToast(msg){
-  var t=document.getElementById('sn-toast');
-  if(!t)return;
-  t.textContent=msg;t.style.display='block';
-  setTimeout(function(){t.style.display='none';},2500);
-}
-
-// Highlight active page
-(function(){
-  var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';
-  document.querySelectorAll('.sn-item[data-page]').forEach(function(el){
-    if(el.dataset.page===path)el.classList.add('active');
-  });
-  snRefresh();
-})();
+buildSB();
+buildRights();
 </script>
-
 </body>
 </html>
