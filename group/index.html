@@ -24,6 +24,40 @@ html,body{height:100%;font-family:'Inter',sans-serif;font-size:14px;background:#
 .sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
 .sidebar::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 .sidebar::-webkit-scrollbar-thumb:hover{background:rgba(200,150,12,.7)}
+.main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
+.sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
+.sb-logo img{max-width:130px}
+.sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
+.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
+.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px}
+.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
+.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
+.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
+.sb-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:5px 7px;margin-top:5px;font-size:11px;color:#C8960C;font-weight:600}
+.sb-meta{font-size:10px;color:rgba(255,255,255,.35);margin-top:5px}
+.sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
+.sb-select option{background:#1B2A4A}
+.sb-brow{display:flex;gap:5px;margin-top:5px}
+.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
+.sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sb-b:hover{opacity:.85}
+.sb-nav{flex:1;padding:6px 0}
+.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
+.sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
+.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center;flex-shrink:0}
+.sb-link.active .sb-num{background:rgba(200,150,12,.25);color:#C8960C}
+.sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
+.sb-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sb-cal-in{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif;margin-bottom:3px}
+.sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
+.sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
 
 .main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
 .page{max-width:620px;margin:0 auto}
@@ -292,7 +326,167 @@ function groupSubmit(){ATC.markPageSaved('/group/');showSubmitPopup('Finding You
 function groupEmail(){
   const d=ATC.activeData()||{};
   const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><body style="margin:20px;font-family:Inter,sans-serif"><div style="max-width:600px;margin:0 auto;border:2px solid #1B2A4A;border-radius:8px;overflow:hidden"><div style="background:#1B2A4A;padding:20px;text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" style="max-width:140px;margin-bottom:10px"><br><div style="color:#fff;font-size:18px;font-weight:700">Finding Your Group</div></div><div style="padding:24px"><div style="text-align:center;margin-bottom:20px"><div style="font-size:22px;font-weight:700;color:#1B2A4A">One case is a complaint.</div><div style="font-size:22px;font-weight:700;color:#C8960C">Fifty is a pattern.</div></div><p style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:12px">When multiple owners document the same violations against the same resort, it becomes a group filing. The resort faces consolidated legal and financial exposure — and must grant exit to all participants.</p><p style="font-size:14px;color:#374151;line-height:1.7">In some filings, 20–40% of participants receive compensation checks directly from the resort. Alpha keeps zero.</p></div></div><button onclick="window.print()" style="margin-top:10px;padding:10px 20px;background:#1B2A4A;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer">🖨 Print</button></body></html>`);
+  win.document.write(`<!DOCTYPE html><html><body style="margin:20px;font-family:Inter,sans-serif"><div style="max-width:600px;margin:0 auto;border:2px solid #1B2A4A;border-radius:8px;overflow:hidden"><div style="background:#1B2A4A;padding:20px;text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" style="max-width:140px;margin-bottom:10px"><br><div style="color:#fff;font-size:18px;font-weight:700">Finding Your Group</div></div><div style="padding:24px"><div style="text-align:center;margin-bottom:20px"><div style="font-size:22px;font-weight:700;color:#1B2A4A">One case is a complaint.</div><div style="font-size:22px;font-weight:700;color:#C8960C">Fifty is a pattern.</div></div><p style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:12px">When multiple owners document the same violations against the same resort, it becomes a group filing. The resort faces consolidated legal and financial exposure — and must grant exit to all participants.</p><p style="font-size:14px;color:#374151;line-height:1.7">In some filings, 20–40% of participants receive compensation checks directly from the resort. Alpha keeps zero.</p></div></div><button onclick="window.print()" style="margin-top:10px;padding:10px 20px;background:#1B2A4A;color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer">🖨 Print</button><script>
+/* Universal Sidebar */
+
+var SK='atc_clients_v2',AK='atc_active';
+function _getAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function _active(){return localStorage.getItem(AK)||null;}
+function _activeData(){var s=_active();return s?_getAll()[s]||null:null;}
+function _fmtC(n){return '$'+Math.round(n||0).toLocaleString();}
+function _fmtD(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function _saveField(k,v){var s=_active();if(!s)return;var all=_getAll();if(!all[s])return;all[s][k]=v;all[s]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(all));}
+
+var _PAGES=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+
+function buildSidebar(){
+  var d=_activeData(),slug=_active(),all=_getAll();
+  var cHTML='';
+  if(d){
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    cHTML='<div class="sb-client">'
+      +'<div class="sb-stage">'+(d.alphaFee?'Quoted':'Assessment')+'</div>'
+      +'<div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div>'
+      +'<div class="sb-resort">'+(d.resort||'No resort entered')+'</div>'
+      +'<div class="sb-stats">'
+        +'<div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+_fmtC(mo)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Yearly</div><div class="sv">'+_fmtC(mo*12)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+_fmtC(parseFloat(d.maitFees)||0)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Visits</div><div class="sv">'+(d._visits||1)+'</div></div>'
+      +'</div>'
+      +(d.alphaFee?'<div class="sb-quote">📄 '+_fmtC(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')
+      +'<div class="sb-meta">Last: '+_fmtD(d._updated)+'</div>'
+    +'</div>';
+  } else {
+    cHTML='<div class="sb-no-client">⚠️ No client selected — go to Dashboard</div>';
+  }
+  var opts=Object.keys(all).map(function(k){
+    var c=all[k];
+    return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'
+      +(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';
+  }).join('');
+  var curPath='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+  var nav=_PAGES.map(function(p){
+    var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;
+    return '<a href="'+p.url+'" class="sb-link'+(curPath===p.url?' active':'')+'"><span class="sb-num">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#1a7a3c;font-size:10px;flex-shrink:0">✓</span>':'')+'</a>';
+  }).join('');
+  var calV=d
+    ?'<input type="datetime-local" class="sb-cal-in" id="_ta" value="'+(d._todayAppt||'')+'" onchange="_saveField('_todayAppt',this.value)"><div class="sb-cal-lbl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sb-cal-in" id="_fa" value="'+(d._fuAppt||'')+'" onchange="_saveField('_fuAppt',this.value)"><button class="sb-b" style="margin-top:4px;width:100%;font-size:9px" onclick="_addCal()">+ Google Calendar</button>'
+    :'<div style="font-size:10px;color:rgba(255,255,255,.3);padding:2px">Select a client first</div>';
+  var sbEl=document.getElementById('sidebar')||document.getElementById('sb');
+  if(!sbEl)return;
+  sbEl.innerHTML=
+    '<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
+    +cHTML
+    +'<div class="sb-sel"><select class="sb-select" onchange="_switchClient(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div class="sb-brow"><button class="sb-b" onclick="_newClient()">+ New</button><button class="sb-b out" onclick="_saveClear()">Save &amp; Clear</button></div></div>'
+    +'<nav class="sb-nav">'+nav+'</nav>'
+    +'<div class="sb-cal"><div class="sb-cal-lbl">📅 Today</div>'+calV+'</div>'
+    +'<div class="sb-rpts"><div class="sb-cal-lbl">📋 Reports</div>'
+    +'<button class="sb-rpt" onclick="_rpt('vero')">📋 Vero</button>'
+    +'<button class="sb-rpt" onclick="_rpt('crm')">📋 CRM Note</button>'
+    +'<button class="sb-rpt" onclick="_rpt('sms')">💬 SMS</button>'
+    +'<button class="sb-rpt" onclick="_rpt('full')">📄 Full Summary</button>'
+    +'</div>';
+}
+
+function _switchClient(slug){if(!slug)return;localStorage.setItem(AK,slug);_toast('Loaded');setTimeout(function(){location.reload();},500);}
+
+function _newClient(){
+  var m=document.getElementById('_nc-ov');
+  if(!m){
+    m=document.createElement('div');m.id='_nc-ov';
+    m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';
+    m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:380px;width:100%;margin:20px"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client</div><div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_nc-f" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="First name"></div><div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_nc-l" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Last name"></div><div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_nc-r" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="e.g. Westgate — Orlando, FL"></div><div style="display:flex;gap:8px"><button onclick="document.getElementById('_nc-ov').style.display='none'" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="_createClient()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Create &amp; Start</button></div></div>';
+    m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});
+    document.body.appendChild(m);
+  }
+  m.style.display='flex';setTimeout(function(){var f=document.getElementById('_nc-f');if(f)f.focus();},100);
+}
+
+function _createClient(){
+  var f=(document.getElementById('_nc-f')||{}).value||'';
+  var l=(document.getElementById('_nc-l')||{}).value||'';
+  var r=(document.getElementById('_nc-r')||{}).value||'';
+  f=f.trim();l=l.trim();r=r.trim();
+  if(!f&&!l){alert('Please enter a name.');return;}
+  var slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');
+  var all=_getAll();
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});
+  localStorage.setItem(SK,JSON.stringify(all));
+  localStorage.setItem(AK,slug);
+  var m=document.getElementById('_nc-ov');if(m)m.style.display='none';
+  _toast('Created: '+f+' '+l);
+  setTimeout(function(){location.href='/owner/';},700);
+}
+
+function _saveClear(){
+  var d=_activeData();if(!d){alert('No active client.');return;}
+  var saved=d._savedPages||[];
+  var list=_PAGES.map(function(p){var ok=saved.indexOf(p.url)>-1;return'<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:'+(ok?'#1a7a3c':'#d1d5db')+'">'+(ok?'✓':'○')+'</span>'+p.ic+' '+p.lb+'</div>';}).join('');
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:420px;width:100%;margin:20px;max-height:85vh;overflow-y:auto"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</div><div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A">'+(d.resort||'No resort')+'</div>'+list+'<div style="display:flex;gap:8px;margin-top:14px"><button onclick="this.closest('div[style]').remove()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="_doClear()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Clear &amp; New</button></div></div>';
+  document.body.appendChild(ov);
+}
+
+function _doClear(){localStorage.removeItem(AK);_toast('Cleared');setTimeout(function(){location.href='/home/';},700);}
+
+function _addCal(){
+  var d=_activeData();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}
+  var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
+  var end=new Date(dt.getTime()+3600000);
+  var name=(d&&d.firstName?d.firstName+' ':'')+'ATC Follow-Up';
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(name)+'&dates='+fmt(dt)+'/'+fmt(end),'_blank');
+}
+
+function _rpt(type){
+  var d=_activeData();if(!d){_toast('No active client','#c0392b');return;}
+  var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
+  var mo=_fmtC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
+  var txt='';
+  if(type==='vero')txt='Name: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n2nd: '+(d.phone2||'—')+'\nEmail: '+(d.email||'—')+'\nAddress: '+(d.address||'—');
+  else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+_fmtC(d.maitFees)+'/yr\nMortgage: '+_fmtC(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fmtC(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\nMotivation: '+(d.motivation||'—')+'/10\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';
+  else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\n\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nEmail: '+(d.email||'—')+'\nMonthly: '+mo+'\nMTF: '+_fmtC(d.maitFees)+'/yr\nMortgage: '+_fmtC(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fmtC(d.alphaFee):'—')+' / '+(d.selectedTerm||'—')+' mo\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  try{navigator.clipboard.writeText(txt).then(function(){_toast('✓ Copied');});}
+  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);_toast('✓ Copied');}
+}
+
+function _toast(msg,color){
+  var t=document.getElementById('_toast')||document.getElementById('global-toast')||document.getElementById('tst');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='display:none;position:fixed;bottom:24px;left:260px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}
+  t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2500);
+}
+
+document.addEventListener('DOMContentLoaded',function(){buildSidebar();});
+
+</script>
+</body></html>`);
 }
 </script>
 
@@ -489,91 +683,6 @@ function showToast(msg, color) {
   setTimeout(() => t.style.display = 'none', 3000);
 }
 
-function buildSidebar() {
-  const path = window.location.pathname;
-  const activeUrl = '/' + path.split('/').filter(Boolean)[0] + '/';
-  const d = ATC.activeData();
-  const slug = ATC.active();
-
-  let clientHTML = '';
-  if (d) {
-    const mo = (parseFloat(d.monthlyMortgage)||0) + ((parseFloat(d.maitFees)||0)/12);
-    const stage = d.alphaFee ? 'quoted' : 'assessment';
-    const stageLabel = {assessment:'Assessment', quoted:'Quoted', approved:'Approved', followup:'Follow-Up'}[stage];
-    clientHTML = `
-      <div class="sb-client">
-        <div class="sb-stage">${stageLabel}</div>
-        <div class="sb-name">${d.firstName||''} ${d.lastName||''}</div>
-        <div class="sb-resort">${d.resort||'No resort entered'}</div>
-        <div class="sb-stats">
-          <div class="sb-stat"><div class="sl">Monthly</div><div class="sv">${ATC.formatCurrency(mo)}</div></div>
-          <div class="sb-stat"><div class="sl">Yearly</div><div class="sv">${ATC.formatCurrency(mo*12)}</div></div>
-          <div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">${ATC.formatCurrency(parseFloat(d.maitFees)||0)}</div></div>
-          <div class="sb-stat"><div class="sl">Visits</div><div class="sv">${d._visits||1}</div></div>
-        </div>
-        ${d.alphaFee ? `<div class="sb-quote-bar">📄 Quote: ${ATC.formatCurrency(d.alphaFee)} · ${d.selectedTerm||'—'} mo</div>` : ''}
-        <div class="sb-visits">Last edited: ${ATC.formatDate(d._updated)}</div>
-      </div>`;
-  } else {
-    clientHTML = `<div class="sb-client no-client" style="padding:12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600">⚠️ No client selected</div>`;
-  }
-
-  const all = ATC.getAll();
-  const clientOptions = Object.keys(all).map(k => {
-    const c = all[k];
-    const label = (c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'');
-    return `<option value="${k}" ${k===slug?'selected':''}>${label}</option>`;
-  }).join('');
-
-  const navLinks = PAGES.map(p => {
-    const isActive = p.url === activeUrl;
-    const saved = d && d._savedPages && d._savedPages.includes(p.url);
-    return `<a href="${slug ? p.url.replace(/\/$/, '/'+slug+'/') : p.url}" class="sb-link ${isActive?'active':''}" data-url="${p.url}">
-      <span class="sb-num">${p.num}</span>
-      <span style="flex:1">${p.icon} ${p.label}</span>
-      ${saved ? '<span style="color:#1a7a3c;font-size:10px">✓</span>' : ''}
-    </a>`;
-  }).join('');
-
-  const sidebar = document.getElementById('sidebar');
-  if (!sidebar) return;
-
-  sidebar.innerHTML = `
-    <div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-    ${clientHTML}
-    <div class="sb-selector">
-      <select class="sb-select" id="sb-client-dd" onchange="sbSwitchClient(this.value)">
-        <option value="">— Select client —</option>
-        ${clientOptions}
-      </select>
-      <div class="sb-btn-row">
-        <button class="sb-btn" onclick="sbNewClient()">+ New</button>
-        <button class="sb-btn outline" onclick="sbSaveClear()">Save & Clear</button>
-      </div>
-    </div>
-    <nav class="sb-nav">${navLinks}</nav>
-    <div class="sb-cal">
-      <div class="sb-cal-label">📅 Today's Appointment</div>
-      <input type="datetime-local" class="sb-cal-input" id="sb-today-appt" onchange="sbSaveAppt('today',this.value)">
-      <div class="sb-cal-label" style="margin-top:8px">📅 Follow-Up</div>
-      <input type="datetime-local" class="sb-cal-input" id="sb-fu-appt" onchange="sbSaveAppt('followup',this.value)">
-      <button class="sb-btn" style="margin-top:6px;font-size:10px" onclick="sbAddToCalendar()">+ Add to Google Calendar</button>
-    </div>
-    <div class="sb-reports">
-      <div class="sb-cal-label">📋 Reports</div>
-      <button class="sb-report-btn" onclick="sbReport('vero')">📋 Vero Report</button>
-      <button class="sb-report-btn" onclick="sbReport('crm')">📋 CRM Call Note</button>
-      <button class="sb-report-btn" onclick="sbReport('email')">📧 Client Email</button>
-      <button class="sb-report-btn" onclick="sbReport('sms')">💬 Follow-Up SMS</button>
-      <button class="sb-report-btn" onclick="sbReport('summary')">📄 Full Summary</button>
-    </div>`;
-
-  // Restore calendar values
-  if (d) {
-    if (d._todayAppt) document.getElementById('sb-today-appt').value = d._todayAppt;
-    if (d._fuAppt) document.getElementById('sb-fu-appt').value = d._fuAppt;
-  }
-}
 
 function sbSwitchClient(slug) {
   if (!slug) return;
