@@ -289,7 +289,13 @@ window.rpt=rpt;
 function toast(msg,color){var t=document.getElementById('_t');if(!t){t=document.createElement('div');t.id='_t';t.style.cssText='display:none;position:fixed;bottom:24px;left:240px;background:#16A34A;color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}t.style.background=color||'#16A34A';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
 window.toast=toast;
 function initBanner(){var s=localStorage.getItem(AK);if(!s)return;var d=ga()[s];if(!d)return;var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}set('vb-name',((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—');set('vb-phone',d.phone||'—');set('vb-resort',d.resort||'—');set('vb-loc',d.location||'—');set('vb-mo',mo>0?fc(mo)+'/mo':'—');set('vb-yr',mo>0?fc(mo*12)+'/yr':'—');set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');set('vb-stg',stg);}
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){buildSB();initBanner();});}else{buildSB();initBanner();}
+// Run after all inline scripts have executed
+function _sbInit(){buildSB();if(typeof initBanner==='function')initBanner();if(typeof loadData==='function'&&!window._pageDidLoad)loadData();}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(_sbInit,0);});
+}else{
+  setTimeout(_sbInit,0);
+}
 })();
 </script>
 </body>
