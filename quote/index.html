@@ -165,32 +165,8 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 </head>
 <body>
 
-<div class="sidenav">
-<div class="sn-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>
-<div class="sn-client-box">
-<div class="sn-client-label">Active Client</div>
-<select class="sn-client-select" id="sn-client-dd" onchange="snLoadClient()"><option value="">— Select Client —</option></select>
-<button class="sn-new-btn" onclick="snShowModal()">+ New Client</button>
-</div>
-<nav class="sn-menu">
-<a href="/home/" class="sn-item" data-page="home"><span class="sn-icon">🏠</span>Dashboard</a>
-<div class="sn-divider"></div>
-<a href="/owner/" class="sn-item" data-page="owner"><span class="sn-icon">📋</span>Owner & Resort Info</a>
-<a href="/whyout/" class="sn-item" data-page="whyout"><span class="sn-icon">❓</span>Why Do You Want Out</a>
-<a href="/wait/" class="sn-item" data-page="wait"><span class="sn-icon">⚠️</span>If You Do Nothing</a>
-<a href="/history/" class="sn-item" data-page="history"><span class="sn-icon">⭐</span>Our Track Record</a>
-<a href="/rights/" class="sn-item" data-page="rights"><span class="sn-icon">⚖️</span>Consumer Rights</a>
-<a href="/cost/" class="sn-item" data-page="cost"><span class="sn-icon">💰</span>True Cost</a>
-<a href="/quote/" class="sn-item" data-page="quote"><span class="sn-icon">📄</span>Your Quote</a>
-<div class="sn-divider"></div>
-<a href="/better/" class="sn-item" data-page="better"><span class="sn-icon">🏆</span>What Makes Alpha Better</a>
-<a href="/recap/" class="sn-item" data-page="recap"><span class="sn-icon">📋</span>Recap & Next Steps</a>
-<a href="/guarantee/" class="sn-item" data-page="guarantee"><span class="sn-icon">🛡</span>Guarantee</a>
-<a href="/checklist/" class="sn-item" data-page="checklist"><span class="sn-icon">✅</span>Acknowledgment</a>
-<a href="https://drive.google.com/file/d/12_izeyq-MnQXeyiTCmkj5T2-zxxWvtW2/view" target="_blank" class="sn-item"><span class="sn-icon">📝</span>Alpha Contract</a>
-</nav>
-</div>
-<div class="sn-toast" id="sn-toast"></div>
+<div class="sidenav" id="sidenav"></div>
+<div class="sn-toast main" id="sn-toast"></div>
 <div class="sn-modal-overlay" id="sn-modal">
 <div class="sn-modal">
 <h3>New Client</h3>
