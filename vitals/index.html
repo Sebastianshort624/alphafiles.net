@@ -1294,7 +1294,7 @@ function initBanner(){
   set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');
   set('vb-stg',stg);
 }
-function _sbInit(){buildSB();if(typeof initBanner==='function')initBanner();}
+window.buildSB=buildSB;function _sbInit(){buildSB();if(typeof initBanner==='function')initBanner();}
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(_sbInit,0);});}
 else{setTimeout(_sbInit,0);}
 })();
