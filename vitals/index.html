@@ -672,19 +672,18 @@ function saveVitals(){autoSave();if(typeof toast==='function')toast('Saved');}
 
 function copyVitals(){
   var d=ad()||{};var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-  var txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===
-'
-    +'Client: '+((d.firstName||'')+' '+(d.lastName||'')).trim()+'
-Resort: '+(d.resort||'—')+'
-Phone: '+(d.phone||'—')+'
-'
-    +'Monthly: '+fc(mo)+'
-MTF: '+fc(d.maitFees)+'/yr
-Mortgage: '+fc(d.monthlyMortgage)+'/mo
-'
-    +'Stage: '+STAGES[_stage]+'
-Quote: '+(d.alphaFee?fc(d.alphaFee):'—')+'
-Notes: '+(d.notes||'—');
+  var nl='\n';
+  var em='\u2014';
+  var txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ==='+nl
+    +'Client: '+((d.firstName||'')+' '+(d.lastName||'')).trim()+nl
+    +'Resort: '+(d.resort||em)+nl
+    +'Phone: '+(d.phone||em)+nl
+    +'Monthly: '+fc(mo)+nl
+    +'MTF: '+fc(d.maitFees)+'/yr'+nl
+    +'Mortgage: '+fc(d.monthlyMortgage)+'/mo'+nl
+    +'Stage: '+STAGES[_stage]+nl
+    +'Quote: '+(d.alphaFee?fc(d.alphaFee):em)+nl
+    +'Notes: '+(d.notes||em);
   try{navigator.clipboard.writeText(txt).then(function(){if(typeof toast==='function')toast('Copied');});}
   catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);if(typeof toast==='function')toast('Copied');}
 }
@@ -766,6 +765,7 @@ window._newCFn=function(){
     html+='<div style="margin-bottom:14px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_ncr" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="Resort name"></div>';
     html+='<div style="display:flex;gap:8px"><button id="_nccancel" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="createC()" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Start</button></div></div>';
     m.innerHTML=html;
+    document.getElementById('_nccancel').onclick=function(){m.style.display='none';};
     m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});
     document.body.appendChild(m);
   }
