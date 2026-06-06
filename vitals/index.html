@@ -309,77 +309,42 @@
   <div class="card-hdr">Appointment</div>
   <div class="card-body">
 
-    <div class="frow" style="margin-bottom:6px">
-      <div class="ff"><label>Appt Type</label>
+    <div class="frow" style="margin-bottom:8px">
+      <div class="ff"><label>Type</label>
         <select id="v-appttype" onchange="autoSave()">
-          <option>Firm Appointment</option>
-          <option>Follow Up</option>
-          <option>Quote Review</option>
-          <option>Contract Review</option>
-          <option>Accept Agreement</option>
+          <option>Firm Appointment</option><option>Follow Up</option>
+          <option>Quote Review</option><option>Contract Review</option><option>Accept Agreement</option>
         </select>
       </div>
-      <div class="ff"><label>Client Classification</label>
+      <div class="ff"><label>Client — A B C D</label>
         <select id="v-classify" onchange="autoSave()">
-          <option value="">Select...</option>
-          <option value="A">A — Hot, ready to move forward</option>
-          <option value="B">B — Interested, needs one more touch</option>
-          <option value="C">C — Engaged but has objections</option>
-          <option value="D">D — Cold, needs long-term nurture</option>
+          <option value="">--</option>
+          <option value="A">A — Hot / Ready</option>
+          <option value="B">B — Interested</option>
+          <option value="C">C — Objections</option>
+          <option value="D">D — Cold / Nurture</option>
         </select>
       </div>
     </div>
 
-    <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin:8px 0 6px">Today's Appointment</div>
-    <div class="frow" style="margin-bottom:4px">
-      <div class="ff">
-        <label>Date</label>
-        <input id="v-tdate" type="date" oninput="autoSave()">
-      </div>
-      <div class="ff">
-        <label>Date Certainty</label>
+    <div style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin:6px 0 4px">Today</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px">
+      <div class="ff"><label>Date</label><input id="v-tdate" type="date" oninput="autoSave()"></div>
+      <div class="ff"><label>Time</label><input id="v-ttime" type="time" oninput="autoSave()"></div>
+      <div class="ff"><label>Certainty</label>
         <select id="v-tdate-cert" onchange="autoSave()">
           <option value="firm">Set in Stone</option>
           <option value="approx">Approximate</option>
         </select>
       </div>
     </div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="ff">
-        <label>Time</label>
-        <input id="v-ttime" type="time" oninput="autoSave()">
-      </div>
-      <div class="ff">
-        <label>Time Certainty</label>
-        <select id="v-ttime-cert" onchange="autoSave()">
-          <option value="firm">Set in Stone</option>
-          <option value="approx">Approximate</option>
-        </select>
-      </div>
-    </div>
 
-    <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin:8px 0 6px">Follow-Up</div>
-    <div class="frow" style="margin-bottom:4px">
-      <div class="ff">
-        <label>Date</label>
-        <input id="v-fudate2" type="date" oninput="autoSave()">
-      </div>
-      <div class="ff">
-        <label>Date Certainty</label>
+    <div style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin:6px 0 4px">Follow-Up</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px">
+      <div class="ff"><label>Date</label><input id="v-fudate2" type="date" oninput="autoSave()"></div>
+      <div class="ff"><label>Time</label><input id="v-futime" type="time" oninput="autoSave()"></div>
+      <div class="ff"><label>Certainty</label>
         <select id="v-fudate-cert" onchange="autoSave()">
-          <option value="firm">Set in Stone</option>
-          <option value="approx">Approximate</option>
-        </select>
-      </div>
-    </div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="ff">
-        <label>Time</label>
-        <input id="v-futime" type="time" oninput="autoSave()">
-      </div>
-      <div class="ff">
-        <label>Time Certainty</label>
-        <select id="v-futime-cert" onchange="autoSave()">
           <option value="firm">Set in Stone</option>
           <option value="approx">Approximate</option>
         </select>
@@ -698,7 +663,7 @@ function loadData(){
     'v-mtfb':'mtfBehind','v-mtgb':'mtgBehind','v-fee':'alphaFee','v-term':'selectedTerm',
     'v-fund':'fundingStatus','v-obj':'objection','v-objstat':'objStatus','v-note':'notes',
     'v-credit-affected':'creditAffected','v-fico':'ficoScore','v-resort-threat':'resortThreat',
-    'v-mtf-freq':'mtfFreq','v-appttype':'apptType','v-closer':'closer'
+    'v-mtf-freq':'mtfFreq','v-appttype':'apptType','v-closer':'closer','v-classify':'clientClass','v-tdate-cert':'apptCert','v-fudate-cert':'fuCert'
   };
   Object.keys(map).forEach(function(id){
     var el=document.getElementById(id);
