@@ -77,15 +77,112 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 </style>
 <style id="atc-sidebar-css">
 :root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--orange:#ea580c;--blue:#2563EB}
-body{display:flex!important;min-height:100vh!important;margin:0!important;font-family:'Inter',sans-serif!important}
-.sidenav{width:220px!important;min-width:220px!important;max-width:220px!important;background:#1B2A4A!important;background-color:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;scrollbar-width:thin!important;scrollbar-color:rgba(200,150,12,.4) transparent!important}
-.sidenav *{box-sizing:border-box}
+body{display:flex!important;min-height:100vh!important;margin:0!important}
+.sidenav{width:220px!important;min-width:220px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .sidenav::-webkit-scrollbar{width:4px}
 .sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
-.main,.main-content,.page-content,.app-content,.content-area,.page-wrap{margin-left:220px!important;flex:1!important;min-width:0!important;width:calc(100% - 220px)!important}
-.app{display:flex!important;flex:1!important;width:100%!important;min-height:100vh!important}
+.main,.main-content,.page-content,.app-content{margin-left:220px!important;flex:1!important;min-width:0!important}
+.app{display:flex!important;flex:1!important;width:100%!important}
 @media print{.sidenav{display:none!important}.main,.main-content,.page-content,.app-content{margin-left:0!important;width:100%!important}}
 </style>
+<script id="atc-sb-head">
+var SK='atc_clients_v2',AK='atc_active';
+function _gaAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function _saAll(o){localStorage.setItem(SK,JSON.stringify(o));}
+function _acSlug(){return localStorage.getItem(AK)||null;}
+function _adData(){var s=_acSlug();return s?_gaAll()[s]||null:null;}
+function _fc(n){return '$'+Math.round(n||0).toLocaleString();}
+function _fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+window.sf=function(k,v){var s=_acSlug();if(!s)return;var a=_gaAll();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_saAll(a);};
+window.swC=function(s){if(!s)return;localStorage.setItem(AK,s);setTimeout(function(){location.reload();},400);};
+window.addCal=function(){var d=_adData();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent((d.firstName||'Client')+' — ATC Follow-Up')+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');};
+window.rpt=function(type){var d=_adData();if(!d){_sbToast('No active client','#DC2626');return;}var nm=(d.firstName||d.lastName?(d.firstName||'')+' '+(d.lastName||''):'Unnamed').trim();var mo=_fc((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));var txt='';if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+nm+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+_fc(d.maitFees)+'/yr\nMortgage: '+_fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fc(d.alphaFee):'—')+'\nNotes: '+(d.notes||'—');else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Good time to connect? (877) 848-3948 Ext. 134';else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\nClient: '+nm+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+_fc(d.maitFees)+'/yr\nMortgage: '+_fc(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fc(d.alphaFee):'—')+'\nNotes: '+(d.notes||'—');try{navigator.clipboard.writeText(txt).then(function(){_sbToast('✓ Copied');});}catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);_sbToast('✓ Copied');}};
+window.newC=function(){var m=document.getElementById('_ncm');if(!m){m=document.createElement('div');m.id='_ncm';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:380px;width:100%;margin:20px"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client Session</div><div style="margin-bottom:10px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_ncf" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="First (or leave blank)"></div><div style="margin-bottom:10px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_ncl" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="Last (or leave blank)"></div><div style="margin-bottom:14px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_ncr" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="Resort name"></div><div style="display:flex;gap:8px"><button onclick="document.getElementById('_ncm').style.display='none'" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="createC()" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Start</button></div></div>';m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});document.body.appendChild(m);}m.style.display='flex';setTimeout(function(){var f=document.getElementById('_ncf');if(f)f.focus();},100);};
+window.createC=function(){var f=(document.getElementById('_ncf')||{}).value||'';var l=(document.getElementById('_ncl')||{}).value||'';var r=(document.getElementById('_ncr')||{}).value||'';f=f.trim();l=l.trim();r=r.trim();var all=_gaAll();var slug;if(!f&&!l){var ct=Object.keys(all).filter(function(k){return k.indexOf('unnamed')===0;}).length+1;slug='unnamed-'+ct;}else{slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');}all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_updated:Date.now()});_saAll(all);localStorage.setItem(AK,slug);var m=document.getElementById('_ncm');if(m)m.style.display='none';_sbToast('Session started'+(f||l?' for '+f+' '+l:''));setTimeout(function(){location.href='/vitals/';},700);};
+window.saveClear=function(){var s=_acSlug();if(s){var all=_gaAll();if(all[s]){all[s]._updated=Date.now();_saAll(all);}}localStorage.removeItem(AK);_sbToast('Saved & cleared');setTimeout(function(){location.href='/home/';},700);};
+function _sbToast(msg,color){var t=document.getElementById('_t');if(!t){t=document.createElement('div');t.id='_t';t.style.cssText='display:none;position:fixed;bottom:24px;left:240px;background:#16A34A;color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}t.style.background=color||'#16A34A';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+window.toast=_sbToast;
+
+var _PG=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:'V1',ic:'⚾',lb:'Client Vitals',url:'/vitals/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Your Spot in Group Filing',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:'4f',ic:'🚪',lb:'4 Ways to Exit',url:'/exit-methods/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+
+function buildSB(){
+  var el=document.querySelector('.sidenav');if(!el)return;
+  var d=_adData(),slug=_acSlug(),all=_gaAll();
+  var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+  var mo=d?(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12):0;
+  var nm=d?(d.firstName||d.lastName?(d.firstName||'')+' '+(d.lastName||''):'Unnamed').trim():null;
+  var ct=d?('<div style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)">'
+    +'<div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px">'+(nm||'Unnamed')+'</div>'
+    +'<div style="font-size:12px;color:#C8960C;font-weight:600;margin-bottom:4px">'+(d.resort||'No resort')+'</div>'
+    +'<div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65);margin-bottom:2px"><span>Monthly</span><strong style="color:#fff">'+_fc(mo)+'</strong></div>'
+    +'<div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65)"><span>MTF/yr</span><strong style="color:#fff">'+_fc(parseFloat(d.maitFees)||0)+'</strong></div>'
+    +(d.alphaFee?'<div style="background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:12px;color:#C8960C;font-weight:600">'+_fc(d.alphaFee)+'</div>':'')
+    +'<div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:4px">'+_fd(d._updated)+'</div></div>')
+    :'<div style="padding:10px 12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)">⚠️ No client selected</div>';
+  var opts=Object.keys(all).map(function(k){var c=all[k];var n=(c.firstName||c.lastName?(c.firstName||'')+' '+(c.lastName||''):'Unnamed').trim();return'<option value="'+k+'"'+(k===slug?' selected':'')+'>'+(n)+(c.resort?' — '+c.resort:'')+'</option>';}).join('');
+  var nav=_PG.map(function(p){var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;return'<a href="'+p.url+'" style="display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:'+(cur===p.url?'#C8960C':'rgba(255,255,255,.65)')+';font-size:12px;font-weight:500;border-left:3px solid '+(cur===p.url?'#C8960C':'transparent')+';background:'+(cur===p.url?'rgba(200,150,12,.12)':'transparent')+'"><span style="font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:20px;text-align:center;color:'+(cur===p.url?'#C8960C':'rgba(255,255,255,.45)')+'">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#16A34A;font-size:12px;flex-shrink:0">✓</span>':'')+'</a>';}).join('');
+  var calV=d?('<input type="datetime-local" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;margin-bottom:3px" value="'+(d._todayAppt||'')+'" onchange="sf('_todayAppt',this.value)"><div style="font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin:4px 0">📅 Follow-Up</div><input type="datetime-local" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;margin-bottom:4px" value="'+(d._fuAppt||'')+'" onchange="sf('_fuAppt',this.value)"><button onclick="addCal()" style="width:100%;background:#C8960C;color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer">+ Google Calendar</button>'):'<div style="font-size:12px;color:rgba(255,255,255,.3)">Select a client first</div>';
+  el.innerHTML=
+    '<div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC" style="max-width:130px"></div>'
+    +ct
+    +'<div style="padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)"><select style="width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px" onchange="swC(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div style="display:flex;gap:5px;margin-top:5px"><button onclick="newC()" style="flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer">+ New</button><button onclick="saveClear()" style="flex:1;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer">Save &amp; Clear</button></div></div>'
+    +'<div style="font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px">Pages</div>'
+    +'<nav style="flex:1;padding:4px 0">'+nav+'</nav>'
+    +'<div style="padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)"><div style="font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">📅 Today</div>'+calV+'</div>'
+    +'<div style="padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)"><div style="font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">📋 Reports</div>'
+    +'<button onclick="rpt('crm')" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">📋 CRM Note</button>'
+    +'<button onclick="rpt('sms')" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">💬 SMS</button>'
+    +'<button onclick="rpt('full')" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer">📄 Full Summary</button>'
+    +'</div>';
+}
+
+function initBanner(){
+  var d=_adData();if(!d)return;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+  var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set('vb-name',(d.firstName||d.lastName?(d.firstName||'')+' '+(d.lastName||''):'Unnamed').trim());
+  set('vb-phone',d.phone||'—');
+  set('vb-resort',d.resort||'—');
+  set('vb-loc',d.location||'—');
+  set('vb-mo',mo>0?_fc(mo)+'/mo':'—');
+  set('vb-yr',mo>0?_fc(mo*12)+'/yr':'—');
+  set('vb-quote',d.alphaFee?_fc(parseFloat(d.alphaFee)):'No quote yet');
+  set('vb-stg',stg);
+}
+
+// Run on DOMContentLoaded — functions are global so this always works
+document.addEventListener('DOMContentLoaded',function(){
+  buildSB();
+  initBanner();
+});
+</script>
 </head>
 <body>
 <div class="sidenav"></div>
