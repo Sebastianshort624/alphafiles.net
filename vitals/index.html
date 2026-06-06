@@ -1104,11 +1104,7 @@ function loadData(){
   showThreatAlert();checkCreditAlert();updateProgress();
 }
 
-document.addEventListener('DOMContentLoaded',function(){
-  buildSB();
-  initBanner();
-  loadData();
-});
+document.addEventListener('DOMContentLoaded',function(){if(typeof loadData==='function')loadData();});
 </script>
 
 <script>
