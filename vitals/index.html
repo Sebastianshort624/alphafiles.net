@@ -222,13 +222,24 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
     </div>
     <div class="ps" id="mtg-details">
       <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label style="color:var(--orange)">Monthly Payment</label><input id="v-mtg" type="number" class="hi" style="border-color:var(--orange)" placeholder="350" oninput="autoSave();calcTotals()"></div>
+        <div class="ff"><label style="color:var(--orange)">Monthly Payment</label><input id="v-mtg" type="number" class="hi" style="border-color:var(--orange)" placeholder="350" oninput="autoSave();calcTotals();calcMtgRemaining()"></div>
         <div class="ff ro"><label>Annual</label><input id="v-mtg-yr" readonly></div>
       </div>
-      <div class="frow">
-        <div class="ff ro"><label>Balance (auto)</label><input id="v-balance" readonly style="font-weight:700;color:var(--orange);background:#fff8f0"></div>
-        <div class="ff ro"><label>Price (auto)</label><input id="v-mtg-future" readonly style="font-weight:700;color:var(--red);background:#fef2f2"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
+        <div style="background:#fff8f0;border:1.5px solid var(--orange);border-radius:6px;padding:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Balance Remaining</div>
+          <div id="v-balance-display" style="font-size:18px;font-weight:700;color:var(--orange)">—</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:2px">Years left × annual payment</div>
+          <input type="hidden" id="v-balance">
+        </div>
+        <div style="background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Price</div>
+          <div id="v-price-display" style="font-size:18px;font-weight:700;color:var(--red)">—</div>
+          <div id="v-price-rate" style="font-size:11px;color:#9ca3af;margin-top:2px">Select credit rating</div>
+          <input type="hidden" id="v-mtg-future">
+        </div>
       </div>
+      <div id="mtg-rem-box" style="display:none;background:#EAF0F8;border-radius:6px;padding:8px 10px;font-size:12px;color:#1B2A4A;margin-top:2px"></div>
     </div>
     <div class="ps" id="mtg-behind">
       <div class="ff"><label style="color:var(--red)">Months Late — Mortgage</label><input id="v-mtgb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
@@ -540,34 +551,42 @@ function calcSavings(){
 }
 
 function calcMtgRemaining(){
-  var year=parseInt(document.getElementById('v-year').value)||0;
-  var mtg=parseFloat(document.getElementById('v-mtg').value)||0;
-  var fico=document.getElementById('v-fico').value||'';
+  var year=parseInt((document.getElementById('v-year')||{}).value)||0;
+  var mtg=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
+  var fico=(document.getElementById('v-fico')||{}).value||'';
   var now=new Date().getFullYear();
-  var el=document.getElementById('mtg-rem-box');
-  var balEl=document.getElementById('v-balance');
-  var futEl=document.getElementById('v-mtg-future');
+  var balDisplay=document.getElementById('v-balance-display');
+  var balHidden=document.getElementById('v-balance');
+  var priceDisplay=document.getElementById('v-price-display');
+  var priceRate=document.getElementById('v-price-rate');
+  var priceHidden=document.getElementById('v-mtg-future');
+  var remBox=document.getElementById('mtg-rem-box');
+
   if(year>1990&&year<=now&&mtg>0){
     var yrsIn=now-year;
     var yrsLeft=Math.max(0,10-yrsIn);
-    var balance=mtg*12*yrsLeft;
-    // credit rate
+    // Balance = monthly × 12 × years remaining
+    var balance=Math.round(mtg*12*yrsLeft);
+    if(balDisplay)balDisplay.textContent=balance>0?fc(balance):'$0';
+    if(balHidden)balHidden.value=balance;
+    // Price = balance × rate × 120
     var rate=fico==='good'?0.165:fico==='fair'?0.175:fico==='poor'?0.185:0;
-    var price=rate>0?balance*rate*120:0;
-    // populate fields
-    if(balEl)balEl.value=balance>0?Math.round(balance):'';
-    if(futEl)futEl.value=price>0?fc(price):'—';
-    if(el){
-      el.style.display='block';
-      el.innerHTML='Purchased <strong>'+yrsIn+' years ago</strong>. '
-        +'<strong>'+yrsLeft+' years left</strong> on 10-yr term.'
-        +(balance>0?'<br>Balance: <strong style="color:var(--orange)">'+fc(balance)+'</strong>':'')
-        +(price>0?'&nbsp;&nbsp;Price: <strong style="color:var(--red)">'+fc(price)+'</strong>':'');
+    var rateLabel=fico==='good'?'Good credit — 16.5%':fico==='fair'?'Fair credit — 17.5%':fico==='poor'?'Poor credit — 18.5%':'Select credit rating';
+    var price=rate>0?Math.round(balance*rate*120):0;
+    if(priceDisplay)priceDisplay.textContent=price>0?fc(price):'—';
+    if(priceRate)priceRate.textContent=rateLabel;
+    if(priceHidden)priceHidden.value=price;
+    if(remBox){
+      remBox.style.display=yrsLeft>0?'block':'none';
+      remBox.innerHTML='Purchased <strong>'+yrsIn+' yrs ago</strong> — <strong>'+yrsLeft+' yrs left</strong> on 10-yr term';
     }
   } else {
-    if(el)el.style.display='none';
-    if(balEl)balEl.value='';
-    if(futEl)futEl.value='—';
+    if(balDisplay)balDisplay.textContent='—';
+    if(priceDisplay)priceDisplay.textContent='—';
+    if(priceRate&&fico==='')priceRate.textContent='Select year &amp; credit rating';
+    if(remBox)remBox.style.display='none';
+    if(balHidden)balHidden.value='';
+    if(priceHidden)priceHidden.value='';
   }
 }
   } else {if(el)el.style.display='none';}
