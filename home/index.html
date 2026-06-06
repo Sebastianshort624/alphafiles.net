@@ -92,12 +92,12 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 <script>
 var PG=[
   {n:0,  ic:'🏠', lb:'Dashboard',             sub:'You are here',                    url:'/home/'},
-  {n:1,  ic:'📋', lb:'Owner & Resort Info',    sub:'Names, resort, mortgage & fees',  url:'/owner/'},
+  {n:1,  ic:'📋', lb:'Owner & Resort Info (Legacy)',    sub:'Names, resort, mortgage & fees',  url:'/owner/'},
   {n:'V1',ic:'⚾',lb:'Client Vitals',          sub:'Baseball card snapshot',           url:'/vitals/'},
   {n:2,  ic:'❓', lb:'Why Do You Want Out',    sub:'Select your main reasons',        url:'/whyout/'},
   {n:3,  ic:'⚠️', lb:'If You Do Nothing',      sub:'Resort escalation path',          url:'/wait/'},
   {n:4,  ic:'🔍', lb:'Finding Your Group',     sub:'How group filings work',          url:'/group/'},
-  {n:'4a',ic:'✅',lb:'Money-Back Approval',    sub:'Criteria & risk assessment',      url:'/approval/'},
+  {n:'4a',ic:'✅',lb:'Your Spot in Group Filing',    sub:'Criteria & risk assessment',      url:'/approval/'},
   {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate',   sub:'Perpetuity & inheritance',        url:'/heirs/'},
   {n:'4c',ic:'💵',lb:'Resort Compensation',    sub:'What owners may recover',         url:'/compensation/'},
   {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',  sub:'Credit & payment explained',      url:'/credit/'},
@@ -148,12 +148,12 @@ function fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US
 window.sf=function(k,v){var s=ac();if(!s)return;var a=ga();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(a));};
 var PG=[
   {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
-  {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:1,ic:'📋',lb:'Owner Info (Legacy)',url:'/owner/'},
   {n:'V1',ic:'⚾',lb:'Client Vitals',url:'/vitals/'},
   {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
   {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
   {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
-  {n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4a',ic:'✅',lb:'Your Spot in Group Filing',url:'/approval/'},
   {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
   {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
   {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
