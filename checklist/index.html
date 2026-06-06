@@ -646,7 +646,7 @@ function _toast(msg,color){
   setTimeout(function(){t.style.display='none';},2500);
 }
 
-document.addEventListener('DOMContentLoaded',function(){buildSidebar();});
+document.addEventListener('DOMContentLoaded',function(){if(typeof buildSB==='function')buildSB();});
 </script>
 
 
