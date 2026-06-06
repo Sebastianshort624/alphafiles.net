@@ -864,10 +864,13 @@ function buildSB(){
     +'<input type="datetime-local" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;margin-bottom:4px" value="'+(d&&d._fuAppt?d._fuAppt:'')+'" onchange="sf(\"_fuAppt\",this.value)">'
     +'<button onclick="addCal()" style="width:100%;background:#C8960C;color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer">+ Google Calendar</button></div>'
     +'<div style="padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)"><div style="font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Reports</div>'
-    +'<button onclick="rpt(\'crm\')"" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">CRM Note</button>'
-    +'<button onclick="rpt(\'sms\')"" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">SMS</button>'
-    +'<button onclick="rpt(\'full\')"" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer">Full Summary</button>'
+    +'<button data-rpt="crm" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">CRM Note</button>'
+    +'<button data-rpt="sms" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px">SMS</button>'
+    +'<button data-rpt="full" style="display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer">Full Summary</button>'
     +'</div>';
+  el.querySelectorAll("[data-rpt]").forEach(function(btn){
+    btn.addEventListener("click",function(){rpt(this.getAttribute("data-rpt"));});
+  });
 }
 
 function initBanner(){
