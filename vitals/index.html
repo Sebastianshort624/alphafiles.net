@@ -226,8 +226,8 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
         <div class="ff ro"><label>Annual</label><input id="v-mtg-yr" readonly></div>
       </div>
       <div class="frow">
-        <div class="ff"><label>Balance</label><input id="v-balance" type="number" oninput="autoSave();calcMtgRemaining()"></div>
-        <div class="ff ro"><label>Future Pmts (10yr)</label><input id="v-mtg-future" readonly></div>
+        <div class="ff ro"><label>Balance (auto)</label><input id="v-balance" readonly style="font-weight:700;color:var(--orange);background:#fff8f0"></div>
+        <div class="ff ro"><label>Price (auto)</label><input id="v-mtg-future" readonly style="font-weight:700;color:var(--red);background:#fef2f2"></div>
       </div>
     </div>
     <div class="ps" id="mtg-behind">
@@ -248,14 +248,12 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
               <option value="unknown">Unknown</option>
             </select>
           </div>
-          <div class="ff"><label>Est. FICO Score</label>
-            <select id="v-fico" onchange="autoSave()">
+          <div class="ff"><label>Credit Rating</label>
+            <select id="v-fico" onchange="autoSave();calcMtgRemaining()">
               <option value="">Select...</option>
-              <option>850</option><option>820</option><option>800</option><option>780</option>
-              <option>760</option><option>740</option><option>720</option><option>700</option>
-              <option>680</option><option>660</option><option>640</option><option>620</option>
-              <option>600</option><option>580</option><option>560</option><option>540</option>
-              <option>525</option>
+              <option value="good">Good (16.5%)</option>
+              <option value="fair">Fair (17.5%)</option>
+              <option value="poor">Poor (18.5%)</option>
             </select>
           </div>
         </div>
@@ -544,14 +542,34 @@ function calcSavings(){
 function calcMtgRemaining(){
   var year=parseInt(document.getElementById('v-year').value)||0;
   var mtg=parseFloat(document.getElementById('v-mtg').value)||0;
+  var fico=document.getElementById('v-fico').value||'';
   var now=new Date().getFullYear();
   var el=document.getElementById('mtg-rem-box');
+  var balEl=document.getElementById('v-balance');
   var futEl=document.getElementById('v-mtg-future');
-  if(year>1990&&year<=now){
-    var yrsIn=now-year;var yrsLeft=Math.max(0,10-yrsIn);
-    var futPmts=mtg>0?mtg*12*yrsLeft:0;
-    if(futEl)futEl.value=futPmts>0?fc(futPmts):'—';
-    if(el){el.style.display='block';el.innerHTML='Purchased '+yrsIn+' years ago. <strong>'+yrsLeft+' years left</strong> on 10-year term.'+(futPmts>0?' Remaining: <strong style="color:var(--orange)">'+fc(futPmts)+'</strong>':'');}
+  if(year>1990&&year<=now&&mtg>0){
+    var yrsIn=now-year;
+    var yrsLeft=Math.max(0,10-yrsIn);
+    var balance=mtg*12*yrsLeft;
+    // credit rate
+    var rate=fico==='good'?0.165:fico==='fair'?0.175:fico==='poor'?0.185:0;
+    var price=rate>0?balance*rate*120:0;
+    // populate fields
+    if(balEl)balEl.value=balance>0?Math.round(balance):'';
+    if(futEl)futEl.value=price>0?fc(price):'—';
+    if(el){
+      el.style.display='block';
+      el.innerHTML='Purchased <strong>'+yrsIn+' years ago</strong>. '
+        +'<strong>'+yrsLeft+' years left</strong> on 10-yr term.'
+        +(balance>0?'<br>Balance: <strong style="color:var(--orange)">'+fc(balance)+'</strong>':'')
+        +(price>0?'&nbsp;&nbsp;Price: <strong style="color:var(--red)">'+fc(price)+'</strong>':'');
+    }
+  } else {
+    if(el)el.style.display='none';
+    if(balEl)balEl.value='';
+    if(futEl)futEl.value='—';
+  }
+}
   } else {if(el)el.style.display='none';}
 }
 
