@@ -514,7 +514,6 @@ function buildSB(){
 }
 function switchC(s){if(!s)return;localStorage.setItem(AK,s);setTimeout(function(){location.reload();},400);}
 
-buildSB();
 buildReport();
 </script>
 
@@ -732,5 +731,6 @@ else{buildNav();}
 })();
 </script>
 
+<script>setTimeout(function(){if(typeof buildSB==="function"){buildSB();if(typeof initBanner==="function")initBanner();}},0);</script>
 </body>
 </html>
