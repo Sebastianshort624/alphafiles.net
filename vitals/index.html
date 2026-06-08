@@ -344,9 +344,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
       <button class="sp sd" onclick="setStage(7,this)">8 Done</button>
     </div>
     <table class="tt">
-      <thead><tr>
-        <th>Section</th><th>Email</th><th>Text</th><th>Verbal</th><th>Agreed</th><th>Go</th>
-      </tr></thead>
+      <thead><tr style="background:#1B2A4A"><th style="padding:7px 8px;text-align:left;font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.3px">Page / Section</th><th style="padding:7px 4px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);width:40px">Email</th><th style="padding:7px 4px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);width:40px">Text</th><th style="padding:7px 4px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);width:40px">Verbal</th><th style="padding:7px 4px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);width:48px">Agreed</th><th style="padding:7px 4px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);width:40px">Go</th></tr></thead>
       <tbody id="tasks-body"></tbody>
     </table>
   </div>
@@ -626,24 +624,31 @@ var TASKS=[
 function buildTasks(){
   var d=ad()||{};var tc=d.taskChecks||{};
   var body=document.getElementById('tasks-body');if(!body)return;
-  var done=0;var html='';
+  var done=0;var sent=0;var html='';
   TASKS.forEach(function(t,i){
     var em=tc['e'+i]||false,tx=tc['t'+i]||false,vb=tc['v'+i]||false,ag=tc['a'+i]||false;
-    if(vb&&ag)done++;
-    var emCell=t.email
-      ?'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-col="e"'+(em?' checked':'')+' onchange="savTask(this)"></td>'
-      :'<td style="color:#d1d5db">—</td>';
-    html+='<tr>'
-      +'<td style="font-size:11px">'+t.lb+'</td>'
-      +emCell
-      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-col="t"'+(tx?' checked':'')+' onchange="savTask(this)"></td>'
-      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-col="v"'+(vb?' checked':'')+' onchange="savTask(this)"></td>'
-      +'<td><input type="checkbox" class="tcb" data-i="'+i+'" data-col="a"'+(ag?' checked':'')+' onchange="savTask(this)"></td>'
-      +'<td><select onchange="if(this.value)location.href=this.value;this.value=String()" style="font-size:11px;border:1px solid #e5e7eb;border-radius:3px;padding:2px;max-width:80px;color:var(--gold)"><option value="">Go...</option><option value="'+t.url+'">'+t.lb+'</option></select></td>'
+    if(ag)done++;
+    if(em||tx)sent++;
+    var allDone=em&&vb&&ag;
+    var rowBg=allDone?'background:#f0fdf4;':'';
+    function cb(col,val){
+      return '<input type="checkbox" class="tcb" data-i="'+i+'" data-col="'+col+'"'+(val?' checked':'')+' onchange="savTask(this)" title="'+col+'">';
+    }
+    html+='<tr style="'+rowBg+'">'
+      +'<td style="font-size:12px;font-weight:500;color:#1B2A4A;padding:5px 6px">'
+        +(allDone?'<span style="color:#16A34A;margin-right:4px">✓</span>':'')
+        +t.lb
+      +'</td>'
+      +(t.email?'<td style="text-align:center;padding:4px">'+cb('e',em)+'</td>':'<td style="text-align:center;color:#d1d5db;font-size:11px">—</td>')
+      +'<td style="text-align:center;padding:4px">'+cb('t',tx)+'</td>'
+      +'<td style="text-align:center;padding:4px">'+cb('v',vb)+'</td>'
+      +'<td style="text-align:center;padding:4px">'+cb('a',ag)+'</td>'
+      +'<td style="text-align:center;padding:4px"><a href="'+t.url+'" style="display:inline-block;background:#1B2A4A;color:#C8960C;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;text-decoration:none">Go</a></td>'
     +'</tr>';
   });
   body.innerHTML=html;
-  var badge=document.getElementById('task-badge');if(badge)badge.textContent=done+' done';
+  var badge=document.getElementById('task-badge');
+  if(badge)badge.textContent=done+' agreed | '+sent+' sent';
 }
 
 function savTask(cb){
@@ -819,7 +824,7 @@ function loadData(){
   calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();
 }
 
-document.addEventListener('DOMContentLoaded', loadData);
+document.addEventListener('DOMContentLoaded', function(){loadData();if(!ac())buildTasks();});
 </script>
 
 <style id="atc-sb-css">
