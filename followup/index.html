@@ -231,6 +231,8 @@ function saveFU(){
   all[s]._updated=Date.now();
   sa(all);
   updateDisplays();
+  // Sync sidebar Follow-Up input live
+  if(typeof buildSB==="function")buildSB();
 }
 
 function updateDisplays(){
