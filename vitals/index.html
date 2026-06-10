@@ -170,13 +170,13 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
   <div class="card-body">
     <div class="ff"><label>Resort Name</label><input id="v-resort" class="hi" oninput="autoSave()"></div>
     <div class="frow">
-      <div class="ff"><label>State</label><input id="v-loc" placeholder="FL" oninput="autoSave()"></div>
-      <div class="ff"><label>City</label><input id="v-rescity" placeholder="Orlando" oninput="autoSave()"></div>
+      <div class="ff"><label>State</label><input id="v-loc" placeholder="Data" oninput="autoSave()"></div>
+      <div class="ff"><label>City</label><input id="v-rescity" placeholder="Data" oninput="autoSave()"></div>
     </div>
     <div class="pt" onclick="togglePS('purch-info')"><div class="pt-ic" id="pto-purch-info">+</div><span>Year Purchased, Price, Why Out</span></div>
     <div class="ps" id="purch-info">
       <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="2019" oninput="autoSave();calcMtgRemaining()"></div>
+        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="Data" oninput="autoSave();calcMtgRemaining()"></div>
         <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave()"></div>
       </div>
       <div id="mtg-rem-box" style="display:none;background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:8px;font-size:13px;color:#1B2A4A"></div>
@@ -189,7 +189,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 <div class="card" style="border-top:3px solid #2563EB">
   <div class="card-hdr" style="background:#1a3a6b">Maintenance Fees (MTF)</div>
   <div class="card-body">
-    <div class="ff"><label style="color:var(--blue)">Annual MTF</label><input id="v-mtf" type="number" class="hi" style="border-color:var(--blue)" placeholder="e.g. 1600" oninput="autoSave();calcTotals()"></div>
+    <div class="ff"><label style="color:var(--blue)">Annual MTF</label><input id="v-mtf" type="number" class="hi" style="border-color:var(--blue)" placeholder="Data" oninput="autoSave();calcTotals()"></div>
     <div class="frow">
       <div class="ff ro"><label>Monthly MTF</label><input id="v-mtf-mo" readonly></div>
       <div class="ff"><label>Paid</label>
@@ -201,7 +201,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
     </div>
     <div class="pt" onclick="togglePS('mtf-late')"><div class="pt-ic" id="pto-mtf-late">+</div><span>LATE MTF Payments</span></div>
     <div class="ps" id="mtf-late">
-      <div class="ff"><label style="color:var(--red)">Months Late — MTF</label><input id="v-mtfb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
+      <div class="ff"><label style="color:var(--red)">Months Late — MTF</label><input id="v-mtfb" type="number" placeholder="Data" oninput="autoSave();calcTotals()"></div>
       <div id="mtf-late-box" style="display:none;background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px;margin-top:6px;font-size:13px;color:#7f1d1d"></div>
       <div style="margin-top:8px">
         <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:6px"><input type="checkbox" id="cancel-mtf-late" onchange="autoSave()"> Cancel LATE MTF with exit</label>
@@ -222,7 +222,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
     </div>
     <div class="ps" id="mtg-details">
       <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label style="color:var(--orange)">Monthly Payment</label><input id="v-mtg" type="number" class="hi" style="border-color:var(--orange)" placeholder="350" oninput="autoSave();calcTotals();calcMtgRemaining()"></div>
+        <div class="ff"><label style="color:var(--orange)">Monthly Payment</label><input id="v-mtg" type="number" class="hi" style="border-color:var(--orange)" placeholder="Data" oninput="autoSave();calcTotals();calcMtgRemaining()"></div>
         <div class="ff ro"><label>Annual</label><input id="v-mtg-yr" readonly></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
@@ -242,7 +242,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
       <div id="mtg-rem-box" style="display:none;background:#EAF0F8;border-radius:6px;padding:8px 10px;font-size:12px;color:#1B2A4A;margin-top:2px"></div>
     </div>
     <div class="ps" id="mtg-behind">
-      <div class="ff"><label style="color:var(--red)">Months Late — Mortgage</label><input id="v-mtgb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
+      <div class="ff"><label style="color:var(--red)">Months Late — Mortgage</label><input id="v-mtgb" type="number" placeholder="Data" oninput="autoSave();calcTotals()"></div>
       <div id="mtg-late-box" style="display:none;background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px;margin-top:6px;font-size:13px;color:#7f1d1d"></div>
       <div id="credit-alert" style="display:none;margin-top:8px"></div>
       <div style="margin-top:8px">
@@ -292,7 +292,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
   <div class="card-hdr">Alpha Solution</div>
   <div class="card-body">
     <div class="frow">
-      <div class="ff"><label>Alpha Fee</label><input id="v-fee" type="number" class="hi" placeholder="0" oninput="autoSave();calcSavings()"></div>
+      <div class="ff"><label>Alpha Fee</label><input id="v-fee" type="number" class="hi" placeholder="Data" oninput="autoSave();calcSavings()"></div>
       <div class="ff"><label>Term</label>
         <select id="v-term" onchange="autoSave();calcSavings()">
           <option value="">Pay in Full</option>
