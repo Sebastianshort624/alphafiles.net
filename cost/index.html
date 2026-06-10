@@ -5,165 +5,293 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>True Cost of Ownership — Alpha Timeshare Consultants</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<style id="page-css">
 :root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--orange:#ea580c;--blue:#2563EB}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1a1a1a;display:flex;min-height:100vh}
-.sidenav{width:220px;height:100vh;background:var(--navy);position:fixed;top:0;left:0;z-index:100;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(200,150,12,.4) transparent}
-.sidenav::-webkit-scrollbar{width:4px}
-.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
-.main{margin-left:220px;flex:1;padding:20px;min-height:100vh}
-.wrap{max-width:760px;margin:0 auto}
+body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1a1a1a}
+.main{padding:20px;min-height:100vh}
+.wrap{max-width:800px;margin:0 auto}
 .ph{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px}
 .ph-num{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .ph-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
 .ph-sub{font-size:14px;color:rgba(255,255,255,.65)}
 .vb{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
-.vbc{padding:9px 13px;border-right:1px solid var(--border)}
-.vbc:last-child{border-right:none}
+.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border-right:none}
 .vbl{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
-.vbv{font-size:14px;font-weight:700;color:var(--navy);line-height:1.2}
-.vbs{font-size:12px;color:#6b7280;margin-top:2px}
-.pb{background:#fff;border-radius:8px;border:1px solid var(--border);padding:24px;margin-bottom:14px}
-.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:12px}
-.card.navy{background:var(--navy);color:#fff;border-color:var(--navy)}
-.card.gold-top{border-top:3px solid var(--gold)}
-.card.red-top{border-top:3px solid var(--red)}
-.card.green-top{border-top:3px solid var(--green)}
-.sec{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
-.sec::after{content:'';flex:1;height:1px;background:var(--border)}
-.body-text{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}
-.body-text strong{color:var(--navy)}
-.pt{display:flex;align-items:center;gap:8px;padding:7px 0;cursor:pointer;color:var(--gold);font-size:13px;font-weight:600;border-top:1px dashed var(--border);margin-top:8px;user-select:none}
-.pt-ic{width:18px;height:18px;background:var(--gold);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.ps{display:none;margin-top:8px}
-.ps.open{display:block}
-.ff label{display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
-.ff input,.ff select{width:100%;border:1.5px solid var(--border);border-radius:5px;padding:8px 10px;font-size:14px;font-family:'Inter',sans-serif;color:var(--navy);background:#fff}
-.ff input:focus,.ff select:focus{outline:none;border-color:var(--gold)}
-.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:'Inter',sans-serif}
-.btn.p{background:var(--gold);color:#fff}
-.btn.n{background:var(--navy);color:#fff}
-.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.btn-row .btn{flex:1}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:14px;border-top:1px solid var(--border)}
+.vbv{font-size:14px;font-weight:700;color:var(--navy)}.vbs{font-size:12px;color:#6b7280;margin-top:2px}
+/* Input grid */
+.input-panel{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.ip-hdr{background:var(--navy);color:#fff;padding:11px 16px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.ip-hdr span{font-size:16px}
+.ip-body{padding:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.ff label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.ff input{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:9px 11px;font-size:15px;font-weight:600;font-family:"Inter",sans-serif;color:var(--navy);background:#fff}
+.ff input:focus{outline:none;border-color:var(--gold);background:#fffdf5}
+.ff input.auto{background:#f9fafb;color:#6b7280;font-weight:400}
+/* Results */
+.results-panel{background:var(--navy);border-radius:10px;padding:20px;margin-bottom:16px}
+.rp-title{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.cost-box{background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center}
+.cost-box.hot{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3)}
+.cb-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+.cb-val{font-size:20px;font-weight:700;color:#fff;line-height:1}
+.cb-val.gold{color:var(--gold)}
+.cb-val.red{color:#f87171}
+/* VS comparison */
+.vs-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:14px}
+.vs-box{background:rgba(255,255,255,.06);border-radius:8px;padding:14px}
+.vs-box.green{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3)}
+.vs-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+.vs-val{font-size:18px;font-weight:700;color:#fff}
+.vs-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px}
+.vs-div{font-size:20px;font-weight:700;color:var(--gold);text-align:center}
+.breakeven{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);border-radius:8px;padding:12px;text-align:center}
+.be-val{font-size:22px;font-weight:700;color:#4ade80}
+.be-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:3px}
+/* Behind row */
+.behind-row{background:#fef2f2;border:1.5px solid var(--red);border-radius:8px;padding:12px;margin-top:10px;display:none}
+.behind-row.show{display:block}
+.behind-label{font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px}
+.behind-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.behind-item{font-size:13px;color:#374151}<br>
+.behind-item strong{color:var(--red)}
+/* Nav */
+.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:"Inter",sans-serif}
+.btn.p{background:var(--gold);color:#fff}.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn-row .btn{flex:1}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
 .np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
 .nn{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
 .ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat-card{border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.sc-hdr{background:var(--navy);padding:9px 14px;display:flex;justify-content:space-between;align-items:center}
-.sc-cite{font-size:14px;font-weight:700;color:var(--gold)}
-.sc-name{font-size:12px;color:#8fa3c4;text-align:right}
-.sc-body{padding:12px 14px;font-size:14px;color:#2a3f60;line-height:1.6}
-.con{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
-.con:last-child{border-bottom:none}
-.con-n{width:28px;height:28px;background:var(--navy);color:var(--gold);border-radius:50%;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.con-title{font-size:14px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
-.con-text{font-size:14px;color:#2a3f60;line-height:1.6}
-.cite-pill{display:inline-block;margin-top:5px;background:#EAF0F8;border-radius:3px;padding:2px 8px;font-size:12px;font-weight:600;color:var(--navy)}
-.alert-box{border-radius:6px;padding:12px 14px;margin:10px 0;font-size:14px;line-height:1.5}
-.alert-box.danger{background:#fef2f2;border:1.5px solid var(--red);color:#7f1d1d}
-.alert-box.warn{background:#fff8f0;border:1.5px solid var(--orange);color:#7c2d12}
-.alert-box.info{background:#EAF0F8;border:1.5px solid var(--blue);color:#1e3a5f}
-.alert-box.success{background:#f0fdf4;border:1.5px solid var(--green);color:#14532d}
-.alert-title{font-weight:700;font-size:14px;margin-bottom:4px}
-.tbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.tp{flex:1;min-width:80px;background:var(--navy);color:#fff;border-radius:6px;padding:10px;text-align:center}
-.tp .tv{font-size:18px;font-weight:700;color:var(--gold);line-height:1}
-.tp .tl{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;text-transform:uppercase}
-@media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
+@media print{.sidenav,.btn-row,.nav-bar,.input-panel{display:none!important}.main{margin-left:0!important}}
 </style>
 </head>
 <body>
 <div class="sidenav" id="sidenav"></div>
-<div class="main">
-<div class="wrap">
+<div class="main"><div class="wrap">
 
 <div class="ph">
   <div class="ph-num">Page 8</div>
   <div class="ph-title">True Cost of Ownership</div>
-  <div class="ph-sub">The numbers the resort never showed you — calculated from your file</div>
+  <div class="ph-sub">The numbers the resort never showed you</div>
 </div>
-
 <div class="vb">
-  <div class="vbc"><div class="vbl">👤 Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
-  <div class="vbc"><div class="vbl">🏨 Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
-  <div class="vbc"><div class="vbl">💰 Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
-  <div class="vbc"><div class="vbl">📄 Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
+  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
+  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
+  <div class="vbc"><div class="vbl">Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
+  <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
 </div>
 
-
-<div class="pb">
-
-<div style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:16px">
-  Numbers pulled automatically from your client file. The resort never showed you this — they focused on the purchase price. This is the real picture.
-</div>
-
-<!-- MTF + MTG COLUMNS -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px">
-  <div style="background:#f0f7ff;padding:16px;border-right:1.5px solid #bfdbfe">
-    <div style="font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.4px;border-bottom:2px solid var(--blue);padding-bottom:6px;margin-bottom:10px">🌊 Maintenance Fees (MTF)</div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Annual MTF today</span><strong id="c-mtf-now" style="color:var(--blue)">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Monthly MTF</span><strong id="c-mtf-mo">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Year 5 (at 8%/yr)</span><strong id="c-mtf-5" style="color:var(--red)">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Year 10</span><strong id="c-mtf-10" style="color:var(--red)">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Year 20</span><strong id="c-mtf-20" style="color:var(--red)">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;"><span>Year 30</span><strong id="c-mtf-30" style="color:var(--red)">—</strong></div>
-  </div>
-  <div style="background:#fff8f0;padding:16px">
-    <div style="font-size:12px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.4px;border-bottom:2px solid var(--orange);padding-bottom:6px;margin-bottom:10px">🏦 Mortgage</div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Monthly payment</span><strong id="c-mtg-mo" style="color:var(--orange)">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Annual mortgage</span><strong id="c-mtg-yr">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Balance remaining</span><strong id="c-balance">—</strong></div>
-    <div style="display:flex;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:5px"><span>Total future pymts (10yr)</span><strong id="c-mtg-future" style="color:var(--red)">—</strong></div>
-    <div style="height:1px;background:var(--border);margin:8px 0"></div>
-    <div style="font-size:12px;color:#6b7280;font-style:italic" id="c-mtg-status">—</div>
-  </div>
-</div>
-
-<!-- GRAND TOTALS -->
-<div style="background:var(--navy);border-radius:8px;padding:16px;margin-bottom:14px">
-  <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px">Combined Ownership Cost</div>
-  <div class="tbar" style="margin:0">
-    <div class="tp"><div class="tv" id="c-total-mo">$0</div><div class="tl">Monthly</div></div>
-    <div class="tp"><div class="tv" id="c-total-yr">$0</div><div class="tl">Yearly</div></div>
-    <div class="tp"><div class="tv" id="c-total-5">$0</div><div class="tl">5 Years</div></div>
-    <div class="tp"><div class="tv" id="c-total-10">$0</div><div class="tl">10 Years</div></div>
-    <div class="tp"><div class="tv" id="c-total-30">$0</div><div class="tl">30 Years</div></div>
-  </div>
-</div>
-
-<!-- VS ALPHA FEE -->
-<div id="c-vs-alpha" style="display:none">
-  <div class="sec">vs. Alpha Exit Fee</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-    <div style="background:#fef2f2;border:1.5px solid var(--red);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px">Staying In — 5 Years</div>
-      <div style="font-size:24px;font-weight:700;color:var(--red)" id="c-stay-5">—</div>
-      <div style="font-size:12px;color:#6b7280;margin-top:4px">Total cost of ownership</div>
-    </div>
-    <div style="background:#f0fdf4;border:1.5px solid var(--green);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px">Exiting with Alpha</div>
-      <div style="font-size:24px;font-weight:700;color:var(--green)" id="c-alpha-fee">—</div>
-      <div style="font-size:12px;color:#6b7280;margin-top:4px">One-time exit fee</div>
+<!-- INPUT PANEL: Maintenance Fees -->
+<div class="input-panel">
+  <div class="ip-hdr"><span>🌊</span> Maintenance Fees (MTF)</div>
+  <div class="ip-body">
+    <div class="grid3" style="margin-bottom:10px">
+      <div class="ff"><label>Annual MTF ($)</label><input type="number" id="i-mtf-yr" placeholder="e.g. 1800" oninput="calc()"></div>
+      <div class="ff"><label>Monthly MTF</label><input type="number" id="i-mtf-mo" class="auto" readonly placeholder="auto"></div>
+      <div class="ff"><label>Months Behind</label><input type="number" id="i-mtf-behind" placeholder="0" oninput="calc()"></div>
     </div>
   </div>
-  <div class="alert-box success">
-    <div class="alert-title">💚 Exit fee pays for itself in <span id="c-breakeven">—</span></div>
-    After that, every month is money back in your pocket — forever.
+</div>
+
+<!-- INPUT PANEL: Mortgage -->
+<div class="input-panel">
+  <div class="ip-hdr"><span>🏦</span> Mortgage</div>
+  <div class="ip-body">
+    <div class="grid3" style="margin-bottom:10px">
+      <div class="ff"><label>Monthly Payment ($)</label><input type="number" id="i-mtg-mo" placeholder="e.g. 350" oninput="calc()"></div>
+      <div class="ff"><label>Annual Mortgage</label><input type="number" id="i-mtg-yr" class="auto" readonly placeholder="auto"></div>
+      <div class="ff"><label>Months Behind</label><input type="number" id="i-mtg-behind" placeholder="0" oninput="calc()"></div>
+    </div>
+    <div class="grid2">
+      <div class="ff"><label>Balance Remaining ($)</label><input type="number" id="i-balance" placeholder="e.g. 12000" oninput="calc()"></div>
+      <div class="ff"><label>Years Left on Term</label><input type="number" id="i-yrs-left" placeholder="e.g. 7" oninput="calc()"></div>
+    </div>
+  </div>
+</div>
+
+<!-- INPUT PANEL: Alpha Fee -->
+<div class="input-panel">
+  <div class="ip-hdr"><span>✅</span> Alpha Exit Fee</div>
+  <div class="ip-body">
+    <div class="grid2">
+      <div class="ff"><label>Alpha Service Fee ($)</label><input type="number" id="i-fee" placeholder="e.g. 4500" oninput="calc()"></div>
+      <div class="ff"><label>Year Purchased</label><input type="number" id="i-year" placeholder="e.g. 2018" oninput="calc()"></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS PANEL -->
+<div class="results-panel">
+  <div class="rp-title">True Cost — Staying In</div>
+  <div class="cost-grid">
+    <div class="cost-box"><div class="cb-label">Monthly</div><div class="cb-val gold" id="r-mo">—</div></div>
+    <div class="cost-box"><div class="cb-label">Yearly</div><div class="cb-val gold" id="r-yr">—</div></div>
+    <div class="cost-box hot"><div class="cb-label">5 Years</div><div class="cb-val red" id="r-5">—</div></div>
+    <div class="cost-box hot"><div class="cb-label">10 Years</div><div class="cb-val red" id="r-10">—</div></div>
+    <div class="cost-box hot"><div class="cb-label">20 Years</div><div class="cb-val red" id="r-20">—</div></div>
+    <div class="cost-box hot"><div class="cb-label">30 Years</div><div class="cb-val red" id="r-30">—</div></div>
+  </div>
+
+  <!-- Behind alert -->
+  <div id="behind-box" class="behind-row">
+    <div class="behind-label">⚠️ Currently Behind</div>
+    <div class="behind-grid">
+      <div class="behind-item" id="behind-mtf-txt"></div>
+      <div class="behind-item" id="behind-mtg-txt"></div>
+    </div>
+  </div>
+
+  <!-- VS comparison -->
+  <div class="rp-title" style="margin-top:18px">Exit With Alpha vs. Stay In</div>
+  <div class="vs-row">
+    <div class="vs-box">
+      <div class="vs-label">Staying In — 5 Years</div>
+      <div class="vs-val" id="vs-stay">—</div>
+      <div class="vs-sub">MTF + mortgage × 5 yrs (8%/yr MTF)</div>
+    </div>
+    <div class="vs-div">VS</div>
+    <div class="vs-box green">
+      <div class="vs-label">Exit with Alpha</div>
+      <div class="vs-val" id="vs-exit">—</div>
+      <div class="vs-sub">One time — then $0 forever</div>
+    </div>
+  </div>
+  <div class="breakeven">
+    <div class="cb-label" style="color:rgba(255,255,255,.5)">Break-Even</div>
+    <div class="be-val" id="r-be">—</div>
+    <div class="be-sub">After that, every month is money back in your pocket</div>
   </div>
 </div>
 
 <div class="btn-row">
-  <button class="btn p" onclick="saveAndContinue()">Save &amp; Continue →</button>
-  <button class="btn o" onclick="emailCost()">📧 Email This Section</button>
+  <button class="btn p" onclick="savePage()">Save &amp; Continue</button>
+  <button class="btn o" onclick="window.print()">Print</button>
+</div>
+<div class="nav-bar">
+  <a href="/rights/" class="np">← Consumer Rights</a>
+  <span class="ns">Page 8 of 16</span>
+  <a href="/quote/" class="nn">Your Quote →</a>
 </div>
 
-</div>
+</div></div>
 
+<script>
+var SK="atc_clients_v2",AK="atc_active";
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function fc(n){return n>0?"$"+Math.round(n).toLocaleString():"—";}
 
+function g(id){return parseFloat(document.getElementById(id).value)||0;}
+function s(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+function sv(id,v){var el=document.getElementById(id);if(el)el.value=v>0?Math.round(v):"";}
+
+function calc(){
+  var mtfYr  = g("i-mtf-yr");
+  var mtfMo  = mtfYr/12;
+  var mtgMo  = g("i-mtg-mo");
+  var mtgYr  = mtgMo*12;
+  var mtfBeh = g("i-mtf-behind");
+  var mtgBeh = g("i-mtg-behind");
+  var fee    = g("i-fee");
+  var balance= g("i-balance");
+
+  // Auto-fill monthly MTF and annual mortgage
+  sv("i-mtf-mo", mtfMo);
+  sv("i-mtg-yr", mtgYr);
+
+  var totalMo = mtfMo + mtgMo;
+  var totalYr = totalMo * 12;
+
+  // 5/10/20/30 year projections — MTF grows 8%/yr, mortgage stays flat
+  function mtfAtYear(n){
+    // Sum of geometric series: mtfYr * ((1.08^n - 1) / 0.07)
+    return mtfYr > 0 ? mtfYr * (Math.pow(1.08, n) - 1) / 0.08 : 0;
+  }
+  var r5  = mtfAtYear(5)  + mtgMo*12*5;
+  var r10 = mtfAtYear(10) + mtgMo*12*10;
+  var r20 = mtfAtYear(20) + mtgMo*12*20;
+  var r30 = mtfAtYear(30) + mtgMo*12*30;
+
+  s("r-mo",  fc(totalMo));
+  s("r-yr",  fc(totalYr));
+  s("r-5",   fc(r5));
+  s("r-10",  fc(r10));
+  s("r-20",  fc(r20));
+  s("r-30",  fc(r30));
+
+  // Behind alert
+  var behindBox = document.getElementById("behind-box");
+  var hasBehind = mtfBeh > 0 || mtgBeh > 0;
+  behindBox.className = "behind-row" + (hasBehind ? " show" : "");
+  document.getElementById("behind-mtf-txt").innerHTML = mtfBeh > 0
+    ? "MTF: <strong>" + mtfBeh + " months</strong> = <strong>" + fc(mtfMo*mtfBeh) + "</strong>" : "";
+  document.getElementById("behind-mtg-txt").innerHTML = mtgBeh > 0
+    ? "Mortgage: <strong>" + mtgBeh + " months</strong> = <strong>" + fc(mtgMo*mtgBeh) + "</strong>" : "";
+
+  // VS comparison
+  s("vs-stay", fc(r5));
+  s("vs-exit", fee > 0 ? fc(fee) : "—");
+  if(fee > 0 && totalMo > 0){
+    var beMo = Math.ceil(fee / totalMo);
+    s("r-be", beMo + " month" + (beMo !== 1 ? "s" : ""));
+  } else {
+    s("r-be", "—");
+  }
+
+  // Save to localStorage
+  var slug = ac(); if(!slug) return;
+  var all = ga(); if(!all[slug]) return;
+  all[slug].cost_mtfYr  = mtfYr;
+  all[slug].cost_mtgMo  = mtgMo;
+  all[slug].cost_mtfBeh = mtfBeh;
+  all[slug].cost_mtgBeh = mtgBeh;
+  all[slug].cost_balance= balance;
+  all[slug].cost_fee    = fee;
+  all[slug]._updated    = Date.now();
+  sa(all);
+}
+
+function savePage(){
+  calc();
+  var s2=ac();if(!s2){location.href="/quote/";return;}
+  var all=ga();if(!all[s2]){location.href="/quote/";return;}
+  var sp=all[s2]._savedPages||[];
+  if(sp.indexOf("/cost/")<0)sp.push("/cost/");
+  all[s2]._savedPages=sp;all[s2]._updated=Date.now();sa(all);
+  location.href="/quote/";
+}
+
+function initBanner(){
+  var d=ac()?ga()[ac()]:null;if(!d)return;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set("vb-name",((d.firstName||"")+" "+(d.lastName||"")).trim()||"—");
+  set("vb-phone",d.phone||"—");
+  set("vb-resort",d.resort||"—");
+  set("vb-loc",d.location||"—");
+  set("vb-mo",mo>0?"$"+Math.round(mo).toLocaleString()+"/mo":"—");
+  set("vb-yr",mo>0?"$"+Math.round(mo*12).toLocaleString()+"/yr":"—");
+  set("vb-quote",d.alphaFee?"$"+Math.round(d.alphaFee).toLocaleString():"—");
+  set("vb-stg",["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"][d.vitalsStage||1]||"Assessment");
+
+  // Pre-fill inputs from saved cost data if available
+  if(d.cost_mtfYr) document.getElementById("i-mtf-yr").value = d.cost_mtfYr;
+  if(d.cost_mtgMo) document.getElementById("i-mtg-mo").value = d.cost_mtgMo;
+  if(d.cost_mtfBeh) document.getElementById("i-mtf-behind").value = d.cost_mtfBeh;
+  if(d.cost_mtgBeh) document.getElementById("i-mtg-behind").value = d.cost_mtgBeh;
+  if(d.cost_balance) document.getElementById("i-balance").value = d.cost_balance;
+  if(d.cost_fee) document.getElementById("i-fee").value = d.cost_fee;
+  if(d.alphaFee && !d.cost_fee) document.getElementById("i-fee").value = d.alphaFee;
+  calc();
+}
+
+document.addEventListener("DOMContentLoaded", initBanner);
+</script>
 <style id="atc-sb-css">
 body{display:flex!important;min-height:100vh!important}
 .sidenav{width:220px!important;min-width:220px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
@@ -318,22 +446,5 @@ function initBanner(){
 }
 document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();});
 </script>
-</body></html>');
-}
-
-document.addEventListener('DOMContentLoaded',function(){populate();});
-</script>
-
-
-<div class="nav-bar">
-  <a href="/history/" class="np">← Our Track Record</a>
-  <span class="ns">Page 8 of 16</span>
-  <a href="/quote/" class="nn">Your Quote →</a>
-</div>
-
-</div></div>
-
-
-
 </body>
 </html>
