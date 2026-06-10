@@ -252,6 +252,8 @@ function calc(){
   all[slug].cost_mtgBeh = mtgBeh;
   all[slug].cost_balance= balance;
   all[slug].cost_fee    = fee;
+  all[slug].cost_year   = g("i-year");
+  all[slug].cost_yrsLeft= g("i-yrs-left");
   all[slug]._updated    = Date.now();
   sa(all);
 }
@@ -287,6 +289,8 @@ function initBanner(){
   if(d.cost_balance) document.getElementById("i-balance").value = d.cost_balance;
   if(d.cost_fee) document.getElementById("i-fee").value = d.cost_fee;
   if(d.alphaFee && !d.cost_fee) document.getElementById("i-fee").value = d.alphaFee;
+  if(d.cost_year) document.getElementById("i-year").value = d.cost_year;
+  if(d.cost_yrsLeft) document.getElementById("i-yrs-left").value = d.cost_yrsLeft;
   calc();
 }
 
