@@ -350,6 +350,46 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
   </div>
 </div>
 
+<!-- EMAIL GENERATOR -->
+<div class="card" style="margin-bottom:14px">
+  <div class="card-hdr">✉️ Email Generator</div>
+  <div class="card-body" style="padding:14px 16px">
+
+    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:12px;align-items:flex-end">
+      <div>
+        <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Select Email Template</label>
+        <select id="email-template-sel" onchange="generateEmail()" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 10px;font-size:14px;font-family:Inter,sans-serif;color:#1B2A4A;background:#fff">
+          <option value="">— Choose a template —</option>
+          <option value="whyout">❓ Why Do You Want Out</option>
+          <option value="wait">⚠️ If You Do Nothing</option>
+          <option value="group">🔍 Finding Your Group</option>
+          <option value="approval">✅ Your Spot in Group Filing</option>
+          <option value="heirs">👨‍👩‍👧 Heirs & Estate Liability</option>
+          <option value="compensation">💵 Resort Compensation</option>
+          <option value="credit">💳 To Pay or Not to Pay</option>
+          <option value="letter">✉️ Mutual Release Letter</option>
+          <option value="exit-methods">🚪 4 Ways to Exit</option>
+          <option value="guarantee">🛡 Certificate of Guarantee</option>
+          <option value="history">⭐ Our Track Record</option>
+          <option value="rights">⚖️ Consumer Rights</option>
+          <option value="cost">💰 True Cost of Ownership</option>
+          <option value="quote">📄 Your Quote</option>
+          <option value="followup">⏰ Follow-Up</option>
+          <option value="better">🏆 What Makes Alpha Better</option>
+          <option value="included">📦 What's Included</option>
+          <option value="recap">📋 Recap</option>
+        </select>
+      </div>
+      <button onclick="copyEmail()" style="background:#1B2A4A;color:#C8960C;border:none;padding:9px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;white-space:nowrap">Copy Email</button>
+    </div>
+
+    <div id="email-preview" style="background:#f9fafb;border:1.5px solid #E0E4ED;border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:#374151;min-height:60px;white-space:pre-wrap;font-family:Inter,sans-serif;display:none"></div>
+    <div id="email-placeholder" style="color:#b0bac9;font-size:13px;text-align:center;padding:18px 0">Select a template above to generate an email for this client.</div>
+    <div id="email-copied-msg" style="display:none;color:#16A34A;font-size:12px;font-weight:600;margin-top:6px;text-align:center">✓ Copied to clipboard</div>
+
+  </div>
+</div>
+
 <!-- MOTIVATION SCALE -->
 <div class="card">
   <div class="card-hdr">Motivation Scale</div>
@@ -854,6 +894,130 @@ function loadData(){
 }
 
 document.addEventListener('DOMContentLoaded', function(){loadData();if(!ac())buildTasks();});
+
+// ── EMAIL GENERATOR ──────────────────────────────────────────────────────
+function _clientHeader(){
+  var d=ad()||{};
+  var name = '';
+  if(d.firstName&&d.lastName) name = d.firstName+' '+d.lastName;
+  else if(d.firstName) name = d.firstName;
+  else if(d.lastName) name = d.lastName;
+  if(d.coFirst||d.coLast) name += ' & '+((d.coFirst||'')+' '+(d.coLast||'')).trim();
+  var resort = d.resort||'';
+  var phone  = d.phone||'';
+  var email  = d.email||'';
+  var mo     = (parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var fee    = parseFloat(d.alphaFee)||0;
+  return {name:name.trim(),resort:resort,phone:phone,email:email,mo:mo,fee:fee,d:d};
+}
+
+var EMAIL_TEMPLATES = {
+  whyout: function(c){
+    return 'Hi '+c.name+',\n\nThank you for taking the time to speak with us today. Based on our conversation, I wanted to send over some information on the first step in our process — Understanding Why You Want Out.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nThe reasons you shared are not just personal frustrations — they are documented grounds for a formal filing. Every concern you mentioned today becomes part of your case file.\n\nWe will go through this in detail on our next call. If you have any questions in the meantime, do not hesitate to reach out.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  wait: function(c){
+    return 'Hi '+c.name+',\n\nFollowing up with the information we discussed regarding what happens if you continue to wait on your timeshare situation.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nEvery month that passes, the obligation grows. If payments stop, collections begin within days, all three credit bureaus are notified within 30 days, and the exposure to your heirs increases. The window to exit cleanly is now — and it narrows every month.\n\nI want to make sure you have the full picture before making any decisions. Let\'s connect soon.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  group: function(c){
+    return 'Hi '+c.name+',\n\nAs discussed, I\'m sending over a summary of how group filings work and why they change everything for owners like you.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nOne case is a complaint. Twenty to fifty documented owners from the same resort is a pattern — and patterns force resorts to settle. When your violations are grouped with others from '+c.resort+', the resort faces millions in collective fine exposure all at once.\n\nEvery member of the group benefits from the strength of the whole. That is the advantage you do not have going alone.\n\nLooking forward to discussing your qualification.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  approval: function(c){
+    return 'Hi '+c.name+',\n\nI wanted to follow up with the qualification criteria we reviewed today for your spot in our group filing.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nNot every case gets approved — and that is by design. The criteria exist to protect every participant already in the group. If we cannot help you, we tell you upfront and you owe nothing.\n\nBased on what we have reviewed, your case shows documented violations that match our active filing for your resort. Your Consumer Rights Assessment is your ticket in — the more violations documented, the stronger your position.\n\nI\'ll be in touch shortly with next steps.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  heirs: function(c){
+    return 'Hi '+c.name+',\n\nThis is the information we covered today regarding timeshare inheritance and estate liability — an issue many owners do not discover until it is too late.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nYour timeshare at '+c.resort+' is deeded real property. That means it passes to your heirs automatically when you pass. It does not matter whether they want it. Resorts — particularly with senior owners — often intentionally delay foreclosure precisely so the obligation survives and they can begin fresh collections against the estate or heirs.\n\nThe only outcome that fully protects your estate is a Mutual Release — your name permanently off the deed, all future obligations terminated.\n\nThis is one of the most important reasons to act now.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  compensation: function(c){
+    return 'Hi '+c.name+',\n\nAs promised, here is a summary of the resort compensation information we discussed today.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nWhen documented violations reach critical mass in a group filing, resorts often compensate participants directly. Typical range: $8,000 – $24,000, paid from the resort directly to you. Alpha keeps zero percent of any reimbursement.\n\nThe amount depends on how much you have paid in, how long you have owned with minimal use, your violation count, and the strength of your group. Compensation is not guaranteed — but it is documented and common for well-filed cases.\n\nYou can review our verified case database at: https://alphatimeshareconsultants.com/proof-of-performance-private/\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  credit: function(c){
+    return 'Hi '+c.name+',\n\nFollowing up with the credit protection information we covered today.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nOnce your Mutual Release is recorded at the county, we send documentation directly to all three bureaus — TransUnion, Equifax, and Experian — within 30–45 days. Any collections, late marks, or derogatory entries related to the timeshare are addressed as part of your case at no additional cost.\n\nThis is included in every case we take. You do not pay extra for it.\n\nWe also discussed your current monthly commitment: $'+Math.round(c.mo).toLocaleString()+'/mo. That obligation stops the day your release is recorded.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  letter: function(c){
+    return 'Hi '+c.name+',\n\nAttached are sample Mutual Release Letters from past clients (personal details redacted). These are the actual documents that close ownership permanently.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nThe Mutual Release is the signed legal document that removes your name from the deed, terminates all fees, and closes all resort claims against you forever. It is the only outcome that fully protects you and your heirs.\n\nYou can view release letters and client video testimonials at:\nhttps://alphafiles.net/letter/\n\nLet me know if you have any questions.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  'exit-methods': function(c){
+    return 'Hi '+c.name+',\n\nAs we discussed, there are only four ways out of a timeshare — and most of them do not work. Here is a quick summary.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n1. Resort Takes It Back — Extremely rare. Almost never accepted if there is an unpaid mortgage.\n2. Sell It — Timeshares have no resale market. Secondary values are effectively zero.\n3. Exit Attorney — Can help, but rarely puts results in writing. No group filing access.\n4. Group Filing — What Alpha does. Documented violations, collective leverage, written guarantee. The only method that forces a result at scale.\n\nYou have already seen how group filings work. This confirms it is the right path.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  guarantee: function(c){
+    return 'Hi '+c.name+',\n\nAs discussed, here is a reminder of the written guarantee that is included in every Alpha engagement.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nIf Alpha does not achieve a Favorable Outcome within 36 months, we refund 100% of your service fee. This is not a verbal promise — it is in your contract, signed by us.\n\nNo attorney in the timeshare space puts that in writing. We do, because we only take cases we can win.\n\n$0 down. First payment starts your second month. Full guarantee in writing.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  history: function(c){
+    return 'Hi '+c.name+',\n\nHere is a quick look at our track record — in case you want to share it or review it before our next call.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n- 41 years in business (founded 1985)\n- A+ BBB rating — independently verified\n- 184+ Google reviews\n- Hundreds of documented exits across Wyndham, Hilton, Marriott, Bluegreen, Diamond, and more\n\nFull case database and client video testimonials:\nhttps://alphatimeshareconsultants.com/proof/\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  rights: function(c){
+    return 'Hi '+c.name+',\n\nFollowing up with the consumer rights information we reviewed today for your case.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nFederal and state consumer protection laws give timeshare owners specific rights — and violations of those rights carry documented fines that create leverage. The violations identified in your Consumer Rights Assessment are the foundation of your filing.\n\nEach violation carries a calculated fine. The more violations, the greater the combined exposure — and the stronger your position in the group.\n\nWe will review your specific violations in full on our next call.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  cost: function(c){
+    var d=c.d;
+    var mtfYr=parseFloat(d.maitFees)||0;
+    var mtgMo=parseFloat(d.monthlyMortgage)||0;
+    var totalMo=c.mo;
+    var totalYr=totalMo*12;
+    function mtfTotal(n){return mtfYr>0?mtfYr*(Math.pow(1.08,n)-1)/0.08:0;}
+    function proj(n){return Math.round(mtfTotal(n)+mtgMo*12*n);}
+    var f=function(n){return n>0?'$'+n.toLocaleString():'—';};
+    return 'Hi '+c.name+',\n\nAs discussed, here is a breakdown of the true cost of staying in your timeshare at '+c.resort+'.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n--- YOUR CURRENT COSTS ---\nMaintenance Fee: '+f(mtfYr)+'/yr ('+f(Math.round(mtfYr/12))+'/mo)\nMortgage: '+(mtgMo>0?f(Math.round(mtgMo))+'/mo':'Paid off')+'\nCombined Monthly: '+f(Math.round(totalMo))+'\n\n--- IF YOU STAY IN ---\n1 Year:   '+f(Math.round(totalYr))+'\n5 Years:  '+f(proj(5))+' (MTF grows 8%/yr)\n10 Years: '+f(proj(10))+'\n20 Years: '+f(proj(20))+'\n30 Years: '+f(proj(30))+'\n\n--- EXIT WITH ALPHA ---\nOne-time fee: '+(c.fee>0?f(c.fee):'See quote')+'\nAfter exit: $0/month forever\nBreak-even: '+(c.fee>0&&totalMo>0?Math.ceil(c.fee/totalMo)+' months':'—')+'\n\nThe resort never showed you these numbers. Now you have them.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  quote: function(c){
+    var d=c.d;
+    return 'Hi '+c.name+',\n\nHere is a summary of your Alpha quote as we discussed.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n--- YOUR ALPHA QUOTE ---\nService Fee: '+(c.fee>0?'$'+Math.round(c.fee).toLocaleString():'See proposal')+'\nTerm: '+(d.selectedTerm||'60 months')+'\nMonthly: '+(d.alphaFee&&d.selectedTerm?'$'+Math.round(parseFloat(d.alphaFee)/(parseFloat(d.selectedTerm)||60)).toLocaleString()+'/mo':'See proposal')+'\n$0 down — First payment starts month 2\n100% Money-Back Guarantee — in writing\n\nThis is a one-time engagement fee. Once your release is recorded, your timeshare obligation is $0 forever.\n\nReady to move forward? Reply to this email or call me directly.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  followup: function(c){
+    var d=c.d;
+    var fu=d._fuAppt?new Date(d._fuAppt).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'}):'TBD';
+    return 'Hi '+c.name+',\n\nJust a quick follow-up from our recent conversation about your timeshare at '+c.resort+'.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nI wanted to check in and see if you had any additional questions after reviewing the information I sent over. We have a follow-up scheduled for '+fu+' and I want to make sure you feel fully informed before we reconnect.\n\nFeel free to reach out anytime — I\'m always available at 877-848-3948, Ext. 134.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  better: function(c){
+    return 'Hi '+c.name+',\n\nHere is a summary of what separates Alpha from every other option out there — as we covered today.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n1. GROUP FILINGS — No one else does this at scale. We consolidate owners from the same resort into a single filing. Group filing participants are the only ones eligible for resort reimbursement.\n\n2. WRITTEN GUARANTEE — In your contract, signed by us. 100% refund if no Favorable Outcome within 36 months. No attorney puts that in writing.\n\n3. 41 YEARS — A+ BBB, 184+ verified Google reviews, every case handled in-house.\n\n4. $0 DOWN — First payment starts month 2. If we review your file and cannot help, you owe nothing.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  included: function(c){
+    return 'Hi '+c.name+',\n\nAs promised, here is everything included in your Alpha engagement — no surprises.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\nSERVICE INCLUDED:\n✓ Full contract & case review\n✓ Violation documentation with statute citations\n✓ Group filing placement (up to 50 clients)\n✓ Direct resort negotiation — you do not engage the resort\n✓ Credit protection & repair — all 3 bureaus\n✓ Attorney on retainer at no additional cost\n\nRESULTS YOU RECEIVE:\n✓ Mutual Release Letter — deed removed, all fees terminated\n✓ Compensation when applicable — Alpha keeps 0%\n✓ 100% Money-Back Guarantee — in writing\n\nOne fee. One time. Then $0 forever.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  },
+  recap: function(c){
+    var d=c.d;
+    return 'Hi '+c.name+',\n\nHere is a quick recap of everything we covered today — so you have it in writing.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n✓ You have documented reasons to exit '+c.resort+'\n✓ Doing nothing means growing fees, credit risk, and heir liability\n✓ Group filings force resorts to act — one case is a complaint, twenty is a pattern\n✓ You qualify for our active group filing\n✓ Written guarantee · $0 down · Credit protection included\n✓ Quote: '+(c.fee>0?'$'+Math.round(c.fee).toLocaleString():'See proposal')+' — one time, then $0 forever\n\nThe only question left: Are you ready to stop paying the resort and start paying toward the solution?\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  }
+};
+
+function generateEmail(){
+  var sel = document.getElementById('email-template-sel');
+  var preview = document.getElementById('email-preview');
+  var placeholder = document.getElementById('email-placeholder');
+  var key = sel.value;
+  if(!key){
+    preview.style.display='none';
+    placeholder.style.display='block';
+    return;
+  }
+  var c = _clientHeader();
+  var fn = EMAIL_TEMPLATES[key];
+  if(!fn){preview.textContent='Template not found.';preview.style.display='block';placeholder.style.display='none';return;}
+  var text = fn(c);
+  preview.textContent = text;
+  preview.style.display='block';
+  placeholder.style.display='none';
+  document.getElementById('email-copied-msg').style.display='none';
+}
+
+function copyEmail(){
+  var preview = document.getElementById('email-preview');
+  if(!preview||preview.style.display==='none'){alert('Select a template first.');return;}
+  var text = preview.textContent;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){
+      var msg = document.getElementById('email-copied-msg');
+      if(msg){msg.style.display='block';setTimeout(function(){msg.style.display='none';},3000);}
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    var msg = document.getElementById('email-copied-msg');
+    if(msg){msg.style.display='block';setTimeout(function(){msg.style.display='none';},3000);}
+  }
+}
+// ── END EMAIL GENERATOR ───────────────────────────────────────────────────
+
 </script>
 
 <style id="atc-sb-css">
