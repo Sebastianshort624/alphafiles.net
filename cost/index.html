@@ -4,69 +4,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>True Cost of Ownership — Alpha Timeshare Consultants</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style id="page-css">
-:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--orange:#ea580c;--blue:#2563EB}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e8edf3;--red:#DC2626;--green:#16A34A;--orange:#ea580c}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1a1a1a}
-.main{padding:20px;min-height:100vh}
-.wrap{max-width:800px;margin:0 auto}
-.ph{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px}
-.ph-num{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.ph-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
-.ph-sub{font-size:14px;color:rgba(255,255,255,.65)}
-.vb{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
-.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border-right:none}
-.vbl{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
-.vbv{font-size:14px;font-weight:700;color:var(--navy)}.vbs{font-size:12px;color:#6b7280;margin-top:2px}
-/* Input grid */
-.input-panel{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
-.ip-hdr{background:var(--navy);color:#fff;padding:11px 16px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
-.ip-hdr span{font-size:16px}
-.ip-body{padding:16px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.ff label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
-.ff input{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:9px 11px;font-size:15px;font-weight:600;font-family:"Inter",sans-serif;color:var(--navy);background:#fff}
-.ff input:focus{outline:none;border-color:var(--gold);background:#fffdf5}
-.ff input.auto{background:#f9fafb;color:#6b7280;font-weight:400}
-/* Results */
-.results-panel{background:var(--navy);border-radius:10px;padding:20px;margin-bottom:16px}
-.rp-title{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
-.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.cost-box{background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center}
-.cost-box.hot{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3)}
-.cb-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
-.cb-val{font-size:20px;font-weight:700;color:#fff;line-height:1}
-.cb-val.gold{color:var(--gold)}
-.cb-val.red{color:#f87171}
-/* VS comparison */
-.vs-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:14px}
-.vs-box{background:rgba(255,255,255,.06);border-radius:8px;padding:14px}
-.vs-box.green{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3)}
-.vs-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
-.vs-val{font-size:18px;font-weight:700;color:#fff}
-.vs-sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:3px}
-.vs-div{font-size:20px;font-weight:700;color:var(--gold);text-align:center}
-.breakeven{background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);border-radius:8px;padding:12px;text-align:center}
-.be-val{font-size:22px;font-weight:700;color:#4ade80}
-.be-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:3px}
-/* Behind row */
-.behind-row{background:#fef2f2;border:1.5px solid var(--red);border-radius:8px;padding:12px;margin-top:10px;display:none}
-.behind-row.show{display:block}
-.behind-label{font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px}
-.behind-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.behind-item{font-size:13px;color:#374151}<br>
-.behind-item strong{color:var(--red)}
+body{font-family:"Inter",sans-serif;background:#ffffff;color:#1a1a1a;font-size:14px}
+.main{padding:24px;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto}
+
+/* Page header */
+.ph{margin-bottom:28px}
+.ph-eyebrow{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.ph-title{font-size:28px;font-weight:300;color:var(--navy);margin-bottom:4px;letter-spacing:-.3px}
+.ph-sub{font-size:14px;color:#8b9ab0;font-weight:400}
+
+/* Client banner — slim, light */
+.vb{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:10px;margin-bottom:32px;overflow:hidden}
+.vbc{padding:12px 16px;border-right:1px solid var(--border)}
+.vbc:last-child{border-right:none}
+.vbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.vbv{font-size:14px;font-weight:600;color:var(--navy)}
+.vbs{font-size:12px;color:#9ca3af;margin-top:2px}
+
+/* Numbers summary — pulled from vitals */
+.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
+.sum-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.sum-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.sum-val{font-size:22px;font-weight:600;color:var(--navy);line-height:1}
+.sum-sub{font-size:12px;color:#b0bac9;margin-top:5px}
+
+/* Behind alert */
+.behind-alert{border:1px solid #fecdd3;background:#fff5f5;border-radius:10px;padding:14px 18px;margin-bottom:28px;display:none}
+.behind-alert.show{display:flex;gap:14px;align-items:flex-start}
+.behind-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.behind-text{font-size:13px;color:#7f1d1d;line-height:1.6}
+.behind-text strong{color:var(--red)}
+
+/* Section divider */
+.section-label{font-size:11px;font-weight:700;color:#b0bac9;text-transform:uppercase;letter-spacing:.8px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* Projections — the main display */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px}
+.proj-card{border:1px solid var(--border);border-radius:12px;padding:22px 24px;position:relative}
+.proj-card.highlight{border-color:#fecaca;background:#fff8f8}
+.proj-yr{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.proj-val{font-size:36px;font-weight:300;color:var(--navy);letter-spacing:-.5px;line-height:1}
+.proj-val.hot{color:var(--red);font-weight:400}
+.proj-cents{font-size:16px;font-weight:400;vertical-align:super;margin-right:2px;letter-spacing:0}
+.proj-breakdown{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.proj-line{display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:3px}
+.proj-line span:last-child{color:#64748b;font-weight:500}
+
+/* VS breakeven */
+.vs-section{border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:36px}
+.vs-inner{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center}
+.vs-box{text-align:center}
+.vs-box-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.vs-box-val{font-size:28px;font-weight:300;color:var(--navy);letter-spacing:-.3px}
+.vs-box-val.green{color:var(--green);font-weight:500}
+.vs-box-sub{font-size:12px;color:#b0bac9;margin-top:6px}
+.vs-divider{font-size:13px;font-weight:700;color:#d1d5db;text-align:center}
+.be-box{background:#f8fffe;border:1px solid #bbf7d0;border-radius:10px;padding:16px;text-align:center;margin-top:18px}
+.be-val{font-size:20px;font-weight:600;color:var(--green)}
+.be-sub{font-size:12px;color:#6b7280;margin-top:4px}
+
+/* No client notice */
+.no-client{text-align:center;padding:60px 24px;color:#b0bac9}
+.no-client-icon{font-size:40px;margin-bottom:12px}
+.no-client-title{font-size:16px;font-weight:500;color:#6b7280;margin-bottom:6px}
+.no-client-sub{font-size:13px}
+
 /* Nav */
-.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:"Inter",sans-serif}
-.btn.p{background:var(--gold);color:#fff}.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn-row .btn{flex:1}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
-.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
-.nn{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
-.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-@media print{.sidenav,.btn-row,.nav-bar,.input-panel{display:none!important}.main{margin-left:0!important}}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
+.np{padding:10px 20px;font-size:13px;font-weight:600;border-radius:8px;text-decoration:none;background:#f8fafc;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 20px;font-size:13px;font-weight:600;border-radius:8px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#b0bac9;text-align:center;flex:1}
+.btn-row{display:flex;gap:10px;margin-top:20px}
+.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:8px;border:none;cursor:pointer;font-family:"Inter",sans-serif}
+.btn.p{background:var(--gold);color:#fff}
+.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--border)}
+.btn-row .btn{flex:1}
+
+/* Edit link */
+.edit-link{font-size:12px;color:var(--gold);text-decoration:none;font-weight:600}
+.edit-link:hover{text-decoration:underline}
+
+@media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
 </style>
 </head>
 <body>
@@ -74,10 +98,12 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 <div class="main"><div class="wrap">
 
 <div class="ph">
-  <div class="ph-num">Page 8</div>
+  <div class="ph-eyebrow">Page 8</div>
   <div class="ph-title">True Cost of Ownership</div>
   <div class="ph-sub">The numbers the resort never showed you</div>
 </div>
+
+<!-- Client banner -->
 <div class="vb">
   <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
   <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
@@ -85,87 +111,103 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
   <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
 </div>
 
-<!-- INPUT PANEL: Maintenance Fees -->
-<div class="input-panel">
-  <div class="ip-hdr"><span>🌊</span> Maintenance Fees (MTF)</div>
-  <div class="ip-body">
-    <div class="grid3" style="margin-bottom:10px">
-      <div class="ff"><label>Annual MTF ($)</label><input type="number" id="i-mtf-yr" placeholder="Data" oninput="calc()"></div>
-      <div class="ff"><label>Monthly MTF</label><input type="number" id="i-mtf-mo" class="auto" readonly placeholder="Data"></div>
-      <div class="ff"><label>Months Behind</label><input type="number" id="i-mtf-behind" placeholder="Data" oninput="calc()"></div>
-    </div>
-  </div>
+<!-- No client state -->
+<div id="no-client-msg" class="no-client" style="display:none">
+  <div class="no-client-icon">📋</div>
+  <div class="no-client-title">No client selected</div>
+  <div class="no-client-sub">Select a client from the sidebar or fill out <a href="/vitals/" style="color:var(--gold)">Client Vitals</a> first.</div>
 </div>
 
-<!-- INPUT PANEL: Mortgage -->
-<div class="input-panel">
-  <div class="ip-hdr"><span>🏦</span> Mortgage</div>
-  <div class="ip-body">
-    <div class="grid3" style="margin-bottom:10px">
-      <div class="ff"><label>Monthly Payment ($)</label><input type="number" id="i-mtg-mo" placeholder="Data" oninput="calc()"></div>
-      <div class="ff"><label>Annual Mortgage</label><input type="number" id="i-mtg-yr" class="auto" readonly placeholder="Data"></div>
-      <div class="ff"><label>Months Behind</label><input type="number" id="i-mtg-behind" placeholder="Data" oninput="calc()"></div>
-    </div>
-    <div class="grid2">
-      <div class="ff"><label>Balance Remaining ($)</label><input type="number" id="i-balance" placeholder="Data" oninput="calc()"></div>
-      <div class="ff"><label>Years Left on Term</label><input type="number" id="i-yrs-left" placeholder="Data" oninput="calc()"></div>
-    </div>
-  </div>
-</div>
+<!-- Main content (shown when client exists) -->
+<div id="cost-content">
 
-<!-- INPUT PANEL: Alpha Fee -->
-<div class="input-panel">
-  <div class="ip-hdr"><span>✅</span> Alpha Exit Fee</div>
-  <div class="ip-body">
-    <div class="grid2">
-      <div class="ff"><label>Alpha Service Fee ($)</label><input type="number" id="i-fee" placeholder="Data" oninput="calc()"></div>
-      <div class="ff"><label>Year Purchased</label><input type="number" id="i-year" placeholder="Data" oninput="calc()"></div>
-    </div>
+  <!-- Summary numbers from vitals -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div class="section-label" style="flex:1;margin-bottom:0">Your Numbers</div>
+    <a href="/vitals/" class="edit-link" style="margin-left:16px">Edit in Vitals ↗</a>
   </div>
-</div>
-
-<!-- RESULTS PANEL -->
-<div class="results-panel">
-  <div class="rp-title">True Cost — Staying In</div>
-  <div class="cost-grid">
-    <div class="cost-box"><div class="cb-label">Monthly</div><div class="cb-val gold" id="r-mo">—</div></div>
-    <div class="cost-box"><div class="cb-label">Yearly</div><div class="cb-val gold" id="r-yr">—</div></div>
-    <div class="cost-box hot"><div class="cb-label">5 Years</div><div class="cb-val red" id="r-5">—</div></div>
-    <div class="cost-box hot"><div class="cb-label">10 Years</div><div class="cb-val red" id="r-10">—</div></div>
-    <div class="cost-box hot"><div class="cb-label">20 Years</div><div class="cb-val red" id="r-20">—</div></div>
-    <div class="cost-box hot"><div class="cb-label">30 Years</div><div class="cb-val red" id="r-30">—</div></div>
+  <div class="summary-row">
+    <div class="sum-card">
+      <div class="sum-label">Maintenance Fee</div>
+      <div class="sum-val" id="s-mtf">—</div>
+      <div class="sum-sub" id="s-mtf-sub">per year</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Mortgage Payment</div>
+      <div class="sum-val" id="s-mtg">—</div>
+      <div class="sum-sub" id="s-mtg-sub">per month</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Combined Monthly</div>
+      <div class="sum-val" id="s-combined">—</div>
+      <div class="sum-sub">total obligation / mo</div>
+    </div>
   </div>
 
   <!-- Behind alert -->
-  <div id="behind-box" class="behind-row">
-    <div class="behind-label">⚠️ Currently Behind</div>
-    <div class="behind-grid">
-      <div class="behind-item" id="behind-mtf-txt"></div>
-      <div class="behind-item" id="behind-mtg-txt"></div>
+  <div id="behind-alert" class="behind-alert">
+    <div class="behind-icon">⚠️</div>
+    <div class="behind-text" id="behind-text"></div>
+  </div>
+
+  <!-- Projections -->
+  <div class="section-label">If You Stay In — What It Costs</div>
+  <div class="proj-grid">
+    <div class="proj-card">
+      <div class="proj-yr">This Year</div>
+      <div class="proj-val" id="p-1">—</div>
+      <div class="proj-breakdown" id="pb-1"></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-yr">5 Years</div>
+      <div class="proj-val hot" id="p-5">—</div>
+      <div class="proj-breakdown" id="pb-5"></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-yr">10 Years</div>
+      <div class="proj-val hot" id="p-10">—</div>
+      <div class="proj-breakdown" id="pb-10"></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-yr">20 Years</div>
+      <div class="proj-val hot" id="p-20">—</div>
+      <div class="proj-breakdown" id="pb-20"></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-yr">30 Years</div>
+      <div class="proj-val hot" id="p-30">—</div>
+      <div class="proj-breakdown" id="pb-30"></div>
+    </div>
+    <div class="proj-card" style="border-color:#bbf7d0;background:#f8fffe">
+      <div class="proj-yr" style="color:var(--green)">Alpha Exit Fee</div>
+      <div class="proj-val" style="color:var(--green)" id="p-fee">—</div>
+      <div class="proj-breakdown" id="pb-fee"></div>
     </div>
   </div>
 
-  <!-- VS comparison -->
-  <div class="rp-title" style="margin-top:18px">Exit With Alpha vs. Stay In</div>
-  <div class="vs-row">
-    <div class="vs-box">
-      <div class="vs-label">Staying In — 5 Years</div>
-      <div class="vs-val" id="vs-stay">—</div>
-      <div class="vs-sub">MTF + mortgage × 5 yrs (8%/yr MTF)</div>
+  <!-- VS / Breakeven -->
+  <div class="section-label">Exit vs. Stay</div>
+  <div class="vs-section">
+    <div class="vs-inner">
+      <div class="vs-box">
+        <div class="vs-box-label">Staying In — 5 Years</div>
+        <div class="vs-box-val" id="vs-stay">—</div>
+        <div class="vs-box-sub">MTF grows 8% per year</div>
+      </div>
+      <div class="vs-divider">VS</div>
+      <div class="vs-box">
+        <div class="vs-box-label">Exit with Alpha</div>
+        <div class="vs-box-val green" id="vs-exit">—</div>
+        <div class="vs-box-sub">One time · then $0 forever</div>
+      </div>
     </div>
-    <div class="vs-div">VS</div>
-    <div class="vs-box green">
-      <div class="vs-label">Exit with Alpha</div>
-      <div class="vs-val" id="vs-exit">—</div>
-      <div class="vs-sub">One time — then $0 forever</div>
+    <div class="be-box" id="be-box" style="display:none">
+      <div class="be-val" id="be-val">—</div>
+      <div class="be-sub">After that, every month is money back in your pocket</div>
     </div>
   </div>
-  <div class="breakeven">
-    <div class="cb-label" style="color:rgba(255,255,255,.5)">Break-Even</div>
-    <div class="be-val" id="r-be">—</div>
-    <div class="be-sub">After that, every month is money back in your pocket</div>
-  </div>
-</div>
+
+</div><!-- /cost-content -->
 
 <div class="btn-row">
   <button class="btn p" onclick="savePage()">Save &amp; Continue</button>
@@ -182,119 +224,139 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 <script>
 var SK="atc_clients_v2",AK="atc_active";
 function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
 function ac(){return localStorage.getItem(AK)||null;}
-function fc(n){return n>0?"$"+Math.round(n).toLocaleString():"—";}
+function ad(){var s=ac();return s?ga()[s]||null:null;}
 
-function g(id){return parseFloat(document.getElementById(id).value)||0;}
-function s(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
-function sv(id,v){var el=document.getElementById(id);if(el)el.value=v>0?Math.round(v):"";}
+function fc(n){
+  if(!n||n===0) return "—";
+  if(n>=1000000) return "$"+Math.round(n/1000)/10+"M";
+  if(n>=10000) return "$"+Math.round(n/1000)+"K";
+  return "$"+Math.round(n).toLocaleString();
+}
+function fcd(n){ return n>0?"$"+Math.round(n).toLocaleString():"—"; }
 
-function calc(){
-  var mtfYr  = g("i-mtf-yr");
+// MTF projections: sum of geometric series MTF*(1.08^n -1)/0.08
+function mtfTotal(mtfYr, n){
+  if(!mtfYr||mtfYr<=0) return 0;
+  return mtfYr * (Math.pow(1.08, n) - 1) / 0.08;
+}
+
+function breakdown(mtfYr, mtgMo, n){
+  var mtfT = mtfTotal(mtfYr, n);
+  var mtgT = mtgMo * 12 * n;
+  var lines = "";
+  if(mtfYr>0) lines += "<div class='proj-line'><span>Maintenance fees</span><span>"+fcd(mtfT)+"</span></div>";
+  if(mtgMo>0) lines += "<div class='proj-line'><span>Mortgage payments</span><span>"+fcd(mtgT)+"</span></div>";
+  return lines;
+}
+
+function set(id, v){var el=document.getElementById(id);if(el)el.textContent=v;}
+function setHTML(id, v){var el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+function render(){
+  var d = ad();
+  var content = document.getElementById("cost-content");
+  var noClient = document.getElementById("no-client-msg");
+
+  if(!d){
+    if(content) content.style.display = "none";
+    if(noClient) noClient.style.display = "block";
+    return;
+  }
+  if(content) content.style.display = "block";
+  if(noClient) noClient.style.display = "none";
+
+  // Banner
+  var mo = (parseFloat(d.monthlyMortgage)||0) + ((parseFloat(d.maitFees)||0)/12);
+  set("vb-name", ((d.firstName||"")+" "+(d.lastName||"")).trim()||"—");
+  set("vb-phone", d.phone||"—");
+  set("vb-resort", d.resort||"—");
+  set("vb-loc", d.location||"—");
+  set("vb-mo", mo>0 ? "$"+Math.round(mo).toLocaleString()+"/mo" : "—");
+  set("vb-yr", mo>0 ? "$"+Math.round(mo*12).toLocaleString()+"/yr" : "—");
+  set("vb-quote", d.alphaFee ? "$"+Math.round(d.alphaFee).toLocaleString() : "—");
+  set("vb-stg", ["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"][d.vitalsStage||1]||"Assessment");
+
+  // Pull numbers from vitals
+  var mtfYr  = parseFloat(d.maitFees)||0;
   var mtfMo  = mtfYr/12;
-  var mtgMo  = g("i-mtg-mo");
+  var mtgMo  = parseFloat(d.monthlyMortgage)||0;
   var mtgYr  = mtgMo*12;
-  var mtfBeh = g("i-mtf-behind");
-  var mtgBeh = g("i-mtg-behind");
-  var fee    = g("i-fee");
-  var balance= g("i-balance");
-
-  // Auto-fill monthly MTF and annual mortgage
-  sv("i-mtf-mo", mtfMo);
-  sv("i-mtg-yr", mtgYr);
-
+  var mtfBeh = parseFloat(d.mtfBehind)||0;
+  var mtgBeh = parseFloat(d.mtgBehind)||0;
+  var fee    = parseFloat(d.alphaFee)||0;
   var totalMo = mtfMo + mtgMo;
   var totalYr = totalMo * 12;
 
-  // 5/10/20/30 year projections — MTF grows 8%/yr, mortgage stays flat
-  function mtfAtYear(n){
-    // Sum of geometric series: mtfYr * ((1.08^n - 1) / 0.07)
-    return mtfYr > 0 ? mtfYr * (Math.pow(1.08, n) - 1) / 0.08 : 0;
-  }
-  var r5  = mtfAtYear(5)  + mtgMo*12*5;
-  var r10 = mtfAtYear(10) + mtgMo*12*10;
-  var r20 = mtfAtYear(20) + mtgMo*12*20;
-  var r30 = mtfAtYear(30) + mtgMo*12*30;
-
-  s("r-mo",  fc(totalMo));
-  s("r-yr",  fc(totalYr));
-  s("r-5",   fc(r5));
-  s("r-10",  fc(r10));
-  s("r-20",  fc(r20));
-  s("r-30",  fc(r30));
+  // Summary cards
+  set("s-mtf",   mtfYr>0  ? "$"+Math.round(mtfYr).toLocaleString()  : "Not set");
+  set("s-mtf-sub", mtfYr>0 ? "$"+Math.round(mtfMo).toLocaleString()+"/mo" : "");
+  set("s-mtg",   mtgMo>0  ? "$"+Math.round(mtgMo).toLocaleString()  : "Paid off");
+  set("s-mtg-sub", mtgMo>0 ? "$"+Math.round(mtgYr).toLocaleString()+"/yr" : "No mortgage");
+  set("s-combined", totalMo>0 ? "$"+Math.round(totalMo).toLocaleString() : "—");
 
   // Behind alert
-  var behindBox = document.getElementById("behind-box");
-  var hasBehind = mtfBeh > 0 || mtgBeh > 0;
-  behindBox.className = "behind-row" + (hasBehind ? " show" : "");
-  document.getElementById("behind-mtf-txt").innerHTML = mtfBeh > 0
-    ? "MTF: <strong>" + mtfBeh + " months</strong> = <strong>" + fc(mtfMo*mtfBeh) + "</strong>" : "";
-  document.getElementById("behind-mtg-txt").innerHTML = mtgBeh > 0
-    ? "Mortgage: <strong>" + mtgBeh + " months</strong> = <strong>" + fc(mtgMo*mtgBeh) + "</strong>" : "";
-
-  // VS comparison
-  s("vs-stay", fc(r5));
-  s("vs-exit", fee > 0 ? fc(fee) : "—");
-  if(fee > 0 && totalMo > 0){
-    var beMo = Math.ceil(fee / totalMo);
-    s("r-be", beMo + " month" + (beMo !== 1 ? "s" : ""));
+  var alert = document.getElementById("behind-alert");
+  if(mtfBeh>0 || mtgBeh>0){
+    alert.classList.add("show");
+    var txt = "Currently behind: ";
+    var parts = [];
+    if(mtfBeh>0) parts.push("<strong>"+mtfBeh+" month"+(mtfBeh!==1?"s":"")+
+      " MTF</strong> = <strong>"+fcd(mtfMo*mtfBeh)+"</strong>");
+    if(mtgBeh>0) parts.push("<strong>"+mtgBeh+" month"+(mtgBeh!==1?"s":"")+
+      " mortgage</strong> = <strong>"+fcd(mtgMo*mtgBeh)+"</strong>");
+    setHTML("behind-text", txt + parts.join("  ·  "));
   } else {
-    s("r-be", "—");
+    alert.classList.remove("show");
   }
 
-  // Save to localStorage
-  var slug = ac(); if(!slug) return;
-  var all = ga(); if(!all[slug]) return;
-  all[slug].cost_mtfYr  = mtfYr;
-  all[slug].cost_mtgMo  = mtgMo;
-  all[slug].cost_mtfBeh = mtfBeh;
-  all[slug].cost_mtgBeh = mtgBeh;
-  all[slug].cost_balance= balance;
-  all[slug].cost_fee    = fee;
-  all[slug].cost_year   = g("i-year");
-  all[slug].cost_yrsLeft= g("i-yrs-left");
-  all[slug]._updated    = Date.now();
-  sa(all);
+  // Projections
+  function projTotal(n){return mtfTotal(mtfYr,n) + mtgMo*12*n;}
+  set("p-1",  fcd(totalYr));  setHTML("pb-1",  breakdown(mtfYr,mtgMo,1));
+  set("p-5",  fc(projTotal(5)));   setHTML("pb-5",  breakdown(mtfYr,mtgMo,5));
+  set("p-10", fc(projTotal(10)));  setHTML("pb-10", breakdown(mtfYr,mtgMo,10));
+  set("p-20", fc(projTotal(20)));  setHTML("pb-20", breakdown(mtfYr,mtgMo,20));
+  set("p-30", fc(projTotal(30)));  setHTML("pb-30", breakdown(mtfYr,mtgMo,30));
+
+  // Alpha fee card
+  if(fee>0){
+    set("p-fee", fcd(fee));
+    setHTML("pb-fee","<div class='proj-line'><span>One time · then $0</span><span style='color:var(--green)'>Forever</span></div>");
+  } else {
+    set("p-fee","Not set");
+    setHTML("pb-fee","<div class='proj-line'><span>Set fee in Vitals</span><span></span></div>");
+  }
+
+  // VS / Breakeven
+  var stay5 = projTotal(5);
+  set("vs-stay", fc(stay5));
+  set("vs-exit", fee>0 ? fcd(fee) : "—");
+  var beBox = document.getElementById("be-box");
+  if(fee>0 && totalMo>0){
+    var beMo = Math.ceil(fee/totalMo);
+    set("be-val", beMo+" month"+(beMo!==1?"s":"")+" to break even");
+    if(beBox) beBox.style.display="block";
+  } else {
+    if(beBox) beBox.style.display="none";
+  }
 }
 
 function savePage(){
-  calc();
-  var s2=ac();if(!s2){location.href="/quote/";return;}
-  var all=ga();if(!all[s2]){location.href="/quote/";return;}
-  var sp=all[s2]._savedPages||[];
+  var s=ac();if(!s){location.href="/quote/";return;}
+  var all=ga();if(!all[s]){location.href="/quote/";return;}
+  var sp=all[s]._savedPages||[];
   if(sp.indexOf("/cost/")<0)sp.push("/cost/");
-  all[s2]._savedPages=sp;all[s2]._updated=Date.now();sa(all);
+  all[s]._savedPages=sp;all[s]._updated=Date.now();
+  localStorage.setItem(SK,JSON.stringify(all));
   location.href="/quote/";
 }
 
-function initBanner(){
-  var d=ac()?ga()[ac()]:null;if(!d)return;
-  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
-  set("vb-name",((d.firstName||"")+" "+(d.lastName||"")).trim()||"—");
-  set("vb-phone",d.phone||"—");
-  set("vb-resort",d.resort||"—");
-  set("vb-loc",d.location||"—");
-  set("vb-mo",mo>0?"$"+Math.round(mo).toLocaleString()+"/mo":"—");
-  set("vb-yr",mo>0?"$"+Math.round(mo*12).toLocaleString()+"/yr":"—");
-  set("vb-quote",d.alphaFee?"$"+Math.round(d.alphaFee).toLocaleString():"—");
-  set("vb-stg",["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"][d.vitalsStage||1]||"Assessment");
+document.addEventListener("DOMContentLoaded", render);
 
-  // Pre-fill inputs from saved cost data if available
-  if(d.cost_mtfYr) document.getElementById("i-mtf-yr").value = d.cost_mtfYr;
-  if(d.cost_mtgMo) document.getElementById("i-mtg-mo").value = d.cost_mtgMo;
-  if(d.cost_mtfBeh) document.getElementById("i-mtf-behind").value = d.cost_mtfBeh;
-  if(d.cost_mtgBeh) document.getElementById("i-mtg-behind").value = d.cost_mtgBeh;
-  if(d.cost_balance) document.getElementById("i-balance").value = d.cost_balance;
-  if(d.cost_fee) document.getElementById("i-fee").value = d.cost_fee;
-  if(d.alphaFee && !d.cost_fee) document.getElementById("i-fee").value = d.alphaFee;
-  if(d.cost_year) document.getElementById("i-year").value = d.cost_year;
-  if(d.cost_yrsLeft) document.getElementById("i-yrs-left").value = d.cost_yrsLeft;
-  calc();
-}
-
-document.addEventListener("DOMContentLoaded", initBanner);
+// Live update if localStorage changes in another tab
+window.addEventListener("storage", function(e){
+  if(e.key===SK||e.key===AK) render();
+});
 </script>
 <style id="atc-sb-css">
 body{display:flex!important;min-height:100vh!important}
