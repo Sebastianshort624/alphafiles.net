@@ -725,11 +725,40 @@ function updateCRM(){
 }
 
 var _timer=null;
+function _ensureClient(){
+  // If no active client, auto-create one from the name fields
+  var s=ac();
+  if(s) return s;
+  var f=(document.getElementById('v-first')||{}).value||'';
+  var l=(document.getElementById('v-last')||{}).value||'';
+  var r=(document.getElementById('v-resort')||{}).value||'';
+  if(!f&&!l) return null; // nothing to save yet
+  var all=ga();
+  // Build slug
+  var slug;
+  if(f||l){
+    slug=((f||'x')[0]+'.'+((l||'client').replace(/\s+/g,'-'))).toLowerCase().replace(/[^a-z0-9.\-]/g,'');
+    // avoid collision
+    var base=slug,ct=1;
+    while(all[slug]&&all[slug].firstName!==f&&ct<20){slug=base+'-'+ct;ct++;}
+  } else {
+    var ct2=Object.keys(all).filter(function(k){return k.indexOf('unnamed')===0;}).length+1;
+    slug='unnamed-'+ct2;
+  }
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_updated:Date.now()});
+  sa(all);
+  localStorage.setItem(AK,slug);
+  // Also set sidebar key so dropdown updates
+  localStorage.setItem('atc_active',slug);
+  if(typeof buildSB==='function') buildSB();
+  return slug;
+}
+
 function autoSave(){
   updateBanner();updateCRM();
   clearTimeout(_timer);
   _timer=setTimeout(function(){
-    var s=ac();if(!s)return;var all=ga();if(!all[s])return;
+    var s=_ensureClient();if(!s)return;var all=ga();if(!all[s])all[s]={_created:Date.now()};
     function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
     all[s]=Object.assign(all[s],{
       firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),email:g('v-email'),
