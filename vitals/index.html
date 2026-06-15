@@ -155,6 +155,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
     <div class="ps" id="co-info">
       <div class="frow" style="margin-bottom:8px">
         <div class="ff"><label>2nd Phone</label><input id="v-phone2" type="tel" oninput="autoSave()"></div>
+    <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" placeholder="" oninput="autoSave()"></div>
         <div class="ff"><label>Email</label><input id="v-email" type="email" oninput="autoSave()"></div>
       </div>
       <div class="frow">
@@ -187,105 +188,144 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 </div>
 
 <!-- MTF -->
-<div class="card" style="border-top:3px solid #2563EB">
-  <div class="card-hdr" style="background:#1a3a6b">Maintenance Fees (MTF)</div>
-  <div class="card-body">
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
-      <div class="ff"><label>Annual MTF</label><input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals()"></div>
-      <div class="ff ro"><label>Monthly MTF</label><input id="v-mtf-mo" readonly style="background:#f8fafc;color:#6b7280;border-color:#e8edf3"></div>
-      <div class="ff"><label>Billed</label>
-        <select id="v-mtf-freq" onchange="autoSave()">
-          <option value="yearly">Yearly</option>
-          <option value="monthly">Monthly</option>
-        </select>
-      </div>
+<!-- MTF + MORTGAGE UNIFIED SECTION -->
+
+<!-- MAINTENANCE FEES -->
+<div class="card">
+  <div class="card-hdr">🌊 Maintenance Fees</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+    <div class="ff">
+      <label>Annual MTF</label>
+      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals()">
     </div>
-    <div class="pt" onclick="togglePS('mtf-late')"><div class="pt-ic" id="pto-mtf-late">+</div><span>LATE MTF Payments</span></div>
-    <div class="ps" id="mtf-late">
-      <div class="ff"><label>Months Late — MTF</label><input id="v-mtfb" type="number" placeholder="" oninput="autoSave();calcTotals()"></div>
-      <div id="mtf-late-box" style="display:none;background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px;margin-top:6px;font-size:13px;color:#7f1d1d"></div>
-      <div style="margin-top:8px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:6px"><input type="checkbox" id="cancel-mtf-late" onchange="autoSave()"> Cancel LATE MTF with exit</label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtf-curr" onchange="autoSave()"> Cancel all future MTF with exit</label>
-      </div>
+    <div class="ff ro">
+      <label>Monthly MTF</label>
+      <input id="v-mtf-mo" readonly>
+    </div>
+    <div class="ff">
+      <label>Billed</label>
+      <select id="v-mtf-freq" onchange="autoSave()">
+        <option value="yearly">Yearly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </div>
+  </div>
+  <div class="pt" onclick="togglePS('mtf-late')"><div class="pt-ic" id="pto-mtf-late">+</div><span>Behind on MTF?</span></div>
+  <div class="ps" id="mtf-late">
+    <div class="ff" style="margin-top:8px">
+      <label>Months Behind — MTF</label>
+      <input id="v-mtfb" type="number" placeholder="" oninput="autoSave();calcTotals()">
+    </div>
+    <div id="mtf-late-box" style="display:none;font-size:13px;color:#374151;margin-top:6px;padding:10px 12px;background:#f9fafb;border-radius:7px;border:1px solid #e8edf3"></div>
+    <div style="margin-top:10px;display:flex;gap:16px">
+      <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtf-late" onchange="autoSave()"> Cancel late MTF on exit</label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtf-curr" onchange="autoSave()"> Cancel all future MTF on exit</label>
     </div>
   </div>
 </div>
 
 <!-- MORTGAGE -->
-<div class="card" style="border-top:3px solid var(--orange)">
-  <div class="card-hdr" style="background:#7c2d12">Mortgage</div>
-  <div class="card-body">
-    <div class="mt-row">
-      <button class="mt-b" id="mt-pf" onclick="setMtg('pf')">Paid Off</button>
-      <button class="mt-b" id="mt-ow" onclick="setMtg('ow')">Owes</button>
-      <button class="mt-b" id="mt-bh" onclick="setMtg('bh')">Behind</button>
-    </div>
-    <div class="ps" id="mtg-details">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-        <div class="ff"><label>Monthly Payment</label><input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining()"></div>
-        <div class="ff ro"><label>Annual</label><input id="v-mtg-yr" readonly style="background:#f8fafc;color:#6b7280;border-color:#e8edf3"></div>
+<div class="card">
+  <div class="card-hdr">🏦 Mortgage</div>
+  <div class="mt-row">
+    <button class="mt-b" id="mt-pf" onclick="setMtg('pf')">Paid Off</button>
+    <button class="mt-b" id="mt-ow" onclick="setMtg('ow')">Owes</button>
+    <button class="mt-b" id="mt-bh" onclick="setMtg('bh')">Behind</button>
+  </div>
+  <!-- Owes / Behind — payment fields -->
+  <div class="ps" id="mtg-details">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+      <div class="ff">
+        <label>Monthly Payment</label>
+        <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining()">
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
-        <div style="background:#fff8f0;border:1.5px solid var(--orange);border-radius:6px;padding:10px">
-          <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Balance Remaining</div>
-          <div id="v-balance-display" style="font-size:18px;font-weight:700;color:var(--orange)">—</div>
-          <div style="font-size:11px;color:#9ca3af;margin-top:2px">Years left × annual payment</div>
-          <input type="hidden" id="v-balance">
-        </div>
-        <div style="background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px">
-          <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Price</div>
-          <div id="v-price-display" style="font-size:18px;font-weight:700;color:var(--red)">—</div>
-          <div id="v-price-rate" style="font-size:11px;color:#9ca3af;margin-top:2px">Select credit rating</div>
-          <input type="hidden" id="v-mtg-future">
-        </div>
-      </div>
-      <div id="mtg-rem-box" style="display:none;background:#EAF0F8;border-radius:6px;padding:8px 10px;font-size:12px;color:#1B2A4A;margin-top:2px"></div>
-    </div>
-    <div class="ps" id="mtg-behind">
-      <div class="ff"><label>Months Late — Mortgage</label><input id="v-mtgb" type="number" placeholder="" oninput="autoSave();calcTotals()"></div>
-      <div id="mtg-late-box" style="display:none;background:#fef2f2;border:1.5px solid var(--red);border-radius:6px;padding:10px;margin-top:6px;font-size:13px;color:#7f1d1d"></div>
-      <div id="credit-alert" style="display:none;margin-top:8px"></div>
-      <div style="margin-top:8px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:6px"><input type="checkbox" id="cancel-mtg-late" onchange="autoSave()"> Cancel LATE mortgage with exit</label>
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtg-curr" onchange="autoSave()"> Cancel all future mortgage with exit</label>
-      </div>
-      <div style="margin-top:12px">
-        <div class="frow">
-          <div class="ff"><label>Credit Affected?</label>
-            <select id="v-credit-affected" onchange="autoSave();checkCredit()">
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">Not yet</option>
-              <option value="unknown">Unknown</option>
-            </select>
-          </div>
-          <div class="ff"><label>Credit Rating</label>
-            <select id="v-fico" onchange="autoSave();calcMtgRemaining()">
-              <option value="">Select...</option>
-              <option value="good">Good (16.5%)</option>
-              <option value="fair">Fair (17.5%)</option>
-              <option value="poor">Poor (18.5%)</option>
-            </select>
-          </div>
-        </div>
+      <div class="ff ro">
+        <label>Annual</label>
+        <input id="v-mtg-yr" readonly>
       </div>
     </div>
-    <div class="pt" onclick="togglePS('resort-alert')"><div class="pt-ic" id="pto-resort-alert">+</div><span>Resort Threat Level</span></div>
-    <div class="ps" id="resort-alert">
-      <div class="ff"><label>Resort Action Level</label>
-        <select id="v-resort-threat" onchange="autoSave();showThreat()">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px">
+      <div class="ff ro">
+        <label>Balance Remaining</label>
+        <input id="v-balance-display" readonly>
+        <input type="hidden" id="v-balance">
+      </div>
+      <div class="ff ro">
+        <label>Original Price Paid</label>
+        <input id="v-price-display" readonly>
+        <input type="hidden" id="v-mtg-future">
+        <div id="v-price-rate" style="font-size:11px;color:#b0bac9;margin-top:3px">Set year &amp; credit rating below</div>
+      </div>
+    </div>
+    <div id="mtg-rem-box" style="display:none;font-size:12px;color:#6b7280;margin-top:4px;padding:8px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e8edf3"></div>
+  </div>
+  <!-- Behind — extra months field -->
+  <div class="ps" id="mtg-behind">
+    <div class="ff" style="margin-top:4px">
+      <label>Months Behind — Mortgage</label>
+      <input id="v-mtgb" type="number" placeholder="" oninput="autoSave();calcTotals()">
+    </div>
+    <div id="mtg-late-box" style="display:none;font-size:13px;color:#374151;margin-top:6px;padding:10px 12px;background:#f9fafb;border-radius:7px;border:1px solid #e8edf3"></div>
+    <div id="credit-alert" style="display:none;margin-top:8px"></div>
+    <div style="margin-top:10px;display:flex;gap:16px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtg-late" onchange="autoSave()"> Cancel late mortgage on exit</label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer"><input type="checkbox" id="cancel-mtg-curr" onchange="autoSave()"> Cancel all future mortgage on exit</label>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="ff">
+        <label>Credit Affected?</label>
+        <select id="v-credit-affected" onchange="autoSave()">
           <option value="">Select...</option>
-          <option value="1">1 — Current, no contact</option>
-          <option value="2">2 — Calls and letters</option>
-          <option value="3">3 — Legal demand letters</option>
-          <option value="4">4 — Credit reported / collections</option>
-          <option value="5">5 — Foreclosure initiated</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select>
       </div>
-      <div id="threat-box" style="margin-top:8px"></div>
+      <div class="ff">
+        <label>Credit Rating</label>
+        <select id="v-fico" onchange="autoSave();calcMtgRemaining()">
+          <option value="">Select...</option>
+          <option value="good">Good (720+)</option>
+          <option value="fair">Fair (640–719)</option>
+          <option value="poor">Poor (under 640)</option>
+        </select>
+      </div>
     </div>
   </div>
+  <!-- Resort Threat Level (always visible) -->
+  <div class="pt" onclick="togglePS('resort-threat-ps')" style="margin-top:10px"><div class="pt-ic" id="pto-resort-threat-ps">+</div><span>Resort Threat Level</span></div>
+  <div class="ps" id="resort-threat-ps">
+    <div class="ff" style="margin-top:8px">
+      <label>Resort Action Level</label>
+      <select id="v-resort-threat" onchange="autoSave()">
+        <option value="">Select...</option>
+        <option value="none">No action taken</option>
+        <option value="calls">Collections calls only</option>
+        <option value="bureau">Reported to bureaus</option>
+        <option value="foreclosure">Foreclosure initiated</option>
+        <option value="judgment">Judgment lien filed</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- TOTALS SUMMARY — the main thing -->
+<div class="card" id="totals-card" style="border:2px solid #1B2A4A">
+  <div class="card-hdr" style="color:var(--gold)">📊 Total Commitment</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:6px">
+    <div style="text-align:center;padding:14px 8px;border:1px solid #e8edf3;border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Monthly</div>
+      <div id="total-mo" style="font-size:24px;font-weight:300;color:#1B2A4A;letter-spacing:-.5px">—</div>
+    </div>
+    <div style="text-align:center;padding:14px 8px;border:1px solid #e8edf3;border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Yearly</div>
+      <div id="total-yr" style="font-size:24px;font-weight:300;color:#1B2A4A;letter-spacing:-.5px">—</div>
+    </div>
+    <div style="text-align:center;padding:14px 8px;border:1px solid #fecdd3;border-radius:8px;background:#fff8f8">
+      <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Owed / Past Due</div>
+      <div id="total-owed" style="font-size:24px;font-weight:300;color:#DC2626;letter-spacing:-.5px">—</div>
+    </div>
+  </div>
+  <div id="totals-breakdown" style="font-size:12px;color:#b0bac9;margin-top:6px;line-height:1.8;display:none"></div>
 </div>
 
 <!-- ALPHA SOLUTION -->
@@ -548,23 +588,61 @@ function setMtg(t){
 }
 
 function calcTotals(){
-  var mtf=(parseFloat(document.getElementById('v-mtf').value)||0)/12;
-  var mtg=_mtgType==='pf'?0:(parseFloat(document.getElementById('v-mtg').value)||0);
-  var mo=mtf+mtg;
-  var mtfb=parseInt(document.getElementById('v-mtfb').value)||0;
-  var mtgb=parseInt(document.getElementById('v-mtgb').value)||0;
-  var mtfEl=document.getElementById('v-mtf-mo');if(mtfEl)mtfEl.value=mtf>0?fc(mtf):'';
-  var myrEl=document.getElementById('v-mtg-yr');if(myrEl)myrEl.value=mtg>0?fc(mtg*12):'';
-  var mtfLate=mtfb*mtf;
-  var mtgLate=mtgb*mtg;
+  var mtfYr  = parseFloat(document.getElementById('v-mtf').value)||0;
+  var mtfMo  = mtfYr/12;
+  var mtgMo  = parseFloat(document.getElementById('v-mtg')&&document.getElementById('v-mtg').value)||0;
+  var mtgYr  = mtgMo*12;
+  var mtfBeh = parseFloat(document.getElementById('v-mtfb')&&document.getElementById('v-mtfb').value)||0;
+  var mtgBeh = parseFloat(document.getElementById('v-mtgb')&&document.getElementById('v-mtgb').value)||0;
+
+  // Monthly MTF display
+  var moEl=document.getElementById('v-mtf-mo');
+  if(moEl) moEl.value = mtfMo>0?'$'+Math.round(mtfMo).toLocaleString()+'/mo':'';
+
+  // Mortgage annual display
+  var yrEl=document.getElementById('v-mtg-yr');
+  if(yrEl) yrEl.value = mtgMo>0?'$'+Math.round(mtgYr).toLocaleString()+'/yr':'';
+
+  // MTF late box
   var mtfBox=document.getElementById('mtf-late-box');
-  if(mtfBox){mtfBox.style.display=mtfb>0?'block':'none';if(mtfb>0)mtfBox.innerHTML='<strong>'+mtfb+' months late MTF</strong> — Total: <strong>'+fc(mtfLate)+'</strong>';}
+  if(mtfBox){
+    if(mtfBeh>0){
+      mtfBox.style.display='block';
+      mtfBox.textContent=mtfBeh+' month'+(mtfBeh!==1?'s':'')+' late MTF — Total: $'+Math.round(mtfMo*mtfBeh).toLocaleString();
+    } else {mtfBox.style.display='none';}
+  }
+
+  // Mortgage late box
   var mtgBox=document.getElementById('mtg-late-box');
-  if(mtgBox){mtgBox.style.display=mtgb>0?'block':'none';if(mtgb>0)mtgBox.innerHTML='<strong>'+mtgb+' months late mortgage</strong> — Total: <strong>'+fc(mtgLate)+'</strong>';}
-  if(mtgb>=1){var ca=document.getElementById('credit-alert');if(ca){ca.style.display='block';ca.innerHTML='<div class="alert-box danger"><strong>Credit impact imminent.</strong> Late mortgage payments trigger bureau reporting. Credit Protection Professional recommended immediately.</div>';}}
-  document.getElementById('vb-mo').textContent=fc(mo)+'/mo';
-  document.getElementById('vb-yr').textContent=fc(mo*12)+'/yr';
-  calcSavings();calcMtgRemaining();updateProgress();
+  if(mtgBox){
+    if(mtgBeh>0){
+      mtgBox.style.display='block';
+      mtgBox.textContent=mtgBeh+' month'+(mtgBeh!==1?'s':'')+' late mortgage — Total: $'+Math.round(mtgMo*mtgBeh).toLocaleString();
+    } else {mtgBox.style.display='none';}
+  }
+
+  // ── TOTALS SUMMARY ──
+  var totalMo  = mtfMo + mtgMo;
+  var totalYr  = totalMo * 12;
+  var totalOwed = (mtfMo*mtfBeh) + (mtgMo*mtgBeh);
+
+  function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
+
+  var moDiv=document.getElementById('total-mo');
+  var yrDiv=document.getElementById('total-yr');
+  var owDiv=document.getElementById('total-owed');
+  var bdDiv=document.getElementById('totals-breakdown');
+  if(moDiv) moDiv.textContent = fc(totalMo);
+  if(yrDiv) yrDiv.textContent = fc(totalYr);
+  if(owDiv) owDiv.textContent = fc(totalOwed);
+  if(bdDiv){
+    var parts=[];
+    if(mtfMo>0) parts.push('MTF: $'+Math.round(mtfMo).toLocaleString()+'/mo · $'+Math.round(mtfYr).toLocaleString()+'/yr');
+    if(mtgMo>0) parts.push('Mortgage: $'+Math.round(mtgMo).toLocaleString()+'/mo · $'+Math.round(mtgYr).toLocaleString()+'/yr');
+    if(totalOwed>0) parts.push('Past due: $'+Math.round(mtfMo*mtfBeh).toLocaleString()+' MTF + $'+Math.round(mtgMo*mtgBeh).toLocaleString()+' mortgage');
+    bdDiv.innerHTML=parts.join('<br>');
+    bdDiv.style.display=parts.length?'block':'none';
+  }
 }
 
 function calcSavings(){
@@ -802,7 +880,7 @@ function autoSave(){
     var s=_ensureClient();if(!s)return;var all=ga();if(!all[s])all[s]={_created:Date.now()};
     function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
     all[s]=Object.assign(all[s],{
-      firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),email:g('v-email'),
+      firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
       coFirst:g('v-co'),coLast:g('v-col'),
       resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
       yearPurchased:g('v-year'),purchasePrice:g('v-pprice'),whyOut:g('v-why'),
