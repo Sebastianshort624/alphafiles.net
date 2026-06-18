@@ -55,6 +55,25 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 </style>
 </head>
 <body>
+
+<script type="module" id="atc-firebase-guard">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const _fc = {apiKey:"AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",authDomain:"alphafiles-net.firebaseapp.com",projectId:"alphafiles-net",storageBucket:"alphafiles-net.firebasestorage.app",messagingSenderId:"656837736859",appId:"1:656837736859:web:d8ab92c07d91ddcdd4493e"};
+const _fapp = getApps().length ? getApps()[0] : initializeApp(_fc);
+const _fauth = getAuth(_fapp);
+const _fdb = getFirestore(_fapp);
+onAuthStateChanged(_fauth, async (user) => {
+  if (!user) { window.location.href = '/login/'; return; }
+  const udoc = await getDoc(doc(_fdb, 'users', user.uid));
+  const role = udoc.exists() ? udoc.data().role : 'client';
+  if (role !== 'admin') { window.location.href = '/client-view/'; return; }
+  window._ATC_UID = user.uid;
+  window._ATC_EMAIL = user.email;
+  window._ATC_ROLE = 'admin';
+});
+</script>
 <div class="sidenav" id="sidenav"></div>
 <div class="main">
 <div class="wrap">
