@@ -871,5 +871,27 @@ onAuthStateChanged(_auth, async (user) => {
 });
 </script>
 
+
+<script type="module" id="atc-live-sync-admin">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const _fc = {apiKey:"AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",authDomain:"alphafiles-net.firebaseapp.com",projectId:"alphafiles-net"};
+const _app = getApps().length ? getApps()[0] : initializeApp(_fc);
+const _db = getFirestore(_app);
+const _auth = getAuth(_app);
+const _slug = sessionStorage.getItem('atc_active');
+onAuthStateChanged(_auth, async (user) => {
+  if (!user || !_slug) return;
+  // Write current page to the active session doc
+  try {
+    await setDoc(doc(_db, 'sessions', _slug), {
+      currentPage: window.location.pathname,
+      updatedAt: serverTimestamp(),
+      adminUID: user.uid
+    }, { merge: true });
+  } catch(e) {}
+});
+</script>
 </body>
 </html>
