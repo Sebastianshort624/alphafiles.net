@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Your Case — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A}
+body{font-family:"Inter",sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
+.topbar{background:var(--navy);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.topbar img{max-height:36px}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-name{font-size:13px;color:rgba(255,255,255,.7)}
+.signout{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px;border-radius:5px;font-size:12px;font-weight:600;cursor:pointer;font-family:"Inter",sans-serif}
+.wrap{max-width:800px;margin:0 auto;padding:24px 16px}
+.hero{background:var(--navy);border-radius:10px;padding:28px;margin-bottom:20px;color:#fff}
+.hero-label{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.hero-name{font-size:26px;font-weight:700;margin-bottom:4px}
+.hero-resort{font-size:15px;color:rgba(255,255,255,.65)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{background:rgba(255,255,255,.1);border-radius:5px;padding:5px 11px;font-size:12px;color:rgba(255,255,255,.8);font-weight:600}
+.chip.gold{background:rgba(200,150,12,.2);color:var(--gold)}
+.card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:22px;margin-bottom:14px}
+.card-title{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #f0f2f5}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f9fafb;font-size:13px}
+.row:last-child{border-bottom:none}
+.row-label{color:#6b7280;font-weight:500}
+.row-val{font-weight:700;color:var(--navy)}
+.stage-wrap{margin-top:6px}
+.stages{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.stage-pill{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;background:#f3f4f6;color:#9ca3af;border:2px solid transparent}
+.stage-pill.done{background:#f0fdf4;color:var(--green);border-color:var(--green)}
+.stage-pill.current{background:var(--navy);color:#fff}
+.empty{text-align:center;padding:48px 20px;color:#9ca3af}
+.empty-icon{font-size:40px;margin-bottom:12px}
+.empty p{font-size:14px;line-height:1.6}
+.no-share{background:#EAF0F8;border:1.5px solid #2563EB;color:#1e3a5f;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;margin-bottom:20px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png"
+       alt="ATC" onerror="this.style.display='none'">
+  <div class="topbar-right">
+    <span class="topbar-name" id="client-email-display"></span>
+    <button class="signout" onclick="window.ATC && window.ATC.signOut ? window.ATC.signOut() : signOutDirect()">Sign Out</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="no-share" class="no-share" style="display:none">
+    Your consultant hasn't shared your case summary yet. You'll see your information here once they do. Questions? Call <strong>(877) 848-3948 Ext. 134</strong>.
+  </div>
+  <div id="content" style="display:none">
+    <div class="hero">
+      <div class="hero-label">Your Case Summary</div>
+      <div class="hero-name" id="cv-name">—</div>
+      <div class="hero-resort" id="cv-resort">—</div>
+      <div class="chips">
+        <span class="chip gold" id="cv-quote">No quote yet</span>
+        <span class="chip" id="cv-stage">—</span>
+        <span class="chip" id="cv-monthly">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your Timeshare Details</div>
+      <div class="row"><span class="row-label">Resort</span><span class="row-val" id="cv-resort2">—</span></div>
+      <div class="row"><span class="row-label">Location</span><span class="row-val" id="cv-loc">—</span></div>
+      <div class="row"><span class="row-label">Annual Maintenance Fee</span><span class="row-val" id="cv-mtf">—</span></div>
+      <div class="row"><span class="row-label">Monthly Cost</span><span class="row-val" id="cv-mo">—</span></div>
+      <div class="row"><span class="row-label">Mortgage Status</span><span class="row-val" id="cv-mtg">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Alpha Solution</div>
+      <div class="row"><span class="row-label">Service Fee</span><span class="row-val" id="cv-fee">—</span></div>
+      <div class="row"><span class="row-label">Payment Option</span><span class="row-val" id="cv-term">—</span></div>
+      <div class="row"><span class="row-label">Funding Status</span><span class="row-val" id="cv-fund">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your Case Progress</div>
+      <div class="stage-wrap">
+        <div class="stages" id="cv-stages"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading" class="empty">
+    <div class="empty-icon">⏳</div>
+    <p>Loading your case…</p>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const STAGES = ['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+
+function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
+function set(id,v){const el=document.getElementById(id);if(el)el.textContent=v||'—';}
+
+window.signOutDirect = async function(){
+  await signOut(auth);
+  window.location.href = '/login/';
+};
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) { window.location.href = '/login/'; return; }
+
+  document.getElementById('client-email-display').textContent = user.email;
+  document.getElementById('loading').style.display = 'none';
+
+  // Listen in real time to this client's shared view document
+  // This ONLY updates when Sebastian explicitly clicks "Share View"
+  // It does NOT sync automatically when Sebastian navigates
+  onSnapshot(doc(db, 'clientViews', user.uid), (snap) => {
+    if (!snap.exists()) {
+      document.getElementById('no-share').style.display = 'block';
+      document.getElementById('content').style.display = 'none';
+      return;
+    }
+
+    const d = snap.data().vitals || {};
+    document.getElementById('no-share').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+
+    const name = ((d.firstName||'') + ' ' + (d.lastName||'')).trim() || '—';
+    const mo   = (parseFloat(d.monthlyMortgage)||0) + ((parseFloat(d.maitFees)||0)/12);
+    const stg  = STAGES[typeof d.vitalsStage==='number' ? d.vitalsStage : 1] || 'Assessment';
+    const termMap = {'0':'Pay in Full','12':'12 Mo 0%','24':'24 Mo','36':'36 Mo','48':'48 Mo','60':'60 Mo'};
+
+    set('cv-name', name);
+    set('cv-resort', d.resort);
+    set('cv-resort2', d.resort);
+    set('cv-loc', [d.resortCity, d.location].filter(Boolean).join(', '));
+    set('cv-mtf', d.maitFees ? fc(parseFloat(d.maitFees)) + '/yr' : '—');
+    set('cv-mo', mo > 0 ? fc(mo) + '/mo' : '—');
+    set('cv-mtg', d.mortgageType === 'pf' ? 'Paid Off' : d.mortgageType === 'bh' ? 'Behind' : 'Has Mortgage');
+    set('cv-fee', d.alphaFee ? fc(parseFloat(d.alphaFee)) : '—');
+    set('cv-term', termMap[d.selectedTerm] || '—');
+    set('cv-fund', d.fundingStatus || '—');
+    set('cv-quote', d.alphaFee ? fc(parseFloat(d.alphaFee)) : 'No quote yet');
+    set('cv-stage', 'Stage: ' + stg);
+    set('cv-monthly', mo > 0 ? fc(mo) + '/mo' : '');
+
+    // Progress pills
+    const idx = typeof d.vitalsStage === 'number' ? d.vitalsStage : 1;
+    const stagesEl = document.getElementById('cv-stages');
+    if (stagesEl) {
+      stagesEl.innerHTML = STAGES.map((s, i) =>
+        `<span class="stage-pill ${i < idx ? 'done' : i === idx ? 'current' : ''}">${s}</span>`
+      ).join('');
+    }
+  });
+});
+</script>
+</body>
+</html>
