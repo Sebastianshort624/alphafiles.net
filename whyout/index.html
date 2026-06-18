@@ -97,125 +97,6 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 </style>
 </head>
 <body>
-
-<div class="sidenav" id="sidenav"></div>
-<div class="main"><div class="wrap">
-<div class="ph">
-  <div class="ph-num">Page 2</div>
-  <div class="ph-title">Why Do You Want Out?</div>
-  <div class="ph-sub">Select your reasons — every answer strengthens your case file</div>
-</div>
-<div class="vb">
-  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
-  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
-  <div class="vbc"><div class="vbl">Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
-  <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
-</div>
-
-<div class="pb">
-  <div style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:14px">Select your main reasons. Every answer strengthens your case file — the more documented, the stronger your position.</div>
-  <div id="wo-count" style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:12px">0 reasons selected</div>
-  
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>💸 Financial Burden</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Maintenance fees are too expensive and keep rising</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Total monthly cost is no longer manageable</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I am retired or on a fixed income</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> This is causing financial hardship or debt</label>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>🚫 I Don't Use It</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I rarely or never use it — I'm paying for nothing</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Availability is terrible — can't get what I want</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> My lifestyle or travel preferences have changed</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I can vacation better and cheaper without it</label>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>🏥 Health & Life Changes</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Health issues prevent me from traveling</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I am older and no longer want this obligation</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Death or illness of a spouse or co-owner</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Concerned about this passing to my children</label>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>⚠️ I Was Deceived</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I was misled during the sales presentation</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I was told it was an investment that would appreciate</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I did not know the contract was perpetual — no end date</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> The true long-term cost was never disclosed to me</label>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>🏨 Resort Is the Problem</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Poor management or customer service</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Unexpected fee increases or special assessments</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> The resort refuses to help me exit</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Resort has closed, been sold, or changed hands</label>
-  </div>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
-    <span>🔄 I've Already Tried</span><span style="font-size:12px;opacity:.6">▸</span>
-  </div>
-  <div class="wo-items" style="display:none;padding:4px 14px 8px">
-    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to exit through the resort — they refused</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to sell it — no buyers at any price</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I used another exit company and was not helped</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to give it away — no one would take it</label>
-  </div>
-</div>
-  <div style="margin-top:14px">
-    <div style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Other reason(s)</div>
-    <textarea id="wo-other" placeholder="Anything not listed above..." style="width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px;font-size:14px;font-family:Inter,sans-serif;resize:vertical;min-height:60px" oninput="woSaveOther(this.value)"></textarea>
-  </div>
-</div>
-<div class="btn-row">
-  <button class="btn p" onclick="savePage()">Save &amp; Continue</button>
-  <button class="btn o" onclick="window.print()">Print</button>
-</div>
-<div class="nav-bar">
-  <a href="/vitals/" class="np">← Client Vitals</a>
-  <span class="ns">Page 2 of 16</span>
-  <a href="/wait/" class="nn">If You Do Nothing →</a>
-</div>
-</div></div>
-<script>
-var SK="atc_clients_v2",AK="atc_active";
-function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
-function ac(){return localStorage.getItem(AK)||null;}
-function savePage(){var s=ac();if(!s){location.href="/wait/";return;}var all=ga();if(!all[s]){location.href="/wait/";return;}var sp=all[s]._savedPages||[];if(sp.indexOf("/whyout/")<0)sp.push("/whyout/");all[s]._savedPages=sp;all[s]._updated=Date.now();sa(all);location.href="/wait/";}
-
-function toggleCat(hdr) {
-  var items = hdr.nextElementSibling;
-  var arrow = hdr.querySelector("span:last-child");
-  var isOpen = items.style.display !== "none";
-  items.style.display = isOpen ? "none" : "block";
-  arrow.textContent = isOpen ? "▸" : "▾";
-}
-function woChange(cb) {
-  var s = ac(); if (!s) return;
-  var all = ga(); if (!all[s]) return;
-  if (!all[s].whyReasons) all[s].whyReasons = {};
-  all[s].whyReasons[cb.getAttribute("data-cat") + "_" + cb.parentElement.textContent.trim().substring(0,30)] = cb.checked;
-  all[s]._updated = Date.now(); sa(all);
-  // Update count
-  var total = document.querySelectorAll(".wo-items input:checked").length;
-  document.getElementById("wo-count").textContent = total + " reason" + (total !== 1 ? "s" : "") + " selected";
-}
-
-function woSaveOther(v) {
-  var s = ac(); if (!s) return;
-  var all = ga(); if (!all[s]) return;
-  all[s].whyOther = v; all[s]._updated = Date.now(); sa(all);
-}
-
-</script>
-
-
-
-
-
 <style id="atc-sb-css">
 body{display:flex!important;min-height:100vh!important}
 .sidenav{width:220px!important;min-width:220px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
@@ -366,4 +247,124 @@ function initBanner(){
 }
 document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();});
 </script>
+
+<div class="sidenav" id="sidenav"></div>
+<div class="main"><div class="wrap">
+<div class="ph">
+  <div class="ph-num">Page 2</div>
+  <div class="ph-title">Why Do You Want Out?</div>
+  <div class="ph-sub">Select your reasons — every answer strengthens your case file</div>
+</div>
+<div class="vb">
+  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
+  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
+  <div class="vbc"><div class="vbl">Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
+  <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
+</div>
+
+<div class="pb">
+  <div style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:14px">Select your main reasons. Every answer strengthens your case file — the more documented, the stronger your position.</div>
+  <div id="wo-count" style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:12px">0 reasons selected</div>
+  
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>💸 Financial Burden</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Maintenance fees are too expensive and keep rising</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Total monthly cost is no longer manageable</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I am retired or on a fixed income</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="financial_burden" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> This is causing financial hardship or debt</label>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>🚫 I Don't Use It</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I rarely or never use it — I'm paying for nothing</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Availability is terrible — can't get what I want</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> My lifestyle or travel preferences have changed</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_dont_use_it" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I can vacation better and cheaper without it</label>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>🏥 Health & Life Changes</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Health issues prevent me from traveling</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I am older and no longer want this obligation</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Death or illness of a spouse or co-owner</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="health_and_life_changes" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Concerned about this passing to my children</label>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>⚠️ I Was Deceived</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I was misled during the sales presentation</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I was told it was an investment that would appreciate</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I did not know the contract was perpetual — no end date</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="i_was_deceived" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> The true long-term cost was never disclosed to me</label>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>🏨 Resort Is the Problem</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Poor management or customer service</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Unexpected fee increases or special assessments</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> The resort refuses to help me exit</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="resort_is_the_problem" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> Resort has closed, been sold, or changed hands</label>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center" onclick="toggleCat(this)">
+    <span>🔄 I've Already Tried</span><span style="font-size:12px;opacity:.6">▸</span>
+  </div>
+  <div class="wo-items" style="display:none;padding:4px 14px 8px">
+    <label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to exit through the resort — they refused</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to sell it — no buyers at any price</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I used another exit company and was not helped</label><label style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:14px;color:#374151;border-bottom:1px solid #f3f4f6;line-height:1.4"><input type="checkbox" data-cat="ive_already_tried" style="margin-top:2px;accent-color:#1B2A4A;flex-shrink:0" onchange="woChange(this)"> I tried to give it away — no one would take it</label>
+  </div>
+</div>
+  <div style="margin-top:14px">
+    <div style="font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Other reason(s)</div>
+    <textarea id="wo-other" placeholder="Anything not listed above..." style="width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px;font-size:14px;font-family:Inter,sans-serif;resize:vertical;min-height:60px" oninput="woSaveOther(this.value)"></textarea>
+  </div>
+</div>
+<div class="btn-row">
+  <button class="btn p" onclick="savePage()">Save &amp; Continue</button>
+  <button class="btn o" onclick="window.print()">Print</button>
+</div>
+<div class="nav-bar">
+  <a href="/vitals/" class="np">← Client Vitals</a>
+  <span class="ns">Page 2 of 16</span>
+  <a href="/wait/" class="nn">If You Do Nothing →</a>
+</div>
+</div></div>
+<script>
+var SK="atc_clients_v2",AK="atc_active";
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function savePage(){var s=ac();if(!s){location.href="/wait/";return;}var all=ga();if(!all[s]){location.href="/wait/";return;}var sp=all[s]._savedPages||[];if(sp.indexOf("/whyout/")<0)sp.push("/whyout/");all[s]._savedPages=sp;all[s]._updated=Date.now();sa(all);location.href="/wait/";}
+
+function toggleCat(hdr) {
+  var items = hdr.nextElementSibling;
+  var arrow = hdr.querySelector("span:last-child");
+  var isOpen = items.style.display !== "none";
+  items.style.display = isOpen ? "none" : "block";
+  arrow.textContent = isOpen ? "▸" : "▾";
+}
+function woChange(cb) {
+  var s = ac(); if (!s) return;
+  var all = ga(); if (!all[s]) return;
+  if (!all[s].whyReasons) all[s].whyReasons = {};
+  all[s].whyReasons[cb.getAttribute("data-cat") + "_" + cb.parentElement.textContent.trim().substring(0,30)] = cb.checked;
+  all[s]._updated = Date.now(); sa(all);
+  // Update count
+  var total = document.querySelectorAll(".wo-items input:checked").length;
+  document.getElementById("wo-count").textContent = total + " reason" + (total !== 1 ? "s" : "") + " selected";
+}
+
+function woSaveOther(v) {
+  var s = ac(); if (!s) return;
+  var all = ga(); if (!all[s]) return;
+  all[s].whyOther = v; all[s]._updated = Date.now(); sa(all);
+}
+
+</script>
+
+
+
+
+
+
 </body></html>
