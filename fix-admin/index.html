@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fix Admin — ATC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;background:#0f1824;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:440px}
+h1{font-size:20px;font-weight:700;color:#1B2A4A;margin-bottom:6px}
+.sub{font-size:13px;color:#6b7280;margin-bottom:24px;line-height:1.5}
+.ff{margin-bottom:14px}
+.ff label{display:block;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.ff input{width:100%;border:1.5px solid #E0E4ED;border-radius:7px;padding:10px 13px;font-size:14px;font-family:"Inter",sans-serif;color:#1B2A4A}
+.ff input:focus{outline:none;border-color:#C8960C}
+.btn{width:100%;padding:12px;font-size:14px;font-weight:700;border-radius:7px;border:none;cursor:pointer;font-family:"Inter",sans-serif;background:#C8960C;color:#fff;margin-top:6px}
+.msg{border-radius:6px;padding:10px 13px;font-size:13px;margin-top:12px;display:none}
+.msg.ok{background:#f0fdf4;border:1.5px solid #16A34A;color:#14532d}
+.msg.err{background:#fef2f2;border:1.5px solid #DC2626;color:#7f1d1d}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Fix Admin Role</h1>
+  <p class="sub">Sign in with your admin email and password to set your role correctly in Firestore.</p>
+  <div class="ff"><label>Email</label><input type="email" id="email" value="sebastianshort624@gmail.com"></div>
+  <div class="ff"><label>Password</label><input type="password" id="password" placeholder="Your password"></div>
+  <button class="btn" onclick="fixAdmin()">Set Me As Admin</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+function show(msg, type) {
+  const el = document.getElementById('msg');
+  el.textContent = msg;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+}
+
+window.fixAdmin = async function() {
+  const email = document.getElementById('email').value.trim();
+  const pw    = document.getElementById('password').value;
+  if (!pw) { show('Enter your password.', 'err'); return; }
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, pw);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      email: email,
+      role: 'admin',
+      name: 'Sebastian Short',
+      createdAt: serverTimestamp()
+    }, { merge: true });
+    show('✓ Admin role set! Redirecting to home...', 'ok');
+    setTimeout(() => window.location.href = '/home/', 1500);
+  } catch(e) {
+    show('Error: ' + e.message, 'err');
+  }
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') window.fixAdmin();
+});
+</script>
+</body>
+</html>
