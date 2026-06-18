@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Setup — ATC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;background:#0f1824;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:440px}
+h1{font-size:20px;font-weight:700;color:#1B2A4A;margin-bottom:6px}
+.sub{font-size:13px;color:#6b7280;margin-bottom:24px;line-height:1.5}
+.ff{margin-bottom:14px}
+.ff label{display:block;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.ff input{width:100%;border:1.5px solid #E0E4ED;border-radius:7px;padding:10px 13px;font-size:14px;font-family:"Inter",sans-serif;color:#1B2A4A}
+.ff input:focus{outline:none;border-color:#C8960C}
+.btn{width:100%;padding:12px;font-size:14px;font-weight:700;border-radius:7px;border:none;cursor:pointer;font-family:"Inter",sans-serif;background:#1B2A4A;color:#fff;margin-top:6px}
+.btn.gold{background:#C8960C}
+.msg{border-radius:6px;padding:10px 13px;font-size:13px;margin-top:12px;display:none}
+.msg.ok{background:#f0fdf4;border:1.5px solid #16A34A;color:#14532d}
+.msg.err{background:#fef2f2;border:1.5px solid #DC2626;color:#7f1d1d}
+.divider{border:none;border-top:1px solid #E0E4ED;margin:24px 0}
+h2{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
+.warn{background:#fff8f0;border:1.5px solid #ea580c;color:#7c2d12;border-radius:6px;padding:10px 13px;font-size:12px;margin-bottom:16px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>ATC — First Time Setup</h1>
+  <p class="sub">This page creates your admin account and sets up the first client login. Run this once, then delete or protect this page.</p>
+
+  <div class="warn">⚠️ This page should be deleted or password-protected after setup. Do not share the URL.</div>
+
+  <h2>1. Create Admin Account (You)</h2>
+  <div class="ff"><label>Your Email</label><input type="email" id="admin-email" placeholder="Sebastian@AlphaTimeshareConsultants.com"></div>
+  <div class="ff"><label>Password (min 8 chars)</label><input type="password" id="admin-pw" placeholder="Choose a strong password"></div>
+  <button class="btn gold" onclick="createAdmin()">Create Admin Account</button>
+  <div class="msg" id="admin-msg"></div>
+
+  <hr class="divider">
+
+  <h2>2. Create Client Account</h2>
+  <p class="sub" style="margin-bottom:14px">Each client gets their own email + password. You control this.</p>
+  <div class="ff"><label>Client Email</label><input type="email" id="client-email" placeholder="client@email.com"></div>
+  <div class="ff"><label>Client Password</label><input type="password" id="client-pw" placeholder="Temporary password"></div>
+  <div class="ff"><label>Client Name (for records)</label><input type="text" id="client-name" placeholder="e.g. Mary Johnson"></div>
+  <button class="btn" onclick="createClient()">Create Client Account</button>
+  <div class="msg" id="client-msg"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+function show(id, msg, type) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+}
+
+window.createAdmin = async function() {
+  const email = document.getElementById('admin-email').value.trim();
+  const pw    = document.getElementById('admin-pw').value;
+  if (!email || !pw) { show('admin-msg','Fill in both fields.','err'); return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pw);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      email, role: 'admin', name: 'Sebastian Short',
+      createdAt: serverTimestamp()
+    });
+    show('admin-msg', '✓ Admin account created. Save your email + password.', 'ok');
+  } catch(e) {
+    show('admin-msg', e.message, 'err');
+  }
+};
+
+window.createClient = async function() {
+  const email = document.getElementById('client-email').value.trim();
+  const pw    = document.getElementById('client-pw').value;
+  const name  = document.getElementById('client-name').value.trim();
+  if (!email || !pw) { show('client-msg','Fill in email and password.','err'); return; }
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pw);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      email, role: 'client', name,
+      createdAt: serverTimestamp()
+    });
+    show('client-msg', '✓ Client account created for ' + email, 'ok');
+    // Clear fields
+    document.getElementById('client-email').value = '';
+    document.getElementById('client-pw').value = '';
+    document.getElementById('client-name').value = '';
+  } catch(e) {
+    show('client-msg', e.message, 'err');
+  }
+};
+</script>
+</body>
+</html>
