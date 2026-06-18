@@ -76,8 +76,7 @@ window.rpt=function(type){
   var d=_aD();if(!d){toast("No active client","#DC2626");return;}
   var nm=(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim();
   var mo=_fC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
-  var nl="
-";var txt="";
+  var nl="\n";var txt="";
   if(type==="crm")txt="=== CALL NOTES "+new Date().toLocaleDateString()+" ==="+nl+"Client: "+nm+nl+"Resort: "+(d.resort||"--")+nl+"Phone: "+(d.phone||"--")+nl+"Monthly: "+mo+nl+"MTF: "+_fC(d.maitFees)+"/yr"+nl+"Mortgage: "+(parseFloat(d.monthlyMortgage)>0?_fC(d.monthlyMortgage)+"/mo":"Paid off")+nl+"Stage: "+["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"][d.vitalsStage||1]+nl+"Quote: "+(d.alphaFee?_fC(d.alphaFee):"--")+nl+"Classify: "+(d.clientClass||"--")+nl+"Notes: "+(d.notes||"--");
   else if(type==="sms")txt="Hi "+(d.firstName||"there")+", this is Sebastian at Alpha Timeshare Consultants. Good time to connect? (877) 848-3948 Ext. 134";
   else txt="ALPHA TIMESHARE CONSULTANTS"+nl+new Date().toLocaleDateString()+nl+"Client: "+nm+nl+"Resort: "+(d.resort||"--")+nl+"Phone: "+(d.phone||"--")+nl+"Monthly: "+mo+nl+"Quote: "+(d.alphaFee?_fC(d.alphaFee):"--")+nl+"Notes: "+(d.notes||"--");
