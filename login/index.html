@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sign In — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;background:#0f1824;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.logo{text-align:center;margin-bottom:28px}
+.logo img{max-width:160px;margin-bottom:12px}
+.logo-fallback{font-size:20px;font-weight:800;color:#1B2A4A;letter-spacing:-.5px}
+.logo-sub{font-size:13px;color:#6b7280;margin-top:4px}
+h1{font-size:22px;font-weight:700;color:#1B2A4A;margin-bottom:6px;text-align:center}
+.sub{font-size:14px;color:#6b7280;text-align:center;margin-bottom:28px}
+.ff{margin-bottom:16px}
+.ff label{display:block;font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.ff input{width:100%;border:1.5px solid #E0E4ED;border-radius:8px;padding:11px 14px;font-size:14px;font-family:"Inter",sans-serif;color:#1B2A4A;background:#fff;transition:border-color .15s}
+.ff input:focus{outline:none;border-color:#C8960C}
+.btn{width:100%;padding:13px;font-size:15px;font-weight:700;border-radius:8px;border:none;cursor:pointer;font-family:"Inter",sans-serif;background:#C8960C;color:#fff;margin-top:8px;transition:background .15s}
+.btn:hover{background:#b07d08}
+.btn:disabled{background:#d1d5db;cursor:not-allowed}
+.err{background:#fef2f2;border:1.5px solid #DC2626;color:#7f1d1d;border-radius:6px;padding:10px 13px;font-size:13px;margin-top:12px;display:none}
+.footer{text-align:center;margin-top:20px;font-size:12px;color:#9ca3af}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png"
+         alt="Alpha Timeshare Consultants"
+         onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='block'">
+    <div id="logo-fallback" style="display:none" class="logo-fallback">Alpha Timeshare Consultants</div>
+    <div class="logo-sub">Client Portal</div>
+  </div>
+  <div class="ff">
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+  </div>
+  <div class="ff">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+  </div>
+  <button class="btn" id="signin-btn" onclick="signIn()">Sign In</button>
+  <div class="err" id="err-msg"></div>
+  <div class="footer">Alpha Timeshare Consultants &copy; 2026</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// If already logged in, redirect
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+  const userDoc = await getDoc(doc(db, 'users', user.uid));
+  const role = userDoc.exists() ? userDoc.data().role : 'client';
+  if (role === 'admin') window.location.href = '/home/';
+  else window.location.href = '/client-view/';
+});
+
+window.signIn = async function() {
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const btn      = document.getElementById('signin-btn');
+  const err      = document.getElementById('err-msg');
+
+  if (!email || !password) {
+    err.textContent = 'Please enter your email and password.';
+    err.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  err.style.display = 'none';
+
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+    const role = userDoc.exists() ? userDoc.data().role : 'client';
+    if (role === 'admin') window.location.href = '/home/';
+    else window.location.href = '/client-view/';
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+    err.textContent = 'Incorrect email or password. Please try again.';
+    err.style.display = 'block';
+  }
+};
+
+// Allow Enter key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') window.signIn();
+});
+</script>
+</body>
+</html>
