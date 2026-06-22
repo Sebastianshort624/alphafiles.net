@@ -1320,10 +1320,29 @@ var EMAIL_TEMPLATES = {
     var mtgMo=parseFloat(d.monthlyMortgage)||0;
     var totalMo=c.mo;
     var totalYr=totalMo*12;
+
+    // Mortgage is not perpetual — cap it at remaining years on a 10-yr term,
+    // same math as calcMtgRemaining(). Without a purchase year we can't know
+    // the payoff date, so flag the estimate rather than silently overstating it.
+    var yearPurchased=parseInt(d.yearPurchased)||0;
+    var now=new Date().getFullYear();
+    var purchaseKnown = yearPurchased>1990 && yearPurchased<=now;
+    var mtgYearsLeft = purchaseKnown ? Math.max(0, 10-(now-yearPurchased)) : null;
+
     function mtfTotal(n){return mtfYr>0?mtfYr*(Math.pow(1.08,n)-1)/0.08:0;}
-    function proj(n){return Math.round(mtfTotal(n)+mtgMo*12*n);}
+    function mtgTotal(n){
+      if(mtgMo<=0) return 0;
+      if(mtgYearsLeft===null) return mtgMo*12*n; // unknown payoff date — uncapped fallback
+      return mtgMo*12*Math.min(n, mtgYearsLeft);
+    }
+    function proj(n){return Math.round(mtfTotal(n)+mtgTotal(n));}
     var f=function(n){return n>0?'$'+n.toLocaleString():'—';};
-    return 'Hi '+c.name+',\n\nAs discussed, here is a breakdown of the true cost of staying in your timeshare at '+c.resort+'.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n--- YOUR CURRENT COSTS ---\nMaintenance Fee: '+f(mtfYr)+'/yr ('+f(Math.round(mtfYr/12))+'/mo)\nMortgage: '+(mtgMo>0?f(Math.round(mtgMo))+'/mo':'Paid off')+'\nCombined Monthly: '+f(Math.round(totalMo))+'\n\n--- IF YOU STAY IN ---\n1 Year:   '+f(Math.round(totalYr))+'\n5 Years:  '+f(proj(5))+' (MTF grows 8%/yr)\n10 Years: '+f(proj(10))+'\n20 Years: '+f(proj(20))+'\n30 Years: '+f(proj(30))+'\n\n--- EXIT WITH ALPHA ---\nOne-time fee: '+(c.fee>0?f(c.fee):'See quote')+'\nAfter exit: $0/month forever\nBreak-even: '+(c.fee>0&&totalMo>0?Math.ceil(c.fee/totalMo)+' months':'—')+'\n\nThe resort never showed you these numbers. Now you have them.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+
+    var mtgNote = mtgMo<=0 ? ''
+      : purchaseKnown ? ' (paid off in '+mtgYearsLeft+' more yr'+(mtgYearsLeft!==1?'s':'')+', then $0/mo)'
+      : ' (purchase year not on file — estimated as ongoing; add purchase year for an exact payoff date)';
+
+    return 'Hi '+c.name+',\n\nAs discussed, here is a breakdown of the true cost of staying in your timeshare at '+c.resort+'.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n--- YOUR CURRENT COSTS ---\nMaintenance Fee: '+f(mtfYr)+'/yr ('+f(Math.round(mtfYr/12))+'/mo)\nMortgage: '+(mtgMo>0?f(Math.round(mtgMo))+'/mo'+mtgNote:'Paid off')+'\nCombined Monthly: '+f(Math.round(totalMo))+'\n\n--- IF YOU STAY IN ---\n1 Year:   '+f(Math.round(totalYr))+'\n5 Years:  '+f(proj(5))+' (MTF grows 8%/yr)\n10 Years: '+f(proj(10))+'\n20 Years: '+f(proj(20))+'\n30 Years: '+f(proj(30))+'\n\n--- EXIT WITH ALPHA ---\nOne-time fee: '+(c.fee>0?f(c.fee):'See quote')+'\nAfter exit: $0/month forever\nBreak-even: '+(c.fee>0&&totalMo>0?Math.ceil(c.fee/totalMo)+' months':'—')+'\n\nThe resort never showed you these numbers. Now you have them.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
   },
   quote: function(c){
     var d=c.d;
