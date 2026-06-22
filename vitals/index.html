@@ -1068,15 +1068,19 @@ function calcTcExtra(){
   var rateEl=document.getElementById('tc-rate');
   var paidEl=document.getElementById('tc-totalpaid');
   if(!rateEl||!paidEl) return;
-  var pprice=parseFloat((document.getElementById('v-pprice')||{}).value)||0;
   var mtgMo=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
-  if(pprice>0 && mtgMo>0){
-    var r=impliedAnnualRate(pprice, mtgMo, 120);
-    rateEl.textContent = r!==null ? r.toFixed(1)+'%' : '—';
-  } else {
-    rateEl.textContent='—';
-  }
-  paidEl.textContent = mtgMo>0 ? fc(mtgMo*120) : '—';
+
+  // Flat default — no rate-solving. Simple and predictable.
+  rateEl.textContent = mtgMo>0 ? '17.5%' : '—';
+
+  // Total paid = current monthly payment × months remaining on the term.
+  var yearRaw=(document.getElementById('v-year')||{}).value;
+  var year=parseInt(yearRaw)||0;
+  var now=new Date().getFullYear();
+  var yearWasEntered = year>1990 && year<=now;
+  var yrsIn = yearWasEntered ? (now-year) : 1;
+  var monthsLeft = Math.max(0,10-yrsIn)*12;
+  paidEl.textContent = mtgMo>0 ? fc(mtgMo*monthsLeft) : '—';
 }
 window.calcTcExtra=calcTcExtra;
 
@@ -1125,33 +1129,6 @@ function calcMtgRemaining(){
   }
 }
 
-// ── Solve for the monthly interest rate implied by Purchase Price + Monthly
-// Payment over a fixed term (bisection — no closed-form solution exists for
-// amortized-loan rate). Returns annualized rate (%) or null if unsolvable.
-function impliedAnnualRate(pv, pmt, termMonths){
-  if(pv<=0||pmt<=0||termMonths<=0) return null;
-  function payAtRate(r){
-    if(r<=0) return pv/termMonths;
-    return pv*r/(1-Math.pow(1+r,-termMonths));
-  }
-  var lo=0, hi=1; // monthly rate search range: 0% to 100%/mo (generous ceiling)
-  if(payAtRate(hi)<pmt) return null; // payment too low to solve within range
-  for(var i=0;i<100;i++){
-    var mid=(lo+hi)/2;
-    if(payAtRate(mid)>pmt) hi=mid; else lo=mid;
-  }
-  return ((lo+hi)/2)*12*100;
-}
-
-// ── Direct formula: purchase price implied by a monthly payment at a fixed
-// annual rate over a fixed term. PV = PMT × (1 − (1+r)⁻ⁿ) / r
-function impliedPurchasePrice(pmt, annualRatePct, termMonths){
-  if(pmt<=0||termMonths<=0) return 0;
-  var r=(annualRatePct/100)/12;
-  if(r<=0) return pmt*termMonths;
-  return pmt*(1-Math.pow(1+r,-termMonths))/r;
-}
-
 function calcPurchaseFinance(){
   var box=document.getElementById('purch-finance-box');
   if(!box) return;
@@ -1190,15 +1167,13 @@ function calcPurchaseFinance(){
   tiles.push(tile('Mortgage Left', hasMtg?fc(mtgRemaining):'Paid off'));
   tiles.push(tile('MTF Left', fc(mtfRemaining)));
 
-  if(pprice>0 && mtgMo>0){
-    var impRate=impliedAnnualRate(pprice, mtgMo, 120);
-    tiles.push(tile('Implied Rate', impRate!==null?impRate.toFixed(1)+'%':'—'));
+  if(mtgMo>0){
+    tiles.push(tile('Rate', '17.5%', 'default'));
   }
   if(pprice>0){
     tiles.push(tile('Purchase Price', fc(pprice), 'as entered'));
   } else if(mtgMo>0){
-    var impPrice=impliedPurchasePrice(mtgMo, 17.5, 120);
-    tiles.push(tile('Est. Price', fc(Math.round(impPrice)), '@ 17.5% (no price entered)'));
+    tiles.push(tile('Est. Price', fc(mtgRemaining), 'pay × months left'));
   }
 
   box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
