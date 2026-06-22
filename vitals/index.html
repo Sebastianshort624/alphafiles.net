@@ -468,7 +468,6 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
         <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance();calcComparison()"></div>
         <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave();calcPurchaseFinance()"></div>
       </div>
-      <div id="purch-finance-box" style="background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:8px;font-size:13px;color:#1B2A4A;line-height:1.7"></div>
       <div class="ff"><label>Why Do They Want Out?</label><textarea id="v-why" oninput="autoSave()"></textarea></div>
     </div>
   </div>
@@ -593,6 +592,12 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
       </select>
     </div>
   </div>
+</div>
+
+<!-- TERM REMAINING / PAYOFF SUMMARY — sits directly under MTF + Mortgage -->
+<div class="card">
+  <div class="card-hdr">Remaining Term &amp; Payoff</div>
+  <div id="purch-finance-box" style="font-size:13px;color:#1B2A4A;line-height:1.7"></div>
 </div>
 
 <!-- TOTALS SUMMARY — the main thing -->
