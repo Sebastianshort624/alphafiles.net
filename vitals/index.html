@@ -462,8 +462,8 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
       <div class="ff"><label>State</label><input id="v-loc" placeholder="" oninput="autoSave()"></div>
       <div class="ff"><label>City</label><input id="v-rescity" placeholder="" oninput="autoSave()"></div>
     </div>
-    <div class="pt" onclick="togglePS('purch-info')"><div class="pt-ic" id="pto-purch-info">+</div><span>Year Purchased, Price, Why Out</span></div>
-    <div class="ps" id="purch-info">
+    <div class="pt" onclick="togglePS('purch-info')"><div class="pt-ic" id="pto-purch-info">−</div><span>Year Purchased, Price, Why Out</span></div>
+    <div class="ps open" id="purch-info">
       <div class="frow" style="margin-bottom:8px">
         <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance();calcComparison()"></div>
         <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave();calcPurchaseFinance()"></div>
@@ -1379,7 +1379,7 @@ function loadData(){
   setMtg(mtgSet);
   if(typeof d.vitalsStage==='number'){var pills=document.querySelectorAll('.sp');if(pills[d.vitalsStage])setStage(d.vitalsStage,pills[d.vitalsStage]);}
   if(d.coFirst||d.phone2||d.email){togglePS('co-info');}
-  if(d.yearPurchased||d.whyOut){togglePS('purch-info');}
+  // purch-info now stays open by default (see HTML) — no toggle needed on load
   if(d.mtfBehind&&parseInt(d.mtfBehind)>0){togglePS('mtf-late');}
   if(d.resortThreat){togglePS('resort-alert');}
   if(d._fuAppt&&d._fuAppt.includes('T')){
