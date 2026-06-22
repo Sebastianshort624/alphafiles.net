@@ -660,16 +660,16 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div style="margin-top:10px;border-top:1px dashed var(--border);padding-top:10px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div style="border:2px solid #f3c6cc;border-radius:10px;padding:14px 10px;text-align:center;background:#fff8f8">
-          <div style="font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Current — <span id="cmp-resort">Your Resort</span></div>
-          <div id="cmp-current-sub" style="font-size:10px;color:#9ca3af;margin-bottom:8px">—</div>
-          <div id="cmp-current-total" style="font-size:26px;font-weight:700;color:#DC2626;letter-spacing:-.5px">—</div>
-          <div style="font-size:10px;color:#9ca3af;margin-top:4px">MTF + mortgage, compounding</div>
+          <div style="font-size:9px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Current — <span id="cmp-resort">Your Resort</span></div>
+          <div id="cmp-current-sub" style="font-size:9px;color:#9ca3af;margin-bottom:6px">—</div>
+          <div id="cmp-current-total" style="font-size:24px;font-weight:700;color:#DC2626;letter-spacing:-.5px">—</div>
+          <div style="font-size:9px;color:#9ca3af;margin-top:4px">MTF + mortgage, compounding</div>
         </div>
         <div style="border:2px solid #c8e6d4;border-radius:10px;padding:14px 10px;text-align:center;background:#f5fdf8">
-          <div style="font-size:11px;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Alpha Solution — <span id="cmp-term">—</span></div>
-          <div id="cmp-alpha-sub" style="font-size:10px;color:#9ca3af;margin-bottom:8px">—</div>
-          <div id="cmp-alpha-total" style="font-size:26px;font-weight:700;color:#16A34A;letter-spacing:-.5px">—</div>
-          <div style="font-size:10px;color:#9ca3af;margin-top:4px">Then $0/month, forever</div>
+          <div style="font-size:9px;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px">Alpha Solution — <span id="cmp-term">—</span></div>
+          <div id="cmp-alpha-sub" style="font-size:9px;color:#9ca3af;margin-bottom:6px">—</div>
+          <div id="cmp-alpha-total" style="font-size:24px;font-weight:700;color:#16A34A;letter-spacing:-.5px">—</div>
+          <div style="font-size:9px;color:#9ca3af;margin-top:4px">Then $0/month, forever</div>
         </div>
       </div>
       <div style="text-align:center;margin-top:10px;background:#1B2A4A;border-radius:8px;padding:10px">
@@ -1019,7 +1019,7 @@ function calcComparison(){
   function mtgTotal(nMonths){ return mtgMo>0 ? mtgMo*Math.min(nMonths,monthsLeftOnMtg) : 0; }
   var currentTotal = Math.round(mtfTotal(horizonMonths)+mtgTotal(horizonMonths));
   curEl.textContent = fc(currentTotal);
-  if(curSubEl) curSubEl.textContent = horizonMonths+'-Month Forecast';
+  if(curSubEl) curSubEl.innerHTML = '<span style="font-size:16px;font-weight:800;color:#1B2A4A">'+horizonMonths+'</span>-Month Forecast';
 
   // Total actually paid to Alpha over the chosen term (financed total, not just the fee)
   var alphaTotal=0;
@@ -1028,8 +1028,8 @@ function calcComparison(){
     else { var r=0.20/12; var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1); alphaTotal=pmt*term; }
   }
   alphaEl.textContent = fee>0 ? fc(Math.round(alphaTotal)) : '—';
-  if(termEl) termEl.textContent = fee>0 ? (term ? term+' Mo' : 'Pay in Full') : '—';
-  if(alphaSubEl) alphaSubEl.textContent = fee>0 ? 'Over '+horizonMonths+' Months' : 'One-Time Exit Plan';
+  if(termEl) termEl.innerHTML = fee>0 ? (term ? '<span style="font-size:13px;font-weight:800">'+term+'</span> Mo' : 'Pay in Full') : '—';
+  if(alphaSubEl) alphaSubEl.innerHTML = fee>0 ? 'Over <span style="font-size:16px;font-weight:800;color:#1B2A4A">'+horizonMonths+'</span> Months' : 'One-Time Exit Plan';
 
   if(saveEl){
     if(fee>0 && currentTotal>0){
