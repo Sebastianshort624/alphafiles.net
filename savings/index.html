@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha Timeshare Consultants | Savings Engine</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+:root{
+  --navy:#1B2A4A;
+  --gold:#C8960C;
+  --ice:#EAF0F8;
+  --white:#FFFFFF;
+  --red:#A8243B;
+  --green:#1E7A4C;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family:'Barlow Condensed', sans-serif;
+  background:var(--ice);
+  color:var(--navy);
+  padding:24px 16px 60px;
+}
+
+.wrap{max-width:1100px;margin:0 auto;}
+
+header{
+  text-align:center;
+  margin-bottom:28px;
+}
+
+header .brand{
+  font-family:'Barlow Condensed',sans-serif;
+  letter-spacing:2px;
+  font-size:13px;
+  color:var(--gold);
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+header h1{
+  font-family:'Cormorant Garamond', serif;
+  font-weight:700;
+  font-size:clamp(28px,5vw,44px);
+  margin:6px 0 4px;
+  color:var(--navy);
+}
+
+header p{
+  color:#56607a;
+  font-size:15px;
+  margin:0;
+}
+
+.panel{
+  background:var(--white);
+  border-radius:14px;
+  padding:22px 22px 26px;
+  box-shadow:0 4px 18px rgba(27,42,74,0.08);
+  margin-bottom:22px;
+}
+
+.panel h3{
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:14px;
+  color:var(--gold);
+  margin:0 0 16px;
+  border-bottom:2px solid var(--ice);
+  padding-bottom:10px;
+}
+
+.input-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:18px;
+}
+
+.field label{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:600;
+  color:var(--navy);
+  margin-bottom:6px;
+}
+
+.field label span.val{
+  color:var(--gold);
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  font-weight:700;
+}
+
+.field input[type=range]{
+  width:100%;
+  accent-color:var(--gold);
+  height:6px;
+}
+
+.field input[type=number]{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid #d7deea;
+  border-radius:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;
+  margin-top:6px;
+}
+
+.banner{
+  background:linear-gradient(135deg,var(--navy),#10192e);
+  color:var(--white);
+  border-radius:14px;
+  padding:28px 24px;
+  text-align:center;
+  margin-bottom:22px;
+  box-shadow:0 6px 24px rgba(27,42,74,0.25);
+}
+
+.banner .label{
+  font-size:13px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+}
+
+.banner .amount{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;
+  font-size:clamp(40px,8vw,68px);
+  margin:8px 0 4px;
+  color:var(--white);
+}
+
+.banner .sub{
+  font-size:14px;
+  color:#cdd6e8;
+}
+
+.split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-bottom:22px;
+}
+
+@media(max-width:720px){
+  .split{grid-template-columns:1fr;}
+}
+
+.card{
+  border-radius:14px;
+  padding:20px;
+  color:var(--white);
+}
+
+.card.current{background:linear-gradient(160deg,var(--red),#7a1a2c);}
+.card.alpha{background:linear-gradient(160deg,var(--green),#155c39);}
+
+.card h4{
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:13px;
+  margin:0 0 6px;
+  opacity:0.85;
+}
+
+.card .big{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;
+  font-size:clamp(30px,6vw,42px);
+  margin:4px 0 10px;
+}
+
+.card ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  font-size:13.5px;
+  line-height:1.7;
+}
+
+.card ul li:before{
+  content:"— ";
+  opacity:0.7;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:var(--white);
+  border-radius:10px;
+  overflow:hidden;
+  font-size:13.5px;
+}
+
+th,td{
+  padding:9px 8px;
+  text-align:center;
+  border-bottom:1px solid var(--ice);
+}
+
+th{
+  background:var(--navy);
+  color:var(--white);
+  font-weight:600;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  font-size:11.5px;
+}
+
+tr:last-child td{font-weight:700;background:var(--ice);}
+
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;
+  font-size:20px;
+  color:var(--navy);
+  margin:0 0 14px;
+}
+
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;}
+.dot.red{background:var(--red);}
+.dot.green{background:var(--green);}
+
+.actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+
+button{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  font-size:13px;
+  padding:12px 22px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+button:hover{transform:translateY(-1px);}
+
+.btn-gold{background:var(--gold);color:var(--white);}
+.btn-navy{background:var(--navy);color:var(--white);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+
+footer{
+  text-align:center;
+  font-size:12px;
+  color:#7c869c;
+  margin-top:30px;
+}
+
+#pdf-export-area{background:var(--ice);}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="pdf-export-area">
+
+<header>
+  <div class="brand">Alpha Timeshare Consultants</div>
+  <h1>The Savings Engine</h1>
+  <p>Drag the sliders to model your exact contract — see it update live.</p>
+</header>
+
+<div class="panel">
+  <h3>Your Numbers</h3>
+  <div class="input-grid">
+    <div class="field">
+      <label>Mortgage / MTG (monthly) <span class="val" id="mtg-val">$363</span></label>
+      <input type="range" id="mtg" min="0" max="1200" step="1" value="363" oninput="syncAndBuild('mtg')">
+      <input type="number" id="mtg-num" value="363" oninput="syncAndBuild('mtg-num')">
+    </div>
+    <div class="field">
+      <label>Maintenance Fee / MTF (monthly) <span class="val" id="mtf-val">$125</span></label>
+      <input type="range" id="mtf" min="0" max="800" step="1" value="125" oninput="syncAndBuild('mtf')">
+      <input type="number" id="mtf-num" value="125" oninput="syncAndBuild('mtf-num')">
+    </div>
+    <div class="field">
+      <label>Alpha Service Fee (monthly) <span class="val" id="alpha-val">$123</span></label>
+      <input type="range" id="alpha" min="0" max="800" step="1" value="123" oninput="syncAndBuild('alpha')">
+      <input type="number" id="alpha-num" value="123" oninput="syncAndBuild('alpha-num')">
+    </div>
+  </div>
+
+  <div class="input-grid" style="margin-top:18px;">
+    <div class="field">
+      <label>MTG Payoff Cap (years) <span class="val" id="mtgcap-val">8</span></label>
+      <input type="range" id="mtgcap" min="0" max="15" step="1" value="8" oninput="syncAndBuild('mtgcap')">
+    </div>
+    <div class="field">
+      <label>MTF Annual Growth <span class="val" id="growth-val">8%</span></label>
+      <input type="range" id="growth" min="0" max="15" step="0.5" value="8" oninput="syncAndBuild('growth')">
+    </div>
+    <div class="field">
+      <label>Alpha Exit Year (MTG cutoff) <span class="val" id="exitYear-val">3</span></label>
+      <input type="range" id="exitYear" min="1" max="6" step="1" value="3" oninput="syncAndBuild('exitYear')">
+    </div>
+    <div class="field">
+      <label>Alpha Term (years) <span class="val" id="alphaterm-val">5</span></label>
+      <input type="range" id="alphaterm" min="1" max="10" step="1" value="5" oninput="syncAndBuild('alphaterm')">
+    </div>
+  </div>
+</div>
+
+<div class="banner">
+  <div class="label">Total Lifetime Difference — 20 Year View</div>
+  <div class="amount" id="bigSavings">$0</div>
+  <div class="sub" id="bigSavingsSub">Updating model…</div>
+</div>
+
+<div class="split">
+  <div class="card current">
+    <h4><span class="dot red"></span>Current — Do Nothing</h4>
+    <div class="big" id="currentTotal">$0</div>
+    <ul>
+      <li>Maintenance compounds every year, forever</li>
+      <li>Mortgage runs its full term before any relief</li>
+      <li>No exit date — liability passes to your estate</li>
+    </ul>
+  </div>
+  <div class="card alpha">
+    <h4><span class="dot green"></span>Alpha — Act Today</h4>
+    <div class="big" id="alphaTotalCard">$0</div>
+    <ul>
+      <li>Maintenance fee eliminated entirely</li>
+      <li>Mortgage exposure capped on a fixed timeline</li>
+      <li>One predictable fee with a hard exit date</li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="section-title">20-Year Comparison Table</div>
+  <div style="overflow-x:auto;">
+    <table id="dataTable"></table>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="btn-gold" onclick="exportPDF()">📄 Export PDF for Client</button>
+  <button class="btn-outline" onclick="copyEmbed()">📋 Copy CRM Embed Code</button>
+</div>
+
+<footer>Alpha Timeshare Consultants · Generated for client presentation · This model is illustrative and based on figures entered above.</footer>
+
+</div>
+
+<script>
+const years = [1,2,3,5,10,20];
+let lastSavings = 0;
+
+function fmt(n){
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+
+function animateValue(el, start, end, duration){
+  const startTime = performance.now();
+  function step(now){
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1-progress, 3);
+    const current = start + (end - start) * eased;
+    el.textContent = fmt(current);
+    if(progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function syncAndBuild(sourceId){
+  // keep slider + number input in sync for mtg/mtf/alpha pairs
+  const pairs = {mtg:'mtg-num', 'mtg-num':'mtg', mtf:'mtf-num', 'mtf-num':'mtf', alpha:'alpha-num', 'alpha-num':'alpha'};
+  if(pairs[sourceId]){
+    const src = document.getElementById(sourceId);
+    const dst = document.getElementById(pairs[sourceId]);
+    dst.value = src.value;
+  }
+  build();
+}
+
+function getInputs(){
+  return {
+    mtg: parseFloat(document.getElementById('mtg').value)||0,
+    mtf: parseFloat(document.getElementById('mtf').value)||0,
+    alpha: parseFloat(document.getElementById('alpha').value)||0,
+    mtgCap: parseInt(document.getElementById('mtgcap').value)||0,
+    growth: (parseFloat(document.getElementById('growth').value)||0)/100,
+    exitYear: parseInt(document.getElementById('exitYear').value)||1,
+    alphaTerm: parseInt(document.getElementById('alphaterm').value)||1
+  };
+}
+
+function updateLabels(v){
+  document.getElementById('mtg-val').textContent = fmt(v.mtg);
+  document.getElementById('mtf-val').textContent = fmt(v.mtf);
+  document.getElementById('alpha-val').textContent = fmt(v.alpha);
+  document.getElementById('mtgcap-val').textContent = v.mtgCap;
+  document.getElementById('growth-val').textContent = (v.growth*100).toFixed(1).replace(/\.0$/,'') + '%';
+  document.getElementById('exitYear-val').textContent = v.exitYear;
+  document.getElementById('alphaterm-val').textContent = v.alphaTerm;
+}
+
+function mtfYearAmount(mtf, growth, year){
+  return mtf * Math.pow(1+growth, year-1) * 12;
+}
+
+function currentCumulative(v, y){
+  let mtgTotal = 0, mtfTotal = 0;
+  for(let i=1;i<=y;i++){
+    if(i<=v.mtgCap) mtgTotal += v.mtg*12;
+    mtfTotal += mtfYearAmount(v.mtf, v.growth, i);
+  }
+  return mtgTotal + mtfTotal;
+}
+
+function alphaCumulative(v, y){
+  let mtgTotal = 0, alphaTotal = 0;
+  for(let i=1;i<=y;i++){
+    if(i<=v.exitYear) mtgTotal += v.mtg*12;
+    if(i<=v.alphaTerm) alphaTotal += v.alpha*12;
+  }
+  return mtgTotal + alphaTotal;
+}
+
+function build(){
+  const v = getInputs();
+  updateLabels(v);
+
+  const cur20 = currentCumulative(v, 20);
+  const alp20 = alphaCumulative(v, 20);
+  const savings = Math.max(cur20 - alp20, 0);
+
+  animateValue(document.getElementById('bigSavings'), lastSavings, savings, 700);
+  animateValue(document.getElementById('currentTotal'), 0, cur20, 700);
+  animateValue(document.getElementById('alphaTotalCard'), 0, alp20, 700);
+  lastSavings = savings;
+
+  document.getElementById('bigSavingsSub').textContent =
+    "Current: " + fmt(cur20) + "  vs  Alpha: " + fmt(alp20) + "  over 20 years";
+
+  // table
+  let html = "<tr><th>Row</th>";
+  years.forEach(y => html += `<th>Yr ${y}</th><th>YTD</th>`);
+  html += "</tr>";
+
+  html += "<tr><td><b>MTG (Current)</b></td>";
+  years.forEach(y => {
+    let yrVal = y<=v.mtgCap ? v.mtg*12 : 0;
+    let ytd = 0;
+    for(let i=1;i<=y;i++){ if(i<=v.mtgCap) ytd += v.mtg*12; }
+    html += `<td>${fmt(yrVal)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>MTF (Current, compounding)</b></td>";
+  years.forEach(y => {
+    let yrVal = mtfYearAmount(v.mtf, v.growth, y);
+    let ytd = 0;
+    for(let i=1;i<=y;i++){ ytd += mtfYearAmount(v.mtf, v.growth, i); }
+    html += `<td>${fmt(yrVal)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>Total Current</b></td>";
+  years.forEach(y => {
+    let ytd = currentCumulative(v, y);
+    let prevYtd = currentCumulative(v, y-1<0?0:y-1);
+    html += `<td>${fmt(ytd-prevYtd)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>MTG (Alpha, capped)</b></td>";
+  years.forEach(y => {
+    let yrVal = y<=v.exitYear ? v.mtg*12 : 0;
+    let ytd = 0;
+    for(let i=1;i<=y;i++){ if(i<=v.exitYear) ytd += v.mtg*12; }
+    html += `<td>${fmt(yrVal)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>Alpha Fee</b></td>";
+  years.forEach(y => {
+    let yrVal = y<=v.alphaTerm ? v.alpha*12 : 0;
+    let ytd = 0;
+    for(let i=1;i<=y;i++){ if(i<=v.alphaTerm) ytd += v.alpha*12; }
+    html += `<td>${fmt(yrVal)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>Total Alpha</b></td>";
+  years.forEach(y => {
+    let ytd = alphaCumulative(v, y);
+    let prevYtd = alphaCumulative(v, y-1<0?0:y-1);
+    html += `<td>${fmt(ytd-prevYtd)}</td><td><b>${fmt(ytd)}</b></td>`;
+  });
+  html += "</tr>";
+
+  document.getElementById('dataTable').innerHTML = html;
+}
+
+function exportPDF(){
+  const el = document.getElementById('pdf-export-area');
+  const btns = document.querySelector('.actions');
+  btns.style.display = 'none';
+  html2canvas(el, {scale:2, backgroundColor:"#EAF0F8"}).then(canvas => {
+    btns.style.display = 'flex';
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jspdf.jsPDF('p','pt','a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgProps = {width: canvas.width, height: canvas.height};
+    const imgWidth = pageWidth - 40;
+    const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+    pdf.save('Alpha-Savings-Comparison.pdf');
+  });
+}
+
+function copyEmbed(){
+  const code = `<iframe src="https://alphafiles.net/savings/" style="width:100%;height:1400px;border:none;border-radius:12px;"></iframe>`;
+  navigator.clipboard.writeText(code).then(()=>{
+    alert("Embed code copied — paste into your CRM notes or client portal.");
+  });
+}
+
+build();
+</script>
+
+</body>
+</html>
