@@ -661,19 +661,19 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div style="border:2px solid #f3c6cc;border-radius:10px;padding:14px 10px;text-align:center;background:#fff8f8">
           <div style="font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Current — <span id="cmp-resort">Your Resort</span></div>
-          <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">60-Year Commitment</div>
+          <div id="cmp-current-sub" style="font-size:10px;color:#9ca3af;margin-bottom:8px">—</div>
           <div id="cmp-current-total" style="font-size:26px;font-weight:700;color:#DC2626;letter-spacing:-.5px">—</div>
           <div style="font-size:10px;color:#9ca3af;margin-top:4px">MTF + mortgage, compounding</div>
         </div>
         <div style="border:2px solid #c8e6d4;border-radius:10px;padding:14px 10px;text-align:center;background:#f5fdf8">
           <div style="font-size:11px;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Alpha Solution — <span id="cmp-term">—</span></div>
-          <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">One-Time Exit Plan</div>
+          <div id="cmp-alpha-sub" style="font-size:10px;color:#9ca3af;margin-bottom:8px">—</div>
           <div id="cmp-alpha-total" style="font-size:26px;font-weight:700;color:#16A34A;letter-spacing:-.5px">—</div>
           <div style="font-size:10px;color:#9ca3af;margin-top:4px">Then $0/month, forever</div>
         </div>
       </div>
       <div style="text-align:center;margin-top:10px;background:#1B2A4A;border-radius:8px;padding:10px">
-        <div style="font-size:10px;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Total Saved Over 60 Years</div>
+        <div id="cmp-savings-label" style="font-size:10px;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Total Saved</div>
         <div id="cmp-savings" style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-top:2px">—</div>
       </div>
     </div>
@@ -984,6 +984,9 @@ function calcComparison(){
   var curEl=document.getElementById('cmp-current-total');
   var alphaEl=document.getElementById('cmp-alpha-total');
   var saveEl=document.getElementById('cmp-savings');
+  var curSubEl=document.getElementById('cmp-current-sub');
+  var alphaSubEl=document.getElementById('cmp-alpha-sub');
+  var saveLblEl=document.getElementById('cmp-savings-label');
   if(!curEl||!alphaEl) return;
 
   var resort=(document.getElementById('v-resort')||{}).value||'';
@@ -996,18 +999,27 @@ function calcComparison(){
   var fee=parseFloat((document.getElementById('v-fee')||{}).value)||0;
   var term=parseInt((document.getElementById('v-term')||{}).value)||0;
 
+  // The comparison horizon always matches the selected financing term, in
+  // months — a 60-month plan compares 60 months on BOTH sides, not a fixed
+  // long-range projection. Pay-in-Full has no inherent month count, so it
+  // defaults to a 12-month window for a same-footing comparison.
+  var horizonMonths = term>0 ? term : 12;
+
   // Mortgage years remaining — same default-to-1-yr-ago logic used elsewhere
   var yearRaw=(document.getElementById('v-year')||{}).value;
   var year=parseInt(yearRaw)||0;
   var now=new Date().getFullYear();
   var yearWasEntered = year>1990 && year<=now;
   var yrsIn = yearWasEntered ? (now-year) : 1;
-  var yrsLeftOnMtg = Math.max(0,10-yrsIn);
+  var monthsLeftOnMtg = Math.max(0,10-yrsIn)*12;
 
-  function mtfTotal(n){ return mtfYr>0 ? mtfYr*(Math.pow(1.08,n)-1)/0.08 : 0; }
-  function mtgTotal(n){ return mtgMo>0 ? mtgMo*12*Math.min(n,yrsLeftOnMtg) : 0; }
-  var current60 = Math.round(mtfTotal(60)+mtgTotal(60));
-  curEl.textContent = fc(current60);
+  // MTF compounds annually at 8%; extend the formula to fractional years so
+  // short horizons (e.g. 12mo = 1yr) still resolve sensibly.
+  function mtfTotal(nMonths){ var nYears=nMonths/12; return mtfYr>0 ? mtfYr*(Math.pow(1.08,nYears)-1)/0.08 : 0; }
+  function mtgTotal(nMonths){ return mtgMo>0 ? mtgMo*Math.min(nMonths,monthsLeftOnMtg) : 0; }
+  var currentTotal = Math.round(mtfTotal(horizonMonths)+mtgTotal(horizonMonths));
+  curEl.textContent = fc(currentTotal);
+  if(curSubEl) curSubEl.textContent = horizonMonths+'-Month Forecast';
 
   // Total actually paid to Alpha over the chosen term (financed total, not just the fee)
   var alphaTotal=0;
@@ -1017,15 +1029,17 @@ function calcComparison(){
   }
   alphaEl.textContent = fee>0 ? fc(Math.round(alphaTotal)) : '—';
   if(termEl) termEl.textContent = fee>0 ? (term ? term+' Mo' : 'Pay in Full') : '—';
+  if(alphaSubEl) alphaSubEl.textContent = fee>0 ? 'Over '+horizonMonths+' Months' : 'One-Time Exit Plan';
 
   if(saveEl){
-    if(fee>0 && current60>0){
-      var savings=current60-alphaTotal;
+    if(fee>0 && currentTotal>0){
+      var savings=currentTotal-alphaTotal;
       saveEl.textContent = savings>0 ? fc(Math.round(savings)) : '—';
     } else {
       saveEl.textContent='—';
     }
   }
+  if(saveLblEl) saveLblEl.textContent = 'Total Saved Over '+horizonMonths+' Months';
   if(typeof calcTcExtra==='function') calcTcExtra();
 }
 window.calcComparison=calcComparison;
