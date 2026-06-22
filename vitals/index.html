@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 
 <!-- TOTALS SUMMARY — the main thing -->
 <div class="card" id="totals-card" style="border:2px solid #1B2A4A">
-  <div class="card-hdr" style="color:var(--gold)"><span id="totals-hdr-resort">YOUR</span> CURRENT COMMITMENT</div>
+  <div class="card-hdr" style="color:var(--gold)">YOUR CURRENT <span id="totals-hdr-resort"></span>COMMITMENT</div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:6px">
     <div style="text-align:center;padding:14px 8px;border:1px solid #e8edf3;border-radius:8px">
       <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Monthly</div>
@@ -972,7 +972,7 @@ function calcComparison(){
   var resort=(document.getElementById('v-resort')||{}).value||'';
   if(resortEl) resortEl.textContent = resort.trim() ? resort.trim() : 'Your Resort';
   var totalsHdrEl=document.getElementById('totals-hdr-resort');
-  if(totalsHdrEl) totalsHdrEl.textContent = resort.trim() ? resort.trim().toUpperCase() : 'YOUR';
+  if(totalsHdrEl) totalsHdrEl.textContent = resort.trim() ? resort.trim().toUpperCase()+' ' : '';
 
   var mtfYr=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
   var mtgMo=_mtgType==='pf'?0:(parseFloat((document.getElementById('v-mtg')||{}).value)||0);
