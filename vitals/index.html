@@ -618,6 +618,18 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     </div>
   </div>
   <div id="totals-breakdown" style="font-size:12px;color:#b0bac9;margin-top:6px;line-height:1.8;display:none"></div>
+  <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border);display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px">
+    <div class="ff" style="margin-bottom:0"><label>Year Purchased</label><input id="v-year2" type="number" placeholder="" oninput="syncYearPrice('year',this.value)"></div>
+    <div class="ff" style="margin-bottom:0"><label>Purchase Price</label><input id="v-pprice2" type="number" oninput="syncYearPrice('price',this.value)"></div>
+    <div style="text-align:center;padding:8px 4px;border:1px solid #e8edf3;border-radius:8px">
+      <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Rate</div>
+      <div id="tc-rate" style="font-size:18px;font-weight:700;color:#1B2A4A">—</div>
+    </div>
+    <div style="text-align:center;padding:8px 4px;border:1px solid #e8edf3;border-radius:8px">
+      <div style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Total Paid (Loan)</div>
+      <div id="tc-totalpaid" style="font-size:18px;font-weight:700;color:#1B2A4A">—</div>
+    </div>
+  </div>
 </div>
 
 <!-- ALPHA SOLUTION -->
@@ -1014,8 +1026,45 @@ function calcComparison(){
       saveEl.textContent='—';
     }
   }
+  if(typeof calcTcExtra==='function') calcTcExtra();
 }
 window.calcComparison=calcComparison;
+
+// ── Quick-entry Year/Price in the Total Commitment card ─────────
+// Two-way synced with the canonical v-year/v-pprice fields in
+// Resort & Purchase Info — typing in either place updates both.
+function syncYearPrice(which,val){
+  if(which==='year'){
+    var y=document.getElementById('v-year'); if(y) y.value=val;
+    autoSave();calcMtgRemaining();calcPurchaseFinance();calcComparison();
+  } else {
+    var p=document.getElementById('v-pprice'); if(p) p.value=val;
+    autoSave();calcPurchaseFinance();calcComparison();
+  }
+}
+window.syncYearPrice=syncYearPrice;
+
+function syncQuickEntryDisplay(){
+  var y2=document.getElementById('v-year2'); if(y2) y2.value=(document.getElementById('v-year')||{}).value||'';
+  var p2=document.getElementById('v-pprice2'); if(p2) p2.value=(document.getElementById('v-pprice')||{}).value||'';
+}
+
+function calcTcExtra(){
+  syncQuickEntryDisplay();
+  var rateEl=document.getElementById('tc-rate');
+  var paidEl=document.getElementById('tc-totalpaid');
+  if(!rateEl||!paidEl) return;
+  var pprice=parseFloat((document.getElementById('v-pprice')||{}).value)||0;
+  var mtgMo=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
+  if(pprice>0 && mtgMo>0){
+    var r=impliedAnnualRate(pprice, mtgMo, 120);
+    rateEl.textContent = r!==null ? r.toFixed(1)+'%' : '—';
+  } else {
+    rateEl.textContent='—';
+  }
+  paidEl.textContent = mtgMo>0 ? fc(mtgMo*120) : '—';
+}
+window.calcTcExtra=calcTcExtra;
 
 function calcMtgRemaining(){
   var yearRaw=(document.getElementById('v-year')||{}).value;
