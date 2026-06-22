@@ -641,11 +641,22 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
       </div>
     </div>
     <div style="margin-top:10px;border-top:1px dashed var(--border);padding-top:10px">
-      <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Savings After Exit</div>
-      <div class="sav-row"><span>Monthly cost today</span><span id="sv-mo">—</span></div>
-      <div class="sav-row"><span>After exit</span><span style="color:var(--green);font-weight:700">$0 / month</span></div>
-      <div class="sav-row"><span>Yearly savings</span><span id="sv-yr" style="color:var(--green);font-weight:700">—</span></div>
-      <div class="sav-row" style="border:none;font-weight:700;font-size:14px"><span>Break-even</span><span id="sv-be" style="color:var(--green)">—</span></div>
+      <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Next Phase — Alpha Plan</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="text-align:center;padding:14px 6px;border:1px solid #e8edf3;border-radius:8px">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Term</div>
+          <div id="np-term" style="font-size:24px;font-weight:300;color:#1B2A4A;letter-spacing:-.5px">—</div>
+        </div>
+        <div style="text-align:center;padding:14px 6px;border:1px solid #f0e0b8;border-radius:8px;background:#fffdf5">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Price</div>
+          <div id="np-price" style="font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.5px">—</div>
+        </div>
+        <div style="text-align:center;padding:14px 6px;border:1px solid #d7f0e0;border-radius:8px;background:#f0fdf4">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Yearly Savings</div>
+          <div id="sv-yr" style="font-size:24px;font-weight:700;color:var(--green);letter-spacing:-.5px">—</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:8px;font-size:12px;color:#6b7280">Break-even: <strong id="sv-be" style="color:var(--green)">—</strong></div>
     </div>
     <div class="pt" onclick="togglePS('fee-more')"><div class="pt-ic" id="pto-fee-more">+</div><span>Follow-Up Date &amp; Expected Price</span></div>
     <div class="ps" id="fee-more">
@@ -938,17 +949,20 @@ function calcSavings(){
   var mo=mtf+mtg;
   var fee=parseFloat(document.getElementById('v-fee').value)||0;
   var term=parseInt(document.getElementById('v-term').value)||0;
-  var pay='—';
+  var pay='—', bigPrice='—';
   if(fee>0){
-    if(!term){pay=fc(fee)+' (Full)';}
-    else if(term===12){pay=fc(fee/12)+'/mo (0%)';}
-    else{var r=0.20/12;var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1);pay=fc(pmt)+'/mo';}
+    if(!term){pay=fc(fee)+' (Full)';bigPrice=fc(fee);}
+    else if(term===12){pay=fc(fee/12)+'/mo (0%)';bigPrice=fc(fee/12)+'/mo';}
+    else{var r=0.20/12;var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1);pay=fc(pmt)+'/mo';bigPrice=fc(pmt)+'/mo';}
   }
   var mpEl=document.getElementById('v-mopay');if(mpEl)mpEl.value=pay;
   document.getElementById('vb-quote').textContent=fee?fc(fee):'No quote yet';
   document.getElementById('sh-price').textContent=fee?fc(fee):'No quote';
+  var npTermEl=document.getElementById('np-term');
+  if(npTermEl) npTermEl.textContent = term ? term+' Mo' : (fee>0?'Full':'—');
+  var npPriceEl=document.getElementById('np-price');
+  if(npPriceEl) npPriceEl.textContent = bigPrice;
   if(mo>0){
-    document.getElementById('sv-mo').textContent=fc(mo)+'/mo';
     document.getElementById('sv-yr').textContent=fc(mo*12)+'/yr';
     if(fee>0){document.getElementById('sv-be').textContent=Math.ceil(fee/mo)+' months';}
   }
