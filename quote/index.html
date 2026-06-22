@@ -4,6 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Service Quote — Alpha Timeshare Consultants</title>
+
+<!-- ── LIVE SCREEN-SHARE SYNC (PILOT) ──────────────────────────────
+     Pushes this page's fee/term inputs to Firestore as you edit them.
+     A second browser at /quote/?view=client subscribes and mirrors
+     the same numbers live, read-only — no screen-sharing software needed.
+     Pilot scope: this page only. Does not touch any other page's data
+     or the existing client-record system (atc_clients_v2). -->
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const sessionRef = doc(db, "liveSession", "active");
+
+const params = new URLSearchParams(window.location.search);
+const isClientView = params.get('view') === 'client';
+window.ATC_IS_CLIENT_VIEW = isClientView;
+
+let _pushTimer = null;
+window.ATC_pushLive = function(state){
+  if (isClientView) return; // client side must never write
+  clearTimeout(_pushTimer);
+  _pushTimer = setTimeout(function(){
+    setDoc(sessionRef, Object.assign({}, state, { page: 'quote', updatedAt: serverTimestamp() }))
+      .catch(function(e){ console.error('live push failed', e); });
+  }, 400);
+};
+
+if (isClientView){
+  window.ATC_clientSubscribe = function(callback){
+    onSnapshot(sessionRef, function(snap){
+      callback(snap.exists() ? snap.data() : null);
+    }, function(err){ console.error('live subscribe failed', err); });
+  };
+}
+
+window.dispatchEvent(new CustomEvent('atc-live-ready'));
+</script>
+<!-- ── END LIVE SCREEN-SHARE SYNC ──────────────────────────────── -->
+
 <style>
 :root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
 
@@ -601,6 +652,7 @@ function upd(){
   }
   if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
   save(fee);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:_selMo});
 }
 
 var _selMo=null;
@@ -619,6 +671,7 @@ function selPlan(mo,rate){
   document.getElementById('sd-mo').textContent=fee?fmtd(r.mo)+' / month':'—';
   document.getElementById('sd-tot').textContent=fee?fmt(r.tot)+' total paid':'—';
   save(fee,mo);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:mo});
 }
 
 function save(fee,selMo){
@@ -628,7 +681,8 @@ function save(fee,selMo){
 }
 
 function init(){
-  var key=localStorage.getItem(AK);if(!key)return;
+  var key=localStorage.getItem(AK);
+  if(!key){ initLiveScreenShare(); return; }
   var c=JSON.parse(localStorage.getItem(SK)||'{}');
   var d=c[key]||{};
   if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name||'—';
@@ -651,7 +705,57 @@ function init(){
   document.getElementById('fee-inp').value=fee||'';
   if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
+  initLiveScreenShare();
 }
+
+// ── LIVE SCREEN-SHARE (PILOT) ───────────────────────────────────
+function initLiveScreenShare(){
+  var isClient = new URLSearchParams(window.location.search).get('view')==='client';
+  if(!isClient) return; // rep side: nothing to lock, just pushes from upd()/selPlan()
+
+  // Client side: lock the page read-only and show a live status banner.
+  var feeInp=document.getElementById('fee-inp');
+  if(feeInp) feeInp.setAttribute('readonly','readonly');
+  document.querySelectorAll('.fin-card').forEach(function(c){ c.style.pointerEvents='none'; });
+  var sidenav=document.querySelector('.sidenav');
+  if(sidenav) sidenav.style.display='none';
+  var main=document.querySelector('.main-content');
+  if(main) main.style.marginLeft='0';
+
+  var banner=document.createElement('div');
+  banner.id='live-status-banner';
+  banner.style.cssText='position:sticky;top:0;z-index:500;background:#1B2A4A;color:#fff;text-align:center;padding:10px 14px;font-family:Inter,sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px';
+  banner.textContent='Connecting…';
+  document.body.insertBefore(banner, document.body.firstChild);
+
+  function waitForSubscribe(){
+    if(typeof window.ATC_clientSubscribe === 'function'){
+      window.ATC_clientSubscribe(function(data){
+        if(!data){
+          banner.style.background='#6b7280';
+          banner.textContent='⏳ Waiting for your consultant to start the session…';
+          return;
+        }
+        var updatedAt = data.updatedAt && data.updatedAt.toDate ? data.updatedAt.toDate() : null;
+        var ageSec = updatedAt ? (Date.now()-updatedAt.getTime())/1000 : 9999;
+        if(ageSec > 120){
+          banner.style.background='#6b7280';
+          banner.textContent='⏳ Session inactive — waiting for your consultant…';
+          return;
+        }
+        banner.style.background='#16A34A';
+        banner.textContent='🔴 LIVE — following your consultant\u2019s screen';
+        if(feeInp && typeof data.fee==='number') feeInp.value = data.fee;
+        upd();
+        if(data.selMo) selPlan(data.selMo, data.selMo===12?0:0.20);
+      });
+    } else {
+      setTimeout(waitForSubscribe, 80);
+    }
+  }
+  waitForSubscribe();
+}
+// ── END LIVE SCREEN-SHARE ───────────────────────────────────────
 
 /* ── SIDEBAR NAV ── */
 var _SK='atc_clients_v2',_AK='atc_active';
