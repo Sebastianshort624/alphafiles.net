@@ -356,6 +356,13 @@ footer{
   </div>
 </div>
 
+<div class="panel">
+  <div class="section-title">If We Get You Out — 12 / 24 / 36 Month Snapshot</div>
+  <div style="overflow-x:auto;">
+    <table id="snapshotTable"></table>
+  </div>
+</div>
+
 <div class="actions">
   <button class="btn-gold" onclick="exportPDF()">📄 Export PDF for Client</button>
   <button class="btn-outline" onclick="copyEmbed()">📋 Copy CRM Embed Code</button>
@@ -514,6 +521,50 @@ function build(){
   html += "</tr>";
 
   document.getElementById('dataTable').innerHTML = html;
+
+  buildSnapshotTable(v);
+}
+
+// ── 12/24/36-month snapshot — simple multiplication, no compounding, no
+// rate-solving. Resort = monthly cost x months (mortgage capped at its own
+// payoff cap); Alpha = monthly fee x months (capped at Alpha term).
+function buildSnapshotTable(v){
+  const months = [12, 24, 36];
+  const mtgCapMonths = v.mtgCap * 12;
+  const alphaTermMonths = v.alphaTerm * 12;
+
+  let html = "<tr><th>Section</th>";
+  months.forEach(m => html += `<th>${m} Months</th>`);
+  html += "</tr>";
+
+  html += "<tr><td><b>Resort's Choice</b></td>";
+  let resortVals = [];
+  months.forEach(m => {
+    const mtgPart = v.mtg * Math.min(m, mtgCapMonths);
+    const mtfPart = v.mtf * m;
+    const total = mtgPart + mtfPart;
+    resortVals.push(total);
+    html += `<td>${fmt(total)}</td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>Savings</b></td>";
+  let alphaVals = [];
+  months.forEach((m, i) => {
+    const alphaTotal = v.alpha * Math.min(m, alphaTermMonths);
+    alphaVals.push(alphaTotal);
+    const savings = Math.max(resortVals[i] - alphaTotal, 0);
+    html += `<td style="color:var(--green);font-weight:700">${fmt(savings)}</td>`;
+  });
+  html += "</tr>";
+
+  html += "<tr><td><b>Our Choice — Alpha</b></td>";
+  months.forEach((m, i) => {
+    html += `<td>${fmt(alphaVals[i])}</td>`;
+  });
+  html += "</tr>";
+
+  document.getElementById('snapshotTable').innerHTML = html;
 }
 
 function exportPDF(){
