@@ -1180,9 +1180,11 @@ function calcPurchaseFinance(){
     var impRate=impliedAnnualRate(pprice, mtgMo, 120);
     tiles.push(tile('Implied Rate', impRate!==null?impRate.toFixed(1)+'%':'—'));
   }
-  if(mtgMo>0){
+  if(pprice>0){
+    tiles.push(tile('Purchase Price', fc(pprice), 'as entered'));
+  } else if(mtgMo>0){
     var impPrice=impliedPurchasePrice(mtgMo, 17.5, 120);
-    tiles.push(tile('Est. Price', fc(Math.round(impPrice)), '@ 17.5%'));
+    tiles.push(tile('Est. Price', fc(Math.round(impPrice)), '@ 17.5% (no price entered)'));
   }
 
   box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
