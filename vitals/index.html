@@ -465,10 +465,10 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="pt" onclick="togglePS('purch-info')"><div class="pt-ic" id="pto-purch-info">+</div><span>Year Purchased, Price, Why Out</span></div>
     <div class="ps" id="purch-info">
       <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining()"></div>
-        <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave()"></div>
+        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance()"></div>
+        <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave();calcPurchaseFinance()"></div>
       </div>
-      <div id="mtg-rem-box" style="display:none;background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:8px;font-size:13px;color:#1B2A4A"></div>
+      <div id="purch-finance-box" style="background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:8px;font-size:13px;color:#1B2A4A;line-height:1.7"></div>
       <div class="ff"><label>Why Do They Want Out?</label><textarea id="v-why" oninput="autoSave()"></textarea></div>
     </div>
   </div>
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
     <div class="ff">
       <label>Annual MTF</label>
-      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals()">
+      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals();calcPurchaseFinance()">
     </div>
     <div class="ff ro">
       <label>Monthly MTF</label>
@@ -524,7 +524,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
       <div class="ff">
         <label>Monthly Payment</label>
-        <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining()">
+        <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining();calcPurchaseFinance()">
       </div>
       <div class="ff ro">
         <label>Annual</label>
@@ -544,7 +544,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
         <div id="v-price-rate" style="font-size:11px;color:#b0bac9;margin-top:3px">Set year &amp; credit rating below</div>
       </div>
     </div>
-    <div id="mtg-rem-box" style="display:none;font-size:12px;color:#6b7280;margin-top:4px;padding:8px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e8edf3"></div>
+    <div id="mtg-rem-box2" style="display:none;font-size:12px;color:#6b7280;margin-top:4px;padding:8px 10px;background:#f8fafc;border-radius:6px;border:1px solid #e8edf3"></div>
   </div>
   <!-- Behind — extra months field -->
   <div class="ps" id="mtg-behind">
@@ -871,7 +871,7 @@ function setMtg(t){
   var b=document.getElementById('mt-'+t);if(b)b.className='mt-b a '+t;
   document.getElementById('mtg-details').classList.toggle('open',t==='ow'||t==='bh');
   document.getElementById('mtg-behind').classList.toggle('open',t==='bh');
-  calcTotals();autoSave();
+  calcTotals();autoSave();calcPurchaseFinance();
 }
 
 function calcTotals(){
@@ -955,7 +955,8 @@ function calcSavings(){
 }
 
 function calcMtgRemaining(){
-  var year=parseInt((document.getElementById('v-year')||{}).value)||0;
+  var yearRaw=(document.getElementById('v-year')||{}).value;
+  var year=parseInt(yearRaw)||0;
   var mtg=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
   var fico=(document.getElementById('v-fico')||{}).value||'';
   var now=new Date().getFullYear();
@@ -964,11 +965,15 @@ function calcMtgRemaining(){
   var priceDisplay=document.getElementById('v-price-display');
   var priceRate=document.getElementById('v-price-rate');
   var priceHidden=document.getElementById('v-mtg-future');
-  var remBox=document.getElementById('mtg-rem-box');
+  var remBox=document.getElementById('mtg-rem-box2');
 
-  if(year>1990&&year<=now&&mtg>0){
-    var yrsIn=now-year;
-    var yrsLeft=Math.max(0,10-yrsIn);
+  // No year entered? Default to "bought last year" — 9 yrs left on the 10-yr term —
+  // instead of showing nothing. Still flagged as a default, not a hard fact.
+  var yearWasEntered = year>1990 && year<=now;
+  var yrsIn = yearWasEntered ? (now-year) : 1;
+  var yrsLeft = Math.max(0,10-yrsIn);
+
+  if(mtg>0){
     // Balance = monthly × 12 × years remaining
     var balance=Math.round(mtg*12*yrsLeft);
     if(balDisplay)balDisplay.textContent=balance>0?fc(balance):'$0';
@@ -981,8 +986,8 @@ function calcMtgRemaining(){
     if(priceRate)priceRate.textContent=rateLabel;
     if(priceHidden)priceHidden.value=price;
     if(remBox){
-      remBox.style.display=yrsLeft>0?'block':'none';
-      remBox.innerHTML='Purchased <strong>'+yrsIn+' yrs ago</strong> — <strong>'+yrsLeft+' yrs left</strong> on 10-yr term';
+      remBox.style.display='block';
+      remBox.innerHTML=(yearWasEntered?'Purchased <strong>'+yrsIn+' yrs ago</strong>':'No purchase year entered — <strong>defaulting to 1 yr ago</strong>')+' — <strong>'+yrsLeft+' yrs left</strong> on 10-yr term';
     }
   } else {
     if(balDisplay)balDisplay.textContent='—';
@@ -993,6 +998,87 @@ function calcMtgRemaining(){
     if(priceHidden)priceHidden.value='';
   }
 }
+
+// ── Solve for the monthly interest rate implied by Purchase Price + Monthly
+// Payment over a fixed term (bisection — no closed-form solution exists for
+// amortized-loan rate). Returns annualized rate (%) or null if unsolvable.
+function impliedAnnualRate(pv, pmt, termMonths){
+  if(pv<=0||pmt<=0||termMonths<=0) return null;
+  function payAtRate(r){
+    if(r<=0) return pv/termMonths;
+    return pv*r/(1-Math.pow(1+r,-termMonths));
+  }
+  var lo=0, hi=1; // monthly rate search range: 0% to 100%/mo (generous ceiling)
+  if(payAtRate(hi)<pmt) return null; // payment too low to solve within range
+  for(var i=0;i<100;i++){
+    var mid=(lo+hi)/2;
+    if(payAtRate(mid)>pmt) hi=mid; else lo=mid;
+  }
+  return ((lo+hi)/2)*12*100;
+}
+
+// ── Direct formula: purchase price implied by a monthly payment at a fixed
+// annual rate over a fixed term. PV = PMT × (1 − (1+r)⁻ⁿ) / r
+function impliedPurchasePrice(pmt, annualRatePct, termMonths){
+  if(pmt<=0||termMonths<=0) return 0;
+  var r=(annualRatePct/100)/12;
+  if(r<=0) return pmt*termMonths;
+  return pmt*(1-Math.pow(1+r,-termMonths))/r;
+}
+
+function calcPurchaseFinance(){
+  var box=document.getElementById('purch-finance-box');
+  if(!box) return;
+
+  var yearRaw=(document.getElementById('v-year')||{}).value;
+  var year=parseInt(yearRaw)||0;
+  var now=new Date().getFullYear();
+  var yearWasEntered = year>1990 && year<=now;
+  var yrsIn = yearWasEntered ? (now-year) : 1; // default: assume bought 1 yr ago
+  var yrsLeft = Math.max(0,10-yrsIn);
+  var monthsLeftOnMtg = yrsLeft*12;
+
+  var mtgMo = parseFloat((document.getElementById('v-mtg')||{}).value)||0;
+  var mtfYr = parseFloat((document.getElementById('v-mtf')||{}).value)||0;
+  var mtfMo = mtfYr/12;
+  var pprice = parseFloat((document.getElementById('v-pprice')||{}).value)||0;
+  var hasMtg = mtgMo>0 && _mtgType!=='pf';
+
+  // If there's no active mortgage, MTF doesn't have a "term" to anchor to —
+  // default to the standard 10-yr / 120-mo window per Sebastian's spec.
+  var monthsWindow = hasMtg ? monthsLeftOnMtg : 120;
+
+  var mtgRemaining = hasMtg ? Math.round(mtgMo*monthsLeftOnMtg) : 0;
+  var mtfRemaining = Math.round(mtfMo*monthsWindow);
+
+  var lines=[];
+  lines.push((yearWasEntered?'Term remaining: <strong>'+yrsLeft+' yrs</strong> ('+yrsIn+' yrs in on a 10-yr term)':'Term remaining: <strong>'+yrsLeft+' yrs</strong> <span style="color:#6b7280">(no purchase year entered — defaulted to 1 yr ago)</span>'));
+
+  if(hasMtg){
+    lines.push('Mortgage left to pay: <strong>'+fc(mtgRemaining)+'</strong> (at '+fc(mtgMo)+'/mo × '+monthsLeftOnMtg+' mo)');
+  } else {
+    lines.push('Mortgage: <strong>Paid off / none</strong>');
+  }
+
+  lines.push('MTF left to pay over same window: <strong>'+fc(mtfRemaining)+'</strong> (at '+fc(Math.round(mtfMo))+'/mo × '+monthsWindow+' mo, flat — not compounded)');
+
+  // Implied interest rate (needs both purchase price and a mortgage payment)
+  if(pprice>0 && mtgMo>0){
+    var impRate=impliedAnnualRate(pprice, mtgMo, 120);
+    lines.push(impRate!==null
+      ? 'Implied interest rate: <strong>'+impRate.toFixed(1)+'% APR</strong> (based on $'+pprice.toLocaleString()+' price, '+fc(mtgMo)+'/mo, 120-mo term)'
+      : 'Implied interest rate: <span style="color:#6b7280">payment too low relative to price to solve — check entries</span>');
+  }
+
+  // Implied purchase price at the resort-standard 17.5% rate (only needs a payment)
+  if(mtgMo>0){
+    var impPrice=impliedPurchasePrice(mtgMo, 17.5, 120);
+    lines.push('Estimated original price at 17.5%: <strong>'+fc(Math.round(impPrice))+'</strong> (from '+fc(mtgMo)+'/mo over 120 mo)');
+  }
+
+  box.innerHTML=lines.join('<br>');
+}
+window.calcPurchaseFinance=calcPurchaseFinance;
 
 function checkCredit(){
   var v=document.getElementById('v-credit-affected').value;
@@ -1256,7 +1342,7 @@ function loadData(){
   if(d.firstName||d.lastName){document.getElementById('sh-name').textContent=((d.firstName||'')+' '+(d.lastName||'')).trim();}
   if(d.resort)document.getElementById('sh-resort').textContent=d.resort;
   if(d.qualifyAnswer)setQualify(d.qualifyAnswer);
-  calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();
+  calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();calcMtgRemaining();calcPurchaseFinance();
 }
 
 document.addEventListener('DOMContentLoaded', function(){loadData();if(!ac())buildTasks();});
@@ -1322,17 +1408,18 @@ var EMAIL_TEMPLATES = {
     var totalYr=totalMo*12;
 
     // Mortgage is not perpetual — cap it at remaining years on a 10-yr term,
-    // same math as calcMtgRemaining(). Without a purchase year we can't know
-    // the payoff date, so flag the estimate rather than silently overstating it.
+    // same math as calcMtgRemaining()/calcPurchaseFinance(). No purchase year
+    // on file? Default to "bought 1 yr ago" (9 yrs left) rather than treating
+    // the mortgage as running forever.
     var yearPurchased=parseInt(d.yearPurchased)||0;
     var now=new Date().getFullYear();
     var purchaseKnown = yearPurchased>1990 && yearPurchased<=now;
-    var mtgYearsLeft = purchaseKnown ? Math.max(0, 10-(now-yearPurchased)) : null;
+    var yrsIn = purchaseKnown ? (now-yearPurchased) : 1;
+    var mtgYearsLeft = Math.max(0, 10-yrsIn);
 
     function mtfTotal(n){return mtfYr>0?mtfYr*(Math.pow(1.08,n)-1)/0.08:0;}
     function mtgTotal(n){
       if(mtgMo<=0) return 0;
-      if(mtgYearsLeft===null) return mtgMo*12*n; // unknown payoff date — uncapped fallback
       return mtgMo*12*Math.min(n, mtgYearsLeft);
     }
     function proj(n){return Math.round(mtfTotal(n)+mtgTotal(n));}
@@ -1340,7 +1427,7 @@ var EMAIL_TEMPLATES = {
 
     var mtgNote = mtgMo<=0 ? ''
       : purchaseKnown ? ' (paid off in '+mtgYearsLeft+' more yr'+(mtgYearsLeft!==1?'s':'')+', then $0/mo)'
-      : ' (purchase year not on file — estimated as ongoing; add purchase year for an exact payoff date)';
+      : ' (paid off in an estimated '+mtgYearsLeft+' more yr'+(mtgYearsLeft!==1?'s':'')+' — add purchase year for an exact date)';
 
     return 'Hi '+c.name+',\n\nAs discussed, here is a breakdown of the true cost of staying in your timeshare at '+c.resort+'.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n--- YOUR CURRENT COSTS ---\nMaintenance Fee: '+f(mtfYr)+'/yr ('+f(Math.round(mtfYr/12))+'/mo)\nMortgage: '+(mtgMo>0?f(Math.round(mtgMo))+'/mo'+mtgNote:'Paid off')+'\nCombined Monthly: '+f(Math.round(totalMo))+'\n\n--- IF YOU STAY IN ---\n1 Year:   '+f(Math.round(totalYr))+'\n5 Years:  '+f(proj(5))+' (MTF grows 8%/yr)\n10 Years: '+f(proj(10))+'\n20 Years: '+f(proj(20))+'\n30 Years: '+f(proj(30))+'\n\n--- EXIT WITH ALPHA ---\nOne-time fee: '+(c.fee>0?f(c.fee):'See quote')+'\nAfter exit: $0/month forever\nBreak-even: '+(c.fee>0&&totalMo>0?Math.ceil(c.fee/totalMo)+' months':'—')+'\n\nThe resort never showed you these numbers. Now you have them.\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
   },
