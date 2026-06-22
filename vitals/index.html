@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="card">
   <div class="card-hdr">Resort &amp; Purchase Info</div>
   <div class="card-body">
-    <div class="ff"><label>Resort Name</label><input id="v-resort" class="hi" oninput="autoSave()"></div>
+    <div class="ff"><label>Resort Name</label><input id="v-resort" class="hi" oninput="autoSave();calcComparison()"></div>
     <div class="frow">
       <div class="ff"><label>State</label><input id="v-loc" placeholder="" oninput="autoSave()"></div>
       <div class="ff"><label>City</label><input id="v-rescity" placeholder="" oninput="autoSave()"></div>
@@ -465,7 +465,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="pt" onclick="togglePS('purch-info')"><div class="pt-ic" id="pto-purch-info">+</div><span>Year Purchased, Price, Why Out</span></div>
     <div class="ps" id="purch-info">
       <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance()"></div>
+        <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance();calcComparison()"></div>
         <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave();calcPurchaseFinance()"></div>
       </div>
       <div id="purch-finance-box" style="background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:8px;font-size:13px;color:#1B2A4A;line-height:1.7"></div>
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
     <div class="ff">
       <label>Annual MTF</label>
-      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals();calcPurchaseFinance()">
+      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals();calcPurchaseFinance();calcComparison()">
     </div>
     <div class="ff ro">
       <label>Monthly MTF</label>
@@ -524,7 +524,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
       <div class="ff">
         <label>Monthly Payment</label>
-        <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining();calcPurchaseFinance()">
+        <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining();calcPurchaseFinance();calcComparison()">
       </div>
       <div class="ff ro">
         <label>Annual</label>
@@ -641,22 +641,24 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
       </div>
     </div>
     <div style="margin-top:10px;border-top:1px dashed var(--border);padding-top:10px">
-      <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Next Phase — Alpha Plan</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div style="text-align:center;padding:14px 6px;border:1px solid #e8edf3;border-radius:8px">
-          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Term</div>
-          <div id="np-term" style="font-size:24px;font-weight:300;color:#1B2A4A;letter-spacing:-.5px">—</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="border:2px solid #f3c6cc;border-radius:10px;padding:14px 10px;text-align:center;background:#fff8f8">
+          <div style="font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Current — <span id="cmp-resort">Your Resort</span></div>
+          <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">60-Year Commitment</div>
+          <div id="cmp-current-total" style="font-size:26px;font-weight:700;color:#DC2626;letter-spacing:-.5px">—</div>
+          <div style="font-size:10px;color:#9ca3af;margin-top:4px">MTF + mortgage, compounding</div>
         </div>
-        <div style="text-align:center;padding:14px 6px;border:1px solid #f0e0b8;border-radius:8px;background:#fffdf5">
-          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Price</div>
-          <div id="np-price" style="font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.5px">—</div>
-        </div>
-        <div style="text-align:center;padding:14px 6px;border:1px solid #d7f0e0;border-radius:8px;background:#f0fdf4">
-          <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Yearly Savings</div>
-          <div id="sv-yr" style="font-size:24px;font-weight:700;color:var(--green);letter-spacing:-.5px">—</div>
+        <div style="border:2px solid #c8e6d4;border-radius:10px;padding:14px 10px;text-align:center;background:#f5fdf8">
+          <div style="font-size:11px;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">Alpha Solution — <span id="cmp-term">—</span></div>
+          <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">One-Time Exit Plan</div>
+          <div id="cmp-alpha-total" style="font-size:26px;font-weight:700;color:#16A34A;letter-spacing:-.5px">—</div>
+          <div style="font-size:10px;color:#9ca3af;margin-top:4px">Then $0/month, forever</div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:8px;font-size:12px;color:#6b7280">Break-even: <strong id="sv-be" style="color:var(--green)">—</strong></div>
+      <div style="text-align:center;margin-top:10px;background:#1B2A4A;border-radius:8px;padding:10px">
+        <div style="font-size:10px;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;font-weight:700">Total Saved Over 60 Years</div>
+        <div id="cmp-savings" style="font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-top:2px">—</div>
+      </div>
     </div>
     <div class="pt" onclick="togglePS('fee-more')"><div class="pt-ic" id="pto-fee-more">+</div><span>Follow-Up Date &amp; Expected Price</span></div>
     <div class="ps" id="fee-more">
@@ -882,7 +884,7 @@ function setMtg(t){
   var b=document.getElementById('mt-'+t);if(b)b.className='mt-b a '+t;
   document.getElementById('mtg-details').classList.toggle('open',t==='ow'||t==='bh');
   document.getElementById('mtg-behind').classList.toggle('open',t==='bh');
-  calcTotals();autoSave();calcPurchaseFinance();
+  calcTotals();autoSave();calcPurchaseFinance();calcComparison();
 }
 
 function calcTotals(){
@@ -944,29 +946,69 @@ function calcTotals(){
 }
 
 function calcSavings(){
-  var mtf=(parseFloat(document.getElementById('v-mtf').value)||0)/12;
-  var mtg=_mtgType==='pf'?0:(parseFloat(document.getElementById('v-mtg').value)||0);
-  var mo=mtf+mtg;
   var fee=parseFloat(document.getElementById('v-fee').value)||0;
   var term=parseInt(document.getElementById('v-term').value)||0;
-  var pay='—', bigPrice='—';
+  var pay='—';
   if(fee>0){
-    if(!term){pay=fc(fee)+' (Full)';bigPrice=fc(fee);}
-    else if(term===12){pay=fc(fee/12)+'/mo (0%)';bigPrice=fc(fee/12)+'/mo';}
-    else{var r=0.20/12;var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1);pay=fc(pmt)+'/mo';bigPrice=fc(pmt)+'/mo';}
+    if(!term){pay=fc(fee)+' (Full)';}
+    else if(term===12){pay=fc(fee/12)+'/mo (0%)';}
+    else{var r=0.20/12;var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1);pay=fc(pmt)+'/mo';}
   }
   var mpEl=document.getElementById('v-mopay');if(mpEl)mpEl.value=pay;
   document.getElementById('vb-quote').textContent=fee?fc(fee):'No quote yet';
   document.getElementById('sh-price').textContent=fee?fc(fee):'No quote';
-  var npTermEl=document.getElementById('np-term');
-  if(npTermEl) npTermEl.textContent = term ? term+' Mo' : (fee>0?'Full':'—');
-  var npPriceEl=document.getElementById('np-price');
-  if(npPriceEl) npPriceEl.textContent = bigPrice;
-  if(mo>0){
-    document.getElementById('sv-yr').textContent=fc(mo*12)+'/yr';
-    if(fee>0){document.getElementById('sv-be').textContent=Math.ceil(fee/mo)+' months';}
+  calcComparison();
+}
+
+// ── CURRENT vs ALPHA — symmetric 60-year comparison ─────────────
+function calcComparison(){
+  var resortEl=document.getElementById('cmp-resort');
+  var termEl=document.getElementById('cmp-term');
+  var curEl=document.getElementById('cmp-current-total');
+  var alphaEl=document.getElementById('cmp-alpha-total');
+  var saveEl=document.getElementById('cmp-savings');
+  if(!curEl||!alphaEl) return;
+
+  var resort=(document.getElementById('v-resort')||{}).value||'';
+  if(resortEl) resortEl.textContent = resort.trim() ? resort.trim() : 'Your Resort';
+
+  var mtfYr=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
+  var mtgMo=_mtgType==='pf'?0:(parseFloat((document.getElementById('v-mtg')||{}).value)||0);
+  var fee=parseFloat((document.getElementById('v-fee')||{}).value)||0;
+  var term=parseInt((document.getElementById('v-term')||{}).value)||0;
+
+  // Mortgage years remaining — same default-to-1-yr-ago logic used elsewhere
+  var yearRaw=(document.getElementById('v-year')||{}).value;
+  var year=parseInt(yearRaw)||0;
+  var now=new Date().getFullYear();
+  var yearWasEntered = year>1990 && year<=now;
+  var yrsIn = yearWasEntered ? (now-year) : 1;
+  var yrsLeftOnMtg = Math.max(0,10-yrsIn);
+
+  function mtfTotal(n){ return mtfYr>0 ? mtfYr*(Math.pow(1.08,n)-1)/0.08 : 0; }
+  function mtgTotal(n){ return mtgMo>0 ? mtgMo*12*Math.min(n,yrsLeftOnMtg) : 0; }
+  var current60 = Math.round(mtfTotal(60)+mtgTotal(60));
+  curEl.textContent = fc(current60);
+
+  // Total actually paid to Alpha over the chosen term (financed total, not just the fee)
+  var alphaTotal=0;
+  if(fee>0){
+    if(!term || term===12){ alphaTotal=fee; }
+    else { var r=0.20/12; var pmt=fee*(r*Math.pow(1+r,term))/(Math.pow(1+r,term)-1); alphaTotal=pmt*term; }
+  }
+  alphaEl.textContent = fee>0 ? fc(Math.round(alphaTotal)) : '—';
+  if(termEl) termEl.textContent = fee>0 ? (term ? term+' Mo' : 'Pay in Full') : '—';
+
+  if(saveEl){
+    if(fee>0 && current60>0){
+      var savings=current60-alphaTotal;
+      saveEl.textContent = savings>0 ? fc(Math.round(savings)) : '—';
+    } else {
+      saveEl.textContent='—';
+    }
   }
 }
+window.calcComparison=calcComparison;
 
 function calcMtgRemaining(){
   var yearRaw=(document.getElementById('v-year')||{}).value;
@@ -1353,7 +1395,7 @@ function loadData(){
   if(d.firstName||d.lastName){document.getElementById('sh-name').textContent=((d.firstName||'')+' '+(d.lastName||'')).trim();}
   if(d.resort)document.getElementById('sh-resort').textContent=d.resort;
   if(d.qualifyAnswer)setQualify(d.qualifyAnswer);
-  calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();calcMtgRemaining();calcPurchaseFinance();
+  calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();calcMtgRemaining();calcPurchaseFinance();calcComparison();
 }
 
 document.addEventListener('DOMContentLoaded', function(){loadData();if(!ac())buildTasks();});
