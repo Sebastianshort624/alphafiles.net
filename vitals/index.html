@@ -990,13 +990,13 @@ function calcMtgRemaining(){
   if(mtg>0){
     // Balance = monthly × 12 × years remaining
     var balance=Math.round(mtg*12*yrsLeft);
-    if(balDisplay)balDisplay.textContent=balance>0?fc(balance):'$0';
+    if(balDisplay)balDisplay.value=balance>0?fc(balance):'$0';
     if(balHidden)balHidden.value=balance;
     // Price = balance × rate × 120
     var rate=fico==='good'?0.165:fico==='fair'?0.175:fico==='poor'?0.185:0;
     var rateLabel=fico==='good'?'Good credit — 16.5%':fico==='fair'?'Fair credit — 17.5%':fico==='poor'?'Poor credit — 18.5%':'Select credit rating';
     var price=rate>0?Math.round(balance*rate*120):0;
-    if(priceDisplay)priceDisplay.textContent=price>0?fc(price):'—';
+    if(priceDisplay)priceDisplay.value=price>0?fc(price):'—';
     if(priceRate)priceRate.textContent=rateLabel;
     if(priceHidden)priceHidden.value=price;
     if(remBox){
@@ -1004,8 +1004,8 @@ function calcMtgRemaining(){
       remBox.innerHTML=(yearWasEntered?'Purchased <strong>'+yrsIn+' yrs ago</strong>':'No purchase year entered — <strong>defaulting to 1 yr ago</strong>')+' — <strong>'+yrsLeft+' yrs left</strong> on 10-yr term';
     }
   } else {
-    if(balDisplay)balDisplay.textContent='—';
-    if(priceDisplay)priceDisplay.textContent='—';
+    if(balDisplay)balDisplay.value='—';
+    if(priceDisplay)priceDisplay.value='—';
     if(priceRate&&fico==='')priceRate.textContent='Select year &amp; credit rating';
     if(remBox)remBox.style.display='none';
     if(balHidden)balHidden.value='';
@@ -1065,32 +1065,29 @@ function calcPurchaseFinance(){
   var mtgRemaining = hasMtg ? Math.round(mtgMo*monthsLeftOnMtg) : 0;
   var mtfRemaining = Math.round(mtfMo*monthsWindow);
 
-  var lines=[];
-  lines.push((yearWasEntered?'Term remaining: <strong>'+yrsLeft+' yrs</strong> ('+yrsIn+' yrs in on a 10-yr term)':'Term remaining: <strong>'+yrsLeft+' yrs</strong> <span style="color:#6b7280">(no purchase year entered — defaulted to 1 yr ago)</span>'));
-
-  if(hasMtg){
-    lines.push('Mortgage left to pay: <strong>'+fc(mtgRemaining)+'</strong> (at '+fc(mtgMo)+'/mo × '+monthsLeftOnMtg+' mo)');
-  } else {
-    lines.push('Mortgage: <strong>Paid off / none</strong>');
+  function tile(label,val,sub){
+    return '<div style="text-align:center;padding:10px 6px;border:1px solid #d7e3f2;border-radius:7px;background:#fff">'
+      +'<div style="font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">'+label+'</div>'
+      +'<div style="font-size:18px;font-weight:700;color:#1B2A4A;letter-spacing:-.3px">'+val+'</div>'
+      +(sub?'<div style="font-size:10px;color:#9ca3af;margin-top:2px">'+sub+'</div>':'')
+    +'</div>';
   }
 
-  lines.push('MTF left to pay over same window: <strong>'+fc(mtfRemaining)+'</strong> (at '+fc(Math.round(mtfMo))+'/mo × '+monthsWindow+' mo, flat — not compounded)');
+  var tiles=[];
+  tiles.push(tile('Term Left', yrsLeft+' yrs', yearWasEntered?null:'(estimated)'));
+  tiles.push(tile('Mortgage Left', hasMtg?fc(mtgRemaining):'Paid off'));
+  tiles.push(tile('MTF Left', fc(mtfRemaining)));
 
-  // Implied interest rate (needs both purchase price and a mortgage payment)
   if(pprice>0 && mtgMo>0){
     var impRate=impliedAnnualRate(pprice, mtgMo, 120);
-    lines.push(impRate!==null
-      ? 'Implied interest rate: <strong>'+impRate.toFixed(1)+'% APR</strong> (based on $'+pprice.toLocaleString()+' price, '+fc(mtgMo)+'/mo, 120-mo term)'
-      : 'Implied interest rate: <span style="color:#6b7280">payment too low relative to price to solve — check entries</span>');
+    tiles.push(tile('Implied Rate', impRate!==null?impRate.toFixed(1)+'%':'—'));
   }
-
-  // Implied purchase price at the resort-standard 17.5% rate (only needs a payment)
   if(mtgMo>0){
     var impPrice=impliedPurchasePrice(mtgMo, 17.5, 120);
-    lines.push('Estimated original price at 17.5%: <strong>'+fc(Math.round(impPrice))+'</strong> (from '+fc(mtgMo)+'/mo over 120 mo)');
+    tiles.push(tile('Est. Price', fc(Math.round(impPrice)), '@ 17.5%'));
   }
 
-  box.innerHTML=lines.join('<br>');
+  box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
 }
 window.calcPurchaseFinance=calcPurchaseFinance;
 
