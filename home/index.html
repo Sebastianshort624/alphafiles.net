@@ -452,6 +452,57 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="qc-tile"><div class="l">Total Paid (Loan)</div><div class="v" id="qc-totpaid">—</div></div>
   </div>
 
+  <div class="qc-hdr">Q&amp;A — Required Payments</div>
+  <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:6px">Am I required to continue paying the resort once I hire Alpha?</div>
+  <div style="font-size:11px;color:#374151;margin-bottom:8px;line-height:1.5">Alpha does not require you to continue making MTF payments to the resort while we transition your ownership back to the resort.</div>
+  <div style="font-size:11px;color:#374151;margin-bottom:6px;line-height:1.5">Alpha does not require you to continue making MTG payments to the resort as long as you are enrolled in Alpha-certified:</div>
+  <div id="qc-qa-list">
+    <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
+      <input type="checkbox" class="qc-qa-cb" data-n="1" onchange="qc_qaUpdate(1)" style="width:auto">
+      1. Credit Protection
+      <span id="qc-qa-1" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
+      <input type="checkbox" class="qc-qa-cb" data-n="2" onchange="qc_qaUpdate(2)" style="width:auto">
+      2. Credit Repair
+      <span id="qc-qa-2" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
+      <input type="checkbox" class="qc-qa-cb" data-n="3" onchange="qc_qaUpdate(3)" style="width:auto">
+      3. Credit Monitoring
+      <span id="qc-qa-3" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+    </label>
+  </div>
+
+  <div class="qc-hdr">Monthly Comparison</div>
+  <div class="qc-row2">
+    <div class="qc-tile"><div class="l">Alpha Monthly</div><div class="v" id="qc-mc-alpha">—</div></div>
+    <div class="qc-tile"><div class="l">Resort Monthly</div><div class="v" id="qc-mc-resort">—</div></div>
+  </div>
+  <div class="qc-tile" style="margin-top:6px;background:#f0fdf4;border-color:#c8e6d4">
+    <div class="l" style="color:#16A34A">Monthly Savings</div>
+    <div class="v" style="color:#16A34A;font-size:15px" id="qc-mc-savings">—</div>
+  </div>
+
+  <div class="qc-hdr">Yearly Savings</div>
+  <div class="qc-f"><label>If We Get You Out In</label>
+    <select id="qc-exit-window" onchange="qc_build()">
+      <option value="6">6 Months</option>
+      <option value="12" selected>12 Months</option>
+      <option value="18">18 Months</option>
+      <option value="36">36 Max (Rare)!</option>
+    </select>
+  </div>
+  <div style="font-size:9px;color:#9ca3af;margin-bottom:6px;line-height:1.4">After this point, resort MTG + MTF payments stop entirely — only the Alpha payment continues for the rest of its term.</div>
+  <div class="qc-row2">
+    <div class="qc-tile"><div class="l">During Transition</div><div class="v" id="qc-ys-transition" style="font-size:12px">—</div></div>
+    <div class="qc-tile"><div class="l">After Exit (Alpha Only)</div><div class="v" id="qc-ys-after" style="font-size:12px">—</div></div>
+  </div>
+  <div class="qc-tile" style="margin-top:6px;background:#f0fdf4;border-color:#c8e6d4">
+    <div class="l" style="color:#16A34A">Yearly Savings Once Out</div>
+    <div class="v" style="color:#16A34A;font-size:15px" id="qc-ys-yearly">—</div>
+  </div>
+
   <div class="qc-hdr">Alpha Solution</div>
   <div class="qc-row2">
     <div class="qc-f"><label>Alpha Fee</label><input id="qc-fee" type="number" oninput="qc_build()"></div>
@@ -504,6 +555,22 @@ function qc_toggleMtgSection(){
   var checked = document.getElementById('qc-has-mtg').checked;
   document.getElementById('qc-mtg-section').style.display = checked ? 'block' : 'none';
   qc_setMtg(checked ? 'ow' : 'pf');
+}
+
+// Each checkbox independently flips its own label between red
+// "Mtg Payments Required" and blue "No Mtg Payments Required" — no
+// combined logic across the three, exactly as specified.
+function qc_qaUpdate(n){
+  var cb = document.querySelector('.qc-qa-cb[data-n="'+n+'"]');
+  var lbl = document.getElementById('qc-qa-'+n);
+  if(!cb||!lbl) return;
+  if(cb.checked){
+    lbl.textContent = 'No Mtg Payments Required';
+    lbl.style.color = '#2563EB';
+  } else {
+    lbl.textContent = 'Mtg Payments Required';
+    lbl.style.color = '#DC2626';
+  }
 }
 
 function qc_setMtg(t){
@@ -592,6 +659,35 @@ function qc_build(){
   }
   document.getElementById('qc-mopay').value = pay;
 
+  // Numeric (unformatted) Alpha monthly payment — Pay-in-Full has no ongoing
+  // monthly obligation, so it's $0/mo for comparison purposes.
+  var alphaMonthlyNum = 0;
+  if(fee>0 && term>0){
+    if(term===12){ alphaMonthlyNum = fee/12; }
+    else { var r3=0.20/12; alphaMonthlyNum = fee*(r3*Math.pow(1+r3,term))/(Math.pow(1+r3,term)-1); }
+  }
+  var resortMonthly = mtgMo + mtfMo;
+
+  // Monthly Comparison
+  document.getElementById('qc-mc-alpha').textContent = fee>0 ? qc_fc(alphaMonthlyNum) : '—';
+  document.getElementById('qc-mc-resort').textContent = resortMonthly>0 ? qc_fc(resortMonthly) : '—';
+  document.getElementById('qc-mc-savings').textContent = (fee>0 || resortMonthly>0) ? qc_fc(Math.max(resortMonthly-alphaMonthlyNum,0)) : '—';
+
+  // Yearly Savings — once the selected exit window passes, resort MTG+MTF
+  // stop entirely; only the Alpha payment continues for the rest of ITS
+  // own term. Before that point, both are being paid simultaneously.
+  var exitMonths = parseInt(document.getElementById('qc-exit-window').value)||12;
+  var alphaTermMonths = term>0 ? term : 0; // 0 = Pay in Full, no ongoing monthly obligation
+  var transitionMonths = Math.min(exitMonths, alphaTermMonths>0?alphaTermMonths:exitMonths);
+  var afterMonths = Math.max(0, alphaTermMonths - exitMonths);
+
+  var transitionTotal = transitionMonths * (resortMonthly + alphaMonthlyNum);
+  var afterTotal = afterMonths * alphaMonthlyNum;
+
+  document.getElementById('qc-ys-transition').textContent = (fee>0 || resortMonthly>0) ? (qc_fc(transitionTotal)+' / '+transitionMonths+' mo') : '—';
+  document.getElementById('qc-ys-after').textContent = alphaMonthlyNum>0 ? (qc_fc(afterTotal)+' / '+afterMonths+' mo') : (fee>0 ? 'Paid in full' : '—');
+  document.getElementById('qc-ys-yearly').textContent = resortMonthly>0 ? qc_fc(resortMonthly*12) : '—';
+
   // Comparison — horizon matches the selected term (months); Pay-in-Full defaults to 12mo
   var horizonMonths = term>0 ? term : 12;
   var mtgCapMonths = monthsLeft; // mortgage's own remaining term, independent of Alpha
@@ -625,6 +721,8 @@ function qc_reset(){
   document.getElementById('qc-yrsleft-sub').textContent='—';
   document.getElementById('qc-has-mtg').checked=false;
   document.getElementById('qc-mtg-section').style.display='none';
+  document.getElementById('qc-exit-window').value='12';
+  document.querySelectorAll('.qc-qa-cb').forEach(function(cb){ cb.checked=false; qc_qaUpdate(cb.getAttribute('data-n')); });
   qc_setMtg('pf');
 }
 
