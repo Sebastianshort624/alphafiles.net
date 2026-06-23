@@ -434,11 +434,13 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   </div>
   <div class="qc-f"><label>Billed</label><select id="qc-mtf-freq"><option value="yearly">Yearly</option><option value="monthly">Monthly</option></select></div>
 
-  <div class="qc-hdr">Remaining Term &amp; Payoff</div>
-  <div class="qc-row3">
-    <div class="qc-tile"><div class="l">Term Left</div><div class="v" id="qc-term-left">—</div></div>
-    <div class="qc-tile"><div class="l">Mtg Left</div><div class="v" id="qc-mtg-left">—</div></div>
-    <div class="qc-tile"><div class="l">MTF Left</div><div class="v" id="qc-mtf-left">—</div></div>
+  <div id="qc-rtp-1" style="display:none">
+    <div class="qc-hdr">Remaining Term &amp; Payoff</div>
+    <div class="qc-row3">
+      <div class="qc-tile"><div class="l">Term Left</div><div class="v" id="qc-term-left">—</div></div>
+      <div class="qc-tile"><div class="l">Mtg Left</div><div class="v" id="qc-mtg-left">—</div></div>
+      <div class="qc-tile"><div class="l">MTF Left</div><div class="v" id="qc-mtf-left">—</div></div>
+    </div>
   </div>
 
   <div class="qc-hdr">Your Current Commitment</div>
@@ -503,11 +505,13 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="v" style="color:#16A34A;font-size:15px" id="qc-ys-yearly">—</div>
   </div>
 
-  <div class="qc-hdr">Remaining Term &amp; Payoff</div>
-  <div class="qc-row3">
-    <div class="qc-tile"><div class="l">Term Left</div><div class="v" id="qc-term-left2">—</div></div>
-    <div class="qc-tile"><div class="l">Mtg Left</div><div class="v" id="qc-mtg-left2">—</div></div>
-    <div class="qc-tile"><div class="l">MTF Left</div><div class="v" id="qc-mtf-left2">—</div></div>
+  <div id="qc-rtp-2" style="display:none">
+    <div class="qc-hdr">Remaining Term &amp; Payoff</div>
+    <div class="qc-row3">
+      <div class="qc-tile"><div class="l">Term Left</div><div class="v" id="qc-term-left2">—</div></div>
+      <div class="qc-tile"><div class="l">Mtg Left</div><div class="v" id="qc-mtg-left2">—</div></div>
+      <div class="qc-tile"><div class="l">MTF Left</div><div class="v" id="qc-mtf-left2">—</div></div>
+    </div>
   </div>
 
   <div class="qc-hdr">Alpha Solution</div>
@@ -561,6 +565,8 @@ function qc_fc(n){ return '$'+Math.round(n||0).toLocaleString(); }
 function qc_toggleMtgSection(){
   var checked = document.getElementById('qc-has-mtg').checked;
   document.getElementById('qc-mtg-section').style.display = checked ? 'block' : 'none';
+  document.getElementById('qc-rtp-1').style.display = checked ? 'block' : 'none';
+  document.getElementById('qc-rtp-2').style.display = checked ? 'block' : 'none';
   qc_setMtg(checked ? 'ow' : 'pf');
 }
 
@@ -732,6 +738,8 @@ function qc_reset(){
   document.getElementById('qc-yrsleft-sub').textContent='—';
   document.getElementById('qc-has-mtg').checked=false;
   document.getElementById('qc-mtg-section').style.display='none';
+  document.getElementById('qc-rtp-1').style.display='none';
+  document.getElementById('qc-rtp-2').style.display='none';
   document.getElementById('qc-exit-window').value='12';
   document.querySelectorAll('.qc-qa-cb').forEach(function(cb){ cb.checked=false; qc_qaUpdate(cb.getAttribute('data-n')); });
   qc_setMtg('pf');
