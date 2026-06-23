@@ -393,11 +393,39 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   <div style="font-size:10px;color:#9ca3af;margin-bottom:4px">No client record needed</div>
 
   <div class="qc-hdr">Purchase Info</div>
-  <div class="qc-row2">
-    <div class="qc-f"><label>Year Purchased</label><input id="qc-year" type="number" oninput="qc_build()"></div>
-    <div class="qc-f"><label>Purchase Price</label><input id="qc-pprice" type="number" oninput="qc_build()"></div>
-  </div>
   <div class="qc-f"><label>Why Do They Want Out?</label><textarea id="qc-why"></textarea></div>
+
+  <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--navy);margin:8px 0 6px;cursor:pointer">
+    <input type="checkbox" id="qc-has-mtg" onchange="qc_toggleMtgSection()" style="width:auto">
+    Has Mortgage
+  </label>
+
+  <div id="qc-mtg-section" style="display:none">
+    <div class="qc-row2">
+      <div class="qc-f">
+        <label>Year Purchased</label>
+        <input id="qc-year" type="number" oninput="qc_syncYearsLeft('year')">
+        <div style="font-size:9px;color:#9ca3af;margin-top:2px" id="qc-year-sub">—</div>
+      </div>
+      <div class="qc-f">
+        <label>Years Left</label>
+        <input id="qc-yrsleft" type="number" min="0" max="10" oninput="qc_syncYearsLeft('yrsleft')">
+        <div style="font-size:9px;color:#9ca3af;margin-top:2px" id="qc-yrsleft-sub">—</div>
+      </div>
+    </div>
+    <div class="qc-f"><label>Purchase Price</label><input id="qc-pprice" type="number" oninput="qc_build()"></div>
+
+    <div class="qc-hdr">🏦 Mortgage</div>
+    <div class="qc-mtg-row" style="grid-template-columns:1fr 1fr">
+      <div class="qc-mtg-btn" id="qc-mt-ow" onclick="qc_setMtg('ow')">Owes</div>
+      <div class="qc-mtg-btn" id="qc-mt-bh" onclick="qc_setMtg('bh')">Behind</div>
+    </div>
+    <div class="qc-row2">
+      <div class="qc-f"><label>Monthly Payment</label><input id="qc-mtg" type="number" oninput="qc_build()"></div>
+      <div class="qc-f"><label>Annual</label><input id="qc-mtg-yr" class="ro" readonly></div>
+    </div>
+    <div class="qc-f"><label>Balance Remaining</label><input id="qc-balance" class="ro" readonly></div>
+  </div>
 
   <div class="qc-hdr">🌊 Maintenance Fees</div>
   <div class="qc-row2">
@@ -405,18 +433,6 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="qc-f"><label>Monthly MTF</label><input id="qc-mtf-mo" class="ro" readonly></div>
   </div>
   <div class="qc-f"><label>Billed</label><select id="qc-mtf-freq"><option value="yearly">Yearly</option><option value="monthly">Monthly</option></select></div>
-
-  <div class="qc-hdr">🏦 Mortgage</div>
-  <div class="qc-mtg-row">
-    <div class="qc-mtg-btn" id="qc-mt-pf" onclick="qc_setMtg('pf')">Paid Off</div>
-    <div class="qc-mtg-btn" id="qc-mt-ow" onclick="qc_setMtg('ow')">Owes</div>
-    <div class="qc-mtg-btn" id="qc-mt-bh" onclick="qc_setMtg('bh')">Behind</div>
-  </div>
-  <div class="qc-row2">
-    <div class="qc-f"><label>Monthly Payment</label><input id="qc-mtg" type="number" oninput="qc_build()"></div>
-    <div class="qc-f"><label>Annual</label><input id="qc-mtg-yr" class="ro" readonly></div>
-  </div>
-  <div class="qc-f"><label>Balance Remaining</label><input id="qc-balance" class="ro" readonly></div>
 
   <div class="qc-hdr">Remaining Term &amp; Payoff</div>
   <div class="qc-row3">
@@ -484,38 +500,75 @@ var qc_mtgType = 'pf';
 
 function qc_fc(n){ return '$'+Math.round(n||0).toLocaleString(); }
 
+function qc_toggleMtgSection(){
+  var checked = document.getElementById('qc-has-mtg').checked;
+  document.getElementById('qc-mtg-section').style.display = checked ? 'block' : 'none';
+  qc_setMtg(checked ? 'ow' : 'pf');
+}
+
 function qc_setMtg(t){
   qc_mtgType = t;
-  ['pf','ow','bh'].forEach(function(x){
+  ['ow','bh'].forEach(function(x){
     var b=document.getElementById('qc-mt-'+x);
     if(b) b.classList.toggle('active', x===t);
   });
   qc_build();
 }
 
+// Year Purchased <-> Years Left are two views of the same fact. Typing
+// either one back-calculates and displays the other, so the rep can use
+// whichever number the client actually gave them.
+function qc_syncYearsLeft(source){
+  var now = new Date().getFullYear();
+  if(source==='year'){
+    var year = parseInt(document.getElementById('qc-year').value)||0;
+    var yearWasEntered = year>1990 && year<=now;
+    var yrsIn = yearWasEntered ? (now-year) : 0;
+    var yrsLeft = yearWasEntered ? Math.max(0,Math.min(10,10-yrsIn)) : '';
+    document.getElementById('qc-yrsleft').value = yrsLeft;
+    document.getElementById('qc-year-sub').textContent = yearWasEntered ? ('Yrs Left: '+yrsLeft) : '—';
+    document.getElementById('qc-yrsleft-sub').textContent = yearWasEntered ? ('Year: '+year) : '—';
+  } else {
+    var raw = document.getElementById('qc-yrsleft').value;
+    if(raw===''){
+      document.getElementById('qc-yrsleft-sub').textContent = '—';
+      document.getElementById('qc-year-sub').textContent = '—';
+    } else {
+      var yrsLeft2 = Math.max(0,Math.min(10, parseFloat(raw)||0));
+      var impliedYear = now - (10-yrsLeft2);
+      document.getElementById('qc-year').value = impliedYear;
+      document.getElementById('qc-year-sub').textContent = 'Yrs Left: '+yrsLeft2;
+      document.getElementById('qc-yrsleft-sub').textContent = 'Year: '+impliedYear;
+    }
+  }
+  qc_build();
+}
+
 function qc_build(){
-  var year = parseInt(document.getElementById('qc-year').value)||0;
+  var hasMtg = document.getElementById('qc-has-mtg').checked;
+
+  var year = hasMtg ? (parseInt(document.getElementById('qc-year').value)||0) : 0;
   var now = new Date().getFullYear();
   var yearWasEntered = year>1990 && year<=now;
   var yrsIn = yearWasEntered ? (now-year) : 1; // default: assume bought 1 yr ago
   var yrsLeft = Math.max(0,10-yrsIn);
   var monthsLeft = yrsLeft*12;
 
-  var pprice = parseFloat(document.getElementById('qc-pprice').value)||0;
+  var pprice = hasMtg ? (parseFloat(document.getElementById('qc-pprice').value)||0) : 0;
   var mtfYr = parseFloat(document.getElementById('qc-mtf').value)||0;
   var mtfMo = mtfYr/12;
-  var mtgMo = qc_mtgType==='pf' ? 0 : (parseFloat(document.getElementById('qc-mtg').value)||0);
-  var mtgBeh = qc_mtgType==='bh' ? 1 : 0; // simple flag; no separate months-behind field in this quick calc
+  var mtgMo = hasMtg ? (parseFloat(document.getElementById('qc-mtg').value)||0) : 0;
+  var mtgBeh = (hasMtg && qc_mtgType==='bh') ? 1 : 0;
 
   document.getElementById('qc-mtf-mo').value = mtfMo>0 ? qc_fc(mtfMo)+'/mo' : '';
-  document.getElementById('qc-mtg-yr').value = mtgMo>0 ? qc_fc(mtgMo*12)+'/yr' : '';
+  if(hasMtg) document.getElementById('qc-mtg-yr').value = mtgMo>0 ? qc_fc(mtgMo*12)+'/yr' : '';
 
   // Balance remaining — simple multiplication, no rate-solving
   var balance = mtgMo>0 ? mtgMo*monthsLeft : 0;
-  document.getElementById('qc-balance').value = mtgMo>0 ? qc_fc(balance) : '—';
+  if(hasMtg) document.getElementById('qc-balance').value = mtgMo>0 ? qc_fc(balance) : '—';
 
   // Remaining Term & Payoff tiles
-  document.getElementById('qc-term-left').textContent = yrsLeft+' yrs';
+  document.getElementById('qc-term-left').textContent = hasMtg ? (yrsLeft+' yrs') : '—';
   document.getElementById('qc-mtg-left').textContent = mtgMo>0 ? qc_fc(balance) : 'Paid off';
   var mtfWindow = mtgMo>0 ? monthsLeft : 120;
   document.getElementById('qc-mtf-left').textContent = qc_fc(mtfMo*mtfWindow);
@@ -563,11 +616,15 @@ function qc_build(){
 }
 
 function qc_reset(){
-  ['qc-year','qc-pprice','qc-mtf','qc-mtg','qc-fee','qc-resort'].forEach(function(id){ document.getElementById(id).value=''; });
+  ['qc-year','qc-yrsleft','qc-pprice','qc-mtf','qc-mtg','qc-fee','qc-resort'].forEach(function(id){ document.getElementById(id).value=''; });
   document.getElementById('qc-why').value='';
   document.getElementById('qc-term').value='60';
   document.getElementById('qc-mtf-freq').value='yearly';
   document.getElementById('qc-fund').value='Pending';
+  document.getElementById('qc-year-sub').textContent='—';
+  document.getElementById('qc-yrsleft-sub').textContent='—';
+  document.getElementById('qc-has-mtg').checked=false;
+  document.getElementById('qc-mtg-section').style.display='none';
   qc_setMtg('pf');
 }
 
