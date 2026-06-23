@@ -716,7 +716,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:12px;align-items:flex-end">
       <div>
         <label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">Select Email Template</label>
-        <select id="email-template-sel" onchange="generateEmail()" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 10px;font-size:14px;font-family:Inter,sans-serif;color:#1B2A4A;background:#fff">
+        <select id="email-template-sel" onchange="document.getElementById('email-pack-sel').value='';generateEmail()" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 10px;font-size:14px;font-family:Inter,sans-serif;color:#1B2A4A;background:#fff">
           <option value="">— Choose a template —</option>
           <option value="whyout">❓ Why Do You Want Out</option>
           <option value="wait">⚠️ If You Do Nothing</option>
@@ -739,6 +739,23 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
         </select>
       </div>
       <button onclick="copyEmail()" style="background:#1B2A4A;color:#C8960C;border:none;padding:9px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;white-space:nowrap">Copy Email</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:12px;align-items:flex-end;border-top:1px dashed #E0E4ED;padding-top:12px">
+      <div>
+        <label style="display:block;font-size:11px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px">📚 Email Packs (Grouped)</label>
+        <select id="email-pack-sel" onchange="renderEmailPack()" style="width:100%;border:1.5px solid #C8960C;border-radius:6px;padding:9px 10px;font-size:14px;font-family:Inter,sans-serif;color:#1B2A4A;background:#fff">
+          <option value="">— Choose a pack —</option>
+          <option value="pack1">🆘 Your Situation</option>
+          <option value="pack2">🛡 Protection</option>
+          <option value="pack3">🔍 Group Filing Path</option>
+          <option value="pack4">💰 The Numbers</option>
+          <option value="pack5">🏆 Why Alpha</option>
+          <option value="pack6">⭐ Track Record &amp; Rights</option>
+          <option value="pack7">📋 Wrap-Up</option>
+        </select>
+      </div>
+      <button onclick="copyEmail()" style="background:#C8960C;color:#1B2A4A;border:none;padding:9px 16px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;white-space:nowrap">Copy Pack</button>
     </div>
 
     <div id="email-preview" style="background:#f9fafb;border:1.5px solid #E0E4ED;border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:#374151;min-height:60px;white-space:pre-wrap;font-family:Inter,sans-serif;display:none"></div>
@@ -1551,6 +1568,98 @@ var EMAIL_TEMPLATES = {
     return 'Hi '+c.name+',\n\nHere is a quick recap of everything we covered today — so you have it in writing.\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n✓ You have documented reasons to exit '+c.resort+'\n✓ Doing nothing means growing fees, credit risk, and heir liability\n✓ Group filings force resorts to act — one case is a complaint, twenty is a pattern\n✓ You qualify for our active group filing\n✓ Written guarantee · $0 down · Credit protection included\n✓ Quote: '+(c.fee>0?'$'+Math.round(c.fee).toLocaleString():'See proposal')+' — one time, then $0 forever\n\nThe only question left: Are you ready to stop paying the resort and start paying toward the solution?\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
   }
 };
+
+// ── EMAIL PACKS (GROUPED) ──────────────────────────────────────────────────
+// Every pack opens with "Why You Want Out" and closes with "Your Quote" —
+// the rest of each pack's topics sit in between, with redundant greetings/
+// owner-blocks/signatures stripped via coreBody() so it reads as ONE email.
+
+var SECTION_TITLES = {
+  whyout: 'WHY YOU WANT OUT',
+  wait: 'IF YOU DO NOTHING',
+  group: 'FINDING YOUR GROUP',
+  approval: 'YOUR SPOT IN THE GROUP FILING',
+  heirs: 'HEIRS & ESTATE LIABILITY',
+  compensation: 'RESORT COMPENSATION',
+  credit: 'CREDIT PROTECTION',
+  letter: 'THE MUTUAL RELEASE LETTER',
+  'exit-methods': '4 WAYS TO EXIT',
+  guarantee: 'OUR WRITTEN GUARANTEE',
+  history: 'OUR TRACK RECORD',
+  rights: 'YOUR CONSUMER RIGHTS',
+  cost: 'THE TRUE COST OF STAYING IN',
+  quote: 'YOUR ALPHA QUOTE',
+  followup: 'FOLLOW-UP',
+  better: 'WHAT MAKES ALPHA DIFFERENT',
+  included: "WHAT'S INCLUDED",
+  recap: 'RECAP'
+};
+
+var PACK_TEMPLATES = {
+  pack1: { label:'🆘 Your Situation', seq:['whyout','wait','credit','heirs','quote'],
+    intro:'Here is everything we covered today about where things stand and what your options look like.' },
+  pack2: { label:'🛡 Protection', seq:['whyout','guarantee','credit','letter','quote'],
+    intro:'Here is a summary of how Alpha protects you — in writing, every step of the way.' },
+  pack3: { label:'🔍 Group Filing Path', seq:['whyout','group','approval','exit-methods','quote'],
+    intro:'Here is how the group filing process works and where you stand in it.' },
+  pack4: { label:'💰 The Numbers', seq:['whyout','cost','compensation','quote'],
+    intro:'Here is the full financial picture — what staying costs you, and what leaving looks like.' },
+  pack5: { label:'🏆 Why Alpha', seq:['whyout','better','included','quote'],
+    intro:'Here is what separates Alpha from every other option, and exactly what is included.' },
+  pack6: { label:'⭐ Track Record & Rights', seq:['whyout','history','rights','quote'],
+    intro:'Here is our track record and the consumer rights that support your case.' },
+  pack7: { label:'📋 Wrap-Up', seq:['whyout','followup','recap','quote'],
+    intro:'Here is a complete recap of everything we have covered, in writing.' }
+};
+
+// Strips the per-template greeting, owner block, and signature so multiple
+// templates can be stitched into one email without repeating boilerplate.
+function coreBody(full, c){
+  var t = full;
+  var greet = 'Hi '+c.name+',\n\n';
+  if(t.indexOf(greet)===0) t = t.slice(greet.length);
+  var ownerMarker = '\n\nOwner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n';
+  var idx = t.indexOf(ownerMarker);
+  if(idx>=0) t = t.slice(idx+ownerMarker.length);
+  var sig = '\n\nBest,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  if(t.slice(t.length-sig.length)===sig) t = t.slice(0, t.length-sig.length);
+  return t.trim();
+}
+
+function generatePackEmail(packKey, c){
+  var pack = PACK_TEMPLATES[packKey];
+  if(!pack) return 'Pack not found.';
+  var out = 'Hi '+c.name+',\n\n'+pack.intro+'\n\n';
+  out += 'Owner: '+c.name+'\nResort: '+c.resort+'\nPhone: '+c.phone+(c.email?'\nEmail: '+c.email:'')+'\n\n';
+  pack.seq.forEach(function(key){
+    var fn = EMAIL_TEMPLATES[key];
+    if(!fn) return;
+    var body = coreBody(fn(c), c);
+    var title = SECTION_TITLES[key] || key.toUpperCase();
+    out += '— '+title+' —\n'+body+'\n\n';
+  });
+  out += 'Best,\nSebastian Short\nAlpha Timeshare Consultants\nExt. 134 | 877-848-3948';
+  return out;
+}
+
+function renderEmailPack(){
+  var sel = document.getElementById('email-pack-sel');
+  var preview = document.getElementById('email-preview');
+  var placeholder = document.getElementById('email-placeholder');
+  var key = sel.value;
+  document.getElementById('email-template-sel').value = '';
+  if(!key){
+    preview.style.display='none';
+    placeholder.style.display='block';
+    return;
+  }
+  var c = _clientHeader();
+  preview.textContent = generatePackEmail(key, c);
+  preview.style.display='block';
+  placeholder.style.display='none';
+  document.getElementById('email-copied-msg').style.display='none';
+}
+// ── END EMAIL PACKS ────────────────────────────────────────────────────────
 
 function generateEmail(){
   var sel = document.getElementById('email-template-sel');
