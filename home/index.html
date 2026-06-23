@@ -503,6 +503,13 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="v" style="color:#16A34A;font-size:15px" id="qc-ys-yearly">—</div>
   </div>
 
+  <div class="qc-hdr">Remaining Term &amp; Payoff</div>
+  <div class="qc-row3">
+    <div class="qc-tile"><div class="l">Term Left</div><div class="v" id="qc-term-left2">—</div></div>
+    <div class="qc-tile"><div class="l">Mtg Left</div><div class="v" id="qc-mtg-left2">—</div></div>
+    <div class="qc-tile"><div class="l">MTF Left</div><div class="v" id="qc-mtf-left2">—</div></div>
+  </div>
+
   <div class="qc-hdr">Alpha Solution</div>
   <div class="qc-row2">
     <div class="qc-f"><label>Alpha Fee</label><input id="qc-fee" type="number" oninput="qc_build()"></div>
@@ -639,6 +646,10 @@ function qc_build(){
   document.getElementById('qc-mtg-left').textContent = mtgMo>0 ? qc_fc(balance) : 'Paid off';
   var mtfWindow = mtgMo>0 ? monthsLeft : 120;
   document.getElementById('qc-mtf-left').textContent = qc_fc(mtfMo*mtfWindow);
+  // Mirrored copy lower on the page (after Yearly Savings, before Alpha Solution)
+  document.getElementById('qc-term-left2').textContent = document.getElementById('qc-term-left').textContent;
+  document.getElementById('qc-mtg-left2').textContent = document.getElementById('qc-mtg-left').textContent;
+  document.getElementById('qc-mtf-left2').textContent = document.getElementById('qc-mtf-left').textContent;
 
   // Your Current Commitment tiles
   var totalMo = mtfMo+mtgMo;
