@@ -462,17 +462,17 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
       <input type="checkbox" class="qc-qa-cb" data-n="1" onchange="qc_qaUpdate(1)" style="width:auto">
       1. Credit Protection
-      <span id="qc-qa-1" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+      <span id="qc-qa-1" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Required</span>
     </label>
     <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
       <input type="checkbox" class="qc-qa-cb" data-n="2" onchange="qc_qaUpdate(2)" style="width:auto">
       2. Credit Repair
-      <span id="qc-qa-2" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+      <span id="qc-qa-2" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Required</span>
     </label>
     <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--navy);margin-bottom:5px;cursor:pointer">
       <input type="checkbox" class="qc-qa-cb" data-n="3" onchange="qc_qaUpdate(3)" style="width:auto">
       3. Credit Monitoring
-      <span id="qc-qa-3" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Mtg Payments Required</span>
+      <span id="qc-qa-3" style="margin-left:auto;font-weight:700;font-size:10px;color:#DC2626">Required</span>
     </label>
   </div>
 
@@ -571,17 +571,17 @@ function qc_toggleMtgSection(){
 }
 
 // Each checkbox independently flips its own label between red
-// "Mtg Payments Required" and blue "No Mtg Payments Required" — no
+// "Required" and blue "Not Required" — no
 // combined logic across the three, exactly as specified.
 function qc_qaUpdate(n){
   var cb = document.querySelector('.qc-qa-cb[data-n="'+n+'"]');
   var lbl = document.getElementById('qc-qa-'+n);
   if(!cb||!lbl) return;
   if(cb.checked){
-    lbl.textContent = 'No Mtg Payments Required';
+    lbl.textContent = 'Not Required';
     lbl.style.color = '#2563EB';
   } else {
-    lbl.textContent = 'Mtg Payments Required';
+    lbl.textContent = 'Required';
     lbl.style.color = '#DC2626';
   }
 }
