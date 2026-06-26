@@ -550,7 +550,38 @@ function initBanner(){
 }
 window.initBanner=initBanner;
 
-document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();});
+document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();_buildTopSave();});
+
+/* ── TOP SAVE BUTTON (all pages) ── */
+function _buildTopSave(){
+  if(document.getElementById('_topSaveBtn')) return;
+  var btn=document.createElement('button');
+  btn.id='_topSaveBtn';
+  btn.innerHTML='\ud83d\udcbe Save';
+  btn.style.cssText='position:fixed;top:14px;right:18px;z-index:99999;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:6px;padding:10px 22px;font-size:14px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25);letter-spacing:.2px';
+  btn.onclick=_topSaveClick;
+  document.body.appendChild(btn);
+}
+function _topSaveClick(){
+  try{
+    if(typeof autoSave==='function') autoSave();
+    if(typeof autoSaveAck==='function') autoSaveAck();
+    if(typeof upd==='function') upd();
+    if(typeof savePageData==='function') savePageData();
+  }catch(e){}
+  var btn=document.getElementById('_topSaveBtn');
+  if(btn){
+    btn.innerHTML='\u2713 Saved';
+    btn.style.background='#16A34A';
+    btn.style.borderColor='#16A34A';
+    clearTimeout(window._topSaveTimer);
+    window._topSaveTimer=setTimeout(function(){
+      btn.innerHTML='\ud83d\udcbe Save';
+      btn.style.background='#1B2A4A';
+      btn.style.borderColor='#C8960C';
+    },1500);
+  }
+}
 
 </script>
 
@@ -845,6 +876,11 @@ function updLenders(){
   document.getElementById('l1-mo').textContent=fmtd(r1.mo)+'/mo';
   document.getElementById('l2-mo').textContent=fmtd(r2.mo)+'/mo';
   updPayCompare();
+  var rawFee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  save(rawFee,_selMo,d1,d2,l1term,l2term);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, disc1:d1, disc2:d2, l1term:l1term, l2term:l2term, selMo:_selMo});
 }
 
 function openEmailQuote(){
@@ -959,7 +995,7 @@ function selPlan(mo,rate){
   if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, selMo:mo});
 }
 
-function save(fee,selMo,d1,d2){
+function save(fee,selMo,d1,d2,l1term,l2term){
   var key=localStorage.getItem(AK);if(!key)return;
   var c=JSON.parse(localStorage.getItem(SK)||'{}');
   if(c[key]){
@@ -967,6 +1003,8 @@ function save(fee,selMo,d1,d2){
     if(selMo)c[key].selectedTerm=selMo;
     c[key].discount1=d1||0;
     c[key].discount2=d2||0;
+    if(l1term)c[key].lender1Term=l1term;
+    if(l2term)c[key].lender2Term=l2term;
     localStorage.setItem(SK,JSON.stringify(c));
   }
 }
@@ -995,6 +1033,8 @@ function init(){
   document.getElementById('fee-inp').value=fee||'';
   document.getElementById('disc1-inp').value=parseFloat(d.discount1)||'';
   document.getElementById('disc2-inp').value=parseFloat(d.discount2)||'';
+  if(d.lender1Term)document.getElementById('l1-term').value=d.lender1Term;
+  if(d.lender2Term)document.getElementById('l2-term').value=d.lender2Term;
   if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
   initLiveScreenShare();
