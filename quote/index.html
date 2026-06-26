@@ -159,6 +159,17 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .fin-disclaimer .sb{border:none;padding:0}
 .fin-disclaimer .fin-grid{opacity:.85}
 .fin-disclaimer-note{font-size:10px;color:#aaa;margin-top:8px;line-height:1.5}
+
+/* Two-lender split (fee > $15k) */
+.lender-banner{background:#fff8e8;border:1px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:12px;color:#946f00;margin-bottom:14px;text-align:center}
+.lender-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.lender-card{flex:1;min-width:200px;border:2px solid #ddd;border-radius:6px;padding:14px}
+.lender-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px}
+.lender-amt{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif;margin-bottom:8px}
+.lender-select{width:100%;border:1.5px solid #ccc;border-radius:4px;padding:8px 10px;font-size:13px;font-family:Georgia,serif;margin-bottom:8px}
+.lender-mo{font-size:14px;font-weight:700;color:#1B2A4A}
+.lender-mo .lbl{font-size:10px;font-weight:400;color:#888;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:2px}
+.lender-warning{background:#fdf0ef;border:1px solid #e8a09a;color:#c0392b;border-radius:4px;padding:10px 14px;font-size:12px;text-align:center}
 .sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
 .sv{color:#C8960C;font-weight:700}
 .sv.w{color:#fff}
@@ -644,6 +655,39 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="sd-row"><span>Monthly Payment</span><span class="sd-val" id="sd-mo">—</span></div>
 <div class="sd-row"><span>Total Paid</span><span class="sd-val" id="sd-tot">—</span></div>
 </div>
+
+<!-- TWO-LENDER SPLIT (fee > $15,000) -->
+<div id="two-lender-box" style="display:none">
+<div class="lender-banner">This service fee is over $15,000 — it's split across two lending partners below.</div>
+<div class="lender-row">
+<div class="lender-card">
+<div class="lender-title">Lender 1 — $15,000 Cap</div>
+<div class="lender-amt" id="l1-amt">$15,000</div>
+<select class="lender-select" id="l1-term" onchange="updLenders()">
+<option value="12">12 Mo — 0% Interest</option>
+<option value="24">24 Mo — 20% Annual</option>
+<option value="36">36 Mo — 20% Annual</option>
+<option value="48">48 Mo — 20% Annual</option>
+<option value="60" selected>60 Mo — 20% Annual</option>
+</select>
+<div class="lender-mo"><span class="lbl">Monthly Payment</span><span id="l1-mo">—</span></div>
+</div>
+<div class="lender-card">
+<div class="lender-title">Lender 2 — $13,000 Cap</div>
+<div class="lender-amt" id="l2-amt">—</div>
+<select class="lender-select" id="l2-term" onchange="updLenders()">
+<option value="12">12 Mo — 0% Interest</option>
+<option value="24">24 Mo — 20% Annual</option>
+<option value="36">36 Mo — 20% Annual</option>
+<option value="48">48 Mo — 20% Annual</option>
+<option value="60" selected>60 Mo — 20% Annual</option>
+</select>
+<div class="lender-mo"><span class="lbl">Monthly Payment</span><span id="l2-mo">—</span></div>
+</div>
+</div>
+<div class="lender-warning" id="lender-warning" style="display:none">Fee exceeds the combined $28,000 lending capacity (Lender 1 $15,000 + Lender 2 $13,000).</div>
+</div>
+
 <div class="fin-disclaimer-note">Financing terms shown are estimates based on the service fee above. 0% interest applies only if paid in full within 12 months; all other terms are 20% annual.</div>
 </div>
 </div>
@@ -683,8 +727,40 @@ function upd(){
     }
   });
   if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
+  toggleLenders(fee);
   save(fee);
   if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:_selMo});
+}
+
+function toggleLenders(fee){
+  var box=document.getElementById('two-lender-box');
+  var grid=document.getElementById('fin-grid');
+  var single=document.getElementById('sel-detail');
+  if(fee>15000){
+    box.style.display='block';
+    grid.style.display='none';
+    single.classList.remove('show');
+    var l2amt=Math.min(fee-15000,13000);
+    document.getElementById('l2-amt').textContent=fmt(l2amt);
+    document.getElementById('lender-warning').style.display = (fee-15000>13000) ? 'block' : 'none';
+    updLenders();
+  } else {
+    box.style.display='none';
+    grid.style.display='grid';
+  }
+}
+
+function updLenders(){
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  if(fee<=15000) return;
+  var l1amt=15000;
+  var l2amt=Math.min(fee-15000,13000);
+  var l1term=parseInt(document.getElementById('l1-term').value)||60;
+  var l2term=parseInt(document.getElementById('l2-term').value)||60;
+  var r1=fi(l1amt,l1term,l1term===12?0:0.20);
+  var r2=fi(l2amt,l2term,l2term===12?0:0.20);
+  document.getElementById('l1-mo').textContent=fmtd(r1.mo)+'/mo';
+  document.getElementById('l2-mo').textContent=fmtd(r2.mo)+'/mo';
 }
 
 var _selMo=null;
