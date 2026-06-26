@@ -127,6 +127,15 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .pif-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#C8960C;margin-bottom:4px}
 .pif-amount{font-size:32px;font-weight:700;color:#C8960C;font-family:Georgia,serif;line-height:1}
 .pif-sub{font-size:11px;color:#888;margin-top:4px}
+
+.discount-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.disc-field{flex:1;min-width:120px;border:1px solid #ddd;border-radius:4px;padding:8px 10px;background:#fafbfc;display:flex;flex-direction:column;align-items:center}
+.disc-field.total{background:#fdf0ef;border-color:#e8a09a}
+.disc-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#888;margin-bottom:4px}
+.disc-inp{border:1.5px solid #ccc;border-radius:4px;padding:6px 8px;font-size:15px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:90px;text-align:center}
+.disc-inp:focus{outline:none;border-color:#C8960C}
+.disc-total{font-size:17px;font-weight:700;color:#c0392b;font-family:Georgia,serif}
+.pif-was{font-size:14px;color:#aaa;text-decoration:line-through;margin-bottom:2px}
 /* FINANCING CARDS - the big interactive ones */
 .fin-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}
 .fin-card{border:2px solid #ddd;border-radius:6px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .25s;background:#fff;position:relative;overflow:hidden}
@@ -610,8 +619,16 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <input type="number" class="fee-inp" id="fee-inp" value="0" oninput="upd()">
 <span class="fee-note">Type your fee — default = 5-year resort cost</span>
 </div>
+
+<div class="discount-row">
+<div class="disc-field"><span class="disc-lbl">Discount 1 $</span><input type="number" class="disc-inp" id="disc1-inp" value="0" oninput="upd()"></div>
+<div class="disc-field"><span class="disc-lbl">Discount 2 $</span><input type="number" class="disc-inp" id="disc2-inp" value="0" oninput="upd()"></div>
+<div class="disc-field total"><span class="disc-lbl">Total Discount</span><span class="disc-total" id="disc-total">$0</span></div>
+</div>
+
 <div class="pif-card">
-<div class="pif-label">Pay in Full — Best Value</div>
+<div class="pif-label">Reduced Price</div>
+<div class="pif-was" id="q-was" style="display:none">—</div>
 <div class="pif-amount" id="q-full">—</div>
 <div class="pif-sub">One-time payment — no interest, no monthly obligations</div>
 </div>
@@ -722,23 +739,42 @@ function fmt(n){return '$'+Math.round(n).toLocaleString();}
 function fmtd(n){return '$'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
 function fi(p,mo,r){if(r===0)return{mo:p/mo,tot:p};var x=r/12;var pmt=p*(x*Math.pow(1+x,mo))/(Math.pow(1+x,mo)-1);return{mo:pmt,tot:pmt*mo};}
 
+function getEffectiveFee(){
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  return Math.max(0, fee-d1-d2);
+}
+
 function upd(){
   var fee=parseFloat(document.getElementById('fee-inp').value)||0;
-  document.getElementById('q-full').textContent=fee?fmt(fee):'—';
-  document.getElementById('alpha-display').textContent=fee?fmt(fee):'—';
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  var totalDisc=d1+d2;
+  var effFee=Math.max(0, fee-totalDisc);
+  document.getElementById('disc-total').textContent=fmt(totalDisc);
+  var wasEl=document.getElementById('q-was');
+  if(totalDisc>0 && fee>0){
+    wasEl.style.display='block';
+    wasEl.textContent=fmt(fee);
+  } else {
+    wasEl.style.display='none';
+  }
+  document.getElementById('q-full').textContent=fee?fmt(effFee):'—';
+  document.getElementById('alpha-display').textContent=fee?fmt(effFee):'—';
   var plans=[{mo:12,r:0},{mo:24,r:0.20},{mo:36,r:0.20},{mo:48,r:0.20},{mo:60,r:0.20}];
   plans.forEach(function(p){
-    var r=fi(fee,p.mo,p.r);
-    document.getElementById('fm-'+p.mo).textContent=fee?fmtd(r.mo)+'/mo':'—';
-    document.getElementById('ft-'+p.mo).textContent=fee?'Total: '+fmt(r.tot):'—';
+    var r=fi(effFee,p.mo,p.r);
+    document.getElementById('fm-'+p.mo).textContent=effFee?fmtd(r.mo)+'/mo':'—';
+    document.getElementById('ft-'+p.mo).textContent=effFee?'Total: '+fmt(r.tot):'—';
   });
   var oneYrLive=_msrp/5;
-  updSavingsTable(oneYrLive, fee);
+  updSavingsTable(oneYrLive, effFee);
   if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
-  toggleLenders(fee);
+  toggleLenders(effFee);
   updPayCompare();
-  save(fee);
-  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:_selMo});
+  save(fee, _selMo, d1, d2);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, disc1:d1, disc2:d2, selMo:_selMo});
 }
 
 function updSavingsTable(oneYr, fee){
@@ -760,7 +796,7 @@ function updSavingsTable(oneYr, fee){
 }
 
 function updPayCompare(){
-  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var fee=getEffectiveFee();
   var ourFee=0;
   var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
   if(twoLenderActive){
@@ -798,7 +834,7 @@ function toggleLenders(fee){
 }
 
 function updLenders(){
-  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var fee=getEffectiveFee();
   if(fee<=15000) return;
   var l1amt=15000;
   var l2amt=Math.min(fee-15000,13000);
@@ -906,7 +942,7 @@ function selPlan(mo,rate){
   _selMo=mo;
   document.querySelectorAll('.fin-card').forEach(function(c){c.classList.remove('selected');});
   document.getElementById('fc-'+mo).classList.add('selected');
-  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var fee=getEffectiveFee();
   var r=fi(fee,mo,rate);
   var det=document.getElementById('sel-detail');
   det.classList.add('show');
@@ -916,14 +952,23 @@ function selPlan(mo,rate){
   document.getElementById('sd-rate').textContent=rate===0?'0% Interest':'20% Annual';
   document.getElementById('sd-mo').textContent=fee?fmtd(r.mo)+' / month':'—';
   document.getElementById('sd-tot').textContent=fee?fmt(r.tot)+' total paid':'—';
-  save(fee,mo);
-  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:mo});
+  var rawFee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  save(rawFee,mo,d1,d2);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, selMo:mo});
 }
 
-function save(fee,selMo){
+function save(fee,selMo,d1,d2){
   var key=localStorage.getItem(AK);if(!key)return;
   var c=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(c[key]){c[key].alphaFee=fee||0;if(selMo)c[key].selectedTerm=selMo;localStorage.setItem(SK,JSON.stringify(c));}
+  if(c[key]){
+    c[key].alphaFee=fee||0;
+    if(selMo)c[key].selectedTerm=selMo;
+    c[key].discount1=d1||0;
+    c[key].discount2=d2||0;
+    localStorage.setItem(SK,JSON.stringify(c));
+  }
 }
 
 function init(){
@@ -948,6 +993,8 @@ function init(){
   }
   var fee=parseFloat(d.alphaFee)||0;
   document.getElementById('fee-inp').value=fee||'';
+  document.getElementById('disc1-inp').value=parseFloat(d.discount1)||'';
+  document.getElementById('disc2-inp').value=parseFloat(d.discount2)||'';
   if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
   initLiveScreenShare();
@@ -961,6 +1008,9 @@ function initLiveScreenShare(){
   // Client side: lock the page read-only and show a live status banner.
   var feeInp=document.getElementById('fee-inp');
   if(feeInp) feeInp.setAttribute('readonly','readonly');
+  var disc1Inp=document.getElementById('disc1-inp'), disc2Inp=document.getElementById('disc2-inp');
+  if(disc1Inp) disc1Inp.setAttribute('readonly','readonly');
+  if(disc2Inp) disc2Inp.setAttribute('readonly','readonly');
   document.querySelectorAll('.fin-card').forEach(function(c){ c.style.pointerEvents='none'; });
   var sidenav=document.querySelector('.sidenav');
   if(sidenav) sidenav.style.display='none';
@@ -991,6 +1041,8 @@ function initLiveScreenShare(){
         banner.style.background='#16A34A';
         banner.textContent='🔴 LIVE — following your consultant\u2019s screen';
         if(feeInp && typeof data.fee==='number') feeInp.value = data.fee;
+        if(disc1Inp && typeof data.disc1==='number') disc1Inp.value = data.disc1;
+        if(disc2Inp && typeof data.disc2==='number') disc2Inp.value = data.disc2;
         upd();
         if(data.selMo) selPlan(data.selMo, data.selMo===12?0:0.20);
       });
