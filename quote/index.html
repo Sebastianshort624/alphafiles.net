@@ -148,6 +148,17 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .sav-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:14px}
 .sav-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:10px}
 .sr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+
+/* Our Payments — total monthly line */
+.our-pay-total{text-align:center;font-size:13px;color:#888;margin:-4px 0 14px}
+.our-pay-total strong{font-size:15px;color:#1B2A4A}
+
+/* Financing — bottom disclaimer style */
+.fin-disclaimer{margin-top:36px;padding-top:18px;border-top:1px dashed #ddd}
+.fin-disclaimer .sh{background:none;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:0 0 8px;border-radius:0;margin-top:0;font-weight:700}
+.fin-disclaimer .sb{border:none;padding:0}
+.fin-disclaimer .fin-grid{opacity:.85}
+.fin-disclaimer-note{font-size:10px;color:#aaa;margin-top:8px;line-height:1.5}
 .sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
 .sv{color:#C8960C;font-weight:700}
 .sv.w{color:#fff}
@@ -549,13 +560,15 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="ss">and every year after that</div>
 </div>
 
-<!-- CURRENT OBLIGATION (ported from /cost) -->
-<div class="msrp-row">
-<div class="mc resort"><div class="ml">🏠 Mortgage Payments</div><div class="ma" id="q-mtg-mo">—</div><div class="ms" id="q-mtg-detail">Monthly · — Annual</div></div>
-<div class="mc resort"><div class="ml">🌊 Maintenance Fees</div><div class="ma" id="q-mtf-mo">—</div><div class="ms" id="q-mtf-detail">Monthly · — Annual</div></div>
+<!-- YOUR SAVINGS -->
+<div class="sav-box">
+<div class="sav-title">Your Savings — Exit vs. Stay</div>
+<div class="sr"><span>2 Years</span><span class="sv" id="sv-2">—</span></div>
+<div class="sr"><span>3 Years</span><span class="sv" id="sv-3">—</span></div>
+<div class="sr" style="border-bottom:none"><span>6 Years</span><span class="sv" id="sv-6">—</span></div>
 </div>
 
-<!-- SERVICE FEE -->
+<!-- SERVICE FEE (Alpha Payments) -->
 <div class="sh">Alpha Service Fee</div>
 <div class="sb">
 <div class="fee-row">
@@ -570,8 +583,25 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 </div>
 </div>
 
-<!-- FINANCING OPTIONS -->
-<div class="sh">Financing Options — Select a Plan</div>
+<!-- OUR PAYMENTS (current resort obligation, ported from /cost) -->
+<div class="sh">Our Payments</div>
+<div class="sb">
+<div class="our-pay-total">Total Monthly Payments: <strong id="q-tot-mo">—</strong></div>
+<div class="msrp-row">
+<div class="mc resort"><div class="ml">🏠 Mortgage Payments</div><div class="ma" id="q-mtg-mo">—</div><div class="ms" id="q-mtg-detail">Monthly · — Annual</div></div>
+<div class="mc resort"><div class="ml">🌊 Maintenance Fees</div><div class="ma" id="q-mtf-mo">—</div><div class="ms" id="q-mtf-detail">Monthly · — Annual</div></div>
+</div>
+</div>
+
+<div class="nav-bar">
+<a href="/cost/" class="nb prev">← True Cost</a>
+<span class="ns">What Makes Alpha Better →</span>
+<a href="/better/" class="nb next">Next →</a>
+</div>
+
+<!-- FINANCING OPTIONS — moved to bottom, disclaimer style -->
+<div class="fin-disclaimer">
+<div class="sh">Optional — Select a Payment Term</div>
 <div class="sb">
 <div class="fin-grid" id="fin-grid">
 <div class="fin-card" id="fc-12" onclick="selPlan(12,0)">
@@ -614,12 +644,8 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="sd-row"><span>Monthly Payment</span><span class="sd-val" id="sd-mo">—</span></div>
 <div class="sd-row"><span>Total Paid</span><span class="sd-val" id="sd-tot">—</span></div>
 </div>
+<div class="fin-disclaimer-note">Financing terms shown are estimates based on the service fee above. 0% interest applies only if paid in full within 12 months; all other terms are 20% annual.</div>
 </div>
-
-<div class="nav-bar">
-<a href="/cost/" class="nb prev">← True Cost</a>
-<span class="ns">What Makes Alpha Better →</span>
-<a href="/better/" class="nb next">Next →</a>
 </div>
 
 </div></div>
@@ -645,6 +671,17 @@ function upd(){
     var diff=_msrp-fee;
     document.getElementById('sh-diff').textContent=diff>0?fmt(diff)+' saved':'—';
   }
+  var oneYrLive=_msrp/5;
+  [2,3,6].forEach(function(n){
+    var el=document.getElementById('sv-'+n);
+    if(!el) return;
+    if(fee>0 && oneYrLive>0){
+      var save=(oneYrLive*n)-fee;
+      el.textContent = save>0 ? fmt(save)+' saved' : '—';
+    } else {
+      el.textContent = 'Set fee below';
+    }
+  });
   if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
   save(fee);
   if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:_selMo});
@@ -688,6 +725,7 @@ function init(){
   document.getElementById('q-mtg-detail').textContent = mtgMoQ>0 ? fmt(mtgMoQ)+'/mo · '+fmt(mtgMoQ*12)+'/yr' : '—';
   document.getElementById('q-mtf-mo').textContent = mtfYrQ>0 ? fmt(mtfMoQ) : 'Not set';
   document.getElementById('q-mtf-detail').textContent = mtfYrQ>0 ? fmt(mtfMoQ)+'/mo · '+fmt(mtfYrQ)+'/yr' : '—';
+  document.getElementById('q-tot-mo').textContent = (mtgMoQ+mtfMoQ)>0 ? fmt(mtgMoQ+mtfMoQ)+'/mo' : '—';
   var five=(parseFloat(d.maitFees)||0)+((parseFloat(d.monthlyMortgage)||0)*12);
   var oneYr=five;
   five=five*5;
@@ -699,6 +737,16 @@ function init(){
     if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 5 yrs';
   }
   var fee=parseFloat(d.alphaFee)||0;
+  [2,3,6].forEach(function(n){
+    var el=document.getElementById('sv-'+n);
+    if(!el) return;
+    if(fee>0 && oneYr>0){
+      var save=(oneYr*n)-fee;
+      el.textContent = save>0 ? fmt(save)+' saved' : '—';
+    } else {
+      el.textContent = 'Set fee below';
+    }
+  });
   document.getElementById('fee-inp').value=fee||'';
   if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
