@@ -13,18 +13,18 @@ body{font-family:"Inter",sans-serif;background:#ffffff;color:#1a1a1a;font-size:1
 .wrap{max-width:780px;margin:0 auto}
 
 /* Page header */
-.ph{margin-bottom:28px}
+.ph{margin-bottom:28px;background:var(--navy);border-radius:10px;padding:20px 24px}
 .ph-eyebrow{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.ph-title{font-size:28px;font-weight:300;color:var(--navy);margin-bottom:4px;letter-spacing:-.3px}
-.ph-sub{font-size:14px;color:#8b9ab0;font-weight:400}
+.ph-title{font-size:28px;font-weight:300;color:#fff;margin-bottom:4px;letter-spacing:-.3px}
+.ph-sub{font-size:14px;color:#c7d0e0;font-weight:400}
 
-/* Client banner — slim, light */
-.vb{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:10px;margin-bottom:32px;overflow:hidden}
-.vbc{padding:12px 16px;border-right:1px solid var(--border)}
+/* Client banner — dark navy, white & gold */
+.vb{display:grid;grid-template-columns:repeat(4,1fr);background:var(--navy);border-radius:10px;margin-bottom:32px;overflow:hidden}
+.vbc{padding:14px 16px;border-right:1px solid rgba(255,255,255,.12)}
 .vbc:last-child{border-right:none}
 .vbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.vbv{font-size:14px;font-weight:600;color:var(--navy)}
-.vbs{font-size:12px;color:#9ca3af;margin-top:2px}
+.vbv{font-size:14px;font-weight:600;color:#fff}
+.vbs{font-size:12px;color:#aab4c8;margin-top:2px}
 
 /* Numbers summary — pulled from vitals */
 .summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
@@ -530,14 +530,14 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   <div class="fee-card">
     <div class="fee-grid">
       <div><div class="fee-tile-lbl">Our Fee</div><div class="fee-tile-val" id="c-fee">—</div></div>
-      <div><div class="fee-tile-lbl">Per Month</div><div class="fee-tile-val" id="c-fee-permo">—</div><div class="fee-note">0% Interest — if paid off within 90 days</div></div>
+      <div><div class="fee-tile-lbl">Per Month</div><div class="fee-tile-val" id="c-fee-permo">—</div><div class="fee-note" id="c-fee-rate-note">60 months · 20% annual</div></div>
     </div>
     <div class="fee-divider"></div>
     <div class="fee-grid">
       <div><div class="fee-tile-lbl">Month Term</div><div class="fee-tile-val" id="c-fee-term">60</div></div>
       <div><div class="fee-tile-lbl">Savings / Mo</div><div class="fee-tile-val" id="c-fee-savings">—</div></div>
     </div>
-    <div class="fee-note">No prepayment penalty &nbsp;·&nbsp; No payments until <strong id="c-nopay-date">—</strong></div>
+    <div class="fee-note">No prepayment penalty</div>
   </div>
 
 </div><!-- /cost-content -->
@@ -686,7 +686,6 @@ function render(){
 
   // Our Fee card
   set("c-fee", fee>0 ? fcd(fee) : "Set fee in Vitals");
-  set("c-fee-permo", fee>0 ? fcd(fee/3) : "—"); // 0% promo: 3 equal payments within 90 days
   var feeTerm = 60, feeRate = 0.20;
   set("c-fee-term", feeTerm);
   var feeMoPay = 0;
@@ -694,10 +693,9 @@ function render(){
     var rr = feeRate/12;
     feeMoPay = fee*(rr*Math.pow(1+rr,feeTerm))/(Math.pow(1+rr,feeTerm)-1);
   }
+  set("c-fee-permo", fee>0 ? fcd(feeMoPay) : "—");
   var savingsMo = (totalMo>0 && fee>0) ? Math.max(totalMo-feeMoPay,0) : 0;
   set("c-fee-savings", fee>0 ? fcd(savingsMo)+"/mo" : "—");
-  var noPay = new Date(); noPay.setDate(noPay.getDate()+30);
-  set("c-nopay-date", noPay.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}));
 }
 
 function savePage(){
