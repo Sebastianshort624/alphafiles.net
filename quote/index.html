@@ -162,6 +162,16 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .pc-box.savings .pc-val{color:#1a7a3c}
 .pc-vs{font-size:11px;font-weight:700;color:#aaa;flex-shrink:0}
 
+/* Resort vs Alpha side-by-side savings table */
+.savings-table{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:13px}
+.savings-table th{background:#1B2A4A;color:#fff;padding:9px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;text-align:right}
+.savings-table th:first-child{text-align:left}
+.savings-table td{padding:10px;border-bottom:1px solid #e3e7ec;text-align:right;color:#1a1a1a}
+.savings-table td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
+.savings-table td.save{color:#1a7a3c;font-weight:700}
+.savings-table tr.hl td{background:#fdf8ec;font-weight:700}
+.savings-table tr.hl td.save{color:#1a7a3c}
+
 /* Financing — bottom disclaimer style */
 .fin-disclaimer{margin-top:36px;padding-top:18px;border-top:1px dashed #ddd}
 .fin-disclaimer .sh{background:none;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:0 0 8px;border-radius:0;margin-top:0;font-weight:700}
@@ -579,19 +589,18 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="vs">VS</div>
 <div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">Financed over 1–5 years or One time — then $0 forever</div><div class="mdisc">Not adjusted for the financing annual interest rate</div><div class="mdisc">1y: $0</div></div>
 </div>
-<div class="save-strip">
-<div class="sl">You save over 5 years</div>
-<div class="sa" id="sh-diff">—</div>
-<div class="ss">and every year after that</div>
-</div>
 
-<!-- YOUR SAVINGS -->
-<div class="sav-box">
-<div class="sav-title">Your Savings — Exit vs. Stay</div>
-<div class="sr"><span>2 Years</span><span class="sv" id="sv-2">—</span></div>
-<div class="sr"><span>3 Years</span><span class="sv" id="sv-3">—</span></div>
-<div class="sr" style="border-bottom:none"><span>6 Years</span><span class="sv" id="sv-6">—</span></div>
-</div>
+<!-- RESORT vs ALPHA — SIDE BY SIDE -->
+<div class="section-label" style="margin-top:18px">Resort Cost vs. Alpha Fee — Side by Side</div>
+<table class="savings-table">
+<tr><th>Years</th><th>Resort Cost</th><th>Alpha Fee</th><th>You Save</th></tr>
+<tr><td>1 Year</td><td id="cmp-resort-1">—</td><td id="cmp-alpha-1">—</td><td class="save" id="cmp-save-1">—</td></tr>
+<tr><td>2 Years</td><td id="cmp-resort-2">—</td><td id="cmp-alpha-2">—</td><td class="save" id="cmp-save-2">—</td></tr>
+<tr><td>3 Years</td><td id="cmp-resort-3">—</td><td id="cmp-alpha-3">—</td><td class="save" id="cmp-save-3">—</td></tr>
+<tr class="hl"><td>5 Years</td><td id="cmp-resort-5">—</td><td id="cmp-alpha-5">—</td><td class="save" id="cmp-save-5">—</td></tr>
+<tr><td>6 Years</td><td id="cmp-resort-6">—</td><td id="cmp-alpha-6">—</td><td class="save" id="cmp-save-6">—</td></tr>
+</table>
+<div class="cost-note" style="text-align:center;margin-bottom:18px">Alpha Fee is one-time and stays the same — only the resort cost keeps growing the longer you stay.</div>
 
 <!-- SERVICE FEE (Alpha Payments) -->
 <div class="sh">Alpha Service Fee</div>
@@ -723,26 +732,31 @@ function upd(){
     document.getElementById('fm-'+p.mo).textContent=fee?fmtd(r.mo)+'/mo':'—';
     document.getElementById('ft-'+p.mo).textContent=fee?'Total: '+fmt(r.tot):'—';
   });
-  if(_msrp>0&&fee>0){
-    var diff=_msrp-fee;
-    document.getElementById('sh-diff').textContent=diff>0?fmt(diff)+' saved':'—';
-  }
   var oneYrLive=_msrp/5;
-  [2,3,6].forEach(function(n){
-    var el=document.getElementById('sv-'+n);
-    if(!el) return;
-    if(fee>0 && oneYrLive>0){
-      var save=(oneYrLive*n)-fee;
-      el.textContent = save>0 ? fmt(save)+' saved' : '—';
-    } else {
-      el.textContent = 'Set fee below';
-    }
-  });
+  updSavingsTable(oneYrLive, fee);
   if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
   toggleLenders(fee);
   updPayCompare();
   save(fee);
   if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, selMo:_selMo});
+}
+
+function updSavingsTable(oneYr, fee){
+  [1,2,3,5,6].forEach(function(n){
+    var rEl=document.getElementById('cmp-resort-'+n);
+    var aEl=document.getElementById('cmp-alpha-'+n);
+    var sEl=document.getElementById('cmp-save-'+n);
+    if(!rEl) return;
+    var resortCost = oneYr>0 ? oneYr*n : 0;
+    rEl.textContent = resortCost>0 ? fmt(resortCost) : '—';
+    aEl.textContent = fee>0 ? fmt(fee) : '—';
+    if(resortCost>0 && fee>0){
+      var save = resortCost-fee;
+      sEl.textContent = save>0 ? fmt(save) : '$0';
+    } else {
+      sEl.textContent = '—';
+    }
+  });
 }
 
 function updPayCompare(){
@@ -802,7 +816,7 @@ function openEmailQuote(){
   var resort=(document.getElementById('b-resort')||{}).textContent||'Your Resort';
   var resortCost5=(document.getElementById('msrp')||{}).textContent||'—';
   var alphaFeeTxt=(document.getElementById('alpha-display')||{}).textContent||'—';
-  var savings5=(document.getElementById('sh-diff')||{}).textContent||'—';
+  var savings5=(document.getElementById('cmp-save-5')||{}).textContent||'—';
   var curMoTxt=(document.getElementById('pc-current')||{}).textContent||'—';
 
   var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
@@ -933,16 +947,6 @@ function init(){
     if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 5 yrs';
   }
   var fee=parseFloat(d.alphaFee)||0;
-  [2,3,6].forEach(function(n){
-    var el=document.getElementById('sv-'+n);
-    if(!el) return;
-    if(fee>0 && oneYr>0){
-      var save=(oneYr*n)-fee;
-      el.textContent = save>0 ? fmt(save)+' saved' : '—';
-    } else {
-      el.textContent = 'Set fee below';
-    }
-  });
   document.getElementById('fee-inp').value=fee||'';
   if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
   upd();
