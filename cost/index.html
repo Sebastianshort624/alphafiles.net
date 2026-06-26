@@ -90,6 +90,38 @@ body{font-family:"Inter",sans-serif;background:#ffffff;color:#1a1a1a;font-size:1
 .edit-link{font-size:12px;color:var(--gold);text-decoration:none;font-weight:600}
 .edit-link:hover{text-decoration:underline}
 
+/* New True-Cost breakdown cards */
+.cost-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.cost-card.total{border-color:var(--navy);background:#f8faff}
+.cost-card-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:6px}
+.cost-card-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px}
+.cost-card-badge{font-size:12px;color:#9ca3af;font-weight:500}
+.cost-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.cost-tile-lbl{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.cost-tile-val{font-size:19px;font-weight:600;color:var(--navy);letter-spacing:-.2px}
+.cost-tile-val.behind{color:var(--red)}
+.cost-tile-val.tot{color:var(--navy);font-size:22px}
+.cost-note{font-size:12px;color:#b0bac9;margin-top:10px}
+
+/* Projection groups */
+.proj-group{margin-bottom:22px}
+.proj-group-hdr{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.proj-group-hdr span:last-child{color:#c7cdd6;font-weight:600;letter-spacing:0}
+.proj-list{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.proj-list-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border)}
+.proj-list-row:last-child{border-bottom:none}
+.proj-list-yrs{font-size:14px;font-weight:600;color:var(--navy)}
+.proj-list-val{font-size:17px;font-weight:600;color:var(--red)}
+.proj-list-val.save{color:var(--green)}
+
+/* Our Fee card */
+.fee-card{border:2px solid var(--gold);border-radius:10px;padding:20px 22px;background:#fffaf0;margin-bottom:8px}
+.fee-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+.fee-tile-lbl{font-size:10px;font-weight:700;color:#b08a2e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.fee-tile-val{font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.3px}
+.fee-note{font-size:12px;color:#8a7142;margin-top:2px}
+.fee-divider{border-top:1px dashed #e8d9b0;margin:14px 0}
+
 @media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
 </style>
 </head>
@@ -414,21 +446,44 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="section-label" style="flex:1;margin-bottom:0">Your Numbers</div>
     <a href="/vitals/" class="edit-link" style="margin-left:16px">Edit in Vitals ↗</a>
   </div>
-  <div class="summary-row">
-    <div class="sum-card">
-      <div class="sum-label">Maintenance Fee</div>
-      <div class="sum-val" id="s-mtf">—</div>
-      <div class="sum-sub" id="s-mtf-sub">per year</div>
+
+  <!-- Mortgage Payments -->
+  <div class="cost-card">
+    <div class="cost-card-hdr">
+      <div class="cost-card-title">Mortgage Payments</div>
+      <div class="cost-card-badge" id="mtg-yr-badge">—</div>
     </div>
-    <div class="sum-card">
-      <div class="sum-label">Mortgage Payment</div>
-      <div class="sum-val" id="s-mtg">—</div>
-      <div class="sum-sub" id="s-mtg-sub">per month</div>
+    <div class="cost-row3">
+      <div><div class="cost-tile-lbl">Monthly</div><div class="cost-tile-val" id="c-mtg-mo">—</div></div>
+      <div><div class="cost-tile-lbl">Annual</div><div class="cost-tile-val" id="c-mtg-yr">—</div></div>
+      <div><div class="cost-tile-lbl" id="c-mtg-tot-lbl">Total Remaining</div><div class="cost-tile-val" id="c-mtg-tot">—</div></div>
     </div>
-    <div class="sum-card">
-      <div class="sum-label">Combined Monthly</div>
-      <div class="sum-val" id="s-combined">—</div>
-      <div class="sum-sub">total obligation / mo</div>
+  </div>
+
+  <!-- Maintenance Fees -->
+  <div class="cost-card">
+    <div class="cost-card-hdr">
+      <div class="cost-card-title">Maintenance Fees</div>
+      <div class="cost-card-badge">Months Behind: <strong id="c-mtf-beh-badge">0</strong></div>
+    </div>
+    <div class="cost-row3">
+      <div><div class="cost-tile-lbl">Monthly</div><div class="cost-tile-val" id="c-mtf-mo">—</div></div>
+      <div><div class="cost-tile-lbl">Annual</div><div class="cost-tile-val" id="c-mtf-yr">—</div></div>
+      <div><div class="cost-tile-lbl">Behind</div><div class="cost-tile-val behind" id="c-mtf-beh">$0</div></div>
+    </div>
+    <div class="cost-note">Maintenance fees continue growing: <strong>8%</strong> per year</div>
+  </div>
+
+  <!-- Total Cost of Ownership -->
+  <div class="cost-card total">
+    <div class="cost-card-hdr">
+      <div class="cost-card-title">Total Cost of Ownership</div>
+      <div class="cost-card-badge">Total</div>
+    </div>
+    <div class="cost-row3">
+      <div><div class="cost-tile-lbl">Monthly</div><div class="cost-tile-val tot" id="c-tot-mo">—</div></div>
+      <div><div class="cost-tile-lbl">Annual</div><div class="cost-tile-val tot" id="c-tot-yr">—</div></div>
+      <div><div class="cost-tile-lbl">Behind</div><div class="cost-tile-val tot behind" id="c-tot-beh">$0</div></div>
     </div>
   </div>
 
@@ -438,61 +493,50 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
     <div class="behind-text" id="behind-text"></div>
   </div>
 
-  <!-- Projections -->
-  <div class="section-label">If You Stay In — What It Costs</div>
-  <div class="proj-grid">
-    <div class="proj-card">
-      <div class="proj-yr">This Year</div>
-      <div class="proj-val" id="p-1">—</div>
-      <div class="proj-breakdown" id="pb-1"></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-yr">5 Years</div>
-      <div class="proj-val hot" id="p-5">—</div>
-      <div class="proj-breakdown" id="pb-5"></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-yr">10 Years</div>
-      <div class="proj-val hot" id="p-10">—</div>
-      <div class="proj-breakdown" id="pb-10"></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-yr">20 Years</div>
-      <div class="proj-val hot" id="p-20">—</div>
-      <div class="proj-breakdown" id="pb-20"></div>
-    </div>
-    <div class="proj-card">
-      <div class="proj-yr">30 Years</div>
-      <div class="proj-val hot" id="p-30">—</div>
-      <div class="proj-breakdown" id="pb-30"></div>
-    </div>
-    <div class="proj-card" style="border-color:#bbf7d0;background:#f8fffe">
-      <div class="proj-yr" style="color:var(--green)">Alpha Exit Fee</div>
-      <div class="proj-val" style="color:var(--green)" id="p-fee">—</div>
-      <div class="proj-breakdown" id="pb-fee"></div>
+  <!-- Projections: 5-7 Yrs -->
+  <div class="proj-group">
+    <div class="proj-group-hdr"><span>If Situation Continues: 5–7 Yrs</span><span>Total To Pay</span></div>
+    <div class="proj-list">
+      <div class="proj-list-row"><div class="proj-list-yrs">3 Years</div><div class="proj-list-val" id="p-3">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">5 Years</div><div class="proj-list-val" id="p-5">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">7 Years</div><div class="proj-list-val" id="p-7">—</div></div>
     </div>
   </div>
 
-  <!-- VS / Breakeven -->
-  <div class="section-label">Exit vs. Stay</div>
-  <div class="vs-section">
-    <div class="vs-inner">
-      <div class="vs-box">
-        <div class="vs-box-label">Staying In — 5 Years</div>
-        <div class="vs-box-val" id="vs-stay">—</div>
-        <div class="vs-box-sub">MTF grows 8% per year</div>
-      </div>
-      <div class="vs-divider">VS</div>
-      <div class="vs-box">
-        <div class="vs-box-label">Exit with Alpha</div>
-        <div class="vs-box-val green" id="vs-exit">—</div>
-        <div class="vs-box-sub">One time · then $0 forever</div>
-      </div>
+  <!-- Projections: 10-30 Yrs -->
+  <div class="proj-group">
+    <div class="proj-group-hdr"><span>If Situation Continues: 10–30 Yrs</span><span>Total To Pay</span></div>
+    <div class="proj-list">
+      <div class="proj-list-row"><div class="proj-list-yrs">10 Years</div><div class="proj-list-val" id="p-10">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">20 Years</div><div class="proj-list-val" id="p-20">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">30 Years</div><div class="proj-list-val" id="p-30">—</div></div>
     </div>
-    <div class="be-box" id="be-box" style="display:none">
-      <div class="be-val" id="be-val">—</div>
-      <div class="be-sub">After that, every month is money back in your pocket</div>
+  </div>
+
+  <!-- Savings: Exit vs. Stay -->
+  <div class="proj-group">
+    <div class="proj-group-hdr"><span>Your Savings — Exit vs. Stay</span><span>You Save</span></div>
+    <div class="proj-list">
+      <div class="proj-list-row"><div class="proj-list-yrs">2 Years</div><div class="proj-list-val save" id="sv-2">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">3 Years</div><div class="proj-list-val save" id="sv-3">—</div></div>
+      <div class="proj-list-row"><div class="proj-list-yrs">6 Years</div><div class="proj-list-val save" id="sv-6">—</div></div>
     </div>
+    <div class="cost-note">Resort cost at each mark minus the one-time Alpha fee — then $0 forever after that.</div>
+  </div>
+
+  <!-- Our Fee -->
+  <div class="section-label">Our Fee</div>
+  <div class="fee-card">
+    <div class="fee-grid">
+      <div><div class="fee-tile-lbl">Our Fee</div><div class="fee-tile-val" id="c-fee">—</div></div>
+      <div><div class="fee-tile-lbl">Per Month</div><div class="fee-tile-val" id="c-fee-permo">—</div><div class="fee-note">0% Interest — if paid off within 90 days</div></div>
+    </div>
+    <div class="fee-divider"></div>
+    <div class="fee-grid">
+      <div><div class="fee-tile-lbl">Month Term</div><div class="fee-tile-val" id="c-fee-term">60</div></div>
+      <div><div class="fee-tile-lbl">Savings / Mo</div><div class="fee-tile-val" id="c-fee-savings">—</div></div>
+    </div>
+    <div class="fee-note">No prepayment penalty &nbsp;·&nbsp; No payments until <strong id="c-nopay-date">—</strong></div>
   </div>
 
 </div><!-- /cost-content -->
@@ -576,12 +620,32 @@ function render(){
   var totalMo = mtfMo + mtgMo;
   var totalYr = totalMo * 12;
 
-  // Summary cards
-  set("s-mtf",   mtfYr>0  ? "$"+Math.round(mtfYr).toLocaleString()  : "Not set");
-  set("s-mtf-sub", mtfYr>0 ? "$"+Math.round(mtfMo).toLocaleString()+"/mo" : "");
-  set("s-mtg",   mtgMo>0  ? "$"+Math.round(mtgMo).toLocaleString()  : "Paid off");
-  set("s-mtg-sub", mtgMo>0 ? "$"+Math.round(mtgYr).toLocaleString()+"/yr" : "No mortgage");
-  set("s-combined", totalMo>0 ? "$"+Math.round(totalMo).toLocaleString() : "—");
+  // Years left on mortgage term (10-yr assumed term, same model as Vitals)
+  var now = new Date().getFullYear();
+  var yearPurchased = parseInt(d.yearPurchased)||0;
+  var yearKnown = yearPurchased>1990 && yearPurchased<=now;
+  var yrsIn = yearKnown ? (now-yearPurchased) : 1;
+  var yrsLeft = Math.max(0,10-yrsIn);
+  var mtgTotalRemaining = mtgMo*12*yrsLeft;
+
+  // Mortgage Payments card
+  set("mtg-yr-badge", yearKnown ? (yearPurchased+" · "+yrsLeft+" yrs left") : yrsLeft+" yrs left (est.)");
+  set("c-mtg-mo", mtgMo>0 ? fcd(mtgMo) : "Paid off");
+  set("c-mtg-yr", mtgMo>0 ? fcd(mtgYr) : "—");
+  set("c-mtg-tot-lbl", "Total Remaining ("+yrsLeft+" yrs)");
+  set("c-mtg-tot", mtgMo>0 ? fcd(mtgTotalRemaining) : "—");
+
+  // Maintenance Fees card
+  set("c-mtf-beh-badge", mtfBeh||0);
+  set("c-mtf-mo", mtfYr>0 ? fcd(mtfMo) : "Not set");
+  set("c-mtf-yr", mtfYr>0 ? fcd(mtfYr) : "—");
+  set("c-mtf-beh", fcd(mtfMo*mtfBeh));
+
+  // Total Cost of Ownership card
+  var totalBehDollars = (mtfMo*mtfBeh) + (mtgMo*mtgBeh);
+  set("c-tot-mo", totalMo>0 ? fcd(totalMo) : "—");
+  set("c-tot-yr", totalMo>0 ? fcd(totalYr) : "—");
+  set("c-tot-beh", fcd(totalBehDollars));
 
   // Behind alert
   var alert = document.getElementById("behind-alert");
@@ -598,35 +662,41 @@ function render(){
     alert.classList.remove("show");
   }
 
-  // Projections
+  // Projections — If Situation Continues
   function projTotal(n){return mtfTotal(mtfYr,n) + mtgMo*12*n;}
-  set("p-1",  fcd(totalYr));  setHTML("pb-1",  breakdown(mtfYr,mtgMo,1));
-  set("p-5",  fc(projTotal(5)));   setHTML("pb-5",  breakdown(mtfYr,mtgMo,5));
-  set("p-10", fc(projTotal(10)));  setHTML("pb-10", breakdown(mtfYr,mtgMo,10));
-  set("p-20", fc(projTotal(20)));  setHTML("pb-20", breakdown(mtfYr,mtgMo,20));
-  set("p-30", fc(projTotal(30)));  setHTML("pb-30", breakdown(mtfYr,mtgMo,30));
+  set("p-3",  fcd(projTotal(3)));
+  set("p-5",  fcd(projTotal(5)));
+  set("p-7",  fcd(projTotal(7)));
+  set("p-10", fcd(projTotal(10)));
+  set("p-20", fcd(projTotal(20)));
+  set("p-30", fcd(projTotal(30)));
 
-  // Alpha fee card
+  // Savings — Exit vs. Stay (resort cost at each mark minus the one-time fee)
+  [2,3,6].forEach(function(n){
+    var el=document.getElementById("sv-"+n);
+    if(!el) return;
+    if(fee>0){
+      var save=projTotal(n)-fee;
+      el.textContent = save>0 ? fcd(save)+" saved" : "—";
+    } else {
+      el.textContent = "Set fee in Vitals";
+    }
+  });
+
+  // Our Fee card
+  set("c-fee", fee>0 ? fcd(fee) : "Set fee in Vitals");
+  set("c-fee-permo", fee>0 ? fcd(fee/3) : "—"); // 0% promo: 3 equal payments within 90 days
+  var feeTerm = 60, feeRate = 0.20;
+  set("c-fee-term", feeTerm);
+  var feeMoPay = 0;
   if(fee>0){
-    set("p-fee", fcd(fee));
-    setHTML("pb-fee","<div class='proj-line'><span>One time · then $0</span><span style='color:var(--green)'>Forever</span></div>");
-  } else {
-    set("p-fee","Not set");
-    setHTML("pb-fee","<div class='proj-line'><span>Set fee in Vitals</span><span></span></div>");
+    var rr = feeRate/12;
+    feeMoPay = fee*(rr*Math.pow(1+rr,feeTerm))/(Math.pow(1+rr,feeTerm)-1);
   }
-
-  // VS / Breakeven
-  var stay5 = projTotal(5);
-  set("vs-stay", fc(stay5));
-  set("vs-exit", fee>0 ? fcd(fee) : "—");
-  var beBox = document.getElementById("be-box");
-  if(fee>0 && totalMo>0){
-    var beMo = Math.ceil(fee/totalMo);
-    set("be-val", beMo+" month"+(beMo!==1?"s":"")+" to break even");
-    if(beBox) beBox.style.display="block";
-  } else {
-    if(beBox) beBox.style.display="none";
-  }
+  var savingsMo = (totalMo>0 && fee>0) ? Math.max(totalMo-feeMoPay,0) : 0;
+  set("c-fee-savings", fee>0 ? fcd(savingsMo)+"/mo" : "—");
+  var noPay = new Date(); noPay.setDate(noPay.getDate()+30);
+  set("c-nopay-date", noPay.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}));
 }
 
 function savePage(){
