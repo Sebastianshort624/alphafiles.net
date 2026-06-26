@@ -108,6 +108,9 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .mc.alpha .ma{color:#1a7a3c}
 .mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
 .mc .mdisc{font-size:9px;color:#aaa;margin-top:4px;line-height:1.3;font-style:italic}
+.email-action-row{text-align:center;margin-bottom:16px}
+.email-btn{background:#1B2A4A;color:#fff;border:none;border-radius:4px;padding:10px 22px;font-size:13px;font-weight:700;letter-spacing:.3px;cursor:pointer;font-family:Georgia,serif}
+.email-btn:hover{background:#C8960C}
 .vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
 .save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
 .save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
@@ -559,6 +562,10 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
   <div class="vb-corner"><div class="vb-lbl">📄 Quote / Stage</div><div class="vb-val" id="vb-quote">—</div><div class="vb-sub" id="vb-stage">—</div></div>
 </div>
 
+<div class="email-action-row">
+<button class="email-btn" onclick="openEmailQuote()">📧 Email This Quote</button>
+</div>
+
 <!-- MSRP COMPARISON -->
 <div class="msrp-row">
 <div class="mc resort"><div class="ml">🏨 Resort — 5-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 5 yrs</div><div class="mdisc">Not adjusted for the MTF annual rate of increase</div><div class="mdisc" id="msrp-1yr">1yr: —</div></div>
@@ -761,6 +768,96 @@ function updLenders(){
   var r2=fi(l2amt,l2term,l2term===12?0:0.20);
   document.getElementById('l1-mo').textContent=fmtd(r1.mo)+'/mo';
   document.getElementById('l2-mo').textContent=fmtd(r2.mo)+'/mo';
+}
+
+function openEmailQuote(){
+  var clientName=(document.getElementById('b-name')||{}).textContent||'—';
+  var resort=(document.getElementById('b-resort')||{}).textContent||'Your Resort';
+  var resortCost5=(document.getElementById('msrp')||{}).textContent||'—';
+  var alphaFeeTxt=(document.getElementById('alpha-display')||{}).textContent||'—';
+  var savings5=(document.getElementById('sh-diff')||{}).textContent||'—';
+  var mtgMoTxt=(document.getElementById('q-mtg-mo')||{}).textContent||'—';
+
+  var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
+  var l1mo=0,l2mo=0,totalAlphaMo=0,rows='';
+  if(twoLenderActive){
+    l1mo=parseFloat((document.getElementById('l1-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    l2mo=parseFloat((document.getElementById('l2-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    totalAlphaMo=l1mo+l2mo;
+    rows+='<tr><td class="et-lbl">Lender 1 Payment</td><td class="et-val">'+fmtd(l1mo)+'/mo</td></tr>';
+    rows+='<tr><td class="et-lbl">Lender 2 Payment</td><td class="et-val">'+fmtd(l2mo)+'/mo</td></tr>';
+  } else if(_selMo){
+    var selMoTxt=(document.getElementById('sd-mo')||{}).textContent||'0';
+    totalAlphaMo=parseFloat(selMoTxt.replace(/[^0-9.]/g,''))||0;
+    rows+='<tr><td class="et-lbl">'+_selMo+'-Month Plan Payment</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>';
+  } else {
+    rows+='<tr><td class="et-lbl">Pay in Full</td><td class="et-val">'+alphaFeeTxt+' one-time</td></tr>';
+  }
+
+  var mtgMoNum=parseFloat(mtgMoTxt.replace(/[^0-9.]/g,''))||0;
+  var monthlySavings=mtgMoNum-totalAlphaMo;
+
+  var totalRow = (twoLenderActive)
+    ? '<tr class="et-total"><td class="et-lbl">Total Alpha Payment</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>'
+    : '';
+
+  var html =
+'<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Your Service Quote — Alpha Timeshare Consultants</title>'+
+'<style>'+
+'body{margin:0;padding:0;background:#f0f2f5;font-family:Georgia,serif;color:#1a1a1a}'+
+'.wrap{max-width:600px;margin:0 auto;background:#fff}'+
+'.hdr{background:#1B2A4A;padding:26px 30px;text-align:center}'+
+'.hdr h1{color:#fff;font-size:20px;letter-spacing:1px;margin:0}'+
+'.hdr p{color:#C8960C;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 0}'+
+'.body{padding:28px 30px}'+
+'.greet{font-size:15px;line-height:1.6;margin-bottom:20px}'+
+'.vs-row{display:flex;gap:10px;margin-bottom:18px}'+
+'.vs-card{flex:1;border:2px solid #ddd;border-radius:4px;padding:14px;text-align:center}'+
+'.vs-card.resort{background:#fdf0ef;border-color:#e8a09a}'+
+'.vs-card.alpha{background:#e8f5ee;border-color:#1a7a3c}'+
+'.vs-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;color:#888}'+
+'.vs-val{font-size:24px;font-weight:700}'+
+'.vs-card.resort .vs-val{color:#c0392b}'+
+'.vs-card.alpha .vs-val{color:#1a7a3c}'+
+'.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px;text-align:center;margin-bottom:24px}'+
+'.save-strip .sl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;opacity:.8}'+
+'.save-strip .sa{font-size:20px;font-weight:700;color:#C8960C}'+
+'h2.sec{font-size:14px;color:#1B2A4A;border-bottom:2px solid #C8960C;padding-bottom:8px;margin:0 0 14px}'+
+'table.et{width:100%;border-collapse:collapse;margin-bottom:10px}'+
+'table.et td{padding:11px 14px;border-bottom:1px solid #e3e7ec;font-size:14px}'+
+'table.et td.et-lbl{color:#444}'+
+'table.et td.et-val{text-align:right;font-weight:700;color:#1B2A4A}'+
+'table.et tr.et-total td{background:#f5f7fa;font-weight:700}'+
+'table.et tr.et-total td.et-val{color:#C8960C;font-size:16px}'+
+'table.et tr.et-savings td{background:#1B2A4A}'+
+'table.et tr.et-savings td.et-lbl{color:#fff}'+
+'table.et tr.et-savings td.et-val{color:#C8960C;font-size:17px}'+
+'.sig{margin-top:26px;font-size:14px;line-height:1.6}'+
+'.sig .nm{color:#1B2A4A;font-weight:700}'+
+'.disc{background:#f5f7fa;padding:16px 30px;font-size:10.5px;color:#999;line-height:1.5}'+
+'</style></head><body><div class="wrap">'+
+'<div class="hdr"><h1>ALPHA TIMESHARE CONSULTANTS</h1><p>Your Service Quote</p></div>'+
+'<div class="body">'+
+'<div class="greet">Hi <strong>'+clientName+'</strong>,<br><br>Here\'s a summary of your '+resort+' numbers and what it costs to exit with Alpha.</div>'+
+'<div class="vs-row">'+
+'<div class="vs-card resort"><div class="vs-lbl">Resort — 5-Year Cost</div><div class="vs-val">'+resortCost5+'</div></div>'+
+'<div class="vs-card alpha"><div class="vs-lbl">Alpha — Exit Fee</div><div class="vs-val">'+alphaFeeTxt+'</div></div>'+
+'</div>'+
+'<div class="save-strip"><div class="sl">You Save Over 5 Years</div><div class="sa">'+savings5+'</div></div>'+
+'<h2 class="sec">Monthly Payment Breakdown</h2>'+
+'<table class="et">'+rows+totalRow+
+'<tr><td class="et-lbl">Current '+resort+' Payment</td><td class="et-val">'+fmtd(mtgMoNum)+'/mo</td></tr>'+
+'<tr class="et-savings"><td class="et-lbl">Monthly Savings</td><td class="et-val">'+(monthlySavings>0?fmtd(monthlySavings)+'/mo saved':'—')+'</td></tr>'+
+'</table>'+
+'<div class="sig">Best,<br><span class="nm">Sebastian Short</span><br>Alpha Timeshare Consultants<br>Ext. 134 &middot; (877) 848-3948<br>Sebastian@AlphaTimeshareConsultants.com</div>'+
+'</div>'+
+'<div class="disc">This summary is for informational purposes regarding your timeshare exit program enrollment and is not a binding offer until a signed agreement is executed. Pricing and financing terms are subject to change.</div>'+
+'</div></body></html>';
+
+  var win = window.open('', '_blank');
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
 }
 
 var _selMo=null;
