@@ -1190,7 +1190,7 @@ function calcPurchaseFinance(){
   if(pprice>0){
     tiles.push(tile('Purchase Price', fc(pprice), 'as entered'));
   } else if(mtgMo>0){
-    tiles.push(tile('Est. Price', fc(mtgRemaining), 'pay × months left'));
+    tiles.push(tile('Total Paid (Loan Term)', fc(mtgRemaining), yrsLeft+'-yr term left'));
   }
 
   box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
