@@ -107,6 +107,7 @@ body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georg
 .mc.resort .ma{color:#c0392b}
 .mc.alpha .ma{color:#1a7a3c}
 .mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
+.mc .mdisc{font-size:9px;color:#aaa;margin-top:4px;line-height:1.3;font-style:italic}
 .vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
 .save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
 .save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
@@ -538,14 +539,20 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 
 <!-- MSRP COMPARISON -->
 <div class="msrp-row">
-<div class="mc resort"><div class="ml">🏨 Resort — 3-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 3 yrs</div></div>
+<div class="mc resort"><div class="ml">🏨 Resort — 5-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 5 yrs</div><div class="mdisc">Not adjusted for the MTF annual rate of increase</div><div class="mdisc" id="msrp-1yr">1yr: —</div></div>
 <div class="vs">VS</div>
-<div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">One time — then $0 forever</div></div>
+<div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">One time — then $0 forever</div><div class="mdisc">Not adjusted for the financing annual interest rate</div><div class="mdisc">1y: $0</div></div>
 </div>
 <div class="save-strip">
-<div class="sl">You save over 3 years</div>
+<div class="sl">You save over 5 years</div>
 <div class="sa" id="sh-diff">—</div>
 <div class="ss">and every year after that</div>
+</div>
+
+<!-- CURRENT OBLIGATION (ported from /cost) -->
+<div class="msrp-row">
+<div class="mc resort"><div class="ml">🏠 Mortgage Payments</div><div class="ma" id="q-mtg-mo">—</div><div class="ms" id="q-mtg-detail">Monthly · — Annual</div></div>
+<div class="mc resort"><div class="ml">🌊 Maintenance Fees</div><div class="ma" id="q-mtf-mo">—</div><div class="ms" id="q-mtf-detail">Monthly · — Annual</div></div>
 </div>
 
 <!-- SERVICE FEE -->
@@ -554,7 +561,7 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="fee-row">
 <span class="fee-lbl">Service Fee $</span>
 <input type="number" class="fee-inp" id="fee-inp" value="0" oninput="upd()">
-<span class="fee-note">Type your fee — default = 3-year resort cost</span>
+<span class="fee-note">Type your fee — default = 5-year resort cost</span>
 </div>
 <div class="pif-card">
 <div class="pif-label">Pay in Full — Best Value</div>
@@ -606,18 +613,6 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();}
 <div class="sd-row"><span>Interest Rate</span><span class="sd-val" id="sd-rate">—</span></div>
 <div class="sd-row"><span>Monthly Payment</span><span class="sd-val" id="sd-mo">—</span></div>
 <div class="sd-row"><span>Total Paid</span><span class="sd-val" id="sd-tot">—</span></div>
-</div>
-</div>
-
-<!-- SAVINGS -->
-<div class="sh">What You Stop Paying After Exit</div>
-<div class="sb">
-<div class="sav-box">
-<div class="sav-title">Monthly & Yearly Savings</div>
-<div class="sr"><span>Current monthly obligation</span><span class="sv w" id="s-mo">—</span></div>
-<div class="sr"><span>After exit</span><span class="sv w">$0 / month</span></div>
-<div class="sr"><span>Monthly savings</span><span class="sv" id="s-save-mo">—</span></div>
-<div class="sr"><span>Yearly savings</span><span class="sv" id="s-save-yr">—</span></div>
 </div>
 </div>
 
@@ -688,18 +683,20 @@ function init(){
   if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name||'—';
   if(d.resort)document.getElementById('b-resort').textContent=d.resort;
   var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
-  if(mo>0){
-    document.getElementById('s-mo').textContent=fmt(mo)+'/mo';
-    document.getElementById('s-save-mo').textContent=fmt(mo)+'/mo';
-    document.getElementById('s-save-yr').textContent=fmt(mo*12)+'/yr';
-  }
-  var three=parseFloat(d.threeYearCost)||0;
-  if(!three){var mtf=parseFloat(d.maitFees)||0,mtg=(parseFloat(d.monthlyMortgage)||0)*12;three=(mtf+mtg)+(mtf*1.08+mtg)+(mtf*Math.pow(1.08,2)+mtg);}
-  if(three>0){
-    _msrp=three;
-    document.getElementById('msrp').textContent=fmt(three);
+  var mtgMoQ=parseFloat(d.monthlyMortgage)||0, mtfYrQ=parseFloat(d.maitFees)||0, mtfMoQ=mtfYrQ/12;
+  document.getElementById('q-mtg-mo').textContent = mtgMoQ>0 ? fmt(mtgMoQ) : 'Paid off';
+  document.getElementById('q-mtg-detail').textContent = mtgMoQ>0 ? fmt(mtgMoQ)+'/mo · '+fmt(mtgMoQ*12)+'/yr' : '—';
+  document.getElementById('q-mtf-mo').textContent = mtfYrQ>0 ? fmt(mtfMoQ) : 'Not set';
+  document.getElementById('q-mtf-detail').textContent = mtfYrQ>0 ? fmt(mtfMoQ)+'/mo · '+fmt(mtfYrQ)+'/yr' : '—';
+  var five=(parseFloat(d.maitFees)||0)+((parseFloat(d.monthlyMortgage)||0)*12);
+  var oneYr=five;
+  five=five*5;
+  if(five>0){
+    _msrp=five;
+    document.getElementById('msrp').textContent=fmt(five);
+    document.getElementById('msrp-1yr').textContent='1yr: '+fmt(oneYr);
     var ma=parseFloat(d.maitFees)||0,mg=(parseFloat(d.monthlyMortgage)||0)*12;
-    if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 3 yrs';
+    if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 5 yrs';
   }
   var fee=parseFloat(d.alphaFee)||0;
   document.getElementById('fee-inp').value=fee||'';
