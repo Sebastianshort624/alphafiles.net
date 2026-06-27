@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Exit Program Summary — Alpha Timeshare Consultants</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+
+  body{margin:0;padding:0;background:#eef1f5;font-family:'Barlow Condensed',Arial,sans-serif;color:#1a1a1a}
+  .wrapper{max-width:660px;margin:0 auto;background:#ffffff}
+  .header{background:#1B2A4A;padding:34px 36px 26px;text-align:center}
+  .header h1{font-family:'Cormorant Garamond',Georgia,serif;color:#ffffff;font-size:26px;letter-spacing:1px;margin:0;font-weight:600}
+  .header .gold-line{width:70px;height:2px;background:#C8960C;margin:12px auto}
+  .header p{color:#C8960C;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0}
+  .section{padding:30px 36px}
+  .greeting{font-size:17px;line-height:1.6;margin-bottom:6px}
+  .greeting strong{color:#1B2A4A}
+  .sub-greet{font-size:14px;color:#3d4450;margin-bottom:22px;line-height:1.6}
+
+  h2.subhead{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:21px;margin:30px 0 14px;border-bottom:2px solid #C8960C;padding-bottom:8px}
+
+  .resort-grid{display:flex;gap:14px;margin-bottom:6px}
+  .resort-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:16px}
+  .resort-card .rname{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;color:#1B2A4A;font-size:15px;margin-bottom:8px}
+  .resort-card .rrow{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #e6eaef}
+  .resort-card .rrow:last-child{border-bottom:none}
+  .resort-card .rrow span:last-child{font-weight:700;color:#1B2A4A}
+
+  .numbers-grid{display:flex;gap:14px;margin:18px 0 6px}
+  .num-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:14px;text-align:center}
+  .num-card.total{background:#1B2A4A;border-color:#1B2A4A}
+  .num-card.total .label{color:#C8960C}
+  .num-card.total .value{color:#fff}
+  .num-card.total .sub{color:#dde5f0}
+  .num-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5a6472;margin-bottom:6px}
+  .num-card .value{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:#1B2A4A;font-weight:700}
+  .num-card .sub{font-size:12.5px;color:#3d4450;margin-top:4px;font-weight:600}
+
+  .total-bar{background:#1B2A4A;border-radius:6px;padding:20px 24px;text-align:center;margin:22px 0}
+  .total-bar .lbl{color:#C8960C;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  .total-bar .big{color:#ffffff;font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
+  .total-bar .sub{color:#dde5f0;font-size:13px;margin-top:6px}
+
+  .ct-cols{display:flex;gap:14px}
+  .ct-cols table.ct{flex:1}
+  table.ct{width:100%;border-collapse:collapse;margin:12px 0 6px;font-size:14px}
+  table.ct th{background:#1B2A4A;color:#fff;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:right}
+  table.ct th:first-child{text-align:left}
+  table.ct td{padding:11px 12px;border-bottom:1px solid #e3e7ec;text-align:right}
+  table.ct td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
+  table.ct tr.hl td{background:#fdf8ec;font-weight:700}
+
+  .vs-row{display:flex;gap:14px;margin:20px 0 8px;align-items:stretch}
+  .vs-card{flex:1;border:2px solid #ddd;border-radius:6px;padding:18px;text-align:center}
+  .vs-card.resort{background:#fdf0ef;border-color:#e8a09a}
+  .vs-card.alpha{background:#e8f5ee;border-color:#1a7a3c}
+  .vs-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6472;margin-bottom:8px}
+  .vs-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
+  .vs-card.resort .vs-val{color:#c0392b}
+  .vs-card.alpha .vs-val{color:#1a7a3c}
+  .vs-sub{font-size:12px;color:#5a6472;margin-top:6px;font-weight:600}
+  .vs-mid{display:flex;align-items:center;font-weight:700;color:#aaa;font-size:13px}
+
+  .save-strip{background:#1a7a3c;color:#fff;border-radius:6px;padding:16px;text-align:center;margin-bottom:8px}
+  .save-strip .sl{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+  .save-strip .sa{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700}
+
+  .bestvalue{margin-top:10px;text-align:center;border:2px solid #1B2A4A;border-radius:8px;padding:22px 20px}
+  .bestvalue .eyebrow{color:#C8960C;font-weight:700;letter-spacing:1.5px;font-size:12px;text-transform:uppercase}
+  .bestvalue .price{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:38px;font-weight:700;margin:6px 0 4px}
+  .bestvalue .desc{color:#4a4f57;font-size:13px}
+  .sameascash{display:inline-block;background:#C8960C;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:5px 12px;border-radius:20px;margin-top:10px}
+
+  .fin-tabs table{width:100%;border-collapse:collapse}
+  .fin-tabs th{background:#f5f7fa;color:#1B2A4A;border:1px solid #dde3ea;padding:9px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .fin-tabs td{border:1px solid #dde3ea;padding:9px;text-align:center;font-size:13px}
+  .fin-tabs .pct{font-size:11px;color:#5a6472;font-weight:600}
+  .fin-note{font-size:12px;color:#4a5260;margin-top:10px;line-height:1.5}
+
+  .lender-row{display:flex;gap:14px;margin-bottom:6px}
+  .lender-card{flex:1;border:2px solid #1B2A4A;border-radius:6px;padding:16px;text-align:center}
+  .lender-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+  .lender-amt{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700;color:#C8960C;margin-bottom:8px}
+  .lender-terms{font-size:11px;color:#4a5260;margin-bottom:12px;line-height:1.4;font-weight:500}
+  .lender-mo{border-top:1px dashed #dde3ea;padding-top:10px}
+  .lender-mo .lbl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:#5a6472;margin-bottom:3px;font-weight:700}
+  .lender-mo .amt{font-size:17px;font-weight:700;color:#1B2A4A}
+
+  .process-list{margin:10px 0 0;padding:0;list-style:none}
+  .process-list li{display:flex;gap:10px;font-size:14px;line-height:1.5;margin-bottom:10px}
+  .process-list .num{flex:0 0 22px;height:22px;border-radius:50%;background:#1B2A4A;color:#C8960C;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  .pullquote{margin:30px 0 0;border-left:4px solid #C8960C;padding:6px 0 6px 18px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#1B2A4A;font-size:18px}
+
+  .signature{margin-top:28px;font-size:15px;line-height:1.6}
+  .signature .name{color:#1B2A4A;font-weight:700;font-size:16px}
+
+  .disclosure{background:#f5f7fa;padding:18px 36px 26px;font-size:11.5px;color:#5a6472;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <h1>ALPHA TIMESHARE CONSULTANTS</h1>
+    <div class="gold-line"></div>
+    <p>Your Exit Program Summary</p>
+  </div>
+
+  <div class="section">
+    <p class="greeting">Hi <strong>Jeremy &amp; Jaclyn</strong>,</p>
+    <p class="sub-greet">Here's a clean summary of where things stand with both of your Hilton Grand Vacations contracts and what your Alpha program looks like.</p>
+
+    <h2 class="subhead">Resort 1 — Hilton Grand Vacations Las Vegas</h2>
+    <div class="resort-card" style="margin-bottom:14px">
+      <div class="rrow"><span>Purchased</span><span>Aug 2024</span></div>
+      <div class="rrow"><span>Balance Owed</span><span>$57,050</span></div>
+      <div class="rrow"><span>Status</span><span>Current</span></div>
+    </div>
+    <div class="numbers-grid">
+      <div class="num-card">
+        <div class="label">Mortgage Payment</div>
+        <div class="value">$11,292</div>
+        <div class="sub">$941/mo</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Maintenance Fees</div>
+        <div class="value">$5,253.60</div>
+        <div class="sub">$437.80/mo</div>
+      </div>
+      <div class="num-card total">
+        <div class="label">Total — This Resort</div>
+        <div class="value">$16,545.60</div>
+        <div class="sub">$1,378.80/mo</div>
+      </div>
+    </div>
+
+    <h2 class="subhead">Resort 2 — Hilton Grand Vacations Hawaii (HGV MAX)</h2>
+    <div class="resort-card" style="margin-bottom:14px">
+      <div class="rrow"><span>Purchased</span><span>Nov 2025</span></div>
+      <div class="rrow"><span>Balance Owed</span><span>$49,704</span></div>
+      <div class="rrow"><span>Status</span><span>Current</span></div>
+    </div>
+    <div class="numbers-grid">
+      <div class="num-card">
+        <div class="label">Mortgage Payment</div>
+        <div class="value">$7,224</div>
+        <div class="sub">$602/mo</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Maintenance Fees</div>
+        <div class="value">$3,715.86</div>
+        <div class="sub">$309.66/mo</div>
+      </div>
+      <div class="num-card total">
+        <div class="label">Total — This Resort</div>
+        <div class="value">$10,939.86</div>
+        <div class="sub">$911.66/mo</div>
+      </div>
+    </div>
+
+    <h2 class="subhead">Combined Totals — Both Resorts</h2>
+    <div class="numbers-grid">
+      <div class="num-card">
+        <div class="label">Mortgage Payments</div>
+        <div class="value">$18,516</div>
+        <div class="sub">$1,543/mo</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Maintenance Fees</div>
+        <div class="value">$8,969.46</div>
+        <div class="sub">$747/mo</div>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <div class="lbl">Combined Monthly &amp; Yearly Obligation</div>
+      <div class="big">$27,485.46/yr</div>
+      <div class="sub" style="font-size:14px;margin-top:4px">$2,290.46/mo equivalent</div>
+      <div class="sub" style="margin-top:8px">Across both Hilton contracts &mdash; before any future increases</div>
+    </div>
+
+    <h2 class="subhead">Resort Cost Over Time</h2>
+    <div class="ct-cols">
+      <table class="ct">
+        <tr><th>Years</th><th>Combined Cost</th></tr>
+        <tr><td>1 Year</td><td>$27,485</td></tr>
+        <tr><td>3 Years</td><td>$84,666</td></tr>
+        <tr class="hl"><td>5 Years</td><td>$145,200</td></tr>
+      </table>
+      <table class="ct">
+        <tr><th>Years</th><th>Combined Cost</th></tr>
+        <tr><td>10 Years</td><td>$315,097</td></tr>
+        <tr><td>20 Years</td><td>$780,780</td></tr>
+        <tr class="hl"><td>30 Years</td><td>$1,571,569</td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#4a5260;margin-top:4px;font-weight:500">Maintenance fees are projected to grow at an average <strong>8% per year</strong> &mdash; mortgage payments shown flat. The real number could be higher or lower depending on your resort's actual increases.</p>
+
+    <h2 class="subhead">Resort Cost vs. Alpha Program</h2>
+    <div class="vs-row">
+      <div class="vs-card resort">
+        <div class="vs-lbl">Resort &mdash; 5-Year Cost</div>
+        <div class="vs-val">$145,200</div>
+        <div class="vs-sub">Keeps going every year after</div>
+      </div>
+      <div class="vs-card alpha">
+        <div class="vs-lbl">Alpha &mdash; Exit Program</div>
+        <div class="vs-val">$20,000</div>
+        <div class="vs-sub">One time &mdash; then $0 forever</div>
+      </div>
+    </div>
+    <div class="save-strip">
+      <div class="sl">You Save Over 5 Years</div>
+      <div class="sa">$125,200</div>
+    </div>
+
+    <h2 class="subhead">Your Program Cost</h2>
+    <div class="bestvalue">
+      <div class="eyebrow">Total Program Cost</div>
+      <div class="price">$20,000</div>
+      <div class="desc">Covers both the Las Vegas and Hawaii contracts under one filing.</div>
+      <div class="sameascash">Same-As-Cash if Paid Within 90 Days</div>
+    </div>
+
+    <div class="fin-tabs">
+      <h2 class="subhead">Optional — Select a Payment Term</h2>
+      <p class="fin-note" style="background:#fff8e8;border:1px solid #C8960C;color:#946f00;padding:10px 14px;border-radius:4px;text-align:center;margin-top:0">This service fee is over $15,000 &mdash; it's split across two lending partners below.</p>
+
+      <div class="lender-row">
+        <div class="lender-card">
+          <div class="lender-title">Lender 1 &mdash; $15,000 Cap</div>
+          <div class="lender-amt">$15,000</div>
+          <div class="lender-terms">12 Mo &mdash; 0% Interest &nbsp;&middot;&nbsp; 24&ndash;60 Mo &mdash; 20% Annual</div>
+          <div class="lender-mo"><span class="lbl">Monthly Payment (60 Mo)</span><span class="amt">$397/mo</span></div>
+        </div>
+        <div class="lender-card">
+          <div class="lender-title">Lender 2 &mdash; $13,000 Cap</div>
+          <div class="lender-amt">$5,000</div>
+          <div class="lender-terms">12 Mo &mdash; 0% Interest &nbsp;&middot;&nbsp; 24&ndash;60 Mo &mdash; 20% Annual</div>
+          <div class="lender-mo"><span class="lbl">Monthly Payment (60 Mo)</span><span class="amt">$132/mo</span></div>
+        </div>
+      </div>
+
+      <div class="total-bar" style="margin-top:14px">
+        <div class="lbl">Total Monthly Payment — Alpha Fee</div>
+        <div class="big">$529/mo</div>
+        <div class="sub">Lender 1 $397/mo + Lender 2 $132/mo &middot; 60-month term shown</div>
+      </div>
+
+      <p class="fin-note">Both lenders offer 0% interest if paid in full within 12 months; 24&ndash;60 month terms are financed at 20% annual on each lender's portion independently. Shorter terms are available and will lower the total paid.</p>
+    </div>
+
+    <h2 class="subhead">What Happens Next</h2>
+    <ul class="process-list">
+      <li><span class="num">1</span><span>Your file moves into contracting &mdash; verification is already underway with our team.</span></li>
+      <li><span class="num">2</span><span>Once verified, we begin the filing process for both the Las Vegas and Hawaii contracts together.</span></li>
+      <li><span class="num">3</span><span>You stop paying the resort directly once your exit filing is active &mdash; we'll walk you through exactly when.</span></li>
+      <li><span class="num">4</span><span>You're notified in writing once both contracts are fully released.</span></li>
+    </ul>
+
+    <p class="pullquote">"Two contracts, one filing, one price &mdash; $20,000 closes out $145,200 of future resort cost over the next five years alone."</p>
+
+    <div class="signature">
+      Best,<br>
+      <span class="name">Sebastian Short</span><br>
+      Alpha Timeshare Consultants<br>
+      Ext. 134 &middot; (877) 848-3948<br>
+      Sebastian@AlphaTimeshareConsultants.com
+    </div>
+  </div>
+
+  <div class="disclosure">
+    This summary reflects the information on file for Jeremy &amp; Jaclyn Bates as of Jun 25, 2026 and is provided for informational purposes regarding your timeshare exit program enrollment. It is not a binding offer or guarantee of resort response time. Alpha Timeshare Consultants is not a law firm and does not provide legal advice. Pricing and financing terms are subject to the signed agreement on file.
+  </div>
+
+</div>
+</body>
+</html>
