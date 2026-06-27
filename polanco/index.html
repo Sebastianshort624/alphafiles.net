@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tu Costo de Salida — Alpha Timeshare Consultants</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+
+  body{margin:0;padding:0;background:#eef1f5;font-family:'Barlow Condensed',Arial,sans-serif;color:#1a1a1a}
+  .wrapper{max-width:660px;margin:0 auto;background:#ffffff}
+  .header{background:#1B2A4A;padding:34px 36px 26px;text-align:center}
+  .header h1{font-family:'Cormorant Garamond',Georgia,serif;color:#ffffff;font-size:26px;letter-spacing:1px;margin:0;font-weight:600}
+  .header .gold-line{width:70px;height:2px;background:#C8960C;margin:12px auto}
+  .header p{color:#C8960C;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0}
+  .section{padding:30px 36px}
+  .greeting{font-size:17px;line-height:1.6;margin-bottom:6px}
+  .greeting strong{color:#1B2A4A}
+  .sub-greet{font-size:14px;color:#3d4450;margin-bottom:22px;line-height:1.6}
+
+  h2.subhead{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:21px;margin:30px 0 14px;border-bottom:2px solid #C8960C;padding-bottom:8px}
+
+  .resort-card{background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:16px}
+  .resort-card .rrow{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #e6eaef}
+  .resort-card .rrow:last-child{border-bottom:none}
+  .resort-card .rrow span:last-child{font-weight:700;color:#1B2A4A}
+
+  .numbers-grid{display:flex;gap:14px;margin:18px 0 6px}
+  .num-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:14px;text-align:center}
+  .num-card.total{background:#1B2A4A;border-color:#1B2A4A}
+  .num-card.total .label{color:#C8960C}
+  .num-card.total .value{color:#fff}
+  .num-card.total .sub{color:#dde5f0}
+  .num-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#3d4450;margin-bottom:6px}
+  .num-card .value{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:#1B2A4A;font-weight:700}
+  .num-card .sub{font-size:12.5px;color:#3d4450;margin-top:4px;font-weight:600}
+
+  .total-bar{background:#1B2A4A;border-radius:6px;padding:20px 24px;text-align:center;margin:22px 0}
+  .total-bar .lbl{color:#C8960C;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  .total-bar .big{color:#ffffff;font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
+  .total-bar .sub{color:#dde5f0;font-size:13px;margin-top:6px}
+
+  .opt-row{display:flex;gap:14px;margin:14px 0 8px;align-items:stretch}
+  .opt-card{flex:1;border:2px solid #ddd;border-radius:8px;padding:18px;background:#fff}
+  .opt-card.worse{border-color:#e8a09a;background:#fdf0ef}
+  .opt-card.better{border-color:#1a7a3c;background:#e8f5ee}
+  .opt-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#5a6472;margin-bottom:10px;line-height:1.4}
+  .opt-card.better .opt-title{color:#1a7a3c}
+  .opt-card.worse .opt-title{color:#c0392b}
+  .opt-row2{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dashed #ddd}
+  .opt-row2:last-of-type{border-bottom:none}
+  .opt-row2 span:last-child{font-weight:700;color:#1B2A4A}
+  .opt-total{margin-top:12px;text-align:center;border-top:2px solid #1B2A4A;padding-top:10px}
+  .opt-total .otl{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:#5a6472}
+  .opt-total .otv{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:700;color:#1B2A4A}
+  .opt-card.better .opt-total .otv{color:#1a7a3c}
+  .opt-card.worse .opt-total .otv{color:#c0392b}
+  .opt-diff{font-size:11.5px;margin-top:6px;font-weight:700;text-align:center}
+  .opt-card.better .opt-diff{color:#1a7a3c}
+  .opt-card.worse .opt-diff{color:#c0392b}
+
+  .ct-cols{display:flex;gap:14px}
+  .ct-cols table.ct{flex:1}
+  table.ct{width:100%;border-collapse:collapse;margin:12px 0 6px;font-size:14px}
+  table.ct th{background:#1B2A4A;color:#fff;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:right}
+  table.ct th:first-child{text-align:left}
+  table.ct td{padding:11px 12px;border-bottom:1px solid #e3e7ec;text-align:right}
+  table.ct td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
+  table.ct tr.hl td{background:#fdf8ec;font-weight:700}
+
+  .save-strip{background:#1a7a3c;color:#fff;border-radius:6px;padding:16px;text-align:center;margin-bottom:8px}
+  .save-strip .sl{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+  .save-strip .sa{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700}
+
+  .timeline-list{border:1px solid #dde3ea;border-radius:8px;overflow:hidden;margin-top:8px}
+  .timeline-row{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #e6eaef}
+  .timeline-row:last-child{border-bottom:none}
+  .timeline-row span:first-child{font-weight:700;color:#1B2A4A;font-size:14px}
+  .timeline-row span:last-child{font-weight:700;color:#1a7a3c;font-size:15px}
+
+  .fin-tabs table{width:100%;border-collapse:collapse}
+  .fin-tabs th{background:#f5f7fa;color:#1B2A4A;border:1px solid #dde3ea;padding:9px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .fin-tabs td{border:1px solid #dde3ea;padding:9px;text-align:center;font-size:13px}
+  .fin-tabs .pct{font-size:11px;color:#5a6472;font-weight:600}
+  .fin-note{font-size:12px;color:#4a5260;margin-top:10px;line-height:1.5}
+
+  .pullquote{margin:30px 0 0;border-left:4px solid #C8960C;padding:6px 0 6px 18px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#1B2A4A;font-size:18px}
+
+  .signature{margin-top:28px;font-size:15px;line-height:1.6}
+  .signature .name{color:#1B2A4A;font-weight:700;font-size:16px}
+
+  .disclosure{background:#f5f7fa;padding:18px 36px 26px;font-size:11.5px;color:#5a6472;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <h1>ALPHA TIMESHARE CONSULTANTS</h1>
+    <div class="gold-line"></div>
+    <p>Tus Números, Lado a Lado</p>
+  </div>
+
+  <div class="section">
+    <p class="greeting">Hola <strong>Armando y Alta Gracia</strong>,</p>
+    <p class="sub-greet">Quiero mostrarte esto más claro que la última vez — dos formas distintas de ver tu situación, lado a lado, para que veas exactamente qué pasa con tu pago según la opción que elijas.</p>
+
+    <h2 class="subhead">Resort 1 — Marriott Orlando</h2>
+    <div class="resort-card" style="margin-bottom:14px">
+      <div class="rrow"><span>Comprado</span><span>Ago 2024</span></div>
+      <div class="rrow"><span>Balance</span><span>$20,000</span></div>
+      <div class="rrow"><span>Estado de Hipoteca</span><span>Aún Debe</span></div>
+      <div class="rrow"><span>Estado</span><span>Activo</span></div>
+    </div>
+
+    <div class="numbers-grid">
+      <div class="num-card">
+        <div class="label">Hipoteca</div>
+        <div class="value">$4,356/yr</div>
+        <div class="sub">$363/mo</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Cuota de Mantenimiento</div>
+        <div class="value">$1,500/yr</div>
+        <div class="sub">$125/mo</div>
+      </div>
+      <div class="num-card total">
+        <div class="label">Total Hoy</div>
+        <div class="value">$5,856/yr</div>
+        <div class="sub">$488/mo</div>
+      </div>
+    </div>
+
+    <h2 class="subhead">Dos Formas de Verlo</h2>
+    <div class="opt-row">
+      <div class="opt-card worse">
+        <div class="opt-title">Opción 1<br>Sigues Pagando la Hipoteca &mdash; Dejas de Pagar Mantenimiento</div>
+        <div class="opt-row2"><span>Hipoteca (sin cambio)</span><span>$363/mo</span></div>
+        <div class="opt-row2"><span>Mantenimiento</span><span>$0</span></div>
+        <div class="opt-row2"><span>Tarifa Alpha (60 meses)</span><span>$158.83/mo</span></div>
+        <div class="opt-total">
+          <div class="otl">Nuevo Total</div>
+          <div class="otv">$521.83/mo</div>
+        </div>
+        <div class="opt-diff">$33.83/mes MÁS que hoy</div>
+      </div>
+      <div class="opt-card better">
+        <div class="opt-title">Opción 2<br>Solo Nos Pagas a Nosotros &mdash; Hipoteca y Mantenimiento Cancelados</div>
+        <div class="opt-row2"><span>Hipoteca</span><span>$0</span></div>
+        <div class="opt-row2"><span>Mantenimiento</span><span>$0</span></div>
+        <div class="opt-row2"><span>Tarifa Alpha (60 meses)</span><span>$158.83/mo</span></div>
+        <div class="opt-total">
+          <div class="otl">Nuevo Total</div>
+          <div class="otv">$158.83/mo</div>
+        </div>
+        <div class="opt-diff">$329.17/mes MENOS que hoy</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#4a5260;margin-top:4px;font-weight:500">La Opción 1 mantiene la hipoteca activa, así que tu pago mensual en realidad sube un poco. La Opción 2 &mdash; donde nos pagas solo a nosotros y se cancelan ambos pagos al resort &mdash; es la que de verdad te baja el costo cada mes.</p>
+
+    <h2 class="subhead">Costo Total en los Próximos 5 Años</h2>
+    <div class="ct-cols">
+      <table class="ct">
+        <tr><th>Si Te Quedas</th><th>Costo</th></tr>
+        <tr><td>1 Año</td><td>$5,856</td></tr>
+        <tr><td>3 Años</td><td>$17,938</td></tr>
+        <tr class="hl"><td>5 Años</td><td>$30,580</td></tr>
+      </table>
+      <table class="ct">
+        <tr><th>Con Alpha (Opción 2)</th><th>Costo</th></tr>
+        <tr><td>1 Año</td><td>$1,906</td></tr>
+        <tr><td>3 Años</td><td>$5,718</td></tr>
+        <tr class="hl"><td>5 Años</td><td>$9,530</td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#4a5260;margin-top:4px;font-weight:500">La cuota de mantenimiento se proyecta creciendo un <strong>8% al año</strong> &mdash; la hipoteca se muestra fija. Con Alpha, tu tarifa no cambia y termina por completo a los 60 meses.</p>
+
+    <div class="save-strip">
+      <div class="sl">Ahorras en los Próximos 5 Años (Opción 2)</div>
+      <div class="sa">$21,050</div>
+    </div>
+
+    <h2 class="subhead">Mientras Más Rápido Salgas, Más Te Quedas</h2>
+    <p style="font-size:13px;color:#3d4450;margin-bottom:10px">Ahora mismo pagas $488/mes completos. Con la Opción 2, ese pago baja a $158.83/mes desde el primer mes &mdash; y a los 60 meses llega a $0 para siempre. Esto es lo que te ahorras comparado con quedarte pagando los $488 completos:</p>
+    <div class="timeline-list">
+      <div class="timeline-row"><span>En 1 Año</span><span>$3,950 ahorrados</span></div>
+      <div class="timeline-row"><span>En 2 Años</span><span>$7,900 ahorrados</span></div>
+      <div class="timeline-row"><span>En 3 Años</span><span>$11,850 ahorrados</span></div>
+    </div>
+
+    <h2 class="subhead">Tu Tarifa Alpha</h2>
+    <div class="fin-tabs">
+      <table>
+        <tr><th>Plazo</th><th>Mensual</th><th>Tasa</th><th>Total</th></tr>
+        <tr><td>12 Meses</td><td>$500/mo</td><td class="pct">0% Interés</td><td>$5,995</td></tr>
+        <tr><td>24 Meses</td><td>$305/mo</td><td class="pct">20% Anual</td><td>$7,323</td></tr>
+        <tr><td>36 Meses</td><td>$223/mo</td><td class="pct">20% Anual</td><td>$8,021</td></tr>
+        <tr><td>48 Meses</td><td>$182/mo</td><td class="pct">20% Anual</td><td>$8,757</td></tr>
+        <tr><td>60 Meses</td><td>$159/mo</td><td class="pct">20% Anual</td><td>$9,530</td></tr>
+      </table>
+      <p class="fin-note">0% interés si se paga por completo dentro de 12 meses. Plazos de más de 12 meses se financian al 20% anual.</p>
+    </div>
+
+    <p class="pullquote">"Tu crédito no se toca, tu compra no se afecta. La pregunta es simple: ¿prefieres seguir pagando $488 al mes para siempre, o $158.83 al mes durante 60 meses y después $0 para siempre?"</p>
+
+    <div class="signature">
+      Saludos,<br>
+      <span class="name">Sebastian Short</span><br>
+      Alpha Timeshare Consultants<br>
+      Ext. 134 &middot; 877-848-3948<br>
+      Sebastian@AlphaTimeshareConsultants.com
+    </div>
+  </div>
+
+  <div class="disclosure">
+    Este resumen refleja la información en archivo para Armando y Alta Gracia Polanco al 27 de junio de 2026 y se proporciona con fines informativos sobre la inscripción a su programa de salida de timeshare. No es una oferta vinculante ni una garantía del tiempo de respuesta del resort. Alpha Timeshare Consultants no es un despacho de abogados y no brinda asesoría legal. Los precios y términos de financiamiento están sujetos al acuerdo firmado en archivo.
+  </div>
+
+</div>
+</body>
+</html>
