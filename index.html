@@ -2,193 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Alpha Timeshare Consultants — Client Lookup</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta http-equiv="refresh" content="0; url=https://alphatimeshareconsultants.com/">
+<link rel="canonical" href="https://alphatimeshareconsultants.com/">
+<title>Redirecting — Alpha Timeshare Consultants</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Inter",sans-serif;background:#0f1923;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 16px}
-.logo{margin-bottom:32px;text-align:center}
-.logo img{max-width:200px}
-.card{background:#1B2A4A;border-radius:14px;padding:32px;width:100%;max-width:520px;box-shadow:0 8px 40px rgba(0,0,0,.4)}
-h1{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
-.sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:24px}
-.search-row{display:flex;gap:8px;margin-bottom:16px}
-.search-row input{flex:1;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;padding:12px 14px;font-size:15px;color:#fff;font-family:"Inter",sans-serif;outline:none}
-.search-row input:focus{border-color:#C8960C}
-.search-row input::placeholder{color:rgba(255,255,255,.3)}
-.btn-search{background:#C8960C;color:#fff;border:none;border-radius:8px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:"Inter",sans-serif}
-.btn-search:hover{background:#b07d0a}
-.results{margin-top:4px}
-.result-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:background .15s}
-.result-item:hover{background:rgba(200,150,12,.12);border-color:rgba(200,150,12,.3)}
-.ri-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:3px}
-.ri-resort{font-size:13px;color:#C8960C;font-weight:600;margin-bottom:4px}
-.ri-row{display:flex;gap:16px;flex-wrap:wrap}
-.ri-chip{font-size:12px;color:rgba(255,255,255,.5)}
-.ri-chip span{color:rgba(255,255,255,.85);font-weight:600}
-.ri-stage{display:inline-block;background:rgba(200,150,12,.2);color:#C8960C;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:6px}
-.empty{text-align:center;padding:24px;color:rgba(255,255,255,.3);font-size:14px}
-.divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:20px 0}
-.new-btn{width:100%;background:transparent;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:12px;font-size:14px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;font-family:"Inter",sans-serif;transition:all .15s}
-.new-btn:hover{border-color:#C8960C;color:#C8960C}
-.all-section{margin-top:8px}
-.all-label{font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.tag{display:inline-block;background:rgba(255,255,255,.07);border-radius:4px;padding:3px 8px;font-size:12px;color:rgba(255,255,255,.5);margin:2px;cursor:pointer}
-.tag:hover{color:#C8960C}
-.count-badge{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:12px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",Arial,sans-serif;background:#0f1923;min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:24px}
+  .box{max-width:420px}
+  h1{font-size:18px;font-weight:700;margin-bottom:10px}
+  p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.5}
+  a{display:inline-block;background:#C8960C;color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px}
 </style>
+<script>
+  window.location.replace("https://alphatimeshareconsultants.com/");
+</script>
 </head>
 <body>
-
-<div class="logo">
-  <img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="Alpha Timeshare Consultants">
-</div>
-
-<div class="card">
-  <h1>Client Lookup</h1>
-  <div class="sub">Search by name, resort, or phone</div>
-
-  <div class="search-row">
-    <input type="text" id="q" placeholder="Last name, first name, resort, or phone..." autofocus autocomplete="off" oninput="doSearch(this.value)">
-    <button class="btn-search" onclick="doSearch(document.getElementById('q').value)">Search</button>
+  <div class="box">
+    <h1>Redirecting…</h1>
+    <p>You're being sent to alphatimeshareconsultants.com.</p>
+    <a href="https://alphatimeshareconsultants.com/">Continue to Alpha Timeshare Consultants &rarr;</a>
   </div>
-
-  <div id="results" class="results"></div>
-
-  <hr class="divider">
-  <button class="new-btn" onclick="newClient()">+ Start New Client Session</button>
-
-  <div class="all-section" id="all-section" style="margin-top:16px"></div>
-</div>
-
-<script>
-var SK = "atc_clients_v2", AK = "atc_active";
-function ga() { try { return JSON.parse(localStorage.getItem(SK)) || {}; } catch(e) { return {}; } }
-function sa(o) { localStorage.setItem(SK, JSON.stringify(o)); }
-var STAGES = ["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
-function fc(n) { return "$" + Math.round(n||0).toLocaleString(); }
-function fd(ts) { if(!ts) return ""; return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
-
-function clientCard(slug, d) {
-  var nm = ((d.firstName||"") + " " + (d.lastName||"")).trim() || "Unnamed";
-  var resort = d.resort || "No resort";
-  var phone = d.phone || "";
-  var mo = (parseFloat(d.monthlyMortgage)||0) + ((parseFloat(d.maitFees)||0)/12);
-  var stage = STAGES[typeof d.vitalsStage==="number" ? d.vitalsStage : 1] || "Assessment";
-  var quote = d.alphaFee ? fc(d.alphaFee) : "";
-  var cls = d.clientClass || "";
-  var updated = fd(d._updated);
-
-  return '<div class="result-item" onclick="openClient(\''+slug+'\')">'+
-    '<div class="ri-name">'+nm+(cls?'<span class="ri-stage">'+cls+'</span>':'')+'</div>'+
-    '<div class="ri-resort">'+resort+'</div>'+
-    '<div class="ri-row">'+
-      (phone?'<div class="ri-chip">📞 <span>'+phone+'</span></div>':'')+
-      (mo>0?'<div class="ri-chip">Monthly <span>'+fc(mo)+'</span></div>':'')+
-      (quote?'<div class="ri-chip">Quote <span>'+quote+'</span></div>':'')+
-      '<div class="ri-chip">Stage <span>'+stage+'</span></div>'+
-      (updated?'<div class="ri-chip">Updated <span>'+updated+'</span></div>':'')+
-    '</div>'+
-  '</div>';
-}
-
-function doSearch(q) {
-  var all = ga();
-  var keys = Object.keys(all);
-  var el = document.getElementById("results");
-
-  if (!q || q.trim().length === 0) {
-    renderAll();
-    el.innerHTML = "";
-    return;
-  }
-
-  q = q.toLowerCase().trim();
-  var matches = keys.filter(function(slug) {
-    var d = all[slug];
-    var nm = ((d.firstName||"") + " " + (d.lastName||"")).toLowerCase();
-    var resort = (d.resort||"").toLowerCase();
-    var phone = (d.phone||"").toLowerCase().replace(/\D/g,"");
-    var qPhone = q.replace(/\D/g,"");
-    return nm.indexOf(q) >= 0 ||
-           resort.indexOf(q) >= 0 ||
-           (qPhone.length >= 4 && phone.indexOf(qPhone) >= 0) ||
-           slug.indexOf(q) >= 0;
-  });
-
-  // Sort by most recently updated
-  matches.sort(function(a,b) {
-    return (all[b]._updated||0) - (all[a]._updated||0);
-  });
-
-  if (matches.length === 0) {
-    el.innerHTML = '<div class="empty">No clients found for "'+q+'"</div>';
-    return;
-  }
-
-  el.innerHTML = '<div class="count-badge">'+matches.length+' result'+(matches.length!==1?'s':'')+'</div>' +
-    matches.map(function(slug) { return clientCard(slug, all[slug]); }).join("");
-}
-
-function renderAll() {
-  var all = ga();
-  var keys = Object.keys(all);
-  var sec = document.getElementById("all-section");
-
-  if (keys.length === 0) {
-    sec.innerHTML = '<div class="empty" style="padding:12px 0">No saved clients yet.</div>';
-    return;
-  }
-
-  // Sort by most recently updated
-  keys.sort(function(a,b) {
-    return (all[b]._updated||0) - (all[a]._updated||0);
-  });
-
-  var recentKeys = keys.slice(0, 8);
-  var html = '<div class="all-label">Recent clients ('+keys.length+' total)</div>';
-  html += recentKeys.map(function(slug) {
-    var d = all[slug];
-    var nm = ((d.firstName||"") + " " + (d.lastName||"")).trim() || "Unnamed";
-    return '<span class="tag" onclick="openClient(\''+slug+'\')">'+nm+'</span>';
-  }).join("");
-  if (keys.length > 8) html += '<span class="tag" onclick="showAll()">+' + (keys.length-8) + ' more</span>';
-  sec.innerHTML = html;
-}
-
-function showAll() {
-  var all = ga();
-  var keys = Object.keys(all);
-  keys.sort(function(a,b){ return (all[b]._updated||0) - (all[a]._updated||0); });
-  var sec = document.getElementById("all-section");
-  var html = '<div class="all-label">All clients ('+keys.length+')</div>';
-  html += keys.map(function(slug) {
-    var d = all[slug];
-    var nm = ((d.firstName||"") + " " + (d.lastName||"")).trim() || "Unnamed";
-    return '<span class="tag" onclick="openClient(\''+slug+'\')">'+nm+'</span>';
-  }).join("");
-  sec.innerHTML = html;
-}
-
-function openClient(slug) {
-  localStorage.setItem(AK, slug);
-  location.href = "/vitals/";
-}
-
-function newClient() {
-  // Clear active client and go to vitals to create new
-  localStorage.removeItem(AK);
-  location.href = "/vitals/";
-}
-
-// Also handle Enter key
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") doSearch(document.getElementById("q").value);
-});
-
-// On load, show recent clients
-renderAll();
-</script>
 </body>
 </html>
