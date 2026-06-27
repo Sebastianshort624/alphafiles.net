@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Exit Program Summary — Alpha Timeshare Consultants</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+
+  body{margin:0;padding:0;background:#eef1f5;font-family:'Barlow Condensed',Arial,sans-serif;color:#1a1a1a}
+  .wrapper{max-width:660px;margin:0 auto;background:#ffffff}
+  .header{background:#1B2A4A;padding:34px 36px 26px;text-align:center}
+  .header h1{font-family:'Cormorant Garamond',Georgia,serif;color:#ffffff;font-size:26px;letter-spacing:1px;margin:0;font-weight:600}
+  .header .gold-line{width:70px;height:2px;background:#C8960C;margin:12px auto}
+  .header p{color:#C8960C;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0}
+  .section{padding:30px 36px}
+  .greeting{font-size:17px;line-height:1.6;margin-bottom:6px}
+  .greeting strong{color:#1B2A4A}
+  .sub-greet{font-size:14px;color:#3d4450;margin-bottom:22px;line-height:1.6}
+
+  h2.subhead{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:21px;margin:30px 0 14px;border-bottom:2px solid #C8960C;padding-bottom:8px}
+
+  .resort-card{background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:16px}
+  .resort-card .rrow{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #e6eaef}
+  .resort-card .rrow:last-child{border-bottom:none}
+  .resort-card .rrow span:last-child{font-weight:700;color:#1B2A4A}
+  .resort-card .rrow.behind span:last-child{color:#c0392b}
+
+  .numbers-grid{display:flex;gap:14px;margin:18px 0 6px}
+  .num-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:14px;text-align:center}
+  .num-card.total{background:#1B2A4A;border-color:#1B2A4A}
+  .num-card.total .label{color:#C8960C}
+  .num-card.total .value{color:#fff}
+  .num-card.total .sub{color:#dde5f0}
+  .num-card.behind{background:#fdf0ef;border-color:#e8a09a}
+  .num-card.behind .label{color:#c0392b}
+  .num-card.behind .value{color:#c0392b}
+  .num-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#3d4450;margin-bottom:6px}
+  .num-card .value{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:#1B2A4A;font-weight:700}
+  .num-card .sub{font-size:12.5px;color:#3d4450;margin-top:4px;font-weight:600}
+
+  .total-bar{background:#1B2A4A;border-radius:6px;padding:20px 24px;text-align:center;margin:22px 0}
+  .total-bar .lbl{color:#C8960C;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  .total-bar .big{color:#ffffff;font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
+  .total-bar .sub{color:#dde5f0;font-size:13px;margin-top:6px}
+
+  .ct-cols{display:flex;gap:14px}
+  .ct-cols table.ct{flex:1}
+  table.ct{width:100%;border-collapse:collapse;margin:12px 0 6px;font-size:14px}
+  table.ct th{background:#1B2A4A;color:#fff;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:right}
+  table.ct th:first-child{text-align:left}
+  table.ct td{padding:11px 12px;border-bottom:1px solid #e3e7ec;text-align:right}
+  table.ct td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
+  table.ct tr.hl td{background:#fdf8ec;font-weight:700}
+
+  .vs-row{display:flex;gap:14px;margin:20px 0 8px;align-items:stretch}
+  .vs-card{flex:1;border:2px solid #ddd;border-radius:6px;padding:18px;text-align:center}
+  .vs-card.resort{background:#fdf0ef;border-color:#e8a09a}
+  .vs-card.alpha{background:#e8f5ee;border-color:#1a7a3c}
+  .vs-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6472;margin-bottom:8px}
+  .vs-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
+  .vs-card.resort .vs-val{color:#c0392b}
+  .vs-card.alpha .vs-val{color:#1a7a3c}
+  .vs-sub{font-size:12px;color:#5a6472;margin-top:6px;font-weight:600}
+
+  .save-strip{background:#1a7a3c;color:#fff;border-radius:6px;padding:16px;text-align:center;margin-bottom:8px}
+  .save-strip .sl{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+  .save-strip .sa{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700}
+
+  .bestvalue{margin-top:10px;text-align:center;border:2px solid #1B2A4A;border-radius:8px;padding:22px 20px}
+  .bestvalue .eyebrow{color:#C8960C;font-weight:700;letter-spacing:1.5px;font-size:12px;text-transform:uppercase}
+  .bestvalue .price{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:38px;font-weight:700;margin:6px 0 4px}
+  .bestvalue .desc{color:#4a4f57;font-size:13px}
+
+  .fin-tabs table{width:100%;border-collapse:collapse}
+  .fin-tabs th{background:#f5f7fa;color:#1B2A4A;border:1px solid #dde3ea;padding:9px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .fin-tabs td{border:1px solid #dde3ea;padding:9px;text-align:center;font-size:13px}
+  .fin-tabs .pct{font-size:11px;color:#5a6472;font-weight:600}
+  .fin-note{font-size:12px;color:#4a5260;margin-top:10px;line-height:1.5}
+
+  .process-list{margin:10px 0 0;padding:0;list-style:none}
+  .process-list li{display:flex;gap:10px;font-size:14px;line-height:1.5;margin-bottom:10px}
+  .process-list .num{flex:0 0 22px;height:22px;border-radius:50%;background:#1B2A4A;color:#C8960C;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  .pullquote{margin:30px 0 0;border-left:4px solid #C8960C;padding:6px 0 6px 18px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#1B2A4A;font-size:18px}
+
+  .signature{margin-top:28px;font-size:15px;line-height:1.6}
+  .signature .name{color:#1B2A4A;font-weight:700;font-size:16px}
+
+  .disclosure{background:#f5f7fa;padding:18px 36px 26px;font-size:11.5px;color:#5a6472;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <h1>ALPHA TIMESHARE CONSULTANTS</h1>
+    <div class="gold-line"></div>
+    <p>Your Exit Program Summary</p>
+  </div>
+
+  <div class="section">
+    <p class="greeting">Hi <strong>Amandeep &amp; Surinder</strong>,</p>
+    <p class="sub-greet">Here's a clean summary of where things stand with your Embarc Whistler contract and what your Alpha program looks like.</p>
+
+    <h2 class="subhead">Resort 1 — Embarc Whistler</h2>
+    <div class="resort-card" style="margin-bottom:14px">
+      <div class="rrow"><span>Purchased</span><span>Feb 2020</span></div>
+      <div class="rrow"><span>Purchase Price</span><span>$37,000</span></div>
+      <div class="rrow"><span>Mortgage Status</span><span>Paid Off</span></div>
+      <div class="rrow behind"><span>Maintenance Fees Behind</span><span>1 Year ($2,000)</span></div>
+      <div class="rrow"><span>Status</span><span>Active</span></div>
+    </div>
+
+    <div class="numbers-grid">
+      <div class="num-card">
+        <div class="label">Maintenance Fees</div>
+        <div class="value">$2,000/yr</div>
+        <div class="sub">$166.67/mo</div>
+      </div>
+      <div class="num-card behind">
+        <div class="label">Currently Behind</div>
+        <div class="value">$2,000</div>
+        <div class="sub">1 year of unpaid maintenance fees</div>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <div class="lbl">Your Annual Obligation</div>
+      <div class="big">$2,000/yr</div>
+      <div class="sub">$166.67/mo equivalent &mdash; with no mortgage left to pay</div>
+    </div>
+
+    <h2 class="subhead">Resort Cost Over Time</h2>
+    <div class="ct-cols">
+      <table class="ct">
+        <tr><th>Years</th><th>Resort Cost</th></tr>
+        <tr><td>1 Year</td><td>$2,000</td></tr>
+        <tr><td>3 Years</td><td>$6,493</td></tr>
+        <tr class="hl"><td>5 Years</td><td>$11,733</td></tr>
+      </table>
+      <table class="ct">
+        <tr><th>Years</th><th>Resort Cost</th></tr>
+        <tr><td>10 Years</td><td>$28,973</td></tr>
+        <tr><td>20 Years</td><td>$91,524</td></tr>
+        <tr class="hl"><td>30 Years</td><td>$226,566</td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#4a5260;margin-top:4px;font-weight:500">Maintenance fees are projected to grow at an average <strong>8% per year</strong>. The real number could be higher or lower depending on Embarc's actual increases.</p>
+
+    <h2 class="subhead">Resort Cost vs. Alpha Program</h2>
+    <div class="vs-row">
+      <div class="vs-card resort">
+        <div class="vs-lbl">Resort &mdash; 5-Year Cost</div>
+        <div class="vs-val">$11,733</div>
+        <div class="vs-sub">Keeps going every year after</div>
+      </div>
+      <div class="vs-card alpha">
+        <div class="vs-lbl">Alpha &mdash; Exit Program</div>
+        <div class="vs-val">$4,495</div>
+        <div class="vs-sub">One time &mdash; then $0 forever</div>
+      </div>
+    </div>
+    <div class="save-strip">
+      <div class="sl">You Save Over 5 Years</div>
+      <div class="sa">$7,238</div>
+    </div>
+
+    <h2 class="subhead">Your Program Cost</h2>
+    <div class="bestvalue">
+      <div class="eyebrow">Total Program Cost</div>
+      <div class="price">$4,495</div>
+      <div class="desc">Covers your Embarc Whistler contract under one filing.</div>
+    </div>
+
+    <div class="fin-tabs">
+      <h2 class="subhead">Financing Options</h2>
+      <table>
+        <tr><th>Term</th><th>Monthly</th><th>Rate</th><th>Total</th></tr>
+        <tr><td>12 Mo</td><td>$375/mo</td><td class="pct">0% Interest</td><td>$4,495</td></tr>
+        <tr><td>24 Mo</td><td>$229/mo</td><td class="pct">20% Annual</td><td>$5,491</td></tr>
+        <tr><td>36 Mo</td><td>$167/mo</td><td class="pct">20% Annual</td><td>$6,014</td></tr>
+        <tr><td>48 Mo</td><td>$137/mo</td><td class="pct">20% Annual</td><td>$6,566</td></tr>
+        <tr><td>60 Mo</td><td>$119/mo</td><td class="pct">20% Annual</td><td>$7,145</td></tr>
+      </table>
+      <p class="fin-note">0% interest applies if paid in full within 12 months. Terms beyond 12 months are financed at 20% annual.</p>
+    </div>
+
+    <h2 class="subhead">What Happens Next</h2>
+    <ul class="process-list">
+      <li><span class="num">1</span><span>We get your Embarc Whistler file verified and your enrollment finalized.</span></li>
+      <li><span class="num">2</span><span>Your exit filing is submitted &mdash; this addresses both the contract and the current maintenance fee balance.</span></li>
+      <li><span class="num">3</span><span>You stop paying the resort directly once your exit filing is active &mdash; we'll walk you through exactly when.</span></li>
+      <li><span class="num">4</span><span>You're notified in writing once your contract is fully released.</span></li>
+    </ul>
+
+    <p class="pullquote">"One filing, one price &mdash; $4,495 closes out $11,733 of future resort cost over the next five years alone."</p>
+
+    <div class="signature">
+      Best,<br>
+      <span class="name">Sebastian Short</span><br>
+      Alpha Timeshare Consultants<br>
+      Ext. 134 &middot; (877) 848-3948<br>
+      Sebastian@AlphaTimeshareConsultants.com
+    </div>
+  </div>
+
+  <div class="disclosure">
+    This summary reflects the information on file for Amandeep &amp; Surinder Bath as of Jun 27, 2026 and is provided for informational purposes regarding your timeshare exit program enrollment. It is not a binding offer or guarantee of resort response time. Alpha Timeshare Consultants is not a law firm and does not provide legal advice. Pricing and financing terms are subject to the signed agreement on file.
+  </div>
+
+</div>
+</body>
+</html>
