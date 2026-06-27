@@ -747,9 +747,7 @@ function _topSaveClick(){
 <select class="lender-select" id="l2-term" onchange="updLenders()">
 <option value="12">12 Mo — 0% Interest</option>
 <option value="24">24 Mo — 20% Annual</option>
-<option value="36">36 Mo — 20% Annual</option>
-<option value="48">48 Mo — 20% Annual</option>
-<option value="60" selected>60 Mo — 20% Annual</option>
+<option value="36" selected>36 Mo — 20% Annual</option>
 </select>
 <div class="lender-mo"><span class="lbl">Monthly Payment</span><span id="l2-mo">—</span></div>
 </div>
@@ -870,7 +868,7 @@ function updLenders(){
   var l1amt=15000;
   var l2amt=Math.min(fee-15000,13000);
   var l1term=parseInt(document.getElementById('l1-term').value)||60;
-  var l2term=parseInt(document.getElementById('l2-term').value)||60;
+  var l2term=parseInt(document.getElementById('l2-term').value)||36;
   var r1=fi(l1amt,l1term,l1term===12?0:0.20);
   var r2=fi(l2amt,l2term,l2term===12?0:0.20);
   document.getElementById('l1-mo').textContent=fmtd(r1.mo)+'/mo';
