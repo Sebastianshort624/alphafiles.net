@@ -605,8 +605,13 @@ function _topSaveClick(){
 <div class="main-content">
 <div class="page-wrap">
 
-<div class="page-title">Your Service Quote</div>
-<div class="page-sub">What you'll keep paying — vs. what it costs to stop.</div>
+<div class="page-title" id="pg-title">Your Service Quote</div>
+<div class="page-sub" id="pg-sub">What you'll keep paying — vs. what it costs to stop.</div>
+
+<div class="lang-toggle-row" style="display:flex;gap:8px;margin:10px 0 18px">
+  <button id="lang-en" class="lang-btn active" onclick="setLang('en')" style="padding:7px 16px;border-radius:6px;border:1.5px solid #1B2A4A;background:#1B2A4A;color:#fff;font-weight:700;font-size:12px;cursor:pointer">English</button>
+  <button id="lang-es" class="lang-btn" onclick="setLang('es')" style="padding:7px 16px;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;color:#1B2A4A;font-weight:700;font-size:12px;cursor:pointer">Español</button>
+</div>
 
 <div class="client-bar">
 <div class="cb-f"><strong>Client</strong><span id="b-name">—</span></div>
@@ -621,7 +626,7 @@ function _topSaveClick(){
 </div>
 
 <div class="email-action-row">
-<button class="email-btn" onclick="openEmailQuote()">📧 Email This Quote</button>
+<button class="email-btn" id="email-btn" onclick="openEmailQuote()">📧 Email This Quote</button>
 </div>
 
 <!-- MSRP COMPARISON -->
@@ -882,7 +887,106 @@ function updLenders(){
   if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, disc1:d1, disc2:d2, l1term:l1term, l2term:l2term, selMo:_selMo});
 }
 
+// ── LANGUAGE TOGGLE ──────────────────────────────────────────────
+var _lang = 'en';
+
+var T = {
+  en: {
+    pageTitle: "Your Service Quote",
+    pageSub: "What you'll keep paying — vs. what it costs to stop.",
+    emailBtn: "📧 Email This Quote",
+    greeting: function(name,resort){ return 'Hi <strong>'+name+'</strong>,<br><br>Here\'s a summary of your '+resort+' numbers and what it costs to exit with Alpha.'; },
+    resortLbl: "Resort — 5-Year Cost",
+    alphaLbl: "Alpha — Exit Fee",
+    savedLbl: "You Save Over 5 Years",
+    sectionLbl: "Monthly Payment Breakdown",
+    lender1: "Lender 1 Payment",
+    lender2: "Lender 2 Payment",
+    planPayment: function(mo){ return mo+'-Month Plan Payment'; },
+    totalAlpha: "Total Alpha Payment",
+    payInFull: "Pay in Full",
+    oneTime: " one-time",
+    currentPayments: "Current Payments",
+    monthlySavings: "Monthly Savings",
+    monthlySaved: function(v){ return v+'/mo saved'; },
+    includesTitle: "OUR EXIT PROGRAM INCLUDES",
+    includes: [
+      "Written Money-Back Guarantee upon Program Completion",
+      "Permanent Legal Termination of Your Timeshare",
+      "Elimination of Future Maintenance Obligations",
+      "Resolution of Delinquent Fees",
+      "Credit Protection &amp; Repair Support",
+      "Proof of Performance Documentation",
+      "Consumer Protection &amp; BBB Credibility"
+    ],
+    closingQuote: "&ldquo;Would you rather be putting those payments toward the problem or toward the solution?&rdquo;",
+    sigThanks: "Thank you,",
+    sigName: "Sebastian Short",
+    sigTitle: "Account Specialist",
+    sigCompany: "ALPHA TIMESHARE CONSULTANTS",
+    sigBiz: "Business:",
+    sigOffice: "Office:",
+    sigEmail: "Email:",
+    disclaimer: "This summary is for informational purposes regarding your timeshare exit program enrollment and is not a binding offer until a signed agreement is executed. Pricing and financing terms are subject to change.",
+    autoDisclosure: "Automated Disclosure. This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender. Unauthorized review, dissemination, distribution, copying or other use of this information is strictly prohibited. If NDANC is signed, all electronic communications are under that NDANC. Thank you for your cooperation."
+  },
+  es: {
+    pageTitle: "Su Cotización de Servicio",
+    pageSub: "Lo que seguirá pagando — frente a lo que cuesta detenerlo.",
+    emailBtn: "📧 Enviar Esta Cotización",
+    greeting: function(name,resort){ return 'Hola <strong>'+name+'</strong>,<br><br>Aquí tiene un resumen de sus números de '+resort+' y lo que cuesta salir con Alpha.'; },
+    resortLbl: "Resort — Costo a 5 Años",
+    alphaLbl: "Alpha — Tarifa de Salida",
+    savedLbl: "Usted Ahorra en 5 Años",
+    sectionLbl: "Desglose del Pago Mensual",
+    lender1: "Pago del Prestamista 1",
+    lender2: "Pago del Prestamista 2",
+    planPayment: function(mo){ return 'Pago del Plan a '+mo+' Meses'; },
+    totalAlpha: "Pago Total de Alpha",
+    payInFull: "Pago Completo",
+    oneTime: " único pago",
+    currentPayments: "Pagos Actuales",
+    monthlySavings: "Ahorro Mensual",
+    monthlySaved: function(v){ return v+'/mes ahorrado'; },
+    includesTitle: "NUESTRO PROGRAMA DE SALIDA INCLUYE",
+    includes: [
+      "Garantía Escrita de Devolución de Dinero al Completar el Programa",
+      "Terminación Legal Permanente de Su Timeshare",
+      "Eliminación de Obligaciones Futuras de Mantenimiento",
+      "Resolución de Cuotas Atrasadas",
+      "Apoyo de Protección y Reparación de Crédito",
+      "Documentación de Comprobación de Resultados",
+      "Protección al Consumidor y Credibilidad BBB"
+    ],
+    closingQuote: "&ldquo;¿Preferiría destinar esos pagos al problema o a la solución?&rdquo;",
+    sigThanks: "Gracias,",
+    sigName: "Sebastian Short",
+    sigTitle: "Especialista de Cuenta",
+    sigCompany: "ALPHA TIMESHARE CONSULTANTS",
+    sigBiz: "Negocios:",
+    sigOffice: "Oficina:",
+    sigEmail: "Correo:",
+    disclaimer: "Este resumen es de carácter informativo sobre su inscripción en el programa de salida del timeshare y no constituye una oferta vinculante hasta que se firme un acuerdo. Los precios y condiciones de financiamiento están sujetos a cambios.",
+    autoDisclosure: "Divulgación Automática. Este correo electrónico y cualquier archivo transmitido con él son confidenciales y están destinados únicamente para el uso de la persona o entidad a la que están dirigidos. Si ha recibido este correo por error, notifique al remitente. La revisión, difusión, distribución, copia u otro uso no autorizado de esta información está estrictamente prohibido. Si se ha firmado un NDANC, todas las comunicaciones electrónicas están sujetas a ese NDANC. Gracias por su cooperación."
+  }
+};
+
+function setLang(lang){
+  _lang = lang;
+  document.getElementById('lang-en').classList.toggle('active', lang==='en');
+  document.getElementById('lang-es').classList.toggle('active', lang==='es');
+  document.getElementById('lang-en').style.background = lang==='en' ? '#1B2A4A' : '#fff';
+  document.getElementById('lang-en').style.color = lang==='en' ? '#fff' : '#1B2A4A';
+  document.getElementById('lang-es').style.background = lang==='es' ? '#1B2A4A' : '#fff';
+  document.getElementById('lang-es').style.color = lang==='es' ? '#fff' : '#1B2A4A';
+  document.getElementById('pg-title').textContent = T[lang].pageTitle;
+  document.getElementById('pg-sub').textContent = T[lang].pageSub;
+  document.getElementById('email-btn').textContent = T[lang].emailBtn;
+}
+// ── END LANGUAGE TOGGLE ──────────────────────────────────────────
+
 function openEmailQuote(){
+  var L = T[_lang];
   var clientName=(document.getElementById('b-name')||{}).textContent||'—';
   var resort=(document.getElementById('b-resort')||{}).textContent||'Your Resort';
   var resortCost5=(document.getElementById('msrp')||{}).textContent||'—';
@@ -896,22 +1000,26 @@ function openEmailQuote(){
     l1mo=parseFloat((document.getElementById('l1-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
     l2mo=parseFloat((document.getElementById('l2-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
     totalAlphaMo=l1mo+l2mo;
-    rows+='<tr><td class="et-lbl">Lender 1 Payment</td><td class="et-val">'+fmtd(l1mo)+'/mo</td></tr>';
-    rows+='<tr><td class="et-lbl">Lender 2 Payment</td><td class="et-val">'+fmtd(l2mo)+'/mo</td></tr>';
+    rows+='<tr><td class="et-lbl">'+L.lender1+'</td><td class="et-val">'+fmtd(l1mo)+'/mo</td></tr>';
+    rows+='<tr><td class="et-lbl">'+L.lender2+'</td><td class="et-val">'+fmtd(l2mo)+'/mo</td></tr>';
   } else if(_selMo){
     var selMoTxt=(document.getElementById('sd-mo')||{}).textContent||'0';
     totalAlphaMo=parseFloat(selMoTxt.replace(/[^0-9.]/g,''))||0;
-    rows+='<tr><td class="et-lbl">'+_selMo+'-Month Plan Payment</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>';
+    rows+='<tr><td class="et-lbl">'+L.planPayment(_selMo)+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>';
   } else {
-    rows+='<tr><td class="et-lbl">Pay in Full</td><td class="et-val">'+alphaFeeTxt+' one-time</td></tr>';
+    rows+='<tr><td class="et-lbl">'+L.payInFull+'</td><td class="et-val">'+alphaFeeTxt+L.oneTime+'</td></tr>';
   }
 
   var curMoNum=parseFloat(curMoTxt.replace(/[^0-9.]/g,''))||0;
   var monthlySavings=curMoNum-totalAlphaMo;
 
   var totalRow = (twoLenderActive)
-    ? '<tr class="et-total"><td class="et-lbl">Total Alpha Payment</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>'
+    ? '<tr class="et-total"><td class="et-lbl">'+L.totalAlpha+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>'
     : '';
+
+  var includesHtml = '<ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:#333">'
+    + L.includes.map(function(item){ return '<li>'+item+'</li>'; }).join('')
+    + '</ul>';
 
   var html =
 '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Your Service Quote — Alpha Timeshare Consultants</title>'+
@@ -947,23 +1055,37 @@ function openEmailQuote(){
 '.sig{margin-top:26px;font-size:14px;line-height:1.6}'+
 '.sig .nm{color:#1B2A4A;font-weight:700}'+
 '.disc{background:#f5f7fa;padding:16px 30px;font-size:10.5px;color:#999;line-height:1.5}'+
+'.incl{margin:24px 0;padding:16px 18px;background:#f9faf9;border-left:3px solid #1a7a3c;border-radius:0 4px 4px 0}'+
+'.incl-title{font-size:12px;font-weight:700;letter-spacing:.5px;color:#1B2A4A;margin-bottom:10px}'+
+'.cq{margin:22px 0;padding:16px 18px;background:#fbf7ec;border-left:3px solid #C8960C;font-style:italic;font-size:14px;color:#444;line-height:1.6}'+
+'.sig-block{margin-top:8px;font-size:13px;line-height:1.7;color:#333}'+
 '</style></head><body><div class="wrap">'+
-'<div class="hdr"><h1>ALPHA TIMESHARE CONSULTANTS</h1><p>Your Service Quote</p></div>'+
+'<div class="hdr"><h1>ALPHA TIMESHARE CONSULTANTS</h1><p>'+L.pageTitle+'</p></div>'+
 '<div class="body">'+
-'<div class="greet">Hi <strong>'+clientName+'</strong>,<br><br>Here\'s a summary of your '+resort+' numbers and what it costs to exit with Alpha.</div>'+
+'<div class="greet">'+L.greeting(clientName,resort)+'</div>'+
 '<div class="vs-row">'+
-'<div class="vs-card resort"><div class="vs-lbl">Resort — 5-Year Cost</div><div class="vs-val">'+resortCost5+'</div></div>'+
-'<div class="vs-card alpha"><div class="vs-lbl">Alpha — Exit Fee</div><div class="vs-val">'+alphaFeeTxt+'</div></div>'+
+'<div class="vs-card resort"><div class="vs-lbl">'+L.resortLbl+'</div><div class="vs-val">'+resortCost5+'</div></div>'+
+'<div class="vs-card alpha"><div class="vs-lbl">'+L.alphaLbl+'</div><div class="vs-val">'+alphaFeeTxt+'</div></div>'+
 '</div>'+
-'<div class="save-strip"><div class="sl">You Save Over 5 Years</div><div class="sa">'+savings5+'</div></div>'+
-'<h2 class="sec">Monthly Payment Breakdown</h2>'+
+'<div class="save-strip"><div class="sl">'+L.savedLbl+'</div><div class="sa">'+savings5+'</div></div>'+
+'<h2 class="sec">'+L.sectionLbl+'</h2>'+
 '<table class="et">'+rows+totalRow+
-'<tr><td class="et-lbl">Current Payments</td><td class="et-val">'+fmtd(curMoNum)+'/mo</td></tr>'+
-'<tr class="et-savings"><td class="et-lbl">Monthly Savings</td><td class="et-val">'+(monthlySavings>0?fmtd(monthlySavings)+'/mo saved':'—')+'</td></tr>'+
+'<tr><td class="et-lbl">'+L.currentPayments+'</td><td class="et-val">'+fmtd(curMoNum)+'/mo</td></tr>'+
+'<tr class="et-savings"><td class="et-lbl">'+L.monthlySavings+'</td><td class="et-val">'+(monthlySavings>0?L.monthlySaved(fmtd(monthlySavings)):'—')+'</td></tr>'+
 '</table>'+
-'<div class="sig">Best,<br><span class="nm">Sebastian Short</span><br>Alpha Timeshare Consultants<br>Ext. 134 &middot; (877) 848-3948<br>Sebastian@AlphaTimeshareConsultants.com</div>'+
+'<div class="incl"><div class="incl-title">'+L.includesTitle+'</div>'+includesHtml+'</div>'+
+'<div class="cq">'+L.closingQuote+'</div>'+
+'<div class="sig">'+L.sigThanks+'<br>'+
+'<div class="sig-block">'+
+'<span class="nm">'+L.sigName+'</span> &middot; '+L.sigTitle+'<br>'+
+L.sigCompany+'<br>'+
+L.sigBiz+' 1 (877) 848-3948 Ext. 134<br>'+
+L.sigOffice+' 1 (689) 233-3259<br>'+
+L.sigEmail+' Sebastian@AlphaTimeshareConsultants.com'+
+'</div></div>'+
 '</div>'+
-'<div class="disc">This summary is for informational purposes regarding your timeshare exit program enrollment and is not a binding offer until a signed agreement is executed. Pricing and financing terms are subject to change.</div>'+
+'<div class="disc">'+L.disclaimer+'</div>'+
+'<div class="disc">'+L.autoDisclosure+'</div>'+
 '</div></body></html>';
 
   var win = window.open('', '_blank');
