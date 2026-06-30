@@ -338,7 +338,9 @@ var _PG=[
   {n:13,ic:"\ud83d\udccb",lb:"Recap",url:"/recap/"},
   {n:14,ic:"\u2705",lb:"Client Acknowledgment",url:"/checklist/"},
   {n:15,ic:"\ud83d\udcdd",lb:"Alpha Contract",url:"/contract/"},
-  {n:16,ic:"\ud83c\udf89",lb:"Let's Be Timeshare Free",url:"/free/"}
+  {n:16,ic:"\ud83c\udf89",lb:"Let's Be Timeshare Free",url:"/free/"},
+  {n:"EN",ic:"\ud83d\udcd1",lb:"Enrollment Agreement",url:"/agreement/"},
+  {n:"ES",ic:"\ud83d\udcd1",lb:"Acuerdo (Español)",url:"/acuerdo/"}
 ];
 
 function buildSB(){
@@ -370,7 +372,8 @@ function buildSB(){
 
   var nav=_PG.map(function(p){
     var act=cur===p.url;
-    return "<a href='"+p.url+"' style='display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:12px;font-weight:500;border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'><span style='font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:20px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.45)")+"'>"+p.n+"</span><span style='flex:1'>"+p.ic+" "+p.lb+"</span></a>";
+    var divider = (p.url==="/agreement/") ? "<div style='margin:10px 10px 4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px'>Documents</div>" : "";
+    return divider+"<a href='"+p.url+"' style='display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:12px;font-weight:500;border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'><span style='font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:20px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.45)")+"'>"+p.n+"</span><span style='flex:1'>"+p.ic+" "+p.lb+"</span></a>";
   }).join("");
 
   var today=d&&d._todayAppt?d._todayAppt:"";
