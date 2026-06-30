@@ -53,6 +53,14 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 .ic-lbl{font-size:12px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:3px}
 .ic-sub{font-size:12px;color:#6b7280;line-height:1.3}
 </style>
+
+<style id="atc-lang-css">
+/* Language show/hide system — controlled by data-lang attribute on body */
+[data-lang="en"] .es-only { display: none !important; }
+[data-lang="es"] .en-only { display: none !important; }
+/* Default to English until atcApplyLang() fires */
+body:not([data-lang]) .es-only { display: none !important; }
+</style>
 </head>
 <body>
 <style id="atc-sb-css">
@@ -304,6 +312,13 @@ function buildSB(){
   html+="<button data-rpt='crm' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px'>CRM Note</button>";
   html+="<button data-rpt='sms' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px'>SMS</button>";
   html+="<button data-rpt='full' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer'>Full Summary</button></div>";
+  html+="<div style='padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)'>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px'>Language / Idioma</div>";
+  var cl=window.atcGetLang();
+  html+="<div style='display:flex;gap:5px'>";
+  html+="<button id='_lgen' onclick=\"window.atcSetLang('en')\" style='flex:1;padding:5px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;background:"+(cl==='en'?'#C8960C':'rgba(255,255,255,.1)')+";color:"+(cl==='en'?'#fff':'rgba(255,255,255,.6)')+"'>EN</button>";
+  html+="<button id='_lges' onclick=\"window.atcSetLang('es')\" style='flex:1;padding:5px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;background:"+(cl==='es'?'#C8960C':'rgba(255,255,255,.1)')+";color:"+(cl==='es'?'#fff':'rgba(255,255,255,.6)')+"'>ES</button>";
+  html+="</div></div>";
 
   el.innerHTML=html;
 
@@ -324,6 +339,47 @@ function buildSB(){
   if(calEl)calEl.addEventListener("click",function(){window.addCal();});
 }
 window.buildSB=buildSB;
+
+// ── ATC LANGUAGE SYSTEM ─────────────────────────────────────────────────────
+// Language preference stored in localStorage as 'atc_lang'.
+// Pages use CSS classes .en-only / .es-only to show/hide content.
+// Auto-detects from the active client's 'lang' field, with manual override.
+window.atcGetLang = function(){
+  return localStorage.getItem('atc_lang') || 'en';
+};
+window.atcSetLang = function(lang){
+  localStorage.setItem('atc_lang', lang);
+  // Also save to active client record so it persists with the client
+  var s=localStorage.getItem('atc_active');
+  if(s){
+    try{
+      var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+      if(all[s]){ all[s].lang=lang; localStorage.setItem('atc_clients_v2',JSON.stringify(all)); }
+    }catch(e){}
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.body.setAttribute('data-lang', lang);
+  buildSB(); // refresh sidebar toggle state
+};
+window.atcApplyLang = function(){
+  // Auto-detect from client record, fall back to stored preference, then EN
+  var lang = 'en';
+  try{
+    var s=localStorage.getItem('atc_active');
+    if(s){
+      var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+      if(all[s] && all[s].lang) lang = all[s].lang;
+      else lang = localStorage.getItem('atc_lang') || 'en';
+    } else {
+      lang = localStorage.getItem('atc_lang') || 'en';
+    }
+  }catch(e){ lang='en'; }
+  localStorage.setItem('atc_lang', lang);
+  document.documentElement.setAttribute('data-lang', lang);
+  document.body.setAttribute('data-lang', lang);
+  return lang;
+};
+// ── END LANGUAGE SYSTEM ─────────────────────────────────────────────────────
 
 function initBanner(){
   var d=_aD();
@@ -965,5 +1021,13 @@ if(document.readyState==='loading'){
 
 
 
+<script>
+(function(){
+  if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  else document.addEventListener('DOMContentLoaded', function(){
+    if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  });
+})();
+</script>
 </body>
 </html>
