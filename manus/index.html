@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thomas &amp; Cozette Manus — Alpha Timeshare Consultants</title>
+
+<!-- ── LIVE SCREEN-SHARE SYNC (PILOT) ──────────────────────────────
+     Pushes this page's fee/term inputs to Firestore as you edit them.
+     A second browser at /quote/?view=client subscribes and mirrors
+     the same numbers live, read-only — no screen-sharing software needed.
+     Pilot scope: this page only. Does not touch any other page's data
+     or the existing client-record system (atc_clients_v2). -->
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const sessionRef = doc(db, "liveSession", "active");
+
+const params = new URLSearchParams(window.location.search);
+const isClientView = params.get('view') === 'client';
+window.ATC_IS_CLIENT_VIEW = isClientView;
+
+let _pushTimer = null;
+window.ATC_pushLive = function(state){
+  if (isClientView) return; // client side must never write
+  clearTimeout(_pushTimer);
+  _pushTimer = setTimeout(function(){
+    setDoc(sessionRef, Object.assign({}, state, { page: 'quote', updatedAt: serverTimestamp() }))
+      .catch(function(e){ console.error('live push failed', e); });
+  }, 400);
+};
+
+if (isClientView){
+  window.ATC_clientSubscribe = function(callback){
+    onSnapshot(sessionRef, function(snap){
+      callback(snap.exists() ? snap.data() : null);
+    }, function(err){ console.error('live subscribe failed', err); });
+  };
+}
+
+window.dispatchEvent(new CustomEvent('atc-live-ready'));
+</script>
+<!-- ── END LIVE SCREEN-SHARE SYNC ──────────────────────────────── -->
+
+<style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--white:#fff;--blue:#2563EB;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--amber:#D97706;--red:#DC2626;--font:'Inter',sans-serif}
+
+body{display:flex;min-height:100vh;margin:0;background:#f0f2f5;font-family:Georgia,serif}
+
+.sidenav .sn-logo{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidenav .sn-logo img{max-width:140px}
+.sn-client-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sn-client-label{font-size:9px;font-weight:700;color:#C8960C;letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px}
+.sn-client-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 8px;font-size:11px;border-radius:3px;font-family:Georgia,serif}
+.sn-client-select option{background:#1B2A4A}
+.sn-new-btn{width:100%;background:#C8960C;color:#fff;border:none;padding:6px;font-size:11px;font-weight:700;border-radius:3px;cursor:pointer;margin-top:5px;font-family:Georgia,serif}
+.sn-menu{flex:1;padding:8px 0}
+.sn-item{display:flex;align-items:center;gap:8px;padding:8px 14px;text-decoration:none;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;letter-spacing:.2px;border-left:3px solid transparent}
+.sn-item:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:#C8960C}
+.sn-item.active{background:rgba(200,150,12,.15);color:#C8960C;border-left-color:#C8960C}
+.sn-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.sn-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 12px}
+.main-content{margin-left:220px;flex:1;padding:20px;min-height:100vh}
+.page-wrap{max-width:640px;margin:0 auto;background:#fff;padding:24px;border-radius:4px}
+.sn-toast{display:none;position:fixed;bottom:20px;left:240px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:12px;font-weight:700;border-radius:4px;z-index:300}
+.sn-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center}
+.sn-modal-overlay.active{display:flex}
+.sn-modal{background:#fff;border-radius:6px;padding:24px;width:100%;max-width:380px;margin:20px}
+.sn-modal h3{font-size:15px;font-weight:700;color:#1B2A4A;margin-bottom:14px}
+.sn-modal label{font-size:10px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;display:block;margin-bottom:3px;margin-top:10px}
+.sn-modal input{width:100%;border:1px solid #ccc;border-radius:3px;padding:8px 10px;font-size:13px;font-family:Georgia,serif}
+.sn-modal-btns{display:flex;gap:8px;margin-top:14px}
+.sn-modal-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;font-family:Georgia,serif}
+.sn-modal-btn.primary{background:#C8960C;color:#fff}
+.sn-modal-btn.secondary{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+/* PAGE STYLES */
+*{box-sizing:border-box}
+.page-title{background:#1B2A4A;color:#fff;text-align:center;padding:12px 16px;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;border-radius:3px 3px 0 0}
+.page-sub{background:#C8960C;color:#fff;text-align:center;padding:8px 16px;font-size:13px;margin-bottom:20px;border-radius:0 0 3px 3px}
+.client-bar{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:3px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
+.cb-f strong{display:block;font-size:9px;font-weight:700;color:#888;letter-spacing:.3px;text-transform:uppercase;margin-bottom:2px}
+.cb-f span{font-size:13px;color:#1B2A4A;font-weight:700}
+.sh{background:#1B2A4A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.4px;border-radius:3px 3px 0 0;margin-top:16px}
+.sb{border:1px solid #ddd;border-top:none;padding:16px;border-radius:0 0 3px 3px;margin-bottom:4px}
+/* MSRP COMPARE */
+.msrp-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.mc{flex:1;min-width:160px;border-radius:4px;padding:16px;text-align:center;border:2px solid #ddd}
+.mc.resort{background:#fdf0ef;border-color:#e8a09a}
+.mc.alpha{background:#e8f5ee;border-color:#1a7a3c}
+.mc .ml{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.mc.resort .ml{color:#c0392b}
+.mc.alpha .ml{color:#1a7a3c}
+.mc .ma{font-size:28px;font-weight:700;line-height:1;font-family:Georgia,serif}
+.mc.resort .ma{color:#c0392b}
+.mc.alpha .ma{color:#1a7a3c}
+.mc .ms{font-size:11px;color:#888;margin-top:4px;line-height:1.4}
+.mc .mdisc{font-size:9px;color:#aaa;margin-top:4px;line-height:1.3;font-style:italic}
+.email-action-row{text-align:center;margin-bottom:16px}
+.email-btn{background:#1B2A4A;color:#fff;border:none;border-radius:4px;padding:10px 22px;font-size:13px;font-weight:700;letter-spacing:.3px;cursor:pointer;font-family:Georgia,serif}
+.email-btn:hover{background:#C8960C}
+.vs{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#888;flex-shrink:0;padding-top:28px}
+.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px 16px;text-align:center;margin-bottom:20px}
+.save-strip .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;opacity:.8;margin-bottom:4px}
+.save-strip .sa{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif}
+.save-strip .ss{font-size:11px;opacity:.7;margin-top:2px}
+/* FEE INPUT */
+.fee-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.fee-lbl{font-size:11px;font-weight:700;color:#C8960C;letter-spacing:.3px;text-transform:uppercase;flex-shrink:0}
+.fee-inp{border:2px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:22px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:160px;text-align:center}
+.fee-inp:focus{outline:none;border-color:#1B2A4A}
+.fee-note{font-size:11px;color:#888;line-height:1.4;flex:1}
+/* PAY IN FULL */
+.pif-card{background:#fff8e8;border:2px solid #C8960C;border-radius:4px;padding:14px;text-align:center;margin-bottom:16px}
+.pif-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#C8960C;margin-bottom:4px}
+.pif-amount{font-size:32px;font-weight:700;color:#C8960C;font-family:Georgia,serif;line-height:1}
+.pif-sub{font-size:11px;color:#888;margin-top:4px}
+
+.discount-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.disc-field{flex:1;min-width:120px;border:1px solid #ddd;border-radius:4px;padding:8px 10px;background:#fafbfc;display:flex;flex-direction:column;align-items:center}
+.disc-field.total{background:#fdf0ef;border-color:#e8a09a}
+.disc-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#888;margin-bottom:4px}
+.disc-inp{border:1.5px solid #ccc;border-radius:4px;padding:6px 8px;font-size:15px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;width:90px;text-align:center}
+.disc-inp:focus{outline:none;border-color:#C8960C}
+.disc-total{font-size:17px;font-weight:700;color:#c0392b;font-family:Georgia,serif}
+.pif-was{font-size:14px;color:#aaa;text-decoration:line-through;margin-bottom:2px}
+/* FINANCING CARDS - the big interactive ones */
+.fin-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:8px}
+.fin-card{border:2px solid #ddd;border-radius:6px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .25s;background:#fff;position:relative;overflow:hidden}
+.fin-card:hover{border-color:#1B2A4A;transform:translateY(-2px)}
+.fin-card.selected{border-color:#1B2A4A;background:#1B2A4A;color:#fff;transform:translateY(-4px);box-shadow:0 6px 20px rgba(27,42,74,.3);z-index:2}
+.fin-card .fc-term{font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px;opacity:.7}
+.fin-card.selected .fc-term{opacity:1;color:#C8960C}
+.fin-card .fc-mo{font-size:18px;font-weight:700;line-height:1;font-family:Georgia,serif;color:#1B2A4A;transition:font-size .25s}
+.fin-card.selected .fc-mo{font-size:26px;color:#fff}
+.fin-card .fc-sub{font-size:9px;color:#888;margin-top:4px;line-height:1.3}
+.fin-card.selected .fc-sub{color:rgba(255,255,255,.7)}
+.fin-card .fc-total{font-size:10px;color:#aaa;margin-top:3px}
+.fin-card.selected .fc-total{color:rgba(255,255,255,.6)}
+/* SELECTED DETAIL */
+.sel-detail{background:#EAF0F8;border:1px solid #c5d5e8;border-radius:4px;padding:14px;margin-top:10px;display:none}
+.sel-detail.show{display:block}
+.sd-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.3px;text-transform:uppercase;margin-bottom:10px}
+.sd-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #d0dcea;font-size:13px}
+.sd-row:last-child{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px;color:#1B2A4A}
+.sd-val{font-weight:700;color:#1B2A4A}
+/* SAVINGS */
+.sav-box{background:#1B2A4A;color:#fff;border-radius:4px;padding:14px}
+.sav-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#C8960C;margin-bottom:10px}
+.sr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:13px}
+
+/* Payment comparison — compact */
+.pay-compare-row{display:flex;gap:8px;align-items:center;margin:10px 0 18px;flex-wrap:wrap}
+.pc-box{flex:1;min-width:110px;border:1.5px solid #ddd;border-radius:4px;padding:9px 8px;text-align:center;background:#fafbfc}
+.pc-box.savings{border-color:#1a7a3c;background:#e8f5ee}
+.pc-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#888;margin-bottom:3px}
+.pc-box.savings .pc-lbl{color:#1a7a3c}
+.pc-val{font-size:16px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif}
+.pc-box.savings .pc-val{color:#1a7a3c}
+.pc-vs{font-size:11px;font-weight:700;color:#aaa;flex-shrink:0}
+
+/* Resort vs Alpha side-by-side savings table */
+.savings-table{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:13px}
+.savings-table th{background:#1B2A4A;color:#fff;padding:9px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.3px;text-align:right}
+.savings-table th:first-child{text-align:left}
+.savings-table td{padding:10px;border-bottom:1px solid #e3e7ec;text-align:right;color:#1a1a1a}
+.savings-table td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
+.savings-table td.save{color:#1a7a3c;font-weight:700}
+.savings-table tr.hl td{background:#fdf8ec;font-weight:700}
+.savings-table tr.hl td.save{color:#1a7a3c}
+
+/* Financing — bottom disclaimer style */
+.fin-disclaimer{margin-top:36px;padding-top:18px;border-top:1px dashed #ddd}
+.fin-disclaimer .sh{background:none;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:0 0 8px;border-radius:0;margin-top:0;font-weight:700}
+.fin-disclaimer .sb{border:none;padding:0}
+.fin-disclaimer .fin-grid{opacity:.85}
+.fin-disclaimer-note{font-size:10px;color:#aaa;margin-top:8px;line-height:1.5}
+
+/* Two-lender split (fee > $15k) */
+.lender-banner{background:#fff8e8;border:1px solid #C8960C;border-radius:4px;padding:10px 14px;font-size:12px;color:#946f00;margin-bottom:14px;text-align:center}
+.lender-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.lender-card{flex:1;min-width:200px;border:2px solid #ddd;border-radius:6px;padding:14px}
+.lender-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.3px;margin-bottom:8px}
+.lender-amt{font-size:22px;font-weight:700;color:#C8960C;font-family:Georgia,serif;margin-bottom:8px}
+.lender-select{width:100%;border:1.5px solid #ccc;border-radius:4px;padding:8px 10px;font-size:13px;font-family:Georgia,serif;margin-bottom:8px}
+.lender-mo{font-size:14px;font-weight:700;color:#1B2A4A}
+.lender-mo .lbl{font-size:10px;font-weight:400;color:#888;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:2px}
+.lender-warning{background:#fdf0ef;border:1px solid #e8a09a;color:#c0392b;border-radius:4px;padding:10px 14px;font-size:12px;text-align:center}
+.sr:last-child{border-bottom:none;font-size:15px;font-weight:700;padding-top:8px}
+.sv{color:#C8960C;font-weight:700}
+.sv.w{color:#fff}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid #ddd}
+.nb{display:inline-block;padding:10px 28px;font-size:12px;font-weight:700;border-radius:3px;text-decoration:none;border:none;font-family:Georgia,serif;cursor:pointer}
+.nb.prev{background:#EAF0F8;color:#1B2A4A;border:1px solid #1B2A4A}
+.nb.next{background:#C8960C;color:#fff}
+.ns{font-size:10px;color:#888;text-align:center;flex:1;letter-spacing:.3px;text-transform:uppercase}
+
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(200,150,12,.7)}
+
+
+
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
+.sidebar::-webkit-scrollbar-thumb:hover{background:rgba(200,150,12,.7)}
+.main{margin-left:240px;flex:1;padding:24px;min-height:100vh}
+.sb-logo{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center}
+.sb-logo img{max-width:130px}
+.sb-client{background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1);padding:12px}
+.sb-no-client{padding:12px;font-size:13px;color:rgba(255,120,120,.9);font-weight:600;background:rgba(220,50,50,.1);border-bottom:1px solid rgba(220,50,50,.3)}
+.sb-stage{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.sb-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.sb-resort{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:6px}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:4px}
+.sb-stat{background:rgba(255,255,255,.07);border-radius:3px;padding:4px 6px}
+.sb-stat .sl{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.3px}
+.sb-stat .sv{font-size:12px;font-weight:600;color:#C8960C}
+.sb-quote{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:5px 7px;margin-top:5px;font-size:11px;color:#C8960C;font-weight:600}
+.sb-meta{font-size:10px;color:rgba(255,255,255,.35);margin-top:5px}
+.sb-sel{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif}
+.sb-select option{background:#1B2A4A}
+.sb-brow{display:flex;gap:5px;margin-top:5px}
+.sb-b{flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:10px;font-weight:700;border-radius:3px;cursor:pointer;font-family:'Inter',sans-serif}
+.sb-b.out{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75)}
+.sb-b:hover{opacity:.85}
+.sb-nav{flex:1;padding:6px 0}
+.sb-link{display:flex;align-items:center;gap:7px;padding:7px 12px;text-decoration:none;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;border-left:3px solid transparent;transition:background .15s}
+.sb-link:hover{background:rgba(255,255,255,.07);color:#fff;border-left-color:rgba(200,150,12,.5)}
+.sb-link.active{background:rgba(200,150,12,.12);color:#C8960C;border-left-color:#C8960C}
+.sb-num{font-size:9px;font-weight:700;background:rgba(255,255,255,.1);color:rgba(255,255,255,.45);padding:1px 4px;border-radius:6px;min-width:18px;text-align:center;flex-shrink:0}
+.sb-link.active .sb-num{background:rgba(200,150,12,.25);color:#C8960C}
+.sb-div{height:1px;background:rgba(255,255,255,.07);margin:3px 10px}
+.sb-cal{padding:8px 12px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-cal-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sb-cal-in{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.13);color:#fff;padding:5px 7px;font-size:11px;border-radius:3px;font-family:'Inter',sans-serif;margin-bottom:3px}
+.sb-rpts{padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)}
+.sb-rpt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:10px;border-radius:3px;cursor:pointer;margin-bottom:3px;font-family:'Inter',sans-serif}
+.sb-rpt:hover{background:rgba(255,255,255,.1);color:#fff}
+
+
+/* ── 4-CORNER VITALS BANNER ── */
+.vitals-banner{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid #E0E4ED;border-top:3px solid #C8960C;border-radius:0 0 8px 8px;margin-bottom:18px}
+.vb-corner{padding:9px 13px;border-right:1px solid #E0E4ED}
+.vb-corner:last-child{border-right:none}
+.vb-lbl{font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.vb-val{font-size:13px;font-weight:700;color:#1B2A4A;line-height:1.2}
+.vb-sub{font-size:11px;color:#6b7280;margin-top:2px}
+.vb-stage-badge{display:inline-block;background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.3px}
+
+</style>
+
+<style id="atc-lang-css">
+/* Language show/hide system — controlled by data-lang attribute on body */
+[data-lang="en"] .es-only { display: none !important; }
+[data-lang="es"] .en-only { display: none !important; }
+/* Default to English until atcApplyLang() fires */
+body:not([data-lang]) .es-only { display: none !important; }
+</style>
+</head>
+<body>
+<style id="atc-sb-css">
+body{display:flex!important;min-height:100vh!important}
+.sidenav{width:220px!important;min-width:220px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
+.sidenav::-webkit-scrollbar{width:4px}
+.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
+.main,.main-content,.app,.page-content{margin-left:220px!important;flex:1!important}
+@media print{.sidenav{display:none!important}.main,.main-content,.app{margin-left:0!important}}
+</style>
+<script id="atc-sb">
+var _SK="atc_clients_v2",_AK="atc_active";
+function _gA(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return{};}}
+function _sA(o){localStorage.setItem(_SK,JSON.stringify(o));}
+function _aC(){return localStorage.getItem(_AK)||null;}
+function _aD(){var s=_aC();return s?_gA()[s]||null:null;}
+function _fC(n){return "$"+Math.round(n||0).toLocaleString();}
+function _fD(ts){if(!ts)return"--";return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
+
+window.sf=function(k,v){
+  var s=_aC();if(!s)return;
+  var a=_gA();if(!a[s])return;
+  a[s][k]=v;a[s]._updated=Date.now();_sA(a);
+};
+
+window.swC=function(s){
+  if(!s)return;
+  localStorage.setItem(_AK,s);
+  setTimeout(function(){location.reload();},400);
+};
+
+window.toast=function(msg,color){
+  var t=document.getElementById("_t");
+  if(!t){
+    t=document.createElement("div");
+    t.id="_t";
+    t.style.cssText="display:none;position:fixed;bottom:24px;left:240px;background:#16A34A;color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700";
+    document.body.appendChild(t);
+  }
+  t.style.background=color||"#16A34A";
+  t.textContent=msg;
+  t.style.display="block";
+  setTimeout(function(){t.style.display="none";},2500);
+};
+
+window.newC=function(){
+  var m=document.getElementById("_ncm");
+  if(!m){
+    m=document.createElement("div");
+    m.id="_ncm";
+    m.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center";
+    var box=document.createElement("div");
+    box.style.cssText="background:#fff;border-radius:12px;padding:24px;max-width:380px;width:100%;margin:20px";
+    function mkF(id,lbl,ph){
+      var d=document.createElement("div");
+      d.style.marginBottom="10px";
+      var l=document.createElement("label");
+      l.style.cssText="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px";
+      l.textContent=lbl;
+      d.appendChild(l);
+      var i=document.createElement("input");
+      i.id=id;
+      i.style.cssText="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px";
+      i.placeholder=ph;
+      d.appendChild(i);
+      return d;
+    }
+    var tt=document.createElement("div");
+    tt.style.cssText="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px";
+    tt.textContent="New Client Session";
+    box.appendChild(tt);
+    box.appendChild(mkF("_ncf","First Name","First (optional)"));
+    box.appendChild(mkF("_ncl","Last Name","Last (optional)"));
+    box.appendChild(mkF("_ncr","Resort","Resort name (optional)"));
+    var btns=document.createElement("div");
+    btns.style.cssText="display:flex;gap:8px;margin-top:4px";
+    var bc=document.createElement("button");
+    bc.style.cssText="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer";
+    bc.textContent="Cancel";
+    bc.onclick=function(){m.style.display="none";};
+    var bs=document.createElement("button");
+    bs.style.cssText="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer";
+    bs.textContent="Start";
+    bs.onclick=function(){window.createC();};
+    btns.appendChild(bc);
+    btns.appendChild(bs);
+    box.appendChild(btns);
+    m.appendChild(box);
+    m.addEventListener("click",function(e){if(e.target===m)m.style.display="none";});
+    document.body.appendChild(m);
+  }
+  m.style.display="flex";
+  setTimeout(function(){var f=document.getElementById("_ncf");if(f)f.focus();},100);
+};
+
+window.createC=function(){
+  var f=(document.getElementById("_ncf")||{}).value||"";
+  var l=(document.getElementById("_ncl")||{}).value||"";
+  var r=(document.getElementById("_ncr")||{}).value||"";
+  f=f.trim();l=l.trim();r=r.trim();
+  var all=_gA();
+  var slug;
+  if(!f&&!l){
+    var ct=Object.keys(all).filter(function(k){return k.indexOf("unnamed")===0;}).length+1;
+    slug="unnamed-"+ct;
+  }else{
+    slug=((f||"x")[0]+"."+(l||"client")).toLowerCase().replace(/[^a-z0-9.]/g,"");
+  }
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_updated:Date.now()});
+  _sA(all);
+  localStorage.setItem(_AK,slug);
+  var m=document.getElementById("_ncm");
+  if(m)m.style.display="none";
+  window.toast("Session started");
+  setTimeout(function(){location.href="/vitals/";},700);
+};
+
+window.saveClear=function(){
+  var s=_aC();
+  if(s){
+    var all=_gA();
+    if(all[s]){all[s]._updated=Date.now();_sA(all);}
+  }
+  localStorage.removeItem(_AK);
+  window.toast("Saved and cleared");
+  setTimeout(function(){location.href="/home/";},700);
+};
+
+window.addCal=function(){
+  var d=_aD();
+  var fu=d&&d._fuAppt;
+  if(!fu){alert("Set a follow-up date first.");return;}
+  var dt=new Date(fu);
+  var fmt=function(x){return x.toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";};
+  window.open("https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent((d.firstName||"Client")+" - ATC Follow-Up")+"&dates="+fmt(dt)+"/"+fmt(new Date(dt.getTime()+3600000)),"_blank");
+};
+
+window.rpt=function(type){
+  var d=_aD();
+  if(!d){window.toast("No active client","#DC2626");return;}
+  var nm=(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim();
+  var mo=_fC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
+  var nl=String.fromCharCode(10);
+  var txt="";
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  if(type==="crm"){
+    txt="=== CALL NOTES "+new Date().toLocaleDateString()+" ==="+nl+"Client: "+nm+nl+"Resort: "+(d.resort||"--")+nl+"Phone: "+(d.phone||"--")+nl+"Monthly: "+mo+nl+"MTF: "+_fC(d.maitFees)+"/yr"+nl+"Mortgage: "+(parseFloat(d.monthlyMortgage)>0?_fC(d.monthlyMortgage)+"/mo":"Paid off")+nl+"Stage: "+stages[d.vitalsStage||1]+nl+"Quote: "+(d.alphaFee?_fC(d.alphaFee):"--")+nl+"Classify: "+(d.clientClass||"--")+nl+"Notes: "+(d.notes||"--");
+  }else if(type==="sms"){
+    txt="Hi "+(d.firstName||"there")+", this is Sebastian at Alpha Timeshare Consultants. Good time to connect? (877) 848-3948 Ext. 134";
+  }else{
+    txt="ALPHA TIMESHARE CONSULTANTS"+nl+new Date().toLocaleDateString()+nl+"Client: "+nm+nl+"Resort: "+(d.resort||"--")+nl+"Phone: "+(d.phone||"--")+nl+"Monthly: "+mo+nl+"Quote: "+(d.alphaFee?_fC(d.alphaFee):"--")+nl+"Notes: "+(d.notes||"--");
+  }
+  try{
+    navigator.clipboard.writeText(txt).then(function(){window.toast("Copied");});
+  }catch(e){
+    var ta=document.createElement("textarea");
+    ta.value=txt;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    window.toast("Copied");
+  }
+};
+
+var _PG=[
+  {n:0,ic:"\ud83c\udfe0",lb:"Dashboard",url:"/home/"},
+  {n:"Q",ic:"\ud83d\udcd1",lb:"Clients",url:"/clients/"},
+  {n:"V1",ic:"\u26be",lb:"Client Vitals",url:"/vitals/"},
+  {n:"V2",ic:"\ud83d\udcfa",lb:"Screen Share Invite",url:"/screenshare/"},
+  {n:2,ic:"\u2753",lb:"Why Do You Want Out",url:"/whyout/"},
+  {n:3,ic:"\u26a0",lb:"If You Do Nothing",url:"/wait/"},
+  {n:4,ic:"\ud83d\udd0d",lb:"Finding Your Group",url:"/group/"},
+  {n:"4a",ic:"\u2705",lb:"Your Spot in Group Filing",url:"/approval/"},
+  {n:"4b",ic:"\ud83d\udc68",lb:"Heirs & Estate Liability",url:"/heirs/"},
+  {n:"4c",ic:"\ud83d\udcb5",lb:"Resort Compensation",url:"/compensation/"},
+  {n:"4d",ic:"\ud83d\udcb3",lb:"To Pay or Not to Pay",url:"/credit/"},
+  {n:"4e",ic:"\u2709",lb:"Mutual Release Letter",url:"/letter/"},
+  {n:"4f",ic:"\ud83d\udeaa",lb:"4 Ways to Exit",url:"/exit-methods/"},
+  {n:5,ic:"\ud83d\udee1",lb:"Certificate of Guarantee",url:"/guarantee/"},
+  {n:6,ic:"\u2b50",lb:"Our Track Record",url:"/history/"},
+  {n:7,ic:"\u2696",lb:"Consumer Rights",url:"/rights/"},
+  {n:8,ic:"\ud83d\udcb0",lb:"True Cost",url:"/cost/"},
+  {n:9,ic:"\ud83d\udcc4",lb:"Your Quote",url:"/quote/"},
+  {n:10,ic:"\u23f0",lb:"Follow-Up Scheduler",url:"/followup/"},
+  {n:11,ic:"\ud83c\udfc6",lb:"What Makes Alpha Better",url:"/better/"},
+  {n:12,ic:"\ud83d\udce6",lb:"What's Included",url:"/included/"},
+  {n:13,ic:"\ud83d\udccb",lb:"Recap",url:"/recap/"},
+  {n:14,ic:"\u2705",lb:"Client Acknowledgment",url:"/checklist/"},
+  {n:15,ic:"\ud83d\udcdd",lb:"Alpha Contract",url:"/contract/"},
+  {n:16,ic:"\ud83c\udf89",lb:"Let's Be Timeshare Free",url:"/free/"},
+  {n:"EN",ic:"\ud83d\udcd1",lb:"Enrollment Agreement",url:"/agreement/"},
+  {n:"ES",ic:"\ud83d\udcd1",lb:"Acuerdo (Español)",url:"/acuerdo/"}
+];
+
+function buildSB(){
+  var el=document.querySelector(".sidenav");
+  if(!el){el=document.createElement("div");el.className="sidenav";document.body.insertBefore(el,document.body.firstChild);}
+  var d=_aD(),slug=_aC(),all=_gA();
+  var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
+  var mo=d?(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12):0;
+  var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():null;
+
+  var ct;
+  if(d){
+    ct="<div style='padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>"
+      +"<div style='font-size:14px;font-weight:700;color:#fff;margin-bottom:2px'>"+(nm||"Unnamed")+"</div>"
+      +"<div style='font-size:12px;color:#C8960C;font-weight:600;margin-bottom:4px'>"+(d.resort||"No resort")+"</div>"
+      +"<div style='display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65);margin-bottom:2px'><span>Monthly</span><strong style='color:#fff'>"+_fC(mo)+"</strong></div>"
+      +"<div style='display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65)'><span>MTF/yr</span><strong style='color:#fff'>"+_fC(parseFloat(d.maitFees)||0)+"</strong></div>"
+      +(d.alphaFee?"<div style='background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:4px 7px;margin-top:5px;font-size:12px;color:#C8960C;font-weight:600'>"+_fC(d.alphaFee)+"</div>":"")
+      +"<div style='font-size:12px;color:rgba(255,255,255,.3);margin-top:4px'>"+_fD(d._updated)+"</div></div>";
+  }else{
+    ct="<div style='padding:10px 12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)'>No client selected</div>";
+  }
+
+  var opts=Object.keys(all).map(function(k){
+    var c=all[k];
+    var n=(c.firstName||c.lastName?(c.firstName||"")+" "+(c.lastName||""):"Unnamed").trim();
+    return "<option value='"+k+"'"+(k===slug?" selected":"")+">"+n+(c.resort?" - "+c.resort:"")+"</option>";
+  }).join("");
+
+  var nav=_PG.map(function(p){
+    var act=cur===p.url;
+    var divider = (p.url==="/agreement/") ? "<div style='margin:10px 10px 4px;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);font-size:10px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px'>Documents</div>" : "";
+    return divider+"<a href='"+p.url+"' style='display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:12px;font-weight:500;border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'><span style='font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:20px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.45)")+"'>"+p.n+"</span><span style='flex:1'>"+p.ic+" "+p.lb+"</span></a>";
+  }).join("");
+
+  var today=d&&d._todayAppt?d._todayAppt:"";
+  var fuAppt=d&&d._fuAppt?d._fuAppt:"";
+
+  var html="";
+  html+="<a href='/home/' style='display:flex;align-items:center;gap:8px;padding:9px 14px;background:rgba(200,150,12,.15);border-bottom:1px solid rgba(200,150,12,.25);text-decoration:none'><span style='font-size:16px'>\ud83c\udfe0</span><span style='font-size:13px;font-weight:700;color:#C8960C'>Home / Dashboard</span></a>";
+  html+="<div style='padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.1);text-align:center'><img src='https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png' alt='ATC' style='max-width:120px'></div>";
+  html+=ct;
+  html+="<div style='padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>";
+  html+="<select id='_sbsel' style='width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px'><option value=''>- Select client -</option>"+opts+"</select>";
+  html+="<div style='display:flex;gap:5px;margin-top:5px'><button id='_sbnew' style='flex:1;background:#C8960C;color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer'>+ New</button><button id='_sbclear' style='flex:1;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer'>Save &amp; Clear</button></div></div>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;padding:8px 12px 3px'>Pages</div>";
+  html+="<nav style='flex:1;padding:4px 0'>"+nav+"</nav>";
+  html+="<div style='padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)'>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px'>Today</div>";
+  html+="<input id='_sbtoday' type='datetime-local' style='width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;margin-bottom:3px' value='"+today+"'>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin:4px 0'>Follow-Up</div>";
+  html+="<input id='_sbfu' type='datetime-local' style='width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:5px 7px;font-size:12px;border-radius:3px;margin-bottom:4px' value='"+fuAppt+"'>";
+  html+="<button id='_sbcal' style='width:100%;background:#C8960C;color:#fff;border:none;padding:5px;font-size:12px;font-weight:700;border-radius:3px;cursor:pointer'>+ Google Calendar</button></div>";
+  html+="<div style='padding:6px 12px;border-top:1px solid rgba(255,255,255,.08)'>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px'>Reports</div>";
+  html+="<button data-rpt='crm' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px'>CRM Note</button>";
+  html+="<button data-rpt='sms' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer;margin-bottom:3px'>SMS</button>";
+  html+="<button data-rpt='full' style='display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.65);padding:5px 8px;font-size:12px;border-radius:3px;cursor:pointer'>Full Summary</button></div>";
+  html+="<div style='padding:8px 12px;border-top:1px solid rgba(255,255,255,.08)'>";
+  html+="<div style='font-size:12px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px'>Language / Idioma</div>";
+  var cl=window.atcGetLang();
+  html+="<div style='display:flex;gap:5px'>";
+  html+="<button id='_lgen' onclick=\"window.atcSetLang('en')\" style='flex:1;padding:5px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;background:"+(cl==='en'?'#C8960C':'rgba(255,255,255,.1)')+";color:"+(cl==='en'?'#fff':'rgba(255,255,255,.6)')+"'>EN</button>";
+  html+="<button id='_lges' onclick=\"window.atcSetLang('es')\" style='flex:1;padding:5px;font-size:12px;font-weight:700;border-radius:3px;border:none;cursor:pointer;background:"+(cl==='es'?'#C8960C':'rgba(255,255,255,.1)')+";color:"+(cl==='es'?'#fff':'rgba(255,255,255,.6)')+"'>ES</button>";
+  html+="</div></div>";
+
+  el.innerHTML=html;
+
+  el.querySelectorAll("[data-rpt]").forEach(function(btn){
+    btn.addEventListener("click",function(){window.rpt(this.getAttribute("data-rpt"));});
+  });
+  var selEl=document.getElementById("_sbsel");
+  if(selEl)selEl.addEventListener("change",function(){window.swC(this.value);});
+  var newEl=document.getElementById("_sbnew");
+  if(newEl)newEl.addEventListener("click",function(){window.newC();});
+  var clearEl=document.getElementById("_sbclear");
+  if(clearEl)clearEl.addEventListener("click",function(){window.saveClear();});
+  var todayEl=document.getElementById("_sbtoday");
+  if(todayEl)todayEl.addEventListener("change",function(){window.sf("_todayAppt",this.value);});
+  var fuEl=document.getElementById("_sbfu");
+  if(fuEl)fuEl.addEventListener("change",function(){window.sf("_fuAppt",this.value);});
+  var calEl=document.getElementById("_sbcal");
+  if(calEl)calEl.addEventListener("click",function(){window.addCal();});
+}
+window.buildSB=buildSB;
+
+// ── ATC LANGUAGE SYSTEM ─────────────────────────────────────────────────────
+// Language preference stored in localStorage as 'atc_lang'.
+// Pages use CSS classes .en-only / .es-only to show/hide content.
+// Auto-detects from the active client's 'lang' field, with manual override.
+window.atcGetLang = function(){
+  return localStorage.getItem('atc_lang') || 'en';
+};
+window.atcSetLang = function(lang){
+  localStorage.setItem('atc_lang', lang);
+  // Also save to active client record so it persists with the client
+  var s=localStorage.getItem('atc_active');
+  if(s){
+    try{
+      var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+      if(all[s]){ all[s].lang=lang; localStorage.setItem('atc_clients_v2',JSON.stringify(all)); }
+    }catch(e){}
+  }
+  document.documentElement.setAttribute('data-lang', lang);
+  document.body.setAttribute('data-lang', lang);
+  buildSB(); // refresh sidebar toggle state
+};
+window.atcApplyLang = function(){
+  // Auto-detect from client record, fall back to stored preference, then EN
+  var lang = 'en';
+  try{
+    var s=localStorage.getItem('atc_active');
+    if(s){
+      var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+      if(all[s] && all[s].lang) lang = all[s].lang;
+      else lang = localStorage.getItem('atc_lang') || 'en';
+    } else {
+      lang = localStorage.getItem('atc_lang') || 'en';
+    }
+  }catch(e){ lang='en'; }
+  localStorage.setItem('atc_lang', lang);
+  document.documentElement.setAttribute('data-lang', lang);
+  document.body.setAttribute('data-lang', lang);
+  return lang;
+};
+// ── END LANGUAGE SYSTEM ─────────────────────────────────────────────────────
+
+function initBanner(){
+  var d=_aD();
+  if(!d)return;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  var stg=stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment";
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set("vb-name",(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim());
+  set("vb-phone",d.phone||"--");
+  set("vb-resort",d.resort||"--");
+  set("vb-loc",d.location||"--");
+  set("vb-mo",mo>0?_fC(mo)+"/mo":"--");
+  set("vb-yr",mo>0?_fC(mo*12)+"/yr":"--");
+  set("vb-quote",d.alphaFee?_fC(parseFloat(d.alphaFee)):"No quote yet");
+  set("vb-stg",stg);
+}
+window.initBanner=initBanner;
+
+document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();_buildTopSave();});
+
+/* ── TOP SAVE BUTTON (all pages) ── */
+function _buildTopSave(){
+  if(document.getElementById('_topSaveBtn')) return;
+  var btn=document.createElement('button');
+  btn.id='_topSaveBtn';
+  btn.innerHTML='\ud83d\udcbe Save';
+  btn.style.cssText='position:fixed;top:14px;right:18px;z-index:99999;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:6px;padding:10px 22px;font-size:14px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25);letter-spacing:.2px';
+  btn.onclick=_topSaveClick;
+  document.body.appendChild(btn);
+}
+function _topSaveClick(){
+  try{
+    if(typeof autoSave==='function') autoSave();
+    if(typeof autoSaveAck==='function') autoSaveAck();
+    if(typeof upd==='function') upd();
+    if(typeof savePageData==='function') savePageData();
+  }catch(e){}
+  var btn=document.getElementById('_topSaveBtn');
+  if(btn){
+    btn.innerHTML='\u2713 Saved';
+    btn.style.background='#16A34A';
+    btn.style.borderColor='#16A34A';
+    clearTimeout(window._topSaveTimer);
+    window._topSaveTimer=setTimeout(function(){
+      btn.innerHTML='\ud83d\udcbe Save';
+      btn.style.background='#1B2A4A';
+      btn.style.borderColor='#C8960C';
+    },1500);
+  }
+}
+
+</script>
+
+
+
+<div class="sidenav" id="sidenav"></div>
+<div class="sn-modal-overlay" style="position:fixed;z-index:500;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none" id="sn-modal">
+<div class="sn-modal">
+<h3>New Client</h3>
+<label>Client Name</label><input type="text" id="sn-name" placeholder="Data">
+<label>Resort / Developer</label><input type="text" id="sn-resort" placeholder="Data">
+<label>Date</label><input type="text" id="sn-date">
+<div class="sn-modal-btns">
+<button class="sn-modal-btn secondary" onclick="snCloseModal()">Cancel</button>
+<button class="sn-modal-btn primary" onclick="snCreateClient()">Create & Start</button>
+</div>
+</div>
+</div>
+
+<div class="main-content">
+<div class="page-wrap">
+
+<div class="page-title" id="pg-title">Your Service Quote</div>
+<div class="page-sub" id="pg-sub">What you'll keep paying — vs. what it costs to stop.</div>
+
+<div class="lang-toggle-row" style="display:flex;gap:8px;margin:10px 0 18px">
+  <button id="lang-en" class="lang-btn active" onclick="setLang('en')" style="padding:7px 16px;border-radius:6px;border:1.5px solid #1B2A4A;background:#1B2A4A;color:#fff;font-weight:700;font-size:12px;cursor:pointer">English</button>
+  <button id="lang-es" class="lang-btn" onclick="setLang('es')" style="padding:7px 16px;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;color:#1B2A4A;font-weight:700;font-size:12px;cursor:pointer">Español</button>
+</div>
+
+<div class="client-bar">
+<div class="cb-f"><strong>Client</strong><span id="b-name">—</span></div>
+<div class="cb-f"><strong>Resort</strong><span id="b-resort">—</span></div>
+</div>
+
+<div class="vitals-banner" id="vitals-banner">
+  <div class="vb-corner"><div class="vb-lbl">👤 Client</div><div class="vb-val" id="vb-name">—</div><div class="vb-sub" id="vb-phone">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">🏨 Resort</div><div class="vb-val" id="vb-resort">—</div><div class="vb-sub" id="vb-location">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">💰 Monthly / Yearly</div><div class="vb-val" id="vb-mo">—</div><div class="vb-sub" id="vb-yr">—</div></div>
+  <div class="vb-corner"><div class="vb-lbl">📄 Quote / Stage</div><div class="vb-val" id="vb-quote">—</div><div class="vb-sub" id="vb-stage">—</div></div>
+</div>
+
+<div class="email-action-row">
+<button class="email-btn" id="email-btn" onclick="openEmailQuote()">📧 Email This Quote</button>
+</div>
+
+<!-- MSRP COMPARISON -->
+<div class="msrp-row">
+<div class="mc resort"><div class="ml">🏨 Resort — 5-Year Cost</div><div class="ma" id="msrp">—</div><div class="ms" id="msrp-detail">MTF + mortgage × 5 yrs</div><div class="mdisc">Not adjusted for the MTF annual rate of increase</div><div class="mdisc" id="msrp-1yr">1yr: —</div></div>
+<div class="vs">VS</div>
+<div class="mc alpha"><div class="ml">✓ Alpha — Exit Fee</div><div class="ma" id="alpha-display">—</div><div class="ms">Financed over 1–5 years or One time — then $0 forever</div><div class="mdisc">Not adjusted for the financing annual interest rate</div><div class="mdisc">1y: $0</div></div>
+</div>
+
+<!-- RESORT vs ALPHA — SIDE BY SIDE -->
+<div class="section-label" style="margin-top:18px">Resort Cost vs. Alpha Fee — Side by Side</div>
+<table class="savings-table">
+<tr><th>Years</th><th>Resort Cost</th><th>Alpha Fee</th><th>You Save</th></tr>
+<tr><td>1 Year</td><td id="cmp-resort-1">—</td><td id="cmp-alpha-1">—</td><td class="save" id="cmp-save-1">—</td></tr>
+<tr><td>2 Years</td><td id="cmp-resort-2">—</td><td id="cmp-alpha-2">—</td><td class="save" id="cmp-save-2">—</td></tr>
+<tr><td>3 Years</td><td id="cmp-resort-3">—</td><td id="cmp-alpha-3">—</td><td class="save" id="cmp-save-3">—</td></tr>
+<tr class="hl"><td>5 Years</td><td id="cmp-resort-5">—</td><td id="cmp-alpha-5">—</td><td class="save" id="cmp-save-5">—</td></tr>
+<tr><td>6 Years</td><td id="cmp-resort-6">—</td><td id="cmp-alpha-6">—</td><td class="save" id="cmp-save-6">—</td></tr>
+</table>
+<div class="cost-note" style="text-align:center;margin-bottom:18px">Alpha Fee is one-time and stays the same — only the resort cost keeps growing the longer you stay.</div>
+
+<!-- SERVICE FEE (Alpha Payments) -->
+<div class="sh">Alpha Service Fee</div>
+<div class="sb">
+<div class="fee-row">
+<span class="fee-lbl">Service Fee $</span>
+<input type="number" class="fee-inp" id="fee-inp" value="0" oninput="upd()">
+<span class="fee-note">Type your fee — default = 5-year resort cost</span>
+</div>
+
+<div class="discount-row">
+<div class="disc-field"><span class="disc-lbl">Discount 1 $</span><input type="number" class="disc-inp" id="disc1-inp" value="0" oninput="upd()"></div>
+<div class="disc-field"><span class="disc-lbl">Discount 2 $</span><input type="number" class="disc-inp" id="disc2-inp" value="0" oninput="upd()"></div>
+<div class="disc-field total"><span class="disc-lbl">Total Discount</span><span class="disc-total" id="disc-total">$0</span></div>
+</div>
+
+<div class="pif-card">
+<div class="pif-label">Reduced Price</div>
+<div class="pif-was" id="q-was" style="display:none">—</div>
+<div class="pif-amount" id="q-full">—</div>
+<div class="pif-sub">One-time payment — no interest, no monthly obligations</div>
+</div>
+</div>
+
+<!-- PAYMENT COMPARISON (compact) -->
+<div class="pay-compare-row">
+<div class="pc-box"><div class="pc-lbl">Current Payments</div><div class="pc-val" id="pc-current">—</div></div>
+<div class="pc-vs">VS</div>
+<div class="pc-box"><div class="pc-lbl">Our Monthly Fee</div><div class="pc-val" id="pc-ourfee">—</div></div>
+<div class="pc-box savings"><div class="pc-lbl">Monthly Savings</div><div class="pc-val" id="pc-savings">—</div></div>
+</div>
+
+<!-- ══ CREDIT PROTECTION SECTION (inline, below quote) ═════════════════ -->
+<div style="margin-top:28px;border-top:2px solid #1B2A4A;padding-top:24px">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#C8960C;margin-bottom:6px">Alpha Timeshare Consultants</div>
+  <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:700;color:#1B2A4A;margin-bottom:18px">Your Credit — And Why It Stays Protected</div>
+
+  <p style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:18px">One of the most common questions we hear is whether this process could affect your credit. We want to answer that clearly, because protecting your credit is not an afterthought — it is a core part of what Alpha provides from the moment you enroll.</p>
+
+  <!-- Fact 1 -->
+  <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #e8edf3">
+    <div style="background:#1B2A4A;color:#C8960C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">1</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px">Alpha does not tell you to stop paying. That decision is always yours.</div>
+      <div style="font-size:14px;color:#374151;line-height:1.6">Our agreement is explicit: any decision about your resort maintenance fees or obligations remains entirely at your independent discretion. We do not advise, instruct, or encourage stopping payments. What we do is stand beside you with a full protection team — so that regardless of what happens during the process, you are not navigating it alone.</div>
+    </div>
+  </div>
+
+  <!-- Fact 2 -->
+  <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #e8edf3">
+    <div style="background:#1B2A4A;color:#C8960C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">2</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px">Credit protection is active from day one of your enrollment.</div>
+      <div style="font-size:14px;color:#374151;line-height:1.6">The moment you enroll with Alpha, our in-house credit team begins monitoring your credit profile. If any timeshare-related item appears on your report during the exit process, we document it, dispute it, and submit directly to all three bureaus — TransUnion, Equifax, and Experian — at no additional cost. You do not have to manage this on your own. That is why this protection is worth enrolling in now, not after something happens.</div>
+    </div>
+  </div>
+
+  <!-- Fact 3 -->
+  <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid #e8edf3">
+    <div style="background:#1B2A4A;color:#C8960C;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">3</div>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px">When it's all said and done — your credit is restored.</div>
+      <div style="font-size:14px;color:#374151;line-height:1.6">Upon your Mutual Release — the signed, recorded document that removes your name from the deed permanently — Alpha submits full documentation to all three credit bureaus confirming the resolution. Any timeshare-related marks associated with the process are addressed and cleared. You exit the timeshare, and you exit with your credit intact.</div>
+    </div>
+  </div>
+
+  <!-- Stat -->
+  <div style="background:#1B2A4A;border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px">Credit Resolution Submitted To</div>
+    <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:700;color:#C8960C;line-height:1">All 3 Bureaus</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:6px">TransUnion &nbsp;·&nbsp; Equifax &nbsp;·&nbsp; Experian — upon case completion, at no additional cost</div>
+  </div>
+
+  <!-- What Alpha covers -->
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#C8960C;margin:20px 0 10px">What Alpha's Credit Protection Covers</div>
+  <div style="font-size:14px;color:#374151;line-height:1.6;border-top:1px solid #f3f4f6;padding:8px 0;display:flex;gap:10px"><span style="color:#16A34A;font-weight:700">✓</span> Ongoing credit monitoring from enrollment through case completion</div>
+  <div style="font-size:14px;color:#374151;line-height:1.6;border-top:1px solid #f3f4f6;padding:8px 0;display:flex;gap:10px"><span style="color:#16A34A;font-weight:700">✓</span> Dispute documentation for any timeshare-related bureau entries</div>
+  <div style="font-size:14px;color:#374151;line-height:1.6;border-top:1px solid #f3f4f6;padding:8px 0;display:flex;gap:10px"><span style="color:#16A34A;font-weight:700">✓</span> Direct bureau submission upon Mutual Release — all three agencies</div>
+  <div style="font-size:14px;color:#374151;line-height:1.6;border-top:1px solid #f3f4f6;padding:8px 0;display:flex;gap:10px"><span style="color:#16A34A;font-weight:700">✓</span> Guidance on inaccurate or outdated timeshare items throughout the process</div>
+  <div style="font-size:14px;color:#374151;line-height:1.6;border-top:1px solid #f3f4f6;border-bottom:1px solid #f3f4f6;padding:8px 0;margin-bottom:18px;display:flex;gap:10px"><span style="color:#16A34A;font-weight:700">✓</span> Included at no additional cost — this is part of your enrollment, not an add-on</div>
+
+  <!-- Pull quote -->
+  <div style="background:#f9faf9;border-left:3px solid #C8960C;border-radius:0 6px 6px 0;padding:14px 18px;margin-bottom:20px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:17px;color:#1B2A4A;line-height:1.5">
+    &ldquo;You've maintained your credit for 29 years of ownership. We intend to make sure it's just as clean when this is over.&rdquo;
+  </div>
+
+  <p style="font-size:14px;color:#374151;line-height:1.7">You've been responsible owners. Wyndham has simply become an obligation that no longer serves you. Our job is to close this chapter cleanly — and your credit protection is part of that commitment.</p>
+</div>
+<!-- ══ END CREDIT SECTION ══════════════════════════════════════════════ -->
+
+<div class="nav-bar">
+<a href="/cost/" class="nb prev">← True Cost</a>
+<span class="ns">What Makes Alpha Better →</span>
+<a href="/better/" class="nb next">Next →</a>
+</div>
+
+<!-- FINANCING OPTIONS — moved to bottom, disclaimer style -->
+<div class="fin-disclaimer">
+<div class="sh">Optional — Select a Payment Term</div>
+<div class="sb">
+<div class="fin-grid" id="fin-grid">
+<div class="fin-card" id="fc-12" onclick="selPlan(12,0)">
+<div class="fc-term">12 Mo</div>
+<div class="fc-mo" id="fm-12">—</div>
+<div class="fc-sub">0% Interest</div>
+<div class="fc-total" id="ft-12">—</div>
+</div>
+<div class="fin-card" id="fc-24" onclick="selPlan(24,0.20)">
+<div class="fc-term">24 Mo</div>
+<div class="fc-mo" id="fm-24">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-24">—</div>
+</div>
+<div class="fin-card" id="fc-36" onclick="selPlan(36,0.20)">
+<div class="fc-term">36 Mo</div>
+<div class="fc-mo" id="fm-36">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-36">—</div>
+</div>
+<div class="fin-card" id="fc-48" onclick="selPlan(48,0.20)">
+<div class="fc-term">48 Mo</div>
+<div class="fc-mo" id="fm-48">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-48">—</div>
+</div>
+<div class="fin-card" id="fc-60" onclick="selPlan(60,0.20)">
+<div class="fc-term">60 Mo</div>
+<div class="fc-mo" id="fm-60">—</div>
+<div class="fc-sub">20% Annual</div>
+<div class="fc-total" id="ft-60">—</div>
+</div>
+</div>
+
+<div class="sel-detail" id="sel-detail">
+<div class="sd-title" id="sd-title">Selected Plan</div>
+<div class="sd-row"><span>Service Fee</span><span class="sd-val" id="sd-fee">—</span></div>
+<div class="sd-row"><span>Term</span><span class="sd-val" id="sd-term">—</span></div>
+<div class="sd-row"><span>Interest Rate</span><span class="sd-val" id="sd-rate">—</span></div>
+<div class="sd-row"><span>Monthly Payment</span><span class="sd-val" id="sd-mo">—</span></div>
+<div class="sd-row"><span>Total Paid</span><span class="sd-val" id="sd-tot">—</span></div>
+</div>
+
+<!-- TWO-LENDER SPLIT (fee > $15,000) -->
+<div id="two-lender-box" style="display:none">
+<div class="lender-banner">This service fee is over $15,000 — it's split across two lending partners below.</div>
+<div class="lender-row">
+<div class="lender-card">
+<div class="lender-title">Lender 1 — $15,000 Cap</div>
+<div class="lender-amt" id="l1-amt">$15,000</div>
+<select class="lender-select" id="l1-term" onchange="updLenders()">
+<option value="12">12 Mo — 0% Interest</option>
+<option value="24">24 Mo — 20% Annual</option>
+<option value="36">36 Mo — 20% Annual</option>
+<option value="48">48 Mo — 20% Annual</option>
+<option value="60" selected>60 Mo — 20% Annual</option>
+</select>
+<div class="lender-mo"><span class="lbl">Monthly Payment</span><span id="l1-mo">—</span></div>
+</div>
+<div class="lender-card">
+<div class="lender-title">Lender 2 — $13,000 Cap</div>
+<div class="lender-amt" id="l2-amt">—</div>
+<select class="lender-select" id="l2-term" onchange="updLenders()">
+<option value="12">12 Mo — 0% Interest</option>
+<option value="24">24 Mo — 20% Annual</option>
+<option value="36" selected>36 Mo — 20% Annual</option>
+</select>
+<div class="lender-mo"><span class="lbl">Monthly Payment</span><span id="l2-mo">—</span></div>
+</div>
+</div>
+<div class="lender-warning" id="lender-warning" style="display:none">Fee exceeds the combined $28,000 lending capacity (Lender 1 $15,000 + Lender 2 $13,000).</div>
+</div>
+
+<div class="fin-disclaimer-note">Financing terms shown are estimates based on the service fee above. 0% interest applies only if paid in full within 12 months; all other terms are 20% annual.</div>
+</div>
+</div>
+
+</div></div>
+
+<script>
+var SK='atc_clients_v2',AK='atc_active';
+var _msrp=0,_selMo=null,_curMo=0;
+function fmt(n){return '$'+Math.round(n).toLocaleString();}
+function fmtd(n){return '$'+n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function fi(p,mo,r){if(r===0)return{mo:p/mo,tot:p};var x=r/12;var pmt=p*(x*Math.pow(1+x,mo))/(Math.pow(1+x,mo)-1);return{mo:pmt,tot:pmt*mo};}
+
+function getEffectiveFee(){
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  return Math.max(0, fee-d1-d2);
+}
+
+function upd(){
+  var fee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  var totalDisc=d1+d2;
+  var effFee=Math.max(0, fee-totalDisc);
+  document.getElementById('disc-total').textContent=fmt(totalDisc);
+  var wasEl=document.getElementById('q-was');
+  if(totalDisc>0 && fee>0){
+    wasEl.style.display='block';
+    wasEl.textContent=fmt(fee);
+  } else {
+    wasEl.style.display='none';
+  }
+  document.getElementById('q-full').textContent=fee?fmt(effFee):'—';
+  document.getElementById('alpha-display').textContent=fee?fmt(effFee):'—';
+  var plans=[{mo:12,r:0},{mo:24,r:0.20},{mo:36,r:0.20},{mo:48,r:0.20},{mo:60,r:0.20}];
+  plans.forEach(function(p){
+    var r=fi(effFee,p.mo,p.r);
+    document.getElementById('fm-'+p.mo).textContent=effFee?fmtd(r.mo)+'/mo':'—';
+    document.getElementById('ft-'+p.mo).textContent=effFee?'Total: '+fmt(r.tot):'—';
+  });
+  var oneYrLive=_msrp/5;
+  updSavingsTable(oneYrLive, effFee);
+  if(_selMo)selPlan(_selMo,_selMo===12?0:0.20);
+  toggleLenders(effFee);
+  updPayCompare();
+  save(fee, _selMo, d1, d2);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:fee, disc1:d1, disc2:d2, selMo:_selMo});
+}
+
+function updSavingsTable(oneYr, fee){
+  [1,2,3,5,6].forEach(function(n){
+    var rEl=document.getElementById('cmp-resort-'+n);
+    var aEl=document.getElementById('cmp-alpha-'+n);
+    var sEl=document.getElementById('cmp-save-'+n);
+    if(!rEl) return;
+    var resortCost = oneYr>0 ? oneYr*n : 0;
+    rEl.textContent = resortCost>0 ? fmt(resortCost) : '—';
+    aEl.textContent = fee>0 ? fmt(fee) : '—';
+    if(resortCost>0 && fee>0){
+      var save = resortCost-fee;
+      sEl.textContent = save>0 ? fmt(save) : '$0';
+    } else {
+      sEl.textContent = '—';
+    }
+  });
+}
+
+function updPayCompare(){
+  var fee=getEffectiveFee();
+  var ourFee=0;
+  var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
+  if(twoLenderActive){
+    var l1=parseFloat((document.getElementById('l1-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    var l2=parseFloat((document.getElementById('l2-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    ourFee=l1+l2;
+  } else if(_selMo && fee>0){
+    var r=fi(fee,_selMo,_selMo===12?0:0.20);
+    ourFee=r.mo;
+  } else if(fee>0){
+    var r60=fi(fee,60,0.20);
+    ourFee=r60.mo;
+  }
+  document.getElementById('pc-ourfee').textContent = ourFee>0 ? fmtd(ourFee)+'/mo' : '—';
+  var savings=_curMo-ourFee;
+  document.getElementById('pc-savings').textContent = (ourFee>0 && _curMo>0 && savings>0) ? fmtd(savings)+'/mo' : '—';
+}
+
+function toggleLenders(fee){
+  var box=document.getElementById('two-lender-box');
+  var grid=document.getElementById('fin-grid');
+  var single=document.getElementById('sel-detail');
+  if(fee>15000){
+    box.style.display='block';
+    grid.style.display='none';
+    single.classList.remove('show');
+    var l2amt=Math.min(fee-15000,13000);
+    document.getElementById('l2-amt').textContent=fmt(l2amt);
+    document.getElementById('lender-warning').style.display = (fee-15000>13000) ? 'block' : 'none';
+    updLenders();
+  } else {
+    box.style.display='none';
+    grid.style.display='grid';
+  }
+}
+
+function updLenders(){
+  var fee=getEffectiveFee();
+  if(fee<=15000) return;
+  var l1amt=15000;
+  var l2amt=Math.min(fee-15000,13000);
+  var l1term=parseInt(document.getElementById('l1-term').value)||60;
+  var l2term=parseInt(document.getElementById('l2-term').value)||36;
+  var r1=fi(l1amt,l1term,l1term===12?0:0.20);
+  var r2=fi(l2amt,l2term,l2term===12?0:0.20);
+  document.getElementById('l1-mo').textContent=fmtd(r1.mo)+'/mo';
+  document.getElementById('l2-mo').textContent=fmtd(r2.mo)+'/mo';
+  updPayCompare();
+  var rawFee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  save(rawFee,_selMo,d1,d2,l1term,l2term);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, disc1:d1, disc2:d2, l1term:l1term, l2term:l2term, selMo:_selMo});
+}
+
+// ── LANGUAGE TOGGLE ──────────────────────────────────────────────
+var _lang = 'en';
+
+var T = {
+  en: {
+    pageTitle: "Your Service Quote",
+    pageSub: "What you'll keep paying — vs. what it costs to stop.",
+    emailBtn: "📧 Email This Quote",
+    greeting: function(name,resort){ return 'Hi <strong>'+name+'</strong>,<br><br>Here\'s a summary of your '+resort+' numbers and what it costs to exit with Alpha.'; },
+    resortLbl: "Resort — 5-Year Cost",
+    alphaLbl: "Alpha — Exit Fee",
+    savedLbl: "You Save Over 5 Years",
+    sectionLbl: "Monthly Payment Breakdown",
+    lender1: "Lender 1 Payment",
+    lender2: "Lender 2 Payment",
+    planPayment: function(mo){ return mo+'-Month Plan Payment'; },
+    totalAlpha: "Total Alpha Payment",
+    payInFull: "Pay in Full",
+    oneTime: " one-time",
+    currentPayments: "Current Payments",
+    monthlySavings: "Monthly Savings",
+    monthlySaved: function(v){ return v+'/mo saved'; },
+    includesTitle: "OUR EXIT PROGRAM INCLUDES",
+    includes: [
+      "Written Money-Back Guarantee upon Program Completion",
+      "Permanent Legal Termination of Your Timeshare",
+      "Elimination of Future Maintenance Obligations",
+      "Resolution of Delinquent Fees",
+      "Credit Protection &amp; Repair Support",
+      "Proof of Performance Documentation",
+      "Consumer Protection &amp; BBB Credibility"
+    ],
+    closingQuote: "&ldquo;Would you rather be putting those payments toward the problem or toward the solution?&rdquo;",
+    sigThanks: "Thank you,",
+    sigName: "Sebastian Short",
+    sigTitle: "Account Specialist",
+    sigCompany: "ALPHA TIMESHARE CONSULTANTS",
+    sigBiz: "Business:",
+    sigOffice: "Office:",
+    sigEmail: "Email:",
+    disclaimer: "This summary is for informational purposes regarding your timeshare exit program enrollment and is not a binding offer until a signed agreement is executed. Pricing and financing terms are subject to change.",
+    autoDisclosure: "Automated Disclosure. This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error, please notify the sender. Unauthorized review, dissemination, distribution, copying or other use of this information is strictly prohibited. If NDANC is signed, all electronic communications are under that NDANC. Thank you for your cooperation."
+  },
+  es: {
+    pageTitle: "Su Cotización de Servicio",
+    pageSub: "Lo que seguirá pagando — frente a lo que cuesta detenerlo.",
+    emailBtn: "📧 Enviar Esta Cotización",
+    greeting: function(name,resort){ return 'Hola <strong>'+name+'</strong>,<br><br>Aquí tiene un resumen de sus números de '+resort+' y lo que cuesta salir con Alpha.'; },
+    resortLbl: "Resort — Costo a 5 Años",
+    alphaLbl: "Alpha — Tarifa de Salida",
+    savedLbl: "Usted Ahorra en 5 Años",
+    sectionLbl: "Desglose del Pago Mensual",
+    lender1: "Pago del Prestamista 1",
+    lender2: "Pago del Prestamista 2",
+    planPayment: function(mo){ return 'Pago del Plan a '+mo+' Meses'; },
+    totalAlpha: "Pago Total de Alpha",
+    payInFull: "Pago Completo",
+    oneTime: " único pago",
+    currentPayments: "Pagos Actuales",
+    monthlySavings: "Ahorro Mensual",
+    monthlySaved: function(v){ return v+'/mes ahorrado'; },
+    includesTitle: "NUESTRO PROGRAMA DE SALIDA INCLUYE",
+    includes: [
+      "Garantía Escrita de Devolución de Dinero al Completar el Programa",
+      "Terminación Legal Permanente de Su Timeshare",
+      "Eliminación de Obligaciones Futuras de Mantenimiento",
+      "Resolución de Cuotas Atrasadas",
+      "Apoyo de Protección y Reparación de Crédito",
+      "Documentación de Comprobación de Resultados",
+      "Protección al Consumidor y Credibilidad BBB"
+    ],
+    closingQuote: "&ldquo;¿Preferiría destinar esos pagos al problema o a la solución?&rdquo;",
+    sigThanks: "Gracias,",
+    sigName: "Sebastian Short",
+    sigTitle: "Especialista de Cuenta",
+    sigCompany: "ALPHA TIMESHARE CONSULTANTS",
+    sigBiz: "Negocios:",
+    sigOffice: "Oficina:",
+    sigEmail: "Correo:",
+    disclaimer: "Este resumen es de carácter informativo sobre su inscripción en el programa de salida del timeshare y no constituye una oferta vinculante hasta que se firme un acuerdo. Los precios y condiciones de financiamiento están sujetos a cambios.",
+    autoDisclosure: "Divulgación Automática. Este correo electrónico y cualquier archivo transmitido con él son confidenciales y están destinados únicamente para el uso de la persona o entidad a la que están dirigidos. Si ha recibido este correo por error, notifique al remitente. La revisión, difusión, distribución, copia u otro uso no autorizado de esta información está estrictamente prohibido. Si se ha firmado un NDANC, todas las comunicaciones electrónicas están sujetas a ese NDANC. Gracias por su cooperación."
+  }
+};
+
+function setLang(lang){
+  _lang = lang;
+  document.getElementById('lang-en').classList.toggle('active', lang==='en');
+  document.getElementById('lang-es').classList.toggle('active', lang==='es');
+  document.getElementById('lang-en').style.background = lang==='en' ? '#1B2A4A' : '#fff';
+  document.getElementById('lang-en').style.color = lang==='en' ? '#fff' : '#1B2A4A';
+  document.getElementById('lang-es').style.background = lang==='es' ? '#1B2A4A' : '#fff';
+  document.getElementById('lang-es').style.color = lang==='es' ? '#fff' : '#1B2A4A';
+  document.getElementById('pg-title').textContent = T[lang].pageTitle;
+  document.getElementById('pg-sub').textContent = T[lang].pageSub;
+  document.getElementById('email-btn').textContent = T[lang].emailBtn;
+}
+// ── END LANGUAGE TOGGLE ──────────────────────────────────────────
+
+function openEmailQuote(){
+  var L = T[_lang];
+  var clientName=(document.getElementById('b-name')||{}).textContent||'—';
+  var resort=(document.getElementById('b-resort')||{}).textContent||'Your Resort';
+  var resortCost5=(document.getElementById('msrp')||{}).textContent||'—';
+  var alphaFeeTxt=(document.getElementById('alpha-display')||{}).textContent||'—';
+  var savings5=(document.getElementById('cmp-save-5')||{}).textContent||'—';
+  var curMoTxt=(document.getElementById('pc-current')||{}).textContent||'—';
+
+  var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
+  var l1mo=0,l2mo=0,totalAlphaMo=0,rows='';
+  if(twoLenderActive){
+    l1mo=parseFloat((document.getElementById('l1-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    l2mo=parseFloat((document.getElementById('l2-mo').textContent||'0').replace(/[^0-9.]/g,''))||0;
+    totalAlphaMo=l1mo+l2mo;
+    rows+='<tr><td class="et-lbl">'+L.lender1+'</td><td class="et-val">'+fmtd(l1mo)+'/mo</td></tr>';
+    rows+='<tr><td class="et-lbl">'+L.lender2+'</td><td class="et-val">'+fmtd(l2mo)+'/mo</td></tr>';
+  } else if(_selMo){
+    var selMoTxt=(document.getElementById('sd-mo')||{}).textContent||'0';
+    totalAlphaMo=parseFloat(selMoTxt.replace(/[^0-9.]/g,''))||0;
+    rows+='<tr><td class="et-lbl">'+L.planPayment(_selMo)+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>';
+  } else {
+    rows+='<tr><td class="et-lbl">'+L.payInFull+'</td><td class="et-val">'+alphaFeeTxt+L.oneTime+'</td></tr>';
+  }
+
+  var curMoNum=parseFloat(curMoTxt.replace(/[^0-9.]/g,''))||0;
+  var monthlySavings=curMoNum-totalAlphaMo;
+
+  var totalRow = (twoLenderActive)
+    ? '<tr class="et-total"><td class="et-lbl">'+L.totalAlpha+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>'
+    : '';
+
+  var includesHtml = '<ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:#333">'
+    + L.includes.map(function(item){ return '<li>'+item+'</li>'; }).join('')
+    + '</ul>';
+
+  var html =
+'<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Thomas &amp; Cozette Manus — Alpha Timeshare Consultants</title>'+
+'<style>'+
+'body{margin:0;padding:0;background:#f0f2f5;font-family:Georgia,serif;color:#1a1a1a}'+
+'.wrap{max-width:600px;margin:0 auto;background:#fff}'+
+'.hdr{background:#1B2A4A;padding:26px 30px;text-align:center}'+
+'.hdr h1{color:#fff;font-size:20px;letter-spacing:1px;margin:0}'+
+'.hdr p{color:#C8960C;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0 0}'+
+'.body{padding:28px 30px}'+
+'.greet{font-size:15px;line-height:1.6;margin-bottom:20px}'+
+'.vs-row{display:flex;gap:10px;margin-bottom:18px}'+
+'.vs-card{flex:1;border:2px solid #ddd;border-radius:4px;padding:14px;text-align:center}'+
+'.vs-card.resort{background:#fdf0ef;border-color:#e8a09a}'+
+'.vs-card.alpha{background:#e8f5ee;border-color:#1a7a3c}'+
+'.vs-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;color:#888}'+
+'.vs-val{font-size:24px;font-weight:700}'+
+'.vs-card.resort .vs-val{color:#c0392b}'+
+'.vs-card.alpha .vs-val{color:#1a7a3c}'+
+'.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px;text-align:center;margin-bottom:24px}'+
+'.save-strip .sl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;opacity:.8}'+
+'.save-strip .sa{font-size:20px;font-weight:700;color:#C8960C}'+
+'h2.sec{font-size:14px;color:#1B2A4A;border-bottom:2px solid #C8960C;padding-bottom:8px;margin:0 0 14px}'+
+'table.et{width:100%;border-collapse:collapse;margin-bottom:10px}'+
+'table.et td{padding:11px 14px;border-bottom:1px solid #e3e7ec;font-size:14px}'+
+'table.et td.et-lbl{color:#444}'+
+'table.et td.et-val{text-align:right;font-weight:700;color:#1B2A4A}'+
+'table.et tr.et-total td{background:#f5f7fa;font-weight:700}'+
+'table.et tr.et-total td.et-val{color:#C8960C;font-size:16px}'+
+'table.et tr.et-savings td{background:#1B2A4A}'+
+'table.et tr.et-savings td.et-lbl{color:#fff}'+
+'table.et tr.et-savings td.et-val{color:#C8960C;font-size:17px}'+
+'.sig{margin-top:26px;font-size:14px;line-height:1.6}'+
+'.sig .nm{color:#1B2A4A;font-weight:700}'+
+'.disc{background:#f5f7fa;padding:16px 30px;font-size:10.5px;color:#999;line-height:1.5}'+
+'.incl{margin:24px 0;padding:16px 18px;background:#f9faf9;border-left:3px solid #1a7a3c;border-radius:0 4px 4px 0}'+
+'.incl-title{font-size:12px;font-weight:700;letter-spacing:.5px;color:#1B2A4A;margin-bottom:10px}'+
+'.cq{margin:22px 0;padding:16px 18px;background:#fbf7ec;border-left:3px solid #C8960C;font-style:italic;font-size:14px;color:#444;line-height:1.6}'+
+'.sig-block{margin-top:8px;font-size:13px;line-height:1.7;color:#333}'+
+'</style></head><body><div class="wrap">'+
+'<div class="hdr"><h1>ALPHA TIMESHARE CONSULTANTS</h1><p>'+L.pageTitle+'</p></div>'+
+'<div class="body">'+
+'<div class="greet">'+L.greeting(clientName,resort)+'</div>'+
+'<div class="vs-row">'+
+'<div class="vs-card resort"><div class="vs-lbl">'+L.resortLbl+'</div><div class="vs-val">'+resortCost5+'</div></div>'+
+'<div class="vs-card alpha"><div class="vs-lbl">'+L.alphaLbl+'</div><div class="vs-val">'+alphaFeeTxt+'</div></div>'+
+'</div>'+
+'<div class="save-strip"><div class="sl">'+L.savedLbl+'</div><div class="sa">'+savings5+'</div></div>'+
+'<h2 class="sec">'+L.sectionLbl+'</h2>'+
+'<table class="et">'+rows+totalRow+
+'<tr><td class="et-lbl">'+L.currentPayments+'</td><td class="et-val">'+fmtd(curMoNum)+'/mo</td></tr>'+
+'<tr class="et-savings"><td class="et-lbl">'+L.monthlySavings+'</td><td class="et-val">'+(monthlySavings>0?L.monthlySaved(fmtd(monthlySavings)):'—')+'</td></tr>'+
+'</table>'+
+'<div class="incl"><div class="incl-title">'+L.includesTitle+'</div>'+includesHtml+'</div>'+
+'<div class="cq">'+L.closingQuote+'</div>'+
+'<div class="sig">'+L.sigThanks+'<br>'+
+'<div class="sig-block">'+
+'<span class="nm">'+L.sigName+'</span> &middot; '+L.sigTitle+'<br>'+
+L.sigCompany+'<br>'+
+L.sigBiz+' 1 (877) 848-3948 Ext. 134<br>'+
+L.sigOffice+' 1 (689) 233-3259<br>'+
+L.sigEmail+' Sebastian@AlphaTimeshareConsultants.com'+
+'</div></div>'+
+'</div>'+
+'<div class="disc">'+L.disclaimer+'</div>'+
+'<div class="disc">'+L.autoDisclosure+'</div>'+
+'</div></body></html>';
+
+  var win = window.open('', '_blank');
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+}
+
+var _selMo=null;
+function selPlan(mo,rate){
+  _selMo=mo;
+  document.querySelectorAll('.fin-card').forEach(function(c){c.classList.remove('selected');});
+  document.getElementById('fc-'+mo).classList.add('selected');
+  var fee=getEffectiveFee();
+  var r=fi(fee,mo,rate);
+  var det=document.getElementById('sel-detail');
+  det.classList.add('show');
+  document.getElementById('sd-title').textContent=mo+'-Month Plan — Selected';
+  document.getElementById('sd-fee').textContent=fee?fmt(fee):'—';
+  document.getElementById('sd-term').textContent=mo+' months';
+  document.getElementById('sd-rate').textContent=rate===0?'0% Interest':'20% Annual';
+  document.getElementById('sd-mo').textContent=fee?fmtd(r.mo)+' / month':'—';
+  document.getElementById('sd-tot').textContent=fee?fmt(r.tot)+' total paid':'—';
+  var rawFee=parseFloat(document.getElementById('fee-inp').value)||0;
+  var d1=parseFloat(document.getElementById('disc1-inp').value)||0;
+  var d2=parseFloat(document.getElementById('disc2-inp').value)||0;
+  save(rawFee,mo,d1,d2);
+  if(window.ATC_pushLive) window.ATC_pushLive({fee:rawFee, selMo:mo});
+}
+
+function save(fee,selMo,d1,d2,l1term,l2term){
+  var key=localStorage.getItem(AK);if(!key)return;
+  var c=JSON.parse(localStorage.getItem(SK)||'{}');
+  if(c[key]){
+    c[key].alphaFee=fee||0;
+    if(selMo)c[key].selectedTerm=selMo;
+    c[key].discount1=d1||0;
+    c[key].discount2=d2||0;
+    if(l1term)c[key].lender1Term=l1term;
+    if(l2term)c[key].lender2Term=l2term;
+    localStorage.setItem(SK,JSON.stringify(c));
+  }
+}
+
+function init(){
+  var key=localStorage.getItem(AK);
+  if(!key){
+    // Standalone client link — pre-filled with Thomas & Cozette Manus's quoted figures.
+    document.getElementById('b-name').textContent='Thomas & Cozette Manus';
+    document.getElementById('b-resort').textContent='Wyndham Destinations';
+    document.getElementById('msrp').textContent='$13,740';
+    document.getElementById('alpha-display').textContent='$4,495';
+    var save5El=document.getElementById('cmp-save-5');
+    if(save5El) save5El.textContent='$9,245';
+    document.getElementById('fee-inp').value=4495;
+    // No mortgage — MTF only ($229/mo current payments)
+    if(typeof _curMo!=='undefined') _curMo=229;
+    var pcEl=document.getElementById('pc-current');
+    if(pcEl) pcEl.textContent='$229/mo';
+    initLiveScreenShare();
+    upd();
+    return;
+  }
+  var c=JSON.parse(localStorage.getItem(SK)||'{}');
+  var d=c[key]||{};
+  if(d.firstName||d.name)document.getElementById('b-name').textContent=d.firstName?(d.firstName+' '+(d.lastName||'')).trim():d.name||'—';
+  if(d.resort)document.getElementById('b-resort').textContent=d.resort;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  _curMo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  document.getElementById('pc-current').textContent = _curMo>0 ? fmt(_curMo)+'/mo' : '—';
+  var five=(parseFloat(d.maitFees)||0)+((parseFloat(d.monthlyMortgage)||0)*12);
+  var oneYr=five;
+  five=five*5;
+  if(five>0){
+    _msrp=five;
+    document.getElementById('msrp').textContent=fmt(five);
+    document.getElementById('msrp-1yr').textContent='1yr: '+fmt(oneYr);
+    var ma=parseFloat(d.maitFees)||0,mg=(parseFloat(d.monthlyMortgage)||0)*12;
+    if(ma||mg)document.getElementById('msrp-detail').textContent=fmt(ma)+'/yr MTF + '+fmt(mg)+'/yr mortgage × 5 yrs';
+  }
+  var fee=parseFloat(d.alphaFee)||0;
+  document.getElementById('fee-inp').value=fee||'';
+  document.getElementById('disc1-inp').value=parseFloat(d.discount1)||'';
+  document.getElementById('disc2-inp').value=parseFloat(d.discount2)||'';
+  if(d.lender1Term)document.getElementById('l1-term').value=d.lender1Term;
+  if(d.lender2Term)document.getElementById('l2-term').value=d.lender2Term;
+  if(d.selectedTerm)selPlan(d.selectedTerm,d.selectedTerm===12?0:0.20);
+  upd();
+  initLiveScreenShare();
+}
+
+// ── LIVE SCREEN-SHARE (PILOT) ───────────────────────────────────
+function initLiveScreenShare(){
+  var isClient = new URLSearchParams(window.location.search).get('view')==='client';
+  if(!isClient) return; // rep side: nothing to lock, just pushes from upd()/selPlan()
+
+  // Client side: lock the page read-only and show a live status banner.
+  var feeInp=document.getElementById('fee-inp');
+  if(feeInp) feeInp.setAttribute('readonly','readonly');
+  var disc1Inp=document.getElementById('disc1-inp'), disc2Inp=document.getElementById('disc2-inp');
+  if(disc1Inp) disc1Inp.setAttribute('readonly','readonly');
+  if(disc2Inp) disc2Inp.setAttribute('readonly','readonly');
+  document.querySelectorAll('.fin-card').forEach(function(c){ c.style.pointerEvents='none'; });
+  var sidenav=document.querySelector('.sidenav');
+  if(sidenav) sidenav.style.display='none';
+  var main=document.querySelector('.main-content');
+  if(main) main.style.marginLeft='0';
+
+  var banner=document.createElement('div');
+  banner.id='live-status-banner';
+  banner.style.cssText='position:sticky;top:0;z-index:500;background:#1B2A4A;color:#fff;text-align:center;padding:10px 14px;font-family:Inter,sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px';
+  banner.textContent='Connecting…';
+  document.body.insertBefore(banner, document.body.firstChild);
+
+  function waitForSubscribe(){
+    if(typeof window.ATC_clientSubscribe === 'function'){
+      window.ATC_clientSubscribe(function(data){
+        if(!data){
+          banner.style.background='#6b7280';
+          banner.textContent='⏳ Waiting for your consultant to start the session…';
+          return;
+        }
+        var updatedAt = data.updatedAt && data.updatedAt.toDate ? data.updatedAt.toDate() : null;
+        var ageSec = updatedAt ? (Date.now()-updatedAt.getTime())/1000 : 9999;
+        if(ageSec > 120){
+          banner.style.background='#6b7280';
+          banner.textContent='⏳ Session inactive — waiting for your consultant…';
+          return;
+        }
+        banner.style.background='#16A34A';
+        banner.textContent='🔴 LIVE — following your consultant\u2019s screen';
+        if(feeInp && typeof data.fee==='number') feeInp.value = data.fee;
+        if(disc1Inp && typeof data.disc1==='number') disc1Inp.value = data.disc1;
+        if(disc2Inp && typeof data.disc2==='number') disc2Inp.value = data.disc2;
+        upd();
+        if(data.selMo) selPlan(data.selMo, data.selMo===12?0:0.20);
+      });
+    } else {
+      setTimeout(waitForSubscribe, 80);
+    }
+  }
+  waitForSubscribe();
+}
+// ── END LIVE SCREEN-SHARE ───────────────────────────────────────
+
+/* ── SIDEBAR NAV ── */
+var _SK='atc_clients_v2',_AK='atc_active';
+function _gc(){try{return JSON.parse(localStorage.getItem(_SK))||{};}catch(e){return{};}}
+function _sc(o){localStorage.setItem(_SK,JSON.stringify(o));}
+function snRefresh(){var c=_gc(),dd=document.getElementById('sn-client-dd'),cur=localStorage.getItem(_AK)||'';if(!dd)return;dd.innerHTML='<option value="">— Select Client —</option>';Object.keys(c).sort(function(a,b){return(c[b]._c||0)-(c[a]._c||0);}).forEach(function(k){var o=document.createElement('option');o.value=k;var d=c[k];o.textContent=(d.firstName?d.firstName+' '+(d.lastName||''):d.name||'Unknown')+(d.resort?' — '+d.resort:'');dd.appendChild(o);});if(cur)dd.value=cur;}
+function snLoadClient(){var k=document.getElementById('sn-client-dd').value;if(!k)return;localStorage.setItem(_AK,k);snToast('Loaded');setTimeout(function(){window.location.reload();},600);}
+function snShowModal(){var t=new Date();document.getElementById('sn-date').value=(t.getMonth()+1)+'/'+(t.getDate())+'/'+t.getFullYear();document.getElementById('sn-name').value='';document.getElementById('sn-resort').value='';document.getElementById('sn-modal').classList.add('active');}
+function snCloseModal(){document.getElementById('sn-modal').classList.remove('active');}
+function snCreateClient(){var name=document.getElementById('sn-name').value.trim();var resort=document.getElementById('sn-resort').value.trim();var date=document.getElementById('sn-date').value;if(!name&&!resort){alert('Please enter a name or resort.');return;}var parts=name.split(' ');var k=(name||'Unknown')+(resort?' — '+resort:'')+'_'+Date.now();var c=_gc();c[k]={firstName:parts[0]||'',lastName:parts.slice(1).join(' ')||'',name:name,resort:resort,date:date,_c:Date.now()};_sc(c);localStorage.setItem(_AK,k);snCloseModal();snRefresh();document.getElementById('sn-client-dd').value=k;snToast('Created: '+name);setTimeout(function(){window.location.href='/owner/';},700);}
+function snToast(msg){var t=document.getElementById('sn-toast');if(!t)return;t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+(function(){var path=window.location.pathname.replace(/\/$/,'').split('/').pop()||'home';document.querySelectorAll('.sn-item[data-page]').forEach(function(el){if(el.dataset.page===path)el.classList.add('active');});snRefresh();})();
+
+init();
+setLang('en');
+</script>
+<script>
+var SK='atc_clients_v2',AK='atc_active';
+function _getAll(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function _active(){return localStorage.getItem(AK)||null;}
+function _activeData(){var s=_active();return s?_getAll()[s]||null:null;}
+function _fmtC(n){return '$'+Math.round(n||0).toLocaleString();}
+function _fmtD(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function _saveField(k,v){var s=_active();if(!s)return;var all=_getAll();if(!all[s])return;all[s][k]=v;all[s]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(all));}
+
+var _PAGES=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:1,ic:'📋',lb:'Owner Info (Legacy)',url:'/owner/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Your Spot in Group Filing',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+
+function buildSidebar(){
+  var d=_activeData(),slug=_active(),all=_getAll();
+  var cHTML='';
+  if(d){
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    cHTML='<div class="sb-client">'
+      +'<div class="sb-stage">'+(d.alphaFee?'Quoted':'Assessment')+'</div>'
+      +'<div class="sb-name">'+(d.firstName||'')+' '+(d.lastName||'')+'</div>'
+      +'<div class="sb-resort">'+(d.resort||'No resort entered')+'</div>'
+      +'<div class="sb-stats">'
+        +'<div class="sb-stat"><div class="sl">Monthly</div><div class="sv">'+_fmtC(mo)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Yearly</div><div class="sv">'+_fmtC(mo*12)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">MTF/yr</div><div class="sv">'+_fmtC(parseFloat(d.maitFees)||0)+'</div></div>'
+        +'<div class="sb-stat"><div class="sl">Visits</div><div class="sv">'+(d._visits||1)+'</div></div>'
+      +'</div>'
+      +(d.alphaFee?'<div class="sb-quote">📄 '+_fmtC(d.alphaFee)+' · '+(d.selectedTerm||'—')+' mo</div>':'')
+      +'<div class="sb-meta">Last: '+_fmtD(d._updated)+'</div>'
+    +'</div>';
+  } else {
+    cHTML='<div class="sb-no-client">⚠️ No client selected — go to Dashboard</div>';
+  }
+  var opts=Object.keys(all).map(function(k){
+    var c=all[k];
+    return '<option value="'+k+'"'+(k===slug?' selected':'')+'>'
+      +(c.firstName||'')+(c.lastName?' '+c.lastName:'')+(c.resort?' — '+c.resort:'')+'</option>';
+  }).join('');
+  var curPath='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+  var nav=_PAGES.map(function(p){
+    var saved=d&&d._savedPages&&d._savedPages.indexOf(p.url)>-1;
+    return '<a href="'+p.url+'" class="sb-link'+(curPath===p.url?' active':'')+'"><span class="sb-num">'+p.n+'</span><span style="flex:1">'+p.ic+' '+p.lb+'</span>'+(saved?'<span style="color:#1a7a3c;font-size:10px;flex-shrink:0">✓</span>':'')+'</a>';
+  }).join('');
+  var calV=d
+    ?'<input type="datetime-local" class="sb-cal-in" id="_ta" value="'+(d._todayAppt||'')+'" onchange="_saveField('_todayAppt',this.value)"><div class="sb-cal-lbl" style="margin-top:6px">📅 Follow-Up</div><input type="datetime-local" class="sb-cal-in" id="_fa" value="'+(d._fuAppt||'')+'" onchange="_saveField('_fuAppt',this.value)"><button class="sb-b" style="margin-top:4px;width:100%;font-size:9px" onclick="_addCal()">+ Google Calendar</button>'
+    :'<div style="font-size:10px;color:rgba(255,255,255,.3);padding:2px">Select a client first</div>';
+  var sbEl=document.getElementById('sidebar')||document.getElementById('sb');
+  if(!sbEl)return;
+  sbEl.innerHTML=
+    '<div class="sb-logo"><img src="https://alphatimeshareconsultants.com/wp-content/uploads/2026/04/Alpha-TimeShare-Consultants-logo.png" alt="ATC"></div>'
+    +cHTML
+    +'<div class="sb-sel"><select class="sb-select" onchange="_switchClient(this.value)"><option value="">— Select client —</option>'+opts+'</select>'
+    +'<div class="sb-brow"><button class="sb-b" onclick="_newClient()">+ New</button><button class="sb-b out" onclick="_saveClear()">Save &amp; Clear</button></div></div>'
+    +'<nav class="sb-nav">'+nav+'</nav>'
+    +'<div class="sb-cal"><div class="sb-cal-lbl">📅 Today</div>'+calV+'</div>'
+    +'<div class="sb-rpts"><div class="sb-cal-lbl">📋 Reports</div>'
+    +'<button class="sb-rpt" onclick="_rpt('vero')">📋 Vero</button>'
+    +'<button class="sb-rpt" onclick="_rpt('crm')">📋 CRM Note</button>'
+    +'<button class="sb-rpt" onclick="_rpt('sms')">💬 SMS</button>'
+    +'<button class="sb-rpt" onclick="_rpt('full')">📄 Full Summary</button>'
+    +'</div>';
+}
+
+function _switchClient(slug){if(!slug)return;localStorage.setItem(AK,slug);_toast('Loaded');setTimeout(function(){location.reload();},500);}
+
+function _newClient(){
+  var m=document.getElementById('_nc-ov');
+  if(!m){
+    m=document.createElement('div');m.id='_nc-ov';
+    m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';
+    m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:380px;width:100%;margin:20px"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client</div><div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_nc-f" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Data"></div><div style="margin-bottom:10px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_nc-l" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Data"></div><div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_nc-r" style="width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:9px 11px;font-size:14px;font-family:Inter,sans-serif" placeholder="Data"></div><div style="display:flex;gap:8px"><button onclick="document.getElementById('_nc-ov').style.display='none'" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="_createClient()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Create &amp; Start</button></div></div>';
+    m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});
+    document.body.appendChild(m);
+  }
+  m.style.display='flex';setTimeout(function(){var f=document.getElementById('_nc-f');if(f)f.focus();},100);
+}
+
+function _createClient(){
+  var f=(document.getElementById('_nc-f')||{}).value||'';
+  var l=(document.getElementById('_nc-l')||{}).value||'';
+  var r=(document.getElementById('_nc-r')||{}).value||'';
+  f=f.trim();l=l.trim();r=r.trim();
+  if(!f&&!l){alert('Please enter a name.');return;}
+  var slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');
+  var all=_getAll();
+  all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});
+  localStorage.setItem(SK,JSON.stringify(all));
+  localStorage.setItem(AK,slug);
+  var m=document.getElementById('_nc-ov');if(m)m.style.display='none';
+  _toast('Created: '+f+' '+l);
+  setTimeout(function(){location.href='/owner/';},700);
+}
+
+function _saveClear(){
+  var d=_activeData();if(!d){alert('No active client.');return;}
+  var saved=d._savedPages||[];
+  var list=_PAGES.map(function(p){var ok=saved.indexOf(p.url)>-1;return'<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:'+(ok?'#1a7a3c':'#d1d5db')+'">'+(ok?'✓':'○')+'</span>'+p.ic+' '+p.lb+'</div>';}).join('');
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:420px;width:100%;margin:20px;max-height:85vh;overflow-y:auto"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:8px">✓ '+(d.firstName||'')+' '+(d.lastName||'')+' — Saved</div><div style="background:#EAF0F8;border-left:3px solid #1B2A4A;padding:10px 12px;border-radius:4px;font-size:13px;margin-bottom:12px;color:#1B2A4A">'+(d.resort||'No resort')+'</div>'+list+'<div style="display:flex;gap:8px;margin-top:14px"><button onclick="this.closest('div[style]').remove()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="_doClear()" style="flex:1;padding:10px;font-size:13px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Clear &amp; New</button></div></div>';
+  document.body.appendChild(ov);
+}
+
+function _doClear(){localStorage.removeItem(AK);_toast('Cleared');setTimeout(function(){location.href='/home/';},700);}
+
+function _addCal(){
+  var d=_activeData();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}
+  var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};
+  var end=new Date(dt.getTime()+3600000);
+  var name=(d&&d.firstName?d.firstName+' ':'')+'ATC Follow-Up';
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(name)+'&dates='+fmt(dt)+'/'+fmt(end),'_blank');
+}
+
+function _rpt(type){
+  var d=_activeData();if(!d){_toast('No active client','#c0392b');return;}
+  var name=((d.firstName||'')+' '+(d.lastName||'')).trim();
+  var mo=_fmtC((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
+  var txt='';
+  if(type==='vero')txt='Name: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n2nd: '+(d.phone2||'—')+'\nEmail: '+(d.email||'—')+'\nAddress: '+(d.address||'—');
+  else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+_fmtC(d.maitFees)+'/yr\nMortgage: '+_fmtC(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fmtC(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\nMotivation: '+(d.motivation||'—')+'/10\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';
+  else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\n\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nEmail: '+(d.email||'—')+'\nMonthly: '+mo+'\nMTF: '+_fmtC(d.maitFees)+'/yr\nMortgage: '+_fmtC(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?_fmtC(d.alphaFee):'—')+' / '+(d.selectedTerm||'—')+' mo\nFollow-Up: '+(d._fuAppt||'—')+'\nNotes: '+(d.notes||'—');
+  try{navigator.clipboard.writeText(txt).then(function(){_toast('✓ Copied');});}
+  catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);_toast('✓ Copied');}
+}
+
+function _toast(msg,color){
+  var t=document.getElementById('_toast')||document.getElementById('global-toast')||document.getElementById('tst');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='display:none;position:fixed;bottom:24px;left:260px;background:#1a7a3c;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}
+  t.style.background=color||'#1a7a3c';t.textContent=msg;t.style.display='block';
+  setTimeout(function(){t.style.display='none';},2500);
+}
+
+document.addEventListener('DOMContentLoaded',function(){if(typeof buildSB==='function')buildSB();});
+</script>
+
+
+
+
+<script id="vitals-banner-js">
+(function(){
+  function initVitalsBanner(){
+    var SK='atc_clients_v2',AK='atc_active';
+    function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+    function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+    var s=localStorage.getItem(AK);
+    if(!s)return;
+    var d=ga()[s];if(!d)return;
+    var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+    var stage=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+    function set(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+    set('vb-name',((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—');
+    set('vb-phone',d.phone||'—');
+    set('vb-resort',d.resort||'—');
+    set('vb-location',d.location||'—');
+    set('vb-mo',mo>0?fc(mo)+'/mo':'—');
+    set('vb-yr',mo>0?fc(mo*12)+'/yr':'—');
+    set('vb-quote',d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet');
+    set('vb-stage',stage);
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initVitalsBanner);}
+  else{initVitalsBanner();}
+})();
+</script>
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  else document.addEventListener('DOMContentLoaded', function(){
+    if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  });
+})();
+</script>
+</body>
+</html>
