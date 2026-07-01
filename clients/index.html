@@ -959,7 +959,13 @@ function renderHub(){
     if(q && searchStr.indexOf(q)===-1) continue;
     shown++;
 
+  var fuDate = d._fuAppt ? (function(ts){
+      var dt=new Date(ts);
+      return isNaN(dt.getTime())?ts.split('T')[0]:dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    })(d._fuAppt) : null;
+
     html += '<div style="border:2px solid '+(isActive?'var(--gold)':'var(--border)')+';background:'+(isActive?'#fffdf5':'#fff')+';border-radius:10px;padding:16px 18px;margin-bottom:12px;cursor:pointer" onclick="activateClient(\''+slug+'\')">'
+      +(fuDate?'<div style="background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:8px">📞 FU: '+fuDate+'</div>':'')
       +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'
         +'<div>'
           +'<div style="font-size:15px;font-weight:700;color:var(--navy)">'+(isActive?'🟡 ':'')+ nm+'</div>'
