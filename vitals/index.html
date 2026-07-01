@@ -378,6 +378,17 @@ function buildSB(){
 
   el.innerHTML=html;
 
+  // Inject floating Email This Page FAB into page body (not sidebar)
+  // So it's visible on every page regardless of sidebar state
+  if(!document.getElementById('_email-fab')){
+    var fab=document.createElement('button');
+    fab.id='_email-fab';
+    fab.innerHTML='📧 Email This Page';
+    fab.onclick=function(){ if(typeof window.atcEmailThisPage==='function') window.atcEmailThisPage(); };
+    fab.style.cssText='position:fixed;bottom:20px;right:20px;background:#C8960C;color:#fff;border:none;border-radius:30px;padding:12px 20px;font-size:14px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(200,150,12,.4);z-index:9999;letter-spacing:.2px;white-space:nowrap';
+    document.body.appendChild(fab);
+  }
+
   el.querySelectorAll("[data-rpt]").forEach(function(btn){
     btn.addEventListener("click",function(){window.rpt(this.getAttribute("data-rpt"));});
   });
