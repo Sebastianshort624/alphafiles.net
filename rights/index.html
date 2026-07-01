@@ -485,457 +485,263 @@ function _topSaveClick(){
 }
 
 </script>
-
-
-<div class="sidenav" id="sidenav"></div>
 <div class="main"><div class="wrap">
-<div class="ph">
-  <div class="ph-num">Page 7</div>
-  <div class="ph-title">Consumer Rights Assessment</div>
-  <div class="ph-sub">Check each violation that applies — each one incurs separate fines against the resort</div>
-</div>
-<div class="vb">
-  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
-  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
-  <div class="vbc"><div class="vbl">Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
-  <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
+<div class="ph"><div class="ph-num">7</div><div class="ph-title">Your Consumer Rights Assessment</div><div class="ph-sub">Auto-populated from your previous responses — check any additional violations that apply</div></div>
+<style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--red:#DC2626;--green:#16A34A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1a1a1a}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
+.ph{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px;margin-bottom:16px}
+.ph-num{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ph-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.ph-sub{font-size:13px;color:rgba(255,255,255,.65)}
+.jfk-intro{background:#1a1a1a;border-radius:10px;padding:18px 20px;margin-bottom:18px;border-left:4px solid var(--gold)}
+.jfk-intro h3{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.jfk-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+.jfk-n{background:var(--gold);color:#fff;font-weight:700;font-size:11px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.auto-bar{background:#fffdf5;border:1.5px solid var(--gold);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;display:none}
+.right-section{background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;overflow:hidden}
+.right-header{background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700}
+.viol-table{padding:0 14px}
+.viol-row{display:grid;grid-template-columns:28px 1fr 90px 55px;gap:8px;padding:10px 0;border-bottom:1px solid #f3f4f6;align-items:flex-start}
+.viol-row.auto-flagged{background:#fffdf5}
+.viol-cb{width:16px;height:16px;accent-color:var(--navy);margin-top:3px}
+.viol-desc{font-size:13px;color:#374151;line-height:1.4;margin-bottom:3px}
+.viol-statute{font-size:11px;color:#9ca3af}
+.viol-fine-col{font-size:13px;font-weight:700;color:var(--red);white-space:nowrap}
+.viol-auto{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;margin-top:4px}
+.total-bar{background:var(--navy);border-radius:10px;padding:20px 24px;margin:20px 0;display:flex;justify-content:space-between;align-items:center}
+.total-label{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
+.total-val{font-family:"Cormorant Garamond",Georgia,serif;font-size:32px;font-weight:700;color:#fff}
+.recap-box{background:#fff;border-radius:10px;border:1px solid var(--border);padding:18px;margin-top:16px;display:none}
+.recap-box.show{display:block}
+.recap-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+.recap-total{display:flex;justify-content:space-between;padding:10px 0;font-size:15px;font-weight:700;color:var(--red)}
+.last-q{background:#EAF0F8;border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 18px;margin:20px 0}
+.last-q .lbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.last-q .qtext{font-family:"Cormorant Garamond",Georgia,serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;line-height:1.3}
+.lq-btns{display:flex;gap:10px}
+.lq-btn{flex:1;padding:10px;font-size:14px;font-weight:700;border-radius:8px;border:2px solid var(--border);background:#fff;color:#6b7280;cursor:pointer}
+.lq-btn.yes{border-color:var(--green);background:var(--green);color:#fff}
+.lq-btn.no{border-color:var(--red);background:var(--red);color:#fff}
+.lq-vbox{background:#fef2f2;border:1.5px solid var(--red);border-radius:8px;padding:14px;margin-top:10px;display:none}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:14px;border-top:1px solid var(--border)}
+.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+@media print{.sidenav,.nav-bar{display:none!important}.main{margin-left:0!important}}
+</style>
+
+<div class="jfk-intro">
+  <h3>President Kennedy's Consumer Bill of Rights — March 15, 1962</h3>
+  <div class="jfk-item"><div class="jfk-n">I</div><div><strong>Right to Safety</strong> — Protection from products, practices, and agreements hazardous to health, financial security, or wellbeing</div></div>
+  <div class="jfk-item"><div class="jfk-n">II</div><div><strong>Right to Choose</strong> — As an owner, you have the right to priority access, competitive pricing, and preferred availability over non-paying guests</div></div>
+  <div class="jfk-item"><div class="jfk-n">III</div><div><strong>Right to Be Heard</strong> — Your grievances must be acknowledged. Undisclosed obligations that bind your estate give your heirs no voice</div></div>
+  <div class="jfk-item"><div class="jfk-n">IV</div><div><strong>Right to Be Informed</strong> — YOU HAVE THE RIGHT TO RECEIVE ALL INFORMATION REQUIRED TO MAKE AN INFORMED FINANCIAL COMMITMENT, INCLUDING BUT NOT LIMITED TO TOTAL ANNUAL EXPENSES, LENGTH/TERM OF CONTRACT, AND DETAILED SCOPE OF SERVICES RENDERED</div></div>
 </div>
 
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-    <div>
-      <div style="font-size:14px;color:#374151;margin-bottom:4px">Check each violation that applies. <strong>Each violation is a separate fine.</strong> Fine amounts shown only when checked.</div>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <div style="background:var(--navy);border-radius:6px;padding:10px 16px;text-align:center;min-width:100px">
-        <div style="font-size:22px;font-weight:700;color:var(--gold)" id="viol-count">0</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.7)">Violations</div>
-      </div>
-      <div style="background:var(--red);border-radius:6px;padding:10px 16px;text-align:center;min-width:120px">
-        <div style="font-size:22px;font-weight:700;color:#fff" id="viol-total">$0</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.8)">Fine Exposure</div>
-      </div>
-    </div>
+<div class="auto-bar" id="auto-bar">
+  <strong style="color:var(--navy)">Auto-flagged from your previous responses:</strong>
+  <span id="auto-count" style="color:var(--red);font-weight:700"></span> violations identified based on your answers. They are pre-checked below. Review and add any others that apply.
+</div>
+
+<div class="right-section"><div class="right-header">Right to Safety</div><div class="viol-table"><div class="viol-row" id="vr-v_contract_time">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_contract_time" class="viol-cb" data-fine="50000" data-vid="v_contract_time" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">You were not given adequate time to review the contract before signing</div><div class="viol-statute">TILA §128, RESPA §4</div></div>
+  <div class="viol-fine-col" id="fine-v_contract_time" style="display:none">$50,000</div>
+  <div class="viol-auto" id="src-v_contract_time" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_pressure">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_pressure" class="viol-cb" data-fine="40000" data-vid="v_pressure" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">High-pressure sales tactics prevented you from making a fully informed decision</div><div class="viol-statute">FTC Act §5, UDAP</div></div>
+  <div class="viol-fine-col" id="fine-v_pressure" style="display:none">$40,000</div>
+  <div class="viol-auto" id="src-v_pressure" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_rescission">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_rescission" class="viol-cb" data-fine="75000" data-vid="v_rescission" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">Your right to cancel within the rescission period was not properly explained</div><div class="viol-statute">TILA 15 U.S.C. §1635</div></div>
+  <div class="viol-fine-col" id="fine-v_rescission" style="display:none">$75,000</div>
+  <div class="viol-auto" id="src-v_rescission" style="display:none">AUTO</div>
+</div></div></div><div class="right-section"><div class="right-header">Right to Choose</div><div class="viol-table"><div class="viol-row" id="vr-v_resale">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_resale" class="viol-cb" data-fine="50000" data-vid="v_resale" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">You were led to believe the timeshare could be resold or transferred easily</div><div class="viol-statute">FTC Act §5, State UDAP</div></div>
+  <div class="viol-fine-col" id="fine-v_resale" style="display:none">$50,000</div>
+  <div class="viol-auto" id="src-v_resale" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_nomarket">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_nomarket" class="viol-cb" data-fine="40000" data-vid="v_nomarket" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">The complete absence of a secondary resale market was never disclosed</div><div class="viol-statute">FTC Act §5</div></div>
+  <div class="viol-fine-col" id="fine-v_nomarket" style="display:none">$40,000</div>
+  <div class="viol-auto" id="src-v_nomarket" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_nonowner">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_nonowner" class="viol-cb" data-fine="50000" data-vid="v_nonowner" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">Non-owners get equivalent or superior resort access through public channels</div><div class="viol-statute">FTC Act §5, State UDAP</div></div>
+  <div class="viol-fine-col" id="fine-v_nonowner" style="display:none">$50,000</div>
+  <div class="viol-auto" id="src-v_nonowner" style="display:none">AUTO</div>
+</div></div></div><div class="right-section"><div class="right-header">Right to Be Heard</div><div class="viol-table"><div class="viol-row" id="vr-v_perpetual">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_perpetual" class="viol-cb" data-fine="60000" data-vid="v_perpetual" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">The perpetual and irrevocable nature of your obligation was not clearly disclosed</div><div class="viol-statute">State Contract Law, FL §721.07</div></div>
+  <div class="viol-fine-col" id="fine-v_perpetual" style="display:none">$60,000</div>
+  <div class="viol-auto" id="src-v_perpetual" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_estate">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_estate" class="viol-cb" data-fine="60000" data-vid="v_estate" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">The inheritance clause and 9-month disclaimer window affecting your heirs was not disclosed</div><div class="viol-statute">State Contract Law, IRC §2518</div></div>
+  <div class="viol-fine-col" id="fine-v_estate" style="display:none">$60,000</div>
+  <div class="viol-auto" id="src-v_estate" style="display:none">AUTO</div>
+</div></div></div><div class="right-section"><div class="right-header">Right to Be Informed</div><div class="viol-table"><div class="viol-row" id="vr-v_mtf_cumulative">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_mtf_cumulative" class="viol-cb" data-fine="55000" data-vid="v_mtf_cumulative" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">The cumulative cost of maintenance fees over 10 years was never shown at signing</div><div class="viol-statute">TILA §128, State UDAP</div></div>
+  <div class="viol-fine-col" id="fine-v_mtf_cumulative" style="display:none">$55,000</div>
+  <div class="viol-auto" id="src-v_mtf_cumulative" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_mtf_growth">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_mtf_growth" class="viol-cb" data-fine="55000" data-vid="v_mtf_growth" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">The 8%/yr escalation rate and long-term MTF impact was not disclosed</div><div class="viol-statute">TILA §128, State UDAP</div></div>
+  <div class="viol-fine-col" id="fine-v_mtf_growth" style="display:none">$55,000</div>
+  <div class="viol-auto" id="src-v_mtf_growth" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_mortgage">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_mortgage" class="viol-cb" data-fine="75000" data-vid="v_mortgage" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">Total financing cost including APR and total payments was not clearly shown</div><div class="viol-statute">TILA 15 U.S.C. §1635, Reg Z §226.23</div></div>
+  <div class="viol-fine-col" id="fine-v_mortgage" style="display:none">$75,000</div>
+  <div class="viol-auto" id="src-v_mortgage" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_30yr">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_30yr" class="viol-cb" data-fine="75000" data-vid="v_30yr" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">Your total 30-year financial commitment was never disclosed</div><div class="viol-statute">TILA §128</div></div>
+  <div class="viol-fine-col" id="fine-v_30yr" style="display:none">$75,000</div>
+  <div class="viol-auto" id="src-v_30yr" style="display:none">AUTO</div>
+</div><div class="viol-row" id="vr-v_investment">
+  <div class="viol-check-col"><input type="checkbox" id="vc-v_investment" class="viol-cb" data-fine="100000" data-vid="v_investment" onchange="toggleViol(this)"></div>
+  <div class="viol-desc-col"><div class="viol-desc">Investment value or appreciation claims were made without factual basis</div><div class="viol-statute">FTC Act §5, SEC regs</div></div>
+  <div class="viol-fine-col" id="fine-v_investment" style="display:none">$100,000</div>
+  <div class="viol-auto" id="src-v_investment" style="display:none">AUTO</div>
+</div></div></div>
+
+<div class="last-q">
+  <div class="lbl">Consumer Bill of Rights · Right to Be Informed · Final Question</div>
+  <div class="qtext">Were you informed of your total financial commitment over the first 30 years of ownership — including maintenance fees, mortgage, and all associated costs — before you signed?</div>
+  <div class="lq-btns">
+    <button class="lq-btn" id="lq-yes" onclick="setLastQ('yes')">Yes — This Was Disclosed</button>
+    <button class="lq-btn" id="lq-no" onclick="setLastQ('no')">No — I Was NOT Shown This</button>
+  </div>
+  <div class="lq-vbox" id="lq-vbox">
+    <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚖️ VIOLATION — Right to Be Informed</div>
+    <div style="font-size:11px;color:#6b7280;margin-bottom:4px">Statute: TILA §128</div>
+    <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:700;color:var(--red);margin-bottom:8px">5,000</div>
+    <div style="font-size:13px;color:#374151;line-height:1.6">Failure to disclose total cost of ownership over 30 years is a violation of TILA §128. The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
   </div>
 </div>
 
-
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700">Right to Be Heard</div>
-  <table style="width:100%;border-collapse:collapse">
-    <thead>
-      <tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:center;width:30px;font-size:12px;color:#374151">✓</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Violation</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Statute</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:var(--red)">Fine</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Knew at Signing?</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr id="vrow-right_heard_0">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_heard_0" data-fine="50000" data-statute="TILA §128, RESPA §4" data-desc="You were not given adequate time to review contract documents" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">You were not given adequate time to review contract documents</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA §128, RESPA §4</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_heard_0" style="display:none">$50,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_heard_0',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_heard_1">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_heard_1" data-fine="40000" data-statute="FTC Act §5, UDAP" data-desc="High-pressure sales tactics prevented informed decision-making" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">High-pressure sales tactics prevented informed decision-making</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">FTC Act §5, UDAP</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_heard_1" style="display:none">$40,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_heard_1',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_heard_2">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_heard_2" data-fine="75000" data-statute="TILA 15 U.S.C. §1635" data-desc="Cooling-off period (rescission rights) was not properly explained" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Cooling-off period (rescission rights) was not properly explained</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA 15 U.S.C. §1635</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_heard_2" style="display:none">$75,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_heard_2',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_heard_3">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_heard_3" data-fine="50000" data-statute="Reg Z §226.23" data-desc="Rescission notice was buried or not separately disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Rescission notice was buried or not separately disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">Reg Z §226.23</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_heard_3" style="display:none">$50,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_heard_3',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr></tbody>
-  </table>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700">Right to Safety</div>
-  <table style="width:100%;border-collapse:collapse">
-    <thead>
-      <tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:center;width:30px;font-size:12px;color:#374151">✓</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Violation</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Statute</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:var(--red)">Fine</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Knew at Signing?</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr id="vrow-right_safety_0">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_safety_0" data-fine="35000" data-statute="UCC §2-302, State UDAP" data-desc="Contract contained unconscionable terms not explained verbally" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Contract contained unconscionable terms not explained verbally</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">UCC §2-302, State UDAP</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_safety_0" style="display:none">$35,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_safety_0',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_safety_1">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_safety_1" data-fine="25000" data-statute="FTC Act §5" data-desc="Sales presentation lasted beyond normal hours under pressure" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Sales presentation lasted beyond normal hours under pressure</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">FTC Act §5</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_safety_1" style="display:none">$25,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_safety_1',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_safety_2">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_safety_2" data-fine="45000" data-statute="State Consumer Protection" data-desc="Physical or emotional pressure used to obtain signature" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Physical or emotional pressure used to obtain signature</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">State Consumer Protection</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_safety_2" style="display:none">$45,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_safety_2',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr></tbody>
-  </table>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700">Right to Choose</div>
-  <table style="width:100%;border-collapse:collapse">
-    <thead>
-      <tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:center;width:30px;font-size:12px;color:#374151">✓</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Violation</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Statute</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:var(--red)">Fine</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Knew at Signing?</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr id="vrow-right_choose_0">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_choose_0" data-fine="50000" data-statute="FTC Act §5, State UDAP" data-desc="Told property could be resold or transferred easily — false" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Told property could be resold or transferred easily — false</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">FTC Act §5, State UDAP</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_choose_0" style="display:none">$50,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_choose_0',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_choose_1">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_choose_1" data-fine="40000" data-statute="FTC Act §5" data-desc="No secondary market exists — never disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">No secondary market exists — never disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">FTC Act §5</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_choose_1" style="display:none">$40,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_choose_1',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_choose_2">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_choose_2" data-fine="35000" data-statute="TILA, State Contract Law" data-desc="Exit options were misrepresented or hidden in contract" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Exit options were misrepresented or hidden in contract</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA, State Contract Law</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_choose_2" style="display:none">$35,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_choose_2',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_choose_3">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_choose_3" data-fine="60000" data-statute="State Contract Law" data-desc="Perpetual nature of obligation was not clearly disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Perpetual nature of obligation was not clearly disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">State Contract Law</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_choose_3" style="display:none">$60,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_choose_3',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr></tbody>
-  </table>
-</div>
-<div style="background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;overflow:hidden">
-  <div style="background:var(--navy);color:#fff;padding:10px 14px;font-size:14px;font-weight:700">Right to Be Informed</div>
-  <table style="width:100%;border-collapse:collapse">
-    <thead>
-      <tr style="background:#f9fafb">
-        <th style="padding:6px 8px;text-align:center;width:30px;font-size:12px;color:#374151">✓</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Violation</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Statute</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:var(--red)">Fine</th>
-        <th style="padding:6px 8px;text-align:left;font-size:12px;color:#374151">Knew at Signing?</th>
-      </tr>
-    </thead>
-    <tbody>
-<tr id="vrow-right_informed_0">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_0" data-fine="55000" data-statute="TILA §128, State UDAP" data-desc="Annual maintenance fee increase rate was not disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Annual maintenance fee increase rate was not disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA §128, State UDAP</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_0" style="display:none">$55,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_0',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_informed_1">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_1" data-fine="75000" data-statute="TILA §128" data-desc="Total cost of ownership over contract life was not shown" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Total cost of ownership over contract life was not shown</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA §128</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_1" style="display:none">$75,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_1',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_informed_2">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_2" data-fine="100000" data-statute="FTC Act §5, SEC regs" data-desc="Investment value claims were made without factual basis" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Investment value claims were made without factual basis</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">FTC Act §5, SEC regs</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_2" style="display:none">$100,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_2',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_informed_3">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_3" data-fine="45000" data-statute="TILA, State UDAP" data-desc="Points/credits system explained differently than contract states" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Points/credits system explained differently than contract states</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA, State UDAP</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_3" style="display:none">$45,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_3',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_informed_4">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_4" data-fine="35000" data-statute="State Condo/HOA Law" data-desc="Special assessments possibility was not disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Special assessments possibility was not disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">State Condo/HOA Law</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_4" style="display:none">$35,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_4',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr>
-<tr id="vrow-right_informed_5">
-  <td style="padding:8px;vertical-align:top">
-    <input type="checkbox" id="vc-right_informed_5" data-fine="80000" data-statute="TILA §128, Reg Z" data-desc="Financing terms and total interest cost were not clearly disclosed" onchange="toggleViolation(this)" style="accent-color:#1B2A4A;margin-top:2px">
-  </td>
-  <td style="padding:8px;font-size:13px;color:#374151;line-height:1.5">Financing terms and total interest cost were not clearly disclosed</td>
-  <td style="padding:8px;font-size:12px;color:#6b7280;white-space:nowrap">TILA §128, Reg Z</td>
-  <td style="padding:8px;font-size:13px;font-weight:700;color:var(--red);white-space:nowrap" id="fine-right_informed_5" style="display:none">$80,000</td>
-  <td style="padding:8px">
-    <select onchange="setKnew('right_informed_5',this.value)" style="font-size:12px;border:1px solid #e5e7eb;border-radius:3px;padding:3px 5px;font-family:Inter,sans-serif">
-      <option value="">Knew?</option>
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-  </td>
-</tr></tbody>
-  </table>
+<div class="total-bar">
+  <div><div class="total-label">Total Documented Fine Exposure</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px"><span id="viol-count">0</span> violations documented</div></div>
+  <div style="text-align:right"><div class="total-val" id="total-fines">/bin/sh</div></div>
 </div>
 
-<div class="alert-box info" style="margin-bottom:14px">
-  <div style="font-weight:700;margin-bottom:3px">📋 This report goes directly to the resort</div>
-  Every checked violation becomes part of the group filing. The more documented, the stronger the case — and the faster the settlement.
+<div class="recap-box" id="recap-box">
+  <div style="font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Violation Recap — Case File</div>
+  <div id="recap-list"></div>
+  <div class="recap-total"><span>Total Fine Exposure</span><span id="recap-total-val">/bin/sh</span></div>
+  <div style="font-size:12px;color:#6b7280;margin-top:10px;font-style:italic">The resort takes this combined financial exposure into consideration when negotiating your release and possible compensation. Each violation is documented as part of your group filing case file.</div>
 </div>
 
-<div class="btn-row">
-  <button class="btn p" onclick="saveRights()">Save &amp; Continue</button>
-  <button class="btn o" onclick="window.print()">Print</button>
-</div>
 <div class="nav-bar">
-  <a href="/history/" class="np">← Our Track Record</a>
-  <span class="ns">Page 7 of 16</span>
-  <a href="/cost/" class="nn">True Cost →</a>
+  <a href="/exit-methods/" class="np">← 4 Ways to Exit</a>
+  <span class="ns">7 — Consumer Rights Assessment</span>
+  <a href="/cost/" class="nn">True Cost of Ownership →</a>
 </div>
-
 </div></div>
+
 <script>
-var SK="atc_clients_v2",AK="atc_active";
-function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
-function ac(){return localStorage.getItem(AK)||null;}
+var SK='atc_clients_v2',AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{}}catch(e){return{}}}
 
-var _violations = {};
+var SOURCES={"v_contract_time": ["contract-truth", "misled"], "v_pressure": ["misled"], "v_rescission": ["misled", "contract-truth"], "v_resale": ["no-market", "tried-exit"], "v_nomarket": ["no-market"], "v_nonowner": ["non-owner", "booking"], "v_perpetual": ["no-deedback", "tried-exit"], "v_estate": ["estate-truth", "estate"], "v_mtf_cumulative": ["mtf-secret", "financial"], "v_mtf_growth": ["mtf-growth", "financial"], "v_mortgage": ["mortgage-truth", "financial", "hardship"], "v_30yr": ["true-cost-30", "financial"], "v_investment": ["misled"]};
+var ALL_VIOLS={"v_contract_time": ["TILA \u00a7128, RESPA \u00a74", "You were not given adequate time to review the contract before signing"], "v_pressure": ["FTC Act \u00a75, UDAP", "High-pressure sales tactics prevented you from making a fully informed decision"], "v_rescission": ["TILA 15 U.S.C. \u00a71635", "Your right to cancel within the rescission period was not properly explained"], "v_resale": ["FTC Act \u00a75, State UDAP", "You were led to believe the timeshare could be resold or transferred easily"], "v_nomarket": ["FTC Act \u00a75", "The complete absence of a secondary resale market was never disclosed"], "v_nonowner": ["FTC Act \u00a75, State UDAP", "Non-owners get equivalent or superior access through public channels at competitive rates"], "v_perpetual": ["State Contract Law, FL \u00a7721.07", "The perpetual and irrevocable nature of your obligation was not clearly disclosed"], "v_estate": ["State Contract Law, IRC \u00a72518", "The inheritance clause and 9-month disclaimer window affecting your heirs was not disclosed"], "v_mtf_cumulative": ["TILA \u00a7128, State UDAP", "The cumulative cost of maintenance fees over 10 years was never shown at signing"], "v_mtf_growth": ["TILA \u00a7128, State UDAP", "The 8%/yr escalation rate and its long-term impact was not disclosed"], "v_mortgage": ["TILA 15 U.S.C. \u00a71635, Reg Z \u00a7226.23", "Total financing cost including APR and total payments was not clearly shown"], "v_30yr": ["TILA \u00a7128", "Your total financial commitment over 30 years was never disclosed"], "v_investment": ["FTC Act \u00a75, SEC regs", "Investment value or appreciation claims were made without factual basis"]};
+var _fines={};
+var _lastQ=null;
 
-function toggleViolation(cb) {
-  var vid = cb.id.replace('vc-','');
-  var fine = parseInt(cb.getAttribute('data-fine'))||0;
-  var fineEl = document.getElementById('fine-'+vid);
-  if (cb.checked) {
-    _violations[vid] = fine;
-    if (fineEl) fineEl.style.display = '';
-  } else {
-    delete _violations[vid];
-    if (fineEl) fineEl.style.display = 'none';
-  }
-  updateTotals();
-  saveViolations();
+function toggleViol(cb){
+  var vid=cb.getAttribute('data-vid');
+  var fine=parseInt(cb.getAttribute('data-fine'));
+  var fineEl=document.getElementById('fine-'+vid);
+  if(cb.checked){_fines[vid]=fine;if(fineEl)fineEl.style.display='block';}
+  else{delete _fines[vid];if(fineEl)fineEl.style.display='none';}
+  updateTotals();saveAnswers();
 }
 
-function setKnew(vid, val) {
-  saveViolations();
+function setLastQ(val){
+  _lastQ=val;
+  document.getElementById('lq-yes').className='lq-btn'+(val==='yes'?' yes':'');
+  document.getElementById('lq-no').className='lq-btn'+(val==='no'?' no':'');
+  var vbox=document.getElementById('lq-vbox');
+  vbox.style.display=val==='no'?'block':'none';
+  if(val==='no'){_fines['v_30yr_final']=75000;}else{delete _fines['v_30yr_final'];}
+  updateTotals();saveAnswers();
 }
 
-function updateTotals() {
-  var count = Object.keys(_violations).length;
-  var total = Object.values(_violations).reduce(function(a,b){return a+b;}, 0);
-  document.getElementById('viol-count').textContent = count;
-  document.getElementById('viol-total').textContent = '$' + total.toLocaleString();
+function updateTotals(){
+  var total=Object.values(_fines).reduce(function(a,b){return a+b;},0);
+  var count=Object.keys(_fines).length;
+  document.getElementById('total-fines').textContent='$'+total.toLocaleString();
+  document.getElementById('viol-count').textContent=count;
+  var rb=document.getElementById('recap-box');
+  var rl=document.getElementById('recap-list');
+  if(count>0){
+    rb.classList.add('show');
+    var html='';
+    Object.keys(_fines).forEach(function(vid){
+      if(vid==='v_30yr_final'){html+='<div class="recap-row"><span>30-Year Cost Not Disclosed (Final Question)</span><span style="color:var(--red);font-weight:700">5,000</span></div>';return;}
+      var info=ALL_VIOLS[vid];
+      if(info){html+='<div class="recap-row"><span>'+info[1]+'</span><span style="color:var(--red);font-weight:700">$'+_fines[vid].toLocaleString()+'</span></div>';}
+    });
+    rl.innerHTML=html;
+    document.getElementById('recap-total-val').textContent='$'+total.toLocaleString();
+  }else{rb.classList.remove('show');}
 }
 
-function saveViolations() {
-  var s = ac(); if (!s) return;
-  var all = ga(); if (!all[s]) return;
-  var count = Object.keys(_violations).length;
-  var total = Object.values(_violations).reduce(function(a,b){return a+b;}, 0);
-  // Save violation names and total
-  var names = [];
-  document.querySelectorAll('input[id^="vc-"]:checked').forEach(function(cb){
-    names.push(cb.getAttribute('data-desc'));
-  });
-  all[s].violations = names;
-  all[s].violationTotal = total;
-  all[s].violationCount = count;
-  all[s]._updated = Date.now();
-  sa(all);
+function saveAnswers(){
+  var s=localStorage.getItem(AK);if(!s)return;
+  var all=ga();
+  if(all[s]){all[s].rightsAnswers={fines:_fines,lastQ:_lastQ,total:Object.values(_fines).reduce(function(a,b){return a+b;},0)};localStorage.setItem(SK,JSON.stringify(all));}
 }
 
-function saveRights() {
-  saveViolations();
-  var s = ac(); if (!s) { location.href='/cost/'; return; }
-  var all = ga(); if (!all[s]) { location.href='/cost/'; return; }
-  var sp = all[s]._savedPages||[];
-  if (sp.indexOf('/rights/')<0) sp.push('/rights/');
-  all[s]._savedPages = sp; all[s]._updated = Date.now(); sa(all);
-  location.href = '/cost/';
-}
-
-// Load saved violations
-(function() {
-  var d = ac() ? ga()[ac()] : null;
-  if (!d || !d.violations || !d.violations.length) return;
-  // Restore checked state
-  document.querySelectorAll('input[id^="vc-"]').forEach(function(cb) {
-    var desc = cb.getAttribute('data-desc');
-    if (d.violations.indexOf(desc) >= 0) {
-      cb.checked = true;
-      var fine = parseInt(cb.getAttribute('data-fine'))||0;
-      var vid = cb.id.replace('vc-','');
-      _violations[vid] = fine;
-      var fineEl = document.getElementById('fine-'+vid);
-      if (fineEl) fineEl.style.display = '';
+function autoPopulate(){
+  var s=localStorage.getItem(AK);if(!s)return;
+  var all=ga();var d=all[s]||{};
+  var triggered={};
+  if(d.whyOutCategories){d.whyOutCategories.forEach(function(k){triggered[k]=true;});}
+  if(d.q1Answers){Object.keys(d.q1Answers).forEach(function(path){if(d.q1Answers[path]==='no'){var slug=path.replace(/\//g,'');triggered[slug]=true;}});}
+  var flagCount=0;
+  Object.keys(SOURCES).forEach(function(vid){
+    var sources=SOURCES[vid];
+    var matched=sources.some(function(src){return triggered[src];});
+    if(matched){
+      var cb=document.getElementById('vc-'+vid);
+      if(cb&&!cb.checked){
+        cb.checked=true;
+        _fines[vid]=parseInt(cb.getAttribute('data-fine'));
+        var fineEl=document.getElementById('fine-'+vid);if(fineEl)fineEl.style.display='block';
+        var srcEl=document.getElementById('src-'+vid);if(srcEl)srcEl.style.display='block';
+        var row=document.getElementById('vr-'+vid);if(row)row.classList.add('auto-flagged');
+        flagCount++;
+      }
     }
   });
+  if(flagCount>0){
+    var bar=document.getElementById('auto-bar');bar.style.display='block';
+    document.getElementById('auto-count').textContent=flagCount;
+  }
+  if(d.rightsAnswers){
+    Object.keys(d.rightsAnswers.fines||{}).forEach(function(vid){
+      _fines[vid]=d.rightsAnswers.fines[vid];
+      var cb=document.getElementById('vc-'+vid);
+      if(cb){cb.checked=true;var f=document.getElementById('fine-'+vid);if(f)f.style.display='block';}
+    });
+    if(d.rightsAnswers.lastQ)setLastQ(d.rightsAnswers.lastQ);
+  }
   updateTotals();
-})();
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  autoPopulate();
+  if(typeof buildSB==='function')buildSB();
+  if(typeof window.atcApplyLang==='function')window.atcApplyLang();
+});
 </script>
-
-
-
-
-
-
 </body></html>
