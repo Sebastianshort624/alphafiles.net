@@ -882,29 +882,46 @@ async function syncClients(){
   let local = {};
   try { local = JSON.parse(localStorage.getItem(SK)||'{}'); } catch(e){}
 
-  // 1. Push every local client to Firestore (merge so we never overwrite newer data)
+  // 1. Push every local client to Firestore — local is always the source of truth.
+  //    We use merge:false here intentionally so the local record fully overwrites
+  //    any stale Firestore copy. The local record has the latest _updated timestamp.
   for(const slug of Object.keys(local)){
     try{
       await setDoc(doc(db, 'clients', slug), Object.assign({}, local[slug], {
         _slug: slug, _syncedAt: serverTimestamp()
-      }), { merge: true });
+      }));
     } catch(e){ console.warn('push failed', slug, e); }
   }
 
-  // 2. Pull all Firestore clients and merge into localStorage
+  // 2. Pull Firestore clients — but ONLY add records that don't exist locally at all.
+  //    We NEVER overwrite a locally-present record from Firestore. Local is always
+  //    the authoritative copy. Firestore is only used to restore records that are
+  //    missing from this browser (new device, cleared cache, etc).
   try{
     const snap = await getDocs(collection(db, 'clients'));
+    let added = 0;
     snap.forEach(function(docSnap){
       const data = docSnap.data();
       const slug = docSnap.id;
-      if(!local[slug] || (data._updated && (!local[slug]._updated || data._updated > local[slug]._updated))){
+      if(!local[slug]){
+        // Convert any Firestore Timestamp fields to plain numbers
+        if(data._updated && typeof data._updated.toMillis === 'function'){
+          data._updated = data._updated.toMillis();
+        }
+        if(data._created && typeof data._created.toMillis === 'function'){
+          data._created = data._created.toMillis();
+        }
         local[slug] = data;
+        added++;
       }
     });
     localStorage.setItem(SK, JSON.stringify(local));
-  } catch(e){ console.warn('pull failed', e); }
+    if(statusEl) statusEl.textContent = 'Synced' + (added>0 ? ' · '+added+' restored from cloud' : '') + ' · ' + new Date().toLocaleTimeString();
+  } catch(e){
+    console.warn('pull failed', e);
+    if(statusEl) statusEl.textContent = 'Local only (cloud unavailable) · ' + new Date().toLocaleTimeString();
+  }
 
-  if(statusEl) statusEl.textContent = 'Synced ' + new Date().toLocaleTimeString();
   if(typeof renderHub === 'function') renderHub();
 }
 
