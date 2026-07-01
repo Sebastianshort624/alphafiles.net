@@ -466,6 +466,124 @@ window.atcSetLang = function(lang){
   document.body.setAttribute('data-lang', lang);
   buildSB(); // refresh sidebar toggle state
 };
+// ── ATC GLOBAL AUTO-POPULATION ────────────────────────────────────────────
+// Reads the active client record from localStorage and populates any standard
+// display elements that exist on the current page. Safe to call on any page —
+// it only fills elements that are present, ignores ones that aren't.
+window.atcAutoPopulate = function(){
+  var SK='atc_clients_v2', AK='atc_active';
+  var key;
+  try{ key=localStorage.getItem(AK); }catch(e){ return; }
+  if(!key) return;
+  var d={};
+  try{ d=JSON.parse(localStorage.getItem(SK)||'{}')[key]||{}; }catch(e){ return; }
+
+  function set(id, val){ var el=document.getElementById(id); if(el&&val) el.textContent=val; }
+  function setVal(id, val){ var el=document.getElementById(id); if(el&&val!==undefined) el.value=val; }
+  function fmt(n){ return n>0?'$'+Math.round(n).toLocaleString():''; }
+  function fmtd(n){ return n>0?'$'+n.toFixed(2).replace(/\.?0+$/,''):''; }
+
+  var firstName=(d.firstName||'').trim();
+  var lastName=(d.lastName||'').trim();
+  var fullName=(firstName+' '+lastName).trim() || d.name || '';
+  var resort=d.resort||'';
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var mtfMo=mtfYr/12;
+  var mtgMo=parseFloat(d.monthlyMortgage)||0;
+  var totalMo=mtfMo+mtgMo;
+  var alphaFee=parseFloat(d.alphaFee)||0;
+  var term=parseInt(d.selectedTerm)||0;
+
+  // Client name and resort everywhere they appear
+  ['b-name','vb-name','client-name-display'].forEach(function(id){ set(id, fullName); });
+  ['b-resort','vb-resort','resort-name-display'].forEach(function(id){ set(id, resort); });
+
+  // Current commitment tiles
+  if(totalMo>0){
+    set('total-mo', fmt(totalMo));
+    set('qc-tot-mo', fmt(totalMo));
+    set('pc-current', fmt(totalMo)+'/mo');
+  }
+  if(totalMo>0) set('total-yr', fmt(totalMo*12));
+
+  // MTF tiles
+  if(mtfYr>0) set('v-mtf-yr-display', fmt(mtfYr)+'/yr');
+  if(mtfMo>0){
+    set('mtf-mo-display', fmt(mtfMo)+'/mo');
+    set('qc-mtf-mo', fmt(mtfMo)+'/mo');
+  }
+
+  // Mortgage tiles
+  if(mtgMo>0){
+    set('mtg-mo-display', fmt(mtgMo)+'/mo');
+    set('qc-mtg-yr', fmt(mtgMo*12)+'/yr');
+  }
+
+  // Alpha fee and term
+  if(alphaFee>0){
+    ['alpha-display','qc-fee-display','vb-quote'].forEach(function(id){ set(id, fmt(alphaFee)); });
+  }
+
+  // 5-year resort cost (used on quote pages)
+  if(mtfYr>0 || mtgMo>0){
+    var fiveYr=(mtfYr+mtgMo*12)*5;
+    ['msrp','msrp-display'].forEach(function(id){ set(id, fiveYr>0?fmt(fiveYr):''); });
+  }
+
+  // Why they want out — auto-populate on why-out page
+  if(d.whyOut){ setVal('v-why', d.whyOut); }
+  if(d.whyOutCategories && Array.isArray(d.whyOutCategories)){
+    d.whyOutCategories.forEach(function(key){
+      var card=document.getElementById('cat-'+key);
+      if(card && !card.classList.contains('selected')) card.click();
+    });
+  }
+
+  // Cost comparison stat boxes on 3a-3i pages
+  if(mtgMo>0){
+    var yr=new Date().getFullYear();
+    var yearPurchased=parseInt(d.yearPurchased)||0;
+    var yrsLeft = yearPurchased>1990?(Math.max(0,10-(yr-yearPurchased))):9;
+    var monthsLeft=yrsLeft*12;
+    set('qc-mtg-left', mtgMo>0?fmt(mtgMo*monthsLeft):'Paid off');
+    set('qc-term-left', yrsLeft+' yrs');
+  }
+  if(mtfYr>0){
+    // MTF left over same window
+    var mtfWindow = mtgMo>0 ? (parseInt(d.yearPurchased)||0)>1990?(Math.max(0,10-(new Date().getFullYear()-(parseInt(d.yearPurchased)||0))))*12:108 : 120;
+    set('qc-mtf-left', fmt(mtfMo*mtfWindow));
+  }
+
+  // 30-year cost on true-cost-30 page
+  if(mtfYr>0){
+    function mtfCum(years){ var t=0;for(var i=1;i<=years;i++){ t+=mtfYr*Math.pow(1.08,i-1)+(mtgMo>0?mtgMo*12:0); } return t; }
+    set('cost30-10', fmt(mtfCum(10)));
+    set('cost30-20', fmt(mtfCum(20)));
+    set('cost30-30', fmt(mtfCum(30)));
+  }
+
+  // no-deedback page — 10/20/30 year cost
+  if(mtfYr>0){
+    function mtfFlat(years){ return mtfYr*years+(mtgMo>0?mtgMo*12*Math.min(years,10):0); }
+    set('cost10', fmt(mtfFlat(10)));
+    set('cost20', fmt(mtfFlat(20)));
+    set('cost30', fmt(mtfFlat(30)));
+  }
+
+  // mtf-secret page
+  if(mtfMo>0){
+    set('mtf-mo', fmt(mtfMo)+'/mo');
+    set('mtf-10', fmt(mtfYr*(Math.pow(1.08,10)-1)/0.08));
+  }
+
+  // mortgage-truth page
+  if(mtgMo>0){
+    set('mtg-mo', fmt(mtgMo)+'/mo');
+    set('mtg-total', fmt(mtgMo*120));
+  }
+};
+// ── END AUTO-POPULATION ─────────────────────────────────────────────────────
+
 window.atcApplyLang = function(){
   // Auto-detect from client record, fall back to stored preference, then EN
   var lang = 'en';
@@ -1018,6 +1136,10 @@ document.addEventListener('DOMContentLoaded',function(){if(typeof buildSB==='fun
   if(typeof window.atcApplyLang==='function') window.atcApplyLang();
   else document.addEventListener('DOMContentLoaded', function(){
     if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  });
+  if(typeof window.atcAutoPopulate==='function') window.atcAutoPopulate();
+  else document.addEventListener('DOMContentLoaded', function(){
+    if(typeof window.atcAutoPopulate==='function') window.atcAutoPopulate();
   });
 })();
 </script>
