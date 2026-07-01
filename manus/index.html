@@ -1192,6 +1192,24 @@ function openEmailQuote(){
 '</table>'+
 '<div class="incl"><div class="incl-title">'+L.includesTitle+'</div>'+includesHtml+'</div>'+
 '<div class="cq">'+L.closingQuote+'</div>'+
+'<!-- CREDIT PROTECTION SECTION -->'+
+'<div style="margin-top:24px;border-top:2px solid #1B2A4A;padding-top:20px">'+
+'<div style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#1B2A4A;margin-bottom:14px">Your Credit — And Why It Stays Protected</div>'+
+'<p style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:16px">One of the most common questions we hear is whether this process could affect your credit. Protecting your credit is not an afterthought — it is a core part of what Alpha provides from the moment you enroll.</p>'+
+'<div style="background:#EAF0F8;border-left:4px solid #1B2A4A;padding:14px 16px;margin-bottom:14px;font-size:13px;color:#6b7280;line-height:1.6">Alpha does not advise, instruct, or encourage you to stop making payments. Any decision about your resort obligations is yours alone, and that is written explicitly into your contract.</div>'+
+'<table width="100%" style="border-collapse:collapse;margin-bottom:14px">'+
+'<tr><td width="36" style="vertical-align:top;padding-top:4px"><div style="background:#1B2A4A;color:#C8960C;font-size:16px;font-weight:700;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px">1</div></td><td style="padding:4px 0 10px 10px"><strong style="color:#1B2A4A;font-size:13px;text-transform:uppercase;letter-spacing:.3px">Alpha does not tell you to stop paying. That decision is always yours.</strong><p style="font-size:13px;color:#374151;line-height:1.6;margin:6px 0 0">Our agreement is explicit: any decision about your resort maintenance fees or obligations remains entirely at your independent discretion. What we do is stand beside you with a full protection team from day one.</p></td></tr>'+
+'<tr><td style="vertical-align:top;padding-top:4px"><div style="background:#1B2A4A;color:#C8960C;font-size:16px;font-weight:700;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px">2</div></td><td style="padding:4px 0 10px 10px"><strong style="color:#1B2A4A;font-size:13px;text-transform:uppercase;letter-spacing:.3px">Credit protection is active from day one of your enrollment.</strong><p style="font-size:13px;color:#374151;line-height:1.6;margin:6px 0 0">Our in-house credit team monitors your profile throughout the entire process. If any timeshare-related item appears on your report, we document it, dispute it, and submit directly to all three bureaus — at no additional cost.</p></td></tr>'+
+'<tr><td style="vertical-align:top;padding-top:4px"><div style="background:#1B2A4A;color:#C8960C;font-size:16px;font-weight:700;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px">3</div></td><td style="padding:4px 0 10px 10px"><strong style="color:#1B2A4A;font-size:13px;text-transform:uppercase;letter-spacing:.3px">When it\'s all said and done — your credit is restored.</strong><p style="font-size:13px;color:#374151;line-height:1.6;margin:6px 0 0">Upon your Mutual Release, Alpha submits full documentation to all three credit bureaus confirming the resolution. You exit the timeshare, and you exit with your credit intact.</p></td></tr>'+
+'</table>'+
+'<div style="background:#1B2A4A;border-radius:8px;padding:16px;text-align:center;margin-bottom:14px">'+
+'<div style="font-size:11px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Credit Resolution Submitted To</div>'+
+'<div style="font-size:22px;font-weight:700;color:#C8960C">All 3 Bureaus</div>'+
+'<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">TransUnion · Equifax · Experian — upon case completion, at no additional cost</div>'+
+'</div>'+
+'<p style="font-size:13px;color:#374151;line-height:1.7">You\'ve been responsible owners of '+clientName.split(' ')[0]+'. Wyndham has simply become an obligation that no longer serves you. Our job is to close this chapter cleanly — and your credit protection is part of that commitment.</p>'+
+'</div>'+
+'<!-- END CREDIT SECTION -->'+
 '<div class="sig">'+L.sigThanks+'<br>'+
 '<div class="sig-block">'+
 '<span class="nm">'+L.sigName+'</span> &middot; '+L.sigTitle+'<br>'+
@@ -1253,15 +1271,15 @@ function init(){
     // Standalone client link — pre-filled with Thomas & Cozette Manus's quoted figures.
     document.getElementById('b-name').textContent='Thomas & Cozette Manus';
     document.getElementById('b-resort').textContent='Wyndham Destinations';
+    // MTF: $2,748/yr = $229/mo. No mortgage (paid off).
+    // _msrp = 5-year resort cost at flat MTF (no growth for this display) = $2,748 × 5 = $13,740
+    _msrp = 13740;
+    _curMo = 229;
     document.getElementById('msrp').textContent='$13,740';
+    document.getElementById('msrp-detail').textContent='$2,748/yr MTF × 5 yrs (mortgage paid off)';
     document.getElementById('alpha-display').textContent='$4,495';
-    var save5El=document.getElementById('cmp-save-5');
-    if(save5El) save5El.textContent='$9,245';
+    document.getElementById('pc-current').textContent='$229/mo';
     document.getElementById('fee-inp').value=4495;
-    // No mortgage — MTF only ($229/mo current payments)
-    if(typeof _curMo!=='undefined') _curMo=229;
-    var pcEl=document.getElementById('pc-current');
-    if(pcEl) pcEl.textContent='$229/mo';
     initLiveScreenShare();
     upd();
     return;
