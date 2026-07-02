@@ -4,193 +4,230 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Huston Adams — Rep File · Alpha</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Barlow+Condensed:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
-.page{max-width:900px;margin:0 auto;padding:0 0 60px}
-.rh{background:#0f1a2e;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.rh-l{display:flex;align-items:center;gap:12px}
-.rbadge{background:var(--red);color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:3px}
-.rh h1{font-size:18px;font-weight:700;color:#fff}
-.rh .sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
-.ra{display:flex;gap:8px;flex-wrap:wrap}
-.rb{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+
+/* ── Sticky shell ── */
+.sticky-shell{position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.rep-hdr{background:#0f1a2e;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.rep-hdr-l{display:flex;align-items:center;gap:10px}
+.rbadge{background:var(--red);color:#fff;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:3px}
+.rep-hdr h1{font-size:16px;font-weight:700;color:#fff}
+.ra{display:flex;gap:6px;flex-wrap:wrap}
+.rb{padding:6px 12px;border-radius:5px;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'Inter',sans-serif;white-space:nowrap}
 .rb.gold{background:var(--gold);color:#fff}
-.rb.dk{background:var(--navy);color:#fff}
+.rb.dk{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85)}
 .rb.gr{background:var(--green);color:#fff}
 .rb.lt{background:#f3f4f6;color:var(--navy)}
-.sb2{background:var(--navy);padding:12px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0;border-bottom:1px solid rgba(255,255,255,.1)}
-.si{padding:8px 16px;border-right:1px solid rgba(255,255,255,.08);text-align:center}
+
+/* ── Stats bar ── */
+.stats-bar{background:#1B2A4A;padding:0;display:grid;grid-template-columns:repeat(6,1fr)}
+.si{padding:8px 12px;border-right:1px solid rgba(255,255,255,.1);text-align:center;position:relative}
 .si:last-child{border-right:none}
-.si .sv{font-family:Inter,sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.3px}
-.si .sl{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.9);margin-top:3px}
-.sec{background:#fff;border-radius:8px;border:1px solid var(--border);margin:14px 14px 0;overflow:hidden}
-.sh3{background:#f8fafc;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
-.sh3 h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--navy)}
-.sbody{padding:16px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:600px){.two{grid-template-columns:1fr}}
-.fg{display:grid;gap:0}
-.fr{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid #f3f4f6}
-.fr:last-child{border-bottom:none}
-.fl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:8px 12px;background:#fafafa}
-.fv{font-size:13px;color:var(--navy);padding:8px 12px;font-weight:500}
-.fv a{color:var(--gold);text-decoration:none}
-.fv.red{color:var(--red);font-weight:700}
-.fv.gr2{color:var(--green);font-weight:700}
-.fv.gd{color:var(--gold);font-weight:700}
-.pres{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
-.pl{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;color:var(--navy)}
+.si .sv{font-family:'Inter',sans-serif;font-size:16px;font-weight:800;color:#fff;line-height:1.2}
+.si .sv.gold{color:var(--gold)}
+.si .sv.green{color:#4ade80}
+.si .sv.red{color:#f87171}
+.si .sl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.75);margin-top:2px}
+
+/* Alpha fee button in stats bar */
+.fee-btn{background:var(--gold);color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;display:block;width:100%;text-align:center}
+.fee-input-wrap{display:none}
+.fee-inp{width:100%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:4px;color:#fff;font-size:14px;font-weight:800;text-align:center;padding:3px 6px;font-family:'Inter',sans-serif}
+.fee-inp::placeholder{color:rgba(255,255,255,.4);font-size:11px}
+
+/* ── Page content ── */
+.page{max-width:900px;margin:0 auto;padding:14px 14px 60px}
+.sec{background:#fff;border-radius:8px;border:1px solid var(--border);margin-bottom:12px;overflow:hidden}
+.sh{background:#f8fafc;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.sh h2{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--navy)}
+.sh .save-indicator{font-size:10px;font-weight:600;color:var(--green);display:none}
+.sbody{padding:14px 16px}
+
+/* ── Editable field rows ── */
+.field-row{display:grid;grid-template-columns:140px 1fr;border-bottom:1px solid #f3f4f6;align-items:center;min-height:36px}
+.field-row:last-child{border-bottom:none}
+.fl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:6px 12px;background:#fafafa;align-self:stretch;display:flex;align-items:center}
+.fv{padding:4px 8px}
+.fv input, .fv select, .fv textarea{width:100%;border:1px solid transparent;border-radius:4px;padding:4px 8px;font-family:'Inter',sans-serif;font-size:13px;color:var(--navy);font-weight:500;background:transparent;transition:border-color .15s}
+.fv input:hover,.fv select:hover,.fv textarea:hover{border-color:var(--border);background:#fafafa}
+.fv input:focus,.fv select:focus,.fv textarea:focus{outline:none;border-color:var(--gold);background:#fff}
+.fv textarea{min-height:60px;resize:vertical}
+.fv .static{font-size:13px;color:var(--navy);font-weight:500;padding:4px 8px}
+.fv .static.red{color:var(--red)}
+.fv .static.green{color:var(--green)}
+.fv .static.gold{color:var(--gold)}
+
+/* ── Two column layout ── */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.two{grid-template-columns:1fr}}
+
+/* ── Presentation links ── */
+.pres{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:6px}
+.pl{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#f8fafc;border:0.5px solid var(--border);border-radius:6px;text-decoration:none;font-size:11px;font-weight:600;color:var(--navy)}
 .pl:hover{background:#EAF0F8;border-color:var(--navy)}
-.pl .pc{font-size:10px;color:#9ca3af;margin-top:1px;font-weight:400}
-.tl2{padding:12px 14px 12px 40px;border-bottom:1px solid #f3f4f6;position:relative}
-.tl2:last-child{border-bottom:none}
-.td{position:absolute;left:12px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--navy)}
-.td.gd{background:var(--gold)}
-.tdate{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:3px}
-.ttext{font-size:13px;color:#374151;line-height:1.5}
-.na{width:100%;min-height:100px;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;resize:vertical}
-.spill{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 10px;border-radius:12px}
-.spill.apt{background:#dcfce7;color:#16A34A}
+.pl .pc{font-size:9px;color:#9ca3af;margin-top:1px;font-weight:400}
+
+/* ── Notes ── */
+.note-list{margin-bottom:12px}
+.note-item{padding:10px 12px;background:#f9faf9;border-left:3px solid var(--gold);border-radius:0 6px 6px 0;margin-bottom:6px;font-size:12px;color:#374151;line-height:1.5}
+.note-item .note-ts{font-size:10px;color:#9ca3af;margin-bottom:3px}
+.note-area{width:100%;min-height:80px;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;resize:vertical}
+.note-area:focus{outline:none;border-color:var(--gold)}
+
+/* ── Quick actions ── */
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid var(--border);background:#f9faf9}
+
+/* ── Status pill ── */
+.spill{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:2px 8px;border-radius:10px}
+.spill.apt{background:#dcfce7;color:#166534}
 .spill.nur{background:#fef9c3;color:#854d0e}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#16A34A;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;display:none;z-index:999}
 </style>
 </head>
 <body>
 
-<script>
-// ── ACTIVATE THIS CLIENT ON LOAD ─────────────────────────────────────────
-(function(){
-  var SK='atc_clients_v2', AK='atc_active';
-  var slug='l.huston';
-  var all;
-  try{ all=JSON.parse(localStorage.getItem(SK)||'{}'); }catch(e){ all={}; }
-
-  // Pre-populate client data if not already in localStorage
-  // (merge: preserve any existing notes/answers, but fill in core fields)
-  var existing=all[slug]||{};
-  var defaults={"firstName": "Lynda", "lastName": "Huston Adams", "phone": "9099572386", "email": "lyndaadams58@gmail.com", "resort": "Holiday Inn Club Vacations Lake Tahoe", "resortCity": "Stateline", "resortState": "NV", "yearPurchased": "2025", "purchasePrice": "8000", "maitFees": "480", "monthlyMortgage": "238", "balanceAmount": "25704", "mortgageType": "owes", "alphaFee": "4995", "selectedTerm": "60", "whyOut": "Can't afford the timeshare.", "name": "Lynda Huston Adams"};
-  defaults._created=defaults._created||Date.now();
-  defaults._updated=Date.now();
-  // Merge: hardcoded defaults fill in blanks, existing data wins for anything already set
-  Object.keys(defaults).forEach(function(k){
-    if(!existing[k]) existing[k]=defaults[k];
-  });
-  all[slug]=existing;
-  localStorage.setItem(SK, JSON.stringify(all));
-
-  // Set THIS client as the active client
-  localStorage.setItem(AK, slug);
-})();
-// ── END ACTIVATE ──────────────────────────────────────────────────────────
-</script>
-<div class="page">
-
-<div class="rh">
-  <div class="rh-l">
-    <div class="rbadge">REP VIEW</div>
-    <div>
-      <h1>Lynda Huston Adams</h1>
-      <div class="sub">Holiday Inn Club Vacations Lake Tahoe &middot; $4,995 fee &middot; Appointment Set</div>
+<!-- ══ STICKY SHELL ═══════════════════════════════════════════ -->
+<div class="sticky-shell">
+  <div class="rep-hdr">
+    <div class="rep-hdr-l">
+      <div class="rbadge">REP VIEW</div>
+      <div>
+        <h1 id="hdr-name">Lynda Huston Adams</h1>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:1px">Holiday Inn Club Vacations Lake Tahoe &nbsp;·&nbsp; Appt Set</div>
+      </div>
+    </div>
+    <div class="ra">
+      <a href="/huston/" target="_blank" class="rb dk">👤 Client View ↗</a>
+      <button onclick="saveAll()" class="rb gold">💾 Save All</button>
+      <a href="/clients/" class="rb lt">← Clients</a>
     </div>
   </div>
-  <div class="ra">
-    <a href="/huston/" class="rb dk" target="_blank">👤 Client View ↗</a>
-    <a href="/vitals/" class="rb gold">✏️ Edit Vitals</a>
-    <a href="/quote/" class="rb gr">📄 Quote Tool</a>
-    <a href="/clients/" class="rb lt">← Clients</a>
+
+  <div class="stats-bar">
+    <div class="si"><div class="sv" id="stat-mo">$278</div><div class="sl">Monthly</div></div>
+    <div class="si"><div class="sv" id="stat-yr">$3,336</div><div class="sl">Yearly</div></div>
+    <div class="si"><div class="sv red" id="stat-5yr">$16,680</div><div class="sl">5-Yr Cost</div></div>
+    <div class="si" id="fee-si">
+      <button class="fee-btn" id="fee-reveal-btn" onclick="revealFee()">Alpha Fee</button>
+      <div class="fee-input-wrap" id="fee-wrap">
+        <input class="fee-inp" id="stat-fee-inp" type="text" placeholder="enter fee" oninput="feeTyped(this.value)" onblur="feeCommit(this.value)">
+      </div>
+      <div class="sl">Alpha Fee</div>
+    </div>
+    <div class="si"><div class="sv green" id="stat-save">—</div><div class="sl">Savings</div></div>
+    <div class="si"><div class="sv red" id="stat-bal">$25,704</div><div class="sl">Est. Balance</div></div>
   </div>
 </div>
+<!-- ══ END STICKY ══════════════════════════════════════════════ -->
 
-<div class="sb2">
-  <div class="si"><div class="sv">$278</div><div class="sl">Monthly</div></div>
-  <div class="si"><div class="sv">$3,336</div><div class="sl">Yearly</div></div>
-  <div class="si"><div class="sv">$16,680</div><div class="sl">5-Yr Cost</div></div>
-  <div class="si"><div class="sv">$4,995</div><div class="sl">Alpha Fee</div></div>
-  <div class="si"><div class="sv">$11,685</div><div class="sl">Savings</div></div>
-  <div class="si"><div class="sv">$7,000</div><div class="sl">Balance</div></div>
-</div>
+<div class="page">
 
 <!-- CLIENT PROFILE -->
 <div class="sec">
-  <div class="sh3"><h2>Client Profile</h2><span class="spill apt">Appointment Set</span></div>
+  <div class="sh"><h2>Client Profile</h2><span class="spill apt">Appt Set</span></div>
   <div class="sbody">
     <div class="two">
-      <div class="fg">
-        <div class="fr"><div class="fl">Name</div><div class="fv">Mrs. Lynda Huston Adams</div></div>
-        <div class="fr"><div class="fl">Phone</div><div class="fv"><a href="tel:+19099572386">(909) 957-2386</a></div></div>
-        <div class="fr"><div class="fl">Email</div><div class="fv"><a href="mailto:lyndaadams58@gmail.com">lyndaadams58@gmail.com</a></div></div>
-        <div class="fr"><div class="fl">Language</div><div class="fv">English</div></div>
+      <div>
+        <div class="field-row"><div class="fl">First Name</div><div class="fv"><input id="f-first" value="Lynda" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Last Name</div><div class="fv"><input id="f-last" value="Huston Adams" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Phone</div><div class="fv"><input id="f-phone" value="(909) 957-2386" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Email</div><div class="fv"><input id="f-email" value="lyndaadams58@gmail.com" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Language</div><div class="fv"><select id="f-lang" onchange="autoSave()"><option selected>English</option><option>Spanish</option></select></div></div>
       </div>
-      <div class="fg">
-        <div class="fr"><div class="fl">Lead Owner</div><div class="fv">Sebastian Short</div></div>
-        <div class="fr"><div class="fl">Fronter</div><div class="fv">Aaron</div></div>
-        <div class="fr"><div class="fl">Co-Owner</div><div class="fv">No — sole owner</div></div>
+      <div>
+        <div class="field-row"><div class="fl">Salutation</div><div class="fv"><input id="f-sal" value="Mrs." oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Co-Owner</div><div class="fv"><input id="f-co" value="— (sole owner)" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Lead Owner</div><div class="fv"><div class="static">Sebastian Short</div></div></div>
+        <div class="field-row"><div class="fl">Fronter</div><div class="fv"><input id="f-fronter" value="Aaron" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Status</div><div class="fv"><select id="f-status" onchange="autoSave()"><option>Appointment Set</option><option>Follow Up</option><option>Nurture</option><option>Closed</option><option>Dead</option></select></div></div>
       </div>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:#9ca3af">
-      Tags: Nurture &middot; Jareds-English &middot; teamalpha-english &middot; cadabramedia-english &nbsp;&middot;&nbsp; Created: Jun 18, 2026 &middot; Last Activity: Jun 30, 2026
     </div>
   </div>
 </div>
 
 <!-- RESORT & FINANCIALS -->
 <div class="sec">
-  <div class="sh3"><h2>Resort &amp; Financial Details</h2></div>
+  <div class="sh"><h2>Resort &amp; Financial Details</h2></div>
   <div class="sbody">
     <div class="two">
-      <div class="fg" style="border:1px solid var(--border);border-radius:6px">
-        <div class="fr"><div class="fl">Resort</div><div class="fv">Holiday Inn Club Vacations Lake Tahoe</div></div>
-        <div class="fr"><div class="fl">City / State</div><div class="fv">Stateline, Nevada</div></div>
-        <div class="fr"><div class="fl">Purchased</div><div class="fv">May 13, 2025</div></div>
-        <div class="fr"><div class="fl">Status</div><div class="fv gr2">Current on all payments</div></div>
+      <div>
+        <div class="field-row"><div class="fl">Resort Name</div><div class="fv"><input id="f-resort" value="Holiday Inn Club Vacations Lake Tahoe" oninput="autoSave();updateStats()"></div></div>
+        <div class="field-row"><div class="fl">City / State</div><div class="fv"><input id="f-loc" value="Stateline, NV" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Year Purchased</div><div class="fv"><input id="f-year" type="number" value="2025" oninput="autoSave();updateStats()"></div></div>
+        <div class="field-row"><div class="fl">Purchase Price</div><div class="fv"><input id="f-price" type="number" value="8000" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Est. Balance</div><div class="fv"><div class="static red" id="f-bal-display">$25,704 <span style="font-size:10px;font-weight:400;color:#9ca3af">(9 yrs × 12 × $238)</span></div></div></div>
       </div>
-      <div class="fg" style="border:1px solid var(--border);border-radius:6px">
-        <div class="fr"><div class="fl">Purchase Price</div><div class="fv">$8,000</div></div>
-        <div class="fr"><div class="fl">Est. Remaining Balance</div><div class="fv red">$25,704 <span style="font-size:10px;font-weight:400;color:#9ca3af">(9 yrs × 12 × $238)</span></div></div>
-        <div class="fr"><div class="fl">Mortgage</div><div class="fv">$238/mo</div></div>
-        <div class="fr"><div class="fl">Annual MTF</div><div class="fv">$480/yr ($40/mo)</div></div>
+      <div>
+        <div class="field-row"><div class="fl">Monthly Mortgage</div><div class="fv"><input id="f-mtg" type="number" value="238" oninput="autoSave();updateStats()"></div></div>
+        <div class="field-row"><div class="fl">Annual MTF</div><div class="fv"><input id="f-mtf" type="number" value="480" oninput="autoSave();updateStats()"></div></div>
+        <div class="field-row"><div class="fl">Mtg Status</div><div class="fv"><select id="f-mtgstatus" onchange="autoSave()"><option>Still owes</option><option>Paid off</option></select></div></div>
+        <div class="field-row"><div class="fl">Current on MTF</div><div class="fv"><select id="f-onmtf" onchange="autoSave()"><option>Yes</option><option>No</option></select></div></div>
+        <div class="field-row"><div class="fl">Current on Mtg</div><div class="fv"><select id="f-onmtg" onchange="autoSave()"><option>Yes</option><option>No</option></select></div></div>
       </div>
     </div>
-    <div style="background:#EAF0F8;border:1px solid #c8d4e8;border-radius:6px;padding:12px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:12px">
-      <div style="text-align:center;border-right:1px solid #c8d4e8"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--navy)">$238/mo</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Mortgage</div></div>
-      <div style="text-align:center;border-right:1px solid #c8d4e8"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--navy)">$40/mo</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">MTF</div></div>
-      <div style="text-align:center;border-right:1px solid #c8d4e8"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--navy)">$278/mo</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Total Monthly</div></div>
-      <div style="text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--navy)">$3,336/yr</div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Total Yearly</div></div>
-    </div>
-    <div style="margin-top:12px;padding:10px 14px;background:#fff8f0;border:1px solid #fca5a5;border-radius:6px;font-size:13px;color:#374151">
-      <strong>Why wants out:</strong> Can't afford the timeshare.
+    <div style="margin-top:10px">
+      <div class="field-row" style="grid-template-columns:140px 1fr;border:0.5px solid var(--border);border-radius:6px">
+        <div class="fl" style="border-radius:6px 0 0 6px">Why Wants Out</div>
+        <div class="fv"><textarea id="f-why" oninput="autoSave()">Can't afford the timeshare.</textarea></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- QUOTE SUMMARY -->
+<!-- QUOTE -->
 <div class="sec">
-  <div class="sh3"><h2>Quote Summary</h2></div>
+  <div class="sh"><h2>Quote &amp; Pricing</h2></div>
   <div class="sbody">
-    <div class="two" style="margin-bottom:12px">
-      <div class="fg" style="border:1px solid var(--border);border-radius:6px">
-        <div class="fr"><div class="fl">Alpha Fee</div><div class="fv gd">$4,995</div></div>
-        <div class="fr"><div class="fl">5-Yr Resort Cost</div><div class="fv red">$16,680</div></div>
-        <div class="fr"><div class="fl">Savings 5 Yrs</div><div class="fv gr2">$11,685</div></div>
+    <div class="two">
+      <div>
+        <div class="field-row"><div class="fl">Alpha Fee</div><div class="fv"><input id="f-fee" type="number" value="0" placeholder="enter fee" oninput="feeSyncFromField(this.value);autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Payment Term</div><div class="fv"><select id="f-term" onchange="autoSave()"><option>60 months</option><option>48 months</option><option>36 months</option><option>24 months</option><option>12 months</option><option>Pay in full</option></select></div></div>
+        <div class="field-row"><div class="fl">Discount 1</div><div class="fv"><input id="f-d1" type="number" value="0" placeholder="0" oninput="autoSave();updateStats()"></div></div>
+        <div class="field-row"><div class="fl">Discount 2</div><div class="fv"><input id="f-d2" type="number" value="0" placeholder="0" oninput="autoSave();updateStats()"></div></div>
       </div>
-      <div class="fg" style="border:1px solid var(--border);border-radius:6px">
-        <div class="fr"><div class="fl">60-Mo Payment</div><div class="fv gd">~$132/mo</div></div>
-        <div class="fr"><div class="fl">Current Monthly</div><div class="fv red">$278/mo</div></div>
-        <div class="fr"><div class="fl">Monthly Savings</div><div class="fv gr2">~$146/mo</div></div>
+      <div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:10px">Calculated Quote</div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:#6b7280">5-Yr Resort Cost</span><span id="q-resort" style="font-weight:700;color:var(--red)">$16,680</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:#6b7280">Alpha Fee</span><span id="q-fee" style="font-weight:700;color:var(--gold)">—</span></div>
+        <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px"><span style="color:#6b7280">Total Discounts</span><span id="q-disc" style="font-weight:700;color:var(--green)">$0</span></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:14px;font-weight:700"><span>5-Yr Savings</span><span id="q-save" style="color:var(--green)">—</span></div>
+        <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:4px;font-size:11px;color:#9ca3af">Net fee after discounts: <span id="q-net" style="font-weight:700;color:var(--navy)">—</span></div>
       </div>
     </div>
-    <div style="padding:10px 14px;background:#f9faf9;border:1px solid var(--border);border-radius:6px;font-size:12px;color:#6b7280">
-      <strong style="color:var(--navy)">Client portal URL:</strong> &nbsp;
-      <code style="background:#EAF0F8;padding:2px 8px;border-radius:3px;font-size:12px;color:var(--navy)">https://alphafiles.net/huston/</code>
+    <div style="margin-top:10px;padding:10px 14px;background:#f9faf9;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <span style="font-size:11px;color:#6b7280;font-weight:600">Client portal URL:</span>
+      <code style="background:#EAF0F8;padding:2px 10px;border-radius:4px;font-size:12px;color:var(--navy)">https://alphafiles.net/huston/</code>
+      <a href="mailto:lyndaadams58@gmail.com?subject=Your%20Alpha%20Exit%20File&body=Hi%20Lynda%2C%0A%0AYour%20file%20is%20ready%20at%3A%0Ahttps%3A%2F%2Falphafiles.net%2Fhuston%2F%0A%0ABest%2C%0ASebastian" class="rb gold" style="text-decoration:none;font-size:11px;padding:5px 12px">📧 Email Client Portal</a>
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTION & FOLLOW UP -->
+<div class="sec">
+  <div class="sh"><h2>Objection &amp; Follow Up</h2></div>
+  <div class="sbody">
+    <div class="two">
+      <div>
+        <div class="field-row"><div class="fl">Objection</div><div class="fv"><input id="f-obj" placeholder="main objection..." oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Obj. Status</div><div class="fv"><select id="f-objst" onchange="autoSave()"><option value="">—</option><option>Unresolved</option><option>Addressed</option><option>Closed</option></select></div></div>
+      </div>
+      <div>
+        <div class="field-row"><div class="fl">Today's Appt</div><div class="fv"><input id="f-apt" type="datetime-local" oninput="autoSave()"></div></div>
+        <div class="field-row"><div class="fl">Follow-Up Date</div><div class="fv"><input id="f-fu" type="datetime-local" oninput="autoSave()"></div></div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- PRESENTATION PAGES -->
 <div class="sec">
-  <div class="sh3"><h2>Presentation Pages</h2></div>
+  <div class="sh"><h2>Presentation Pages</h2></div>
   <div class="sbody">
     <div class="pres">
       <a href="/whyout/" class="pl"><span>❓</span><div><div>Why Do You Want Out</div><div class="pc">Discovery</div></div></a>
@@ -209,7 +246,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size
       <a href="/rights/" class="pl"><span>⚖️</span><div><div>Consumer Rights</div><div class="pc">7</div></div></a>
       <a href="/report/" class="pl"><span>📋</span><div><div>Fines Report</div><div class="pc">7b</div></div></a>
       <a href="/cost/" class="pl"><span>💰</span><div><div>True Cost</div><div class="pc">8</div></div></a>
-      <a href="/quote/" class="pl"><span>📄</span><div><div>Quote Tool</div><div class="pc">9</div></div></a>
+      <a href="/huston/" class="pl" style="border-color:var(--gold);background:#fffdf5"><span>📄</span><div><div>Client Quote Page</div><div class="pc">Send this link</div></div></a>
       <a href="/better/" class="pl"><span>🏆</span><div><div>Why Alpha Better</div><div class="pc">10</div></div></a>
       <a href="/included/" class="pl"><span>📦</span><div><div>What's Included</div><div class="pc">11</div></div></a>
       <a href="/recap/" class="pl"><span>📋</span><div><div>Recap</div><div class="pc">12</div></div></a>
@@ -217,61 +254,187 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size
   </div>
 </div>
 
-<!-- CASE NOTES -->
+<!-- NOTES -->
 <div class="sec">
-  <div class="sh3"><h2>Case Notes &amp; History</h2></div>
+  <div class="sh"><h2>Case Notes</h2></div>
   <div class="sbody">
-    <div class="tl2">
-      <div class="td gd"></div>
-      <div class="tdate">Jun 18, 2026 — Brandon Ubiera / Aaron</div>
-      <div class="ttext">Lead created via Cadabra Media (Facebook). Intake by Aaron. Status: Appointment Set. Compliance checklist not completed.</div>
+    <div class="note-list" id="note-list">
+      <div class="note-item"><div class="note-ts">Jun 30, 2026</div>Last activity recorded. Client current on all payments. Reason for exit: can't afford the timeshare.</div>
+      <div class="note-item"><div class="note-ts">Jun 18, 2026 — Aaron / Brandon Ubiera</div>Lead created via Cadabra Media (Facebook). Status: Appointment Set. Compliance checklist not completed.</div>
     </div>
-    <div class="tl2">
-      <div class="td"></div>
-      <div class="tdate">Jun 30, 2026</div>
-      <div class="ttext">Last activity recorded. Client current on all payments. Reason for exit: can't afford the timeshare.</div>
-    </div>
-    <div style="margin-top:16px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:8px">Add Note</div>
-      <textarea class="na" placeholder="Add case notes here..."></textarea>
-      <button onclick="saveNote()" style="margin-top:8px;padding:8px 16px;background:var(--gold);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">Save Note</button>
-    </div>
+    <textarea class="note-area" id="note-inp" placeholder="Add a note..."></textarea>
+    <button onclick="addNote()" style="margin-top:8px;padding:7px 16px;background:var(--gold);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Add Note</button>
   </div>
 </div>
 
-<!-- QUICK ACTIONS -->
-<div class="sec">
-  <div class="sh3"><h2>Quick Actions</h2></div>
-  <div class="sbody">
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="mailto:lyndaadams58@gmail.com?subject=Your%20Alpha%20Exit%20File%20%E2%80%94%20Lynda%20Huston%20Adams&body=Hi%20Lynda%2C%0A%0AYour%20client%20portal%20is%20ready%20at%3A%0Ahttps%3A%2F%2Falphafiles.net%2Fhuston%2F%0A%0ABest%2C%0ASebastian%20Short" class="rb gold" style="text-decoration:none">📧 Email Client Portal</a>
-      <a href="/huston/" target="_blank" class="rb dk" style="text-decoration:none">👤 Preview Client View</a>
-      <a href="/quote/" class="rb gr" style="text-decoration:none">📄 Quote Tool</a>
-      <a href="/vitals/" class="rb lt" style="text-decoration:none;background:var(--navy);color:#fff">✏️ Edit Vitals</a>
-      <a href="/clients/" class="rb lt" style="text-decoration:none">← Back to Clients</a>
-    </div>
-  </div>
-</div>
+</div><!-- /page -->
 
-<div style="text-align:center;padding:20px 16px;font-size:11px;color:#9ca3af">
-  Rep view — not for client sharing &middot; alphafiles.net/huston/rep/
-</div>
-</div>
+<div id="toast">Saved ✓</div>
+
 <script>
-function saveNote(){
-  var ta=document.querySelector('.na');
-  if(!ta||!ta.value.trim())return;
-  var SK='atc_clients_v2',AK='atc_active';
-  var key=localStorage.getItem(AK)||'l.huston';
-  var all=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(!all[key])all[key]={_created:Date.now()};
-  if(!all[key].repNotes)all[key].repNotes=[];
-  all[key].repNotes.unshift({ts:Date.now(),text:ta.value.trim()});
-  all[key]._updated=Date.now();
+var SK='atc_clients_v2', AK='atc_active';
+var SLUG='l.huston';
+
+// ── Activate this client on load ──────────────────────────────
+(function(){
+  localStorage.setItem(AK, SLUG);
+  var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  if(!all[SLUG]) all[SLUG]={_created:Date.now()};
+  // Restore any saved fields
+  var d=all[SLUG];
+  if(d.firstName) document.getElementById('f-first').value=d.firstName;
+  if(d.lastName)  document.getElementById('f-last').value=d.lastName;
+  if(d.phone)     document.getElementById('f-phone').value=d.phone;
+  if(d.email)     document.getElementById('f-email').value=d.email;
+  if(d.resort)    document.getElementById('f-resort').value=d.resort;
+  if(d.resortCity)document.getElementById('f-loc').value=d.resortCity;
+  if(d.yearPurchased) document.getElementById('f-year').value=d.yearPurchased;
+  if(d.purchasePrice) document.getElementById('f-price').value=d.purchasePrice;
+  if(d.monthlyMortgage) document.getElementById('f-mtg').value=d.monthlyMortgage;
+  if(d.maitFees)  document.getElementById('f-mtf').value=d.maitFees;
+  if(d.alphaFee && parseFloat(d.alphaFee)>0){
+    document.getElementById('f-fee').value=d.alphaFee;
+    revealFee();
+    document.getElementById('stat-fee-inp').value='$'+parseFloat(d.alphaFee).toLocaleString();
+  }
+  if(d.whyOut)    document.getElementById('f-why').value=d.whyOut;
+  if(d.objection) document.getElementById('f-obj').value=d.objection;
+  if(d._fuAppt)   document.getElementById('f-fu').value=d._fuAppt;
+  if(d._todayAppt)document.getElementById('f-apt').value=d._todayAppt;
+  if(d.discount1) document.getElementById('f-d1').value=d.discount1;
+  if(d.discount2) document.getElementById('f-d2').value=d.discount2;
+  updateStats();
+})();
+
+function g(id){return document.getElementById(id);}
+
+function revealFee(){
+  g('fee-reveal-btn').style.display='none';
+  g('fee-wrap').style.display='block';
+  setTimeout(function(){g('stat-fee-inp').focus();},100);
+}
+
+function feeTyped(v){
+  var num=parseFloat(v.replace(/[^0-9.]/g,''))||0;
+  g('f-fee').value=num||'';
+  updateStats();
+}
+
+function feeSyncFromField(v){
+  var num=parseFloat(v)||0;
+  if(num>0){
+    revealFee();
+    g('stat-fee-inp').value='$'+num.toLocaleString();
+  }
+  updateStats();
+}
+
+function feeCommit(v){
+  var num=parseFloat(v.replace(/[^0-9.]/g,''))||0;
+  if(num>0) g('stat-fee-inp').value='$'+num.toLocaleString();
+  g('f-fee').value=num||'';
+  updateStats();
+  autoSave();
+}
+
+function updateStats(){
+  var mtg=parseFloat(g('f-mtg').value)||0;
+  var mtfYr=parseFloat(g('f-mtf').value)||0;
+  var yr=parseInt(g('f-year').value)||2025;
+  var fee=parseFloat(g('f-fee').value)||0;
+  var d1=parseFloat(g('f-d1').value)||0;
+  var d2=parseFloat(g('f-d2').value)||0;
+  var totalDisc=d1+d2;
+  var netFee=Math.max(0,fee-totalDisc);
+
+  var totalMo=mtg+mtfYr/12;
+  var totalYr=mtg*12+mtfYr;
+  var fiveYr=totalYr*5;
+  var yearsOwned=2026-yr;
+  var yearsLeft=Math.max(0,10-yearsOwned);
+  var estBal=yearsLeft*12*mtg;
+
+  // Stats bar
+  g('stat-mo').textContent='$'+Math.round(totalMo).toLocaleString();
+  g('stat-yr').textContent='$'+Math.round(totalYr).toLocaleString();
+  g('stat-5yr').textContent='$'+Math.round(fiveYr).toLocaleString();
+  g('stat-bal').textContent='$'+Math.round(estBal).toLocaleString();
+
+  if(netFee>0){
+    var save5=fiveYr-netFee;
+    g('stat-save').textContent='$'+Math.round(save5).toLocaleString();
+    g('stat-save').className='sv green';
+  } else {
+    g('stat-save').textContent='—';
+    g('stat-save').className='sv';
+  }
+
+  // Balance display in field
+  var balLabel='$'+Math.round(estBal).toLocaleString()+' ('+yearsLeft+' yrs × 12 × $'+Math.round(mtg)+')';
+  if(g('f-bal-display')) g('f-bal-display').textContent=balLabel;
+
+  // Quote summary panel
+  g('q-resort').textContent='$'+Math.round(fiveYr).toLocaleString();
+  g('q-fee').textContent=fee>0?'$'+Math.round(fee).toLocaleString():'—';
+  g('q-disc').textContent=totalDisc>0?'-$'+Math.round(totalDisc).toLocaleString():'$0';
+  g('q-net').textContent=netFee>0?'$'+Math.round(netFee).toLocaleString():'—';
+  g('q-save').textContent=netFee>0?'$'+Math.round(fiveYr-netFee).toLocaleString():'—';
+}
+
+var _timer=null;
+function autoSave(){
+  clearTimeout(_timer);
+  _timer=setTimeout(saveAll,800);
+}
+
+function saveAll(){
+  var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  if(!all[SLUG])all[SLUG]={};
+  Object.assign(all[SLUG],{
+    firstName:g('f-first').value,
+    lastName:g('f-last').value,
+    phone:g('f-phone').value,
+    email:g('f-email').value,
+    resort:g('f-resort').value,
+    resortCity:g('f-loc').value,
+    yearPurchased:g('f-year').value,
+    purchasePrice:g('f-price').value,
+    monthlyMortgage:g('f-mtg').value,
+    maitFees:g('f-mtf').value,
+    alphaFee:g('f-fee').value,
+    selectedTerm:g('f-term').value,
+    discount1:g('f-d1').value,
+    discount2:g('f-d2').value,
+    whyOut:g('f-why').value,
+    objection:g('f-obj').value,
+    _todayAppt:g('f-apt').value,
+    _fuAppt:g('f-fu').value,
+    _updated:Date.now()
+  });
+  localStorage.setItem(SK,JSON.stringify(all));
+  var t=g('toast');t.style.display='block';
+  setTimeout(function(){t.style.display='none';},1500);
+}
+
+function addNote(){
+  var ta=g('note-inp');
+  if(!ta.value.trim())return;
+  var now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var div=document.createElement('div');
+  div.className='note-item';
+  div.innerHTML='<div class="note-ts">'+now+'</div>'+ta.value.trim();
+  g('note-list').insertBefore(div,g('note-list').firstChild);
+  // Save note to client record
+  var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  if(!all[SLUG])all[SLUG]={};
+  if(!all[SLUG].repNotes)all[SLUG].repNotes=[];
+  all[SLUG].repNotes.unshift({ts:Date.now(),text:ta.value.trim()});
+  all[SLUG]._updated=Date.now();
   localStorage.setItem(SK,JSON.stringify(all));
   ta.value='';
-  alert('Note saved.');
 }
+
+window.addEventListener('beforeunload',saveAll);
 </script>
 </body>
 </html>
