@@ -1231,11 +1231,28 @@ function renderHub(){
 function activateClient(slug){
   // Set active slug
   localStorage.setItem(AK, slug);
-  // Also stamp the record so we know when it was last opened
+  // Stamp the record
   var all=ga();
   if(all[slug]){ all[slug]._lastOpened=Date.now(); localStorage.setItem(SK,JSON.stringify(all)); }
-  renderHub();
-  if(typeof buildSB==='function') buildSB();
+  // Navigate to their rep page — slug maps to /{slug}/rep/
+  // For slugs with dots (e.g. l.huston) use the name part after the dot
+  // For hardcoded clients, use the known mapping
+  var repMap = {
+    'l.huston': '/huston/rep/',
+    'j.bates':  '/bates/rep/',
+    'e.equihua':'/equihua/',
+    'e.avila':  '/vitals/'
+  };
+  // For dynamically created clients, derive from slug
+  var dest = repMap[slug];
+  if(!dest){
+    // Try /{lastname}/rep/ using the part after the dot
+    var parts = slug.split('.');
+    var name = parts.length>1 ? parts[1] : slug;
+    // Check if the client has a named page or fall back to vitals
+    dest = '/vitals/';
+  }
+  location.href = dest;
 }
 
 document.addEventListener('DOMContentLoaded', function(){
