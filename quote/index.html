@@ -1471,9 +1471,19 @@ function openEmailQuote(){
   var clientName=(document.getElementById('b-name')||{}).textContent||'—';
   var resort=(document.getElementById('b-resort')||{}).textContent||'Your Resort';
   var resortCost5=(document.getElementById('msrp')||{}).textContent||'—';
-  var alphaFeeTxt=(document.getElementById('alpha-display')||{}).textContent||'—';
   var savings5=(document.getElementById('cmp-save-5')||{}).textContent||'—';
   var curMoTxt=(document.getElementById('pc-current')||{}).textContent||'—';
+
+  // Read discounts — only show in email if at least one discount is applied
+  var disc1=parseFloat((document.getElementById('disc1-inp')||{}).value)||0;
+  var disc2=parseFloat((document.getElementById('disc2-inp')||{}).value)||0;
+  var totalDisc=disc1+disc2;
+  var rawFee=parseFloat((document.getElementById('fee-inp')||{}).value)||0;
+  var netFee=Math.max(0,rawFee-totalDisc);
+  var hasDisc=totalDisc>0;
+
+  // Alpha fee display: show net price (after discounts) as the headline figure
+  var alphaFeeTxt=hasDisc?fmtd(netFee):(document.getElementById('alpha-display')||{}).textContent||'—';
 
   var twoLenderActive = document.getElementById('two-lender-box').style.display==='block';
   var l1mo=0,l2mo=0,totalAlphaMo=0,rows='';
@@ -1496,6 +1506,21 @@ function openEmailQuote(){
 
   var totalRow = (twoLenderActive)
     ? '<tr class="et-total"><td class="et-lbl">'+L.totalAlpha+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>'
+    : '';
+
+  // Discount block — only rendered when discounts exist
+  var discBlock = hasDisc
+    ? '<div class="disc-block">'
+        +'<div class="disc-title">Applied Discounts</div>'
+        +(disc1>0?'<div class="disc-row"><span>Discount 1</span><span style="color:#2a7a2a">−'+fmtd(disc1)+'</span></div>':'')
+        +(disc2>0?'<div class="disc-row"><span>Discount 2</span><span style="color:#2a7a2a">−'+fmtd(disc2)+'</span></div>':'')
+        +'<div class="disc-row disc-total-row"><span>Total Savings</span><span style="color:#2a7a2a;font-size:16px">−'+fmtd(totalDisc)+'</span></div>'
+        +'<div class="disc-final">'
+          +'<span class="disc-orig">'+fmtd(rawFee)+'</span>'
+          +'<span class="disc-arrow">→</span>'
+          +'<span class="disc-net">'+fmtd(netFee)+'</span>'
+        +'</div>'
+      +'</div>'
     : '';
 
   var includesHtml = '<ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:#333">'
@@ -1523,6 +1548,14 @@ function openEmailQuote(){
 '.save-strip{background:#1B2A4A;color:#fff;border-radius:4px;padding:12px;text-align:center;margin-bottom:24px}'+
 '.save-strip .sl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;opacity:.8}'+
 '.save-strip .sa{font-size:20px;font-weight:700;color:#C8960C}'+
+'.disc-block{background:#f0fdf4;border:1.5px solid #16A34A;border-radius:6px;padding:14px 16px;margin-bottom:18px}'+
+'.disc-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#16A34A;margin-bottom:10px}'+
+'.disc-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #dcfce7}'+
+'.disc-total-row{font-weight:700;border-bottom:none;padding-top:8px;margin-top:4px}'+
+'.disc-final{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:2px solid #16A34A}'+
+'.disc-orig{font-size:18px;text-decoration:line-through;color:#9ca3af}'+
+'.disc-arrow{font-size:18px;color:#16A34A;font-weight:700}'+
+'.disc-net{font-size:24px;font-weight:700;color:#1B2A4A}'+
 'h2.sec{font-size:14px;color:#1B2A4A;border-bottom:2px solid #C8960C;padding-bottom:8px;margin:0 0 14px}'+
 'table.et{width:100%;border-collapse:collapse;margin-bottom:10px}'+
 'table.et td{padding:11px 14px;border-bottom:1px solid #e3e7ec;font-size:14px}'+
@@ -1544,6 +1577,7 @@ function openEmailQuote(){
 '<div class="hdr"><h1>ALPHA TIMESHARE CONSULTANTS</h1><p>'+L.pageTitle+'</p></div>'+
 '<div class="body">'+
 '<div class="greet">'+L.greeting(clientName,resort)+'</div>'+
+discBlock+
 '<div class="vs-row">'+
 '<div class="vs-card resort"><div class="vs-lbl">'+L.resortLbl+'</div><div class="vs-val">'+resortCost5+'</div></div>'+
 '<div class="vs-card alpha"><div class="vs-lbl">'+L.alphaLbl+'</div><div class="vs-val">'+alphaFeeTxt+'</div></div>'+
