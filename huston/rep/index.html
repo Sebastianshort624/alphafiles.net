@@ -88,6 +88,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size
 
 /* ── Toast ── */
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#16A34A;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;display:none;z-index:999}
+.stage-btn{padding:7px 14px;border:1.5px solid var(--border);background:#fff;color:#6b7280;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s}
+.stage-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.stage-btn:hover:not(.active){border-color:var(--navy);color:var(--navy)}
 </style>
 </head>
 <body>
@@ -220,6 +223,95 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size
       <div>
         <div class="field-row"><div class="fl">Today's Appt</div><div class="fv"><input id="f-apt" type="datetime-local" oninput="autoSave()"></div></div>
         <div class="field-row"><div class="fl">Follow-Up Date</div><div class="fv"><input id="f-fu" type="datetime-local" oninput="autoSave()"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAGE TRACKER -->
+<div class="sec">
+  <div class="sh">
+    <h2>Stage &amp; Status</h2>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button onclick="window.print()" style="padding:4px 10px;background:#f3f4f6;border:0.5px solid var(--border);border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;color:var(--navy)">🖨 Print</button>
+      <button onclick="saveAll()" style="padding:4px 10px;background:var(--gold);border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;color:#fff">💾 Save</button>
+    </div>
+  </div>
+  <div class="sbody">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <button onclick="setStage(1,this)" class="stage-btn active" id="stage-1">Stage 1 — Intake</button>
+      <button onclick="setStage(2,this)" class="stage-btn" id="stage-2">Stage 2 — Assessment</button>
+      <button onclick="setStage(3,this)" class="stage-btn" id="stage-3">Stage 3 — Quote</button>
+      <button onclick="setStage(4,this)" class="stage-btn" id="stage-4">Stage 4 — Closing</button>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="f-noquote" onchange="autoSave()" style="width:15px;height:15px;accent-color:var(--red)"> 
+        <span style="color:var(--red);font-weight:600">No Quote</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="f-nofu" onchange="autoSave()" style="width:15px;height:15px;accent-color:var(--red)">
+        <span style="color:var(--red);font-weight:600">No Follow-Up</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="f-closed" onchange="autoSave()" style="width:15px;height:15px;accent-color:var(--green)">
+        <span style="color:var(--green);font-weight:600">Closed</span>
+      </label>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#EAF0F8;border-radius:6px;border-left:3px solid var(--navy);font-size:13px;color:var(--navy)">
+      After confirming info above → 
+      <a href="/whyout/" style="color:var(--gold);font-weight:700;text-decoration:none">Start Presentation → Why Do You Want Out ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL GENERATOR -->
+<div class="sec">
+  <div class="sh"><h2>✉️ Email Generator</h2></div>
+  <div class="sbody">
+    <div style="margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:6px">Select Template</div>
+      <select id="email-template" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;background:#fff;color:var(--navy)" onchange="generateEmail()">
+        <option value="">— Choose a template —</option>
+        <option value="whyout">❓ Why Do You Want Out</option>
+        <option value="wait">⚠️ If You Do Nothing</option>
+        <option value="group">🔍 Finding Your Group</option>
+        <option value="approval">✅ Your Spot in Group Filing</option>
+        <option value="heirs">👨‍👩‍👧 Heirs &amp; Estate Liability</option>
+        <option value="compensation">💵 Resort Compensation</option>
+        <option value="credit">💳 To Pay or Not to Pay</option>
+        <option value="letter">✉️ Mutual Release Letter</option>
+        <option value="exit">🚪 4 Ways to Exit</option>
+        <option value="guarantee">🛡 Certificate of Guarantee</option>
+        <option value="history">⭐ Our Track Record</option>
+        <option value="rights">⚖️ Consumer Rights</option>
+        <option value="cost">💰 True Cost of Ownership</option>
+        <option value="quote">📄 Your Quote</option>
+        <option value="followup">⏰ Follow-Up</option>
+        <option value="better">🏆 What Makes Alpha Better</option>
+        <option value="included">📦 What's Included</option>
+        <option value="recap">📋 Recap</option>
+      </select>
+    </div>
+    <div id="email-output" style="display:none">
+      <div style="background:#f9faf9;border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:8px;font-size:13px;line-height:1.7;color:#374151;white-space:pre-wrap;max-height:240px;overflow-y:auto" id="email-body"></div>
+      <button onclick="copyEmail()" style="padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">📋 Copy Email</button>
+    </div>
+    <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:6px">📚 Email Packs (Grouped)</div>
+      <select id="pack-template" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;background:#fff;color:var(--navy)" onchange="generatePack()">
+        <option value="">— Choose a pack —</option>
+        <option value="situation">🆘 Your Situation</option>
+        <option value="protection">🛡 Protection</option>
+        <option value="grouppath">🔍 Group Filing Path</option>
+        <option value="numbers">💰 The Numbers</option>
+        <option value="whyalpha">🏆 Why Alpha</option>
+        <option value="trackrep">⭐ Track Record &amp; Rights</option>
+        <option value="wrapup">📋 Wrap-Up</option>
+      </select>
+      <div id="pack-output" style="display:none;margin-top:8px">
+        <div style="background:#f9faf9;border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:8px;font-size:13px;line-height:1.7;color:#374151;white-space:pre-wrap;max-height:240px;overflow-y:auto" id="pack-body"></div>
+        <button onclick="copyPack()" style="padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">📋 Copy Pack</button>
       </div>
     </div>
   </div>
@@ -432,6 +524,86 @@ function addNote(){
   all[SLUG]._updated=Date.now();
   localStorage.setItem(SK,JSON.stringify(all));
   ta.value='';
+}
+
+// ── Stage tracker ──────────────────────────────────────────────
+function setStage(n,btn){
+  document.querySelectorAll('.stage-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  if(!all[SLUG])all[SLUG]={};
+  all[SLUG].stage=n; all[SLUG]._updated=Date.now();
+  localStorage.setItem(SK,JSON.stringify(all));
+}
+
+// ── Email generator ─────────────────────────────────────────────
+var _clientName='Lynda';
+var _resort='Holiday Inn Club Vacations Lake Tahoe';
+
+function emailBody(tpl){
+  var n=_clientName, r=_resort;
+  var mtg=parseFloat(g('f-mtg').value)||238;
+  var mtfYr=parseFloat(g('f-mtf').value)||480;
+  var fee=parseFloat(g('f-fee').value)||0;
+  var mo=Math.round(mtg+mtfYr/12);
+  var fiveYr=Math.round((mtg*12+mtfYr)*5);
+  var save5=fee>0?Math.round(fiveYr-fee):0;
+  var bodies={
+    whyout:'Hi '+n+',\n\nThank you for sharing your situation with me. Based on our conversation, your desire to exit '+r+' is clear — and it\'s valid.\n\nYour current obligation is $'+mo+'/month. That\'s money leaving your pocket every single month for a property you can\'t use and can\'t sell.\n\nLet\'s talk about your options.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    wait:'Hi '+n+',\n\nI want to be direct with you: doing nothing is the most expensive option.\n\nAt $'+mo+'/month, over 5 years you will pay $'+fiveYr.toLocaleString()+' — and every year those fees grow another 8%.\n\nThe longer you wait, the harder your case becomes. We\'re ready to act now.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    guarantee:'Hi '+n+',\n\nHere\'s something no attorney will put in writing — but we will:\n\nIf Alpha Timeshare Consultants does not obtain a Favorable Outcome within 36 months, you receive a 100% refund of your service fee.\n\nThat\'s in your contract. Signed by us.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    cost:'Hi '+n+',\n\nHere\'s the math on your '+r+':\n\nCurrent payments: $'+mo+'/month\n5-Year cost if nothing changes: $'+fiveYr.toLocaleString()+'\n\nVs. Alpha: '+(fee>0?'$'+fee.toLocaleString()+' one time — saving you $'+save5.toLocaleString()+' over 5 years':'One fixed fee — then $0 forever.')+'\n\n"Would you rather put those payments toward the problem — or the solution?"\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    quote:'Hi '+n+',\n\nYour personalized exit summary:\n\nResort 5-Year Cost: $'+fiveYr.toLocaleString()+'\nAlpha Service Fee: '+(fee>0?'$'+fee.toLocaleString():'To be confirmed')+'\n'+(save5>0?'Your Savings: $'+save5.toLocaleString()+'\n':'')+'\n$0 Down · First payment month two · 100% Money-Back Guarantee\n\nView your full file: https://alphafiles.net/huston/\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    followup:'Hi '+n+',\n\nJust following up on our conversation about your '+r+' timeshare.\n\nI want to make sure you have everything you need to make this decision. Your client file is available anytime at:\n\nhttps://alphafiles.net/huston/\n\nI\'m here when you\'re ready.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    better:'Hi '+n+',\n\nHere\'s what makes Alpha different from every other exit company:\n\n01. GROUP FILINGS — We consolidate owners from your same resort. You can\'t do this alone.\n02. WRITTEN GUARANTEE — 100% refund if no result in 36 months. In your contract.\n03. 41 YEARS — BBB A+ independently verified. Every case in-house.\n04. $0 DOWN — First payment month two. We only take cases we can win.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    rights:'Hi '+n+',\n\nBased on your case, your resort failed to make several legally required disclosures at the time of purchase. Each failure is a documented statutory violation.\n\nTotal documented fine exposure in your case: $290,000+\n\nThe resort takes this exposure into consideration when negotiating your release and possible compensation.\n\nView your full violation report: https://alphafiles.net/huston/\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134'
+  };
+  return bodies[tpl]||'Hi '+n+',\n\nThank you for your time. I\'m here when you\'re ready to move forward.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134';
+}
+
+function packBody(tpl){
+  var n=_clientName;
+  var packs={
+    situation:emailBody('whyout')+'\n\n---\n\n'+emailBody('wait'),
+    protection:'Hi '+n+',\n\nTwo things you need to know about credit protection:\n\n1. Alpha\'s credit team monitors your profile from day one of enrollment.\n2. Upon your Mutual Release, we submit documentation to all three bureaus — TransUnion, Equifax, Experian — at no cost.\n\nYour credit is protected throughout. When it\'s all said and done — it\'s restored.\n\nBest,\nSebastian Short | Alpha Timeshare Consultants\n1 (877) 848-3948 Ext. 134',
+    grouppath:emailBody('group')+'\n\n---\n\n'+emailBody('approval'),
+    numbers:emailBody('cost')+'\n\n---\n\n'+emailBody('quote'),
+    whyalpha:emailBody('better')+'\n\n---\n\n'+emailBody('guarantee'),
+    trackrep:emailBody('history')+'\n\n---\n\n'+emailBody('rights'),
+    wrapup:emailBody('quote')+'\n\n---\n\n'+emailBody('followup')
+  };
+  return packs[tpl]||'Pack not found.';
+}
+
+function generateEmail(){
+  var tpl=g('email-template').value;
+  if(!tpl)return;
+  _clientName=(g('f-first').value||'Lynda');
+  _resort=(g('f-resort').value||'your resort');
+  var out=g('email-output'); out.style.display='block';
+  g('email-body').textContent=emailBody(tpl);
+}
+
+function generatePack(){
+  var tpl=g('pack-template').value;
+  if(!tpl)return;
+  _clientName=(g('f-first').value||'Lynda');
+  _resort=(g('f-resort').value||'your resort');
+  var out=g('pack-output'); out.style.display='block';
+  g('pack-body').textContent=packBody(tpl);
+}
+
+function copyEmail(){
+  navigator.clipboard.writeText(g('email-body').textContent).then(function(){
+    var b=document.querySelector('[onclick="copyEmail()"]');
+    b.textContent='✓ Copied!';setTimeout(function(){b.textContent='📋 Copy Email';},1500);
+  });
+}
+function copyPack(){
+  navigator.clipboard.writeText(g('pack-body').textContent).then(function(){
+    var b=document.querySelector('[onclick="copyPack()"]');
+    b.textContent='✓ Copied!';setTimeout(function(){b.textContent='📋 Copy Pack';},1500);
+  });
 }
 
 window.addEventListener('beforeunload',saveAll);
