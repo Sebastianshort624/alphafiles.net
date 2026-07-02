@@ -1978,6 +1978,33 @@ function loadData(){
 
 document.addEventListener('DOMContentLoaded', function(){loadData();if(!ac())buildTasks();});
 
+// Flush any pending autoSave immediately when the user leaves the page
+// so no edit is ever lost due to the 600ms debounce timer not having fired
+window.addEventListener('beforeunload', function(){
+  clearTimeout(_timer);
+  var s=ac(); if(!s) return;
+  var all=ga(); if(!all[s]) return;
+  function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
+  all[s]=Object.assign(all[s],{
+    firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
+    coFirst:g('v-co'),coLast:g('v-col'),
+    resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
+    yearPurchased:g('v-year'),purchasePrice:g('v-pprice'),whyOut:g('v-why'),
+    maitFees:g('v-mtf'),mtfFreq:g('v-mtf-freq'),
+    monthlyMortgage:(_mtgType==='pf'?'0':g('v-mtg')),
+    balanceAmount:g('v-balance'),mortgageType:_mtgType,
+    mtfBehind:g('v-mtfb'),mtgBehind:g('v-mtgb'),
+    creditAffected:g('v-credit-affected'),ficoScore:g('v-fico'),resortThreat:g('v-resort-threat'),
+    alphaFee:g('v-fee'),selectedTerm:g('v-term'),fundingStatus:g('v-fund'),
+    objection:g('v-obj'),objStatus:g('v-objstat'),notes:g('v-note'),
+    vitalsStage:_stage,apptType:g('v-appttype'),
+    clientClass:g('v-classify'),
+    _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
+    _updated:Date.now()
+  });
+  sa(all);
+});
+
 // ── EMAIL GENERATOR ──────────────────────────────────────────────────────
 function _clientHeader(){
   var d=ad()||{};
