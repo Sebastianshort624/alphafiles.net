@@ -1,5 +1,5 @@
 # Disable all Jekyll processing - serve raw HTML files
+# Updated: 2026-07-02 to fix stuck build
 exclude: []
-include: []
 plugins: []
 theme: null
