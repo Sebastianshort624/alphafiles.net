@@ -103,6 +103,33 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size
 </style>
 </head>
 <body>
+
+<script>
+// ── ACTIVATE THIS CLIENT ON LOAD ─────────────────────────────────────────
+(function(){
+  var SK='atc_clients_v2', AK='atc_active';
+  var slug='j.bates';
+  var all;
+  try{ all=JSON.parse(localStorage.getItem(SK)||'{}'); }catch(e){ all={}; }
+
+  // Pre-populate client data if not already in localStorage
+  // (merge: preserve any existing notes/answers, but fill in core fields)
+  var existing=all[slug]||{};
+  var defaults={"firstName": "Jeremy", "lastName": "Bates", "coFirst": "Jaclyn", "coLast": "Bates", "resort": "Hilton Grand Vacations (Las Vegas + Hawaii)", "resortCity": "Las Vegas / Hawaii", "resortState": "NV/HI", "yearPurchased": "2024", "purchasePrice": "106754", "maitFees": "8969", "monthlyMortgage": "1543", "balanceAmount": "106754", "mortgageType": "owes", "alphaFee": "20000", "selectedTerm": "60", "name": "Jeremy & Jaclyn Bates"};
+  defaults._created=defaults._created||Date.now();
+  defaults._updated=Date.now();
+  // Merge: hardcoded defaults fill in blanks, existing data wins for anything already set
+  Object.keys(defaults).forEach(function(k){
+    if(!existing[k]) existing[k]=defaults[k];
+  });
+  all[slug]=existing;
+  localStorage.setItem(SK, JSON.stringify(all));
+
+  // Set THIS client as the active client
+  localStorage.setItem(AK, slug);
+})();
+// ── END ACTIVATE ──────────────────────────────────────────────────────────
+</script>
 <div class="page">
 
 <!-- Rep Header -->
