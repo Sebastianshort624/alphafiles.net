@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bates — Rep File · Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
+.page{max-width:900px;margin:0 auto;padding:0 0 60px}
+
+/* Rep header - different color to distinguish from client view */
+.rep-hdr{background:#0f1a2e;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.rep-hdr-left{display:flex;align-items:center;gap:12px}
+.rep-badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:3px}
+.rep-hdr h1{font-size:18px;font-weight:700;color:#fff}
+.rep-hdr .sub{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px}
+.rep-actions{display:flex;gap:8px;flex-wrap:wrap}
+.rep-btn{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.rep-btn.gold{background:var(--gold);color:#fff}
+.rep-btn.outline{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
+.rep-btn.green{background:var(--green);color:#fff}
+
+/* Quick stats bar */
+.stats-bar{background:var(--navy);padding:12px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-item{padding:8px 16px;border-right:1px solid rgba(255,255,255,.1);text-align:center}
+.sb-item:last-child{border-right:none}
+.sb-item .sv{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold)}
+.sb-item .sl{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.4);margin-top:2px}
+
+.section{background:#fff;border-radius:8px;border:1px solid var(--border);margin:14px 14px 0;overflow:hidden}
+.section-hdr{background:#f8fafc;border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.section-hdr h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--navy)}
+.section-hdr .sh-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px}
+.section-body{padding:16px}
+
+/* Two-column grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+
+/* Field rows */
+.field-grid{display:grid;gap:0}
+.field-row{display:grid;grid-template-columns:140px 1fr;border-bottom:1px solid #f3f4f6}
+.field-row:last-child{border-bottom:none}
+.field-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:8px 12px;background:#fafafa}
+.field-val{font-size:13px;color:var(--navy);padding:8px 12px;font-weight:500}
+.field-val a{color:var(--gold);text-decoration:none}
+.field-val.red{color:var(--red);font-weight:700}
+.field-val.green{color:var(--green);font-weight:700}
+.field-val.gold{color:var(--gold);font-weight:700}
+
+/* Resort cards */
+.resort-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.resort-card{background:#f9faf9;border:1px solid var(--border);border-radius:6px;padding:12px}
+.resort-card h3{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.3px}
+.rrow{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f3f4f6;font-size:12px}
+.rrow:last-child{border-bottom:none}
+.rrow .rl{color:#6b7280}
+.rrow .rv{font-weight:600;color:var(--navy)}
+
+/* Combined totals */
+.totals-bar{background:var(--navy);border-radius:6px;padding:12px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:12px}
+.tb-item{text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+.tb-item:last-child{border-right:none}
+.tb-item .tv{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold)}
+.tb-item .tl{font-size:9px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* Presentation links */
+.pres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.pres-link{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f8fafc;border:1px solid var(--border);border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;color:var(--navy);transition:all .15s}
+.pres-link:hover{background:#EAF0F8;border-color:var(--navy)}
+.pres-link .pi{font-size:14px}
+.pres-link .pc{font-size:10px;color:#9ca3af;margin-top:1px;font-weight:400}
+
+/* Timeline */
+.tl-item{padding:12px 14px 12px 40px;border-bottom:1px solid #f3f4f6;position:relative}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{position:absolute;left:12px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--navy)}
+.tl-dot.gold{background:var(--gold)}
+.tl-dot.green{background:var(--green)}
+.tl-date{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;margin-bottom:3px}
+.tl-text{font-size:13px;color:#374151;line-height:1.5}
+
+/* Notes area */
+.notes-area{width:100%;min-height:120px;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:13px;color:#374151;line-height:1.6;resize:vertical}
+
+/* Quote summary */
+.quote-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.qs-box{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:12px;text-align:center}
+.qs-box .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
+.qs-box .qv{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--navy)}
+.qs-box.highlight{background:var(--navy)}
+.qs-box.highlight .ql{color:rgba(255,255,255,.5)}
+.qs-box.highlight .qv{color:var(--gold)}
+
+/* Status pill */
+.status-pill{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 10px;border-radius:12px}
+.status-pill.active{background:#dcfce7;color:#16A34A}
+.status-pill.nurture{background:#fef9c3;color:#854d0e}
+.status-pill.pitched{background:#EAF0F8;color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Rep Header -->
+<div class="rep-hdr">
+  <div class="rep-hdr-left">
+    <div class="rep-badge">REP VIEW</div>
+    <div>
+      <h1>Jeremy &amp; Jaclyn Bates</h1>
+      <div class="sub">2 Resorts · Hilton Grand Vacations · $20,000 fee · Last updated Jun 25, 2026</div>
+    </div>
+  </div>
+  <div class="rep-actions">
+    <a href="/bates/" class="rep-btn outline" target="_blank">👤 Client View ↗</a>
+    <a href="/vitals/" class="rep-btn gold">✏️ Edit in Vitals</a>
+    <a href="/quote/" class="rep-btn green">📄 Quote Tool</a>
+  </div>
+</div>
+
+<!-- Quick stats -->
+<div class="stats-bar">
+  <div class="sb-item"><div class="sv">$2,290</div><div class="sl">Monthly</div></div>
+  <div class="sb-item"><div class="sv">$27,485</div><div class="sl">Yearly</div></div>
+  <div class="sb-item"><div class="sv">$145,200</div><div class="sl">5-Yr Cost</div></div>
+  <div class="sb-item"><div class="sv">$20,000</div><div class="sl">Alpha Fee</div></div>
+  <div class="sb-item"><div class="sv">$125,200</div><div class="sl">Savings</div></div>
+  <div class="sb-item"><div class="sv">$106,754</div><div class="sl">Balances</div></div>
+</div>
+
+<!-- CLIENT PROFILE -->
+<div class="section">
+  <div class="section-hdr">
+    <h2>Client Profile</h2>
+    <span class="status-pill pitched">Being Pitched</span>
+  </div>
+  <div class="section-body">
+    <div class="two-col">
+      <div class="field-grid">
+        <div class="field-row"><div class="field-lbl">Name</div><div class="field-val">Jeremy &amp; Jaclyn Bates</div></div>
+        <div class="field-row"><div class="field-lbl">Phone</div><div class="field-val"><a href="tel:">—</a></div></div>
+        <div class="field-row"><div class="field-lbl">Email</div><div class="field-val"><a href="mailto:">—</a></div></div>
+        <div class="field-row"><div class="field-lbl">Language</div><div class="field-val">English</div></div>
+      </div>
+      <div class="field-grid">
+        <div class="field-row"><div class="field-lbl">Lead Owner</div><div class="field-val">Sebastian Short</div></div>
+        <div class="field-row"><div class="field-lbl">Fronter</div><div class="field-val">—</div></div>
+        <div class="field-row"><div class="field-lbl">Source</div><div class="field-val">—</div></div>
+        <div class="field-row"><div class="field-lbl">Status</div><div class="field-val"><span class="status-pill nurture">Nurture</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESORT & FINANCIALS -->
+<div class="section">
+  <div class="section-hdr"><h2>Resort &amp; Financial Details</h2></div>
+  <div class="section-body">
+    <div class="resort-pair">
+      <div class="resort-card">
+        <h3>Resort 1 — HGV Las Vegas</h3>
+        <div class="rrow"><span class="rl">Resort</span><span class="rv">Hilton Grand Vacations Las Vegas</span></div>
+        <div class="rrow"><span class="rl">Purchased</span><span class="rv">Aug 2024</span></div>
+        <div class="rrow"><span class="rl">Status</span><span class="rv" style="color:var(--green)">Current</span></div>
+        <div class="rrow"><span class="rl">Balance</span><span class="rv" style="color:var(--red)">$57,050</span></div>
+        <div class="rrow"><span class="rl">Mortgage</span><span class="rv">$941/mo · $11,292/yr</span></div>
+        <div class="rrow"><span class="rl">MTF</span><span class="rv">$437.80/mo · $5,253.60/yr</span></div>
+        <div class="rrow"><span class="rl">Total</span><span class="rv" style="color:var(--red);font-weight:700">$1,378.80/mo</span></div>
+      </div>
+      <div class="resort-card">
+        <h3>Resort 2 — HGV Hawaii MAX</h3>
+        <div class="rrow"><span class="rl">Resort</span><span class="rv">Hilton Grand Vacations Hawaii (HGV MAX)</span></div>
+        <div class="rrow"><span class="rl">Purchased</span><span class="rv">Nov 2025</span></div>
+        <div class="rrow"><span class="rl">Status</span><span class="rv" style="color:var(--green)">Current</span></div>
+        <div class="rrow"><span class="rl">Balance</span><span class="rv" style="color:var(--red)">$49,704</span></div>
+        <div class="rrow"><span class="rl">Mortgage</span><span class="rv">$602/mo · $7,224/yr</span></div>
+        <div class="rrow"><span class="rl">MTF</span><span class="rv">$309.66/mo · $3,715.86/yr</span></div>
+        <div class="rrow"><span class="rl">Total</span><span class="rv" style="color:var(--red);font-weight:700">$911.66/mo</span></div>
+      </div>
+    </div>
+    <div class="totals-bar">
+      <div class="tb-item"><div class="tv">$1,543/mo</div><div class="tl">Combined Mortgage</div></div>
+      <div class="tb-item"><div class="tv">$747/mo</div><div class="tl">Combined MTF</div></div>
+      <div class="tb-item"><div class="tv">$2,290/mo</div><div class="tl">Total Monthly</div></div>
+      <div class="tb-item"><div class="tv">$27,485/yr</div><div class="tl">Total Yearly</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTE SUMMARY -->
+<div class="section">
+  <div class="section-hdr"><h2>Quote Summary</h2></div>
+  <div class="section-body">
+    <div class="quote-summary">
+      <div class="qs-box"><div class="ql">Alpha Fee</div><div class="qv" style="color:var(--gold)">$20,000</div></div>
+      <div class="qs-box"><div class="ql">5-Yr Resort Cost</div><div class="qv" style="color:var(--red)">$145,200</div></div>
+      <div class="qs-box highlight"><div class="ql">They Save</div><div class="qv">$125,200</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field-grid" style="border:1px solid var(--border);border-radius:6px">
+        <div class="field-row"><div class="field-lbl">60-Mo Payment</div><div class="field-val gold">~$529/mo</div></div>
+        <div class="field-row"><div class="field-lbl">Current Monthly</div><div class="field-val red">$2,290/mo</div></div>
+        <div class="field-row"><div class="field-lbl">Monthly Savings</div><div class="field-val green">~$1,761/mo</div></div>
+      </div>
+      <div class="field-grid" style="border:1px solid var(--border);border-radius:6px">
+        <div class="field-row"><div class="field-lbl">Term Options</div><div class="field-val">12/24/36/48/60 mo</div></div>
+        <div class="field-row"><div class="field-lbl">Interest</div><div class="field-val">20% annual (12mo = 0%)</div></div>
+        <div class="field-row"><div class="field-lbl">Down Payment</div><div class="field-val green">$0 Down</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRESENTATION PAGES -->
+<div class="section">
+  <div class="section-hdr"><h2>Presentation Pages — Bates File</h2></div>
+  <div class="section-body">
+    <div class="pres-grid">
+      <a href="/whyout/" class="pres-link"><span class="pi">❓</span><div><div>Why Do You Want Out</div><div class="pc">Discovery</div></div></a>
+      <a href="/contract-truth/" class="pres-link"><span class="pi">📜</span><div><div>Iron Clad Contract</div><div class="pc">3a · Disclosure</div></div></a>
+      <a href="/no-deedback/" class="pres-link"><span class="pi">❌</span><div><div>Resort Won't Take It</div><div class="pc">3b · Disclosure</div></div></a>
+      <a href="/no-market/" class="pres-link"><span class="pi">🚫</span><div><div>No Secondary Market</div><div class="pc">3c · Disclosure</div></div></a>
+      <a href="/mtf-secret/" class="pres-link"><span class="pi">💸</span><div><div>The MTF Secret</div><div class="pc">3d · Disclosure</div></div></a>
+      <a href="/mortgage-truth/" class="pres-link"><span class="pi">🏦</span><div><div>Mortgage True Cost</div><div class="pc">3e · Disclosure</div></div></a>
+      <a href="/mtf-growth/" class="pres-link"><span class="pi">📈</span><div><div>MTF Grows 8%/yr</div><div class="pc">3f · Disclosure</div></div></a>
+      <a href="/true-cost-30/" class="pres-link"><span class="pi">📅</span><div><div>30-Year True Cost</div><div class="pc">3g · Disclosure</div></div></a>
+      <a href="/estate-truth/" class="pres-link"><span class="pi">👨‍👩‍👧</span><div><div>Heirs Own Problem</div><div class="pc">3h · Disclosure</div></div></a>
+      <a href="/non-owner/" class="pres-link"><span class="pi">⚠️</span><div><div>Non-Owners Win</div><div class="pc">3i · Disclosure</div></div></a>
+      <a href="/wait/" class="pres-link"><span class="pi">⏰</span><div><div>If You Do Nothing</div><div class="pc">4 · Consequence</div></div></a>
+      <a href="/group/" class="pres-link"><span class="pi">🔍</span><div><div>Group Filing</div><div class="pc">5 · Method</div></div></a>
+      <a href="/guarantee/" class="pres-link"><span class="pi">🛡️</span><div><div>Guarantee</div><div class="pc">6 · Commitment</div></div></a>
+      <a href="/rights/" class="pres-link"><span class="pi">⚖️</span><div><div>Consumer Rights</div><div class="pc">7 · Legal</div></div></a>
+      <a href="/report/" class="pres-link"><span class="pi">⚖️</span><div><div>Fines Report</div><div class="pc">7b · Legal</div></div></a>
+      <a href="/cost/" class="pres-link"><span class="pi">💰</span><div><div>True Cost</div><div class="pc">8 · Math</div></div></a>
+      <a href="/quote/" class="pres-link"><span class="pi">📄</span><div><div>Quote Tool</div><div class="pc">9 · Offer</div></div></a>
+      <a href="/better/" class="pres-link"><span class="pi">🏆</span><div><div>Why Alpha Better</div><div class="pc">10 · Differentiation</div></div></a>
+      <a href="/included/" class="pres-link"><span class="pi">📦</span><div><div>What's Included</div><div class="pc">11 · Scope</div></div></a>
+      <a href="/recap/" class="pres-link"><span class="pi">📋</span><div><div>Recap</div><div class="pc">12 · Close</div></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES / CASE HISTORY -->
+<div class="section">
+  <div class="section-hdr"><h2>Case Notes &amp; History</h2></div>
+  <div class="section-body">
+    <div class="tl-item">
+      <div class="tl-dot gold"></div>
+      <div class="tl-date">Jun 25, 2026</div>
+      <div class="tl-text">Exit program summary sent to Jeremy &amp; Jaclyn Bates covering both HGV resorts. Fee: $20,000. 5-year savings: $125,200.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Entry Date Unknown</div>
+      <div class="tl-text">Client profile created. 2 Hilton Grand Vacations contracts — Las Vegas (Aug 2024, $57,050 balance) and Hawaii HGV MAX (Nov 2025, $49,704 balance). Combined monthly obligation $2,290.46.</div>
+    </div>
+
+    <!-- Notes box -->
+    <div style="margin-top:16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:8px">Add Note</div>
+      <textarea class="notes-area" placeholder="Add case notes here..."></textarea>
+      <button onclick="saveNote()" style="margin-top:8px;padding:8px 16px;background:var(--gold);color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer">Save Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="section">
+  <div class="section-hdr"><h2>Quick Actions</h2></div>
+  <div class="section-body">
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="mailto:?subject=Your%20Alpha%20Exit%20File%20%E2%80%94%20Jeremy%20%26%20Jaclyn%20Bates&body=Hi%20Jeremy%20and%20Jaclyn%2C%0A%0AYour%20client%20portal%20is%20ready%20at%3A%0Ahttps%3A%2F%2Falphafiles.net%2Fbates%2F%0A%0ABest%2C%0ASebastian%20Short" class="rep-btn gold" style="text-decoration:none">📧 Email Client Portal Link</a>
+      <a href="/bates/" target="_blank" class="rep-btn outline" style="text-decoration:none;background:var(--navy);color:#fff">👤 Preview Client View</a>
+      <a href="/quote/" class="rep-btn green" style="text-decoration:none">📄 Open Quote Tool</a>
+      <a href="/vitals/" class="rep-btn outline" style="text-decoration:none;background:var(--navy);color:#fff">✏️ Edit Vitals</a>
+      <a href="/clients/" class="rep-btn outline" style="text-decoration:none;background:#f3f4f6;color:var(--navy)">← Back to Clients</a>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:#f9faf9;border:1px solid var(--border);border-radius:6px;font-size:12px;color:#6b7280">
+      <strong style="color:var(--navy)">Client portal URL:</strong> &nbsp;
+      <code style="background:#EAF0F8;padding:2px 8px;border-radius:3px;font-size:12px;color:var(--navy)">https://alphafiles.net/bates/</code>
+      &nbsp; — this is the link to send to Jeremy &amp; Jaclyn
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:20px 16px;font-size:11px;color:#9ca3af">
+  Rep view — not for client sharing &nbsp;·&nbsp; alphafiles.net/bates/rep/
+</div>
+
+</div>
+
+<script>
+function saveNote(){
+  var ta=document.querySelector('.notes-area');
+  if(!ta||!ta.value.trim())return;
+  var SK='atc_clients_v2',AK='atc_active';
+  var key=localStorage.getItem(AK)||'j.bates';
+  var all=JSON.parse(localStorage.getItem(SK)||'{}');
+  if(!all[key])all[key]={_created:Date.now()};
+  if(!all[key].repNotes)all[key].repNotes=[];
+  all[key].repNotes.unshift({ts:Date.now(),text:ta.value.trim()});
+  all[key]._updated=Date.now();
+  localStorage.setItem(SK,JSON.stringify(all));
+  ta.value='';
+  alert('Note saved.');
+}
+</script>
+</body>
+</html>
