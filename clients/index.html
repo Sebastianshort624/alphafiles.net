@@ -1208,7 +1208,11 @@ function renderHub(){
 }
 
 function activateClient(slug){
+  // Set active slug
   localStorage.setItem(AK, slug);
+  // Also stamp the record so we know when it was last opened
+  var all=ga();
+  if(all[slug]){ all[slug]._lastOpened=Date.now(); localStorage.setItem(SK,JSON.stringify(all)); }
   renderHub();
   if(typeof buildSB==='function') buildSB();
 }
