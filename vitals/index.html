@@ -412,6 +412,17 @@ function buildSB(){
     document.body.appendChild(fab);
   }
 
+  // Make V1 (Client Vitals) link to active client's /rep/ page
+  var repLinks=el.querySelectorAll('a[href="/vitals/"]');
+  if(repLinks.length>0&&slug){
+    var parts=slug.split('.');
+    var name=parts.length>1?parts[1]:slug;
+    // Known rep page mapping
+    var repMap={'l.huston':'/huston/rep/','j.bates':'/bates/rep/','e.equihua':'/equihua/'};
+    var repUrl=repMap[slug]||'/vitals/';
+    repLinks.forEach(function(a){a.href=repUrl;});
+  }
+
   el.querySelectorAll("[data-rpt]").forEach(function(btn){
     btn.addEventListener("click",function(){window.rpt(this.getAttribute("data-rpt"));});
   });
