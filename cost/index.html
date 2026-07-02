@@ -105,8 +105,8 @@ body{font-family:"Inter",sans-serif;background:#ffffff;color:#1a1a1a;font-size:1
 
 /* Projection groups */
 .proj-group{margin-bottom:22px}
-.proj-group-hdr{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.proj-group-hdr span:last-child{color:#c7cdd6;font-weight:600;letter-spacing:0}
+.proj-group-hdr{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:0;background:var(--navy);padding:10px 14px;border-radius:8px 8px 0 0}
+.proj-group-hdr span:last-child{color:#C8960C;font-weight:700;letter-spacing:0}
 .proj-list{border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .proj-list-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border)}
 .proj-list-row:last-child{border-bottom:none}
@@ -1001,12 +1001,12 @@ function _topSaveClick(){
   <div class="cost-card">
     <div class="cost-card-hdr">
       <div class="cost-card-title">Maintenance Fees</div>
-      <div class="cost-card-badge">Months Behind: <strong id="c-mtf-beh-badge">0</strong></div>
+      
     </div>
     <div class="cost-row3">
       <div><div class="cost-tile-lbl">Monthly</div><div class="cost-tile-val" id="c-mtf-mo">—</div></div>
       <div><div class="cost-tile-lbl">Annual</div><div class="cost-tile-val" id="c-mtf-yr">—</div></div>
-      <div><div class="cost-tile-lbl">Behind</div><div class="cost-tile-val behind" id="c-mtf-beh">$0</div></div>
+      <div><div class="cost-tile-lbl">Total Remaining</div><div class="cost-tile-val" id="c-mtf-tot">—</div></div>
     </div>
     <div class="cost-note">Maintenance fees continue growing: <strong>8%</strong> per year</div>
   </div>
@@ -1020,18 +1020,18 @@ function _topSaveClick(){
     <div class="cost-row3">
       <div><div class="cost-tile-lbl">Monthly</div><div class="cost-tile-val tot" id="c-tot-mo">—</div></div>
       <div><div class="cost-tile-lbl">Annual</div><div class="cost-tile-val tot" id="c-tot-yr">—</div></div>
-      <div><div class="cost-tile-lbl">Behind</div><div class="cost-tile-val tot behind" id="c-tot-beh">$0</div></div>
+      <div><div class="cost-tile-lbl">Total Remaining</div><div class="cost-tile-val tot" id="c-tot-rem">—</div></div>
     </div>
   </div>
 
-  <!-- Behind alert -->
-  <div id="behind-alert" class="behind-alert">
+  <!-- Behind alert - hidden -->
+  <div id="behind-alert" class="behind-alert" style="display:none!important">
     <div class="behind-icon">⚠️</div>
     <div class="behind-text" id="behind-text"></div>
   </div>
 
   <!-- Projections: 5-7 Yrs -->
-  <div class="proj-group">
+  <div class="proj-group" style="margin-bottom:28px">
     <div class="proj-group-hdr"><span>If Situation Continues: 5–7 Yrs</span><span>Total To Pay</span></div>
     <div class="proj-list">
       <div class="proj-list-row"><div class="proj-list-yrs">3 Years</div><div class="proj-list-val" id="p-3">—</div></div>
@@ -1041,7 +1041,7 @@ function _topSaveClick(){
   </div>
 
   <!-- Projections: 10-30 Yrs -->
-  <div class="proj-group">
+  <div class="proj-group" style="margin-bottom:28px">
     <div class="proj-group-hdr"><span>If Situation Continues: 10–30 Yrs</span><span>Total To Pay</span></div>
     <div class="proj-list">
       <div class="proj-list-row"><div class="proj-list-yrs">10 Years</div><div class="proj-list-val" id="p-10">—</div></div>
@@ -1051,7 +1051,7 @@ function _topSaveClick(){
   </div>
 
   <!-- Savings: Exit vs. Stay -->
-  <div class="proj-group">
+  <div class="proj-group" style="margin-bottom:28px">
     <div class="proj-group-hdr"><span>Your Savings — Exit vs. Stay</span><span>You Save</span></div>
     <div class="proj-list">
       <div class="proj-list-row"><div class="proj-list-yrs">2 Years</div><div class="proj-list-val save" id="sv-2">—</div></div>
@@ -1061,9 +1061,9 @@ function _topSaveClick(){
     <div class="cost-note">Resort cost at each mark minus the one-time Alpha fee — then $0 forever after that.</div>
   </div>
 
-  <!-- Our Fee -->
-  <div class="section-label">Our Fee</div>
-  <div class="fee-card">
+  <!-- Our Fee - hidden from client view -->
+  <div class="section-label" style="display:none">Our Fee</div>
+  <div class="fee-card" style="display:none">
     <div class="fee-grid">
       <div><div class="fee-tile-lbl">Our Fee</div><div class="fee-tile-val" id="c-fee">—</div></div>
       <div><div class="fee-tile-lbl">Per Month</div><div class="fee-tile-val" id="c-fee-permo">—</div><div class="fee-note" id="c-fee-rate-note">60 months · 20% annual</div></div>
