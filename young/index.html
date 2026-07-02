@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Alpha Timeshare File — John Young</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
+.page{max-width:760px;margin:0 auto;padding:0 0 60px}
+.top-hdr{background:var(--navy);padding:28px 32px 20px;text-align:center}
+.top-hdr .ey{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.top-hdr h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.top-hdr .sub{font-size:13px;color:rgba(255,255,255,.55)}
+.sec{background:#fff;border-radius:10px;border:1px solid var(--border);margin:16px 16px 0;overflow:hidden}
+.sh{background:var(--navy);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.sh h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px}
+.sb{padding:20px}
+.ir{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--border)}
+.ir:last-child{border-bottom:none}
+.il{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:10px 14px;background:#f9faf9}
+.iv{font-size:14px;color:var(--navy);padding:10px 14px;font-weight:500}
+.iv a{color:var(--navy)}
+.st-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.st{background:var(--navy);border-radius:8px;padding:14px;text-align:center}
+.st .sv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.st .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.55);margin-top:4px}
+.qc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.qb{border-radius:8px;padding:16px;text-align:center;border:2px solid}
+.qb.r{border-color:#fca5a5;background:#fef2f2}.qb.a{border-color:#86efac;background:#f0fdf4}
+.qb .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px}
+.qb .qv{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700}
+.qb.r .qv{color:var(--red)}.qb.a .qv{color:var(--green)}
+.sb2{background:var(--navy);border-radius:8px;padding:14px;text-align:center;margin-bottom:14px}
+.sb2 .sv{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--gold)}
+.sb2 .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)}
+.pg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pb{background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.pb .pl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
+.pb .pv{font-size:15px;font-weight:700;color:var(--navy)}
+.vcard{border-left:4px solid var(--red);background:#fff;border:1px solid #fca5a5;border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px}
+.vr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:4px}
+.vd{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.v2{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f3f4f6;flex-wrap:wrap;gap:6px}
+.vs{font-size:11px;color:#6b7280;font-family:monospace}
+.vf{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--red)}
+.vn{font-size:12px;color:#6b7280;font-style:italic;margin-top:8px;line-height:1.5;border-top:1px solid #f3f4f6;padding-top:8px}
+.ftb{background:var(--navy);border-radius:8px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.ftb .tl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)}
+.ftb .tv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.ii{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ii:last-child{border-bottom:none}
+.ic{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+.ib .it{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.ib .is{font-size:12px;color:#6b7280;line-height:1.5}
+.gb{background:var(--navy);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px}
+.gb .gt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.gb .gv{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:4px}
+.gb .gs{font-size:13px;color:rgba(255,255,255,.6)}
+.pl2{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.pl2:last-child{border-bottom:none}
+.pn{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold);line-height:1;flex-shrink:0;width:36px}
+.pb2 .pt{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.pb2 .ps{font-size:13px;color:#374151;line-height:1.6}
+.rb2{background:var(--navy);border-radius:0 0 8px 8px;padding:20px 24px;text-align:center}
+.rb2 .rn{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.rb2 .rt{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.rb2 .rc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8}
+.rb2 a{color:var(--gold);text-decoration:none}
+.rd{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--navy);margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--navy)}
+p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)}
+thead{background:var(--navy)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+tr:last-child td{border-bottom:none}
+.quote-wrap{display:none}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top-hdr">
+  <div class="ey">Alpha Timeshare Consultants</div>
+  <h1>Your Exit File</h1>
+  <div class="sub">Prepared for John Young &nbsp;&middot;&nbsp; Confidential</div>
+</div>
+
+<!-- 1. YOUR INFO -->
+<div class="sec">
+  <div class="sh"><span>👤</span><h2>Your Information</h2></div>
+  <div class="sb">
+    <div class="ir"><div class="il">Client</div><div class="iv">Mr. John Young</div></div>
+    <div class="ir"><div class="il">Phone</div><div class="iv"><a href="tel:+15032782387">(503) 278-2387</a></div></div>
+    <div class="ir"><div class="il">Email</div><div class="iv"><a href="mailto:jyoung330@gmail.com">jyoung330@gmail.com</a></div></div>
+    <div class="ir"><div class="il">Account Specialist</div><div class="iv">Sebastian Short &nbsp;&middot;&nbsp; Ext. 134</div></div>
+    <div class="ir"><div class="il">Direct Line</div><div class="iv">1 (877) 848-3948</div></div>
+  </div>
+</div>
+
+<!-- 2. RESORT & FINANCIALS -->
+<div class="sec">
+  <div class="sh"><span>🏨</span><h2>Your Resort &amp; Financial Snapshot</h2></div>
+  <div class="sb">
+    <div class="ir"><div class="il">Resort</div><div class="iv"><strong>Bluegreen Las Vegas</strong></div></div>
+    <div class="ir"><div class="il">Location</div><div class="iv">Las Vegas, Nevada</div></div>
+    <div class="ir"><div class="il">Year Purchased</div><div class="iv">June 2026</div></div>
+    <div class="ir"><div class="il">Purchase Price</div><div class="iv">$12,800</div></div>
+    <div class="ir"><div class="il">Balance Owed</div><div class="iv" style="color:var(--red);font-weight:700">$21,840 <span style="font-size:11px;color:#9ca3af;font-weight:400">(10 yrs × 12 × $182)</span></div></div>
+    <div class="ir"><div class="il">Monthly Mortgage</div><div class="iv">$182 / month</div></div>
+    <div class="ir"><div class="il">Annual Maint. Fee</div><div class="iv">$1,485 / year &nbsp;<span style="font-size:11px;color:#9ca3af">($124/mo)</span></div></div>
+    <div class="st-row">
+      <div class="st"><div class="sv">$306</div><div class="sl">Total Monthly</div></div>
+      <div class="st"><div class="sv">$3,669</div><div class="sl">Total Yearly</div></div>
+      <div class="st"><div class="sv">$18,345</div><div class="sl">5-Year Cost</div></div>
+      <div class="st"><div class="sv">$91,000+</div><div class="sl">30-Year Cost</div></div>
+    </div>
+    <p style="font-size:12px;color:#9ca3af;margin:0">30-year projection reflects 8% annual maintenance fee growth compounded yearly (ARDA industry average).</p>
+  </div>
+</div>
+
+<!-- 3. QUOTE — hidden behind button -->
+<div style="text-align:center;padding:20px 16px 4px">
+  <button onclick="document.getElementById('quote-sec').style.display='block';this.style.display='none'" style="background:#C8960C;color:#fff;border:none;border-radius:8px;padding:14px 48px;font-size:16px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 16px rgba(200,150,12,.35)">📄 QUOTE</button>
+</div>
+<div class="sec" id="quote-sec" style="display:none">
+  <div class="sh"><span>📄</span><h2>Your Alpha Quote</h2></div>
+  <div class="sb">
+    <div class="qc">
+      <div class="qb r"><div class="ql">Resort — 5-Year Cost</div><div class="qv">$18,345</div><div style="font-size:11px;color:#9ca3af;margin-top:4px">If you do nothing</div></div>
+      <div class="qb a"><div class="ql">Alpha — Exit Fee</div><div class="qv">$4,995</div><div style="font-size:11px;color:#9ca3af;margin-top:4px">One-time service fee</div></div>
+    </div>
+    <div class="sb2"><div class="sl">You Save Over 5 Years</div><div class="sv">$13,350</div></div>
+    <div class="pg">
+      <div class="pb"><div class="pl">Current Monthly</div><div class="pv" style="color:var(--red)">$306/mo</div></div>
+      <div class="pb"><div class="pl">Alpha Monthly</div><div class="pv">$132/mo</div><div style="font-size:10px;color:#9ca3af;margin-top:2px">60-month plan</div></div>
+      <div class="pb"><div class="pl">Monthly Savings</div><div class="pv" style="color:var(--green)">$174/mo</div></div>
+    </div>
+    <p style="font-size:12px;color:#9ca3af;margin-top:12px;margin-bottom:0">Financing shown at 20% annual interest over 60 months. 0% interest 12-month option available. $0 down — first payment starts month two.</p>
+  </div>
+</div>
+
+<!-- 4. TRUE COST -->
+<div class="sec">
+  <div class="sh"><span>📊</span><h2>True Cost of Ownership</h2></div>
+  <div class="sb">
+    <p>You purchased in June 2026 — barely a month in. Here is what the commitment looks like if nothing changes, combining your $182/month mortgage with maintenance fees growing at 8% annually:</p>
+    <table style="margin:14px 0">
+      <thead><tr><th>Timeframe</th><th>Resort Total</th><th>With Alpha</th><th style="color:var(--gold)">You Save</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;color:var(--navy)">1 Year</td><td style="color:var(--red);font-weight:700">$3,669</td><td style="color:#6b7280">$4,995</td><td style="color:#9ca3af">—</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">3 Years</td><td style="color:var(--red);font-weight:700">$11,200</td><td style="color:#6b7280">$4,995</td><td style="color:var(--green);font-weight:700">$6,205</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">5 Years</td><td style="color:var(--red);font-weight:700">$18,345</td><td style="color:#6b7280">$4,995</td><td style="color:var(--green);font-weight:700">$13,350</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">10 Years</td><td style="color:var(--red);font-weight:700">$43,400</td><td style="color:#6b7280">$4,995</td><td style="color:var(--green);font-weight:700">$38,405</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">30 Years</td><td style="color:var(--red);font-weight:700">$91,000+</td><td style="color:#6b7280">$4,995</td><td style="color:var(--green);font-weight:700">$86,000+</td></div></td></tr>
+      </tbody>
+    </table>
+    <div style="background:#fff8f0;border:1.5px solid #ea580c;border-radius:8px;padding:12px 14px;font-size:12px;color:#374151;line-height:1.6">
+      <strong style="color:#ea580c">Important:</strong> You purchased in June 2026 — you are still within your rescission window in many states. Alpha documents this as part of your consumer rights case.
+    </div>
+  </div>
+</div>
+
+<!-- 5. CONSUMER RIGHTS & VIOLATIONS -->
+<div class="sec">
+  <div class="sh"><span>⚖️</span><h2>Your Consumer Rights &amp; Documented Violations</h2></div>
+  <div class="sb">
+    <p>The following disclosures were legally required at the time of your purchase and were not made. John, you signed in June 2026 — these violations are fresh and fully documentable.</p>
+
+    <div class="rd">Right to Safety</div>
+    <div class="vcard">
+      <div class="vr">Right to Safety</div>
+      <div class="vd">You were not given adequate time to review the full contract before signing. Las Vegas timeshare presentations are designed to create urgency and prevent careful review of contract terms.</div>
+      <div class="v2"><div class="vs">TILA §128 · RESPA §4</div><div class="vf">$50,000</div></div>
+      <div class="vn">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="rd">Right to Choose</div>
+    <div class="vcard">
+      <div class="vr">Right to Choose</div>
+      <div class="vd">The complete absence of a viable resale market for Bluegreen Las Vegas was never disclosed. The same points can be found on eBay for $1 with no buyers — a fact material to any purchase decision.</div>
+      <div class="v2"><div class="vs">FTC Act §5 · State UDAP</div><div class="vf">$50,000</div></div>
+      <div class="vn">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="rd">Right to Be Heard</div>
+    <div class="vcard">
+      <div class="vr">Right to Be Heard</div>
+      <div class="vd">The perpetual nature of this obligation — and the fact that Bluegreen will not voluntarily accept the return of your timeshare — was not clearly disclosed before signing.</div>
+      <div class="v2"><div class="vs">State Contract Law · FL §721.07</div><div class="vf">$60,000</div></div>
+      <div class="vn">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="rd">Right to Be Informed</div>
+    <div class="vcard">
+      <div class="vr">Right to Be Informed</div>
+      <div class="vd">Your maintenance fee of $1,485/year will grow at approximately 8% annually. Over 10 years that becomes over $21,500 in maintenance fees alone — not counting your mortgage. This compounding growth rate was never disclosed.</div>
+      <div class="v2"><div class="vs">TILA §128 · State UDAP</div><div class="vf">$55,000</div></div>
+      <div class="vn">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+    <div class="vcard">
+      <div class="vr">Right to Be Informed</div>
+      <div class="vd">Your total financial commitment over the first 30 years — maintenance fees compounding at 8% plus full mortgage payments — was never disclosed before you signed in June 2026.</div>
+      <div class="v2"><div class="vs">TILA §128</div><div class="vf">$75,000</div></div>
+      <div class="vn">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="ftb">
+      <div><div class="tl">Total Documented Fine Exposure</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">5 violations · Bluegreen Las Vegas · Purchased June 2026</div></div>
+      <div class="tv">$290,000</div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. WHAT'S INCLUDED -->
+<div class="sec">
+  <div class="sh"><span>📦</span><h2>What's Included in Your Enrollment</h2></div>
+  <div class="sb">
+    <div class="gb">
+      <div class="gt">Certificate of Guarantee</div>
+      <div class="gv">100% Money-Back Guarantee</div>
+      <div class="gs">In writing. In your contract. Signed by Alpha Timeshare Consultants.<br><span style="color:#fff;display:block;margin-top:6px">No Favorable Outcome within 36 months — 100% refund of your service fee.</span></div>
+    </div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Written Money-Back Guarantee</div><div class="is">100% refund if no result within 36 months — in your signed contract.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Permanent Legal Termination</div><div class="is">A Mutual Release recorded at the county level removing your name from the deed permanently.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Elimination of Future Maintenance Obligations</div><div class="is">Once released, your $1,485/year maintenance fee obligation ends permanently.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Credit Protection &amp; Repair</div><div class="is">Monitoring from day one. Disputes filed on your behalf. Full submission to all three bureaus upon your Mutual Release.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Proof of Performance Documentation</div><div class="is">Documentation at every stage. Nothing informal.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Consumer Protection &amp; BBB Credibility</div><div class="is">41 years in business. BBB A+ verified. Every case handled in-house.</div></div></div>
+  </div>
+</div>
+
+<!-- 7. WHY ALPHA -->
+<div class="sec">
+  <div class="sh"><span>🏆</span><h2>Why Alpha — Our Track Record</h2></div>
+  <div class="sb">
+    <div class="st-row" style="margin-bottom:18px">
+      <div class="st"><div class="sv">41</div><div class="sl">Years</div></div>
+      <div class="st"><div class="sv">A+</div><div class="sl">BBB Rating</div></div>
+      <div class="st"><div class="sv">100%</div><div class="sl">In-House</div></div>
+      <div class="st"><div class="sv">$0</div><div class="sl">Down</div></div>
+    </div>
+    <div class="pl2"><div class="pn">01</div><div class="pb2"><div class="pt">Group Filings</div><div class="ps">We consolidate owners from the same resort into a single filing — creating documented patterns that give us negotiating power no individual has alone. Group participants are the only ones eligible for resort reimbursement.</div></div></div>
+    <div class="pl2"><div class="pn">02</div><div class="pb2"><div class="pt">Written Guarantee</div><div class="ps">In your contract, signed by us. If we do not get a Favorable Outcome within 36 months, we refund 100% of your service fee. No attorney puts that in writing.</div></div></div>
+    <div class="pl2"><div class="pn">03</div><div class="pb2"><div class="pt">41 Years</div><div class="ps">Four decades of industry experience. BBB A+ verified. Every case handled in-house — you reach the people actually working your file.</div></div></div>
+    <div class="pl2"><div class="pn">04</div><div class="pb2"><div class="pt">$0 Down</div><div class="ps">Nothing due upfront. First payment starts month two. If we cannot help you — you owe us nothing. We do not take cases we cannot win.</div></div></div>
+    <div class="rb2" style="margin:-20px;margin-top:18px;border-radius:0 0 8px 8px">
+      <div class="rn">Sebastian Short</div>
+      <div class="rt">Account Specialist &middot; Alpha Timeshare Consultants</div>
+      <div class="rc"><a href="tel:+18778483948">1 (877) 848-3948</a> Ext. 134 &nbsp;&middot;&nbsp; <a href="tel:+16892333259">1 (689) 233-3259</a><br><a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px 16px;font-size:11px;color:#9ca3af;line-height:1.8">
+  This document is confidential and prepared solely for John Young.<br>
+  Alpha Timeshare Consultants &middot; Orlando, FL &middot; (877) 848-3948<br>
+  This summary is for informational purposes and is not a binding offer until a signed agreement is executed.
+</div>
+</div>
+</body>
+</html>
