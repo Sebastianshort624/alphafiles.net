@@ -378,8 +378,31 @@ function buildSB(){
     return divider+"<a href='"+p.url+"' style='display:flex;align-items:center;gap:7px;padding:7px 10px;text-decoration:none;color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:12px;font-weight:500;border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'><span style='font-size:12px;font-weight:700;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 4px;min-width:20px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.45)")+"'>"+p.n+"</span><span style='flex:1'>"+p.ic+" "+p.lb+"</span></a>";
   }).join("");
 
-  var today=d&&d._todayAppt?d._todayAppt:"";
-  var fuAppt=d&&d._fuAppt?d._fuAppt:"";
+
+  // ── Client switcher dropdown ──────────────────────────────────────────
+  var allClients=_gA();
+  var clientSlugs=Object.keys(allClients).sort(function(a,b){
+    return (allClients[b]._updated||0)-(allClients[a]._updated||0);
+  });
+  var dropdownOpts=clientSlugs.map(function(s){
+    var c=allClients[s];
+    var name=((c.firstName||'')+(c.lastName?' '+c.lastName:'')).trim()||c.name||s;
+    return "<option value='"+s+"'"+(s===slug?' selected':'')+">"+name+"</option>";
+  }).join('');
+  if(clientSlugs.length>0){
+    ct=(ct||'')
+      +"<div style='padding:6px 12px;border-top:1px solid rgba(255,255,255,.1)'>"+
+      "<div style='font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.4);margin-bottom:4px'>Switch Client</div>"+
+      "<select onchange=\"window.swC(this.value)\" style='width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;font-size:12px;padding:5px 8px;font-family:Inter,sans-serif;cursor:pointer'>"+
+      "<option value=''>— all clients —</option>"+
+      dropdownOpts+
+      "</select>"+
+      "<a href='/clients/' style='display:block;text-align:center;margin-top:5px;font-size:10px;color:rgba(255,255,255,.4);text-decoration:none'>+ New Client / View All</a>"+
+      "</div>";
+  }
+  // ── End client switcher ───────────────────────────────────────────────
+
+  var today=d&&d._todayAppt?d._todayAppt:"";  var fuAppt=d&&d._fuAppt?d._fuAppt:"";
 
   var html="";
   html+="<a href='/home/' style='display:flex;align-items:center;gap:8px;padding:9px 14px;background:rgba(200,150,12,.15);border-bottom:1px solid rgba(200,150,12,.25);text-decoration:none'><span style='font-size:16px'>\ud83c\udfe0</span><span style='font-size:13px;font-weight:700;color:#C8960C'>Home / Dashboard</span></a>";
