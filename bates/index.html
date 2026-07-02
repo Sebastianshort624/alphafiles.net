@@ -2,284 +2,288 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Your Exit Program Summary — Alpha Timeshare Consultants</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Alpha Timeshare File — Jeremy & Jaclyn Bates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
-
-  body{margin:0;padding:0;background:#eef1f5;font-family:'Barlow Condensed',Arial,sans-serif;color:#1a1a1a}
-  .wrapper{max-width:660px;margin:0 auto;background:#ffffff}
-  .header{background:#1B2A4A;padding:34px 36px 26px;text-align:center}
-  .header h1{font-family:'Cormorant Garamond',Georgia,serif;color:#ffffff;font-size:26px;letter-spacing:1px;margin:0;font-weight:600}
-  .header .gold-line{width:70px;height:2px;background:#C8960C;margin:12px auto}
-  .header p{color:#C8960C;font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0}
-  .section{padding:30px 36px}
-  .greeting{font-size:17px;line-height:1.6;margin-bottom:6px}
-  .greeting strong{color:#1B2A4A}
-  .sub-greet{font-size:14px;color:#3d4450;margin-bottom:22px;line-height:1.6}
-
-  h2.subhead{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:21px;margin:30px 0 14px;border-bottom:2px solid #C8960C;padding-bottom:8px}
-
-  .resort-grid{display:flex;gap:14px;margin-bottom:6px}
-  .resort-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:16px}
-  .resort-card .rname{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;color:#1B2A4A;font-size:15px;margin-bottom:8px}
-  .resort-card .rrow{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #e6eaef}
-  .resort-card .rrow:last-child{border-bottom:none}
-  .resort-card .rrow span:last-child{font-weight:700;color:#1B2A4A}
-
-  .numbers-grid{display:flex;gap:14px;margin:18px 0 6px}
-  .num-card{flex:1;background:#f5f7fa;border:1px solid #dde3ea;border-radius:6px;padding:14px;text-align:center}
-  .num-card.total{background:#1B2A4A;border-color:#1B2A4A}
-  .num-card.total .label{color:#C8960C}
-  .num-card.total .value{color:#fff}
-  .num-card.total .sub{color:#dde5f0}
-  .num-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5a6472;margin-bottom:6px}
-  .num-card .value{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:#1B2A4A;font-weight:700}
-  .num-card .sub{font-size:12.5px;color:#3d4450;margin-top:4px;font-weight:600}
-
-  .total-bar{background:#1B2A4A;border-radius:6px;padding:20px 24px;text-align:center;margin:22px 0}
-  .total-bar .lbl{color:#C8960C;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
-  .total-bar .big{color:#ffffff;font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
-  .total-bar .sub{color:#dde5f0;font-size:13px;margin-top:6px}
-
-  .ct-cols{display:flex;gap:14px}
-  .ct-cols table.ct{flex:1}
-  table.ct{width:100%;border-collapse:collapse;margin:12px 0 6px;font-size:14px}
-  table.ct th{background:#1B2A4A;color:#fff;padding:9px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:right}
-  table.ct th:first-child{text-align:left}
-  table.ct td{padding:11px 12px;border-bottom:1px solid #e3e7ec;text-align:right}
-  table.ct td:first-child{text-align:left;font-weight:700;color:#1B2A4A}
-  table.ct tr.hl td{background:#fdf8ec;font-weight:700}
-
-  .vs-row{display:flex;gap:14px;margin:20px 0 8px;align-items:stretch}
-  .vs-card{flex:1;border:2px solid #ddd;border-radius:6px;padding:18px;text-align:center}
-  .vs-card.resort{background:#fdf0ef;border-color:#e8a09a}
-  .vs-card.alpha{background:#e8f5ee;border-color:#1a7a3c}
-  .vs-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#5a6472;margin-bottom:8px}
-  .vs-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700}
-  .vs-card.resort .vs-val{color:#c0392b}
-  .vs-card.alpha .vs-val{color:#1a7a3c}
-  .vs-sub{font-size:12px;color:#5a6472;margin-top:6px;font-weight:600}
-  .vs-mid{display:flex;align-items:center;font-weight:700;color:#aaa;font-size:13px}
-
-  .save-strip{background:#1a7a3c;color:#fff;border-radius:6px;padding:16px;text-align:center;margin-bottom:8px}
-  .save-strip .sl{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85}
-  .save-strip .sa{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700}
-
-  .bestvalue{margin-top:10px;text-align:center;border:2px solid #1B2A4A;border-radius:8px;padding:22px 20px}
-  .bestvalue .eyebrow{color:#C8960C;font-weight:700;letter-spacing:1.5px;font-size:12px;text-transform:uppercase}
-  .bestvalue .price{font-family:'Cormorant Garamond',Georgia,serif;color:#1B2A4A;font-size:38px;font-weight:700;margin:6px 0 4px}
-  .bestvalue .desc{color:#4a4f57;font-size:13px}
-  .sameascash{display:inline-block;background:#C8960C;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:5px 12px;border-radius:20px;margin-top:10px}
-
-  .fin-tabs table{width:100%;border-collapse:collapse}
-  .fin-tabs th{background:#f5f7fa;color:#1B2A4A;border:1px solid #dde3ea;padding:9px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
-  .fin-tabs td{border:1px solid #dde3ea;padding:9px;text-align:center;font-size:13px}
-  .fin-tabs .pct{font-size:11px;color:#5a6472;font-weight:600}
-  .fin-note{font-size:12px;color:#4a5260;margin-top:10px;line-height:1.5}
-
-  .lender-row{display:flex;gap:14px;margin-bottom:6px}
-  .lender-card{flex:1;border:2px solid #1B2A4A;border-radius:6px;padding:16px;text-align:center}
-  .lender-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
-  .lender-amt{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:700;color:#C8960C;margin-bottom:8px}
-  .lender-terms{font-size:11px;color:#4a5260;margin-bottom:12px;line-height:1.4;font-weight:500}
-  .lender-mo{border-top:1px dashed #dde3ea;padding-top:10px}
-  .lender-mo .lbl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:#5a6472;margin-bottom:3px;font-weight:700}
-  .lender-mo .amt{font-size:17px;font-weight:700;color:#1B2A4A}
-
-  .process-list{margin:10px 0 0;padding:0;list-style:none}
-  .process-list li{display:flex;gap:10px;font-size:14px;line-height:1.5;margin-bottom:10px}
-  .process-list .num{flex:0 0 22px;height:22px;border-radius:50%;background:#1B2A4A;color:#C8960C;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
-
-  .pullquote{margin:30px 0 0;border-left:4px solid #C8960C;padding:6px 0 6px 18px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;color:#1B2A4A;font-size:18px}
-
-  .signature{margin-top:28px;font-size:15px;line-height:1.6}
-  .signature .name{color:#1B2A4A;font-weight:700;font-size:16px}
-
-  .disclosure{background:#f5f7fa;padding:18px 36px 26px;font-size:11.5px;color:#5a6472;line-height:1.6}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
+.page{max-width:760px;margin:0 auto;padding:0 0 60px}
+.top-hdr{background:var(--navy);padding:28px 32px 20px;text-align:center}
+.top-hdr .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.top-hdr h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.top-hdr .sub{font-size:13px;color:rgba(255,255,255,.55)}
+.section{background:#fff;border-radius:10px;border:1px solid var(--border);margin:16px 16px 0;overflow:hidden}
+.section-hdr{background:var(--navy);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.section-hdr h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px}
+.section-body{padding:20px}
+.info-grid{display:grid;gap:0}
+.info-row{display:grid;grid-template-columns:160px 1fr;gap:0;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none}
+.info-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:10px 14px;background:#f9faf9}
+.info-val{font-size:14px;color:var(--navy);padding:10px 14px;font-weight:500}
+.resort-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.resort-card{background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:14px}
+.resort-card h3{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.rrow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+.rrow:last-child{border-bottom:none}
+.rrow .rl{color:#6b7280}
+.rrow .rv{font-weight:600;color:var(--navy)}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.stat-tile{background:var(--navy);border-radius:8px;padding:14px;text-align:center}
+.stat-tile .sv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.stat-tile .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.55);margin-top:4px}
+.quote-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.qc-box{border-radius:8px;padding:16px;text-align:center;border:2px solid}
+.qc-box.resort{border-color:#fca5a5;background:#fef2f2}
+.qc-box.alpha{border-color:#86efac;background:#f0fdf4}
+.qc-box .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px}
+.qc-box .qv{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700}
+.qc-box.resort .qv{color:var(--red)}
+.qc-box.alpha .qv{color:var(--green)}
+.save-bar{background:var(--navy);border-radius:8px;padding:14px;text-align:center;margin-bottom:14px}
+.save-bar .sv{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--gold)}
+.save-bar .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)}
+.payment-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pay-box{background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.pay-box .pl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px}
+.pay-box .pv{font-size:15px;font-weight:700;color:var(--navy)}
+.viol-card{border-left:4px solid var(--red);background:#fff;border:1px solid #fca5a5;border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px}
+.viol-right{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:4px}
+.viol-desc{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.viol-row2{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f3f4f6;flex-wrap:wrap;gap:6px}
+.viol-statute{font-size:11px;color:#6b7280;font-family:monospace}
+.viol-fine{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--red)}
+.viol-note{font-size:12px;color:#6b7280;font-style:italic;margin-top:8px;line-height:1.5;border-top:1px solid #f3f4f6;padding-top:8px}
+.fine-total-bar{background:var(--navy);border-radius:8px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.fine-total-bar .tl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)}
+.fine-total-bar .tv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.include-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.include-item:last-child{border-bottom:none}
+.include-check{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+.include-body .it{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.include-body .is{font-size:12px;color:#6b7280;line-height:1.5}
+.guarantee-box{background:var(--navy);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px}
+.guarantee-box .gt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.guarantee-box .gv{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:4px}
+.guarantee-box .gs{font-size:13px;color:rgba(255,255,255,.6)}
+.pillar{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.pillar:last-child{border-bottom:none}
+.pillar-num{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold);line-height:1;flex-shrink:0;width:36px}
+.pillar-body .pt{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.pillar-body .ps{font-size:13px;color:#374151;line-height:1.6}
+.rep-box{background:var(--navy);border-radius:0 0 8px 8px;padding:20px 24px;text-align:center}
+.rep-box .rn{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.rep-box .rt{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.rep-box .rc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8}
+.rep-box a{color:var(--gold);text-decoration:none}
+.right-divider{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--navy);margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--navy)}
+p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)}
+thead{background:var(--navy)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px}
+tr:last-child td{border-bottom:none}
 </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="page">
 
-  <div class="header">
-    <h1>ALPHA TIMESHARE CONSULTANTS</h1>
-    <div class="gold-line"></div>
-    <p>Your Exit Program Summary</p>
+<div class="top-hdr">
+  <div class="eyebrow">Alpha Timeshare Consultants</div>
+  <h1>Your Exit File</h1>
+  <div class="sub">Prepared for Jeremy &amp; Jaclyn Bates &nbsp;·&nbsp; Confidential</div>
+</div>
+
+<!-- 1. YOUR INFORMATION -->
+<div class="section">
+  <div class="section-hdr"><span>👤</span><h2>Your Information</h2></div>
+  <div class="section-body">
+    <div class="info-grid">
+      <div class="info-row"><div class="info-lbl">Clients</div><div class="info-val">Jeremy &amp; Jaclyn Bates</div></div>
+      <div class="info-row"><div class="info-lbl">Account Specialist</div><div class="info-val">Sebastian Short &nbsp;·&nbsp; Ext. 134</div></div>
+      <div class="info-row"><div class="info-lbl">Direct Line</div><div class="info-val">1 (877) 848-3948</div></div>
+    </div>
   </div>
+</div>
 
-  <div class="section">
-    <p class="greeting">Hi <strong>Jeremy &amp; Jaclyn</strong>,</p>
-    <p class="sub-greet">Here's a clean summary of where things stand with both of your Hilton Grand Vacations contracts and what your Alpha program looks like.</p>
+<!-- 2. RESORT & FINANCIAL SNAPSHOT -->
+<div class="section">
+  <div class="section-hdr"><span>🏨</span><h2>Your Resort &amp; Financial Snapshot</h2></div>
+  <div class="section-body">
+    <div class="resort-grid">
+      <div class="resort-card">
+        <h3>Resort 1 — HGV Las Vegas</h3>
+        <div class="rrow"><span class="rl">Purchased</span><span class="rv">Aug 2024</span></div>
+        <div class="rrow"><span class="rl">Balance Owed</span><span class="rv" style="color:var(--red)">$57,050</span></div>
+        <div class="rrow"><span class="rl">Mortgage</span><span class="rv">$941/mo</span></div>
+        <div class="rrow"><span class="rl">Annual MTF</span><span class="rv">$5,253/yr</span></div>
+        <div class="rrow"><span class="rl">Total/Month</span><span class="rv" style="color:var(--red)">$1,378/mo</span></div>
+      </div>
+      <div class="resort-card">
+        <h3>Resort 2 — HGV Hawaii (MAX)</h3>
+        <div class="rrow"><span class="rl">Purchased</span><span class="rv">Nov 2025</span></div>
+        <div class="rrow"><span class="rl">Balance Owed</span><span class="rv" style="color:var(--red)">$49,704</span></div>
+        <div class="rrow"><span class="rl">Mortgage</span><span class="rv">$602/mo</span></div>
+        <div class="rrow"><span class="rl">Annual MTF</span><span class="rv">$3,715/yr</span></div>
+        <div class="rrow"><span class="rl">Total/Month</span><span class="rv" style="color:var(--red)">$911/mo</span></div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-tile"><div class="sv">$2,290</div><div class="sl">Combined Monthly</div></div>
+      <div class="stat-tile"><div class="sv">$27,485</div><div class="sl">Combined Yearly</div></div>
+      <div class="stat-tile"><div class="sv">$145,200</div><div class="sl">5-Year Cost</div></div>
+      <div class="stat-tile"><div class="sv">$106,754</div><div class="sl">Total Balances</div></div>
+    </div>
+  </div>
+</div>
 
-    <h2 class="subhead">Resort 1 — Hilton Grand Vacations Las Vegas</h2>
-    <div class="resort-card" style="margin-bottom:14px">
-      <div class="rrow"><span>Purchased</span><span>Aug 2024</span></div>
-      <div class="rrow"><span>Balance Owed</span><span>$57,050</span></div>
-      <div class="rrow"><span>Status</span><span>Current</span></div>
-    </div>
-    <div class="numbers-grid">
-      <div class="num-card">
-        <div class="label">Mortgage Payment</div>
-        <div class="value">$11,292/yr</div>
-        <div class="sub">$941/mo</div>
+<!-- 3. YOUR QUOTE -->
+<div class="section">
+  <div class="section-hdr"><span>📄</span><h2>Your Alpha Quote</h2></div>
+  <div class="section-body">
+    <div class="quote-compare">
+      <div class="qc-box resort">
+        <div class="ql">Resort — 5-Year Cost</div>
+        <div class="qv">$145,200</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:4px">Both resorts combined</div>
       </div>
-      <div class="num-card">
-        <div class="label">Maintenance Fees</div>
-        <div class="value">$5,253.60/yr</div>
-        <div class="sub">$437.80/mo</div>
-      </div>
-      <div class="num-card total">
-        <div class="label">Total — This Resort</div>
-        <div class="value">$16,545.60/yr</div>
-        <div class="sub">$1,378.80/mo</div>
+      <div class="qc-box alpha">
+        <div class="ql">Alpha — Exit Fee</div>
+        <div class="qv">$20,000</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:4px">Both resorts — one fee</div>
       </div>
     </div>
-
-    <h2 class="subhead">Resort 2 — Hilton Grand Vacations Hawaii (HGV MAX)</h2>
-    <div class="resort-card" style="margin-bottom:14px">
-      <div class="rrow"><span>Purchased</span><span>Nov 2025</span></div>
-      <div class="rrow"><span>Balance Owed</span><span>$49,704</span></div>
-      <div class="rrow"><span>Status</span><span>Current</span></div>
-    </div>
-    <div class="numbers-grid">
-      <div class="num-card">
-        <div class="label">Mortgage Payment</div>
-        <div class="value">$7,224/yr</div>
-        <div class="sub">$602/mo</div>
-      </div>
-      <div class="num-card">
-        <div class="label">Maintenance Fees</div>
-        <div class="value">$3,715.86/yr</div>
-        <div class="sub">$309.66/mo</div>
-      </div>
-      <div class="num-card total">
-        <div class="label">Total — This Resort</div>
-        <div class="value">$10,939.86/yr</div>
-        <div class="sub">$911.66/mo</div>
-      </div>
-    </div>
-
-    <h2 class="subhead">Combined Totals — Both Resorts</h2>
-    <div class="numbers-grid">
-      <div class="num-card">
-        <div class="label">Mortgage Payments</div>
-        <div class="value">$18,516/yr</div>
-        <div class="sub">$1,543/mo</div>
-      </div>
-      <div class="num-card">
-        <div class="label">Maintenance Fees</div>
-        <div class="value">$8,969.46/yr</div>
-        <div class="sub">$747/mo</div>
-      </div>
-    </div>
-
-    <div class="total-bar">
-      <div class="lbl">Combined Monthly &amp; Yearly Obligation</div>
-      <div class="big">$27,485.46/yr</div>
-      <div class="sub" style="font-size:14px;margin-top:4px">$2,290.46/mo equivalent</div>
-      <div class="sub" style="margin-top:8px">Across both Hilton contracts &mdash; before any future increases</div>
-    </div>
-
-    <h2 class="subhead">Resort Cost Over Time</h2>
-    <div class="ct-cols">
-      <table class="ct">
-        <tr><th>Years</th><th>Combined Cost</th></tr>
-        <tr><td>1 Year</td><td>$27,485</td></tr>
-        <tr><td>3 Years</td><td>$84,666</td></tr>
-        <tr class="hl"><td>5 Years</td><td>$145,200</td></tr>
-      </table>
-      <table class="ct">
-        <tr><th>Years</th><th>Combined Cost</th></tr>
-        <tr><td>10 Years</td><td>$315,097</td></tr>
-        <tr><td>20 Years</td><td>$780,780</td></tr>
-        <tr class="hl"><td>30 Years</td><td>$1,571,569</td></tr>
-      </table>
-    </div>
-    <p style="font-size:12px;color:#4a5260;margin-top:4px;font-weight:500">Maintenance fees are projected to grow at an average <strong>8% per year</strong> &mdash; mortgage payments shown flat. The real number could be higher or lower depending on your resort's actual increases.</p>
-
-    <h2 class="subhead">Resort Cost vs. Alpha Program</h2>
-    <div class="vs-row">
-      <div class="vs-card resort">
-        <div class="vs-lbl">Resort &mdash; 5-Year Cost</div>
-        <div class="vs-val">$145,200</div>
-        <div class="vs-sub">Keeps going every year after</div>
-      </div>
-      <div class="vs-card alpha">
-        <div class="vs-lbl">Alpha &mdash; Exit Program</div>
-        <div class="vs-val">$20,000</div>
-        <div class="vs-sub">One time &mdash; then $0 forever</div>
-      </div>
-    </div>
-    <div class="save-strip">
+    <div class="save-bar">
       <div class="sl">You Save Over 5 Years</div>
-      <div class="sa">$125,200</div>
+      <div class="sv">$125,200</div>
     </div>
+    <div class="payment-grid">
+      <div class="pay-box"><div class="pl">Current Monthly</div><div class="pv" style="color:var(--red)">$2,290</div></div>
+      <div class="pay-box"><div class="pl">Alpha Monthly</div><div class="pv">$529/mo</div><div style="font-size:10px;color:#9ca3af;margin-top:2px">60-month plan</div></div>
+      <div class="pay-box"><div class="pl">Monthly Savings</div><div class="pv" style="color:var(--green)">$1,761</div></div>
+    </div>
+  </div>
+</div>
 
-    <h2 class="subhead">Your Program Cost</h2>
-    <table class="ct" style="margin-bottom:16px">
-      <tr><th>Item</th><th>Amount</th></tr>
-      <tr><td>Original Alpha Fee &mdash; <span style="font-weight:400;color:#5a6472">one year's combined mortgage &amp; maintenance fees</span></td><td>$27,485.46</td></tr>
-      <tr><td>Discount</td><td style="color:#1a7a3c;font-weight:700">&minus;$7,485.46</td></tr>
-      <tr class="hl"><td>Your Program Cost</td><td>$20,000.00</td></tr>
+<!-- 4. TRUE COST -->
+<div class="section">
+  <div class="section-hdr"><span>📊</span><h2>True Cost of Ownership</h2></div>
+  <div class="section-body">
+    <p>Combining both Hilton contracts — mortgage payments plus maintenance fees growing at the industry-documented average of 8% annually:</p>
+    <table style="margin:14px 0">
+      <thead><tr><th>Timeframe</th><th>Resort Total</th><th>With Alpha</th><th style="color:var(--gold)">You Save</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;color:var(--navy)">1 Year</td><td style="color:var(--red);font-weight:700">$27,485</td><td style="color:#6b7280">$20,000</td><td style="color:var(--green);font-weight:700">$7,485</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">3 Years</td><td style="color:var(--red);font-weight:700">$84,666</td><td style="color:#6b7280">$20,000</td><td style="color:var(--green);font-weight:700">$64,666</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">5 Years</td><td style="color:var(--red);font-weight:700">$145,200</td><td style="color:#6b7280">$20,000</td><td style="color:var(--green);font-weight:700">$125,200</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">10 Years</td><td style="color:var(--red);font-weight:700">$284,700</td><td style="color:#6b7280">$20,000</td><td style="color:var(--green);font-weight:700">$264,700</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">30 Years</td><td style="color:var(--red);font-weight:700">$852,000+</td><td style="color:#6b7280">$20,000</td><td style="color:var(--green);font-weight:700">$832,000+</td></tr>
+      </tbody>
     </table>
-    <p style="font-size:12px;color:#4a5260;margin-top:-8px;margin-bottom:16px;font-weight:500">Your discount brings that down to your final program cost below.</p>
-    <div class="bestvalue">
-      <div class="eyebrow">Total Program Cost</div>
-      <div class="price">$20,000</div>
-      <div class="desc">Covers both the Las Vegas and Hawaii contracts under one filing.</div>
-      <div class="sameascash">Same-As-Cash if Paid Within 90 Days</div>
-    </div>
-
-    <div class="fin-tabs">
-      <h2 class="subhead">Optional — Select a Payment Term</h2>
-      <p class="fin-note" style="background:#fff8e8;border:1px solid #C8960C;color:#946f00;padding:10px 14px;border-radius:4px;text-align:center;margin-top:0">This service fee is over $15,000 &mdash; it's split across two lending partners below.</p>
-
-      <div class="lender-row">
-        <div class="lender-card">
-          <div class="lender-title">Lender 1 &mdash; $15,000 Cap</div>
-          <div class="lender-amt">$15,000</div>
-          <div class="lender-terms">12 Mo &mdash; 0% Interest &nbsp;&middot;&nbsp; 24&ndash;60 Mo &mdash; 20% Annual</div>
-          <div class="lender-mo"><span class="lbl">Monthly Payment (60 Mo)</span><span class="amt">$397/mo</span></div>
-        </div>
-        <div class="lender-card">
-          <div class="lender-title">Lender 2 &mdash; $13,000 Cap</div>
-          <div class="lender-amt">$5,000</div>
-          <div class="lender-terms">12 Mo &mdash; 0% Interest &nbsp;&middot;&nbsp; 24&ndash;36 Mo &mdash; 20% Annual</div>
-          <div class="lender-mo"><span class="lbl">Monthly Payment (36 Mo)</span><span class="amt">$186/mo</span></div>
-        </div>
-      </div>
-
-      <div class="total-bar" style="margin-top:14px">
-        <div class="lbl">Total Monthly Payment — Alpha Fee</div>
-        <div class="big">$583/mo</div>
-        <div class="sub">Lender 1 $397/mo (60 Mo) + Lender 2 $186/mo (36 Mo)</div>
-      </div>
-
-      <p class="fin-note">Lender 1 offers terms up to 60 months. Lender 2 is capped at a 36-month maximum term. Both offer 0% interest if paid in full within 12 months; longer terms are financed at 20% annual.</p>
-    </div>
-
-    <h2 class="subhead">What Happens Next</h2>
-    <ul class="process-list">
-      <li><span class="num">1</span><span>Your file moves into contracting &mdash; verification is already underway with our team.</span></li>
-      <li><span class="num">2</span><span>Once verified, we begin the filing process for both the Las Vegas and Hawaii contracts together.</span></li>
-      <li><span class="num">3</span><span>You stop paying the resort directly once your exit filing is active &mdash; we'll walk you through exactly when.</span></li>
-      <li><span class="num">4</span><span>You're notified in writing once both contracts are fully released.</span></li>
-    </ul>
-
-    <p class="pullquote">"Two contracts, one filing, one price &mdash; $20,000 closes out $145,200 of future resort cost over the next five years alone."</p>
-
-    <div class="signature">
-      Best,<br>
-      <span class="name">Sebastian Short</span><br>
-      Alpha Timeshare Consultants<br>
-      Ext. 134 &middot; (877) 848-3948<br>
-      Sebastian@AlphaTimeshareConsultants.com
+    <div style="background:#fff8f0;border:1.5px solid #ea580c;border-radius:8px;padding:12px 14px;font-size:12px;color:#374151;line-height:1.6">
+      <strong style="color:#ea580c">ARDA Industry Data:</strong> Average maintenance fee rose 102% from 2010–2024. At 8% annual growth, your combined MTF of $8,969/yr becomes $19,253/yr in just 10 years — before mortgage is factored in.
     </div>
   </div>
+</div>
 
-  <div class="disclosure">
-    This summary reflects the information on file for Jeremy &amp; Jaclyn Bates as of Jun 25, 2026 and is provided for informational purposes regarding your timeshare exit program enrollment. It is not a binding offer or guarantee of resort response time. Alpha Timeshare Consultants is not a law firm and does not provide legal advice. Pricing and financing terms are subject to the signed agreement on file.
+<!-- 5. CONSUMER RIGHTS & VIOLATIONS -->
+<div class="section">
+  <div class="section-hdr"><span>⚖️</span><h2>Your Consumer Rights &amp; Documented Violations</h2></div>
+  <div class="section-body">
+    <p>The following disclosures were legally required at the time of purchase and were not made. Each represents documented financial exposure for Hilton Grand Vacations — factored into your negotiated release.</p>
+
+    <div class="right-divider">Right to Safety</div>
+    <div class="viol-card">
+      <div class="viol-right">Right to Safety</div>
+      <div class="viol-desc">You were not given adequate time to review two separate contracts before signing. High-pressure presentation environments prevented fully informed, voluntary decision-making on both purchases.</div>
+      <div class="viol-row2"><div class="viol-statute">TILA §128 · FTC Act §5</div><div class="viol-fine">$50,000</div></div>
+      <div class="viol-note">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="right-divider">Right to Choose</div>
+    <div class="viol-card">
+      <div class="viol-right">Right to Choose</div>
+      <div class="viol-desc">The complete absence of a viable resale market for both Hilton Grand Vacations properties was never disclosed. The same points can be purchased on eBay for $1 with no buyers.</div>
+      <div class="viol-row2"><div class="viol-statute">FTC Act §5 · State UDAP</div><div class="viol-fine">$50,000</div></div>
+      <div class="viol-note">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="right-divider">Right to Be Heard</div>
+    <div class="viol-card">
+      <div class="viol-right">Right to Be Heard</div>
+      <div class="viol-desc">The perpetual and irrevocable nature of both timeshare obligations — and the fact that Hilton Grand Vacations would not voluntarily accept the return of either property — was not clearly disclosed before signing.</div>
+      <div class="viol-row2"><div class="viol-statute">State Contract Law · FL §721.07</div><div class="viol-fine">$60,000</div></div>
+      <div class="viol-note">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="right-divider">Right to Be Informed</div>
+    <div class="viol-card">
+      <div class="viol-right">Right to Be Informed</div>
+      <div class="viol-desc">The total financing cost of both purchases at their respective interest rates — including total amounts paid over the full loan terms — was not clearly disclosed prior to signing either financing agreement.</div>
+      <div class="viol-row2"><div class="viol-statute">TILA 15 U.S.C. §1635 · Reg Z §226.23</div><div class="viol-fine">$75,000 × 2</div></div>
+      <div class="viol-note">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+    <div class="viol-card">
+      <div class="viol-right">Right to Be Informed</div>
+      <div class="viol-desc">Your total financial commitment over the first 30 years across both contracts — maintenance fees compounding at 8% annually plus full mortgage obligations — was never disclosed before signing either agreement.</div>
+      <div class="viol-row2"><div class="viol-statute">TILA §128</div><div class="viol-fine">$75,000 × 2</div></div>
+      <div class="viol-note">The resort takes this financial exposure into consideration when negotiating your release and possible compensation.</div>
+    </div>
+
+    <div class="fine-total-bar">
+      <div><div class="tl">Total Documented Fine Exposure</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">Across both Hilton contracts — 5 violation categories</div></div>
+      <div class="tv">$385,000</div>
+    </div>
   </div>
+</div>
+
+<!-- 6. WHAT'S INCLUDED -->
+<div class="section">
+  <div class="section-hdr"><span>📦</span><h2>What's Included in Your Enrollment</h2></div>
+  <div class="section-body">
+    <div class="guarantee-box">
+      <div class="gt">Certificate of Guarantee</div>
+      <div class="gv">100% Money-Back Guarantee</div>
+      <div class="gs">In writing. In your contract. Signed by Alpha Timeshare Consultants.<br><span style="color:#fff;margin-top:6px;display:block">If we do not obtain a Favorable Outcome within 36 months — full refund of your service fee.</span></div>
+    </div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Written Money-Back Guarantee</div><div class="is">100% refund if no result within 36 months — in your signed contract, not a verbal promise.</div></div></div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Permanent Legal Termination — Both Resorts</div><div class="is">Mutual Releases recorded at the county level removing both deeds permanently. Not transfers. Legal exits.</div></div></div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Elimination of Future MTF Obligations</div><div class="is">Once released, your combined $8,969/yr maintenance fee obligation ends permanently — forever.</div></div></div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Credit Protection &amp; Repair</div><div class="is">Monitoring from day one. Disputes filed on your behalf. Full bureau submission upon each Mutual Release.</div></div></div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Proof of Performance Documentation</div><div class="is">Documentation at every stage for both resorts. Nothing informal.</div></div></div>
+    <div class="include-item"><div class="include-check">✓</div><div class="include-body"><div class="it">Consumer Protection &amp; BBB Credibility</div><div class="is">41 years in business. BBB A+ verified. Every case in-house.</div></div></div>
+  </div>
+</div>
+
+<!-- 7. WHY ALPHA -->
+<div class="section">
+  <div class="section-hdr"><span>🏆</span><h2>Why Alpha — Our Track Record</h2></div>
+  <div class="section-body">
+    <div class="stat-row" style="margin-bottom:18px">
+      <div class="stat-tile"><div class="sv">41</div><div class="sl">Years</div></div>
+      <div class="stat-tile"><div class="sv">A+</div><div class="sl">BBB Rating</div></div>
+      <div class="stat-tile"><div class="sv">100%</div><div class="sl">In-House</div></div>
+      <div class="stat-tile"><div class="sv">$0</div><div class="sl">Down</div></div>
+    </div>
+    <div class="pillar"><div class="pillar-num">01</div><div class="pillar-body"><div class="pt">Group Filings</div><div class="ps">We consolidate owners from the same resort into a single filing, turning individual cases into a documented behavioral pattern. Group participants are the only ones eligible for resort reimbursement.</div></div></div>
+    <div class="pillar"><div class="pillar-num">02</div><div class="pillar-body"><div class="pt">Written Guarantee</div><div class="ps">In your contract, signed by us. If we do not get a Favorable Outcome within 36 months, we refund 100% of your service fee. No attorney puts that in writing.</div></div></div>
+    <div class="pillar"><div class="pillar-num">03</div><div class="pillar-body"><div class="pt">41 Years</div><div class="ps">Four decades of resort industry changes. BBB A+ verified. Every case handled in-house — you reach the people actually working your file.</div></div></div>
+    <div class="pillar"><div class="pillar-num">04</div><div class="pillar-body"><div class="pt">$0 Down</div><div class="ps">Nothing due upfront. First payment starts month two. If we cannot help — you owe us nothing. We do not take cases we cannot win.</div></div></div>
+    <div class="rep-box" style="margin:-20px;margin-top:18px;border-radius:0 0 8px 8px">
+      <div class="rn">Sebastian Short</div>
+      <div class="rt">Account Specialist · Alpha Timeshare Consultants</div>
+      <div class="rc"><a href="tel:+18778483948">1 (877) 848-3948</a> Ext. 134 &nbsp;·&nbsp; <a href="tel:+16892333259">1 (689) 233-3259</a><br><a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px 16px;font-size:11px;color:#9ca3af;line-height:1.8">
+  This document is confidential and prepared solely for Jeremy &amp; Jaclyn Bates.<br>
+  Alpha Timeshare Consultants · Orlando, FL · (877) 848-3948 · AlphaTimeshareConsultants.com<br>
+  This summary is for informational purposes and is not a binding offer until a signed agreement is executed.
+</div>
 
 </div>
 </body>
