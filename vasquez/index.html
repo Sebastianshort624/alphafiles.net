@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Su Archivo Alpha — Conrado Vasquez</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}
+.page{max-width:760px;margin:0 auto;padding:0 0 60px}
+.top-hdr{background:var(--navy);padding:28px 32px 20px;text-align:center}
+.top-hdr .ey{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.top-hdr h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.top-hdr .sub{font-size:13px;color:rgba(255,255,255,.55)}
+.sec{background:#fff;border-radius:10px;border:1px solid var(--border);margin:16px 16px 0;overflow:hidden}
+.sh{background:var(--navy);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.sh h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px}
+.sb{padding:20px}
+.ir{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--border)}
+.ir:last-child{border-bottom:none}
+.il{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:10px 14px;background:#f9faf9}
+.iv{font-size:14px;color:var(--navy);padding:10px 14px;font-weight:500}
+.iv a{color:var(--navy)}
+.st-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.st{background:var(--navy);border-radius:8px;padding:14px;text-align:center}
+.st .sv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1}
+.st .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.55);margin-top:4px}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)}
+thead{background:var(--navy)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+tr:last-child td{border-bottom:none}
+.vcard{border-left:4px solid var(--red);border:1px solid #fca5a5;border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px}
+.vr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:4px}
+.vd{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.v2{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f3f4f6;flex-wrap:wrap;gap:6px}
+.vs2{font-size:11px;color:#6b7280;font-family:monospace}
+.vf{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--red)}
+.vn{font-size:12px;color:#6b7280;font-style:italic;margin-top:8px;line-height:1.5;border-top:1px solid #f3f4f6;padding-top:8px}
+.ftb{background:var(--navy);border-radius:8px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.ftb .tl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)}
+.ftb .tv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.ii{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ii:last-child{border-bottom:none}
+.ic{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:1px}
+.ib .it{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.ib .is{font-size:12px;color:#6b7280;line-height:1.5}
+.gb{background:var(--navy);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px}
+.gb .gt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.gb .gv{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.gb .gs{font-size:13px;color:rgba(255,255,255,.6)}
+.pl2{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.pl2:last-child{border-bottom:none}
+.pn{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold);line-height:1;flex-shrink:0;width:36px}
+.pb2 .pt{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.pb2 .ps{font-size:13px;color:#374151;line-height:1.6}
+.rb2{background:var(--navy);border-radius:0 0 8px 8px;padding:20px 24px;text-align:center}
+.rb2 .rn{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.rb2 .rt{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.rb2 .rc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8}
+.rb2 a{color:var(--gold);text-decoration:none}
+.rd{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--navy);margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--navy)}
+p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}
+/* Quote card */
+.qc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.qb{border-radius:8px;padding:16px;text-align:center;border:2px solid}
+.qb.r{border-color:#fca5a5;background:#fef2f2}.qb.a{border-color:#86efac;background:#f0fdf4}
+.qb .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px}
+.qb .qv{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700}
+.qb.r .qv{color:var(--red)}.qb.a .qv{color:var(--green)}
+.down-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.down-box .dl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#16A34A;margin-bottom:8px}
+.down-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.down-item{text-align:center;background:#fff;border-radius:6px;padding:10px}
+.down-item .dv{font-size:16px;font-weight:800;color:var(--navy)}
+.down-item .dlab{font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.disc-block{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 14px;margin-bottom:12px}
+.disc-block .dt{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#16A34A;margin-bottom:8px}
+.disc-row2{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px}
+.disc-row2:last-child{border-bottom:none}
+.disc-final2{display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,0,0,.1)}
+.disc-orig2{font-size:16px;color:#9ca3af;text-decoration:line-through}
+.disc-net2{font-size:22px;font-weight:800;color:var(--green)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top-hdr">
+  <div class="ey">Alpha Timeshare Consultants</div>
+  <h1>Su Archivo de Salida</h1>
+  <div class="sub">Preparado para Conrado Vasquez &nbsp;&middot;&nbsp; Confidencial</div>
+</div>
+
+<!-- 1. INFORMACIÓN -->
+<div class="sec">
+  <div class="sh"><span>👤</span><h2>Su Información</h2></div>
+  <div class="sb">
+    <div class="ir"><div class="il">Cliente</div><div class="iv">Conrado Vasquez</div></div>
+    <div class="ir"><div class="il">Especialista</div><div class="iv">Sebastian Short &nbsp;&middot;&nbsp; Ext. 134</div></div>
+    <div class="ir"><div class="il">Línea Directa</div><div class="iv">1 (877) 848-3948</div></div>
+  </div>
+</div>
+
+<!-- 2. RESORT & FINANCIALS -->
+<div class="sec">
+  <div class="sh"><span>🏨</span><h2>Su Resort y Resumen Financiero</h2></div>
+  <div class="sb">
+    <div class="ir"><div class="il">Resort</div><div class="iv"><strong>Villa de Palmar</strong></div></div>
+    <div class="ir"><div class="il">Hipoteca Mensual</div><div class="iv">$ — / mes</div></div>
+    <div class="ir"><div class="il">Cuota Mant. Anual</div><div class="iv">$ — / año</div></div>
+    <div class="st-row">
+      <div class="st"><div class="sv">$417</div><div class="sl">Mensual Total</div></div>
+      <div class="st"><div class="sv">$5,002</div><div class="sl">Anual Total</div></div>
+      <div class="st"><div class="sv">$25,010</div><div class="sl">Costo a 5 Años</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. COTIZACIÓN — hidden -->
+<div style="text-align:center;padding:20px 16px 4px">
+  <button onclick="document.getElementById('quote-sec').style.display='block';this.style.display='none'" style="background:#C8960C;color:#fff;border:none;border-radius:8px;padding:14px 48px;font-size:16px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:.5px;box-shadow:0 4px 16px rgba(200,150,12,.35)">📄 COTIZACIÓN</button>
+</div>
+<div class="sec" id="quote-sec" style="display:none">
+  <div class="sh"><span>📄</span><h2>Su Cotización Alpha</h2></div>
+  <div class="sb">
+
+    <!-- Discount block -->
+    <div class="disc-block">
+      <div class="dt">Descuentos Aplicados</div>
+      <div class="disc-row2"><span>Descuento 2</span><span style="color:var(--green);font-weight:700">−$2,100</span></div>
+      <div class="disc-row2" style="font-weight:700"><span>Ahorro Total</span><span style="color:var(--green)">−$2,100</span></div>
+      <div class="disc-final2">
+        <span class="disc-orig2">$5,595</span>
+        <span style="font-size:18px;color:#9ca3af">→</span>
+        <span class="disc-net2">$3,495</span>
+      </div>
+    </div>
+
+    <!-- Down payment box -->
+    <div class="down-box">
+      <div class="dl">Pago Inicial — Hoy</div>
+      <div class="down-grid">
+        <div class="down-item">
+          <div class="dv" style="color:var(--gold)">$500</div>
+          <div class="dlab">Pago Hoy</div>
+        </div>
+        <div class="down-item">
+          <div class="dv">$2,995</div>
+          <div class="dlab">Saldo Financiado</div>
+        </div>
+        <div class="down-item">
+          <div class="dv" style="color:var(--green)">$250/mo</div>
+          <div class="dlab">Mensual (12 meses 0%)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qc">
+      <div class="qb r"><div class="ql">Resort — Costo a 5 Años</div><div class="qv">$25,010</div><div style="font-size:11px;color:#9ca3af;margin-top:4px">Si no hace nada</div></div>
+      <div class="qb a"><div class="ql">Alpha — Tarifa de Salida</div><div class="qv">$3,495</div><div style="font-size:11px;color:#9ca3af;margin-top:4px">Tarifa única de servicio</div></div>
+    </div>
+    <div style="background:var(--navy);border-radius:8px;padding:14px;text-align:center;margin-bottom:14px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.55)">Usted Ahorra en 5 Años</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--gold)">$21,515</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px">Pagos Actuales</div>
+        <div style="font-size:15px;font-weight:700;color:var(--red)">$417/mo</div>
+      </div>
+      <div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px">Plan Alpha (12 meses)</div>
+        <div style="font-size:15px;font-weight:700;color:var(--navy)">$250/mo</div>
+        <div style="font-size:10px;color:#9ca3af;margin-top:2px">0% interés · Pago inicial: $500</div>
+      </div>
+      <div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;margin-bottom:4px">Ahorro Mensual</div>
+        <div style="font-size:15px;font-weight:700;color:var(--green)">$167/mo</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#9ca3af;margin-top:12px;margin-bottom:0">Plan de 12 meses al 0% de interés. Pago inicial de $500 hoy. El saldo de $2,995 se divide en 12 pagos de $250.</p>
+  </div>
+</div>
+
+<!-- 4. COSTO VERDADERO -->
+<div class="sec">
+  <div class="sh"><span>📊</span><h2>Costo Verdadero de Propiedad</h2></div>
+  <div class="sb">
+    <p>Su cuota de mantenimiento crece aproximadamente un <strong>8% anual</strong> — un promedio documentado por la industria. Aquí está lo que le costará continuar con este resort:</p>
+    <table style="margin:14px 0">
+      <thead><tr><th>Período</th><th>Costo Resort</th><th>Con Alpha</th><th style="color:var(--gold)">Usted Ahorra</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;color:var(--navy)">1 Año</td><td style="color:var(--red);font-weight:700">$5,002</td><td style="color:#6b7280">$3,495</td><td style="color:var(--green);font-weight:700">$1,507</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">3 Años</td><td style="color:var(--red);font-weight:700">$15,300</td><td style="color:#6b7280">$3,495</td><td style="color:var(--green);font-weight:700">$11,805</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">5 Años</td><td style="color:var(--red);font-weight:700">$25,010</td><td style="color:#6b7280">$3,495</td><td style="color:var(--green);font-weight:700">$21,515</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">10 Años</td><td style="color:var(--red);font-weight:700">$52,000+</td><td style="color:#6b7280">$3,495</td><td style="color:var(--green);font-weight:700">$48,505+</td></tr>
+        <tr><td style="font-weight:600;color:var(--navy)">30 Años</td><td style="color:var(--red);font-weight:700">$210,000+</td><td style="color:#6b7280">$3,495</td><td style="color:var(--green);font-weight:700">$206,000+</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 5. DERECHOS DEL CONSUMIDOR -->
+<div class="sec">
+  <div class="sh"><span>⚖️</span><h2>Sus Derechos del Consumidor y Violaciones Documentadas</h2></div>
+  <div class="sb">
+    <p>Las siguientes divulgaciones eran legalmente requeridas al momento de su compra y no se realizaron. Cada falla representa una exposición financiera documentada para Villa de Palmar.</p>
+
+    <div class="rd">Derecho a la Seguridad</div>
+    <div class="vcard">
+      <div class="vr">Derecho a la Seguridad</div>
+      <div class="vd">No se le dio tiempo adecuado para revisar el contrato completo antes de firmarlo. Las presentaciones de tiempo compartido en México están diseñadas para crear urgencia e impedir una revisión cuidadosa.</div>
+      <div class="v2"><div class="vs2">TILA §128 · FTC Act §5</div><div class="vf">$50,000</div></div>
+      <div class="vn">El resort considera esta exposición financiera al negociar su liberación y posible compensación.</div>
+    </div>
+
+    <div class="rd">Derecho a Elegir</div>
+    <div class="vcard">
+      <div class="vr">Derecho a Elegir</div>
+      <div class="vd">La completa ausencia de un mercado de reventa viable para Villa de Palmar nunca fue divulgada. Este hecho es material para cualquier decisión de compra.</div>
+      <div class="v2"><div class="vs2">FTC Act §5 · UDAP Estatal</div><div class="vf">$50,000</div></div>
+      <div class="vn">El resort considera esta exposición financiera al negociar su liberación y posible compensación.</div>
+    </div>
+
+    <div class="rd">Derecho a Ser Escuchado</div>
+    <div class="vcard">
+      <div class="vr">Derecho a Ser Escuchado</div>
+      <div class="vd">La naturaleza perpetua e irrevocable de esta obligación — y el hecho de que Villa de Palmar no aceptará voluntariamente la devolución de su propiedad — no fue divulgada claramente antes de firmar.</div>
+      <div class="v2"><div class="vs2">Ley de Contratos · FL §721.07</div><div class="vf">$60,000</div></div>
+      <div class="vn">El resort considera esta exposición financiera al negociar su liberación y posible compensación.</div>
+    </div>
+
+    <div class="rd">Derecho a Ser Informado</div>
+    <div class="vcard">
+      <div class="vr">Derecho a Ser Informado</div>
+      <div class="vd">Su obligación financiera total durante los primeros 30 años de propiedad — cuotas de mantenimiento compuestas al 8% anual más pagos de hipoteca — nunca fue divulgada antes de firmar.</div>
+      <div class="v2"><div class="vs2">TILA §128</div><div class="vf">$75,000</div></div>
+      <div class="vn">El resort considera esta exposición financiera al negociar su liberación y posible compensación.</div>
+    </div>
+
+    <div class="ftb">
+      <div><div class="tl">Exposición Total Documentada</div><div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">4 violaciones · Villa de Palmar</div></div>
+      <div class="tv">$235,000</div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. QUÉ INCLUYE -->
+<div class="sec">
+  <div class="sh"><span>📦</span><h2>Qué Incluye Su Inscripción</h2></div>
+  <div class="sb">
+    <div class="gb">
+      <div class="gt">Certificado de Garantía</div>
+      <div class="gv">Garantía de Devolución del 100%</div>
+      <div class="gs">Por escrito. En su contrato. Firmado por Alpha Timeshare Consultants.<br><span style="color:#fff;display:block;margin-top:6px">Si no obtenemos un Resultado Favorable en 36 meses — devolución del 100% de su tarifa.</span></div>
+    </div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Garantía Escrita de Devolución</div><div class="is">100% de devolución si no hay resultado en 36 meses — en su contrato firmado.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Terminación Legal Permanente</div><div class="is">Un Acuerdo Mutuo registrado que elimina su nombre de la escritura permanentemente.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Eliminación de Cuotas de Mantenimiento</div><div class="is">Una vez liberado, su obligación de cuotas anuales termina permanentemente.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Protección y Reparación de Crédito</div><div class="is">Monitoreo desde el primer día. Disputas presentadas en su nombre. Envío completo a las tres agencias al obtener su liberación.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Documentación de Desempeño</div><div class="is">Documentación en cada etapa. Nada informal.</div></div></div>
+    <div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Credibilidad BBB y Protección al Consumidor</div><div class="is">41 años en el negocio. BBB A+ verificado independientemente. Cada caso manejado internamente.</div></div></div>
+  </div>
+</div>
+
+<!-- 7. POR QUÉ ALPHA -->
+<div class="sec">
+  <div class="sh"><span>🏆</span><h2>Por Qué Alpha — Nuestro Historial</h2></div>
+  <div class="sb">
+    <div class="st-row" style="margin-bottom:18px">
+      <div class="st"><div class="sv">41</div><div class="sl">Años</div></div>
+      <div class="st"><div class="sv">A+</div><div class="sl">Calif. BBB</div></div>
+      <div class="st"><div class="sv">100%</div><div class="sl">Interno</div></div>
+      <div class="st"><div class="sv">$0</div><div class="sl">Inicial</div></div>
+    </div>
+    <div class="pl2"><div class="pn">01</div><div class="pb2"><div class="pt">Solicitudes Grupales</div><div class="ps">Consolidamos propietarios del mismo resort en una sola solicitud — creando patrones documentados que nos dan poder de negociación que ningún individuo tiene por sí solo.</div></div></div>
+    <div class="pl2"><div class="pn">02</div><div class="pb2"><div class="pt">Garantía Escrita</div><div class="ps">En su contrato, firmado por nosotros. Si no obtenemos un Resultado Favorable en 36 meses, reembolsamos el 100% de su tarifa de servicio. Ningún abogado pone eso por escrito.</div></div></div>
+    <div class="pl2"><div class="pn">03</div><div class="pb2"><div class="pt">41 Años</div><div class="ps">Cuatro décadas de experiencia en la industria. BBB A+ verificado. Cada caso manejado internamente — usted llega a las personas que realmente trabajan en su archivo.</div></div></div>
+    <div class="pl2"><div class="pn">04</div><div class="pb2"><div class="pt">$0 Inicial</div><div class="ps">Nada por adelantado. El primer pago comienza el segundo mes. Si no podemos ayudarle — no nos debe nada. No tomamos casos que no podamos ganar.</div></div></div>
+    <div class="rb2" style="margin:-20px;margin-top:18px;border-radius:0 0 8px 8px">
+      <div class="rn">Sebastian Short</div>
+      <div class="rt">Especialista de Cuenta &middot; Alpha Timeshare Consultants</div>
+      <div class="rc"><a href="tel:+18778483948">1 (877) 848-3948</a> Ext. 134 &nbsp;&middot;&nbsp; <a href="tel:+16892333259">1 (689) 233-3259</a><br><a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px 16px;font-size:11px;color:#9ca3af;line-height:1.8">
+  Este documento es confidencial y fue preparado exclusivamente para Conrado Vasquez.<br>
+  Alpha Timeshare Consultants &middot; Orlando, FL &middot; (877) 848-3948
+</div>
+</div>
+</body>
+</html>
