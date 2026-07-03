@@ -1167,6 +1167,21 @@ function _topSaveClick(){
 <div class="disc-field total"><span class="disc-lbl">Total Discount</span><span class="disc-total" id="disc-total">$0</span></div>
 </div>
 
+<div class="discount-row" style="margin-top:8px">
+<div class="disc-field" style="background:#f0fdf4;border-color:#86efac">
+  <span class="disc-lbl">Down Payment $</span>
+  <input type="number" class="disc-inp" id="down-inp" value="0" placeholder="0" oninput="upd()" style="color:#16A34A;font-weight:700">
+</div>
+<div class="disc-field" style="background:#f0fdf4;border-color:#86efac">
+  <span class="disc-lbl">Balance After Down</span>
+  <span class="disc-total" id="after-down" style="color:#16A34A">—</span>
+</div>
+<div class="disc-field total" style="background:#EAF0F8;border-color:#c8d4e8">
+  <span class="disc-lbl">Monthly w/ Down</span>
+  <span class="disc-total" id="mo-after-down" style="color:#1B2A4A">—</span>
+</div>
+</div>
+
 <div class="pif-card">
 <div class="pif-label">Reduced Price</div>
 <div class="pif-was" id="q-was" style="display:none">—</div>
@@ -1519,6 +1534,8 @@ function openEmailQuote(){
   } else if(_selMo){
     var selMoTxt=(document.getElementById('sd-mo')||{}).textContent||'0';
     totalAlphaMo=parseFloat(selMoTxt.replace(/[^0-9.]/g,''))||0;
+    // If down payment, recalculate monthly on remaining balance
+    if(hasDown&&afterDown>0) totalAlphaMo=calcMo(afterDown,_selMo);
     rows+='<tr><td class="et-lbl">'+L.planPayment(_selMo)+'</td><td class="et-val">'+fmtd(totalAlphaMo)+'/mo</td></tr>';
   } else {
     rows+='<tr><td class="et-lbl">'+L.payInFull+'</td><td class="et-val">'+alphaFeeTxt+L.oneTime+'</td></tr>';
@@ -1532,17 +1549,18 @@ function openEmailQuote(){
     : '';
 
   // Discount block — only rendered when discounts exist
-  var discBlock = hasDisc
+  var downPay=parseFloat((document.getElementById('down-inp')||{}).value)||0;
+  var hasDown=downPay>0;
+  var afterDown=Math.max(0,netFee-downPay);
+  var discBlock = (hasDisc||hasDown)
     ? '<div class="disc-block">'
         +'<div class="disc-title">Applied Discounts</div>'
         +(disc1>0?'<div class="disc-row"><span>Discount 1</span><span style="color:#2a7a2a">−'+fmtd(disc1)+'</span></div>':'')
         +(disc2>0?'<div class="disc-row"><span>Discount 2</span><span style="color:#2a7a2a">−'+fmtd(disc2)+'</span></div>':'')
-        +'<div class="disc-row disc-total-row"><span>Total Savings</span><span style="color:#2a7a2a;font-size:16px">−'+fmtd(totalDisc)+'</span></div>'
-        +'<div class="disc-final">'
-          +'<span class="disc-orig">'+fmtd(rawFee)+'</span>'
-          +'<span class="disc-arrow">→</span>'
-          +'<span class="disc-net">'+fmtd(netFee)+'</span>'
-        +'</div>'
+        +(hasDisc?'<div class="disc-row disc-total-row"><span>Total Savings</span><span style="color:#2a7a2a;font-size:16px">−'+fmtd(totalDisc)+'</span></div>':'')
+        +(hasDisc?'<div class="disc-final"><span class="disc-orig">'+fmtd(rawFee)+'</span><span class="disc-arrow">→</span><span class="disc-net">'+fmtd(netFee)+'</span></div>':'')
+        +(hasDown?'<div class="disc-row" style="margin-top:10px;padding-top:10px;border-top:1px solid #e8e8e8"><span style="font-weight:700">Down Payment (Due Today)</span><span style="color:#1B2A4A;font-weight:800">'+fmtd(downPay)+'</span></div>':'')
+        +(hasDown?'<div class="disc-row"><span>Balance Financed</span><span style="color:#1B2A4A;font-weight:700">'+fmtd(afterDown)+'</span></div>':'')
       +'</div>'
     : '';
 
