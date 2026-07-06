@@ -1605,6 +1605,19 @@ function calcComparison(){
     }
   }
   if(saveLblEl) saveLblEl.textContent = 'Total Saved Over '+horizonMonths+' Months';
+
+  // Auto-suggest Alpha fee = 80% of resort forecast — fill fee field if blank
+  if(currentTotal>0){
+    var suggested=Math.round(currentTotal*0.80);
+    var sugEl=document.getElementById('suggested-fee-tile');
+    if(sugEl) sugEl.textContent=fc(suggested)+' (80%)';
+    var feeEl=document.getElementById('v-fee');
+    if(feeEl&&(!feeEl.value||parseFloat(feeEl.value)===0)){
+      feeEl.value=suggested;
+      if(typeof calcSavings==='function') calcSavings();
+    }
+  }
+
   if(typeof calcTcExtra==='function') calcTcExtra();
 }
 window.calcComparison=calcComparison;
@@ -1748,16 +1761,8 @@ function calcPurchaseFinance(){
   tiles.push(tile('MTF — 5 Yrs', fc(mtf5yr), '5yr fees'));
   tiles.push(tile('Total — 5 Yrs', fc(total5yr), 'mtg + MTF'));
 
-  // Suggested fee tile (80% of 5yr total) — auto-fills fee field if empty
-  if(total5yr>0){
-    tiles.push(tile('Suggested Fee', fc(suggested), '80% of 5yr total'));
-    // Auto-fill fee field if blank
-    var feeEl=document.getElementById('v-fee');
-    if(feeEl&&(!feeEl.value||parseFloat(feeEl.value)===0)){
-      feeEl.value=suggested;
-      if(typeof calcSavings==='function') calcSavings();
-    }
-  }
+  // Suggested fee tile — value populated by calcComparison (80% of forecast)
+  tiles.push(tile('Suggested Fee', '<span id="suggested-fee-tile">—</span>', '80% of forecast'));
 
   box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
 }
