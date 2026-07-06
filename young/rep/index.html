@@ -1000,6 +1000,28 @@ function _topSaveClick(){
   </div>
 </div>
 
+<div style="margin-top:12px;background:#fff;border:1px solid #E0E4ED;border-radius:8px;overflow:hidden">
+  <div style="background:#1B2A4A;padding:10px 16px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff">🔄 Update Client Page</div>
+    <div id="push-status" style="font-size:11px;color:rgba(255,255,255,.6)"></div>
+  </div>
+  <div style="padding:14px 16px">
+    <!-- Token entry — hidden once saved -->
+    <div id="token-section" style="margin-bottom:12px">
+      <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">GitHub token (saved locally, enter once):</div>
+      <div style="display:flex;gap:8px">
+        <input id="gh-token-inp" type="password" placeholder="ghp_..." style="flex:1;padding:7px 10px;border:1px solid #E0E4ED;border-radius:5px;font-size:12px;font-family:monospace">
+        <button onclick="saveToken()" style="padding:7px 14px;background:#1B2A4A;color:#fff;border:none;border-radius:5px;font-size:12px;font-weight:700;cursor:pointer">Save</button>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:10px" id="push-note">Rebuilds <strong>/young/</strong> with current fee, discounts, and down payment from this rep file.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="pushClientPage()" id="push-btn" style="padding:9px 20px;background:#C8960C;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">🔄 Update alphafiles.net/young/</button>
+      <button onclick="clearToken()" style="padding:9px 14px;background:#f3f4f6;color:#6b7280;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-family:Inter,sans-serif">Clear Token</button>
+    </div>
+  </div>
+</div>
+
 <div style="margin-top:12px;padding:10px 14px;background:#f9faf9;border:1px solid #E0E4ED;border-radius:6px;font-size:12px;color:#6b7280;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
   <span>Client portal:</span>
   <code style="background:#EAF0F8;padding:2px 10px;border-radius:4px;color:#1B2A4A;font-size:12px">https://alphafiles.net/young/</code>
@@ -1168,6 +1190,89 @@ function copyEM(){
 function openGmail(){
   var body=document.getElementById('em-body').textContent;
   window.open('https://mail.google.com/mail/?view=cm&to=jyoung330@gmail.com&body='+encodeURIComponent(body),'_blank');
+}
+
+// ── GitHub token ─────────────────────────────────────────────────
+var TK='atc_gh_token';
+function saveToken(){
+  var v=document.getElementById('gh-token-inp').value.trim();
+  if(!v){alert('Enter a token first.');return;}
+  localStorage.setItem(TK,v);
+  document.getElementById('gh-token-inp').value='';
+  checkToken();
+}
+function clearToken(){localStorage.removeItem(TK);checkToken();}
+function checkToken(){
+  var t=localStorage.getItem(TK);
+  var sec=document.getElementById('token-section');
+  if(sec)sec.style.display=t?'none':'block';
+}
+checkToken();
+
+// ── Push /young/ with current numbers ────────────────────────────
+function pushClientPage(){
+  var token=localStorage.getItem(TK);
+  if(!token){alert('No GitHub token saved. Enter one above.');document.getElementById('token-section').style.display='block';return;}
+  var all;try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  var d=all[SLUG]||{};
+  var fee=parseFloat(d.alphaFee)||4995;
+  var disc1=parseFloat(d.discount1)||0;
+  var disc2=parseFloat(d.discount2)||0;
+  var down=parseFloat(d.downPayment)||0;
+  var totalDisc=disc1+disc2;
+  var netFee=Math.max(0,fee-totalDisc);
+  var afterDown=Math.max(0,netFee-down);
+  var mtg=parseFloat(d.monthlyMortgage)||182;
+  var mtfYr=parseFloat(d.maitFees)||1485;
+  var mtfMo=Math.round(mtfYr/12*100)/100;
+  var totalMo=Math.round((mtg+mtfMo)*10)/10;
+  var totalYr=Math.round((mtg*12+mtfYr)*10)/10;
+  var fiveYr=Math.round(totalYr*5);
+  var save5=Math.round(fiveYr-netFee);
+  var yr=parseInt(d.yearPurchased)||2026;
+  var yrsLeft=Math.max(0,10-(2026-yr));
+  var estBal=Math.round(yrsLeft*12*mtg);
+  var r60=0.20/12,n60=60;
+  var base=afterDown>0?afterDown:netFee;
+  var mo60=Math.round(base*(r60*Math.pow(1+r60,n60))/(Math.pow(1+r60,n60)-1));
+  var moSave=Math.round(totalMo-mo60);
+  var f=function(n){return '$'+Math.round(n).toLocaleString();};
+
+  var discHtml=totalDisc>0?'<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 14px;margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:#16A34A;text-transform:uppercase;margin-bottom:8px">Applied Discounts</div>'+(disc1>0?'<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0">Discount 1<span style="color:#16A34A;font-weight:700">-'+f(disc1)+'</span></div>':'')+(disc2>0?'<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0">Discount 2<span style="color:#16A34A;font-weight:700">-'+f(disc2)+'</span></div>':'')+'<div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding:6px 0;margin-top:6px;border-top:1px solid #86efac">Net Fee<span style="font-size:20px;font-weight:800;color:#16A34A">'+f(netFee)+'</span></div></div>':'';
+
+  var downHtml=down>0?'<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:14px;margin-bottom:12px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#16A34A;margin-bottom:8px">Down Payment</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center"><div style="background:#fff;border-radius:6px;padding:10px"><div style="font-size:16px;font-weight:800;color:#C8960C">'+f(down)+'</div><div style="font-size:10px;color:#9ca3af">Due Today</div></div><div style="background:#fff;border-radius:6px;padding:10px"><div style="font-size:16px;font-weight:800;color:#1B2A4A">'+f(afterDown)+'</div><div style="font-size:10px;color:#9ca3af">Financed</div></div><div style="background:#fff;border-radius:6px;padding:10px"><div style="font-size:16px;font-weight:800;color:#16A34A">'+f(mo60)+'/mo</div><div style="font-size:10px;color:#9ca3af">60-Month Plan</div></div></div></div>':'';
+
+  var html='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Your Alpha Timeshare File \u2014 John Young</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Barlow+Condensed:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;font-size:14px}.page{max-width:760px;margin:0 auto;padding:0 0 60px}.top-hdr{background:var(--navy);padding:28px 32px 20px;text-align:center}.ey{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}.top-hdr h1{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}.sub{font-size:13px;color:rgba(255,255,255,.55)}.sec{background:#fff;border-radius:10px;border:1px solid var(--border);margin:16px 16px 0;overflow:hidden}.sh{background:var(--navy);padding:12px 20px;display:flex;align-items:center;gap:10px}.sh h2{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px}.sb{padding:20px}.ir{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--border)}.ir:last-child{border-bottom:none}.il{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#9ca3af;padding:10px 14px;background:#f9faf9}.iv{font-size:14px;color:var(--navy);padding:10px 14px;font-weight:500}.st-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}.st{background:var(--navy);border-radius:8px;padding:14px;text-align:center}.st .sv{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--gold)}.st .sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.55);margin-top:4px}.qc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.qb{border-radius:8px;padding:16px;text-align:center;border:2px solid}.qb.r{border-color:#fca5a5;background:#fef2f2}.qb.a{border-color:#86efac;background:#f0fdf4}.qb .ql{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px}.qb .qv{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700}.qb.r .qv{color:var(--red)}.qb.a .qv{color:var(--green)}.vcard{border-left:4px solid var(--red);border:1px solid #fca5a5;border-left-width:4px;border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:10px}.vr{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--gold);margin-bottom:4px}.vd{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.4}.v2{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid #f3f4f6;flex-wrap:wrap;gap:6px}.vs{font-size:11px;color:#6b7280;font-family:monospace}.vf{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--red)}.vn{font-size:12px;color:#6b7280;font-style:italic;margin-top:8px;line-height:1.5;border-top:1px solid #f3f4f6;padding-top:8px}.ftb{background:var(--navy);border-radius:8px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}.ftb .tl{font-size:11px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.55)}.ftb .tv{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:700;color:var(--gold)}.ii{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}.ii:last-child{border-bottom:none}.ic{width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}.ib .it{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}.ib .is{font-size:12px;color:#6b7280;line-height:1.5}.gb{background:var(--navy);border-radius:10px;padding:22px;text-align:center;margin-bottom:14px}.gb .gt{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}.gb .gv{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:4px}.gb .gs{font-size:13px;color:rgba(255,255,255,.6)}.pl2{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}.pl2:last-child{border-bottom:none}.pn{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:700;color:var(--gold);line-height:1;flex-shrink:0;width:36px}.pb2 .pt{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}.pb2 .ps{font-size:13px;color:#374151;line-height:1.6}.rb2{background:var(--navy);border-radius:0 0 8px 8px;padding:20px 24px;text-align:center}.rb2 .rn{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}.rb2 .rt{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}.rb2 .rc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8}.rb2 a{color:var(--gold);text-decoration:none}.rd{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--navy);margin:16px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--navy)}table{width:100%;border-collapse:collapse}th{padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;color:rgba(255,255,255,.6)}thead{background:var(--navy)}td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}tr:last-child td{border-bottom:none}</style></head><body><div class="page"><div class="top-hdr"><div class="ey">Alpha Timeshare Consultants</div><h1>Your Exit File</h1><div class="sub">Prepared for John Young &middot; Confidential</div></div>'
+    +'<div class="sec"><div class="sh"><span>👤</span><h2>Your Information</h2></div><div class="sb"><div class="ir"><div class="il">Client</div><div class="iv">Mr. John Young</div></div><div class="ir"><div class="il">Phone</div><div class="iv"><a href="tel:+15032782387" style="color:var(--navy)">(503) 278-2387</a></div></div><div class="ir"><div class="il">Email</div><div class="iv"><a href="mailto:jyoung330@gmail.com" style="color:var(--navy)">jyoung330@gmail.com</a></div></div><div class="ir"><div class="il">Account Specialist</div><div class="iv">Sebastian Short &middot; Ext. 134</div></div><div class="ir"><div class="il">Direct Line</div><div class="iv">1 (877) 848-3948</div></div></div></div>'
+    +'<div class="sec"><div class="sh"><span>🏨</span><h2>Your Resort &amp; Financial Snapshot</h2></div><div class="sb"><div class="ir"><div class="il">Resort</div><div class="iv"><strong>Bluegreen Las Vegas</strong></div></div><div class="ir"><div class="il">Location</div><div class="iv">Las Vegas, Nevada</div></div><div class="ir"><div class="il">Monthly Mortgage</div><div class="iv">'+f(mtg)+'/month</div></div><div class="ir"><div class="il">Annual MTF</div><div class="iv">'+f(mtfYr)+'/year <span style="font-size:11px;color:#9ca3af">('+f(mtfMo)+'/mo)</span></div></div><div class="ir"><div class="il">Balance Owed</div><div class="iv" style="color:var(--red);font-weight:700">'+f(estBal)+'</div></div><div class="st-row"><div class="st"><div class="sv">'+f(totalMo)+'</div><div class="sl">Total Monthly</div></div><div class="st"><div class="sv">'+f(totalYr)+'</div><div class="sl">Total Yearly</div></div><div class="st"><div class="sv">'+f(fiveYr)+'</div><div class="sl">5-Year Cost</div></div></div></div></div>'
+    +'<div style="text-align:center;padding:20px 16px 4px"><button onclick="document.getElementById(\'q\').style.display=\'block\';this.style.display=\'none\'" style="background:#C8960C;color:#fff;border:none;border-radius:8px;padding:14px 48px;font-size:16px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(200,150,12,.35)">📄 QUOTE</button></div>'
+    +'<div class="sec" id="q" style="display:none"><div class="sh"><span>📄</span><h2>Your Alpha Quote</h2></div><div class="sb">'+discHtml+downHtml+'<div class="qc"><div class="qb r"><div class="ql">Resort 5-Year Cost</div><div class="qv">'+f(fiveYr)+'</div></div><div class="qb a"><div class="ql">Alpha Exit Fee</div><div class="qv">'+f(netFee)+'</div></div></div><div style="background:var(--navy);border-radius:8px;padding:14px;text-align:center;margin-bottom:14px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.55)">You Save Over 5 Years</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:24px;font-weight:700;color:var(--gold)">'+f(save5)+'</div></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">Current Monthly</div><div style="font-size:15px;font-weight:700;color:var(--red)">'+f(totalMo)+'/mo</div></div><div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">Alpha Monthly</div><div style="font-size:15px;font-weight:700;color:var(--navy)">'+f(mo60)+'/mo</div><div style="font-size:10px;color:#9ca3af;margin-top:2px">60-month plan</div></div><div style="background:#f9faf9;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">Monthly Savings</div><div style="font-size:15px;font-weight:700;color:var(--green)">'+f(moSave)+'/mo</div></div></div></div></div>'
+    +'<div class="sec"><div class="sh"><span>⚖️</span><h2>Your Consumer Rights &amp; Violations</h2></div><div class="sb"><div class="rd">Right to Safety</div><div class="vcard"><div class="vr">Right to Safety</div><div class="vd">You were not given adequate time to review the contract before signing. Las Vegas timeshare presentations are designed to create urgency and prevent careful review.</div><div class="v2"><div class="vs">TILA §128 · RESPA §4</div><div class="vf">$50,000</div></div><div class="vn">The resort takes this financial exposure into consideration when negotiating your release.</div></div><div class="rd">Right to Choose</div><div class="vcard"><div class="vr">Right to Choose</div><div class="vd">The complete absence of a viable resale market for Bluegreen Las Vegas was never disclosed. The same points can be found for $1 on eBay with no buyers.</div><div class="v2"><div class="vs">FTC Act §5 · State UDAP</div><div class="vf">$50,000</div></div><div class="vn">The resort takes this financial exposure into consideration when negotiating your release.</div></div><div class="rd">Right to Be Heard</div><div class="vcard"><div class="vr">Right to Be Heard</div><div class="vd">The perpetual nature of this obligation and the fact that Bluegreen will not voluntarily accept the return of your timeshare was not disclosed before signing.</div><div class="v2"><div class="vs">State Contract Law · FL §721.07</div><div class="vf">$60,000</div></div><div class="vn">The resort takes this financial exposure into consideration when negotiating your release.</div></div><div class="rd">Right to Be Informed</div><div class="vcard"><div class="vr">Right to Be Informed</div><div class="vd">Your total financial commitment over the first 30 years — maintenance fees compounding at 8% annually plus mortgage — was never disclosed before you signed.</div><div class="v2"><div class="vs">TILA §128</div><div class="vf">$75,000</div></div><div class="vn">The resort takes this financial exposure into consideration when negotiating your release.</div></div><div class="ftb"><div><div class="tl">Total Documented Fine Exposure</div></div><div class="tv">$235,000</div></div></div></div>'
+    +'<div class="sec"><div class="sh"><span>📦</span><h2>What\'s Included</h2></div><div class="sb"><div class="gb"><div class="gt">Certificate of Guarantee</div><div class="gv">100% Money-Back Guarantee</div><div class="gs">In writing. In your contract. No Favorable Outcome in 36 months — full refund.</div></div><div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Written Money-Back Guarantee</div><div class="is">100% refund if no result within 36 months — in your signed contract.</div></div></div><div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Permanent Legal Termination</div><div class="is">Mutual Release recorded at the county level — permanent.</div></div></div><div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Elimination of Future MTF Obligations</div><div class="is">Your '+f(mtfYr)+'/year maintenance fee obligation ends permanently.</div></div></div><div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">Credit Protection &amp; Repair</div><div class="is">Monitoring from day one. Full bureau submission upon your Mutual Release.</div></div></div><div class="ii"><div class="ic">✓</div><div class="ib"><div class="it">41 Years · BBB A+ · In-House</div><div class="is">Four decades of experience. Every case handled internally.</div></div></div></div></div>'
+    +'<div class="sec"><div class="sh"><span>🏆</span><h2>Why Alpha</h2></div><div class="sb"><div class="st-row" style="margin-bottom:18px"><div class="st"><div class="sv">41</div><div class="sl">Years</div></div><div class="st"><div class="sv">A+</div><div class="sl">BBB</div></div><div class="st"><div class="sv">100%</div><div class="sl">In-House</div></div><div class="st"><div class="sv">$0</div><div class="sl">Down</div></div></div><div class="pl2"><div class="pn">01</div><div class="pb2"><div class="pt">Group Filings</div><div class="ps">We consolidate owners from the same resort — group participants are the only ones eligible for resort reimbursement.</div></div></div><div class="pl2"><div class="pn">02</div><div class="pb2"><div class="pt">Written Guarantee</div><div class="ps">100% refund if no Favorable Outcome within 36 months. In your contract. No attorney puts that in writing.</div></div></div><div class="pl2"><div class="pn">03</div><div class="pb2"><div class="pt">41 Years</div><div class="ps">BBB A+ verified. Every case in-house — you reach the people actually working your file.</div></div></div><div class="pl2"><div class="pn">04</div><div class="pb2"><div class="pt">$0 Down</div><div class="ps">Nothing upfront. First payment month two. If we cannot help — you owe nothing.</div></div></div><div class="rb2" style="margin:-20px;margin-top:18px;border-radius:0 0 8px 8px"><div class="rn">Sebastian Short</div><div class="rt">Account Specialist &middot; Alpha Timeshare Consultants</div><div class="rc"><a href="tel:+18778483948">1 (877) 848-3948</a> Ext. 134 &nbsp;&middot;&nbsp; <a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></div></div></div></div>'
+    +'<div style="text-align:center;padding:24px 16px;font-size:11px;color:#9ca3af;line-height:1.8">This document is confidential and prepared solely for John Young.<br>Alpha Timeshare Consultants &middot; Orlando, FL &middot; (877) 848-3948</div></div></body></html>';
+
+  var btn=document.getElementById('push-btn');
+  var status=document.getElementById('push-status');
+  btn.textContent='⏳ Pushing...';btn.disabled=true;status.textContent='Fetching SHA...';
+
+  fetch('https://api.github.com/repos/Sebastianshort624/alphafiles.net/contents/young/index.html',{headers:{'Authorization':'token '+token}})
+  .then(r=>r.json()).then(data=>{
+    status.textContent='Pushing...';
+    return fetch('https://api.github.com/repos/Sebastianshort624/alphafiles.net/contents/young/index.html',{
+      method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({message:'Update /young/ — fee='+netFee+' disc='+totalDisc+' down='+down,content:btoa(unescape(encodeURIComponent(html))),sha:data.sha,branch:'main'})
+    });
+  }).then(r=>r.json()).then(data=>{
+    if(data.content){
+      btn.textContent='✅ Updated!';
+      status.textContent='Pushed at '+new Date().toLocaleTimeString()+' · live in ~60s';
+      setTimeout(()=>{btn.textContent='🔄 Update alphafiles.net/young/';btn.disabled=false;},3000);
+    } else throw new Error(JSON.stringify(data).substring(0,80));
+  }).catch(err=>{
+    btn.textContent='❌ Failed';btn.disabled=false;
+    status.textContent='Error: '+err.message.substring(0,60);
+  });
 }
 </script>
 </body></html>
