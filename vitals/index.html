@@ -1727,18 +1727,36 @@ function calcPurchaseFinance(){
     +'</div>';
   }
 
+  // 5-year projections
+  var mtg5yr = hasMtg ? Math.round(mtgMo*Math.min(60, monthsLeftOnMtg)) : 0;
+  var mtf5yr = Math.round(mtfMo*60);
+  var total5yr = mtg5yr + mtf5yr;
+  var suggested = Math.round(total5yr * 0.80);
+
   var tiles=[];
   tiles.push(tile('Term Left', yrsLeft+' yrs', yearWasEntered?null:'(estimated)'));
   tiles.push(tile('Mortgage Left', hasMtg?fc(mtgRemaining):'Paid off'));
   tiles.push(tile('MTF Left', fc(mtfRemaining)));
-
   if(mtgMo>0){
     tiles.push(tile('Rate', '17.5%', 'default'));
   }
-  if(pprice>0){
-    tiles.push(tile('Purchase Price', fc(pprice), 'as entered'));
-  } else if(mtgMo>0){
-    tiles.push(tile('Total Paid (Loan Term)', fc(mtgRemaining), yrsLeft+'-yr term left'));
+
+  // 5-year breakdown tiles
+  if(hasMtg){
+    tiles.push(tile('Mortgage — 5 Yrs', fc(mtg5yr), '5yr payments'));
+  }
+  tiles.push(tile('MTF — 5 Yrs', fc(mtf5yr), '5yr fees'));
+  tiles.push(tile('Total — 5 Yrs', fc(total5yr), 'mtg + MTF'));
+
+  // Suggested fee tile (80% of 5yr total) — auto-fills fee field if empty
+  if(total5yr>0){
+    tiles.push(tile('Suggested Fee', fc(suggested), '80% of 5yr total'));
+    // Auto-fill fee field if blank
+    var feeEl=document.getElementById('v-fee');
+    if(feeEl&&(!feeEl.value||parseFloat(feeEl.value)===0)){
+      feeEl.value=suggested;
+      if(typeof calcSavings==='function') calcSavings();
+    }
   }
 
   box.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px">'+tiles.join('')+'</div>';
