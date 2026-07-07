@@ -517,6 +517,8 @@ window.atcAutoPopulate = function(){
 
   // Why they want out — auto-populate on why-out page
   if(d.whyOut){ setVal('v-why', d.whyOut); }
+  if(d.timesUsed){ var el=document.getElementById('v-times-used'); if(el)el.value=d.timesUsed; }
+  if(d.lastUsed){ var el2=document.getElementById('v-last-used'); if(el2)el2.value=d.lastUsed; }
   if(d.whyOutCategories && Array.isArray(d.whyOutCategories)){
     d.whyOutCategories.forEach(function(key){
       var card=document.getElementById('cat-'+key);
@@ -957,6 +959,16 @@ function _topSaveClick(){
 <div class="card-grid">
 
 <!-- OWNER -->
+<!-- CRM PASTE → POPULATE BOX -->
+<div class="card" style="border:2px dashed #C8960C;background:#fffdf5">
+  <div class="card-hdr" style="color:var(--gold)">📋 Paste CRM Data → Auto-Populate</div>
+  <div class="card-body">
+    <textarea id="crm-paste-box" placeholder="Paste all client info from CRM here — names, resort, phone, email, fees, mortgage, MTF, purchase date, why they want out, etc. Then click POPULATE." style="width:100%;min-height:90px;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:12px;resize:vertical;margin-bottom:10px"></textarea>
+    <button onclick="populateFromCRM()" style="padding:8px 20px;background:#C8960C;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">⚡ POPULATE</button>
+    <span id="pop-status" style="margin-left:12px;font-size:12px;color:#16A34A;display:none">✓ Fields populated — review and save</span>
+  </div>
+</div>
+
 <div class="card">
   <div class="card-hdr">Owner Information</div>
   <div class="card-body">
@@ -1005,7 +1017,20 @@ function _topSaveClick(){
         <div class="ff"><label>Year Purchased</label><input id="v-year" type="number" placeholder="" oninput="autoSave();calcMtgRemaining();calcPurchaseFinance();calcComparison()"></div>
         <div class="ff"><label>Purchase Price</label><input id="v-pprice" type="number" oninput="autoSave();calcPurchaseFinance()"></div>
       </div>
-      <div class="ff"><label>Why Do They Want Out?</label><textarea id="v-why" oninput="autoSave()"></textarea></div>
+      <!-- USAGE TRACKER (replaces Why Do They Want Out) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px">
+        <div class="ff"><label>Times Used Total</label><input id="v-times-used" type="number" placeholder="0" oninput="autoSave();calcUsage()"></div>
+        <div class="ff"><label>Last Time Used</label><input id="v-last-used" placeholder="e.g. 2022" oninput="autoSave()"></div>
+      </div>
+      <div class="ff" style="margin-bottom:8px"><label>Why Do They Want Out?</label><textarea id="v-why" oninput="autoSave()" style="min-height:50px"></textarea></div>
+      <!-- Auto-calculated usage summary -->
+      <div id="usage-summary" style="background:#EAF0F8;border-radius:6px;padding:10px;font-size:12px;display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+          <div><div style="font-size:16px;font-weight:800;color:#1B2A4A" id="us-years">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Years Owned</div></div>
+          <div><div style="font-size:16px;font-weight:800;color:#1B2A4A" id="us-total-spent">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Total Spent on Vacations</div></div>
+          <div><div style="font-size:16px;font-weight:800;color:#C8960C" id="us-cost-per-use">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Avg Cost / Vacation</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1303,23 +1328,7 @@ function _topSaveClick(){
 </div>
 
 <!-- MOTIVATION SCALE -->
-<div class="card">
-  <div class="card-hdr">Motivation Scale</div>
-  <div class="card-body">
-    <div style="font-size:13px;color:#374151;font-style:italic;background:#EAF0F8;border-radius:6px;padding:10px;margin-bottom:12px">"On a scale from 1 to 10, how strong is your desire to get out of this as quickly as possible?"</div>
-    <div id="mot-scale" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px"></div>
-    <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:14px"><span>Not urgent</span><span>Get me out NOW</span></div>
-    <div style="border-top:1px solid var(--border);padding-top:12px">
-      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">Qualifying Question</div>
-      <div style="font-size:13px;color:#374151;font-style:italic;background:#f9fafb;border-radius:6px;padding:10px;margin-bottom:10px">"If we could offer a guaranteed service, $0 down today, fair payments, and credit protection — would you move forward?"</div>
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <button id="qual-yes" onclick="setQualify('yes')" style="flex:1;padding:10px;font-size:14px;font-weight:700;border-radius:6px;border:2px solid var(--green);background:#fff;color:var(--green);cursor:pointer">YES</button>
-        <button id="qual-no" onclick="setQualify('no')" style="flex:1;padding:10px;font-size:14px;font-weight:700;border-radius:6px;border:2px solid #9ca3af;background:#fff;color:#9ca3af;cursor:pointer">NOT YET</button>
-      </div>
-      <div style="font-size:13px;color:var(--gold);font-style:italic;font-weight:600;text-align:center">"Would you rather put payments toward the problem — or the solution?"</div>
-    </div>
-  </div>
-</div>
+
 
 <!-- OBJECTION + CRM -->
 <div class="card">
@@ -1516,6 +1525,76 @@ function calcTotals(){
   }
 }
 
+function populateFromCRM(){
+  var raw=document.getElementById('crm-paste-box').value;
+  if(!raw.trim()) return;
+  // Smart field extraction from raw CRM paste
+  function extract(patterns, text){
+    for(var i=0;i<patterns.length;i++){
+      var m=text.match(patterns[i]);
+      if(m&&m[1]&&m[1].trim()&&m[1].trim()!=='-') return m[1].trim();
+    }
+    return '';
+  }
+  var t=raw;
+  var firstName=extract([/First Name[\s\S]{0,20}?\n([\w]+)/,/first[\s:]+([A-Z][a-z]+)/i],t);
+  var lastName=extract([/Last Name[\s\S]{0,20}?\n([\w ,]+)/,/last[\s:]+([A-Z][a-zA-Z ,]+)/i],t);
+  var phone=extract([/Phone[\s\S]{0,10}\n([+0-9() -]{7,20})/,/([+1]?[\s(]?[0-9]{3}[)\s.-][0-9]{3}[.-][0-9]{4})/],t);
+  var email=extract([/Email[\s\S]{0,10}\n([\w.+-]+@[\w.-]+)/,/([\w.+-]+@[\w.-]+\.[a-z]{2,})/i],t);
+  var resort=extract([/Resort Name[\s\S]{0,40}?([A-Z][\w\s&,-]+(?:Club|Inn|Vacation|Resort|Grand|Marriott|Hilton|Bluegreen|Wyndham|Holiday|Sunset)[\w\s&,-]*)/,/R1-Resort Name[^\n]*\n([^\n]+)/],t);
+  var city=extract([/Resort City[\s\S]{0,10}\n([\w ]+)/,/City[\s\S]{0,5}\n([\w ]+)/],t);
+  var state=extract([/Resort State[\s\S]{0,10}\n([A-Z]{2}[\w]*)/],t);
+  var yearPurch=extract([/Date Purchased[^\n]*\n[^\n]*?(20[0-9]{2})/,/(20[12][0-9])/],t);
+  var price=extract([/Purchase Price[\s\S]{0,10}\n([0-9,]+)/,/purchase[^\n]*?([0-9]{4,7})/i],t);
+  var balance=extract([/Balance Amount[\s\S]{0,10}\n([0-9,]+)/,/balance[^\n]*?([0-9]{4,7})/i],t);
+  var mtf=extract([/Mait[^\n]*?([0-9]{3,6})/i,/maintenance[^\n]*?([0-9]{3,6})/i,/MTF[^\n]*?([0-9]{3,6})/i],t);
+  var mtg=extract([/Monthly Mortgage[\s\S]{0,10}([0-9]+)/i,/mortgage[^\n]*?([0-9]{3,5})/i],t);
+  var fee=extract([/Amount Charging[^\n]*?([0-9,\.]+)/,/Recommended Pricing[^\n]*?([0-9,\.]+)/,/\$\s*([0-9,]+\.?[0-9]*)/],t);
+  var why=extract([/Why do they want out[?]?[\s\S]{0,5}\n([\s\S]{1,300}?)\n[A-Z]/i,/R1-Why[^\n]*\n([\s\S]{1,200}?)\n[A-Z]/i],t);
+
+  function setf(id,val){var el=document.getElementById(id);if(el&&val){el.value=val;el.dispatchEvent(new Event('input'));}}
+  if(firstName) setf('v-fname',firstName);
+  if(lastName) setf('v-lname',lastName);
+  if(phone) setf('v-phone',phone.replace(/[^0-9+]/g,''));
+  if(email) setf('v-email',email);
+  if(resort) setf('v-resort',resort);
+  if(city) setf('v-rescity',city);
+  if(state) setf('v-loc',state);
+  if(yearPurch) setf('v-year',yearPurch);
+  if(price) setf('v-pprice',price.replace(/[^0-9]/g,''));
+  if(balance) setf('v-bal',balance.replace(/[^0-9]/g,''));
+  if(mtf) setf('v-mtf',mtf.replace(/[^0-9]/g,''));
+  if(mtg) setf('v-mtg',mtg.replace(/[^0-9]/g,''));
+  if(fee) setf('v-fee',fee.replace(/[^0-9.]/g,''));
+  if(why) setf('v-why',why.trim());
+
+  var st=document.getElementById('pop-status');
+  if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
+  autoSave();
+  if(typeof calcComparison==='function')calcComparison();
+  if(typeof calcUsage==='function')calcUsage();
+  if(typeof calcSavings==='function')calcSavings();
+}
+
+function calcUsage(){
+  var yearEl=document.getElementById('v-year');
+  var timesEl=document.getElementById('v-times-used');
+  var yr=parseInt(yearEl?yearEl.value:'')||0;
+  var times=parseInt(timesEl?timesEl.value:'')||0;
+  var sumEl=document.getElementById('usage-summary');
+  if(!yr||!sumEl){if(sumEl)sumEl.style.display='none';return;}
+  var yearsOwned=2026-yr;
+  // Total annual cost (mtg + mtf)
+  var mtg=parseFloat(document.getElementById('v-mtg')?document.getElementById('v-mtg').value:'')||0;
+  var mtfYr=parseFloat(document.getElementById('v-mtf')?document.getElementById('v-mtf').value:'')||0;
+  var annualCost=(mtg*12)+mtfYr;
+  var totalSpent=Math.round(annualCost*yearsOwned);
+  var costPerUse=times>0?Math.round(totalSpent/times):0;
+  document.getElementById('us-years').textContent=yearsOwned+' yrs';
+  document.getElementById('us-total-spent').textContent=totalSpent>0?'$'+totalSpent.toLocaleString():'—';
+  document.getElementById('us-cost-per-use').textContent=(costPerUse>0?'$'+costPerUse.toLocaleString()+'/trip':'—');
+  sumEl.style.display=yearsOwned>0?'block':'none';
+}
 function calcSavings(){
   var fee=parseFloat(document.getElementById('v-fee').value)||0;
   var term=parseInt(document.getElementById('v-term').value)||0;
@@ -1934,6 +2013,8 @@ function autoSave(){
       coFirst:g('v-co'),coLast:g('v-col'),
       resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
       yearPurchased:g('v-year'),purchasePrice:g('v-pprice'),whyOut:g('v-why'),
+      timesUsed:document.getElementById('v-times-used')?document.getElementById('v-times-used').value:'',
+      lastUsed:document.getElementById('v-last-used')?document.getElementById('v-last-used').value:'',
       maitFees:g('v-mtf'),mtfFreq:g('v-mtf-freq'),
       monthlyMortgage:(_mtgType==='pf'?'0':g('v-mtg')),
       balanceAmount:g('v-balance'),mortgageType:_mtgType,
