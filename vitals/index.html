@@ -2055,9 +2055,9 @@ function _ensureClient(){
   }
   all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_updated:Date.now()});
   sa(all);
-  localStorage.setItem(AK,slug);
+  localStorage.setItem(AK,(slug||'').toLowerCase());
   // Also set sidebar key so dropdown updates
-  localStorage.setItem('atc_active',slug);
+  localStorage.setItem('atc_active',(slug||'').toLowerCase());
   if(typeof buildSB==='function') buildSB();
   return slug;
 }
