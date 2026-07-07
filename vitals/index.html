@@ -2415,7 +2415,7 @@ function createClientFilePage(){
   });
 }
 
-function generateFullQuote(){
+function generateFullQuote(cb){
   var SK='atc_clients_v2', AK='atc_active';
   var slug=localStorage.getItem(AK);
   var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
@@ -2624,6 +2624,7 @@ function generateFullQuote(){
     +makeBlock(5,'Your Service Quote',e5)
     +copyScript+'</body></html>';
 
+  if(typeof cb==='function'){cb(fullHtml);return;}
   var w=window.open('','_blank','width=900,height=700');
   if(w){w.document.open();w.document.write(fullHtml);w.document.close();}
   else{alert('Pop-up blocked. Please allow pop-ups for alphafiles.net.');}
