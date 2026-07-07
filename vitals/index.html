@@ -1529,46 +1529,78 @@ function calcTotals(){
 
 function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
-  if(!raw.trim()) return;
-  // Smart field extraction from raw CRM paste
-  function extract(patterns, text){
-    for(var i=0;i<patterns.length;i++){
-      var m=text.match(patterns[i]);
-      if(m&&m[1]&&m[1].trim()&&m[1].trim()!=='-') return m[1].trim();
+  if(!raw.trim()){alert('Paste CRM data first.');return;}
+
+  // CRM format: "FieldName\t\nValue" or "FieldName\tValue"
+  // Lines are separated by \n; tabs separate label from value on same line,
+  // or value is on the NEXT line after a lone tab.
+  function field(names, text){
+    var t=text;
+    for(var ni=0;ni<names.length;ni++){
+      var nm=names[ni];
+      // Pattern 1: "FieldName\t\nValue\n" (value on next line)
+      var re1=new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\t\\n?([^\\t\\n$-][^\\n]{0,120})','i');
+      // Pattern 2: "FieldName\tValue" (value same line after tab)
+      var re2=new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\t([^\\t\\n]{1,120})','i');
+      var m=t.match(re1)||t.match(re2);
+      if(m&&m[1]){
+        var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'');
+        if(v&&v!=='-'&&v!=='N/A') return v;
+      }
     }
     return '';
   }
-  var t=raw;
-  var firstName=extract([/First Name[\s\S]{0,20}?\n([\w]+)/,/first[\s:]+([A-Z][a-z]+)/i],t);
-  var lastName=extract([/Last Name[\s\S]{0,20}?\n([\w ,]+)/,/last[\s:]+([A-Z][a-zA-Z ,]+)/i],t);
-  var phone=extract([/Phone[\s\S]{0,10}\n([+0-9() -]{7,20})/,/([+1]?[\s(]?[0-9]{3}[)\s.-][0-9]{3}[.-][0-9]{4})/],t);
-  var email=extract([/Email[\s\S]{0,10}\n([\w.+-]+@[\w.-]+)/,/([\w.+-]+@[\w.-]+\.[a-z]{2,})/i],t);
-  var resort=extract([/Resort Name[\s\S]{0,40}?([A-Z][\w\s&,-]+(?:Club|Inn|Vacation|Resort|Grand|Marriott|Hilton|Bluegreen|Wyndham|Holiday|Sunset)[\w\s&,-]*)/,/R1-Resort Name[^\n]*\n([^\n]+)/],t);
-  var city=extract([/Resort City[\s\S]{0,10}\n([\w ]+)/,/City[\s\S]{0,5}\n([\w ]+)/],t);
-  var state=extract([/Resort State[\s\S]{0,10}\n([A-Z]{2}[\w]*)/],t);
-  var yearPurch=extract([/Date Purchased[^\n]*\n[^\n]*?(20[0-9]{2})/,/(20[12][0-9])/],t);
-  var price=extract([/Purchase Price[\s\S]{0,10}\n([0-9,]+)/,/purchase[^\n]*?([0-9]{4,7})/i],t);
-  var balance=extract([/Balance Amount[\s\S]{0,10}\n([0-9,]+)/,/balance[^\n]*?([0-9]{4,7})/i],t);
-  var mtf=extract([/Mait[^\n]*?([0-9]{3,6})/i,/maintenance[^\n]*?([0-9]{3,6})/i,/MTF[^\n]*?([0-9]{3,6})/i],t);
-  var mtg=extract([/Monthly Mortgage[\s\S]{0,10}([0-9]+)/i,/mortgage[^\n]*?([0-9]{3,5})/i],t);
-  var fee=extract([/Amount Charging[^\n]*?([0-9,\.]+)/,/Recommended Pricing[^\n]*?([0-9,\.]+)/,/\$\s*([0-9,]+\.?[0-9]*)/],t);
-  var why=extract([/Why do they want out[?]?[\s\S]{0,5}\n([\s\S]{1,300}?)\n[A-Z]/i,/R1-Why[^\n]*\n([\s\S]{1,200}?)\n[A-Z]/i],t);
 
-  function setf(id,val){var el=document.getElementById(id);if(el&&val){el.value=val;el.dispatchEvent(new Event('input'));}}
-  if(firstName) setf('v-fname',firstName);
-  if(lastName) setf('v-lname',lastName);
-  if(phone) setf('v-phone',phone.replace(/[^0-9+]/g,''));
-  if(email) setf('v-email',email);
-  if(resort) setf('v-resort',resort);
-  if(city) setf('v-rescity',city);
-  if(state) setf('v-loc',state);
-  if(yearPurch) setf('v-year',yearPurch);
-  if(price) setf('v-pprice',price.replace(/[^0-9]/g,''));
-  if(balance) setf('v-bal',balance.replace(/[^0-9]/g,''));
-  if(mtf) setf('v-mtf',mtf.replace(/[^0-9]/g,''));
-  if(mtg) setf('v-mtg',mtg.replace(/[^0-9]/g,''));
-  if(fee) setf('v-fee',fee.replace(/[^0-9.]/g,''));
-  if(why) setf('v-why',why.trim());
+  var t=raw;
+  var firstName  = field(['First Name'],t);
+  var lastName   = field(['Last Name'],t);
+  var email      = field(['Email'],t);
+  var phone      = (field(['Phone','Plain Phone'],t)||'').replace(/\D/g,'').replace(/^1/,'');
+  var resort     = field(['R1-Resort Name'],t);
+  var city       = field(['R1-Resort City'],t);
+  var state      = field(['R1-Resort State'],t);
+  var yearRaw    = field(['R1-Date Purchased'],t);
+  var yearMatch  = yearRaw.match(/(20[0-9]{2}|19[0-9]{2})/);
+  var yearPurch  = yearMatch?yearMatch[1]:'';
+  var price      = field(['R1-Purchase Price','Purchase Price'],t).replace(/[^0-9.]/g,'');
+  var mtf        = field(['R1-Mait','R1-Maintenance','Mait / Tax'],t).replace(/[^0-9.]/g,'');
+  var mtgStatus  = field(['R1-Mortgage status','Mortgage status'],t).toLowerCase();
+  var mtgAmt     = (mtgStatus.indexOf('paid')>-1)?'0':field(['Monthly Mortgage','R1-Monthly Mortgage','Balance Amount'],t).replace(/[^0-9.]/g,'');
+  var balance    = field(['Balance Amount','R1-Balance'],t).replace(/[^0-9.]/g,'');
+  var fee        = field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing'],t).replace(/[^0-9.]/g,'');
+  var whyOut     = field(['R1-Why do they want out','Why do they want out'],t);
+  var salutation = field(['Salutation'],t);
+
+  function setf(id,val){
+    if(!val) return;
+    var el=document.getElementById(id);
+    if(!el) return;
+    el.value=val;
+    el.dispatchEvent(new Event('input'));
+  }
+
+  setf('v-fname', firstName);
+  setf('v-lname', lastName);
+  setf('v-email', email);
+  setf('v-phone', phone);
+  setf('v-resort', resort);
+  setf('v-rescity', city);
+  setf('v-loc', state);
+  if(yearPurch) setf('v-year', yearPurch);
+  if(price)  setf('v-pprice', price);
+  if(mtf)    setf('v-mtf', mtf);
+  if(mtgAmt) setf('v-mtg', mtgAmt);
+  if(balance)setf('v-bal', balance);
+  if(fee)    setf('v-fee', fee);
+  if(whyOut) setf('v-why', whyOut);
+
+  // Show mortgage status as note if paid off
+  if(mtgStatus.indexOf('paid')>-1){
+    var mtgEl=document.getElementById('v-mtg');
+    if(mtgEl){mtgEl.value='0';mtgEl.dispatchEvent(new Event('input'));}
+    var noteEl=document.getElementById('mtg-status-note');
+    if(noteEl){noteEl.textContent='Mortgage: Paid off';noteEl.style.display='inline';}
+  }
 
   var st=document.getElementById('pop-status');
   if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
@@ -1576,6 +1608,7 @@ function populateFromCRM(){
   if(typeof calcComparison==='function')calcComparison();
   if(typeof calcUsage==='function')calcUsage();
   if(typeof calcSavings==='function')calcSavings();
+  if(typeof calcPurchaseFinance==='function')calcPurchaseFinance();
 }
 
 function calcUsage(){
