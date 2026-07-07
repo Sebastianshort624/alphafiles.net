@@ -1555,38 +1555,65 @@ function populateFromCRM(){
   function field(names,text){
     for(var ni=0;ni<names.length;ni++){
       var nm=names[ni];
-      var re1=new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\s*\\t\\n?([^\\t\\n$-][^\\n]{0,120})','i');
-      var re2=new RegExp(nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\t([^\\t\\n]{1,120})','i');
+      var esc=nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      // [^\t\n]* allows extra text after field name (e.g. "(Roughly)", "/ Tax fees")
+      // so "R1-Mait" matches "R1-Mait / Tax fees\t1300"
+      var re1=new RegExp(esc+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,200})','i');
+      var re2=new RegExp(esc+'[^\\t\\n]*\\t([^\\t\\n]{1,200})','i');
       var m=text.match(re1)||text.match(re2);
       if(m&&m[1]){var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'');if(v&&v!=='-'&&v!=='N/A')return v;}
     }return '';
   }
   var t=raw;
-  var firstName=field(['First Name'],t),lastName=field(['Last Name'],t);
+  var firstName=field(['First Name'],t);
+  var lastName=field(['Last Name'],t);
   var email=field(['Email'],t);
   var phone=(field(['Phone','Plain Phone'],t)||'').replace(/\D/g,'').replace(/^1/,'');
   var resort=field(['R1-Resort Name'],t);
-  var city=field(['R1-Resort City'],t),state=field(['R1-Resort State'],t);
-  var yearRaw=field(['R1-Date Purchased'],t),yearMatch=yearRaw.match(/(20[0-9]{2}|19[0-9]{2})/);
+  var city=field(['R1-Resort City'],t);
+  var state=field(['R1-Resort State'],t);
+  var yearRaw=field(['R1-Date Purchased'],t);
+  var yearMatch=yearRaw.match(/(20[0-9]{2}|19[0-9]{2})/);
   var yearPurch=yearMatch?yearMatch[1]:'';
   var price=field(['R1-Purchase Price','Purchase Price'],t).replace(/[^0-9.]/g,'');
   var mtf=field(['R1-Mait','R1-Maintenance','Mait / Tax'],t).replace(/[^0-9.]/g,'');
   var mtgStatus=field(['R1-Mortgage status','Mortgage status'],t).toLowerCase();
-  var mtgAmt=(mtgStatus.indexOf('paid')>-1)?'0':field(['Monthly Mortgage','R1-Monthly Mortgage'],t).replace(/[^0-9.]/g,'');
-  var balance=field(['Balance Amount','R1-Balance'],t).replace(/[^0-9.]/g,'');
+  var isPaid=(mtgStatus.indexOf('paid')>-1||mtgStatus.indexOf('no mortgage')>-1||mtgStatus.indexOf('paid off')>-1);
+  var mtgAmt=isPaid?'0':field(['R1-Monthly Mortgage','Monthly Mortgage'],t).replace(/[^0-9.]/g,'');
+  var balance=field(['R1-Balance Amount','Balance Amount','R1-Balance'],t).replace(/[^0-9.]/g,'');
   var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing'],t).replace(/[^0-9.]/g,'');
   var whyOut=field(['R1-Why do they want out','Why do they want out'],t);
+  var behindMait=field(['R1-How far behind on mait','How far behind on mait'],t);
+  var behindMtg=field(['R1-How far behind on mortgage','How far behind on mortgage'],t);
+  var curMait=field(['R1-Current on Mait','Current on Mait'],t);
+  var curMtg=field(['R1-Current on mortgage','Current on mortgage'],t);
+
   function setf(id,val){if(!val)return;var el=document.getElementById(id);if(!el)return;el.value=val;el.dispatchEvent(new Event('input'));}
-  setf('v-fname',firstName);setf('v-lname',lastName);setf('v-email',email);setf('v-phone',phone);
+  setf('v-fname',firstName);setf('v-lname',lastName);
+  setf('v-email',email);setf('v-phone',phone);
   setf('v-resort',resort);setf('v-rescity',city);setf('v-loc',state);
   if(yearPurch)setf('v-year',yearPurch);
-  if(price)setf('v-pprice',price);if(mtf)setf('v-mtf',mtf);
-  if(mtgAmt)setf('v-mtg',mtgAmt);if(balance)setf('v-bal',balance);if(fee)setf('v-fee',fee);if(whyOut)setf('v-why',whyOut);
-  if(mtgStatus.indexOf('paid')>-1){var el=document.getElementById('v-mtg');if(el){el.value='0';el.dispatchEvent(new Event('input'));}}
+  if(price)setf('v-pprice',price);
+  if(mtf)setf('v-mtf',mtf);
+  if(mtgAmt)setf('v-mtg',mtgAmt);
+  if(balance)setf('v-bal',balance);
+  if(fee)setf('v-fee',fee);
+  if(whyOut)setf('v-why',whyOut);
+  if(isPaid){var mEl=document.getElementById('v-mtg');if(mEl){mEl.value='0';mEl.dispatchEvent(new Event('input'));}}
+  // Mortgage status radio/select
+  var mtgRadio=document.querySelector('input[name="v-mtgstatus"][value="'+(isPaid?'paid':'owes')+'"]');
+  if(mtgRadio){mtgRadio.checked=true;mtgRadio.dispatchEvent(new Event('change'));}
+  var mtgSel=document.getElementById('v-mtgstatus');
+  if(mtgSel){mtgSel.value=isPaid?'paid':'owes';mtgSel.dispatchEvent(new Event('change'));}
+  // Populate extra fields if they exist
+  if(behindMait){var el=document.getElementById('v-behind-mait');if(el){el.value=behindMait;el.dispatchEvent(new Event('input'));}}
+  if(behindMtg){var el=document.getElementById('v-behind-mtg');if(el){el.value=behindMtg;el.dispatchEvent(new Event('input'));}}
   var st=document.getElementById('pop-status');if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
   autoSave();
   if(typeof calcComparison==='function')calcComparison();
   if(typeof calcUsage==='function')calcUsage();
+  if(typeof calcSavings==='function')calcSavings();
+  if(typeof calcPurchaseFinance==='function')calcPurchaseFinance();
 }
 
 function calcUsage(){
