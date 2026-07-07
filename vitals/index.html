@@ -2437,6 +2437,7 @@ function generateFullQuote(cb){
   var netFee=Math.max(0,fee-totalDisc);
   var down=parseFloat(d.downPayment)||0;
   var afterDown=Math.max(0,netFee-down);
+  var phone=(d.phone||'').replace(/\D/g,'');var phone2=(d.phone2||'');var email=d.email||'';var loc=d.resSt||d.loc||d.resState||'';var stage=d.stage||'Assessment';var completion=d.caseCompletion||d.completion||60;
   var r60=0.20/12, n60=60;
   var base=afterDown>0?afterDown:netFee;
   var mo60=netFee>0?Math.round(base*(r60*Math.pow(1+r60,n60))/(Math.pow(1+r60,n60)-1)):0;
@@ -2615,14 +2616,37 @@ function generateFullQuote(cb){
   var copyScript='<script>function copyEmail(id){var el=document.getElementById(id);var r=document.createRange();r.selectNode(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);document.execCommand("copy");window.getSelection().removeAllRanges();var btn=el.closest(".email-block").querySelector(".copy-btn");btn.textContent="✓ Copied!";setTimeout(function(){btn.textContent="📋 Copy";},2000);}<\/script>';
 
   var fullHtml='<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>FULL QUOTE — '+name+'</title>'+css+'</head><body>'
-    +'<div class="page-title">FULL QUOTE — '+name+'</div>'
-    +'<div class="page-sub">'+resort+' &nbsp;·&nbsp; 5 emails ready to copy &nbsp;·&nbsp; Send in order</div>'
+    +'<div style="background:#1B2A4A;padding:12px 20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">'
+    +'<div><div style="font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:.5px">'+name+'</div>'
+    +'<div style="display:flex;gap:10px;align-items:center;margin-top:2px;flex-wrap:wrap">'
+    +(phone?'<a href="tel:'+phone+'" style="color:#C8960C;text-decoration:none;font-size:12px">'+phone+'</a>':'')
+    +(phone2?'<a href="tel:'+phone2+'" style="color:#C8960C;text-decoration:none;font-size:12px">'+phone2+'</a>':'')
+    +(email?'<a href="mailto:'+email+'" style="color:rgba(255,255,255,.55);font-size:11px;text-decoration:none">'+email+'</a>':'')
+    +'<span style="color:rgba(255,255,255,.35);font-size:11px">'+resort+'</span></div></div>'
+    +'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
+    +'<span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px">No quote</span>'
+    +'<span style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px">No follow-up</span>'
+    +'<span style="background:#C8960C;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px">'+stage+'</span>'
+    +'<button onclick="window.print()" style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:4px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer">Print</button>'
+    +'</div></div>'
+    +'<div style="display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid rgba(255,255,255,.1)">'
+    +'<div style="padding:8px 10px;border-right:1px solid rgba(255,255,255,.1)"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Client</div><div style="font-size:12px;font-weight:700;color:#fff">'+name+'</div></div>'
+    +'<div style="padding:8px 10px;border-right:1px solid rgba(255,255,255,.1)"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Resort</div><div style="font-size:12px;font-weight:700;color:#fff">'+resort+'</div><div style="font-size:10px;color:rgba(255,255,255,.4)">'+loc+'</div></div>'
+    +'<div style="padding:8px 10px;border-right:1px solid rgba(255,255,255,.1)"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Monthly / Yearly</div><div style="font-size:12px;font-weight:700;color:#fff">'+(totalMo>0?fc(totalMo):'&mdash;')+'</div><div style="font-size:10px;color:rgba(255,255,255,.4)">'+(totalYr>0?fc(totalYr):'&mdash;')+'</div></div>'
+    +'<div style="padding:8px 10px;border-right:1px solid rgba(255,255,255,.1)"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Quote / Stage</div><div style="font-size:12px;font-weight:700;color:#fff">'+(netFee>0?fc(netFee):'&mdash;')+'</div><div style="font-size:10px;color:rgba(255,255,255,.4)">'+stage+'</div></div>'
+    +'<div style="padding:8px 10px;border-right:1px solid rgba(255,255,255,.1)"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">60-Mo Plan</div><div style="font-size:12px;font-weight:700;color:#fff">'+(mo60>0?fc(mo60)+'/mo':'&mdash;')+'</div><div style="font-size:10px;color:rgba(255,255,255,.4)">'+(moSave>0?'Saves '+fc(moSave)+'/mo':'')+'</div></div>'
+    +'<div style="padding:8px 10px"><div style="font-size:9px;font-weight:700;color:#C8960C;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Case Completion</div><div style="font-size:12px;font-weight:700;color:#fff">'+completion+'</div><div style="height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:4px"><div style="height:4px;background:#C8960C;border-radius:2px;width:'+completion+'%"></div></div></div>'
+    +'</div></div>'
+    +'<div style="padding:20px">'
+    +'<div class="page-title">FULL QUOTE &mdash; '+name+'</div>'
+    +'<div class="page-sub">'+resort+' &nbsp;&middot;&nbsp; 5 emails ready to copy &nbsp;&middot;&nbsp; Send in order</div>'
     +makeBlock(1,'Group Filing — How It Works',e1)
     +makeBlock(2,'Resort Compensation — Why the Resort Will Settle',e2)
     +makeBlock(3,'Credit Protection — What Alpha Covers',e3)
     +makeBlock(4,'True Cost of Ownership',e4)
     +makeBlock(5,'Your Service Quote',e5)
-    +copyScript+'</body></html>';
+    +copyScript+'</div></body></html>';
 
   if(typeof cb==='function'){cb(fullHtml);return;}
   var w=window.open('','_blank','width=900,height=700');
