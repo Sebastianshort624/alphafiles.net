@@ -2656,7 +2656,7 @@ function atcEmailThisPage(url,clientData){
 
 function createClientFilePage(){
   var AK='atc_active',SK='atc_clients_v2',TK='atc_gh_token';
-  var slug=localStorage.getItem(AK);
+  var slug=(localStorage.getItem(AK)||'').toLowerCase().replace(/[^a-z0-9.]/g,'');
   if(!slug){alert('No active client. Select one first.');return;}
   var token=localStorage.getItem(TK);
   if(!token){var t=prompt('Enter GitHub token (ghp_...):');if(!t)return;localStorage.setItem(TK,t.trim());token=t.trim();}
