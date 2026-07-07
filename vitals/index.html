@@ -1616,7 +1616,16 @@ function populateFromCRM(){
     return String(Math.round(n));
   }
   if(behindMtg)setf('v-mtgb',toMonths(behindMtg));
-  if(behindMait)setf('v-mtfb',toMonths(behindMait));
+  if(behindMait){
+    setf('v-mtfb',toMonths(behindMait));
+    // Open the "Behind on MTF?" collapsible panel
+    var mtfPanel=document.getElementById('mtf-late');
+    if(mtfPanel&&!mtfPanel.classList.contains('open')){
+      mtfPanel.classList.add('open');
+      var pto=document.getElementById('pto-mtf-late');
+      if(pto)pto.textContent='−';
+    }
+  }
   var st=document.getElementById('pop-status');
   if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
   autoSave();
