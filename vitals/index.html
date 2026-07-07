@@ -1589,14 +1589,14 @@ function populateFromCRM(){
   var curMtg=field(['R1-Current on mortgage','Current on mortgage'],t);
 
   function setf(id,val){if(!val)return;var el=document.getElementById(id);if(!el)return;el.value=val;el.dispatchEvent(new Event('input'));}
-  setf('v-fname',firstName);setf('v-lname',lastName);
+  setf('v-first',firstName);setf('v-last',lastName);
   setf('v-email',email);setf('v-phone',phone);
   setf('v-resort',resort);setf('v-rescity',city);setf('v-loc',state);
   if(yearPurch)setf('v-year',yearPurch);
   if(price)setf('v-pprice',price);
   if(mtf)setf('v-mtf',mtf);
   if(mtgAmt)setf('v-mtg',mtgAmt);
-  if(balance)setf('v-bal',balance);
+  if(balance)setf('v-balance',balance);
   if(fee)setf('v-fee',fee);
   if(whyOut)setf('v-why',whyOut);
   if(isPaid){var mEl=document.getElementById('v-mtg');if(mEl){mEl.value='0';mEl.dispatchEvent(new Event('input'));}}
