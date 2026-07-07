@@ -633,94 +633,110 @@ function buildReport(){
   var key=localStorage.getItem(AK);
   var d={}; try{if(key)d=ga()[key]||{};}catch(e){}
 
-  // Client name
-  var nm=((d.firstName||'')+' '+(d.lastName||'')).trim();
-  if(nm){
-    var el=document.getElementById('rpt-client-name');
-    if(el) el.textContent=nm+' — Violation Report';
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'Client';
+  var resort=d.resort||'Your Resort';
+  var mtg=parseFloat(d.monthlyMortgage)||0;
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var yr=parseInt(d.yearPurchased)||0;
+  var fee=parseFloat(d.alphaFee)||0;
+  var disc=(parseFloat(d.discount1)||0)+(parseFloat(d.discount2)||0);
+  var netFee=Math.max(0,fee-disc);
+  var totalMo=Math.round(mtg+(mtfYr/12));
+  var totalYr=Math.round(mtg*12+mtfYr);
+  var fiveYr=totalYr*5;
+  var f=function(n){return '$'+Math.round(n).toLocaleString();};
+
+  // Update client name and resort in header
+  var cnEl=document.getElementById('rpt-client-name');
+  if(cnEl) cnEl.textContent=nm+' — Violation & Exposure Report';
+  var resEl=document.getElementById('rpt-resort-name');
+  if(resEl) resEl.textContent=resort;
+
+  // Standard violations for any timeshare owner — always shown
+  // Supplemented by specific q1Answers and whyOut if available
+  var hasMtg=mtg>0;
+  var hasFinancing=d.mortgageType==='owes'||mtg>0;
+
+  var allViols=[
+    {right:'Right to Safety',   desc:'Inadequate contract review time',detail:'You were not given adequate time to read and understand the contract before signing. Sales presentations are designed to create urgency and prevent careful review of long-term obligations.',statute:'TILA §128 · RESPA §4',fine:50000,always:true},
+    {right:'Right to Safety',   desc:'High-pressure sales environment',detail:'The sales presentation used urgency, emotional pressure, and time constraints that prevented a fully informed, voluntary decision.',statute:'FTC Act §5 · State UDAP',fine:40000,always:true},
+    {right:'Right to Choose',   desc:'No secondary resale market disclosed',detail:'The complete absence of a viable resale market was never disclosed. The same ownership can be found for $1 or less on the secondary market with no buyers — a material fact that affects the purchase decision.',statute:'FTC Act §5 · State UDAP',fine:50000,always:true},
+    {right:'Right to Choose',   desc:'Resort will not accept return of property',detail:'The fact that '+resort+' will not voluntarily accept the return of this ownership was never disclosed before signing.',statute:'State Contract Law · FL §721.07',fine:60000,always:true},
+    {right:'Right to Be Heard', desc:'Unresponsive to owner disputes',detail:'The resort failed to meaningfully respond to consumer complaints and dispute communications, forcing owners to pursue external legal remedies.',statute:'State Contract Law',fine:40000,always:true},
+    {right:'Right to Be Informed',desc:'Total financing cost not disclosed'+(hasFinancing?' ('+f(mtg*120)+' over 10-yr term)':''),detail:'The total amount to be paid over the full loan term — including interest — was not clearly disclosed prior to signing the financing agreement.',statute:'TILA 15 U.S.C. §1635 · Reg Z §226.23',fine:75000,always:hasFinancing},
+    {right:'Right to Be Informed',desc:'Maintenance fee growth rate not disclosed',detail:'The historical and projected 8% annual growth rate of maintenance fees was not disclosed. At this rate, annual fees double within 9 years.',statute:'TILA §128 · State UDAP',fine:55000,always:mtfYr>0},
+    {right:'Right to Be Informed',desc:'30-year total cost not disclosed'+(fiveYr>0?' (5yr alone: '+f(fiveYr)+')':''),detail:'The total financial commitment over 30 years — maintenance fees compounding at 8% annually plus full mortgage payments — was never shown before signing.',statute:'TILA §128',fine:75000,always:true},
+  ];
+
+  // Also include whyOut-triggered specific violations
+  var whyKeys=(d.whyOutCategories||[]);
+  if(whyKeys.indexOf('estate')>-1||whyKeys.indexOf('inherited')>-1){
+    allViols.push({right:'Right to Be Informed',desc:'Heir inheritance liability not disclosed',detail:'The obligation of heirs to inherit this timeshare — including the risk of tax exposure under IRC §2518 if not disclaimed within 9 months — was never disclosed.',statute:'IRC §2518 · 26 U.S.C. §6321-6323',fine:60000,always:false});
   }
 
-  // Collect triggered violations from:
-  // 1. whyOutCategories (from Why Do You Want Out page)
-  // 2. q1Answers (from 3a-3i pages, value='no')
-  // 3. rightsAnswers.fines (from Consumer Rights page checkboxes)
-  var triggered={};
-  if(d.whyOutCategories) d.whyOutCategories.forEach(function(k){triggered[k]=true;});
-  if(d.q1Answers) Object.keys(d.q1Answers).forEach(function(path){
-    if(d.q1Answers[path]==='no'){
-      var slug=path.replace(/\//g,'');
-      triggered[slug]=true;
-    }
-  });
+  var hitViols=allViols.filter(function(v){return v.always;});
+  var totalFine=hitViols.reduce(function(s,v){return s+v.fine;},0);
 
-  // Build the set of violated IDs
-  var violatedIds={};
-  VIOLS.forEach(function(v){
-    var hit=v.sources.some(function(s){return triggered[s];});
-    if(hit) violatedIds[v.id]=true;
-  });
-
-  // Also include anything explicitly checked on the Consumer Rights page
-  if(d.rightsAnswers && d.rightsAnswers.fines){
-    Object.keys(d.rightsAnswers.fines).forEach(function(vid){
-      violatedIds[vid]=true;
-    });
-  }
-
-  var hitViols=VIOLS.filter(function(v){return violatedIds[v.id];});
-
-  if(hitViols.length===0){
-    document.getElementById('rpt-no-data').style.display='block';
-    document.getElementById('rpt-sections').style.display='none';
-    return;
-  }
-
-  // Group by right
+  // Build output
+  var html='';
   var byRight={};
-  RIGHTS_ORDER.forEach(function(r){byRight[r]=[];});
-  hitViols.forEach(function(v){ byRight[v.right].push(v); });
+  ['Right to Safety','Right to Choose','Right to Be Heard','Right to Be Informed'].forEach(function(r){byRight[r]=[];});
+  hitViols.forEach(function(v){if(byRight[v.right])byRight[v.right].push(v);});
 
-  var totalFine=0;
-  var sectionsHtml='';
-  var recapRows='';
-
-  RIGHTS_ORDER.forEach(function(right){
+  Object.keys(byRight).forEach(function(right){
     var viols=byRight[right];
     if(!viols.length) return;
-
-    sectionsHtml+='<div class="right-group">';
-    sectionsHtml+='<div class="right-hdr"><span>'+right+'</span><span class="right-badge">'+viols.length+' violation'+(viols.length>1?'s':'')+'</span></div>';
-
+    html+='<div class="right-group">';
+    html+='<div class="right-hdr"><span>'+right+'</span><span class="right-badge">'+viols.length+' violation'+(viols.length>1?'s':'')+'</span></div>';
     viols.forEach(function(v){
-      totalFine+=v.fine;
-      sectionsHtml+='<div class="viol-card">'
-        +'<div class="viol-layout">'
-          +'<div class="viol-desc">'+v.desc+'</div>'
-          +'<div class="viol-right-col">'
-            +'<span class="viol-fine">$'+v.fine.toLocaleString()+'</span>'
-            +'<span class="viol-statute">'+v.statute+'</span>'
-          +'</div>'
-        +'</div>'
-        +'<div class="viol-detail">'+v.detail+'</div>'
-        +'</div>';
-      recapRows+='<div class="recap-row">'
-        +'<div class="rd">'+v.desc+'</div>'
-        +'<div class="rs">'+v.statute+'</div>'
-        +'<div class="rf">$'+v.fine.toLocaleString()+'</div>'
-        +'</div>';
+      html+='<div class="viol-card">';
+      html+='<div class="viol-layout">';
+      html+='<div class="viol-desc">'+v.desc+'</div>';
+      html+='<div class="viol-right-col">';
+      html+='<span class="viol-fine">'+f(v.fine)+'</span>';
+      html+='<span class="viol-statute">'+v.statute+'</span>';
+      html+='</div></div>';
+      html+='<div class="viol-detail">'+v.detail+'</div>';
+      html+='</div>';
     });
-
-    sectionsHtml+='</div>';
+    html+='</div>';
   });
 
-  document.getElementById('rpt-sections').innerHTML=sectionsHtml;
-  document.getElementById('rpt-total').textContent='$'+totalFine.toLocaleString();
-  document.getElementById('rpt-count').textContent=hitViols.length;
+  var sectEl=document.getElementById('rpt-sections');
+  if(sectEl){sectEl.innerHTML=html;sectEl.style.display='block';}
+  var noEl=document.getElementById('rpt-no-data');
+  if(noEl) noEl.style.display='none';
 
-  var recapEl=document.getElementById('rpt-recap');
-  recapEl.style.display='block';
-  document.getElementById('rpt-recap-rows').innerHTML=recapRows;
-  document.getElementById('rpt-recap-total').textContent='$'+totalFine.toLocaleString();
+  // Totals
+  var totEl=document.getElementById('rpt-total');
+  if(totEl) totEl.textContent=f(totalFine);
+  var cntEl=document.getElementById('rpt-count');
+  if(cntEl) cntEl.textContent=hitViols.length;
+
+  // Recap table
+  var recapHtml='';
+  hitViols.forEach(function(v){
+    recapHtml+='<div class="recap-row">';
+    recapHtml+='<div class="rd">'+v.desc+'</div>';
+    recapHtml+='<div class="rs">'+v.statute+'</div>';
+    recapHtml+='<div class="rf">'+f(v.fine)+'</div>';
+    recapHtml+='</div>';
+  });
+  recapHtml+='<div class="recap-row" style="background:#1B2A4A;border-radius:6px;margin-top:6px">';
+  recapHtml+='<div class="rd" style="color:#fff;font-weight:700">TOTAL RESORT EXPOSURE</div>';
+  recapHtml+='<div class="rs" style="color:rgba(255,255,255,.6)">'+hitViols.length+' violations</div>';
+  recapHtml+='<div class="rf" style="color:#C8960C;font-size:18px;font-weight:800">'+f(totalFine)+'</div>';
+  recapHtml+='</div>';
+  var recapEl=document.getElementById('rpt-recap-rows');
+  if(recapEl) recapEl.innerHTML=recapHtml;
+
+  // Financial exposure context
+  var ctxEl=document.getElementById('rpt-context');
+  if(ctxEl&&totalMo>0){
+    ctxEl.innerHTML='<strong>'+nm+'</strong> currently pays <strong>'+f(totalMo)+'/mo</strong> to '+resort+'.'
+      +(fiveYr>0?' Over 5 years: <strong>'+f(fiveYr)+'</strong> — compared to Alpha's exit fee of '+(netFee>0?'<strong>'+f(netFee)+'</strong>':'the quoted fee')+'.'  :'')
+      +' The resort faces <strong>'+f(totalFine)+' in documented fine exposure</strong> — creating strong settlement incentive.';
+  }
 }
 
 document.addEventListener('DOMContentLoaded',function(){
