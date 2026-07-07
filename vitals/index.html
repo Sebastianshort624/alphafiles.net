@@ -961,6 +961,15 @@ function _topSaveClick(){
 <div class="card-grid">
 
 <!-- OWNER -->
+<!-- FULL QUOTE BUTTON -->
+<div class="card" style="border:2px solid #1B2A4A;background:linear-gradient(135deg,#1B2A4A,#2a4080)">
+  <div class="card-body" style="padding:10px">
+    <button onclick="generateFullQuote()" style="width:100%;padding:12px;background:rgba(200,150,12,1);color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:700;font-family:Inter,sans-serif;cursor:pointer;letter-spacing:.4px">
+      📧 FULL QUOTE — Generate All 5 Emails
+    </button>
+  </div>
+</div>
+
 <!-- CRM PASTE → POPULATE BOX -->
 <div class="card" style="border:2px dashed #C8960C;background:#fffdf5">
   <div class="card-hdr" style="color:var(--gold)">📋 Paste CRM Data → Auto-Populate</div>
@@ -1609,6 +1618,222 @@ function populateFromCRM(){
   if(typeof calcUsage==='function')calcUsage();
   if(typeof calcSavings==='function')calcSavings();
   if(typeof calcPurchaseFinance==='function')calcPurchaseFinance();
+}
+
+
+// ══ FULL QUOTE — Generate 5 HTML Emails ═══════════════════════════
+function generateFullQuote(){
+  var SK='atc_clients_v2', AK='atc_active';
+  var slug=localStorage.getItem(AK);
+  var all; try{all=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){all={}}
+  var d=all[slug]||{};
+
+  var fn=(d.firstName||'Friend');
+  var ln=(d.lastName||'');
+  var name=fn+(ln?' '+ln:'');
+  var resort=d.resort||'Your Resort';
+  var mtg=parseFloat(d.monthlyMortgage)||0;
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var mtfMo=Math.round(mtfYr/12);
+  var totalMo=Math.round(mtg+mtfMo);
+  var totalYr=Math.round(mtg*12+mtfYr);
+  var fee=parseFloat(d.alphaFee)||0;
+  var d1=parseFloat(d.discount1)||0;
+  var d2=parseFloat(d.discount2)||0;
+  var totalDisc=d1+d2;
+  var netFee=Math.max(0,fee-totalDisc);
+  var down=parseFloat(d.downPayment)||0;
+  var afterDown=Math.max(0,netFee-down);
+  var r60=0.20/12, n60=60;
+  var base=afterDown>0?afterDown:netFee;
+  var mo60=netFee>0?Math.round(base*(r60*Math.pow(1+r60,n60))/(Math.pow(1+r60,n60)-1)):0;
+  var moSave=Math.round(totalMo-mo60);
+  var save5=Math.round(totalYr*5-netFee);
+  var f=function(n){return '$'+Math.round(n).toLocaleString();};
+
+  var discHtml='';
+  if(totalDisc>0){
+    discHtml='<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px;margin:14px 0">'
+      +'<div style="font-size:11px;font-weight:700;color:#16A34A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Applied Discounts</div>'
+      +(d1>0?'<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>Discount 1</span><span style="color:#16A34A;font-weight:700">−'+f(d1)+'</span></div>':'')
+      +(d2>0?'<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>Discount 2</span><span style="color:#16A34A;font-weight:700">−'+f(d2)+'</span></div>':'')
+      +'<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;padding:8px 0 0;margin-top:6px;border-top:1px solid #86efac"><span>Net Fee</span><span style="color:#16A34A">'+f(netFee)+'</span></div>'
+      +'<div style="display:flex;align-items:center;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #86efac">'
+      +(fee>0?'<span style="font-size:16px;color:#9ca3af;text-decoration:line-through">'+f(fee)+'</span><span style="font-size:18px;color:#9ca3af">→</span>':'')
+      +'<span style="font-size:22px;font-weight:800;color:#16A34A">'+f(netFee)+'</span></div>'
+      +'</div>';
+  }
+
+  var sig='<div style="background:#f5f7fa;padding:14px 20px;font-size:11px;color:#9ca3af;line-height:1.7;border-top:1px solid #E0E4ED">'
+    +'<strong style="color:#1B2A4A">Sebastian Short</strong> · Account Specialist · ALPHA TIMESHARE CONSULTANTS<br>'
+    +'Business: 1 (877) 848-3948 Ext. 134 &nbsp;·&nbsp; Office: 1 (689) 233-3259<br>'
+    +'Sebastian@AlphaTimeshareConsultants.com</div>';
+
+  var pullQuote='<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:18px;font-style:italic;color:#1B2A4A;border-top:2px solid #C8960C;border-bottom:2px solid #C8960C;padding:14px 0;margin:16px 0;text-align:center;line-height:1.5">"Would you rather put those payments toward the problem — or the solution?"</div>';
+
+  var hdr=function(sub){return '<div style="background:#1B2A4A;padding:24px 28px;text-align:center"><h1 style="font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:18px;font-weight:700;color:#fff;letter-spacing:1.5px;margin:0 0 6px">ALPHA TIMESHARE CONSULTANTS</h1><p style="color:#C8960C;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:0">'+sub+'</p></div>';};
+  var sh=function(t){return '<div style="background:#1B2A4A;color:#C8960C;font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:10px 16px;border-radius:4px;margin:16px 0 8px">'+t+'</div>';};
+  var body=function(h){return '<div style="padding:20px 28px;font-family:Arial,sans-serif;font-size:14px;color:#374151;line-height:1.7">'+h+'</div>';};
+
+  // ── EMAIL 1: GROUP FILING ──────────────────────────────────────
+  var e1=hdr('Group Filing — The Only Path to Compensation')
+    +body('<p style="font-size:16px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',</p>'
+    +'<p>I want to make sure you understand something that most timeshare exit companies never explain — because most of them can\'t do it.</p>'
+    +sh('Why Group Filing Changes Everything')
+    +'<p>Most exit companies handle cases one owner at a time. We don\'t. Alpha consolidates owners from the same resort — in your case, <strong>'+resort+'</strong> — into a single, coordinated filing. This is not just a business model. It\'s the single most important legal distinction in the industry.</p>'
+    +'<div style="background:#EAF0F8;border:1.5px solid #1B2A4A;border-radius:8px;padding:16px;margin:14px 0">'
+    +'<div style="font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">How Group Filing Works</div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #d0daea"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div><strong style="color:#1B2A4A">Individual violations become resort-level patterns.</strong> Your disclosures weren\'t just wrong for you — they were wrong for every '+resort+' owner who signed in the same environment. A judge sees a behavioral pattern, not one complaint.</div></div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #d0daea"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div><strong style="color:#1B2A4A">The resort\'s exposure multiplies.</strong> One owner filing = nuisance. Forty coordinated owners from the same resort = regulatory and reputational liability.</div></div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #d0daea"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div><strong style="color:#1B2A4A">Settlement beyond the Mutual Release becomes possible.</strong> Individual filers get exits. Group participants are positioned to seek compensation — reimbursement above and beyond simply walking away.</div></div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div><div><strong style="color:#1B2A4A">You don\'t do anything differently.</strong> Alpha handles the aggregation, documentation, and filing. You benefit from the group\'s leverage automatically.</div></div>'
+    +'</div>'
+    +'<div style="background:#fff8ec;border-left:4px solid #C8960C;border-radius:0 6px 6px 0;padding:12px 14px;margin:14px 0"><p style="margin:0"><strong>Why no one else does this at scale:</strong> 41 years of industry relationships, resort-specific case databases, and the institutional track record to be taken seriously at the negotiating table.</p></div>'
+    +'<p><strong>Individual owners get exits. Group participants get exits and are the only ones eligible for resort reimbursement.</strong></p>'
+    +pullQuote)+sig;
+
+  // ── EMAIL 2: COMPENSATION ──────────────────────────────────────
+  var e2=hdr('Resort Compensation — How It Works')
+    +body('<p style="font-size:16px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',</p>'
+    +'<p>When most people think about exiting a timeshare, they think the goal is just getting out. For group filing participants like you, the goal is bigger — and the resort knows it.</p>'
+    +sh('What the Resort Is Actually Exposed To')
+    +'<p><strong>Individual violations</strong> — the disclosures your salesperson failed to make — represent one complaint. Resorts handle those through delay and attrition. They know most individual owners give up.</p>'
+    +'<p><strong>Resort-wide violations</strong> — the same pattern of failures repeated across hundreds of <strong>'+resort+'</strong> owners — represent a documented behavioral pattern. That\'s a different conversation.</p>'
+    +'<div style="background:#EAF0F8;border:1.5px solid #1B2A4A;border-radius:8px;padding:16px;margin:14px 0">'
+    +'<div style="font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">'+resort+' — Documented Fine Exposure</div>'
+    +'<div style="padding:8px 0;border-bottom:1px solid #d0daea;font-size:13px">▸ <strong>TILA §128 / RESPA §4</strong> — Failure to disclose total financing cost before signing. Fine exposure per owner: up to <strong style="color:#DC2626">$50,000</strong></div>'
+    +'<div style="padding:8px 0;border-bottom:1px solid #d0daea;font-size:13px">▸ <strong>FTC Act §5 / State UDAP</strong> — Material misrepresentations about resale market value and ownership benefits. Fine exposure per owner: up to <strong style="color:#DC2626">$50,000</strong></div>'
+    +'<div style="padding:8px 0;font-size:13px">▸ <strong>TILA 15 U.S.C. §1635 / Reg Z</strong> — Failure to disclose total 30-year financial commitment including compounding MTF growth. Fine exposure per owner: up to <strong style="color:#DC2626">$75,000</strong></div>'
+    +'</div>'
+    +'<div style="background:#DC2626;border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin:14px 0">'
+    +'<div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.7)">Documented Violation Exposure</div><div style="font-size:10px;color:rgba(255,255,255,.55);margin-top:2px">Per Owner — '+resort+'</div></div>'
+    +'<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:28px;font-weight:700;color:#fff">$175,000+</div>'
+    +'</div>'
+    +'<p>When multiplied across a coordinated group, the resort faces a choice: defend an expensive, embarrassing pattern in front of regulators — or negotiate a favorable settlement that includes your Mutual Release <em>and</em> compensation above and beyond the exit itself.</p>'
+    +'<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:14px;margin:14px 0"><strong style="color:#16A34A">Group filing participants are the only ones eligible for resort reimbursement.</strong> The leverage simply doesn\'t exist at the individual level.</div>'
+    +pullQuote)+sig;
+
+  // ── EMAIL 3: CREDIT PROTECTION ────────────────────────────────
+  var e3=hdr('Credit Protection — What\'s Covered From Day One')
+    +body('<p style="font-size:16px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',</p>'
+    +'<p>One of the most important things I want you to understand about your enrollment is what happens to your credit — because Alpha\'s approach here is different from what most people expect.</p>'
+    +sh('Your Credit Is Protected From Day One')
+    +'<p><strong>Alpha does not advise, instruct, or encourage you to stop making payments.</strong> Any decision about your ongoing resort obligations is entirely yours — and that is written explicitly into your contract.</p>'
+    +'<div style="background:#EAF0F8;border:1.5px solid #1B2A4A;border-radius:8px;padding:16px;margin:14px 0">'
+    +'<div style="font-family:\'Barlow Condensed\',Arial,sans-serif;font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Three Layers of Credit Protection</div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #d0daea"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div><strong>Monitoring starts the day you enroll.</strong> Our in-house credit team begins watching your profile immediately. If any timeshare-related item appears, we are on it before you even know.</div></div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #d0daea"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div><strong>Disputes handled for you — at no additional cost.</strong> If any timeshare-related derogatory item appears on your TransUnion, Equifax, or Experian report, we document and dispute it on your behalf.</div></div>'
+    +'<div style="display:flex;gap:12px;padding:10px 0"><div style="background:#1B2A4A;color:#C8960C;font-size:18px;font-weight:700;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div><strong>Full bureau submission upon your Mutual Release.</strong> When your exit is complete, Alpha submits full documentation to all three bureaus simultaneously. You exit with a clean record.</div></div>'
+    +'</div>'
+    +'<ul style="padding-left:18px;margin:12px 0;font-size:13px;line-height:1.9">'
+    +'<li>Protection active from enrollment date — not from exit date</li>'
+    +'<li>All three bureaus covered — TransUnion, Equifax, Experian</li>'
+    +'<li>Disputes filed at no additional charge to you</li>'
+    +'<li>Documentation submitted upon Mutual Release for clean bureau record</li>'
+    +'<li>In-house team — not outsourced to a third-party company</li>'
+    +'</ul>'
+    +pullQuote)+sig;
+
+  // ── EMAIL 4: TRUE COST ────────────────────────────────────────
+  var rows5='';
+  var years=[1,3,5,10,20,30];
+  var rowData=[
+    [totalYr,netFee,(totalYr-netFee<=0?'—':f(totalYr-netFee)),false],
+    [totalYr*3,netFee,f(totalYr*3-netFee),false],
+    [totalYr*5,netFee,f(save5),true],
+    [totalYr*10,netFee,f(totalYr*10-netFee),false],
+    [totalYr*20,netFee,f(totalYr*20-netFee),false],
+    [Math.round(totalYr*30),netFee,f(Math.round(totalYr*30)-netFee),false]
+  ];
+  years.forEach(function(n,i){
+    var hl=rowData[i][3];
+    rows5+='<tr style="background:'+(hl?'#fef2f2':'#fff')+'">'
+      +'<td style="padding:9px 14px;font-weight:'+(hl?'800':'600')+';color:#1B2A4A;border-bottom:1px solid #f3f4f6">'+n+' Year'+(n>1?'s':'')+'</td>'
+      +'<td style="padding:9px 14px;text-align:right;color:#DC2626;font-weight:'+(hl?'800':'700')+';border-bottom:1px solid #f3f4f6">'+f(rowData[i][0])+'</td>'
+      +'<td style="padding:9px 14px;text-align:right;color:#6b7280;border-bottom:1px solid #f3f4f6">'+(netFee>0?f(netFee):'—')+'</td>'
+      +'<td style="padding:9px 14px;text-align:right;color:#16A34A;font-weight:700;border-bottom:1px solid #f3f4f6">'+rowData[i][2]+'</td>'
+      +'</tr>';
+  });
+
+  var e4=hdr('True Cost of Ownership — '+resort)
+    +body('<p style="font-size:16px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',</p>'
+    +'<p>Here\'s the number <strong>'+resort+'</strong> never showed you at signing — what this ownership actually costs over time.</p>'
+    +sh('Your Current Obligation')
+    +'<div style="display:flex;justify-content:space-around;background:#EAF0F8;border-radius:8px;padding:14px;margin:10px 0 14px;text-align:center">'
+    +'<div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:24px;font-weight:700;color:#1B2A4A">'+(totalMo>0?f(totalMo):'—')+'</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:2px">Monthly</div></div>'
+    +'<div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:24px;font-weight:700;color:#1B2A4A">'+(totalYr>0?f(totalYr):'—')+'</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:2px">Yearly</div></div>'
+    +'<div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:24px;font-weight:700;color:#1B2A4A">'+(totalYr>0?f(totalYr*5):'—')+'</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-top:2px">5-Year Cost</div></div>'
+    +'</div>'
+    +sh('What Staying In Will Cost You')
+    +'<p>Your maintenance fees are not fixed. The industry average is <strong>8% annual growth</strong> — confirmed by ARDA data showing fees rose from $731 (2010) to $1,480 (2024), a 102% increase in 14 years.</p>'
+    +'<table style="width:100%;border-collapse:collapse;margin:10px 0"><thead style="background:#1B2A4A"><tr><th style="padding:10px 14px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)">Timeframe</th><th style="padding:10px 14px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)">Resort Total</th><th style="padding:10px 14px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:rgba(255,255,255,.6)">With Alpha</th><th style="padding:10px 14px;text-align:right;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#C8960C">You Save</th></tr></thead><tbody>'+rows5+'</tbody></table>'
+    +'<div style="background:#fff8f0;border:1.5px solid #ea580c;border-radius:6px;padding:12px 14px;margin:10px 0;font-size:13px;line-height:1.6"><strong style="color:#ea580c">What '+resort+' never disclosed:</strong> That obligation doesn\'t stay flat. At 8% annual growth, your maintenance fees alone will more than double within a decade. That number was never shown to you before signing. That is a documented statutory violation.</div>'
+    +'<p>Pay <strong>'+f(netFee)+'</strong> once — and every dollar after that stays in your pocket forever.</p>'
+    +pullQuote)+sig;
+
+  // ── EMAIL 5: QUOTE ─────────────────────────────────────────────
+  var e5=hdr('Your Service Quote')
+    +body('<p style="font-size:16px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+name+',</p>'
+    +'<p>Here\'s a summary of your <strong>'+resort+'</strong> numbers and what it costs to exit with Alpha.</p>'
+    +discHtml
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">'
+    +'<div style="border-radius:8px;padding:16px;text-align:center;border:2px solid #fca5a5;background:#fef2f2"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px">Resort — 5-Year Cost</div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:26px;font-weight:700;color:#DC2626">'+(totalYr>0?f(totalYr*5):'—')+'</div></div>'
+    +'<div style="border-radius:8px;padding:16px;text-align:center;border:2px solid #86efac;background:#f0fdf4"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px">Alpha — Exit Fee</div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:26px;font-weight:700;color:#16A34A">'+(netFee>0?f(netFee):'—')+'</div></div>'
+    +'</div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:14px;text-align:center;margin-bottom:14px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.55)">You Save Over 5 Years</div><div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:24px;font-weight:700;color:#C8960C">'+(save5>0?f(save5):'—')+'</div></div>'
+    +sh('Monthly Payment Breakdown')
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">'
+    +'<div style="background:#f9faf9;border:1px solid #E0E4ED;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">60-Month Plan</div><div style="font-size:15px;font-weight:700;color:#1B2A4A">'+(mo60>0?f(mo60)+'/mo':'—')+'</div></div>'
+    +'<div style="background:#f9faf9;border:1px solid #E0E4ED;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">Current Payments</div><div style="font-size:15px;font-weight:700;color:#DC2626">'+(totalMo>0?f(totalMo)+'/mo':'—')+'</div></div>'
+    +'<div style="background:#f9faf9;border:1px solid #E0E4ED;border-radius:8px;padding:12px;text-align:center"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:4px">Monthly Savings</div><div style="font-size:15px;font-weight:700;color:#16A34A">'+(moSave>0?f(moSave)+'/mo':'—')+'</div></div>'
+    +'</div>'
+    +sh('Our Exit Program Includes')
+    +'<ul style="padding-left:18px;margin:10px 0;font-size:13px;line-height:2">'
+    +'<li>Written Money-Back Guarantee upon Program Completion</li>'
+    +'<li>Permanent Legal Termination of Your Timeshare</li>'
+    +'<li>Elimination of Future Maintenance Obligations</li>'
+    +'<li>Resolution of Delinquent Fees</li>'
+    +'<li>Credit Protection &amp; Repair Support</li>'
+    +'<li>Proof of Performance Documentation</li>'
+    +'<li>Consumer Protection &amp; BBB Credibility</li>'
+    +'</ul>'
+    +'<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:18px;font-style:italic;color:#1B2A4A;border-top:2px solid #C8960C;border-bottom:2px solid #C8960C;padding:14px 0;margin:16px 0;text-align:center">"Would you rather be putting those payments toward the problem or toward the solution?"</div>'
+    +'<div style="background:#f9faf9;border-top:1px solid #E0E4ED;padding:12px 0;font-size:11px;color:#9ca3af;line-height:1.7">This summary is for informational purposes regarding your timeshare exit program enrollment and is not a binding offer until a signed agreement is executed. Pricing and financing terms are subject to change. This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed.</div>')+sig;
+
+  // ── BUILD THE OUTPUT PAGE ─────────────────────────────────────
+  var css='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Barlow+Condensed:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>'
+    +'*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Arial,sans-serif;background:#F4F6FA;padding:20px;color:#1a1a1a}'
+    +'.page-title{font-family:"Barlow Condensed",Arial,sans-serif;font-size:22px;font-weight:700;color:#1B2A4A;letter-spacing:.5px;margin-bottom:4px}'
+    +'.page-sub{font-size:13px;color:#6b7280;margin-bottom:24px}'
+    +'.email-block{background:#fff;border-radius:10px;border:1px solid #E0E4ED;margin-bottom:24px;overflow:hidden}'
+    +'.email-label{background:#1B2A4A;padding:10px 18px;display:flex;justify-content:space-between;align-items:center}'
+    +'.email-label .num{font-family:"Barlow Condensed",Arial,sans-serif;font-size:11px;font-weight:700;color:#C8960C;letter-spacing:1.5px;text-transform:uppercase}'
+    +'.email-label .title{font-size:14px;font-weight:700;color:#fff}'
+    +'.copy-btn{padding:5px 14px;background:#C8960C;color:#fff;border:none;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}'
+    +'p{margin-bottom:10px}'
+    +'</style>';
+
+  var makeBlock=function(num,title,html){
+    return '<div class="email-block"><div class="email-label"><div><div class="num">Email '+num+' of 5</div><div class="title">'+title+'</div></div>'
+      +'<button class="copy-btn" onclick="copyEmail(\'e'+num+'\')">📋 Copy</button></div>'
+      +'<div id="e'+num+'">'+html+'</div></div>';
+  };
+
+  var copyScript='<script>function copyEmail(id){var el=document.getElementById(id);var r=document.createRange();r.selectNode(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);document.execCommand("copy");window.getSelection().removeAllRanges();var btn=el.closest(".email-block").querySelector(".copy-btn");btn.textContent="✓ Copied!";setTimeout(function(){btn.textContent="📋 Copy";},2000);}<\/script>';
+
+  var fullHtml='<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>FULL QUOTE — '+name+'</title>'+css+'</head><body>'
+    +'<div class="page-title">FULL QUOTE — '+name+'</div>'
+    +'<div class="page-sub">'+resort+' &nbsp;·&nbsp; 5 emails ready to copy &nbsp;·&nbsp; Send in order</div>'
+    +makeBlock(1,'Group Filing — How It Works',e1)
+    +makeBlock(2,'Resort Compensation — Why the Resort Will Settle',e2)
+    +makeBlock(3,'Credit Protection — What Alpha Covers',e3)
+    +makeBlock(4,'True Cost of Ownership',e4)
+    +makeBlock(5,'Your Service Quote',e5)
+    +copyScript+'</body></html>';
+
+  var w=window.open('','_blank','width=900,height=700');
+  if(w){w.document.open();w.document.write(fullHtml);w.document.close();}
+  else{alert('Pop-up blocked. Please allow pop-ups for alphafiles.net.');}
 }
 
 function calcUsage(){
