@@ -2382,6 +2382,231 @@ function copyEmail(){
 
 
 
+function atcEmailThisPage(url,clientData){
+  var d=clientData||{};
+  var fn=(d.firstName||'');
+  var resort=d.resort||'Your Resort';
+  var mtg=parseFloat(d.monthlyMortgage)||0;
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var mtfMo=Math.round(mtfYr/12);
+  var totalMo=Math.round(mtg+mtfMo);
+  var totalYr=Math.round(mtg*12+mtfYr);
+  var fee=parseFloat(d.alphaFee)||0;
+  var d1=parseFloat(d.discount1)||0,d2=parseFloat(d.discount2)||0;
+  var netFee=Math.max(0,fee-d1-d2);
+  var r60=0.20/12,n60=60;
+  var mo60=netFee>0?Math.round(netFee*(r60*Math.pow(1+r60,n60))/(Math.pow(1+r60,n60)-1)):0;
+  var moSave=Math.round(totalMo-mo60);
+  var save5=Math.round(totalYr*5-netFee);
+  var f=function(n){return '$'+Math.round(n).toLocaleString();};
+  var HDR=function(s){return '<div style="background:#1B2A4A;padding:22px 28px;text-align:center"><h1 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#fff;letter-spacing:1.5px;margin:0 0 5px">ALPHA TIMESHARE CONSULTANTS<\/h1><p style="color:#C8960C;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin:0">'+s+'<\/p><\/div>';};
+  var B=function(h){return '<div style="padding:18px 24px;font-family:Arial,sans-serif;font-size:14px;color:#374151;line-height:1.7">'+h+'<\/div>';};
+  var SH=function(t){return '<div style="background:#1B2A4A;color:#C8960C;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:4px;margin:12px 0 8px">'+t+'<\/div>';};
+  var SIG='<div style="background:#f5f7fa;padding:12px 18px;font-size:11px;color:#9ca3af;line-height:1.7;border-top:1px solid #E0E4ED"><strong style="color:#1B2A4A">Sebastian Short<\/strong> &middot; Account Specialist &middot; ALPHA TIMESHARE CONSULTANTS<br>1 (877) 848-3948 Ext. 134 &nbsp;&middot;&nbsp; Sebastian@AlphaTimeshareConsultants.com<\/div>';
+  var PQ='<div style="font-family:Georgia,serif;font-size:16px;font-style:italic;color:#1B2A4A;border-top:2px solid #C8960C;border-bottom:2px solid #C8960C;padding:10px 0;margin:12px 0;text-align:center">&ldquo;Would you rather put those payments toward the problem &mdash; or the solution?&rdquo;<\/div>';
+  var ST=function(n,t,b){return '<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f3f4f6"><div style="background:#1B2A4A;color:#C8960C;font-size:13px;font-weight:700;min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+n+'<\/div><div><strong style="color:#1B2A4A;font-size:13px">'+t+'<\/strong> '+b+'<\/div><\/div>';};
+  var html='';
+  var u=url||window.location.pathname;
+
+  if(u.indexOf('/leverage/')>-1){
+    html=HDR('How Consumer Protection Groups Get Owners Out')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>I want to share something most timeshare exit companies never explain &mdash; because they can\'t offer it.<\/p>'
+    +SH('What They Told You &mdash; And What the Contract Actually Says')
+    +'<p>Your timeshare contract is designed to be iron-clad &mdash; in the resort\'s favor. Everything the salesperson promised verbally &mdash; flexibility, upgrades, resale value &mdash; none of it appears in writing. The contract you signed contains language specifically engineered to hold you legally bound regardless of what you were told.<\/p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;font-size:13px">'
+    +'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px"><div style="font-weight:700;color:#DC2626;margin-bottom:6px">What You Were Told<\/div><ul style="padding-left:14px;margin:0;line-height:2"><li>You can always sell it back<\/li><li>Fees will stay manageable<\/li><li>You can cancel anytime<\/li><li>This is a real estate investment<\/li><li>Your family will love it<\/li><\/ul><\/div>'
+    +'<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px"><div style="font-weight:700;color:#16A34A;margin-bottom:6px">What the Contract Says<\/div><ul style="padding-left:14px;margin:0;line-height:2"><li>Perpetual &mdash; in perpetuity<\/li><li>Fees increase without cap<\/li><li>No exit clause once signed<\/li><li>Zero guaranteed resale value<\/li><li>Passes to heirs upon death<\/li><\/ul><\/div>'
+    +'<\/div>'
+    +'<div style="background:#fff8ec;border-left:4px solid #C8960C;padding:10px 12px;margin:12px 0;font-size:13px">The gap between what was said and what was signed is a <strong>documented pattern of statutory violations<\/strong> &mdash; and exactly what creates the leverage that makes resorts settle.<\/div>'
+    +SH('How Alpha Builds Your Case')
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:12px;margin:8px 0">'
+    +ST(1,'We Interview You','Every detail of your purchase experience is documented in a structured client intake. This becomes the evidentiary foundation of your file.')
+    +ST(2,'Our Software Generates a Violation Report','Alpha\'s software cross-references your intake against federal and state disclosure requirements and assigns the applicable statute and fine exposure to each violation.')
+    +ST(3,'We Document Real Estate Law Violations','Each violation is mapped to its specific statute: <strong>RESPA, TILA\/Reg Z, FTC Act §5, State UDAP, FL §721.07, IRC §2518<\/strong>.')
+    +ST(4,'Group Filing Multiplies the Exposure','Alpha consolidates owners from the same resort into coordinated group filings &mdash; turning individual complaints into documented patterns of resort misconduct.')
+    +'<\/div>'
+    +SH('Why the Resort Would Rather Settle Than Fight')
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;text-align:center">'
+    +'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#DC2626">$50K<\/div><div style="font-size:10px;color:#9ca3af;margin-top:3px">Per TILA\/FTC Violation<\/div><\/div>'
+    +'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#DC2626">$75K<\/div><div style="font-size:10px;color:#9ca3af;margin-top:3px">Per Reg Z Violation<\/div><\/div>'
+    +'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#DC2626">$235K+<\/div><div style="font-size:10px;color:#9ca3af;margin-top:3px">Total Per-Owner Exposure<\/div><\/div>'
+    +'<\/div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.8"><strong style="color:#C8960C">Option A:<\/strong> Defend a coordinated group filing &mdash; regulatory enforcement, $235K+ per owner.<br><strong style="color:#C8960C">Option B:<\/strong> Settle: Mutual Release + possible compensation.<br><strong style="color:#fff">Resorts choose Option B. Because the math tells them to.<\/strong><\/div>'
+    +'<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:12px;margin:10px 0;font-size:13px"><strong style="color:#16A34A">Group filing participants are the only owners eligible for reimbursement above and beyond the Mutual Release itself.<\/strong><\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/group/')>-1||u.indexOf('/approval/')>-1){
+    html=HDR('Finding Your Group &mdash; How Group Filing Works')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>Here is something that most timeshare exit companies can\'t explain &mdash; because they don\'t do it.<\/p>'
+    +SH('What Makes Alpha Different: Group Filing')
+    +'<p>Alpha consolidates owners from the same resort &mdash; <strong>'+resort+'<\/strong> &mdash; into a single, coordinated filing. This is the most important legal distinction in the exit industry.<\/p>'
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:12px;margin:10px 0">'
+    +ST(1,'Same Resort, Same Filing','When multiple owners from '+resort+' are consolidated, individual violations become a documented pattern of resort misconduct.')
+    +ST(2,'Pattern vs. Complaint','One complaint = nuisance. A coordinated group = documented behavioral pattern. Regulators respond at a fundamentally different level.')
+    +ST(3,'Compensation Eligibility','Individual filers can typically only negotiate an exit. Group participants are positioned to seek compensation above and beyond the Mutual Release.')
+    +ST(4,'You Do Nothing Differently','Alpha handles the aggregation, documentation, and filing. You benefit from the group\'s leverage automatically.')
+    +'<\/div>'
+    +'<p><strong>Individual owners get exits. Group participants get exits and are the only ones eligible for resort reimbursement.<\/strong><\/p>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/compensation/')>-1){
+    html=HDR('Resort Compensation &mdash; How It Works')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>When most people think about exiting a timeshare, they think the goal is just getting out. For group filing participants, the goal is bigger.<\/p>'
+    +SH('Individual Violations vs. Resort-Wide Pattern')
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;font-size:13px">'
+    +'<div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:8px;padding:12px"><div style="font-weight:700;color:#DC2626;margin-bottom:5px">Individual Exit Only<\/div>One owner &middot; One complaint &middot; Resort delays &middot; Exit only &mdash; no compensation possible<\/div>'
+    +'<div style="background:#f0fdf4;border:2px solid #86efac;border-radius:8px;padding:12px"><div style="font-weight:700;color:#16A34A;margin-bottom:5px">Group Filing (Alpha)<\/div>Coordinated owners &middot; Documented pattern &middot; Regulatory exposure &middot; Exit + compensation eligibility<\/div>'
+    +'<\/div>'
+    +(totalMo>0?'<p><strong>'+fn+'<\/strong> currently pays <strong>'+f(totalMo)+'\/mo<\/strong> to '+resort+'. Over 5 years: <strong>'+f(totalYr*5)+'<\/strong>. The resort\'s documented fine exposure per owner exceeds <strong>$175,000<\/strong>.<\/p>':'')
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,.85);line-height:1.8"><strong style="color:#C8960C">Option A:<\/strong> Defend a coordinated group filing &mdash; $175,000+ per owner in fines.<br><strong style="color:#C8960C">Option B:<\/strong> Settle &mdash; Mutual Release + possible compensation. <strong style="color:#fff">Resorts choose to settle. Group filing participants are the only ones eligible for reimbursement.<\/strong><\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/credit/')>-1){
+    html=HDR('Credit Protection &mdash; What\'s Covered From Day One')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>One of the most important things I want you to understand about your enrollment is what happens to your credit.<\/p>'
+    +SH('Three Layers of Credit Protection')
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:12px;margin:8px 0">'
+    +ST(1,'Monitoring starts the day you enroll','Our in-house credit team begins watching your profile immediately. If any timeshare-related item appears, we are on it.')
+    +ST(2,'Disputes handled for you &mdash; at no additional cost','Any timeshare-related derogatory item on your TransUnion, Equifax, or Experian report gets formally disputed on your behalf.')
+    +ST(3,'Full bureau submission upon your Mutual Release','Alpha submits full documentation to all three bureaus simultaneously. You exit with a clean record.')
+    +'<\/div>'
+    +'<p>Alpha does <strong>not<\/strong> advise you to stop making payments. Any decision about your ongoing resort obligations is entirely yours &mdash; written explicitly into your contract.<\/p>'
+    +'<ul style="padding-left:16px;margin:8px 0;font-size:13px;line-height:2"><li>Protection from enrollment date &mdash; not exit date<\/li><li>All three bureaus: TransUnion, Equifax, Experian<\/li><li>Disputes at no additional charge<\/li><li>In-house team &mdash; not outsourced<\/li><\/ul>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/heirs/')>-1){
+    html=HDR('Heirs & Estate Liability &mdash; What Happens After You')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>There is a part of timeshare ownership that almost never gets explained at purchase &mdash; and it is the reason that acting now protects your family.<\/p>'
+    +SH('What Happens to Your Heirs')
+    +'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:12px;margin:10px 0;font-size:13px;line-height:1.8">'
+    +'Without an exit, your '+resort+' membership automatically passes to your named heir. They inherit the maintenance fee obligation &mdash; growing at 8% per year. If they do not formally disclaim within <strong>9 months (IRC §2518)<\/strong>, they are legally treated as having accepted it.'
+    +'<br><br><strong>'+resort+' practice:<\/strong> Delay HOA foreclosure on elderly owners so debt passes to heirs &mdash; then restart collections fresh against the estate.<\/div>'
+    +SH('The 9-Month Disclaimer Window &mdash; IRC §2518')
+    +'<p>Federal law provides a 9-month window for heirs to formally disclaim an inherited obligation. Missing this window triggers tax exposure and may treat the heir as having permanently accepted the timeshare.<\/p>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,.9);line-height:1.8"><strong style="color:#C8960C">The only protection<\/strong> is to exit while you are here to do it. A Mutual Release permanently removes your name from the deed. <strong style="color:#fff">Your heirs inherit nothing.<\/strong><\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/wait/')>-1){
+    html=HDR('If You Do Nothing &mdash; The Real Cost of Waiting')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>Doing nothing is a decision. And it is the most expensive one you can make.<\/p>'
+    +(totalMo>0?'<div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:14px;margin:12px 0;text-align:center"><div style="font-family:Georgia,serif;font-size:28px;font-weight:700;color:#DC2626">'+f(totalYr*5)+'<\/div><div style="font-size:12px;color:#9ca3af;margin-top:4px">If you do nothing for 5 more years<\/div><\/div>':'')
+    +'<p>At <strong>'+(totalMo>0?f(totalMo)+'\/mo':'your current monthly cost')+'<\/strong>, every month of delay is money working against you. Your maintenance fees grow at 8% per year &mdash; fees that are manageable today become unmanageable within a decade.<\/p>'
+    +'<div style="background:#EAF0F8;border-left:4px solid #1B2A4A;padding:10px 12px;margin:12px 0;font-size:13px"><strong>Why sooner is better:<\/strong> The violations documented in your intake are time-sensitive. Consumer protection agencies track patterns &mdash; and recent cases carry more weight.<\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/cost/')>-1){
+    var rows='';
+    [1,3,5,10,20,30].forEach(function(n){
+      var rc=totalYr*n,sv=rc-netFee;
+      rows+='<tr><td style="padding:8px 12px;font-weight:'+(n===5?'800':'600')+';color:#1B2A4A;border-bottom:1px solid #f3f4f6">'+n+' Year'+(n>1?'s':'')+'<\/td><td style="padding:8px 12px;text-align:right;color:#DC2626;font-weight:700;border-bottom:1px solid #f3f4f6">'+(rc>0?f(rc):'&mdash;')+'<\/td><td style="padding:8px 12px;text-align:right;color:#6b7280;border-bottom:1px solid #f3f4f6">'+(netFee>0?f(netFee):'&mdash;')+'<\/td><td style="padding:8px 12px;text-align:right;color:'+(sv>0?'#16A34A':'#9ca3af')+';font-weight:700;border-bottom:1px solid #f3f4f6">'+(sv>0?f(sv):'&mdash;')+'<\/td><\/tr>';
+    });
+    html=HDR('True Cost of Ownership &mdash; '+resort)
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>Here\'s the number <strong>'+resort+'<\/strong> never showed you at signing.<\/p>'
+    +(totalMo>0?'<div style="display:flex;justify-content:space-around;background:#EAF0F8;border-radius:8px;padding:12px;margin:10px 0;text-align:center"><div><div style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#1B2A4A">'+f(totalMo)+'<\/div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;margin-top:2px">Monthly<\/div><\/div><div><div style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#1B2A4A">'+f(totalYr)+'<\/div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;margin-top:2px">Yearly<\/div><\/div><div><div style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#DC2626">'+f(totalYr*5)+'<\/div><div style="font-size:10px;color:#6b7280;text-transform:uppercase;margin-top:2px">5-Year<\/div><\/div><\/div>':'')
+    +'<table style="width:100%;border-collapse:collapse;margin:10px 0"><thead style="background:#1B2A4A"><tr><th style="padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;color:rgba(255,255,255,.6)">Timeframe<\/th><th style="padding:8px 12px;text-align:right;font-size:10px;text-transform:uppercase;color:rgba(255,255,255,.6)">Resort Total<\/th><th style="padding:8px 12px;text-align:right;font-size:10px;text-transform:uppercase;color:rgba(255,255,255,.6)">With Alpha<\/th><th style="padding:8px 12px;text-align:right;font-size:10px;text-transform:uppercase;color:#C8960C">You Save<\/th><\/tr><\/thead><tbody>'+rows+'<\/tbody><\/table>'
+    +(netFee>0?'<p>Pay <strong>'+f(netFee)+'<\/strong> once &mdash; and every dollar after that stays in your pocket forever.<\/p>':'')
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/guarantee/')>-1){
+    html=HDR('Certificate of Guarantee &mdash; 100% Money-Back')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<div style="background:#1B2A4A;border-radius:10px;padding:20px;text-align:center;margin:12px 0"><div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C8960C;margin-bottom:5px">Certificate of Guarantee<\/div><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:4px">100% Money-Back Guarantee<\/div><div style="font-size:12px;color:rgba(255,255,255,.6)">In writing. In your contract. No Favorable Outcome in 36 months &mdash; full refund.<\/div><\/div>'
+    +'<ul style="padding-left:0;margin:12px 0;list-style:none;font-size:13px">'
+    +'<li style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Written Money-Back Guarantee<\/strong> &mdash; 100% refund if no result within 36 months. In your signed contract.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Permanent Legal Termination<\/strong> &mdash; Mutual Release recorded at the county level.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>No exit clause workaround<\/strong> &mdash; The guarantee covers the legal execution of the Mutual Release, not just a letter.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:8px 0"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>41 Years &middot; BBB A+ &middot; In-House<\/strong> &mdash; The track record behind the guarantee.<\/div><\/li>'
+    +'<\/ul>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/rights/')>-1){
+    html=HDR('Consumer Rights &mdash; Your Documented Violations')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>The following disclosures were legally required at the time of your <strong>'+resort+'<\/strong> purchase and were not made.<\/p>'
+    +'<div style="margin:10px 0">'
+    +'<div style="border-left:4px solid #DC2626;background:#fef2f2;padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:13px"><div style="font-weight:700;color:#1B2A4A;margin-bottom:3px">Right to Safety &mdash; Inadequate contract review time<\/div><div style="font-size:10px;font-family:monospace;color:#6b7280">TILA §128 &middot; RESPA §4<\/div><div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:#DC2626;margin-top:3px">$50,000<\/div><\/div>'
+    +'<div style="border-left:4px solid #DC2626;background:#fef2f2;padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:13px"><div style="font-weight:700;color:#1B2A4A;margin-bottom:3px">Right to Choose &mdash; No resale market disclosed<\/div><div style="font-size:10px;font-family:monospace;color:#6b7280">FTC Act §5 &middot; State UDAP<\/div><div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:#DC2626;margin-top:3px">$50,000<\/div><\/div>'
+    +'<div style="border-left:4px solid #DC2626;background:#fef2f2;padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:13px"><div style="font-weight:700;color:#1B2A4A;margin-bottom:3px">Right to Be Heard &mdash; Resort will not accept return<\/div><div style="font-size:10px;font-family:monospace;color:#6b7280">State Contract Law &middot; FL §721.07<\/div><div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:#DC2626;margin-top:3px">$60,000<\/div><\/div>'
+    +'<div style="border-left:4px solid #DC2626;background:#fef2f2;padding:10px 12px;border-radius:0 6px 6px 0;font-size:13px"><div style="font-weight:700;color:#1B2A4A;margin-bottom:3px">Right to Be Informed &mdash; 30-year cost never disclosed<\/div><div style="font-size:10px;font-family:monospace;color:#6b7280">TILA §128 &middot; Reg Z<\/div><div style="font-family:Georgia,serif;font-size:18px;font-weight:700;color:#DC2626;margin-top:3px">$75,000<\/div><\/div>'
+    +'<\/div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><div><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.55)">Total Documented Exposure<\/div><div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:1px">'+resort+'<\/div><\/div><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#C8960C">$235,000<\/div><\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/current/')>-1){
+    html=HDR('Your Current Situation &mdash; '+resort)
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +(totalMo>0?'<div style="background:#fef2f2;border-radius:8px;padding:14px;margin:10px 0;text-align:center"><div style="font-family:Georgia,serif;font-size:30px;font-weight:700;color:#DC2626">'+f(totalMo)+'\/mo<\/div><div style="font-size:12px;color:#6b7280;margin-top:3px">Total monthly obligation &mdash; mortgage + maintenance fee<\/div><\/div>':'')
+    +(totalMo>0?'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;text-align:center;font-size:12px"><div style="background:#EAF0F8;border-radius:6px;padding:10px"><div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#1B2A4A">'+f(mtg)+'<\/div><div style="color:#6b7280;margin-top:2px">Monthly Mortgage<\/div><\/div><div style="background:#EAF0F8;border-radius:6px;padding:10px"><div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#1B2A4A">'+f(mtfYr)+'<\/div><div style="color:#6b7280;margin-top:2px">Annual MTF<\/div><\/div><div style="background:#EAF0F8;border-radius:6px;padding:10px"><div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#DC2626">'+f(totalYr*5)+'<\/div><div style="color:#6b7280;margin-top:2px">5-Year Total<\/div><\/div><\/div>':'')
+    +'<p>Your maintenance fees grow at <strong>8% per year<\/strong> &mdash; the documented ARDA industry average. This number was never disclosed to you before signing.<\/p>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/better/')>-1){
+    html=HDR('What Makes Alpha Better &mdash; The 4 Differences')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:12px;margin:10px 0">'
+    +ST(1,'Group Filings &mdash; The Only Path to Compensation','We consolidate owners from the same resort into coordinated filings. The only way to be eligible for resort reimbursement above the exit itself.')
+    +ST(2,'Written Money-Back Guarantee','100% refund if no Favorable Outcome within 36 months. In your signed contract.')
+    +ST(3,'41 Years &mdash; BBB A+ Verified','Four decades of documented industry relationships. Every case handled in-house.')
+    +ST(4,'$0 Down &mdash; First Payment Month Two','Nothing upfront. If we cannot help you &mdash; you owe nothing.')
+    +'<\/div>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/included/')>-1){
+    html=HDR('What\'s Included In Your Enrollment')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<ul style="padding-left:0;margin:12px 0;list-style:none;font-size:13px">'
+    +'<li style="display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Written Money-Back Guarantee<\/strong> &mdash; 100% refund if no result within 36 months.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Permanent Legal Termination<\/strong> &mdash; Mutual Release recorded at the county level.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Elimination of Future Maintenance Obligations<\/strong> &mdash; Your annual fee obligation ends permanently.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Credit Protection & Repair<\/strong> &mdash; Monitoring from day one. Full bureau submission upon Mutual Release.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:9px 0;border-bottom:1px solid #f3f4f6"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>Group Filing Participation<\/strong> &mdash; The only tier eligible for resort reimbursement.<\/div><\/li>'
+    +'<li style="display:flex;gap:8px;padding:9px 0"><span style="color:#16A34A;font-weight:700;font-size:15px">&#10003;<\/span><div><strong>41 Years &middot; BBB A+ &middot; In-House<\/strong> &mdash; Every case handled internally.<\/div><\/li>'
+    +'<\/ul>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/history/')>-1){
+    html=HDR('Our Track Record &mdash; 41 Years in Business')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0;text-align:center">'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#C8960C">41<\/div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px">Years<\/div><\/div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#C8960C">A+<\/div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px">BBB Rating<\/div><\/div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#C8960C">100%<\/div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px">In-House<\/div><\/div>'
+    +'<div style="background:#1B2A4A;border-radius:8px;padding:12px"><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#C8960C">$0<\/div><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px">Down<\/div><\/div>'
+    +'<\/div>'
+    +'<p>41 years means we have seen every resort tactic, every delay strategy, every objection. Our case database is built on four decades of documented precedent. When we file, resorts take notice.<\/p>'
+    +'<p>BBB A+ verified. Every case handled in-house &mdash; you will never be transferred to a third-party firm. You reach the people actually working your file.<\/p>'
+    +PQ)+SIG;
+  }
+  else if(u.indexOf('/exit-methods/')>-1||u.indexOf('/letter/')>-1){
+    html=HDR('4 Ways to Exit &mdash; Why the Mutual Release Is the Only Real Option')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>There are four ways owners try to exit timeshare obligations. Only one actually works.<\/p>'
+    +'<div style="margin:12px 0;font-size:13px">'
+    +'<div style="background:#fef2f2;border-radius:6px;padding:10px;margin-bottom:8px"><div style="font-weight:700;color:#DC2626;margin-bottom:3px">&#10007; Sell It<\/div>The secondary market for timeshares is essentially non-existent. Listings exist on eBay for $1 with no buyers.<\/div>'
+    +'<div style="background:#fef2f2;border-radius:6px;padding:10px;margin-bottom:8px"><div style="font-weight:700;color:#DC2626;margin-bottom:3px">&#10007; Give It Back to the Resort<\/div>'+resort+' will not voluntarily accept the return of this ownership. No financial incentive to take it back.<\/div>'
+    +'<div style="background:#fef2f2;border-radius:6px;padding:10px;margin-bottom:8px"><div style="font-weight:700;color:#DC2626;margin-bottom:3px">&#10007; Stop Paying<\/div>Damages your credit, triggers collections, and the obligation does not go away. It follows you &mdash; and then your heirs.<\/div>'
+    +'<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:6px;padding:10px"><div style="font-weight:700;color:#16A34A;margin-bottom:3px">&#10003; Mutual Release &mdash; The Only Real Exit<\/div>A legally executed release recorded at the county level. Permanently removes your name from the deed. This is what Alpha obtains.<\/div>'
+    +'<\/div>'
+    +PQ)+SIG;
+  }
+  else{
+    var pgN=u.replace(/\//g,'').replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+    html=HDR(pgN||'Information From Alpha Timeshare Consultants')
+    +B('<p style="font-size:15px;font-weight:700;color:#1B2A4A;margin:0 0 8px">Hi '+fn+',<\/p>'
+    +'<p>Following up on our conversation about your <strong>'+resort+'<\/strong> ownership and your options with Alpha.<\/p>'
+    +'<p>Please reach out directly if you have any questions.<\/p>'
+    +PQ)+SIG;
+  }
+  return html;
+}
+
 function createClientFilePage(){
   var AK='atc_active',SK='atc_clients_v2',TK='atc_gh_token';
   var slug=localStorage.getItem(AK);
