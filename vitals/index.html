@@ -938,6 +938,8 @@ function _topSaveClick(){
     <span class="sh-chip stage" id="sh-stage">Assessment</span>
   </div>
   <div style="display:flex;gap:6px">
+    <button id="lang-en-btn" onclick="window.atcSetLang('en');updateLangBtns()" style="padding:5px 12px;border-radius:5px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;background:#1B2A4A;color:#C8960C;letter-spacing:.5px">EN</button>
+    <button id="lang-es-btn" onclick="window.atcSetLang('es');updateLangBtns()" style="padding:5px 12px;border-radius:5px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;background:rgba(255,255,255,.15);color:rgba(255,255,255,.5);letter-spacing:.5px">ES</button>
     <button class="sh-btn save" onclick="saveVitals()">Save</button>
     <button class="sh-btn print" onclick="window.print()">Print</button>
   </div>
@@ -1626,6 +1628,12 @@ function populateFromCRM(){
       if(pto)pto.textContent='−';
     }
   }
+  // Detect preferred language from CRM
+  var prefLang=field(['Preffered Language','Preferred Language'],t).toLowerCase();
+  if(prefLang.indexOf('spanish')>-1||prefLang.indexOf('español')>-1||prefLang.indexOf('espanol')>-1){
+    if(typeof window.atcSetLang==='function') window.atcSetLang('es');
+    if(typeof updateLangBtns==='function') updateLangBtns();
+  }
   var st=document.getElementById('pop-status');
   if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
   autoSave();
@@ -2060,6 +2068,20 @@ function _ensureClient(){
   localStorage.setItem('atc_active',(slug||'').toLowerCase());
   if(typeof buildSB==='function') buildSB();
   return slug;
+}
+
+function updateLangBtns(){
+  var lang=typeof window.atcGetLang==='function'?window.atcGetLang():'en';
+  var enBtn=document.getElementById('lang-en-btn');
+  var esBtn=document.getElementById('lang-es-btn');
+  if(!enBtn||!esBtn)return;
+  if(lang==='es'){
+    enBtn.style.background='rgba(255,255,255,.15)';enBtn.style.color='rgba(255,255,255,.5)';
+    esBtn.style.background='#C8960C';esBtn.style.color='#fff';
+  }else{
+    enBtn.style.background='#1B2A4A';enBtn.style.color='#C8960C';
+    esBtn.style.background='rgba(255,255,255,.15)';esBtn.style.color='rgba(255,255,255,.5)';
+  }
 }
 
 function autoSave(){
@@ -2941,6 +2963,7 @@ function generateFullQuote(cb){
 <script>
 (function(){
   if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  if(typeof updateLangBtns==='function') updateLangBtns();
   else document.addEventListener('DOMContentLoaded', function(){
     if(typeof window.atcApplyLang==='function') window.atcApplyLang();
   });
