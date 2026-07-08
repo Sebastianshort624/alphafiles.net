@@ -2751,6 +2751,12 @@ function createClientFilePage(){
     })
     .then(function(ex){
       status.textContent='Pushing to /'+slug+'/...';
+      // Inject data-sync <script> so visiting client page auto-sets localStorage
+      try{
+        var _cj=JSON.stringify(d).replace(/\u003c\/script\u003e/gi,'<\\/script>').replace(/'/g,"\\'");
+        var _ss="<script>try{var _d=JSON.parse('"+_cj+"');var _a=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');_a['"+slug+"']=Object.assign(_a['"+slug+"']||{},_d);localStorage.setItem('atc_clients_v2',JSON.stringify(_a));localStorage.setItem('atc_active','"+slug+"');}catch(e){}<\/script>";
+        html=html.replace('</head>',_ss+'</head>');
+      }catch(_e){}
       var b64;
       try{ b64=btoa(unescape(encodeURIComponent(html))); }
       catch(e){ throw new Error('Encoding failed: '+e.message); }
