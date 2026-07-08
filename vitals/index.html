@@ -1176,7 +1176,7 @@ window.populateFromCRM=function(){
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
     <div class="ff">
       <label>Annual MTF</label>
-      <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals();calcPurchaseFinance();calcComparison()">
+      <input id="v-mtf" type="number" placeholder="" oninput="try{calcTotals();}catch(e){}try{autoSave();calcPurchaseFinance();calcComparison();}catch(e){}">
     </div>
     <div class="ff ro">
       <label>Monthly MTF</label>
