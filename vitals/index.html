@@ -2676,6 +2676,42 @@ function atcEmailThisPage(url,clientData){
   return html;
 }
 
+function updateClientsHub(slug,name,resort,d,token){
+  var fc=function(x){return '$'+Math.round(x||0).toLocaleString();};
+  var net=parseFloat(d.alphaFee)||0;
+  var d1=parseFloat(d.discount1)||0,d2=parseFloat(d.discount2)||0;
+  net=Math.max(0,net-d1-d2);
+  var tMo=Math.round((parseFloat(d.monthlyMortgage)||0)+(parseFloat(d.maitFees)||0)/12);
+  var r60=0.20/12,n60=60;
+  var mo60=net>0?Math.round(net*(r60*Math.pow(1+r60,n60))/(Math.pow(1+r60,n60)-1)):0;
+  var ph=(d.phone||'').replace(/(\d{3})(\d{3})(\d{4})/,'($1) $2-$3');
+  var card="<a href='/vitals/' onclick=\"localStorage.setItem('atc_active','"+slug+"')\" style='text-decoration:none'>"
+    +"<div style='background:#fff;border:1.5px solid #E0E4ED;border-radius:10px;padding:16px;margin-bottom:14px;cursor:pointer'>"
+    +"<div style='font-family:Barlow Condensed,Arial,sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:3px'>"+name+"</div>"
+    +"<div style='font-size:12px;color:#6b7280;margin-bottom:8px'>"+resort+(d.resSt?' &middot; '+d.resSt:'')+(ph?' &middot; '+ph:'')+"</div>"
+    +"<div style='display:flex;gap:8px;font-size:12px'>"
+    +(net>0?"<span style='background:#EAF0F8;color:#1B2A4A;padding:2px 8px;border-radius:10px;font-weight:600'>"+fc(net)+"</span>":'')
+    +(mo60>0?"<span style='background:#f0fdf4;color:#16A34A;padding:2px 8px;border-radius:10px;font-weight:600'>"+fc(mo60)+"/mo</span>":'')
+    +(tMo>0?"<span style='background:#fef2f2;color:#DC2626;padding:2px 8px;border-radius:10px;font-weight:600'>"+fc(tMo)+" current</span>":'')
+    +"</div></div></a>";
+  fetch('https://api.github.com/repos/Sebastianshort624/alphafiles.net/contents/clients/index.html',
+    {headers:{'Authorization':'token '+token}})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var html=atob(data.content.replace(/\n/g,''));
+    if(html.indexOf("'"+slug+"'")>-1)return; // already in hub
+    // Insert at top of client list
+    var insertAfter=html.indexOf("<a href='/vitals/'");
+    var newHtml=insertAfter>-1
+      ? html.slice(0,insertAfter)+card+'\n'+html.slice(insertAfter)
+      : html.replace('</body>',card+'</body>');
+    return fetch('https://api.github.com/repos/Sebastianshort624/alphafiles.net/contents/clients/index.html',
+      {method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
+       body:JSON.stringify({message:'Add '+name+' to clients hub',
+         content:btoa(unescape(encodeURIComponent(newHtml))),sha:data.sha,branch:'main'})});
+  }).catch(function(){});
+}
+
 function createClientFilePage(){
   var AK='atc_active',SK='atc_clients_v2',TK='atc_gh_token';
   var slug=(localStorage.getItem(AK)||'').toLowerCase().replace(/[^a-z0-9.]/g,'');
