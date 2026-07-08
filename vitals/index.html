@@ -1556,20 +1556,34 @@ function calcTotals(){
 function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
+
+  // Strip markdown links [text](url) -> text
+  var t=raw.replace(/\[([^\]]+)\]\([^)]+\)/g,'$1');
+  // Strip bullet points and extra markers
+  t=t.replace(/^\s*[\*\-]\s*/gm,'');
+
   function field(names,text){
     for(var ni=0;ni<names.length;ni++){
       var nm=names[ni];
       var esc=nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      // Try tab-delimited first (Zoho copy-all format)
       var re1=new RegExp(esc+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,200})','i');
-      var re2=new RegExp(esc+'[^\\t\\n]*\\t([^\\t\\n]{1,200})','i');
+      // Then try newline-separated (browser paste format): label on one line, value on next
+      var re2=new RegExp(esc+'[^\\n]*\\n([^\\n]{1,200})','i');
       var m=text.match(re1)||text.match(re2);
-      if(m&&m[1]){var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'');if(v&&v!=='-'&&v!=='N/A')return v;}
+      if(m&&m[1]){
+        var val=m[1].trim()
+          .replace(/^\$\s*/,'').replace(/,/g,'')
+          // strip any remaining markdown links
+          .replace(/\[([^\]]+)\]\([^)]+\)/g,'$1');
+        if(val&&val!=='-'&&val!=='N/A'&&val!=='NA')return val;
+      }
     }return '';
   }
-  var t=raw;
+
   var firstName=field(['First Name'],t);
   var lastName=field(['Last Name'],t);
-  var email=field(['Email'],t);
+  var email=field(['Email'],t).replace(/mailto:/gi,'').replace(/[<>]/g,'');
   var phone=(field(['Phone','Plain Phone'],t)||'').replace(/\D/g,'').replace(/^1/,'');
   var resort=field(['R1-Resort Name'],t);
   var city=field(['R1-Resort City'],t);
@@ -1589,8 +1603,16 @@ function populateFromCRM(){
   var behindMait=field(['R1-How far behind on mait','How far behind on mait'],t);
   var curMtg=field(['R1-Current on mortgage','Current on mortgage'],t).toLowerCase();
   var curMait=field(['R1-Current on Mait','Current on Mait'],t).toLowerCase();
+  var prefLang=field(['Preffered Language','Preferred Language'],t).toLowerCase();
 
-  function setf(id,val){if(!val)return;var el=document.getElementById(id);if(!el)return;el.value=val;el.dispatchEvent(new Event('input'));}
+  function setf(id,val){
+    if(!val)return;
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.value=val;
+    el.dispatchEvent(new Event('input'));
+  }
+
   setf('v-first',firstName);
   setf('v-last',lastName);
   setf('v-email',email);
@@ -1605,43 +1627,32 @@ function populateFromCRM(){
   if(balance)setf('v-balance',balance);
   if(fee)setf('v-fee',fee);
   if(whyOut)setf('v-why',whyOut);
-  // Mortgage toggle
+
   var notCurrMtg=(curMtg==='no'||curMtg.indexOf('no')===0);
   var notCurrMait=(curMait==='no'||curMait.indexOf('no')===0);
   var mtgMode=isPaid?'pf':((notCurrMtg||notCurrMait)?'bh':'ow');
   if(typeof setMtg==='function')setMtg(mtgMode);
-  // Behind fields — convert "2 Years" / "6 Months" to numeric months
-  function toMonths(s){
-    if(!s)return '';
-    var n=parseFloat(s)||0;
-    if(s.toLowerCase().indexOf('year')>-1)return String(Math.round(n*12));
-    return String(Math.round(n));
-  }
+
+  function toMonths(s){var n=parseFloat(s)||0;return s&&s.toLowerCase().indexOf('year')>-1?String(Math.round(n*12)):String(Math.round(n));}
   if(behindMtg)setf('v-mtgb',toMonths(behindMtg));
   if(behindMait){
     setf('v-mtfb',toMonths(behindMait));
-    // Open the "Behind on MTF?" collapsible panel
-    var mtfPanel=document.getElementById('mtf-late');
-    if(mtfPanel&&!mtfPanel.classList.contains('open')){
-      mtfPanel.classList.add('open');
-      var pto=document.getElementById('pto-mtf-late');
-      if(pto)pto.textContent='−';
-    }
+    var p=document.getElementById('mtf-late');
+    if(p&&!p.classList.contains('open')){p.classList.add('open');}
   }
-  // Detect preferred language from CRM
-  var prefLang=field(['Preffered Language','Preferred Language'],t).toLowerCase();
-  if(prefLang.indexOf('spanish')>-1||prefLang.indexOf('español')>-1||prefLang.indexOf('espanol')>-1){
-    if(typeof window.atcSetLang==='function') window.atcSetLang('es');
-    if(typeof updateLangBtns==='function') updateLangBtns();
+
+  if(prefLang.indexOf('spanish')>-1||prefLang.indexOf('espanol')>-1){
+    if(typeof window.atcSetLang==='function')window.atcSetLang('es');
+    if(typeof updateLangBtns==='function')updateLangBtns();
   }
+
   var st=document.getElementById('pop-status');
   if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
   autoSave();
   if(typeof calcComparison==='function')calcComparison();
   if(typeof calcUsage==='function')calcUsage();
-  if(typeof calcSavings==='function')calcSavings();
-  if(typeof calcPurchaseFinance==='function')calcPurchaseFinance();
 }
+
 
 
 function calcUsage(){
@@ -2757,20 +2768,7 @@ function createClientFilePage(){
     })
     .then(function(ex){
       status.textContent='Pushing to /'+slug+'/...';
-      // Embed client data sync in page head (safe, no nested script tags in source)
-      try{
-        var _tag='scr'+'ipt';
-        var _cj=JSON.stringify(d);
-        var _open='<'+_tag+'>';
-        var _close='</'+_tag+'>';
-        var _body='try{var _d=JSON.parse(atob("'+btoa(unescape(encodeURIComponent(_cj)))+'"));'
-          +'var _a=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");'
-          +'_a["'+slug+'"]=Object.assign(_a["'+slug+'"]||{},_d);'
-          +'localStorage.setItem("atc_clients_v2",JSON.stringify(_a));'
-          +'localStorage.setItem("atc_active","'+slug+'");}catch(e){}';
-        var _ss=_open+_body+_close;
-        html=html.replace('</head>',_ss+'</head>');
-      }catch(_e){}
+      // data sync handled separately
       var b64;
       try{ b64=btoa(unescape(encodeURIComponent(html))); }
       catch(e){ throw new Error('Encoding failed: '+e.message); }
