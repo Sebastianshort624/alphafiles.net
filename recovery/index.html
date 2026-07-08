@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>ATC — Client Data Recovery Check</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Arial,sans-serif;background:#f0f2f5;padding:24px;font-size:14px}
+h1{font-family:"Barlow Condensed",Arial,sans-serif;color:#1B2A4A;font-size:28px;font-weight:700;margin-bottom:4px}
+.sub{color:#6b7280;font-size:13px;margin-bottom:24px}.card{background:#fff;border-radius:10px;border:1px solid #E0E4ED;padding:18px;margin-bottom:14px}
+.name{font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:4px}.slug{font-family:monospace;font-size:11px;color:#9ca3af;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}.tile{background:#f8faff;border:1px solid #E0E4ED;border-radius:6px;padding:8px}
+.tl{font-size:9px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:2px}.tv{font-size:13px;font-weight:700;color:#1B2A4A}
+.empty{background:#fef2f2;border:1px solid #fca5a5;color:#DC2626;padding:16px;border-radius:10px;margin-bottom:14px}
+.ok{background:#f0fdf4;border:1px solid #86efac;color:#16A34A;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-weight:600}
+.btn{background:#1B2A4A;color:#C8960C;border:none;padding:10px 20px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;margin-right:8px;margin-bottom:12px}
+.danger{background:#DC2626;color:#fff}pre{font-size:11px;white-space:pre-wrap;word-break:break-all;background:#f8faff;border:1px solid #E0E4ED;border-radius:6px;padding:12px;margin-top:10px;max-height:200px;overflow-y:auto}
+</style></head>
+<body>
+<h1>ATC Client Data Recovery Check</h1>
+<div class="sub">This page reads your browser localStorage directly. Nothing is sent anywhere.</div>
+
+<div id="out"></div>
+
+<div style="margin-top:20px">
+<button class="btn" onclick="downloadBackup()">&#11123; Download Full Backup (JSON)</button>
+<button class="btn" onclick="location.href='/vitals/'">&#8592; Back to Vitals</button>
+</div>
+
+<script>
+var SK='atc_clients_v2', AK='atc_active';
+
+function fc(x){ return x>0?'$'+Math.round(x).toLocaleString():'—'; }
+
+function render(){
+  var out=document.getElementById('out');
+  var raw=localStorage.getItem(SK);
+  var active=localStorage.getItem(AK)||'none';
+  
+  if(!raw){
+    out.innerHTML='<div class="empty"><strong>No client data found in localStorage.</strong><br>Key "atc_clients_v2" is empty or missing. This browser may not have had CRM data pasted into vitals yet.</div>';
+    return;
+  }
+  
+  var all;
+  try{ all=JSON.parse(raw); }catch(e){
+    out.innerHTML='<div class="empty"><strong>Data found but could not be parsed.</strong><br>'+e+'<br><pre>'+raw.substring(0,500)+'</pre></div>';
+    return;
+  }
+  
+  var keys=Object.keys(all);
+  if(keys.length===0){
+    out.innerHTML='<div class="empty"><strong>atc_clients_v2 exists but contains no client records.</strong></div>';
+    return;
+  }
+  
+  var html='<div class="ok">&#10003; Found <strong>'+keys.length+' client record'+(keys.length>1?'s':'')+'</strong> in localStorage. Active: <strong>'+active+'</strong></div>';
+  
+  keys.forEach(function(slug){
+    var d=all[slug]||{};
+    var name=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||slug;
+    var mtg=parseFloat(d.monthlyMortgage)||0;
+    var mf=parseFloat(d.maitFees)||0;
+    var tMo=Math.round(mtg+mf/12);
+    var fee=parseFloat(d.alphaFee)||0;
+    var isActive=(slug===active);
+    
+    html+='<div class="card" style="border-color:'+(isActive?'#C8960C':'#E0E4ED')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+      '<div>'+
+      '<div class="name">'+name+(isActive?' <span style="font-size:11px;background:#C8960C;color:#fff;padding:1px 6px;border-radius:8px;font-weight:700">ACTIVE</span>':'')+'</div>'+
+      '<div class="slug">'+slug+' &nbsp;·&nbsp; '+(d.resort||'No resort')+'</div>'+
+      '</div>'+
+      '<button style="background:#1B2A4A;color:#C8960C;border:none;padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer" '+
+      'onclick="activate(''+slug+'')">Set Active → Vitals</button>'+
+      '</div>'+
+      '<div class="grid" style="margin-top:10px">'+
+      '<div class="tile"><div class="tl">Monthly</div><div class="tv">'+fc(tMo)+'</div></div>'+
+      '<div class="tile"><div class="tl">MTF/yr</div><div class="tv">'+fc(mf)+'</div></div>'+
+      '<div class="tile"><div class="tl">Mortgage/mo</div><div class="tv">'+fc(mtg)+'</div></div>'+
+      '<div class="tile"><div class="tl">Alpha Fee</div><div class="tv">'+fc(fee)+'</div></div>'+
+      '<div class="tile"><div class="tl">State</div><div class="tv">'+(d.resSt||d.location||'—')+'</div></div>'+
+      '<div class="tile"><div class="tl">Last Updated</div><div class="tv">'+(d._updated?new Date(d._updated).toLocaleDateString():'—')+'</div></div>'+
+      '</div></div>';
+  });
+  
+  out.innerHTML=html;
+}
+
+function activate(slug){
+  localStorage.setItem(AK, slug);
+  location.href='/vitals/';
+}
+
+function downloadBackup(){
+  var data={
+    atc_clients_v2: JSON.parse(localStorage.getItem(SK)||'{}'),
+    atc_active: localStorage.getItem(AK),
+    exported: new Date().toISOString()
+  };
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='atc-client-backup-'+new Date().toISOString().split('T')[0]+'.json';
+  a.click();
+}
+
+render();
+</script>
+</body></html>
