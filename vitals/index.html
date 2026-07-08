@@ -2757,10 +2757,18 @@ function createClientFilePage(){
     })
     .then(function(ex){
       status.textContent='Pushing to /'+slug+'/...';
-      // Inject data-sync <script> so visiting client page auto-sets localStorage
+      // Embed client data sync in page head (safe, no nested script tags in source)
       try{
-        var _cj=JSON.stringify(d).replace(/\u003c\/script\u003e/gi,'<\\/script>').replace(/'/g,"\\'");
-        var _ss="<script>try{var _d=JSON.parse('"+_cj+"');var _a=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');_a['"+slug+"']=Object.assign(_a['"+slug+"']||{},_d);localStorage.setItem('atc_clients_v2',JSON.stringify(_a));localStorage.setItem('atc_active','"+slug+"');}catch(e){}<\/script>";
+        var _tag='scr'+'ipt';
+        var _cj=JSON.stringify(d);
+        var _open='<'+_tag+'>';
+        var _close='</'+_tag+'>';
+        var _body='try{var _d=JSON.parse(atob("'+btoa(unescape(encodeURIComponent(_cj)))+'"));'
+          +'var _a=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");'
+          +'_a["'+slug+'"]=Object.assign(_a["'+slug+'"]||{},_d);'
+          +'localStorage.setItem("atc_clients_v2",JSON.stringify(_a));'
+          +'localStorage.setItem("atc_active","'+slug+'");}catch(e){}';
+        var _ss=_open+_body+_close;
         html=html.replace('</head>',_ss+'</head>');
       }catch(_e){}
       var b64;
