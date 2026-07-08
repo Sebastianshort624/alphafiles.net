@@ -985,6 +985,58 @@ function _topSaveClick(){
   <div id="create-file-status" style="display:none;padding:6px 10px;font-size:11px;color:#C8960C;text-align:center"></div>
 </div>
 
+<script>
+window.populateFromCRM=function(){
+  var box=document.getElementById('crm-paste-box');
+  if(!box||!box.value.trim()){return;}
+  var raw=box.value;
+  // Strip markdown links [text](url) -> text
+  raw=raw.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
+  // Strip bullet markers
+  raw=raw.replace(/^\s*[*\-]\s*/gm,'');
+
+  function f(names){
+    for(var i=0;i<names.length;i++){
+      var n=names[i].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      // newline-separated (browser paste)
+      var m=raw.match(new RegExp(n+'[^\\n]*\\n([^\\n]{1,200})','i'));
+      // tab-separated (Zoho copy-all)
+      if(!m)m=raw.match(new RegExp(n+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,200})','i'));
+      if(m&&m[1]){
+        var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
+        if(v&&v!=='-'&&v!=='N/A'&&v!=='NA')return v;
+      }
+    }
+    return '';
+  }
+  function s(id,val){if(!val)return;var e=document.getElementById(id);if(!e)return;e.value=val;e.dispatchEvent(new Event('input'));}
+
+  s('v-first', f(['First Name']));
+  s('v-last',  f(['Last Name']));
+  s('v-email', f(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+  s('v-phone', f(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
+  s('v-resort',f(['R1-Resort Name']));
+  s('v-rescity',f(['R1-Resort City']));
+  s('v-loc',   f(['R1-Resort State']));
+  var yr=f(['R1-Date Purchased']);var ym=yr.match(/(20\d{2}|19\d{2})/);if(ym)s('v-year',ym[1]);
+  var pr=f(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');if(pr)s('v-pprice',pr);
+  var mf=f(['R1-Mait','Mait / Tax']).replace(/[^0-9.]/g,'');if(mf)s('v-mtf',mf);
+  var ms=f(['R1-Mortgage status','Mortgage status']).toLowerCase();
+  var paid=ms.indexOf('paid')>-1;
+  var mg=paid?'0':f(['R1-Monthly Mortgage','Monthly Mortgage']).replace(/[^0-9.]/g,'');if(mg)s('v-mtg',mg);
+  var bal=f(['R1-Balance Amount','R1-Balance']).replace(/[^0-9.]/g,'');if(bal)s('v-balance',bal);
+  var fee=f(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');if(fee)s('v-fee',fee);
+  var why=f(['R1-Why do they want out','Why do they want out']);if(why)s('v-why',why);
+  var cm=f(['R1-Current on mortgage','Current on mortgage']).toLowerCase();
+  var ca=f(['R1-Current on Mait','Current on Mait']).toLowerCase();
+  var mode=paid?'pf':((cm==='no'||ca==='no')?'bh':'ow');
+  if(typeof setMtg==='function')setMtg(mode);
+  var lang=f(['Preffered Language','Preferred Language']).toLowerCase();
+  if(lang.indexOf('spanish')>-1&&typeof window.atcSetLang==='function')window.atcSetLang('es');
+  var st=document.getElementById('pop-status');if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},3000);}
+  if(typeof autoSave==='function')autoSave();
+};
+</script>
 <!-- CRM PASTE → POPULATE BOX -->
 <div class="card" style="border:2px dashed #C8960C;background:#fffdf5">
   <div class="card-hdr" style="color:var(--gold)">📋 Paste CRM Data — Auto-Populates Instantly</div>
