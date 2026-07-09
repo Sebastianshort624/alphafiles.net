@@ -2201,6 +2201,12 @@ function autoSave(){
   _timer=setTimeout(function(){
     var s=_ensureClient();if(!s)return;var all=ga();if(!all[s])all[s]={_created:Date.now()};
     function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
+    // GUARD: if all key fields are blank, do NOT overwrite existing saved data
+    var _fn=g('v-first'),_ln=g('v-last'),_rs=g('v-resort'),_ph=g('v-phone');
+    if(!_fn&&!_ln&&!_rs&&!_ph){
+      // Form is blank — preserve whatever is already saved, just update banner
+      return;
+    }
     all[s]=Object.assign(all[s],{
       firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
       coFirst:g('v-co'),coLast:g('v-col'),
