@@ -129,6 +129,9 @@ window.sf=function(k,v){
   a[s][k]=v;a[s]._updated=Date.now();_sA(a);
 };
 
+window.setR2Mtg=function(t){['pf','ow','bh'].forEach(function(x){var b=document.getElementById('r2-mt-'+x);if(b)b.className='mt-b';});var b=document.getElementById('r2-mt-'+t);if(b)b.className='mt-b a '+t;if(typeof autoSave==='function')autoSave();};
+window.setR3Mtg=function(t){['pf','ow','bh'].forEach(function(x){var b=document.getElementById('r3-mt-'+x);if(b)b.className='mt-b';});var b=document.getElementById('r3-mt-'+t);if(b)b.className='mt-b a '+t;if(typeof autoSave==='function')autoSave();};
+
 window.swC=function(s){
   if(!s)return;
   localStorage.setItem(_AK,s);
@@ -1070,6 +1073,27 @@ window.populateFromCRM=function(){
   }
 
   // Language
+  // R2 and R3 resorts
+  var r2name=f(['R2-Resort Name']);
+  if(r2name){
+    document.getElementById('resort-2-card').style.display='block';
+    s('r2-resort',r2name);
+    s('r2-loc',f(['R2-Resort State']));
+    var r2mf=f(['R2-Mait','R2-Maintenance']).replace(/[^0-9.]/g,'');if(r2mf)s('r2-mtf',r2mf);
+    var r2mg=f(['R2-Monthly Mortgage']).replace(/[^0-9.]/g,'');if(r2mg)s('r2-mtg',r2mg);
+    var r2b=f(['R2-Balance Amount','R2-Balance']).replace(/[^0-9.]/g,'');if(r2b)s('r2-balance',r2b);
+    var r2yr=f(['R2-Date Purchased']);var r2ym=r2yr.match(/(20\d{2}|19\d{2})/);if(r2ym)s('r2-year',r2ym[1]);
+  }
+  var r3name=f(['R3-Resort Name']);
+  if(r3name){
+    document.getElementById('resort-3-card').style.display='block';
+    s('r3-resort',r3name);
+    s('r3-loc',f(['R3-Resort State']));
+    var r3mf=f(['R3-Mait','R3-Maintenance']).replace(/[^0-9.]/g,'');if(r3mf)s('r3-mtf',r3mf);
+    var r3mg=f(['R3-Monthly Mortgage']).replace(/[^0-9.]/g,'');if(r3mg)s('r3-mtg',r3mg);
+    var r3b=f(['R3-Balance Amount','R3-Balance']).replace(/[^0-9.]/g,'');if(r3b)s('r3-balance',r3b);
+    var r3yr=f(['R3-Date Purchased']);var r3ym=r3yr.match(/(20\d{2}|19\d{2})/);if(r3ym)s('r3-year',r3ym[1]);
+  }
   var lang=f(['Preffered Language','Preferred Language']).toLowerCase();
   if(lang.indexOf('spanish')>-1&&typeof window.atcSetLang==='function')window.atcSetLang('es');
 
@@ -1204,6 +1228,74 @@ window.populateFromCRM=function(){
   </div>
 </div>
 
+
+<!-- ADD RESORT BUTTONS -->
+<div style="display:flex;gap:8px;margin-bottom:14px">
+  <button onclick="document.getElementById('resort-2-card').style.display='block'" style="flex:1;padding:8px;background:#EAF0F8;color:#1B2A4A;border:1.5px dashed #1B2A4A;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">+ 2nd Resort</button>
+  <button onclick="document.getElementById('resort-3-card').style.display='block'" style="flex:1;padding:8px;background:#EAF0F8;color:#1B2A4A;border:1.5px dashed #1B2A4A;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">+ 3rd Resort</button>
+</div>
+
+<!-- RESORT 2 -->
+<div id="resort-2-card" class="card" style="display:none;border-left:3px solid #C8960C">
+  <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center">
+    <span>Resort 2</span>
+    <button onclick="document.getElementById('resort-2-card').style.display='none'" style="background:none;border:none;color:#9ca3af;font-size:18px;cursor:pointer;padding:0">&times;</button>
+  </div>
+  <div class="card-body">
+    <div class="frow">
+      <div class="ff"><label>Resort Name</label><input id="r2-resort" type="text" class="hi" placeholder="Resort name" oninput="autoSave()"></div>
+      <div class="ff"><label>State</label><input id="r2-loc" type="text" class="hi" placeholder="FL" style="max-width:60px" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Annual MTF</label><input id="r2-mtf" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+      <div class="ff"><label>Monthly Mortgage</label><input id="r2-mtg" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Balance</label><input id="r2-balance" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+      <div class="ff"><label>Year Purchased</label><input id="r2-year" type="number" class="hi" placeholder="2020" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Mortgage Status</label>
+        <div class="mt-row" style="grid-template-columns:1fr 1fr 1fr">
+          <button class="mt-b" id="r2-mt-pf" onclick="setR2Mtg('pf')">Paid Off</button>
+          <button class="mt-b" id="r2-mt-ow" onclick="setR2Mtg('ow')">Owes</button>
+          <button class="mt-b" id="r2-mt-bh" onclick="setR2Mtg('bh')">Behind</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESORT 3 -->
+<div id="resort-3-card" class="card" style="display:none;border-left:3px solid #C8960C">
+  <div class="card-hdr" style="display:flex;justify-content:space-between;align-items:center">
+    <span>Resort 3</span>
+    <button onclick="document.getElementById('resort-3-card').style.display='none'" style="background:none;border:none;color:#9ca3af;font-size:18px;cursor:pointer;padding:0">&times;</button>
+  </div>
+  <div class="card-body">
+    <div class="frow">
+      <div class="ff"><label>Resort Name</label><input id="r3-resort" type="text" class="hi" placeholder="Resort name" oninput="autoSave()"></div>
+      <div class="ff"><label>State</label><input id="r3-loc" type="text" class="hi" placeholder="FL" style="max-width:60px" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Annual MTF</label><input id="r3-mtf" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+      <div class="ff"><label>Monthly Mortgage</label><input id="r3-mtg" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Balance</label><input id="r3-balance" type="number" class="hi" placeholder="0" oninput="autoSave()"></div>
+      <div class="ff"><label>Year Purchased</label><input id="r3-year" type="number" class="hi" placeholder="2020" oninput="autoSave()"></div>
+    </div>
+    <div class="frow">
+      <div class="ff"><label>Mortgage Status</label>
+        <div class="mt-row" style="grid-template-columns:1fr 1fr 1fr">
+          <button class="mt-b" id="r3-mt-pf" onclick="setR3Mtg('pf')">Paid Off</button>
+          <button class="mt-b" id="r3-mt-ow" onclick="setR3Mtg('ow')">Owes</button>
+          <button class="mt-b" id="r3-mt-bh" onclick="setR3Mtg('bh')">Behind</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- MORTGAGE -->
 <div class="card">
   <div class="card-hdr">🏦 Mortgage</div>
