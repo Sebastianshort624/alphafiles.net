@@ -2207,7 +2207,9 @@ function autoSave(){
       // Form is blank — preserve whatever is already saved, just update banner
       return;
     }
-    all[s]=Object.assign(all[s],{
+    // Safe merge: only update a field if the new value is non-empty
+    // This prevents blank form from wiping existing saved data
+    var _new={
       firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
       coFirst:g('v-co'),coLast:g('v-col'),
       resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
@@ -2227,6 +2229,10 @@ function autoSave(){
       fuDateCert:g('v-fudate-cert'),fuTimeCert:g('v-futime-cert'),
       _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
       _updated:Date.now()
+    };
+    Object.keys(_new).forEach(function(k){
+      var v=_new[k];
+      if(v!==''&&v!==null&&v!==undefined){all[s][k]=v;}
     });
     sa(all);updateProgress();
   },600);
