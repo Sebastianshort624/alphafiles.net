@@ -1559,7 +1559,7 @@ function populateFromCRM(){
     el.dispatchEvent(new Event('input'));
   }
 
-  setf('v-first',  field(['First Name']));
+  var _fn=field(['First Name']);if(_fn.indexOf('&')>-1)_fn=_fn.split('&')[0].trim();setf('v-first',_fn);
   setf('v-last',   field(['Last Name']));
   setf('v-email',  field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
   setf('v-phone',  field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
