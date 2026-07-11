@@ -95,25 +95,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 @media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
 
 
-.mt-b.active{border-color:var(--navy);background:var(--navy);color:#fff}
-/* ── RESPONSIVE FIX ── */
-html,body{max-width:100vw;overflow-x:hidden}
-.main{max-width:calc(100vw - 220px);overflow-x:hidden}
-@media(max-width:1024px){
-  .sidenav{width:180px!important}
-  .main{margin-left:180px!important;max-width:calc(100vw - 180px)!important}
-}
-@media(max-width:768px){
-  .sidenav{display:none!important}
-  .main{margin-left:0!important;width:100vw!important;max-width:100vw!important;padding:12px!important}
-  .vb{grid-template-columns:1fr 1fr!important}
-  .stat-grid{grid-template-columns:1fr 1fr!important}
-  table{font-size:11px!important}
-  .card{margin:8px!important}
-  .frow{flex-direction:column!important}
-  img{max-width:100%!important}
-}
-</style>
+.mt-b.active{border-color:var(--navy);background:var(--navy);color:#fff}</style>
 
 <style id="atc-lang-css">
 /* Language show/hide system — controlled by data-lang attribute on body */
@@ -290,8 +272,6 @@ window.rpt=function(type){
 var _PG=[
   {n:0,   ic:"\u{1F3E0}",lb:"Dashboard",               url:"/home/"},
   {n:"Q", ic:"\u{1F4C4}",lb:"Clients",                  url:"/clients/"},
-  {n:"OV",ic:"\u{1F5FA}",lb:"CRM Overview",             url:"/overview/"},
-  {n:"BL",ic:"\u2699",   lb:"Build Console",            url:"/build/"},
   {n:"V1",ic:"\u26BE",   lb:"Client Vitals",            url:"/vitals/"},
   {n:"V2",ic:"\u{1F4FA}",lb:"Screen Share Invite",      url:"/screenshare/"},
   {n:1,   ic:"\u{1F4CA}",lb:"Current Situation",        url:"/current/",    email:true},
@@ -636,37 +616,12 @@ window.atcEmailThisPage = function(){
       +'1 (877) 848-3948 Ext. 134 &nbsp;&middot;&nbsp; 1 (689) 233-3259 &nbsp;&middot;&nbsp; Sebastian@AlphaTimeshareConsultants.com</div>'
       +'</div>
 <script>
-// Mobile responsive override — runs after atc-sb sidebar injection
 (function(){
-  var css = [
-    'html,body{max-width:100vw!important;overflow-x:hidden!important}',
-    '@media(max-width:768px){',
-    '  body{flex-direction:column!important}',
-    '  .sidenav{display:none!important;width:0!important}',
-    '  .main{margin-left:0!important;width:100vw!important;max-width:100vw!important;padding:10px!important;min-width:0!important}',
-    '  .wrap{max-width:100vw!important;overflow-x:hidden!important;padding:0!important}',
-    '  .frow{flex-direction:column!important;gap:8px!important}',
-    '  .ff{width:100%!important;min-width:0!important}',
-    '  .vb{grid-template-columns:1fr 1fr!important}',
-    '  .card{margin:8px 0!important}',
-    '  input,select,textarea{font-size:16px!important}',
-    '  .mt-row{flex-wrap:wrap!important}',
-    '  table{font-size:11px!important;min-width:0!important;width:100%!important}',
-    '  .sticky-hdr{flex-direction:column!important;gap:6px!important}',
-    '  .sh-row{flex-wrap:wrap!important;gap:6px!important}',
-    '}',
-    '@media(max-width:480px){',
-    '  .big-h,.sec-label{font-size:14px!important}',
-    '  .card-hdr{font-size:12px!important}',
-    '}'
-  ].join('\n');
-  var st = document.createElement('style');
-  st.id = 'mobile-override';
-  st.textContent = css;
-  document.head.appendChild(st);
+  var s=document.createElement('style');
+  s.textContent='@media(max-width:768px){.sidenav{display:none!important}.main{margin-left:0!important;width:100vw!important}}';
+  document.head.appendChild(s);
 })();
 </script>
-
 </body></html>';
     var w=window.open('','_blank');w.document.open();w.document.write(h);w.document.close();
   }
@@ -1031,11 +986,6 @@ function _topSaveClick(){
       <div class="ff"><label>First Name</label><input id="v-first" class="hi" oninput="autoSave()"></div>
       <div class="ff"><label>Last Name</label><input id="v-last" class="hi" oninput="autoSave()"></div>
     </div>
-    <div class="frow" id="coowner-row" style="margin-top:6px;padding:8px;background:#f0f4ff;border-radius:7px;border:1px solid #c7d2fe;display:none">
-      <div style="width:100%;font-size:11px;font-weight:700;color:#4f6ef5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">👥 Co-Owner on Deed</div>
-      <div class="ff"><label>Co-Owner First</label><input id="v-co" oninput="autoSave();showCoOwner()"></div>
-      <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
-    </div>
     <div class="frow">
       <div class="ff"><label>Phone</label><input id="v-phone" type="tel" oninput="autoSave()"></div>
       <div class="ff"><label>Closer</label>
@@ -1047,49 +997,16 @@ function _topSaveClick(){
         </select>
       </div>
     </div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="ff"><label>Preferred Language</label>
-        <select id="v-lang" onchange="autoSave();if(this.value.toLowerCase().indexOf('spanish')>-1&&typeof window.atcSetLang==='function')window.atcSetLang('es');else if(typeof window.atcSetLang==='function')window.atcSetLang('en')">
-          <option value="">—</option>
-          <option value="English">🇺🇸 English</option>
-          <option value="Spanish">🇲🇽 Spanish</option>
-        </select>
-      </div>
-      <div class="ff"><label>Lead Status</label>
-        <select id="v-lstatus" onchange="autoSave()">
-          <option value="">—</option>
-          <option>Appointment Set</option>
-          <option>Follow Up</option>
-          <option>Nurture</option>
-          <option>Assessment</option>
-          <option>Pending Docs</option>
-          <option>Closed Won</option>
-          <option>Closed Lost</option>
-        </select>
-      </div>
-      <div class="ff"><label>Fronter</label><input id="v-fronter" oninput="autoSave()" placeholder="Aaron, Kaylani..."></div>
-    </div>
-    <div class="frow" style="margin-bottom:8px">
-      <div class="ff"><label>Appt Date &amp; Time</label><input id="v-aptdt" oninput="autoSave()" placeholder="2026-07-11 12:00"></div>
-      <div class="ff"><label>Someone Else on Deed?</label>
-        <select id="v-deed" onchange="autoSave()">
-          <option value="">—</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-      </div>
-    </div>
-    <div class="pt" onclick="togglePS('co-info')"><div class="pt-ic" id="pto-co-info">+</div><span>Phone 2, Email, Co-Owner, Behind on Payments</span></div>
+    <div class="pt" onclick="togglePS('co-info')"><div class="pt-ic" id="pto-co-info">+</div><span>Phone 2, Email, Co-Owner</span></div>
     <div class="ps" id="co-info">
       <div class="frow" style="margin-bottom:8px">
         <div class="ff"><label>2nd Phone</label><input id="v-phone2" type="tel" oninput="autoSave()"></div>
-        <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" oninput="autoSave()"></div>
+    <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" placeholder="" oninput="autoSave()"></div>
         <div class="ff"><label>Email</label><input id="v-email" type="email" oninput="autoSave()"></div>
       </div>
-
       <div class="frow">
-        <div class="ff"><label>Behind on Mortgage</label><input id="v-bkmtg" oninput="autoSave()" placeholder="e.g. 3 months"></div>
-        <div class="ff"><label>Behind on MTF</label><input id="v-bkmtf" oninput="autoSave()" placeholder="e.g. 2 months"></div>
+        <div class="ff"><label>Co-Owner First</label><input id="v-co" oninput="autoSave()"></div>
+        <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
       </div>
     </div>
   </div>
@@ -1125,16 +1042,6 @@ function _topSaveClick(){
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-hdr">📝 Meeting Notes</div>
-  <div class="card-body">
-    <textarea id="v-notes" rows="5" oninput="autoSave()" 
-      style="width:100%;border:1.5px solid #E0E4ED;border-radius:7px;padding:10px;font-family:Inter,sans-serif;font-size:13px;color:#374151;resize:vertical;line-height:1.6"
-      placeholder="Paste Gemini notes, key objections, talking points, anything from the call..."></textarea>
-    <div style="font-size:11px;color:#9ca3af;margin-top:4px">Auto-saves per client · Paste Google Meet / Gemini notes here</div>
   </div>
 </div>
 
@@ -1258,36 +1165,6 @@ function _topSaveClick(){
     </div>
   </div>
 </div>
-
-<!-- COST PROJECTION BOX -->
-<div class="card" id="cost-proj-card">
-  <div class="card-hdr">💰 What Staying Costs Them</div>
-  <div class="card-body" style="padding:12px 16px">
-    <div id="cost-proj-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div style="background:#fef2f2;border-radius:8px;padding:12px;border:1px solid #fca5a5">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#dc2626;margin-bottom:6px">Mortgage Remaining</div>
-        <div id="cp-mtg-yrs" style="font-size:12px;color:#6b7280;margin-bottom:4px">— yrs remaining</div>
-        <div id="cp-mtg-total" style="font-size:22px;font-weight:800;color:#dc2626">$—</div>
-        <div id="cp-mtg-calc" style="font-size:11px;color:#9ca3af;margin-top:2px"></div>
-      </div>
-      <div style="background:#fff7ed;border-radius:8px;padding:12px;border:1px solid #fed7aa">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#ea580c;margin-bottom:6px">MTF Remaining</div>
-        <div id="cp-mtf-yrs" style="font-size:12px;color:#6b7280;margin-bottom:4px">— yrs (default 10 if no mtg)</div>
-        <div id="cp-mtf-total" style="font-size:22px;font-weight:800;color:#ea580c">$—</div>
-        <div id="cp-mtf-calc" style="font-size:11px;color:#9ca3af;margin-top:2px"></div>
-      </div>
-    </div>
-    <div style="background:#1B2A4A;border-radius:8px;padding:10px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center">
-      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6)">Total Cost if They Stay</div>
-      <div id="cp-total" style="font-size:20px;font-weight:900;color:#C8960C">$—</div>
-    </div>
-    <div style="background:#f0fdf4;border-radius:8px;padding:10px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;border:1px solid #86efac">
-      <div style="font-size:12px;font-weight:700;color:#16a34a">💡 Suggested Alpha Fee</div>
-      <div id="cp-suggested" style="font-size:18px;font-weight:900;color:#16a34a">$—</div>
-    </div>
-  </div>
-</div>
-
 
 <!-- TERM REMAINING / PAYOFF SUMMARY — sits directly under MTF + Mortgage -->
 <div class="card">
@@ -1591,50 +1468,6 @@ function setStage(idx,btn){
   autoSave();updateProgress();
 }
 
-
-function calcCostProjection(){
-  var mtg=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
-  var bal=parseFloat((document.getElementById('v-balance')||{}).value)||0;
-  var mtfYr=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
-  var feeEl=document.getElementById('v-fee');
-  var fee=parseFloat(feeEl?feeEl.value:'')||0;
-
-  // Years remaining on mortgage: balance / (monthly*12) or balance/monthly/12
-  var mtgYrsRem=0;
-  if(mtg>0&&bal>0){
-    mtgYrsRem=Math.round((bal/mtg/12)*10)/10;
-  }
-
-  // MTG total remaining = balance (what they still owe)
-  var mtgTotal=bal>0?bal:(mtg>0?mtg*12*10:0);
-
-  // MTF years: use mortgage years remaining, or default 10 if no mortgage
-  var mtfYrs=mtgYrsRem>0?mtgYrsRem:5;
-  var mtfTotal=Math.round(mtfYr*mtfYrs);
-
-  // Grand total
-  var grand=Math.round(mtgTotal+mtfTotal);
-
-  // Suggested fee = roughly the grand total × 0.35 (35% of what they'd spend) or CRM fee
-  var suggested=fee>0?fee:Math.round(grand*0.35/100)*100;
-
-  // Update UI
-  var fc=function(n){return n>0?'$'+Math.round(n).toLocaleString():'$0';};
-  var el=function(id){return document.getElementById(id);};
-
-  if(el('cp-mtg-yrs')) el('cp-mtg-yrs').textContent=mtg>0?(mtgYrsRem.toFixed(1)+' yrs remaining on mortgage'):'No mortgage';
-  if(el('cp-mtg-total')) el('cp-mtg-total').textContent=fc(mtgTotal);
-  if(el('cp-mtg-calc')) el('cp-mtg-calc').textContent=mtg>0?('Balance $'+Math.round(bal).toLocaleString()+' ÷ $'+Math.round(mtg)+'/mo ÷ 12'):'Paid off';
-  if(el('cp-mtf-yrs')) el('cp-mtf-yrs').textContent=mtfYrs.toFixed(1)+' yrs '+(mtgYrsRem>0?'(matches mortgage term)':'(5-yr projection — no mortgage)');
-  if(el('cp-mtf-total')) el('cp-mtf-total').textContent=fc(mtfTotal);
-  if(el('cp-mtf-calc')) el('cp-mtf-calc').textContent=mtfYr>0?('$'+Math.round(mtfYr).toLocaleString()+'/yr × '+mtfYrs.toFixed(1)+' yrs'):'';
-  if(el('cp-total')) el('cp-total').textContent=fc(grand);
-  if(el('cp-suggested')){
-    if(fee>0){el('cp-suggested').textContent=fc(fee);el('cp-suggested').style.color='#16a34a';}
-    else{el('cp-suggested').textContent='Approval Pending';el('cp-suggested').style.color='#C8960C';el('cp-suggested').style.fontSize='16px';}
-  }
-}
-
 function setMtg(t){
   _mtgType=t;
   ['pf','ow','bh'].forEach(function(x){var b=document.getElementById('mt-'+x);if(b)b.className='mt-b';});
@@ -1645,8 +1478,6 @@ function setMtg(t){
 }
 
 function calcTotals(){
-  try{calcCostProjection();}catch(e){}
-
   var mtfYr  = parseFloat(document.getElementById('v-mtf').value)||0;
   var mtfMo  = mtfYr/12;
   var mtgMo  = parseFloat(document.getElementById('v-mtg')&&document.getElementById('v-mtg').value)||0;
@@ -1704,13 +1535,6 @@ function calcTotals(){
   }
 }
 
-
-function showCoOwner(){
-  var co=document.getElementById('v-co');
-  var row=document.getElementById('coowner-row');
-  if(row) row.style.display=(co&&co.value.trim())?'flex':'none';
-}
-
 function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
@@ -1723,9 +1547,10 @@ function populateFromCRM(){
   function field(names){
     for(var ni=0;ni<names.length;ni++){
       var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-      // Require field name at START of line to avoid matching e.g. "2nd owner first name" when looking for "First Name"
-      var m=t.match(new RegExp('(?:^|\n)'+nm+'[^\t\n]*\t\n?([^\t\n][^\n]{0,150})','i'));
-      if(!m) m=t.match(new RegExp('(?:^|\n)'+nm+'[^\n]*\n([^\n]{1,150})','i'));
+      // Try tab-delimited (Zoho copy-all): FieldName\tValue or FieldName\t\nValue
+      var m=t.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,150})','i'));
+      // Try newline-separated (browser paste): FieldName\nValue
+      if(!m) m=t.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,150})','i'));
       if(m&&m[1]){
         var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
         if(v&&v!=='-'&&v!=='N/A'&&v!=='NA') return v;
@@ -1742,33 +1567,7 @@ function populateFromCRM(){
     el.dispatchEvent(new Event('input'));
   }
 
-  var _fn=field(['First Name']);
-  if(_fn.indexOf('&')>-1)_fn=_fn.split('&')[0].trim();
-  setf('v-first',_fn);
-  // Co-owner fields
-  var _co1=field(['2nd owner first name']);
-  var _co2=field(['2nd owner last Name','2nd owner last name']);
-  if(_co1){setf('v-co',_co1);document.getElementById('coowner-row').style.display='flex';}
-  if(_co2) setf('v-col',_co2);
-  // New fields
-  var _lang=field(['Preffered Language','Preferred Language']);
-  if(_lang){var _lel=document.getElementById('v-lang');if(_lel){_lel.value=_lang;_lel.dispatchEvent(new Event('change'));}}
-  var _fronter=field(['Intake Specialist \(Fronter\)','Intake Specialist','Fronter']);
-  if(_fronter) setf('v-fronter',_fronter);
-  var _lstatus=field(['Lead Status','Status of call']);
-  if(_lstatus){var _lsel=document.getElementById('v-lstatus');if(_lsel){_lsel.value=_lstatus;}}
-  var _lsrc=field(['Lead sources','Lead source','How did you hear about us']);
-  if(_lsrc) setf('v-lsrc',_lsrc);
-  var _phone2=field(['Secondary Phone']).replace(/\D/g,'').replace(/^1/,'');
-  if(_phone2&&_phone2!=='-') setf('v-phone2',_phone2);
-  var _deed=field(['Someone else on deed']);
-  if(_deed){var _del=document.getElementById('v-deed');if(_del){_del.value=_deed;}}
-  var _aptdt=field(['Client Appt Date & Time','User Appointment Date & Time']);
-  if(_aptdt){var _adp=_aptdt.replace('T',' ').substring(0,16);setf('v-aptdt',_adp);}
-  var _bkmtg=field(['R1-How far behind on mortgage','How far behind on mortgage']);
-  if(_bkmtg&&_bkmtg!=='-') setf('v-bkmtg',_bkmtg);
-  var _bkmtf=field(['R1-How far behind on mait fees','How far behind on mait fees']);
-  if(_bkmtf&&_bkmtf!=='-') setf('v-bkmtf',_bkmtf);
+  setf('v-first',  field(['First Name']));
   setf('v-last',   field(['Last Name']));
   setf('v-email',  field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
   setf('v-phone',  field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
@@ -1776,14 +1575,9 @@ function populateFromCRM(){
   setf('v-rescity',field(['R1-Resort City']));
   setf('v-loc',    field(['R1-Resort State']));
 
-  var yr=field(['R1-Date Purchased','R1-Date Purchased (Roughly)']);
+  var yr=field(['R1-Date Purchased']);
   var ym=yr.match(/(20\d{2}|19\d{2})/);
   if(ym) setf('v-year', ym[1]);
-
-  // R2 year
-  var yr2=field(['R2-Date Purchased','R2-Date Purchased (Roughly)']);
-  var ym2=yr2.match(/(20\d{2}|19\d{2})/);
-  if(ym2) setf('v-year2', ym2[1]);
 
   var pp=field(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');
   if(pp) setf('v-pprice', pp);
@@ -1791,26 +1585,16 @@ function populateFromCRM(){
   var mf=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance']).replace(/[^0-9.]/g,'');
   if(mf) setf('v-mtf', mf);
 
-  // Auto-detect mortgage: if monthly payment exists and > 0 → owes; otherwise paid off
-  var _mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
-  var _bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
-  var _ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
-  var _behind=field(['R1-How far behind on mortgage']).replace(/[^0-9]/g,'');
-  var _mgVal=parseFloat(_mg)||0;
-  if(_ms.indexOf('paid')>-1||_mgVal===0){
-    // Paid off
+  var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
+  var paid=ms.indexOf('paid')>-1;
+  if(paid){
     setf('v-mtg','0');
-    setTimeout(function(){setMtg('pf');},50);
-  } else if(_behind&&parseInt(_behind)>0){
-    // Behind on mortgage
-    if(_mg) setf('v-mtg',_mg);
-    if(_bl) setf('v-balance',_bl);
-    setTimeout(function(){setMtg('bh');},50);
+    var btn=document.getElementById('mt-pf'); if(btn) btn.click();
   } else {
-    // Owes
-    if(_mg) setf('v-mtg',_mg);
-    if(_bl) setf('v-balance',_bl);
-    setTimeout(function(){setMtg('ow');},50);
+    var mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
+    if(mg) setf('v-mtg', mg);
+    var bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
+    if(bl) setf('v-balance', bl);
   }
 
   var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');
@@ -2373,7 +2157,7 @@ window.addEventListener('beforeunload', function(){
   var s=ac(); if(!s) return;
   var all=ga(); if(!all[s]) return;
   function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
-  all[s]=Object.assign(all[s],{
+  var _new={
     firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
     coFirst:g('v-co'),coLast:g('v-col'),
     resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
@@ -2389,7 +2173,10 @@ window.addEventListener('beforeunload', function(){
     clientClass:g('v-classify'),
     _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
     _updated:Date.now()
-  });
+  };
+    Object.keys(_new).forEach(function(k){
+      if(_new[k]!==''&&_new[k]!==null&&_new[k]!==undefined){all[s][k]=_new[k];}
+    });
   sa(all);
 });
 
