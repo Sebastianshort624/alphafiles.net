@@ -1738,9 +1738,14 @@ function populateFromCRM(){
   setf('v-rescity',field(['R1-Resort City']));
   setf('v-loc',    field(['R1-Resort State']));
 
-  var yr=field(['R1-Date Purchased']);
+  var yr=field(['R1-Date Purchased','R1-Date Purchased (Roughly)']);
   var ym=yr.match(/(20\d{2}|19\d{2})/);
   if(ym) setf('v-year', ym[1]);
+
+  // R2 year
+  var yr2=field(['R2-Date Purchased','R2-Date Purchased (Roughly)']);
+  var ym2=yr2.match(/(20\d{2}|19\d{2})/);
+  if(ym2) setf('v-year2', ym2[1]);
 
   var pp=field(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');
   if(pp) setf('v-pprice', pp);
