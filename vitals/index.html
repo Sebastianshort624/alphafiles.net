@@ -1576,7 +1576,7 @@ function calcCostProjection(){
   var mtgTotal=bal>0?bal:(mtg>0?mtg*12*10:0);
 
   // MTF years: use mortgage years remaining, or default 10 if no mortgage
-  var mtfYrs=mtgYrsRem>0?mtgYrsRem:10;
+  var mtfYrs=mtgYrsRem>0?mtgYrsRem:5;
   var mtfTotal=Math.round(mtfYr*mtfYrs);
 
   // Grand total
@@ -1592,11 +1592,14 @@ function calcCostProjection(){
   if(el('cp-mtg-yrs')) el('cp-mtg-yrs').textContent=mtg>0?(mtgYrsRem.toFixed(1)+' yrs remaining on mortgage'):'No mortgage';
   if(el('cp-mtg-total')) el('cp-mtg-total').textContent=fc(mtgTotal);
   if(el('cp-mtg-calc')) el('cp-mtg-calc').textContent=mtg>0?('Balance $'+Math.round(bal).toLocaleString()+' ÷ $'+Math.round(mtg)+'/mo ÷ 12'):'Paid off';
-  if(el('cp-mtf-yrs')) el('cp-mtf-yrs').textContent=mtfYrs.toFixed(1)+' yrs '+(mtgYrsRem>0?'(matches mortgage term)':'(default — no mortgage)');
+  if(el('cp-mtf-yrs')) el('cp-mtf-yrs').textContent=mtfYrs.toFixed(1)+' yrs '+(mtgYrsRem>0?'(matches mortgage term)':'(5-yr projection — no mortgage)');
   if(el('cp-mtf-total')) el('cp-mtf-total').textContent=fc(mtfTotal);
   if(el('cp-mtf-calc')) el('cp-mtf-calc').textContent=mtfYr>0?('$'+Math.round(mtfYr).toLocaleString()+'/yr × '+mtfYrs.toFixed(1)+' yrs'):'';
   if(el('cp-total')) el('cp-total').textContent=fc(grand);
-  if(el('cp-suggested')) el('cp-suggested').textContent=fc(suggested);
+  if(el('cp-suggested')){
+    if(fee>0){el('cp-suggested').textContent=fc(fee);el('cp-suggested').style.color='#16a34a';}
+    else{el('cp-suggested').textContent='Approval Pending';el('cp-suggested').style.color='#C8960C';el('cp-suggested').style.fontSize='16px';}
+  }
 }
 
 function setMtg(t){
