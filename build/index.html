@@ -328,7 +328,22 @@ function addToHub(){
     var html=atob(data.content.replace(/\n/g,''));
     if(html.indexOf("'"+slug+"'")>-1){log('ℹ️ '+nm+' already in hub','warn');return;}
     var ins=html.indexOf("<a href='/vitals/'");
-    var newHtml=ins>-1?html.slice(0,ins)+card+html.slice(ins):html.replace('</body>',card+'</body>');
+    var newHtml=ins>-1?html.slice(0,ins)+card+html.slice(ins):html.replace('
+<!-- FLOATING MENU BUTTON -->
+<div id="float-menu" style="position:fixed;top:16px;left:16px;z-index:9999">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <a href="/vitals/" style="display:flex;align-items:center;gap:8px;background:#1B2A4A;color:#fff;text-decoration:none;border-radius:8px;padding:8px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:.15s" onmouseover="this.style.background='#243a6e'" onmouseout="this.style.background='#1B2A4A'">
+      ⚡ Vitals
+    </a>
+    <a href="/clients/" style="display:flex;align-items:center;gap:8px;background:#1B2A4A;color:#fff;text-decoration:none;border-radius:8px;padding:8px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:.15s" onmouseover="this.style.background='#243a6e'" onmouseout="this.style.background='#1B2A4A'">
+      👥 Clients
+    </a>
+    <a href="/overview/" style="display:flex;align-items:center;gap:8px;background:#C8960C;color:#fff;text-decoration:none;border-radius:8px;padding:8px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;box-shadow:0 2px 8px rgba(200,150,12,.3);transition:.15s" onmouseover="this.style.background='#b8860b'" onmouseout="this.style.background='#C8960C'">
+      🗺 Overview
+    </a>
+  </div>
+</div>
+</body>',card+'</body>');
     return fetch(apiBase,{method:'PUT',headers:{'Authorization':'token '+token,'Content-Type':'application/json'},
       body:JSON.stringify({message:'Add '+nm+' to clients hub',content:btoa(unescape(encodeURIComponent(newHtml))),sha:data.sha,branch:'main'})});
   })
