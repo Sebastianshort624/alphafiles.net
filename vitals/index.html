@@ -1007,16 +1007,53 @@ function _topSaveClick(){
         </select>
       </div>
     </div>
-    <div class="pt" onclick="togglePS('co-info')"><div class="pt-ic" id="pto-co-info">+</div><span>Phone 2, Email, Co-Owner</span></div>
+    <div class="frow" style="margin-bottom:8px">
+      <div class="ff"><label>Preferred Language</label>
+        <select id="v-lang" onchange="autoSave();if(this.value.toLowerCase().indexOf('spanish')>-1&&typeof window.atcSetLang==='function')window.atcSetLang('es');else if(typeof window.atcSetLang==='function')window.atcSetLang('en')">
+          <option value="">—</option>
+          <option value="English">🇺🇸 English</option>
+          <option value="Spanish">🇲🇽 Spanish</option>
+        </select>
+      </div>
+      <div class="ff"><label>Lead Status</label>
+        <select id="v-lstatus" onchange="autoSave()">
+          <option value="">—</option>
+          <option>Appointment Set</option>
+          <option>Follow Up</option>
+          <option>Nurture</option>
+          <option>Assessment</option>
+          <option>Pending Docs</option>
+          <option>Closed Won</option>
+          <option>Closed Lost</option>
+        </select>
+      </div>
+      <div class="ff"><label>Fronter</label><input id="v-fronter" oninput="autoSave()" placeholder="Aaron, Kaylani..."></div>
+    </div>
+    <div class="frow" style="margin-bottom:8px">
+      <div class="ff"><label>Appt Date &amp; Time</label><input id="v-aptdt" oninput="autoSave()" placeholder="2026-07-11 12:00"></div>
+      <div class="ff"><label>Someone Else on Deed?</label>
+        <select id="v-deed" onchange="autoSave()">
+          <option value="">—</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div class="ff"><label>Lead Source</label><input id="v-lsrc" oninput="autoSave()" placeholder="Gold Leads, Outbound..."></div>
+    </div>
+    <div class="pt" onclick="togglePS('co-info')"><div class="pt-ic" id="pto-co-info">+</div><span>Phone 2, Email, Co-Owner, Behind on Payments</span></div>
     <div class="ps" id="co-info">
       <div class="frow" style="margin-bottom:8px">
         <div class="ff"><label>2nd Phone</label><input id="v-phone2" type="tel" oninput="autoSave()"></div>
-    <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" placeholder="" oninput="autoSave()"></div>
+        <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" oninput="autoSave()"></div>
         <div class="ff"><label>Email</label><input id="v-email" type="email" oninput="autoSave()"></div>
       </div>
-      <div class="frow">
+      <div class="frow" style="margin-bottom:8px">
         <div class="ff"><label>Co-Owner First</label><input id="v-co" oninput="autoSave()"></div>
         <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
+      </div>
+      <div class="frow">
+        <div class="ff"><label>Behind on Mortgage</label><input id="v-bkmtg" oninput="autoSave()" placeholder="e.g. 3 months"></div>
+        <div class="ff"><label>Behind on MTF</label><input id="v-bkmtf" oninput="autoSave()" placeholder="e.g. 2 months"></div>
       </div>
     </div>
   </div>
@@ -1052,6 +1089,16 @@ function _topSaveClick(){
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">📝 Meeting Notes</div>
+  <div class="card-body">
+    <textarea id="v-notes" rows="5" oninput="autoSave()" 
+      style="width:100%;border:1.5px solid #E0E4ED;border-radius:7px;padding:10px;font-family:Inter,sans-serif;font-size:13px;color:#374151;resize:vertical;line-height:1.6"
+      placeholder="Paste Gemini notes, key objections, talking points, anything from the call..."></textarea>
+    <div style="font-size:11px;color:#9ca3af;margin-top:4px">Auto-saves per client · Paste Google Meet / Gemini notes here</div>
   </div>
 </div>
 
@@ -1557,10 +1604,9 @@ function populateFromCRM(){
   function field(names){
     for(var ni=0;ni<names.length;ni++){
       var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-      // Try tab-delimited (Zoho copy-all): FieldName\tValue or FieldName\t\nValue
-      var m=t.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,150})','i'));
-      // Try newline-separated (browser paste): FieldName\nValue
-      if(!m) m=t.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,150})','i'));
+      // Require field name at START of line to avoid matching e.g. "2nd owner first name" when looking for "First Name"
+      var m=t.match(new RegExp('(?:^|\n)'+nm+'[^\t\n]*\t\n?([^\t\n][^\n]{0,150})','i'));
+      if(!m) m=t.match(new RegExp('(?:^|\n)'+nm+'[^\n]*\n([^\n]{1,150})','i'));
       if(m&&m[1]){
         var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
         if(v&&v!=='-'&&v!=='N/A'&&v!=='NA') return v;
@@ -1577,7 +1623,33 @@ function populateFromCRM(){
     el.dispatchEvent(new Event('input'));
   }
 
-  var _fn=field(['First Name']);if(_fn.indexOf('&')>-1)_fn=_fn.split('&')[0].trim();setf('v-first',_fn);
+  var _fn=field(['First Name']);
+  if(_fn.indexOf('&')>-1)_fn=_fn.split('&')[0].trim();
+  setf('v-first',_fn);
+  // Co-owner fields
+  var _co1=field(['2nd owner first name']);
+  var _co2=field(['2nd owner last Name','2nd owner last name']);
+  if(_co1) setf('v-co',_co1);
+  if(_co2) setf('v-col',_co2);
+  // New fields
+  var _lang=field(['Preffered Language','Preferred Language']);
+  if(_lang){var _lel=document.getElementById('v-lang');if(_lel){_lel.value=_lang;_lel.dispatchEvent(new Event('change'));}}
+  var _fronter=field(['Intake Specialist (Fronter)','Fronter']);
+  if(_fronter) setf('v-fronter',_fronter);
+  var _lstatus=field(['Lead Status','Status of call']);
+  if(_lstatus){var _lsel=document.getElementById('v-lstatus');if(_lsel){_lsel.value=_lstatus;}}
+  var _lsrc=field(['Lead sources','Lead source','How did you hear about us']);
+  if(_lsrc) setf('v-lsrc',_lsrc);
+  var _phone2=field(['Secondary Phone']).replace(/\D/g,'').replace(/^1/,'');
+  if(_phone2&&_phone2!=='-') setf('v-phone2',_phone2);
+  var _deed=field(['Someone else on deed']);
+  if(_deed){var _del=document.getElementById('v-deed');if(_del){_del.value=_deed;}}
+  var _aptdt=field(['Client Appt Date & Time','User Appointment Date & Time']);
+  if(_aptdt){var _adp=_aptdt.replace('T',' ').substring(0,16);setf('v-aptdt',_adp);}
+  var _bkmtg=field(['R1-How far behind on mortgage','How far behind on mortgage']);
+  if(_bkmtg&&_bkmtg!=='-') setf('v-bkmtg',_bkmtg);
+  var _bkmtf=field(['R1-How far behind on mait fees','How far behind on mait fees']);
+  if(_bkmtf&&_bkmtf!=='-') setf('v-bkmtf',_bkmtf);
   setf('v-last',   field(['Last Name']));
   setf('v-email',  field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
   setf('v-phone',  field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
