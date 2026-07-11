@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CRM Overview — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh}
+
+/* HEADER */
+.hdr{background:var(--navy);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold)}
+.hdr-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.5px}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.hdr-right{display:flex;gap:10px;align-items:center}
+.badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:100px;background:rgba(200,150,12,.15);color:var(--gold);border:1px solid rgba(200,150,12,.3)}
+
+/* LAYOUT */
+.wrap{max-width:1300px;margin:0 auto;padding:24px}
+.intro{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.intro-text h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.intro-text p{font-size:13px;color:#6b7280;line-height:1.6}
+.stats-row{display:flex;gap:12px}
+.stat{background:var(--bg);border-radius:8px;padding:10px 16px;text-align:center;min-width:80px}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;color:var(--gold)}
+.stat-l{font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+
+/* SECTION LABEL */
+.sec-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-left:4px}
+
+/* MAP GRID */
+.map{display:grid;grid-template-columns:200px 1fr 200px;gap:16px;margin-bottom:24px}
+.col-left,.col-right{display:flex;flex-direction:column;gap:12px}
+.col-center{display:flex;flex-direction:column;gap:12px}
+
+/* NODE CARDS */
+.node{border-radius:10px;border:1.5px solid var(--border);background:#fff;cursor:pointer;transition:.2s;position:relative;overflow:visible}
+.node:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(27,42,74,.1);transform:translateY(-2px)}
+.node.active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,150,12,.15)}
+.node.core{border-color:var(--navy);border-width:2px}
+.node.new-page{border-color:var(--green);border-style:dashed}
+.node-hdr{background:var(--navy);padding:8px 12px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:8px}
+.node.new-page .node-hdr{background:var(--green)}
+.node-icon{font-size:16px}
+.node-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;letter-spacing:.3px}
+.node-tag{margin-left:auto;font-size:9px;font-weight:700;padding:2px 6px;border-radius:100px;background:rgba(200,150,12,.3);color:var(--gold);text-transform:uppercase;letter-spacing:.4px}
+.node.new-page .node-tag{background:rgba(255,255,255,.2);color:#fff}
+.node-body{padding:10px 12px}
+.node-url{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.node-desc{font-size:12px;color:#374151;line-height:1.5;margin-bottom:8px}
+.node-chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;background:var(--bg);color:#374151;border:1px solid var(--border)}
+.chip.gold{background:rgba(200,150,12,.1);color:#92400e;border-color:rgba(200,150,12,.3)}
+.chip.green{background:#f0fdf4;color:#16a34a;border-color:#86efac}
+.chip.blue{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+.chip.red{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+
+/* CENTER CORE */
+.core-node{background:linear-gradient(135deg,var(--navy),#243a6e);border-radius:12px;padding:20px;text-align:center;border:2px solid var(--gold)}
+.core-node h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:6px}
+.core-node p{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:14px}
+.core-links{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.core-link{font-size:11px;font-weight:700;padding:5px 10px;border-radius:6px;background:rgba(200,150,12,.2);color:var(--gold);border:1px solid rgba(200,150,12,.3);cursor:pointer;transition:.15s}
+.core-link:hover{background:var(--gold);color:#fff}
+
+/* ARROWS */
+.arrows{display:grid;grid-template-columns:200px 1fr 200px;gap:16px;margin-bottom:12px;pointer-events:none}
+.arrow-col{display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gold);opacity:.5}
+
+/* DETAIL PANEL */
+.detail{background:#fff;border-radius:12px;border:1.5px solid var(--gold);padding:20px;margin-bottom:24px;display:none}
+.detail.open{display:block}
+.detail-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.detail-icon{font-size:28px}
+.detail-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.detail-url{font-size:12px;color:var(--gold);font-weight:700}
+.detail-close{margin-left:auto;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;color:#374151}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.detail-box{background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border)}
+.detail-box h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:8px}
+.detail-box ul{list-style:none;font-size:12px;color:#374151;line-height:1.8}
+.detail-box ul li::before{content:'→ ';color:var(--gold);font-weight:700}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;margin-top:12px}
+.nav-btn:hover{background:#243a6e}
+
+/* FLOW SECTION */
+.flow{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:24px}
+.flow-steps{display:flex;align-items:center;gap:0;overflow-x:auto;padding:8px 0}
+.flow-step{flex-shrink:0;text-align:center;padding:12px 16px;position:relative}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--gold);font-weight:700}
+.flow-dot{width:42px;height:42px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px}
+.flow-step.done .flow-dot{background:var(--green)}
+.flow-step.inprogress .flow-dot{background:var(--gold)}
+.flow-step.planned .flow-dot{background:#e5e7eb}
+.flow-label{font-size:11px;font-weight:700;color:var(--navy);white-space:nowrap}
+.flow-sub{font-size:10px;color:#9ca3af;margin-top:2px;white-space:nowrap}
+
+/* LEGEND */
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#374151;align-items:center}
+.leg-item{display:flex;align-items:center;gap:6px}
+.leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* SUGGEST BTN */
+.suggest-btn{position:fixed;bottom:28px;right:28px;background:var(--gold);color:#fff;border:none;border-radius:100px;padding:14px 22px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 20px rgba(200,150,12,.4);display:flex;align-items:center;gap:8px;z-index:1000;transition:.2s}
+.suggest-btn:hover{background:#b8860b;transform:translateY(-2px);box-shadow:0 6px 24px rgba(200,150,12,.5)}
+
+/* SUGGEST MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:28px;width:560px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.modal-hdr h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.modal-close{margin-left:auto;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:700;color:#374151}
+.modal textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px;font-family:'Inter',sans-serif;font-size:14px;color:var(--navy);resize:none;min-height:100px;line-height:1.6}
+.modal textarea:focus{outline:none;border-color:var(--gold)}
+.modal-examples{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px}
+.ex-chip{background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:4px 10px;font-size:11px;color:#374151;cursor:pointer;transition:.15s}
+.ex-chip:hover{background:rgba(200,150,12,.1);border-color:var(--gold);color:#92400e}
+.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.btn-submit{background:var(--navy);color:#fff;border:none;border-radius:7px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-submit:hover{background:#243a6e}
+.btn-cancel{background:var(--bg);color:#374151;border:1px solid var(--border);border-radius:7px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.analysis-box{background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border);margin-top:14px;display:none}
+.analysis-box.open{display:block}
+.analysis-box h4{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.analysis-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#374151;margin-bottom:6px}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.scope-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.scope-btn{background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:8px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;color:var(--navy);transition:.15s}
+.scope-btn:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="hdr-logo">🗺 ATC CRM Overview</div>
+    <div class="hdr-sub">Interactive system map — click any node to explore</div>
+  </div>
+  <div class="hdr-right">
+    <div class="badge">Live Map</div>
+    <a href="/vitals/" class="nav-btn" style="text-decoration:none">← Back to CRM</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="intro">
+    <div class="intro-text">
+      <h2>AlphaFiles.net — System Architecture</h2>
+      <p>Every page, data source, and workflow in one place. Click any node to see what it does, what data it uses, and how it connects to everything else.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n" id="client-count">—</div><div class="stat-l">Clients</div></div>
+      <div class="stat"><div class="stat-n">11</div><div class="stat-l">Pages</div></div>
+      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Planned</div></div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div style="background:#fff;border-radius:10px;border:1px solid var(--border);padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--navy)"></div> Core Page (Live)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--green);border:2px dashed var(--green)"></div> Planned / New</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div> External Tool</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#7c3aed"></div> Data Store</div>
+    </div>
+    <div style="font-size:11px;color:#9ca3af;margin-left:auto">Click any card to expand details</div>
+  </div>
+
+  <!-- MAP -->
+  <div class="sec-label">System Map</div>
+  <div class="map">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
+      <div class="node" onclick="showDetail('clients')">
+        <div class="node-hdr"><span class="node-icon">👥</span><span class="node-title">Clients Hub</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/clients/</div>
+          <div class="node-desc">All client cards. Quick access to any record.</div>
+          <div class="node-chips"><span class="chip gold">localStorage</span><span class="chip">11 clients</span></div>
+        </div>
+      </div>
+      <div class="node" onclick="showDetail('proof')">
+        <div class="node-hdr"><span class="node-icon">⭐</span><span class="node-title">Proof / Track Record</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/history/</div>
+          <div class="node-desc">Case database, Google reviews, stats.</div>
+          <div class="node-chips"><span class="chip">41 yrs</span><span class="chip">BBB A+</span><span class="chip gold">5★ Google</span></div>
+        </div>
+      </div>
+      <div class="node" onclick="showDetail('leverage')">
+        <div class="node-hdr"><span class="node-icon">⚖️</span><span class="node-title">Leverage</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/leverage/</div>
+          <div class="node-desc">Legal statutes, CBOR, compliance tools.</div>
+          <div class="node-chips"><span class="chip">RESPA</span><span class="chip">TILA</span><span class="chip">FTC §5</span></div>
+        </div>
+      </div>
+      <div class="node" onclick="showDetail('screenshare')">
+        <div class="node-hdr"><span class="node-icon">🖥</span><span class="node-title">Screen Share</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/screenshare/</div>
+          <div class="node-desc">Client-facing invite page for live calls.</div>
+          <div class="node-chips"><span class="chip blue">Client View</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER COLUMN -->
+    <div class="col-center">
+      <div class="core-node">
+        <h3>⚡ Client Vitals</h3>
+        <p>Core CRM workspace — populate, calculate, save, email, push</p>
+        <div class="core-links">
+          <span class="core-link" onclick="showDetail('vitals')">📋 Vitals</span>
+          <span class="core-link" onclick="showDetail('build')">🚀 Build Console</span>
+          <span class="core-link" onclick="showDetail('formulas')">📐 Formula Panel</span>
+          <span class="core-link" onclick="showDetail('notes')">📝 Meeting Notes</span>
+          <span class="core-link" onclick="showDetail('emails')">✉️ Email Generator</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="node" onclick="showDetail('workflow')">
+          <div class="node-hdr" style="background:var(--green)"><span class="node-icon">📅</span><span class="node-title">Daily Workflow</span><span class="node-tag" style="color:#fff">Planned</span></div>
+          <div class="node-body">
+            <div class="node-url">/workflow/</div>
+            <div class="node-desc">3-day calendar + Hit List combined workspace.</div>
+            <div class="node-chips"><span class="chip green">New Page</span><span class="chip">Hit List</span></div>
+          </div>
+        </div>
+        <div class="node" onclick="showDetail('hitlist')">
+          <div class="node-hdr" style="background:var(--green)"><span class="node-icon">🎯</span><span class="node-title">Hit List</span><span class="node-tag" style="color:#fff">Planned</span></div>
+          <div class="node-body">
+            <div class="node-url">Shared Component</div>
+            <div class="node-desc">Today's priority clients. Syncs across AF + SL.</div>
+            <div class="node-chips"><span class="chip green">New</span><span class="chip gold">Shared</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="node" onclick="showDetail('localStorage')">
+          <div class="node-hdr" style="background:#7c3aed"><span class="node-icon">💾</span><span class="node-title">localStorage</span><span class="node-tag">Data</span></div>
+          <div class="node-body">
+            <div class="node-desc">All client data, active slug, GitHub token.</div>
+            <div class="node-chips"><span class="chip">atc_clients_v2</span><span class="chip">atc_active</span></div>
+          </div>
+        </div>
+        <div class="node" onclick="showDetail('github')">
+          <div class="node-hdr" style="background:#24292e"><span class="node-icon">🐙</span><span class="node-title">GitHub API</span><span class="node-tag">Deploy</span></div>
+          <div class="node-body">
+            <div class="node-desc">Push quote pages and hub cards live.</div>
+            <div class="node-chips"><span class="chip">GET SHA</span><span class="chip">PUT b64</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col-right">
+      <div class="node" onclick="showDetail('client-portal')">
+        <div class="node-hdr"><span class="node-icon">🔗</span><span class="node-title">Client Portal</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/[slug]/</div>
+          <div class="node-desc">Client-facing quote page. 7 sections, no sidebar.</div>
+          <div class="node-chips"><span class="chip blue">Public</span><span class="chip">Per Client</span></div>
+        </div>
+      </div>
+      <div class="node" onclick="showDetail('rep-view')">
+        <div class="node-hdr"><span class="node-icon">👤</span><span class="node-title">Rep View</span><span class="node-tag">Live</span></div>
+        <div class="node-body">
+          <div class="node-url">/[slug]/rep/</div>
+          <div class="node-desc">Full sidebar, email gen, all 26 slides, case notes.</div>
+          <div class="node-chips"><span class="chip gold">Internal</span><span class="chip">26 Pages</span></div>
+        </div>
+      </div>
+      <div class="node new-page" onclick="showDetail('formulapage')">
+        <div class="node-hdr"><span class="node-icon">📐</span><span class="node-title">Formula Manager</span><span class="node-tag">Planned</span></div>
+        <div class="node-body">
+          <div class="node-url">/formulas/</div>
+          <div class="node-desc">Admin page for Formula Dictionary. Source of truth.</div>
+          <div class="node-chips"><span class="chip green">New</span><span class="chip">Dictionary</span></div>
+        </div>
+      </div>
+      <div class="node new-page" onclick="showDetail('overview-node')">
+        <div class="node-hdr"><span class="node-icon">🗺</span><span class="node-title">CRM Overview</span><span class="node-tag">This Page</span></div>
+        <div class="node-body">
+          <div class="node-url">/overview/</div>
+          <div class="node-desc">Interactive system map. You are here.</div>
+          <div class="node-chips"><span class="chip green">New</span><span class="chip gold">Live</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail" id="detail-panel">
+    <div class="detail-hdr">
+      <span class="detail-icon" id="d-icon"></span>
+      <div>
+        <div class="detail-title" id="d-title"></div>
+        <div class="detail-url" id="d-url"></div>
+      </div>
+      <button class="detail-close" onclick="closeDetail()">✕ Close</button>
+    </div>
+    <div class="detail-grid" id="d-grid"></div>
+    <div id="d-nav"></div>
+  </div>
+
+  <!-- WORKFLOW FLOW -->
+  <div class="sec-label">Daily Sales Workflow</div>
+  <div class="flow">
+    <div class="flow-steps">
+      <div class="flow-step done"><div class="flow-dot">📞</div><div class="flow-label">Intake Call</div><div class="flow-sub">Fronter sets appt</div></div>
+      <div class="flow-step done"><div class="flow-dot">📋</div><div class="flow-label">CRM Populate</div><div class="flow-sub">Paste Zoho data</div></div>
+      <div class="flow-step done"><div class="flow-dot">💰</div><div class="flow-label">Cost Review</div><div class="flow-sub">Vitals calculates</div></div>
+      <div class="flow-step done"><div class="flow-dot">📧</div><div class="flow-label">Email Sequence</div><div class="flow-sub">5 template emails</div></div>
+      <div class="flow-step done"><div class="flow-dot">📄</div><div class="flow-label">Quote Push</div><div class="flow-sub">Build Console → live</div></div>
+      <div class="flow-step inprogress"><div class="flow-dot">✍️</div><div class="flow-label">Close</div><div class="flow-sub">DocuSign checklist</div></div>
+      <div class="flow-step planned"><div class="flow-dot">🎯</div><div class="flow-label">Hit List</div><div class="flow-sub">Follow-up tracking</div></div>
+      <div class="flow-step planned"><div class="flow-dot">📅</div><div class="flow-label">Daily Workflow</div><div class="flow-sub">Calendar + Hit List</div></div>
+    </div>
+  </div>
+
+  <!-- DATA FLOW -->
+  <div class="sec-label">Data Flow</div>
+  <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:80px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <div style="background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">1. Input</div>
+        <div style="font-size:12px;color:#374151;line-height:1.8">Zoho CRM paste<br>Manual field entry<br>CRM populate button</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">2. Storage</div>
+        <div style="font-size:12px;color:#374151;line-height:1.8">localStorage<br>atc_clients_v2<br>atc_active slug</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">3. Calculate</div>
+        <div style="font-size:12px;color:#374151;line-height:1.8">Formula Dictionary<br>calcTotals()<br>Cost Projection Box</div>
+      </div>
+      <div style="background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">4. Output</div>
+        <div style="font-size:12px;color:#374151;line-height:1.8">Email templates<br>Quote pages pushed<br>Client portals live</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUGGEST BUTTON -->
+<button class="suggest-btn" onclick="openSuggest()">💡 Suggest an Improvement</button>
+
+<!-- SUGGEST MODAL -->
+<div class="modal-overlay" id="suggest-modal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span style="font-size:24px">💡</span>
+      <div>
+        <h3>CRM Suggestions</h3>
+        <div style="font-size:12px;color:#6b7280">Describe any improvement in plain English</div>
+      </div>
+      <button class="modal-close" onclick="closeSuggest()">✕</button>
+    </div>
+    <textarea id="suggest-input" placeholder="e.g. Add a field for Resort Phone Number...&#10;e.g. Create a new formula called LTV&#10;e.g. Add a Quick Call button to every client row"></textarea>
+    <div class="modal-examples">
+      <span class="ex-chip" onclick="fillEx('Add a field for Resort Phone Number')">+ Resort Phone Number</span>
+      <span class="ex-chip" onclick="fillEx('Create a reusable formula for Loan to Value (LTV)')">+ LTV Formula</span>
+      <span class="ex-chip" onclick="fillEx('Add a Quick Call button to every client row in the Hit List')">+ Quick Call Button</span>
+      <span class="ex-chip" onclick="fillEx('Move the Meeting Notes field above the Follow-Up section')">+ Move Notes Field</span>
+      <span class="ex-chip" onclick="fillEx('Add bulk email to all clients on the Hit List')">+ Bulk Email Hit List</span>
+    </div>
+    <div class="analysis-box" id="analysis-box">
+      <h4>AI Analysis — What This Will Change</h4>
+      <div id="analysis-items"></div>
+      <div class="scope-row">
+        <div class="scope-btn" onclick="submitScope('client')">This Client Only</div>
+        <div class="scope-btn" onclick="submitScope('all')">All Clients</div>
+        <div class="scope-btn" onclick="submitScope('template')">Save as Template</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeSuggest()">Cancel</button>
+      <button class="btn-submit" id="analyze-btn" onclick="analyzeSuggestion()">Analyze →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Load client count
+try{
+  var d=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+  document.getElementById('client-count').textContent=Object.keys(d).length;
+}catch(e){}
+
+// NODE DETAIL DATA
+var NODES={
+  vitals:{icon:'⚡',title:'Client Vitals',url:'alphafiles.net/vitals/',
+    what:['CRM paste populate (one click from Zoho)','Auto-calculates MTF, mortgage, combined totals','Mortgage auto-detects paid/owes/behind','Co-owner fields auto-populate separately','Meeting notes per client (auto-save)'],
+    why:['Single source of truth for all client data','Drives email templates, quote pages, cost projections','Links to all 26 presentation slides'],
+    data:['atc_clients_v2 (all clients)','atc_active (current slug)','atc_gh_token (deploy key)'],
+    link:'/vitals/'},
+  build:{icon:'🚀',title:'Build Console',url:'alphafiles.net/build/',
+    what:['Select any client from localStorage','Preview full quote page before pushing','Push to alphafiles.net/[slug]/ via GitHub API','Add card to /clients/ hub','Build log shows all actions'],
+    why:['Completely isolated from vitals','If it fails vitals is untouched','One-click deployment to live URL'],
+    data:['atc_clients_v2','atc_gh_token','GitHub API'],link:'/build/'},
+  clients:{icon:'👥',title:'Clients Hub',url:'alphafiles.net/clients/',
+    what:['Cards for all 11 active clients','Click card to set atc_active and go to vitals','Shows fee, monthly payment, resort at a glance'],
+    why:['Quick navigation between clients','Bulk actions planned (add to Hit List, change stage)'],
+    data:['atc_clients_v2'],link:'/clients/'},
+  proof:{icon:'⭐',title:'Track Record / History',url:'alphafiles.net/history/',
+    what:['41 years in business stats','BBB A+ badge','5-star Google reviews banner + link','Case database with searchable results'],
+    why:['Used during sales calls for social proof','Linked from presentation slide 8'],
+    data:['Static content + Google Reviews link'],link:'/history/'},
+  leverage:{icon:'⚖️',title:'Leverage Page',url:'alphafiles.net/leverage/',
+    what:['RESPA, TILA, FTC §5, Reg Z statutes','Consumer Bill of Rights assessment','Compliance checklist tools'],
+    why:['Legal documentation for sales presentation','Cited during objection handling'],
+    data:['Static legal content'],link:'/leverage/'},
+  workflow:{icon:'📅',title:'Daily Workflow (Planned)',url:'alphafiles.net/workflow/',
+    what:['3-day Google Calendar view (left panel)','Today\'s Hit List (right panel)','Click client row to expand full vitals','All financial formulas calculated automatically'],
+    why:['Single workspace for the entire workday','Never leave this page during active selling'],
+    data:['atc_clients_v2','atc_hitlist','Google Calendar embed'],link:null},
+  hitlist:{icon:'🎯',title:'Hit List (Planned)',url:'Shared Component',
+    what:['Today\'s priority clients','Auto-calculates CMT, AT, 2YT, 3YT, 5YT per row','Add from vitals, clients hub, or workflow page','Syncs between AF and SL via localStorage'],
+    why:['Replaces manual tracking of follow-up clients','Drives daily workflow priority'],
+    data:['atc_hitlist (new key)','atc_clients_v2'],link:null},
+  formulas:{icon:'📐',title:'Formula Panel (Vitals)',url:'alphafiles.net/vitals/ — Formula Card',
+    what:['3–5 reusable formula widgets','Enter formula code (ACP, CMT, AT, etc.)','Auto-resolves label from Formula Dictionary','Auto-calculates result from active client data'],
+    why:['One reusable component instead of hardcoded fields','Add new formulas without touching UI'],
+    data:['FORMULA_DICT (central object)','atc_clients_v2 (active client)'],link:'/vitals/'},
+  formulapage:{icon:'📐',title:'Formula Manager (Planned)',url:'alphafiles.net/formulas/',
+    what:['Admin page for all formula codes','Add/edit/deactivate formulas','Changes propagate everywhere immediately','No hardcoded formulas anywhere else in CRM'],
+    why:['Single source of truth for all calculations','Add hundreds of formulas without redesigning UI'],
+    data:['FORMULA_DICT in localStorage'],link:null},
+  localStorage:{icon:'💾',title:'localStorage Data Store',url:'Browser Storage',
+    what:['atc_clients_v2 — all client data','atc_active — current client slug','atc_gh_token — GitHub deploy token','atc_hitlist — shared hit list (planned)','atc_version_history — version snapshots (planned)'],
+    why:['No server needed — fully offline capable','Data persists across sessions','Shared across all AF pages on same browser'],
+    data:['Browser localStorage API'],link:null},
+  github:{icon:'🐙',title:'GitHub API Deploy',url:'api.github.com',
+    what:['GET file → capture SHA','Base64 encode modified HTML','PUT with SHA to commit and deploy','GitHub Pages serves result in 2–5 min'],
+    why:['Zero server cost deployment','Every push creates a git commit (version history)','Supports custom domains via CNAME'],
+    data:['ghp_ classic PAT with repo scope','Sebastianshort624/alphafiles.net'],link:null},
+  'client-portal':{icon:'🔗',title:'Client Portal',url:'alphafiles.net/[slug]/',
+    what:['7 sections — no sidebar, no rep tools','Auto-sets atc_active on visit via script','Shows quote, timeline, process, guarantees','Pushed via Build Console or /quote codeword'],
+    why:['Client-facing — can be shared via link','Professional presentation between calls'],
+    data:['Built from atc_clients_v2 at push time'],link:null},
+  'rep-view':{icon:'👤',title:'Rep View',url:'alphafiles.net/[slug]/rep/',
+    what:['Full sidebar navigation','Email generator pre-filled with client data','Links to all 26 presentation pages','Update Client Page button','Case notes section'],
+    why:['Internal tool — not shared with clients','Full CRM context during a live call'],
+    data:['atc_clients_v2','All 26 slide pages'],link:null},
+  screenshare:{icon:'🖥',title:'Screen Share Page',url:'alphafiles.net/screenshare/',
+    what:['Client-facing invite page','Used during live calls to guide clients to follow along','Clean minimal design'],
+    why:['Replaces email invitations during calls','One URL to share verbally'],
+    data:['Static page'],link:'/screenshare/'},
+  notes:{icon:'📝',title:'Meeting Notes',url:'Inside /vitals/',
+    what:['Freeform textarea below Why Out section','Per-client auto-saving','Paste Gemini AI meeting notes here','Timestamps on each save'],
+    why:['Captures call context without leaving vitals','Searchable future reference per client'],
+    data:['atc_clients_v2 (notes field)'],link:'/vitals/'},
+  emails:{icon:'✉️',title:'Email Generator',url:'Inside /vitals/',
+    what:['18 email templates','Auto-filled with client name, resort, numbers','Group Filing, HEIRS, CLOSE, OPEN QUOTE, FULL QUOTE','Copy for Gmail paste'],
+    why:['Never manually write a client email','Consistent ATC branding across all communications'],
+    data:['atc_clients_v2 (active client)'],link:'/vitals/'},
+  'overview-node':{icon:'🗺',title:'CRM Overview',url:'alphafiles.net/overview/',
+    what:['Interactive system map (this page)','Click any node for full detail','Daily workflow flow diagram','Data flow visualization','Suggestion Center (💡 button)'],
+    why:['Blueprint for rebuilding or extending the CRM','Onboarding new reps','Spec document for Claude to build from'],
+    data:['atc_clients_v2 (client count)'],link:'/overview/'}
+};
+
+function showDetail(key){
+  var n=NODES[key];if(!n)return;
+  document.getElementById('d-icon').textContent=n.icon;
+  document.getElementById('d-title').textContent=n.title;
+  document.getElementById('d-url').textContent=n.url;
+  var g=document.getElementById('d-grid');
+  g.innerHTML='<div class="detail-box"><h4>What It Does</h4><ul>'+n.what.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>'
+    +'<div class="detail-box"><h4>Why It Exists</h4><ul>'+n.why.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>'
+    +'<div class="detail-box"><h4>Data Sources</h4><ul>'+n.data.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  var nav=document.getElementById('d-nav');
+  nav.innerHTML=n.link?'<a href="'+n.link+'" class="nav-btn">Open '+n.title+' →</a>':'<span style="font-size:12px;color:#9ca3af;margin-top:12px;display:block">📌 Planned — not yet built</span>';
+  var panel=document.getElementById('detail-panel');
+  panel.classList.add('open');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.querySelectorAll('.node').forEach(function(n){n.classList.remove('active');});
+}
+function closeDetail(){document.getElementById('detail-panel').classList.remove('open');}
+
+// SUGGEST
+function openSuggest(){document.getElementById('suggest-modal').classList.add('open');}
+function closeSuggest(){
+  document.getElementById('suggest-modal').classList.remove('open');
+  document.getElementById('suggest-input').value='';
+  document.getElementById('analysis-box').classList.remove('open');
+  document.getElementById('analyze-btn').textContent='Analyze →';
+}
+function fillEx(t){document.getElementById('suggest-input').value=t;}
+function analyzeSuggestion(){
+  var txt=document.getElementById('suggest-input').value.trim();
+  if(!txt){alert('Please describe what you want to improve.');return;}
+  var btn=document.getElementById('analyze-btn');
+  btn.textContent='Analyzing...';
+  setTimeout(function(){
+    var items=generateAnalysis(txt);
+    var box=document.getElementById('analysis-box');
+    var ai=document.getElementById('analysis-items');
+    ai.innerHTML=items.map(function(i){return '<div class="analysis-item"><div class="ai-dot"></div>'+i+'</div>';}).join('');
+    box.classList.add('open');
+    btn.textContent='✓ Analyzed';
+  },800);
+}
+function generateAnalysis(txt){
+  var t=txt.toLowerCase();
+  var items=['Suggestion logged: "'+txt+'"'];
+  if(t.indexOf('field')>-1||t.indexOf('add')>-1) items.push('Affects: vitals/index.html — new input field required');
+  if(t.indexOf('formula')>-1||t.indexOf('ltv')>-1||t.indexOf('calculat')>-1) items.push('Affects: FORMULA_DICT — new formula code to register');
+  if(t.indexOf('button')>-1||t.indexOf('call')>-1) items.push('Affects: UI component — new button element');
+  if(t.indexOf('email')>-1) items.push('Affects: Email Generator templates');
+  if(t.indexOf('move')>-1||t.indexOf('rename')>-1) items.push('Affects: HTML structure — element reposition');
+  if(t.indexOf('hit list')>-1||t.indexOf('bulk')>-1) items.push('Affects: /clients/ and /workflow/ pages');
+  items.push('No existing client data will be lost');
+  items.push('Copy suggestion text → paste to Claude with: "Please implement this in alphafiles.net vitals: '+txt+'"');
+  return items;
+}
+function submitScope(scope){
+  var txt=document.getElementById('suggest-input').value.trim();
+  var msg='Suggestion saved (scope: '+scope+'): '+txt+'\n\nTo implement: paste this to Claude with your GitHub token.';
+  try{
+    var s=JSON.parse(localStorage.getItem('atc_suggestions')||'[]');
+    s.push({text:txt,scope:scope,ts:new Date().toISOString()});
+    localStorage.setItem('atc_suggestions',JSON.stringify(s));
+  }catch(e){}
+  alert(msg);
+  closeSuggest();
+}
+</script>
+</body>
+</html>
