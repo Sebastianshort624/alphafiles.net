@@ -1043,7 +1043,6 @@ function _topSaveClick(){
           <option>No</option>
         </select>
       </div>
-      <div class="ff"><label>Lead Source</label><input id="v-lsrc" oninput="autoSave()" placeholder="Gold Leads, Outbound..."></div>
     </div>
     <div class="pt" onclick="togglePS('co-info')"><div class="pt-ic" id="pto-co-info">+</div><span>Phone 2, Email, Co-Owner, Behind on Payments</span></div>
     <div class="ps" id="co-info">
@@ -1224,6 +1223,36 @@ function _topSaveClick(){
     </div>
   </div>
 </div>
+
+<!-- COST PROJECTION BOX -->
+<div class="card" id="cost-proj-card">
+  <div class="card-hdr">💰 What Staying Costs Them</div>
+  <div class="card-body" style="padding:12px 16px">
+    <div id="cost-proj-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:#fef2f2;border-radius:8px;padding:12px;border:1px solid #fca5a5">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#dc2626;margin-bottom:6px">Mortgage Remaining</div>
+        <div id="cp-mtg-yrs" style="font-size:12px;color:#6b7280;margin-bottom:4px">— yrs remaining</div>
+        <div id="cp-mtg-total" style="font-size:22px;font-weight:800;color:#dc2626">$—</div>
+        <div id="cp-mtg-calc" style="font-size:11px;color:#9ca3af;margin-top:2px"></div>
+      </div>
+      <div style="background:#fff7ed;border-radius:8px;padding:12px;border:1px solid #fed7aa">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#ea580c;margin-bottom:6px">MTF Remaining</div>
+        <div id="cp-mtf-yrs" style="font-size:12px;color:#6b7280;margin-bottom:4px">— yrs (default 10 if no mtg)</div>
+        <div id="cp-mtf-total" style="font-size:22px;font-weight:800;color:#ea580c">$—</div>
+        <div id="cp-mtf-calc" style="font-size:11px;color:#9ca3af;margin-top:2px"></div>
+      </div>
+    </div>
+    <div style="background:#1B2A4A;border-radius:8px;padding:10px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6)">Total Cost if They Stay</div>
+      <div id="cp-total" style="font-size:20px;font-weight:900;color:#C8960C">$—</div>
+    </div>
+    <div style="background:#f0fdf4;border-radius:8px;padding:10px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;border:1px solid #86efac">
+      <div style="font-size:12px;font-weight:700;color:#16a34a">💡 Suggested Alpha Fee</div>
+      <div id="cp-suggested" style="font-size:18px;font-weight:900;color:#16a34a">$—</div>
+    </div>
+  </div>
+</div>
+
 
 <!-- TERM REMAINING / PAYOFF SUMMARY — sits directly under MTF + Mortgage -->
 <div class="card">
@@ -1527,6 +1556,47 @@ function setStage(idx,btn){
   autoSave();updateProgress();
 }
 
+
+function calcCostProjection(){
+  var mtg=parseFloat((document.getElementById('v-mtg')||{}).value)||0;
+  var bal=parseFloat((document.getElementById('v-balance')||{}).value)||0;
+  var mtfYr=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
+  var feeEl=document.getElementById('v-fee');
+  var fee=parseFloat(feeEl?feeEl.value:'')||0;
+
+  // Years remaining on mortgage: balance / (monthly*12) or balance/monthly/12
+  var mtgYrsRem=0;
+  if(mtg>0&&bal>0){
+    mtgYrsRem=Math.round((bal/mtg/12)*10)/10;
+  }
+
+  // MTG total remaining = balance (what they still owe)
+  var mtgTotal=bal>0?bal:(mtg>0?mtg*12*10:0);
+
+  // MTF years: use mortgage years remaining, or default 10 if no mortgage
+  var mtfYrs=mtgYrsRem>0?mtgYrsRem:10;
+  var mtfTotal=Math.round(mtfYr*mtfYrs);
+
+  // Grand total
+  var grand=Math.round(mtgTotal+mtfTotal);
+
+  // Suggested fee = roughly the grand total × 0.35 (35% of what they'd spend) or CRM fee
+  var suggested=fee>0?fee:Math.round(grand*0.35/100)*100;
+
+  // Update UI
+  var fc=function(n){return n>0?'$'+Math.round(n).toLocaleString():'$0';};
+  var el=function(id){return document.getElementById(id);};
+
+  if(el('cp-mtg-yrs')) el('cp-mtg-yrs').textContent=mtg>0?(mtgYrsRem.toFixed(1)+' yrs remaining on mortgage'):'No mortgage';
+  if(el('cp-mtg-total')) el('cp-mtg-total').textContent=fc(mtgTotal);
+  if(el('cp-mtg-calc')) el('cp-mtg-calc').textContent=mtg>0?('Balance $'+Math.round(bal).toLocaleString()+' ÷ $'+Math.round(mtg)+'/mo ÷ 12'):'Paid off';
+  if(el('cp-mtf-yrs')) el('cp-mtf-yrs').textContent=mtfYrs.toFixed(1)+' yrs '+(mtgYrsRem>0?'(matches mortgage term)':'(default — no mortgage)');
+  if(el('cp-mtf-total')) el('cp-mtf-total').textContent=fc(mtfTotal);
+  if(el('cp-mtf-calc')) el('cp-mtf-calc').textContent=mtfYr>0?('$'+Math.round(mtfYr).toLocaleString()+'/yr × '+mtfYrs.toFixed(1)+' yrs'):'';
+  if(el('cp-total')) el('cp-total').textContent=fc(grand);
+  if(el('cp-suggested')) el('cp-suggested').textContent=fc(suggested);
+}
+
 function setMtg(t){
   _mtgType=t;
   ['pf','ow','bh'].forEach(function(x){var b=document.getElementById('mt-'+x);if(b)b.className='mt-b';});
@@ -1537,6 +1607,8 @@ function setMtg(t){
 }
 
 function calcTotals(){
+  try{calcCostProjection();}catch(e){}
+
   var mtfYr  = parseFloat(document.getElementById('v-mtf').value)||0;
   var mtfMo  = mtfYr/12;
   var mtgMo  = parseFloat(document.getElementById('v-mtg')&&document.getElementById('v-mtg').value)||0;
@@ -1643,7 +1715,7 @@ function populateFromCRM(){
   // New fields
   var _lang=field(['Preffered Language','Preferred Language']);
   if(_lang){var _lel=document.getElementById('v-lang');if(_lel){_lel.value=_lang;_lel.dispatchEvent(new Event('change'));}}
-  var _fronter=field(['Intake Specialist (Fronter)','Fronter']);
+  var _fronter=field(['Intake Specialist \(Fronter\)','Intake Specialist','Fronter']);
   if(_fronter) setf('v-fronter',_fronter);
   var _lstatus=field(['Lead Status','Status of call']);
   if(_lstatus){var _lsel=document.getElementById('v-lstatus');if(_lsel){_lsel.value=_lstatus;}}
@@ -1676,16 +1748,26 @@ function populateFromCRM(){
   var mf=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance']).replace(/[^0-9.]/g,'');
   if(mf) setf('v-mtf', mf);
 
-  var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
-  var paid=ms.indexOf('paid')>-1;
-  if(paid){
+  // Auto-detect mortgage: if monthly payment exists and > 0 → owes; otherwise paid off
+  var _mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
+  var _bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
+  var _ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
+  var _behind=field(['R1-How far behind on mortgage']).replace(/[^0-9]/g,'');
+  var _mgVal=parseFloat(_mg)||0;
+  if(_ms.indexOf('paid')>-1||_mgVal===0){
+    // Paid off
     setf('v-mtg','0');
-    var btn=document.getElementById('mt-pf'); if(btn) btn.click();
+    setTimeout(function(){setMtg('pf');},50);
+  } else if(_behind&&parseInt(_behind)>0){
+    // Behind on mortgage
+    if(_mg) setf('v-mtg',_mg);
+    if(_bl) setf('v-balance',_bl);
+    setTimeout(function(){setMtg('bh');},50);
   } else {
-    var mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
-    if(mg) setf('v-mtg', mg);
-    var bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
-    if(bl) setf('v-balance', bl);
+    // Owes
+    if(_mg) setf('v-mtg',_mg);
+    if(_bl) setf('v-balance',_bl);
+    setTimeout(function(){setMtg('ow');},50);
   }
 
   var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');
