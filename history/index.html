@@ -72,6 +72,18 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 .review-name{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
 .review-resort{font-size:12px;color:#6b7280;margin-bottom:8px}
 .review-text{font-size:14px;color:#374151;line-height:1.6;font-style:italic}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .sidenav{display:none!important}
+  .main{margin-left:0!important;width:100%!important;max-width:100vw!important}
+  .wrap,.main,.content{max-width:100vw!important;overflow-x:hidden!important}
+  .vb{grid-template-columns:1fr 1fr!important}
+  .stat-grid{grid-template-columns:1fr 1fr!important}
+  table{font-size:12px!important}
+  .card{margin:8px!important}
+}
+html,body{max-width:100vw;overflow-x:hidden}
 </style>
 
 <style id="atc-lang-css">
@@ -83,22 +95,6 @@ body:not([data-lang]) .es-only { display: none !important; }
 </style>
 </head>
 <body>
-<!-- GOOGLE REVIEWS BANNER -->
-<div style="background:linear-gradient(135deg,#1B2A4A,#243a6e);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:3px solid #C8960C">
-  <div style="display:flex;align-items:center;gap:12px">
-    <div style="display:flex;gap:2px;font-size:20px">⭐⭐⭐⭐⭐</div>
-    <div>
-      <div style="font-family:Inter,sans-serif;font-size:14px;font-weight:800;color:#fff">5-Star Rated on Google</div>
-      <div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:2px">Verified client reviews — Alpha Timeshare Consultants</div>
-    </div>
-  </div>
-  <a href="https://www.google.com/search?q=alpha+timeshare+consultants+reviews" target="_blank"
-     style="background:#C8960C;color:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:800;padding:10px 20px;border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-    Read Our Google Reviews ↗
-  </a>
-</div>
-
 <style id="atc-sb-css">
 body{display:flex!important;min-height:100vh!important}
 .sidenav{width:220px!important;min-width:220px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
@@ -924,6 +920,20 @@ function _topSaveClick(){
   <div class="vbc"><div class="vbl">📄 Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
 </div>
 
+<!-- GOOGLE REVIEWS BANNER -->
+<div style="background:#fff;border:1px solid #E0E4ED;border-left:4px solid #C8960C;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:18px">⭐⭐⭐⭐⭐</span>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#1B2A4A">5-Star Rated on Google</div>
+      <div style="font-size:11px;color:#6b7280">Verified client reviews — Alpha Timeshare Consultants</div>
+    </div>
+  </div>
+  <a href="https://www.google.com/search?q=alpha+timeshare+consultants+reviews" target="_blank"
+     style="background:#C8960C;color:#fff;font-size:12px;font-weight:800;padding:8px 16px;border-radius:6px;text-decoration:none;white-space:nowrap">
+    Read Our Google Reviews ↗
+  </a>
+</div>
 <div class="pb print-section" data-section="stats">
   <div class="stat-grid">
     <div class="stat-box"><div class="stat-num">41</div><div class="stat-lbl">Years in Business</div></div>
