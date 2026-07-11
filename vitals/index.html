@@ -996,6 +996,11 @@ function _topSaveClick(){
       <div class="ff"><label>First Name</label><input id="v-first" class="hi" oninput="autoSave()"></div>
       <div class="ff"><label>Last Name</label><input id="v-last" class="hi" oninput="autoSave()"></div>
     </div>
+    <div class="frow" id="coowner-row" style="margin-top:6px;padding:8px;background:#f0f4ff;border-radius:7px;border:1px solid #c7d2fe;display:none">
+      <div style="width:100%;font-size:11px;font-weight:700;color:#4f6ef5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">👥 Co-Owner on Deed</div>
+      <div class="ff"><label>Co-Owner First</label><input id="v-co" oninput="autoSave();showCoOwner()"></div>
+      <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
+    </div>
     <div class="frow">
       <div class="ff"><label>Phone</label><input id="v-phone" type="tel" oninput="autoSave()"></div>
       <div class="ff"><label>Closer</label>
@@ -1047,10 +1052,7 @@ function _topSaveClick(){
         <div class="ff"><label>3rd Phone</label><input id="v-phone3" type="tel" oninput="autoSave()"></div>
         <div class="ff"><label>Email</label><input id="v-email" type="email" oninput="autoSave()"></div>
       </div>
-      <div class="frow" style="margin-bottom:8px">
-        <div class="ff"><label>Co-Owner First</label><input id="v-co" oninput="autoSave()"></div>
-        <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
-      </div>
+
       <div class="frow">
         <div class="ff"><label>Behind on Mortgage</label><input id="v-bkmtg" oninput="autoSave()" placeholder="e.g. 3 months"></div>
         <div class="ff"><label>Behind on MTF</label><input id="v-bkmtf" oninput="autoSave()" placeholder="e.g. 2 months"></div>
@@ -1592,6 +1594,13 @@ function calcTotals(){
   }
 }
 
+
+function showCoOwner(){
+  var co=document.getElementById('v-co');
+  var row=document.getElementById('coowner-row');
+  if(row) row.style.display=(co&&co.value.trim())?'flex':'none';
+}
+
 function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
@@ -1629,7 +1638,7 @@ function populateFromCRM(){
   // Co-owner fields
   var _co1=field(['2nd owner first name']);
   var _co2=field(['2nd owner last Name','2nd owner last name']);
-  if(_co1) setf('v-co',_co1);
+  if(_co1){setf('v-co',_co1);document.getElementById('coowner-row').style.display='flex';}
   if(_co2) setf('v-col',_co2);
   // New fields
   var _lang=field(['Preffered Language','Preferred Language']);
