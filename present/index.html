@@ -386,7 +386,7 @@ body{font-family:'Inter',sans-serif;background:#0d1117;color:#fff;min-height:100
   <div style="width:100%;max-width:640px;margin:0 auto">
     <div class="cost-grid">
       <div class="cost-box hidden fade" id="cost-10">
-        <div class="cost-yr">10 Years</div>
+        <div class="cost-yr">5 Years</div>
         <div class="cost-num" id="c10">—</div>
         <div class="cost-sub">Write this down</div>
       </div>
@@ -410,7 +410,7 @@ body{font-family:'Inter',sans-serif;background:#0d1117;color:#fff;min-height:100
 
   <div class="hidden fade" id="cost-reveal-btns" style="text-align:center;margin-top:28px">
     <div id="cost-step-btns">
-      <button class="btn-gold" id="show10-btn" onclick="showCost(10)">Show 10 Years →</button>
+      <button class="btn-gold" id="show10-btn" onclick="showCost(5)">Show 10 Years →</button>
     </div>
   </div>
 
@@ -738,8 +738,8 @@ function calcCost(yrs){
 var costStep=0;
 function goP6(){
   showPage('p6');
-  var c10=calcCost(10),c20=calcCost(20),c30=calcCost(30);
-  document.getElementById('c10').textContent='$'+c10.toLocaleString();
+  var c10=calcCost(5),c20=calcCost(20),c30=calcCost(30);
+  document.getElementById('c10').textContent='$'+calcCost(5).toLocaleString();
   document.getElementById('c20').textContent='$'+c20.toLocaleString();
   document.getElementById('c30').textContent='$'+c30.toLocaleString();
   document.getElementById('c-total').textContent='$'+c30.toLocaleString();
@@ -747,7 +747,7 @@ function goP6(){
   costStep=1;
 }
 function showCost(yr){
-  if(yr===10){
+  if(yr===5){
     reveal('cost-10',0);
     document.getElementById('show10-btn').textContent='Show 20 Years →';
     document.getElementById('show10-btn').onclick=function(){showCost(20);};
@@ -803,7 +803,7 @@ function selectPath(type){
 function goQuote(){
   showPage('p10');
   if(fee){
-    document.getElementById('q-fee').textContent='$'+fee.toLocaleString();
+    document.getElementById('q-fee').textContent=fee?'$'+fee.toLocaleString():'Approval Pending';
     var mo=Math.round(fee*(0.20/12*Math.pow(1+0.20/12,60))/(Math.pow(1+0.20/12,60)-1));
     document.getElementById('q-monthly').textContent='$'+mo.toLocaleString()+'/mo';
   }
