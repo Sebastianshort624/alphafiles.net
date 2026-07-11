@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ATC Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED}
+body{font-family:'Inter',sans-serif;background:#0d1117;color:#fff;min-height:100vh;overflow-x:hidden}
+
+/* FADE IN ANIMATION */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fade{animation:fadeUp .45s ease forwards}
+.hidden{display:none!important}
+
+/* TOP BAR */
+.topbar{background:var(--navy);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);position:fixed;top:0;width:100%;z-index:100}
+.topbar-logo{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:.5px}
+.client-pill{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:100px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--gold)}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.nav-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+
+/* MAIN STAGE */
+.stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 40px;max-width:860px;margin:0 auto}
+
+/* SECTION LABEL */
+.sec-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:32px;text-align:center}
+
+/* BIG HEADING */
+.big-h{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:800;letter-spacing:-1px;color:#fff;text-align:center;line-height:1.05;margin-bottom:12px}
+.big-h span{color:var(--gold)}
+.sub-h{font-size:16px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:40px;font-weight:400;line-height:1.6}
+
+/* BUTTONS */
+.btn-gold{background:var(--gold);color:#fff;border:none;border-radius:10px;padding:16px 36px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.3px;transition:.15s;display:inline-flex;align-items:center;gap:10px}
+.btn-gold:hover{background:#b8860b;transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:10px;padding:14px 30px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* YES/NO */
+.yn-row{display:flex;gap:14px;justify-content:center;margin-top:8px}
+.btn-yes{background:#16a34a;color:#fff;border:none;border-radius:10px;padding:14px 40px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;min-width:140px}
+.btn-yes:hover{background:#15803d}
+.btn-no{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:10px;padding:14px 40px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s;min-width:140px}
+.btn-no:hover{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.12)}
+
+/* OWNER CARD */
+.info-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:24px 28px;width:100%;max-width:520px;margin:0 auto}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)}
+.info-val{font-size:15px;font-weight:600;color:#fff}
+.info-val.gold{color:var(--gold)}
+.info-val input{background:transparent;border:none;border-bottom:1px solid rgba(200,150,12,.5);color:#fff;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;outline:none;min-width:160px;padding:2px 4px}
+.info-val input::placeholder{color:rgba(255,255,255,.3)}
+
+/* CBOR CARDS */
+.cbor-stack{width:100%;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.cbor-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px 26px;transition:.3s}
+.cbor-card.dimmed{opacity:.45;pointer-events:none}
+.cbor-card.active{border-color:rgba(200,150,12,.5);background:rgba(200,150,12,.05)}
+.cbor-num{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:6px}
+.cbor-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.cbor-right{font-size:13px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:10px;line-height:1.5;text-transform:uppercase;letter-spacing:.3px}
+.cbor-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:16px}
+.cbor-q{font-size:14px;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:14px;line-height:1.6;padding-left:12px;border-left:2px solid var(--gold)}
+.cbor-btns{display:flex;gap:10px}
+.cbor-apply{background:rgba(200,150,12,.2);border:1.5px solid var(--gold);color:var(--gold);border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.cbor-apply:hover{background:var(--gold);color:#fff}
+.cbor-skip{background:transparent;border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);border-radius:8px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.cbor-skip:hover{border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.7)}
+.cbor-result{margin-top:10px;font-size:12px;color:rgba(255,255,255,.4);font-style:italic;display:none}
+.cbor-result.show{display:block}
+.cbor-result.violation{color:#fca5a5}
+
+/* COST SECTION */
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;max-width:640px;margin:0 auto}
+.cost-box{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;text-align:center}
+.cost-yr{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:8px}
+.cost-num{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.cost-sub{font-size:11px;color:rgba(255,255,255,.3)}
+.cost-total{background:linear-gradient(135deg,rgba(200,150,12,.15),rgba(200,150,12,.05));border:1px solid rgba(200,150,12,.3);border-radius:12px;padding:20px 28px;text-align:center;width:100%;max-width:640px;margin:16px auto 0}
+.cost-total-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.cost-total-num{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--gold)}
+
+/* BIG ACTION BUTTON */
+.big-action{background:linear-gradient(135deg,var(--gold),#e0a20e);color:#fff;border:none;border-radius:14px;padding:22px 48px;font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 32px rgba(200,150,12,.3);transition:.2s;text-align:center}
+.big-action:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(200,150,12,.45)}
+
+/* HOLD SCREEN */
+.hold-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:36px;text-align:center;width:100%;max-width:520px}
+.hold-timer{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;color:var(--gold);line-height:1}
+.hold-label{font-size:14px;color:rgba(255,255,255,.4);margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+
+/* VITALS MINI */
+.vitals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:620px;margin:0 auto}
+.vit-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px}
+.vit-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.3);margin-bottom:4px}
+.vit-val{font-size:15px;font-weight:600;color:#fff}
+.vit-val.empty{color:rgba(255,255,255,.25);font-style:italic}
+
+/* NOTES */
+.notes-area{width:100%;max-width:580px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px;font-family:'Inter',sans-serif;font-size:14px;color:#fff;resize:none;min-height:100px;line-height:1.6}
+.notes-area::placeholder{color:rgba(255,255,255,.2)}
+.notes-area:focus{outline:none;border-color:rgba(200,150,12,.4)}
+
+/* SCHEDULE BOX */
+.sched-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:24px;width:100%;max-width:480px;margin:0 auto}
+.sched-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px;text-align:center}
+.sched-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.sched-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);border-radius:8px;padding:12px 8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;text-align:center;transition:.15s}
+.sched-btn:hover{background:rgba(200,150,12,.15);border-color:var(--gold);color:var(--gold)}
+.sched-btn.selected{background:rgba(200,150,12,.2);border-color:var(--gold);color:var(--gold)}
+
+/* PROGRESS DOTS */
+.progress{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:100}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);transition:.3s}
+.dot.active{background:var(--gold);width:22px;border-radius:100px}
+.dot.done{background:rgba(200,150,12,.4)}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">⚡ ATC — Live Presentation</div>
+  <div class="client-pill" id="top-client-name">Loading...</div>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="window.location='/vitals/'">← Vitals</button>
+    <button class="nav-btn" onclick="window.location='/overview/'">🗺 Overview</button>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress" id="progress-dots"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 1 — RECORDING CONSENT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage" id="p1">
+  <div class="sec-label fade">Introduction</div>
+  <div class="big-h fade" style="animation-delay:.1s">
+    My name is <span id="rep-name">Sebastian</span>.<br>
+    I'm with <span>ACA Group</span>.
+  </div>
+  <div class="sub-h fade" style="animation-delay:.2s">
+    This consultation is recorded<br>for compliance and quality assurance.
+  </div>
+  <div class="fade" style="animation-delay:.35s">
+    <p style="text-align:center;font-size:14px;color:rgba(255,255,255,.4);margin-bottom:20px">Are you comfortable continuing?</p>
+    <div class="yn-row">
+      <button class="btn-yes" onclick="consentYes()">✓ Yes, let's continue</button>
+      <button class="btn-no" onclick="consentNo()">Not comfortable</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 2 — OWNERSHIP VERIFICATION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p2">
+  <div class="sec-label fade">Ownership Verification</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:38px">
+    Let's confirm who we're<br>speaking with today.
+  </div>
+
+  <div class="info-card fade" style="animation-delay:.2s;margin-bottom:28px">
+    <div class="info-row">
+      <span class="info-label">Primary Owner</span>
+      <span class="info-val gold" id="p2-primary">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">2nd Owner</span>
+      <span class="info-val" id="p2-co-display">
+        <input id="p2-co-input" placeholder="None" oninput="updateCoOwner(this.value)">
+      </span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">2nd Owner Phone</span>
+      <span class="info-val">
+        <input id="p2-co-phone" placeholder="None">
+      </span>
+    </div>
+  </div>
+
+  <!-- Co-owner present question — shows if co-owner exists -->
+  <div class="hidden fade" id="p2-present-q" style="text-align:center;margin-bottom:28px">
+    <p style="font-size:16px;color:rgba(255,255,255,.7);margin-bottom:6px">
+      Is <span id="p2-co-name-q" style="color:var(--gold);font-weight:700">—</span> on the call today?
+    </p>
+    <p style="font-size:12px;color:rgba(255,255,255,.3);margin-bottom:18px">Secondary owner</p>
+    <div class="yn-row">
+      <button class="btn-yes" onclick="coOwnerPresent(true)">✓ Yes, present</button>
+      <button class="btn-no" onclick="coOwnerPresent(false)">Not on the call</button>
+    </div>
+  </div>
+
+  <!-- Schedule follow-up — shows if co-owner NOT present -->
+  <div class="hidden fade" id="p2-schedule" style="margin-bottom:28px">
+    <div class="sched-box">
+      <div class="sched-title">Schedule Follow-Up</div>
+      <p style="font-size:13px;color:rgba(255,255,255,.45);text-align:center;margin-bottom:16px">
+        That's perfectly fine. Let's set a time<br>when both owners are available.
+      </p>
+      <div class="sched-btns">
+        <div class="sched-btn" onclick="pickTime(this,'Tonight')">Tonight</div>
+        <div class="sched-btn" onclick="pickTime(this,'Tomorrow')">Tomorrow</div>
+        <div class="sched-btn" onclick="pickTime(this,'Next opening')">Next Opening</div>
+      </div>
+      <div style="text-align:center">
+        <a href="https://calendar.google.com/calendar/r" target="_blank" style="font-size:12px;color:var(--gold);text-decoration:none;font-weight:700">📅 Open My Calendar ↗</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <button class="btn-gold" onclick="goP3()" id="sched-continue" style="display:none">Follow-Up Scheduled — Continue →</button>
+    </div>
+  </div>
+
+  <!-- Continue if both present -->
+  <div class="hidden" id="p2-both-present">
+    <button class="btn-gold fade" onclick="goP3()">Both Present — Continue →</button>
+  </div>
+
+  <!-- Sole owner confirmation -->
+  <div class="hidden" id="p2-sole-confirm" style="text-align:center">
+    <p class="fade" style="font-size:16px;color:rgba(255,255,255,.55);margin-bottom:20px">I confirm you are the sole owner.</p>
+    <button class="btn-gold fade" onclick="goP3()">Confirmed — Continue →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 3 — VITALS CONFIRMATION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p3">
+  <div class="sec-label fade">Client Information</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:36px">
+    Let me confirm<br>what we have on file.
+  </div>
+  <div class="vitals-grid fade" style="animation-delay:.2s;margin-bottom:28px" id="p3-grid">
+  </div>
+  <div class="fade" style="animation-delay:.3s;text-align:center">
+    <p style="font-size:15px;color:rgba(255,255,255,.5);margin-bottom:20px">Is everything accurate to the best of your recollection?</p>
+    <div class="yn-row">
+      <button class="btn-yes" onclick="vitalsAccurate()">✓ Yes, that's accurate</button>
+      <button class="btn-no" onclick="vitalsInaccurate()">Need to correct something</button>
+    </div>
+  </div>
+  <div class="hidden fade" id="p3-correct" style="text-align:center;margin-top:20px">
+    <p style="font-size:13px;color:rgba(255,255,255,.35);margin-bottom:12px">Update the field in Vitals, then continue.</p>
+    <button class="btn-ghost" onclick="window.open('/vitals/','_blank')">Open Vitals ↗</button>
+    <button class="btn-gold" style="margin-left:12px" onclick="vitalsAccurate()">Updated — Continue →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 4 — WHY DO YOU WANT OUT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p4">
+  <div class="sec-label fade">The Story</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:42px">
+    Now <span id="p4-name">—</span>...<br>tell me everything.
+  </div>
+  <div class="sub-h fade" style="animation-delay:.2s">
+    In your own words.<br>Take your time.
+  </div>
+  <div class="fade" style="animation-delay:.3s;width:100%;max-width:580px">
+    <textarea class="notes-area" id="why-out-notes" placeholder="Write down what they say — word for word..." rows="4"></textarea>
+  </div>
+  <div class="fade" style="animation-delay:.4s;margin-top:24px">
+    <button class="big-action" onclick="goP5()">
+      WHY DO YOU WANT OUT?
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 5 — CBOR -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p5">
+  <div class="sec-label fade">Consumer Rights</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:36px">
+    You have rights<br>as a consumer.
+  </div>
+  <div class="sub-h fade" style="animation-delay:.2s;margin-bottom:32px">
+    In 1962, President Kennedy established<br>5 Consumer Bill of Rights.
+  </div>
+
+  <div class="cbor-stack" id="cbor-stack">
+
+    <!-- RIGHT 1 -->
+    <div class="cbor-card active fade" id="cbor-1">
+      <div class="cbor-num">Right 1 of 5</div>
+      <div class="cbor-title">The Right to Safety</div>
+      <div class="cbor-right">You have the right to be protected from products and services that are hazardous to your financial health and wellbeing.</div>
+      <div class="cbor-desc">This includes financial safety — not just physical safety.</div>
+      <div class="cbor-btns">
+        <button class="cbor-apply" onclick="cborClick(1,'applies')">✓ Applies to My Situation</button>
+        <button class="cbor-skip" onclick="cborClick(1,'skip')">Does Not Apply</button>
+      </div>
+      <div class="cbor-result" id="cbor-1-result"></div>
+    </div>
+
+    <!-- RIGHT 2 — hidden until R1 clicked -->
+    <div class="cbor-card hidden" id="cbor-2">
+      <div class="cbor-num">Right 2 of 5</div>
+      <div class="cbor-title">The Right to Choose</div>
+      <div class="cbor-right">You have the right to access what you own — at fair and competitive terms.</div>
+      <div class="cbor-desc">By not disclosing that non-owners can book most dates with 1–7 days notice — often at a lower cost than your annual maintenance fees alone — they limited your ability to make an informed choice about how to use what you own.</div>
+      <div class="cbor-q">Were you ever told that non-owners can book most dates with as little as 1–7 days notice — often at a lower cost than your annual maintenance fees?</div>
+      <div class="cbor-btns">
+        <button class="cbor-apply" onclick="cborClick(2,'applies')">✓ Never told this</button>
+        <button class="cbor-skip" onclick="cborClick(2,'skip')">I knew this</button>
+      </div>
+      <div class="cbor-result" id="cbor-2-result"></div>
+    </div>
+
+    <!-- RIGHT 3 -->
+    <div class="cbor-card hidden" id="cbor-3">
+      <div class="cbor-num">Right 3 of 5</div>
+      <div class="cbor-title">The Right to Be Heard</div>
+      <div class="cbor-right">You have the right to formally raise a concern and receive a fair response — without being forced into litigation or arbitration.</div>
+      <div class="cbor-desc">Owners deserve a formal process to review their situation and reach a reasonable resolution directly with the resort.</div>
+      <div class="cbor-q">Were you ever given a formal process to review your situation and reach a reasonable resolution directly with the resort?</div>
+      <div class="cbor-btns">
+        <button class="cbor-apply" onclick="cborClick(3,'applies')">✓ Never offered this</button>
+        <button class="cbor-skip" onclick="cborClick(3,'skip')">They provided a process</button>
+      </div>
+      <div class="cbor-result" id="cbor-3-result"></div>
+    </div>
+
+    <!-- RIGHT 4 — THE KEY ONE -->
+    <div class="cbor-card hidden" id="cbor-4">
+      <div class="cbor-num">Right 4 of 5</div>
+      <div class="cbor-title">The Right to Be Informed</div>
+      <div class="cbor-right">You have the right to receive sufficient information before making an informed choice — including full disclosure of all costs, terms, and obligations.</div>
+      <div class="cbor-desc">Prior to signing, the resort was required to show you the true long-term cost of ownership — in writing.</div>
+      <div class="cbor-q">Before you signed — did they show you what this timeshare would actually cost over 10, 20, and 30 years?</div>
+      <div class="cbor-btns">
+        <button class="cbor-apply" onclick="cborClick(4,'applies')">✓ They Never Showed Me</button>
+        <button class="cbor-skip" onclick="cborClick(4,'skip')">They disclosed it</button>
+      </div>
+      <div class="cbor-result" id="cbor-4-result"></div>
+    </div>
+
+    <!-- RIGHT 5 -->
+    <div class="cbor-card hidden" id="cbor-5">
+      <div class="cbor-num">Right 5 of 5</div>
+      <div class="cbor-title">The Right to Service</div>
+      <div class="cbor-right">You have the right to courtesy, responsiveness, and products or services that perform exactly as claimed.</div>
+      <div class="cbor-desc">If the resort failed to deliver on what was promised — in usage, availability, or service — that's a violation of this right.</div>
+      <div class="cbor-q">Did the timeshare perform the way it was presented to you on the day you purchased?</div>
+      <div class="cbor-btns">
+        <button class="cbor-apply" onclick="cborClick(5,'applies')">✓ It Did Not</button>
+        <button class="cbor-skip" onclick="cborClick(5,'skip')">No issues there</button>
+      </div>
+      <div class="cbor-result" id="cbor-5-result"></div>
+    </div>
+
+    <!-- VERIFY BUTTON — appears after R4 -->
+    <div class="hidden fade" id="verify-btn-wrap" style="text-align:center;padding:12px 0">
+      <button class="big-action" onclick="goP6()">
+        VERIFY COST OF OWNERSHIP WAS DISCLOSED
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 6 — TRUE COST / 10-20-30 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p6">
+  <div class="sec-label fade">Right to Be Informed</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:38px">
+    Grab a pen.<br>Write these three numbers.
+  </div>
+  <div class="sub-h fade" style="animation-delay:.2s">
+    Based on your current maintenance fees<br>at a conservative 8% annual increase.
+  </div>
+
+  <!-- Numbers appear one at a time -->
+  <div style="width:100%;max-width:640px;margin:0 auto">
+    <div class="cost-grid">
+      <div class="cost-box hidden fade" id="cost-10">
+        <div class="cost-yr">10 Years</div>
+        <div class="cost-num" id="c10">—</div>
+        <div class="cost-sub">Write this down</div>
+      </div>
+      <div class="cost-box hidden fade" id="cost-20">
+        <div class="cost-yr">20 Years</div>
+        <div class="cost-num" id="c20">—</div>
+        <div class="cost-sub">Write this down</div>
+      </div>
+      <div class="cost-box hidden fade" id="cost-30">
+        <div class="cost-yr">30 Years</div>
+        <div class="cost-num" id="c30">—</div>
+        <div class="cost-sub">Write this down</div>
+      </div>
+    </div>
+    <div class="cost-total hidden fade" id="cost-total-box">
+      <div class="cost-total-label">Prior to signing — they should have shown you</div>
+      <div class="cost-total-num" id="c-total">—</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.4);margin-top:6px">in maintenance fees alone over 30 years</div>
+    </div>
+  </div>
+
+  <div class="hidden fade" id="cost-reveal-btns" style="text-align:center;margin-top:28px">
+    <div id="cost-step-btns">
+      <button class="btn-gold" id="show10-btn" onclick="showCost(10)">Show 10 Years →</button>
+    </div>
+  </div>
+
+  <div class="hidden fade" id="cost-question" style="text-align:center;margin-top:28px">
+    <p style="font-size:16px;color:rgba(255,255,255,.6);margin-bottom:8px">Knowing what you know now —</p>
+    <p style="font-size:20px;font-weight:700;color:#fff;margin-bottom:24px">Would you have signed the contract?</p>
+    <div class="yn-row">
+      <button class="btn-yes" onclick="wouldSign('no')">No — I would not have signed</button>
+      <button class="btn-no" onclick="wouldSign('yes')">I still might have</button>
+    </div>
+  </div>
+
+  <div class="hidden fade" id="cost-violation" style="text-align:center;margin-top:20px">
+    <div style="background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.3);border-radius:10px;padding:16px 24px;max-width:480px;margin:0 auto">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#fca5a5;margin-bottom:4px">Possible CBOR Violation</div>
+      <div style="font-size:15px;color:#fff;font-weight:600">Right to Be Informed</div>
+    </div>
+    <button class="btn-gold fade" style="margin-top:24px" onclick="goP7()">Continue to Case Summary →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 7 — NOTES + HOLD -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p7">
+  <div class="sec-label fade">Legal Review</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:36px">
+    Anything else for<br>the legal team?
+  </div>
+  <div class="sub-h fade" style="animation-delay:.15s">
+    Anything that could strengthen your case.
+  </div>
+  <div class="fade" style="animation-delay:.2s;width:100%;max-width:580px;margin-bottom:28px">
+    <textarea class="notes-area" id="legal-notes" placeholder="Write it down word for word..." rows="5"></textarea>
+  </div>
+  <div class="fade" style="animation-delay:.3s;text-align:center">
+    <button class="big-action" onclick="goHold()">
+      SEND TO LEGAL TEAM
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 8 — HOLD -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p8">
+  <div class="sec-label fade">First Hold</div>
+  <div class="hold-box fade" style="animation-delay:.1s;margin-bottom:28px">
+    <div class="hold-timer" id="hold-timer">15:00</div>
+    <div class="hold-label">Legal team review</div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
+      <button class="btn-ghost" onclick="startTimer()" style="font-size:13px;padding:10px 20px">▶ Start Timer</button>
+      <button class="btn-ghost" onclick="stopTimer()" style="font-size:13px;padding:10px 20px">■ Stop</button>
+      <button class="btn-ghost" onclick="resetTimer(900)" style="font-size:13px;padding:10px 20px">↺ Reset</button>
+    </div>
+  </div>
+
+  <!-- Transfer fallback — visible during hold -->
+  <div class="fade" style="animation-delay:.3s;max-width:520px;width:100%;margin-bottom:24px">
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px 22px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.3);margin-bottom:10px">Transfer Service — If Not Eligible</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.8">
+        ✓ Loan must be paid off<br>
+        ✓ Maintenance fees current<br>
+        ✓ Transfer fee: <span id="transfer-fee" style="color:var(--gold);font-weight:700">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade" style="animation-delay:.4s;text-align:center">
+    <button class="btn-gold" onclick="goApproval()">Legal Team Has Responded →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 9 — APPROVAL -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p9">
+  <div class="sec-label fade">Decision</div>
+  <div class="big-h fade" style="animation-delay:.1s">
+    <span id="p9-name">—</span>,<br>congratulations.
+  </div>
+  <div class="sub-h fade" style="animation-delay:.2s">
+    The legal team has agreed<br>to take on your case.
+  </div>
+
+  <div class="fade" style="animation-delay:.3s;margin-bottom:28px">
+    <p style="text-align:center;font-size:14px;color:rgba(255,255,255,.4);margin-bottom:16px">Select the recommended path:</p>
+    <div class="btn-row">
+      <button class="btn-gold" onclick="selectPath('group')">Group Filing</button>
+      <button class="btn-ghost" onclick="selectPath('individual')">Individual Case</button>
+      <button class="btn-ghost" onclick="selectPath('transfer')">Transfer Program</button>
+    </div>
+  </div>
+
+  <div class="hidden fade" id="p9-guarantee" style="max-width:520px;width:100%;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+      <div style="background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:28px;font-weight:900;color:#4ade80;font-family:'Barlow Condensed',sans-serif">100%</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px">Money-Back Guarantee<br>Timeshare Canceled</div>
+      </div>
+      <div style="background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:12px;padding:18px;text-align:center">
+        <div style="font-size:28px;font-weight:900;color:#4ade80;font-family:'Barlow Condensed',sans-serif">36 mo</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px">Guaranteed or<br>Full Refund</div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button class="btn-gold" onclick="goQuote()">Present the Quote →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 10 — QUOTE -->
+<!-- ══════════════════════════════════════════ -->
+<div class="stage hidden" id="p10">
+  <div class="sec-label fade">The Investment</div>
+  <div class="big-h fade" style="animation-delay:.1s;font-size:38px">
+    Here's what it costs<br>to put this behind you.
+  </div>
+
+  <div class="fade" style="animation-delay:.2s;width:100%;max-width:480px;margin:0 auto 28px">
+    <div style="background:linear-gradient(135deg,rgba(200,150,12,.12),rgba(200,150,12,.04));border:1.5px solid rgba(200,150,12,.3);border-radius:16px;padding:32px;text-align:center">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);margin-bottom:12px">Total Exit Fee</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;color:var(--gold);line-height:1" id="q-fee">—</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.35);margin-top:8px">One time. All inclusive. 100% guaranteed.</div>
+    </div>
+
+    <div class="hidden fade" id="q-monthly-box" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;margin-top:12px">
+      <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:6px">Or as low as</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:#fff" id="q-monthly">—</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.3);margin-top:4px">per month — 60 months at 20%</div>
+    </div>
+  </div>
+
+  <div class="fade" style="animation-delay:.3s;text-align:center">
+    <div class="btn-row">
+      <button class="btn-gold" onclick="showMonthly()">Show Monthly Option</button>
+      <button class="btn-ghost" onclick="pushQuote()">🚀 Push to Client URL</button>
+    </div>
+  </div>
+
+  <div class="hidden fade" id="q-pushed" style="text-align:center;margin-top:20px">
+    <div style="font-size:13px;color:rgba(255,255,255,.4)">Quote live at:</div>
+    <div style="font-size:14px;color:var(--gold);font-weight:700;margin-top:4px" id="q-url">—</div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+var C={}, slug='';
+try{
+  var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+  slug=localStorage.getItem('atc_active')||'';
+  C=all[slug]||{};
+}catch(e){}
+
+var fname=C.firstName||'';
+var lname=C.lastName||'';
+var fullName=(fname+' '+lname).trim()||'Client';
+var coFirst=C.coFirst||C['v-co']||'';
+var coLast=C.coLast||C['v-col']||'';
+var coName=(coFirst+' '+coLast).trim();
+var mtf=parseFloat(C.maitFees||C.mtf||0);
+var mtg=parseFloat(C.monthlyMortgage||C.mtgMo||0);
+var fee=parseFloat(C.alphaFee||C.fee||0);
+var resort=C.resort||'your resort';
+
+// Update top bar
+document.getElementById('top-client-name').textContent=fullName;
+
+// ── PROGRESS ──
+var pages=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10'];
+var curPage=0;
+function updateDots(idx){
+  var d=document.getElementById('progress-dots');
+  d.innerHTML=pages.map(function(_,i){
+    return '<div class="dot'+(i<idx?' done':i===idx?' active':'')+'"></div>';
+  }).join('');
+}
+updateDots(0);
+
+function showPage(id){
+  pages.forEach(function(p){
+    var el=document.getElementById(p);
+    if(el){el.classList.add('hidden');}
+  });
+  var el=document.getElementById(id);
+  if(el){
+    el.classList.remove('hidden');
+    window.scrollTo(0,0);
+    curPage=pages.indexOf(id);
+    updateDots(curPage);
+  }
+}
+
+function reveal(id,delay){
+  delay=delay||0;
+  setTimeout(function(){
+    var el=document.getElementById(id);
+    if(el){el.classList.remove('hidden');el.classList.add('fade');}
+  },delay);
+}
+
+// ── PAGE 1 ──
+function consentYes(){
+  showPage('p2');
+  initP2();
+}
+function consentNo(){
+  alert('Understood. We can reschedule at your convenience.');
+}
+
+// ── PAGE 2 ──
+function initP2(){
+  document.getElementById('p2-primary').textContent=fullName||'—';
+  if(coName){
+    document.getElementById('p2-co-input').value=coName;
+    document.getElementById('p2-co-name-q').textContent=coName;
+    reveal('p2-present-q',400);
+  } else {
+    reveal('p2-sole-confirm',400);
+  }
+  var coPhone=C.coPhone||C['v-co-phone']||'';
+  if(coPhone) document.getElementById('p2-co-phone').value=coPhone;
+}
+function updateCoOwner(val){
+  document.getElementById('p2-co-name-q').textContent=val||'the secondary owner';
+  if(val.trim()){
+    reveal('p2-present-q',0);
+    document.getElementById('p2-sole-confirm').classList.add('hidden');
+  } else {
+    document.getElementById('p2-present-q').classList.add('hidden');
+    reveal('p2-sole-confirm',0);
+  }
+}
+function coOwnerPresent(present){
+  if(present){
+    reveal('p2-both-present',300);
+    document.getElementById('p2-schedule').classList.add('hidden');
+  } else {
+    reveal('p2-schedule',300);
+    document.getElementById('p2-both-present').classList.add('hidden');
+  }
+}
+function pickTime(btn,t){
+  document.querySelectorAll('.sched-btn').forEach(function(b){b.classList.remove('selected');});
+  btn.classList.add('selected');
+  var cb=document.getElementById('sched-continue');
+  cb.style.display='inline-flex';
+  cb.classList.add('fade');
+}
+function goP3(){showPage('p3');initP3();}
+
+// ── PAGE 3 ──
+function initP3(){
+  var grid=document.getElementById('p3-grid');
+  var fields=[
+    {l:'Name',v:fullName},
+    {l:'Resort',v:resort},
+    {l:'MTF / Year',v:mtf?'$'+Math.round(mtf).toLocaleString():'—'},
+    {l:'MTF / Month',v:mtf?'$'+Math.round(mtf/12).toLocaleString():'—'},
+    {l:'Mortgage / Mo',v:mtg?'$'+Math.round(mtg):'Paid Off'},
+    {l:'Balance',v:C.balance?'$'+parseFloat(C.balance).toLocaleString():'—'},
+    {l:'Year Purchased',v:C.year||'—'},
+    {l:'Why Out',v:C.whyOut||C.why||'—'}
+  ];
+  grid.innerHTML=fields.map(function(f){
+    var empty=(!f.v||f.v==='—');
+    return '<div class="vit-box"><div class="vit-label">'+f.l+'</div><div class="vit-val'+(empty?' empty':'')+'">'+(empty?'Not on file':f.v)+'</div></div>';
+  }).join('');
+}
+function vitalsAccurate(){
+  document.getElementById('p3-correct').classList.add('hidden');
+  showPage('p4');
+  document.getElementById('p4-name').textContent=fname||fullName;
+}
+function vitalsInaccurate(){reveal('p3-correct',0);}
+
+// ── PAGE 4 ──
+function goP5(){showPage('p5');}
+
+// ── PAGE 5 — CBOR ──
+var cborDone=0;
+var violations=[];
+function cborClick(n,type){
+  var card=document.getElementById('cbor-'+n);
+  var result=document.getElementById('cbor-'+n+'-result');
+  card.classList.remove('active');
+  card.classList.add('dimmed');
+  result.classList.add('show');
+  if(type==='applies'){
+    violations.push(n);
+    result.textContent='✓ Noted — possible violation logged.';
+    result.classList.add('violation');
+  } else {
+    result.textContent='Skipped.';
+  }
+  cborDone++;
+  // Show next right
+  var next=n+1;
+  if(next<=5){
+    setTimeout(function(){
+      var nextCard=document.getElementById('cbor-'+next);
+      if(nextCard){
+        nextCard.classList.remove('hidden');
+        nextCard.classList.add('active','fade');
+        nextCard.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+      // After right 4, show verify button
+      if(n===4){
+        setTimeout(function(){reveal('verify-btn-wrap',300);},400);
+      }
+    },300);
+  }
+}
+
+// ── PAGE 6 — COST ──
+function calcCost(yrs){
+  if(!mtf) return 0;
+  var total=0;
+  for(var i=0;i<yrs*12;i++) total+=mtf/12*Math.pow(1.08/12+1,i);
+  return Math.round(total);
+}
+var costStep=0;
+function goP6(){
+  showPage('p6');
+  var c10=calcCost(10),c20=calcCost(20),c30=calcCost(30);
+  document.getElementById('c10').textContent='$'+c10.toLocaleString();
+  document.getElementById('c20').textContent='$'+c20.toLocaleString();
+  document.getElementById('c30').textContent='$'+c30.toLocaleString();
+  document.getElementById('c-total').textContent='$'+c30.toLocaleString();
+  reveal('cost-reveal-btns',400);
+  costStep=1;
+}
+function showCost(yr){
+  if(yr===10){
+    reveal('cost-10',0);
+    document.getElementById('show10-btn').textContent='Show 20 Years →';
+    document.getElementById('show10-btn').onclick=function(){showCost(20);};
+  } else if(yr===20){
+    reveal('cost-20',0);
+    document.getElementById('show10-btn').textContent='Show 30 Years →';
+    document.getElementById('show10-btn').onclick=function(){showCost(30);};
+  } else if(yr===30){
+    reveal('cost-30',0);
+    setTimeout(function(){
+      reveal('cost-total-box',300);
+      setTimeout(function(){reveal('cost-question',400);},600);
+    },400);
+    document.getElementById('show10-btn').style.display='none';
+  }
+}
+function wouldSign(ans){
+  document.getElementById('cost-question').classList.add('hidden');
+  if(ans==='no'){reveal('cost-violation',300);}
+  else{
+    reveal('cost-violation',300);
+    document.getElementById('cost-violation').querySelector('.cbor-result');
+  }
+}
+function goP7(){showPage('p7');}
+
+// ── HOLD TIMER ──
+var timerInt=null,timerSec=900;
+function startTimer(){
+  if(timerInt) return;
+  timerInt=setInterval(function(){
+    timerSec--;
+    if(timerSec<=0){clearInterval(timerInt);timerSec=0;}
+    var m=Math.floor(timerSec/60),s=timerSec%60;
+    document.getElementById('hold-timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+function stopTimer(){clearInterval(timerInt);timerInt=null;}
+function resetTimer(sec){stopTimer();timerSec=sec;var m=Math.floor(sec/60),s=sec%60;document.getElementById('hold-timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+
+function goHold(){
+  showPage('p8');
+  // Transfer fee based on MTF
+  var tf='$5,500–$6,500';
+  if(mtf>=900&&mtf<=1300) tf='$6,500–$7,500';
+  if(mtf>=1400) tf='$8,500–$9,500';
+  document.getElementById('transfer-fee').textContent=tf;
+}
+function goApproval(){showPage('p9');document.getElementById('p9-name').textContent=fname||fullName;}
+function selectPath(type){
+  reveal('p9-guarantee',300);
+}
+function goQuote(){
+  showPage('p10');
+  if(fee){
+    document.getElementById('q-fee').textContent='$'+fee.toLocaleString();
+    var mo=Math.round(fee*(0.20/12*Math.pow(1+0.20/12,60))/(Math.pow(1+0.20/12,60)-1));
+    document.getElementById('q-monthly').textContent='$'+mo.toLocaleString()+'/mo';
+  }
+  document.getElementById('q-url').textContent='alphafiles.net/'+slug+'/';
+}
+function showMonthly(){reveal('q-monthly-box',0);}
+function pushQuote(){
+  var url='alphafiles.net/'+slug+'/';
+  document.getElementById('q-url').textContent=url;
+  reveal('q-pushed',0);
+  window.open('/build/','_blank');
+}
+</script>
+</body>
+</html>
