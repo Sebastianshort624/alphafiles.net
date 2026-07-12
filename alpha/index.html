@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Alpha — ATC Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED}
+body{font-family:Inter,sans-serif;background:var(--bg);min-height:100vh}
+.hdr{background:var(--navy);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.5px}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px}
+.hdr-right{display:flex;gap:8px}
+.hdr-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;font-family:Inter,sans-serif}
+.hdr-btn:hover{background:rgba(255,255,255,.15);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+
+/* SEARCH */
+.search-bar{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:10px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.search-bar input{flex:1;border:none;outline:none;font-size:14px;font-family:Inter,sans-serif;color:var(--navy)}
+.search-bar input::placeholder{color:#9ca3af}
+.search-bar span{font-size:16px}
+
+/* SECTION */
+.section{margin-bottom:28px}
+.sec-hdr{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-left:2px;display:flex;align-items:center;gap:8px}
+.sec-hdr::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* PAGE GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.page-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:.15s;cursor:pointer}
+.page-card:hover{border-color:var(--gold);box-shadow:0 4px 12px rgba(27,42,74,.08);transform:translateY(-2px)}
+.page-icon{font-size:24px}
+.page-name{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3}
+.page-desc{font-size:11px;color:#9ca3af}
+.page-url{font-size:10px;color:var(--gold);font-weight:600;margin-top:2px}
+
+/* EMAIL SECTION */
+.email-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.email-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px;transition:.15s}
+.email-card:hover{border-color:var(--gold);box-shadow:0 4px 12px rgba(27,42,74,.08)}
+.email-card h4{font-size:13px;font-weight:700;color:var(--navy)}
+.email-card p{font-size:11px;color:#9ca3af;line-height:1.5}
+.email-btns{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.ebtn{font-size:11px;font-weight:700;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;font-family:Inter,sans-serif;text-decoration:none;display:inline-block}
+.ebtn-navy{background:var(--navy);color:#fff}
+.ebtn-navy:hover{background:#243a6e}
+.ebtn-gold{background:var(--gold);color:#fff}
+.ebtn-gold:hover{background:#b8860b}
+.ebtn-ghost{background:#f3f4f6;color:#374151}
+.ebtn-ghost:hover{background:#e5e7eb}
+
+/* QUICK ACCESS */
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.quick-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.15s}
+.quick-btn:hover{background:#243a6e}
+.quick-btn.gold{background:var(--gold)}.quick-btn.gold:hover{background:#b8860b}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-logo">⚡ Alpha — ATC Hub</div>
+    <div class="hdr-sub">All pages · All emails · One place</div>
+  </div>
+  <div class="hdr-right">
+    <a href="/vitals/" class="hdr-btn">← Vitals</a>
+    <a href="/present/" class="hdr-btn">▶ Present</a>
+    <a href="/overview/" class="hdr-btn">🗺 Overview</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <span>🔍</span>
+    <input id="search" placeholder="Search pages, emails..." oninput="filterAll(this.value)">
+  </div>
+
+  <!-- QUICK ACCESS -->
+  <div class="quick">
+    <a href="/vitals/" class="quick-btn">⚡ Vitals</a>
+    <a href="/present/" class="quick-btn">▶ Live Presentation</a>
+    <a href="/clients/" class="quick-btn">👥 Clients</a>
+    <a href="/build/" class="quick-btn">🚀 Build Console</a>
+    <a href="/history/" class="quick-btn">⭐ Track Record</a>
+    <a href="/proof/" class="quick-btn">✅ Proof</a>
+    <a href="/overview/" class="quick-btn gold">🗺 CRM Overview</a>
+  </div>
+
+  <!-- PRESENTATION PAGES -->
+  <div class="section" id="sec-presentation">
+    <div class="sec-hdr">🎯 Presentation Pages</div>
+    <div class="grid" id="grid-presentation">
+      <a href="https://alphafiles.net/vitals/" class="page-card"><div class="page-icon">📋</div><div class="page-name">Vitals</div><div class="page-desc">Client vitals tracker</div><div class="page-url">/vitals/</div></a>
+      <a href="https://alphafiles.net/history/" class="page-card"><div class="page-icon">📜</div><div class="page-name">History</div><div class="page-desc">Alpha history</div><div class="page-url">/history/</div></a>
+      <a href="https://alphafiles.net/cost/" class="page-card"><div class="page-icon">💵</div><div class="page-name">True Cost</div><div class="page-desc">Cost calculator</div><div class="page-url">/cost/</div></a>
+      <a href="https://alphafiles.net/calculator/" class="page-card"><div class="page-icon">🧮</div><div class="page-name">Calculator</div><div class="page-desc">TCO calculator</div><div class="page-url">/calculator/</div></a>
+      <a href="https://alphafiles.net/rights/" class="page-card"><div class="page-icon">⚖️</div><div class="page-name">Rights</div><div class="page-desc">Consumer rights</div><div class="page-url">/rights/</div></a>
+      <a href="https://alphafiles.net/exit-methods/" class="page-card"><div class="page-icon">🚪</div><div class="page-name">Exit Methods</div><div class="page-desc">Exit options</div><div class="page-url">/exit-methods/</div></a>
+      <a href="https://alphafiles.net/guarantee/" class="page-card"><div class="page-icon">🛡️</div><div class="page-name">Guarantee</div><div class="page-desc">Certificate</div><div class="page-url">/guarantee/</div></a>
+      <a href="https://alphafiles.net/quote/" class="page-card"><div class="page-icon">💰</div><div class="page-name">Quote</div><div class="page-desc">Quote generator</div><div class="page-url">/quote/</div></a>
+      <a href="https://alphafiles.net/proof/" class="page-card"><div class="page-icon">✅</div><div class="page-name">Proof</div><div class="page-desc">Case database</div><div class="page-url">/proof/</div></a>
+      <a href="https://alphafiles.net/letter/" class="page-card"><div class="page-icon">📄</div><div class="page-name">Letter</div><div class="page-desc">Mutual release</div><div class="page-url">/letter/</div></a>
+      <a href="https://alphafiles.net/heirs/" class="page-card"><div class="page-icon">👨‍👩‍👧</div><div class="page-name">Heirs</div><div class="page-desc">Estate liability</div><div class="page-url">/heirs/</div></a>
+      <a href="https://alphafiles.net/compensation/" class="page-card"><div class="page-icon">🏦</div><div class="page-name">Compensation</div><div class="page-desc">Resort compensation</div><div class="page-url">/compensation/</div></a>
+      <a href="https://alphafiles.net/credit/" class="page-card"><div class="page-icon">💳</div><div class="page-name">Credit</div><div class="page-desc">Credit protection</div><div class="page-url">/credit/</div></a>
+      <a href="https://alphafiles.net/included/" class="page-card"><div class="page-icon">📦</div><div class="page-name">Included</div><div class="page-desc">What's included</div><div class="page-url">/included/</div></a>
+      <a href="https://alphafiles.net/whyout/" class="page-card"><div class="page-icon">❓</div><div class="page-name">Why Out</div><div class="page-desc">Why exit</div><div class="page-url">/whyout/</div></a>
+      <a href="https://alphafiles.net/group/" class="page-card"><div class="page-icon">👥</div><div class="page-name">Group</div><div class="page-desc">Group filing</div><div class="page-url">/group/</div></a>
+      <a href="https://alphafiles.net/better/" class="page-card"><div class="page-icon">🔝</div><div class="page-name">Better</div><div class="page-desc">Better offer</div><div class="page-url">/better/</div></a>
+      <a href="https://alphafiles.net/free/" class="page-card"><div class="page-icon">🎁</div><div class="page-name">Free</div><div class="page-desc">Free option</div><div class="page-url">/free/</div></a>
+    </div>
+  </div>
+
+  <!-- WORKFLOW PAGES -->
+  <div class="section" id="sec-workflow">
+    <div class="sec-hdr">⚙️ Workflow Pages</div>
+    <div class="grid" id="grid-workflow">
+      <a href="https://alphafiles.net/owner/" class="page-card"><div class="page-icon">👤</div><div class="page-name">Owner Info</div><div class="page-desc">Owner details</div><div class="page-url">/owner/</div></a>
+      <a href="https://alphafiles.net/followup/" class="page-card"><div class="page-icon">📅</div><div class="page-name">Follow Up</div><div class="page-desc">Scheduler</div><div class="page-url">/followup/</div></a>
+      <a href="https://alphafiles.net/recap/" class="page-card"><div class="page-icon">🔄</div><div class="page-name">Recap</div><div class="page-desc">Summary recap</div><div class="page-url">/recap/</div></a>
+      <a href="https://alphafiles.net/approval/" class="page-card"><div class="page-icon">⭐</div><div class="page-name">Approval</div><div class="page-desc">Same-day pricing</div><div class="page-url">/approval/</div></a>
+      <a href="https://alphafiles.net/checklist/" class="page-card"><div class="page-icon">✔️</div><div class="page-name">Checklist</div><div class="page-desc">Process checklist</div><div class="page-url">/checklist/</div></a>
+      <a href="https://alphafiles.net/contract/" class="page-card"><div class="page-icon">📝</div><div class="page-name">Contract</div><div class="page-desc">Contract page</div><div class="page-url">/contract/</div></a>
+      <a href="https://alphafiles.net/wait/" class="page-card"><div class="page-icon">⏳</div><div class="page-name">Hold</div><div class="page-desc">Hold page</div><div class="page-url">/wait/</div></a>
+    </div>
+  </div>
+
+  <!-- ADMIN PAGES -->
+  <div class="section" id="sec-admin">
+    <div class="sec-hdr">🔧 Admin & CRM</div>
+    <div class="grid" id="grid-admin">
+      <a href="https://alphafiles.net/clients/" class="page-card"><div class="page-icon">👥</div><div class="page-name">Clients Hub</div><div class="page-desc">All clients</div><div class="page-url">/clients/</div></a>
+      <a href="https://alphafiles.net/build/" class="page-card"><div class="page-icon">🚀</div><div class="page-name">Build Console</div><div class="page-desc">Push quote pages</div><div class="page-url">/build/</div></a>
+      <a href="https://alphafiles.net/overview/" class="page-card"><div class="page-icon">🗺</div><div class="page-name">CRM Overview</div><div class="page-desc">System map</div><div class="page-url">/overview/</div></a>
+      <a href="https://alphafiles.net/present/" class="page-card"><div class="page-icon">▶️</div><div class="page-name">Presentation</div><div class="page-desc">Live presentation</div><div class="page-url">/present/</div></a>
+      <a href="https://alphafiles.net/admin/" class="page-card"><div class="page-icon">⚙️</div><div class="page-name">Admin</div><div class="page-desc">Admin panel</div><div class="page-url">/admin/</div></a>
+      <a href="https://alphafiles.net/crm/" class="page-card"><div class="page-icon">📊</div><div class="page-name">CRM</div><div class="page-desc">CRM tool</div><div class="page-url">/crm/</div></a>
+      <a href="https://alphafiles.net/report/" class="page-card"><div class="page-icon">📈</div><div class="page-name">Report</div><div class="page-desc">Report page</div><div class="page-url">/report/</div></a>
+      <a href="https://alphafiles.net/leverage/" class="page-card"><div class="page-icon">⚖️</div><div class="page-name">Leverage</div><div class="page-desc">Legal tools</div><div class="page-url">/leverage/</div></a>
+      <a href="https://alphafiles.net/screenshare/" class="page-card"><div class="page-icon">🖥</div><div class="page-name">Screen Share</div><div class="page-desc">Client invite</div><div class="page-url">/screenshare/</div></a>
+    </div>
+  </div>
+
+  <!-- EMAIL TEMPLATES -->
+  <div class="section" id="sec-emails">
+    <div class="sec-hdr">✉️ HTML Email Templates</div>
+    <div class="email-grid" id="grid-emails">
+
+      <div class="email-card">
+        <h4>📬 Open Quote</h4>
+        <p>True Cost of Ownership styled intro email. Navy/gold, your numbers, monthly breakdown.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('open-quote')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('open-quote')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>💰 Full Quote</h4>
+        <p>5-email sequence: Group Filing, Compensation, Credit, TCO, Quote.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('full-quote')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('full-quote')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>👨‍👩‍👧 Heirs / Estate</h4>
+        <p>Estate liability email with state-specific statutes. HEIRS codeword.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('heirs')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('heirs')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>🔒 Close / Objection</h4>
+        <p>No-brainer math email targeting the specific objection. CLOSE codeword.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('close')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('close')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>📋 Group Filing</h4>
+        <p>How the group filing works. Legal strategy, violation documentation.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('group')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('group')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>🏦 Resort Compensation</h4>
+        <p>$235k exposure breakdown. Resort violations, statutory fines.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('compensation')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('compensation')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>💳 Credit Protection</h4>
+        <p>Credit monitoring, bureau disputes, Mutual Release protection.</p>
+        <div class="email-btns">
+          <button class="ebtn ebtn-navy" onclick="openEmail('credit')">Preview</button>
+          <button class="ebtn ebtn-gold" onclick="copyEmail('credit')">Copy for Gmail</button>
+        </div>
+      </div>
+
+      <div class="email-card">
+        <h4>📄 Client File</h4>
+        <p>Push client portal to live URL. CLIENT FILE codeword.</p>
+        <div class="email-btns">
+          <a href="/build/" class="ebtn ebtn-navy">Open Build Console</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- EMAIL PREVIEW MODAL -->
+<div id="email-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;width:700px;max-width:95vw;max-height:90vh;overflow:hidden;display:flex;flex-direction:column">
+    <div style="background:var(--navy);padding:14px 20px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:#fff" id="modal-title">Email Preview</div>
+      <div style="display:flex;gap:8px">
+        <button id="modal-copy-btn" onclick="copyActiveEmail()" style="background:var(--gold);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Copy for Gmail</button>
+        <button onclick="closeModal()" style="background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">✕ Close</button>
+      </div>
+    </div>
+    <div style="overflow-y:auto;flex:1">
+      <iframe id="email-preview-frame" style="width:100%;height:500px;border:none"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+// Filter
+function filterAll(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('.page-card,.email-card').forEach(function(card){
+    var text=card.textContent.toLowerCase();
+    card.style.display=text.includes(q)?'':'none';
+  });
+}
+
+// Load client data
+var C={};
+try{var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');var slug=localStorage.getItem('atc_active')||'';C=all[slug]||{};}catch(e){}
+var fname=C.firstName||'';var lname=C.lastName||'';var fullName=(fname+' '+lname).trim()||'Client';
+var resort=C.resort||'your resort';var mtf=parseFloat(C.maitFees||0);var mtg=parseFloat(C.monthlyMortgage||0);
+var fee=parseFloat(C.alphaFee||0);var tMo=Math.round(mtf/12+mtg);var tYr=Math.round(mtf+mtg*12);
+
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+
+var EMAIL_TEMPLATES={
+  'open-quote': buildOpenQuote,
+  'full-quote': buildFullQuote,
+  'heirs': buildHeirs,
+  'close': buildClose,
+  'group': buildGroup,
+  'compensation': buildCompensation,
+  'credit': buildCredit
+};
+var activeEmail='';
+
+function openEmail(type){
+  activeEmail=type;
+  var fn=EMAIL_TEMPLATES[type];
+  if(!fn){document.getElementById('email-preview-frame').srcdoc='<p style="padding:20px;font-family:sans-serif;color:#666">Email template coming soon.</p>';document.getElementById('modal-title').textContent=type;document.getElementById('email-modal').style.display='flex';return;}
+  document.getElementById('email-preview-frame').srcdoc=fn();
+  document.getElementById('modal-title').textContent='Email Preview';
+  document.getElementById('email-modal').style.display='flex';
+}
+function closeModal(){document.getElementById('email-modal').style.display='none';}
+function copyActiveEmail(){
+  var fn=EMAIL_TEMPLATES[activeEmail];
+  if(!fn)return;
+  var div=document.createElement('div');div.innerHTML=fn();document.body.appendChild(div);
+  var r=document.createRange();r.selectNode(div);window.getSelection().removeAllRanges();window.getSelection().addRange(r);
+  document.execCommand('copy');window.getSelection().removeAllRanges();document.body.removeChild(div);
+  var btn=document.getElementById('modal-copy-btn');btn.textContent='✓ Copied!';setTimeout(function(){btn.textContent='Copy for Gmail';},2000);
+}
+function copyEmail(type){activeEmail=type;copyActiveEmail();}
+
+var CSS='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Arial,sans-serif;background:#F4F6FA;font-size:14px}p{margin-bottom:10px}</style>';
+var SIG='<div style="background:#f5f7fa;padding:12px 20px;font-size:11px;color:#9ca3af;border-top:1px solid #E0E4ED"><strong style="color:#1B2A4A">Sebastian Short</strong> · Account Specialist · ALPHA TIMESHARE CONSULTANTS<br>1 (877) 848-3948 Ext. 134 · Sebastian@AlphaTimeshareConsultants.com</div>';
+var HDR=function(t){return '<div style="background:#1B2A4A;padding:18px 24px;text-align:center"><div style="font-family:Barlow Condensed,Arial,sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:.5px;margin-bottom:3px">ALPHA TIMESHARE CONSULTANTS</div><div style="color:#C8960C;font-size:11px;letter-spacing:2px;text-transform:uppercase">'+t+'</div></div>';};
+var BODY=function(h){return '<div style="padding:20px 24px;font-family:Inter,Arial,sans-serif;font-size:14px;color:#374151;line-height:1.7;background:#fff">'+h+'</div>';};
+var PQ='<div style="font-family:Georgia,serif;font-size:15px;font-style:italic;color:#1B2A4A;border-top:2px solid #C8960C;border-bottom:2px solid #C8960C;padding:10px 0;margin:14px 0;text-align:center">&ldquo;Would you rather put payments toward the problem &mdash; or the solution?&rdquo;</div>';
+
+function buildOpenQuote(){
+  var r5=Math.round(tYr*5),r10=Math.round(tYr*10);
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('True Cost of Ownership — '+resort)+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Here's what '+resort+' never showed you at signing.</p>'
+    +'<div style="display:flex;gap:12px;margin:14px 0">'
+    +'<div style="flex:1;background:#EAF0F8;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#DC2626">'+fc(tMo)+'</div><div style="font-size:10px;color:#6b7280;margin-top:4px;text-transform:uppercase">Monthly</div></div>'
+    +'<div style="flex:1;background:#EAF0F8;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#DC2626">'+fc(tYr)+'</div><div style="font-size:10px;color:#6b7280;margin-top:4px;text-transform:uppercase">Yearly</div></div>'
+    +'<div style="flex:1;background:#1B2A4A;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#C8960C">'+fc(r5)+'</div><div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:4px;text-transform:uppercase">5 Years</div></div>'
+    +'</div>'
+    +'<p>Over 10 years that's <strong>'+fc(r10)+'</strong> — just to keep a timeshare you're not using.</p>'
+    +PQ
+  )+SIG+'</body></html>';
+}
+
+function buildGroup(){
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('Group Filing — How It Works')+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Alpha consolidates owners from <strong>'+resort+'</strong> into coordinated group filings — the most important legal distinction in the industry.</p>'
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:14px;margin:12px 0;font-size:13px;line-height:2">'
+    +'<strong>1. We document your violations.</strong> Every disclosure failure becomes evidence.<br>'
+    +'<strong>2. Group filing multiplies exposure.</strong> Your case joins others at the same resort.<br>'
+    +'<strong>3. Resort settles.</strong> $235,000+ per owner in exposure drives them to negotiate.'
+    +'</div>'+PQ
+  )+SIG+'</body></html>';
+}
+
+function buildCompensation(){
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('Resort Compensation')+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Each documented violation carries a statutory fine. The resort faces up to $235,000 per owner in exposure.</p>'
+    +'<div style="display:flex;gap:12px;margin:14px 0">'
+    +'<div style="flex:1;background:#fef2f2;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#DC2626">$50K</div><div style="font-size:10px;color:#6b7280;margin-top:4px">Per TILA/FTC</div></div>'
+    +'<div style="flex:1;background:#fef2f2;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#DC2626">$75K</div><div style="font-size:10px;color:#6b7280;margin-top:4px">Per Reg Z</div></div>'
+    +'<div style="flex:1;background:#1B2A4A;border-radius:8px;padding:14px;text-align:center"><div style="font-family:Georgia,serif;font-size:24px;font-weight:700;color:#C8960C">$235K+</div><div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:4px">Total Per Owner</div></div>'
+    +'</div>'
+    +'<p><strong>Group filing participants are the only owners eligible for reimbursement.</strong></p>'+PQ
+  )+SIG+'</body></html>';
+}
+
+function buildCredit(){
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('Credit Protection')+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Alpha does not advise you to stop payments. Any decision is yours — in writing.</p>'
+    +'<div style="background:#EAF0F8;border-radius:8px;padding:14px;margin:12px 0;font-size:13px;line-height:2">'
+    +'<strong>1. Monitoring from day one.</strong> In-house team watches your profile immediately.<br>'
+    +'<strong>2. Disputes at no cost.</strong> All three bureaus — TransUnion, Equifax, Experian.<br>'
+    +'<strong>3. Bureau submission on Mutual Release.</strong> You exit with a clean record.'
+    +'</div>'+PQ
+  )+SIG+'</body></html>';
+}
+
+function buildHeirs(){
+  var state=C.resSt||'your state';
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('Estate Liability — '+resort)+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Under <strong>26 U.S.C. §6321–6323</strong> and '+state+' property law, timeshare interests transfer automatically to your estate upon passing.</p>'
+    +'<div style="background:#fef2f2;border-radius:8px;padding:14px;margin:12px 0;border-left:4px solid #DC2626">'
+    +'<strong style="color:#DC2626">Critical 9-Month Window</strong><br>'
+    +'<span style="font-size:13px;color:#374151">Heirs have 9 months to disclaim or they may be treated as having accepted the obligation — including future maintenance fees and any outstanding balance.</span>'
+    +'</div>'
+    +'<p>Resorts are known to delay HOA foreclosure on senior owners — allowing debt to accumulate and pass to heirs. This is a documented tactic.</p>'+PQ
+  )+SIG+'</body></html>';
+}
+
+function buildClose(){
+  var mo60=fee>0?Math.round(fee*(0.20/12*Math.pow(1+0.20/12,60))/(Math.pow(1+0.20/12,60)-1)):0;
+  return '<!DOCTYPE html><html><head>'+CSS+'</head><body>'+HDR('The Numbers — '+fullName)+BODY(
+    '<p style="font-size:15px;font-weight:700;color:#1B2A4A">Hi '+fname+',</p>'
+    +'<p>Here's the simple math.</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">'
+    +'<div style="border-radius:8px;padding:16px;text-align:center;border:2px solid #fca5a5;background:#fef2f2"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">5-Year Cost — Stay</div><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#DC2626">'+fc(tYr*5)+'</div></div>'
+    +'<div style="border-radius:8px;padding:16px;text-align:center;border:2px solid #86efac;background:#f0fdf4"><div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:6px">Alpha Exit Fee</div><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#16A34A">'+(fee?fc(fee):'Approval Pending')+'</div></div>'
+    +'</div>'
+    +(mo60?'<div style="background:#1B2A4A;border-radius:8px;padding:14px;text-align:center;margin-bottom:14px"><div style="font-size:10px;text-transform:uppercase;color:rgba(255,255,255,.55)">Or as low as</div><div style="font-family:Georgia,serif;font-size:28px;font-weight:700;color:#C8960C">'+fc(mo60)+'/mo</div></div>':'')
+    +PQ
+  )+SIG+'</body></html>';
+}
+
+function buildFullQuote(){
+  return buildOpenQuote()+buildGroup()+buildCompensation()+buildCredit()+buildClose();
+}
+</script>
+</body>
+</html>
