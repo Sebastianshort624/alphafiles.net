@@ -614,14 +614,7 @@ window.atcEmailThisPage = function(){
       +'<div class="body">'+clientHdr+bodyHtml+'</div>'
       +'<div class="footer">Sebastian Short &middot; Account Specialist &middot; ALPHA TIMESHARE CONSULTANTS<br>'
       +'1 (877) 848-3948 Ext. 134 &nbsp;&middot;&nbsp; 1 (689) 233-3259 &nbsp;&middot;&nbsp; Sebastian@AlphaTimeshareConsultants.com</div>'
-      +'</div><script>
-(function(){
-  var s=document.createElement('style');
-  s.textContent='@media(max-width:768px){.sidenav{display:none!important}.main{margin-left:0!important;width:100vw!important}}';
-  document.head.appendChild(s);
-})();
-</script>
-</body></html>';
+      +'</div></body></html>';
     var w=window.open('','_blank');w.document.open();w.document.write(h);w.document.close();
   }
 
@@ -2156,7 +2149,7 @@ window.addEventListener('beforeunload', function(){
   var s=ac(); if(!s) return;
   var all=ga(); if(!all[s]) return;
   function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
-  var _new={
+  all[s]=Object.assign(all[s],{
     firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
     coFirst:g('v-co'),coLast:g('v-col'),
     resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
@@ -2172,10 +2165,7 @@ window.addEventListener('beforeunload', function(){
     clientClass:g('v-classify'),
     _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
     _updated:Date.now()
-  };
-    Object.keys(_new).forEach(function(k){
-      if(_new[k]!==''&&_new[k]!==null&&_new[k]!==undefined){all[s][k]=_new[k];}
-    });
+  });
   sa(all);
 });
 
