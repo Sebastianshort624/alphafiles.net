@@ -785,6 +785,10 @@ function makeCard(e,idx){
     +'</div>';
 
   // Attach events using closures — no onclick string interpolation
+  card.draggable=true;
+  card.dataset.slug=e.slug;
+  card.addEventListener('dragstart',function(ev){ev.dataTransfer.setData('slug',e.slug);card.style.opacity='.4';});
+  card.addEventListener('dragend',function(){card.style.opacity='1';});
   card.addEventListener('click', function(){openClient(e.slug);});
   card.querySelector('.cc-open').addEventListener('click', function(ev){ev.stopPropagation();openClient(e.slug);});
   return card;
@@ -801,6 +805,17 @@ function makeSection(key,label,icon,entries){
     +'<span class="pipeline-badge '+key+'">'+entries.length+' client'+(entries.length!==1?'s':'')+'</span>'
     +'<span class="pipeline-chevron">'+(collapsed[key]?'▸':'▾')+'</span>';
   hdr.addEventListener('click', function(){toggleSection(key);});
+  sec.addEventListener('dragover',function(ev){ev.preventDefault();sec.style.outline='2px dashed #C8960C';});
+  sec.addEventListener('dragleave',function(){sec.style.outline='';});
+  sec.addEventListener('drop',function(ev){
+    ev.preventDefault();sec.style.outline='';
+    var s=ev.dataTransfer.getData('slug');if(!s)return;
+    var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
+    if(!all[s])return;
+    all[s]._status=key;all[s]._updated=Date.now();
+    localStorage.setItem('atc_clients_v2',JSON.stringify(all));
+    renderHub();
+  });
   sec.appendChild(hdr);
 
   if(!collapsed[key]){
