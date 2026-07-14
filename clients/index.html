@@ -1276,175 +1276,469 @@ function _topSaveClick(){
 <div class="main"><div class="wrap">
 
 <div class="ph">
-  <div class="ph-eyebrow">Alpha Files</div>
-  <div class="ph-title">All Clients</div>
-  <div class="ph-sub">Your full client roster — tap any card to open</div>
+  <div class="ph-eyebrow">Clients</div>
+  <div class="ph-title">Clients</div>
+  <div class="ph-sub">Client quote pages, ready to send or revisit</div>
 </div>
 
-<!-- TOP ACTIONS -->
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center">
-  <button onclick="window.location='/vitals/'" style="background:#1B2A4A;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">+ New Client</button>
-  <button onclick="exportAll()" style="background:#fff;color:#1B2A4A;border:2px solid #1B2A4A;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">📤 Export All</button>
-  <button onclick="document.getElementById('import-file').click()" style="background:#fff;color:#1B2A4A;border:2px solid #1B2A4A;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">📥 Import</button>
-  <input type="file" id="import-file" accept=".json" style="display:none" onchange="importAll(this)">
+<!-- Client banner -->
+<div class="vb">
+  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
+  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
+  <div class="vbc"><div class="vbl">Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
+  <div class="vbc"><div class="vbl">Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
+</div>
+
+<!-- ── LANGUAGE TOGGLE ── -->
+<div style="display:flex;gap:8px;margin-bottom:18px">
+  <button onclick="window.atcSetLang('en');renderHub()" style="padding:6px 14px;border-radius:6px;border:1.5px solid #1B2A4A;background:#1B2A4A;color:#fff;font-weight:700;font-size:12px;cursor:pointer" id="hub-lang-en">English</button>
+  <button onclick="window.atcSetLang('es');renderHub()" style="padding:6px 14px;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;color:#1B2A4A;font-weight:700;font-size:12px;cursor:pointer" id="hub-lang-es">Español</button>
+</div>
+
+<!-- Search bar -->
+<div style="margin-bottom:16px">
   <input id="hub-search" type="text" placeholder="Search clients…" oninput="renderHub()"
-    style="flex:1;min-width:160px;border:1.5px solid #e5e7eb;border-radius:8px;padding:9px 14px;font-size:13px;font-family:Inter,sans-serif;color:#1B2A4A;outline:none">
+    style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-size:14px;font-family:Inter,sans-serif;color:var(--navy)">
 </div>
 
-<!-- STAGE FILTER -->
-<div id="stage-filters" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
-  <button onclick="setFilter('all',this)" class="sf-btn active" data-filter="all">All</button>
-  <button onclick="setFilter('Assessment',this)" class="sf-btn" data-filter="Assessment">Assessment</button>
-  <button onclick="setFilter('Quote',this)" class="sf-btn" data-filter="Quote">Quote</button>
-  <button onclick="setFilter('Proposal',this)" class="sf-btn" data-filter="Proposal">Proposal</button>
-  <button onclick="setFilter('Follow-Up',this)" class="sf-btn" data-filter="Follow-Up">Follow-Up</button>
-  <button onclick="setFilter('Closed',this)" class="sf-btn" data-filter="Closed">Closed</button>
-</div>
-
-<style>
-.sf-btn{background:#fff;border:1.5px solid #e5e7eb;border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;color:#6b7280;transition:.15s}
-.sf-btn.active{background:#1B2A4A;border-color:#1B2A4A;color:#fff}
-.client-card{background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.15s;text-decoration:none;border-left:5px solid}
-.client-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
-.cc-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
-.cc-name{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:2px}
-.cc-resort{font-size:12px;color:#6b7280;margin-bottom:4px}
-.cc-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.cc-chip{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;background:#f3f4f6;color:#374151}
-.cc-chip.gold{background:#fff8e0;color:#92400e;border:1px solid #f4c542}
-.cc-chip.green{background:#dcfce7;color:#14532d}
-.cc-chip.blue{background:#dbeafe;color:#1e40af}
-.cc-chip.red{background:#fee2e2;color:#991b1b}
-.cc-right{margin-left:auto;text-align:right;flex-shrink:0}
-.cc-fee{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:700;color:#1B2A4A}
-.cc-updated{font-size:10px;color:#9ca3af;margin-top:2px}
-</style>
-
-<!-- DYNAMIC CLIENTS -->
+<!-- Dynamic localStorage client cards -->
+<div class="section-label">Active Sessions</div>
 <div id="hub-local-clients"></div>
 
-<!-- COMPLETED CLIENT PAGES -->
-<div class="section-label" style="margin-top:20px;margin-bottom:10px">📁 Built Client Pages</div>
+<!-- Sync status -->
+<div id="hub-sync-status" style="font-size:11px;color:#9ca3af;margin-bottom:18px;text-align:right"></div>
+
+<!-- Hardcoded completed client pages -->
+<div class="section-label" style="margin-top:12px">Completed Client Pages</div>
 <div id="hub-static-clients">
-  <a href="https://alphafiles.net/genova/" target="_blank" class="client-card" style="border-left-color:#C8960C">
-    <div class="cc-avatar" style="background:#1B2A4A">AG</div>
-    <div style="flex:1"><div class="cc-name">Andrea Génova</div><div class="cc-resort">Wyndham · Español</div><div class="cc-meta"><span class="cc-chip green">Completed</span><span class="cc-chip">alphafiles.net/genova</span></div></div>
-    <div class="cc-right"><div class="cc-fee">$4,520</div></div>
+  <a href="https://alphafiles.net/genova/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Andrea Génova</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,520</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Wyndham &middot; Español</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/genova ↗</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','r.weinaug')" style="text-decoration:none">
+<div style="background:#fff;border:1.5px solid #E0E4ED;border-radius:10px;padding:16px;margin-bottom:14px;cursor:pointer" onmouseover="this.style.borderColor='#DC2626'" onmouseout="this.style.borderColor='#E0E4ED'">
+<div style="display:flex;justify-content:space-between;align-items:flex-start"><div>
+<div style="font-family:'Barlow Condensed',Arial,sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:3px">Robert Weinaug</div>
+<div style="font-size:12px;color:#6b7280;margin-bottom:8px">Vacation Village Kissimmee &middot; FL &middot; (386) 626-1475</div>
+</div><span style="background:#DC2626;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;white-space:nowrap">HEIRS</span></div>
+<div style="display:flex;gap:8px;font-size:12px">
+<span style="background:#EAF0F8;color:#1B2A4A;padding:2px 8px;border-radius:10px;font-weight:600">$3,995</span>
+<span style="background:#f0fdf4;color:#16A34A;padding:2px 8px;border-radius:10px;font-weight:600">$106/mo</span>
+<span style="background:#fef2f2;color:#DC2626;padding:2px 8px;border-radius:10px;font-weight:600">Age 88 &middot; Appt Jul 9</span>
+</div></div></a>
+<a href='/vitals/' onclick="localStorage.setItem('atc_active','j.kaye')" style="text-decoration:none">
+<div style="background:#fff;border:1.5px solid #E0E4ED;border-radius:10px;padding:16px;margin-bottom:14px;cursor:pointer" onmouseover="this.style.borderColor='#1B2A4A'" onmouseout="this.style.borderColor='#E0E4ED'">
+<div style="font-family:'Barlow Condensed',Arial,sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:3px">James Kaye</div>
+<div style="font-size:12px;color:#6b7280;margin-bottom:8px">3 Resorts: Coconut Palms &middot; Hilton &middot; Marriott &middot; (561) 374-2343</div>
+<div style="display:flex;gap:8px;font-size:12px">
+<span style="background:#EAF0F8;color:#1B2A4A;padding:2px 8px;border-radius:10px;font-weight:600">$10,800 total</span>
+<span style="background:#f0fdf4;color:#16A34A;padding:2px 8px;border-radius:10px;font-weight:600">$285/mo</span>
+<span style="background:#fef2f2;color:#DC2626;padding:2px 8px;border-radius:10px;font-weight:600">Saves $412/mo</span>
+</div></div></a>
+<a href='/vitals/' onclick="localStorage.setItem('atc_active','b.brumley')" style="text-decoration:none">
+<div style="background:#fff;border:1.5px solid #E0E4ED;border-radius:10px;padding:16px;margin-bottom:14px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#1B2A4A'" onmouseout="this.style.borderColor='#E0E4ED'">
+<div style="font-family:'Barlow Condensed',Arial,sans-serif;font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:3px">Bill Brumley</div>
+<div style="font-size:12px;color:#6b7280;margin-bottom:8px">Holiday Club Vacations &middot; FL &middot; (817) 241-3777</div>
+<div style="display:flex;gap:8px;font-size:12px"><span style="background:#EAF0F8;color:#1B2A4A;padding:2px 8px;border-radius:10px;font-weight:600">$9,306</span><span style="background:#f0fdf4;color:#16A34A;padding:2px 8px;border-radius:10px;font-weight:600">$247/mo</span><span style="background:#fef2f2;color:#DC2626;padding:2px 8px;border-radius:10px;font-weight:600">$517 current</span></div>
+</div></a>
+<a href='/vitals/' onclick="localStorage.setItem('atc_active','f.oquendo')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr"><div class="cost-card-title">Fridda Oquendo</div><div class="cost-card-badge">RCI &middot; Kissimmee FL &middot; $3,495</div></div>
+      <p style="font-size:13px;color:#374151;margin:0">Mortgage paid off &middot; $600 MTF/yr &middot; <strong style="color:#DC2626">⚠️ HEIRS FOCUS</strong> — brother on inheritance path</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/f.oquendo/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','k.tanner')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr"><div class="cost-card-title">Ken Tanner</div><div class="cost-card-badge">Marriott Vacation Club &middot; $7,800 net</div></div>
+      <p style="font-size:13px;color:#374151;margin:0">$500/mo &middot; 5yr $30,000 &middot; Disc $1,000 &middot; Group filing eligible</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/tanner/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','d.rieger')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr"><div class="cost-card-title">Donald Rieger</div><div class="cost-card-badge">Holiday Inn Las Vegas &middot; $5,430</div></div>
+      <p style="font-size:13px;color:#374151;margin:0">$477/mo &middot; 5-yr $28,620 &middot; Savings $23,190</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/rieger/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','c.vasquez')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Conrado Vasquez</div>
+        <div class="cost-card-badge">Villa de Palmar &middot; $3,495 &middot; ES</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">$417/mo &middot; Desc. $2,100 &middot; Down $500 &middot; 12 meses 0%</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/vasquez/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','j.young')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">John Young</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,995 &middot; No Show</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Bluegreen Las Vegas &middot; $306/mo &middot; Purchased Jun 2026</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/young/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','l.huston')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Lynda Huston Adams</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,995 &middot; Appt Set</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Holiday Inn Club Vacations Lake Tahoe &middot; Stateline NV &middot; $278/mo</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/huston/rep &#8599;</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','e.equihua')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#fff8f0;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Eduardo &amp; Sra. Equihua</div>
+        <div class="cost-card-badge">1 Resort &middot; $7,495 &middot; ⚠️ Active Legal</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Sunset Cancun &middot; Cancun Mexico &middot; $761/mo &middot; Follow Up</p>
+      <div style="font-size:11px;color:#DC2626;font-weight:700;margin-top:4px">Small claims Jun 19 &middot; CB Jul 2 &middot; DOJ complaint active</div>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/equihua ↗</div>
+    </div>
+  </a>
+  <a href="https://alphafiles.net/manus/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Thomas &amp; Cozette Manus</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,495</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Wyndham Destinations &middot; Paid off</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/manus ↗</div>
+    </div>
+  </a>
+  <a href="https://alphafiles.net/rieger/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Donald Rieger</div>
+        <div class="cost-card-badge">1 Resort &middot; $5,430</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">The Holiday Inn Las Vegas &middot; 60 Mo &middot; $144/mo</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/rieger ↗</div>
+    </div>
+  </a>
+  <a href='/vitals/' onclick="localStorage.setItem('atc_active','j.bates')" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Bates Family</div>
+        <div class="cost-card-badge">2 Resorts &middot; $20,000</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Hilton Grand Vacations Las Vegas + HGV Hawaii (HGV MAX)</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/bates ↗</div>
+    </div>
+  </a>
+  <a href="https://alphafiles.net/bath/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Amandeep &amp; Surinder Bath</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,495</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Embarc Whistler</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/bath ↗</div>
+    </div>
+  </a>
+  <a href="https://alphafiles.net/polanco/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Armando &amp; Alta Gracia Polanco</div>
+        <div class="cost-card-badge">1 Resort &middot; $5,995</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Marriott Orlando &middot; Spanish</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/polanco ↗</div>
+    </div>
+  </a>
+  <a href="https://alphafiles.net/crozier/" target="_blank" style="text-decoration:none">
+    <div class="cost-card" style="border:2px solid var(--navy);background:#f8faff;margin-bottom:14px;cursor:pointer">
+      <div class="cost-card-hdr">
+        <div class="cost-card-title">Paul &amp; Katina Crozier</div>
+        <div class="cost-card-badge">1 Resort &middot; $4,995</div>
+      </div>
+      <p style="font-size:13px;color:#374151;margin:0">Westgate Branson Woods MO</p>
+      <div style="margin-top:10px;font-size:13px;font-weight:700;color:var(--gold)">alphafiles.net/crozier ↗</div>
+    </div>
   </a>
 </div>
 
-<script>
-var SK='atc_clients_v2', AK='atc_active';
-var activeFilter='all';
-function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
-function fd(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+<div class="cost-note" style="margin-top:18px">New completed client pages are added here as they're built. Active sessions above pull from your browser — use the sidebar to select and reactivate any client.</div>
 
-var STAGE_COLORS={'Assessment':'#6b7280','True Cost':'#7c3aed','Quote':'#C8960C','Acknowledgment':'#0891b2','Contract':'#2563eb','Funding':'#ea580c','Completed':'#16a34a','Closed':'#16a34a','Proposal':'#C8960C','Follow-Up':'#2563eb'};
-var STAGE_CSS={'Assessment':'','Quote':'gold','Closed':'green','Completed':'green','Funding':'blue','Contract':'blue','Follow-Up':'blue','Proposal':'gold','True Cost':'red'};
-var INITIALS_COLORS=['#1B2A4A','#7c3aed','#0891b2','#16a34a','#ea580c','#db2777','#2563eb','#C8960C'];
+</div><!-- /cost-content -->
 
-function setFilter(f,btn){
-  activeFilter=f;
-  document.querySelectorAll('.sf-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  renderHub();
+<div class="nav-bar">
+  <a href="/home/" class="np">← Dashboard</a>
+  <span class="ns">Clients</span>
+  <a href="/vitals/" class="nn">Start New Client →</a>
+</div>
+
+</div></div>
+
+<!-- ══ FIREBASE — FIRESTORE SYNC ══════════════════════════════════════════
+     Writes every localStorage client to Firestore when this page loads,
+     so records persist across devices and browser-cache clears.
+     Reads Firestore and merges back — combining both sources.
+═══════════════════════════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBINr3Y-kUVc6wcOff5Tsqk6S3PCocYQLs",
+  authDomain: "alphafiles-net.firebaseapp.com",
+  projectId: "alphafiles-net",
+  storageBucket: "alphafiles-net.firebasestorage.app",
+  messagingSenderId: "656837736859",
+  appId: "1:656837736859:web:d8ab92c07d91ddcdd4493e"
+};
+
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function syncClients(){
+  const statusEl = document.getElementById('hub-sync-status');
+  if(statusEl) statusEl.textContent = 'Syncing…';
+
+  const SK = 'atc_clients_v2';
+  let local = {};
+  try { local = JSON.parse(localStorage.getItem(SK)||'{}'); } catch(e){}
+
+  // 1. Push every local client to Firestore — local is always the source of truth.
+  //    We use merge:false here intentionally so the local record fully overwrites
+  //    any stale Firestore copy. The local record has the latest _updated timestamp.
+  for(const slug of Object.keys(local)){
+    try{
+      await setDoc(doc(db, 'clients', slug), Object.assign({}, local[slug], {
+        _slug: slug, _syncedAt: serverTimestamp()
+      }));
+    } catch(e){ console.warn('push failed', slug, e); }
+  }
+
+  // 2. Pull Firestore clients — but ONLY add records that don't exist locally at all.
+  //    We NEVER overwrite a locally-present record from Firestore. Local is always
+  //    the authoritative copy. Firestore is only used to restore records that are
+  //    missing from this browser (new device, cleared cache, etc).
+  try{
+    const snap = await getDocs(collection(db, 'clients'));
+    let added = 0;
+    snap.forEach(function(docSnap){
+      const data = docSnap.data();
+      const slug = docSnap.id;
+      if(!local[slug]){
+        // Convert any Firestore Timestamp fields to plain numbers
+        if(data._updated && typeof data._updated.toMillis === 'function'){
+          data._updated = data._updated.toMillis();
+        }
+        if(data._created && typeof data._created.toMillis === 'function'){
+          data._created = data._created.toMillis();
+        }
+        local[slug] = data;
+        added++;
+      }
+    });
+    localStorage.setItem(SK, JSON.stringify(local));
+    if(statusEl) statusEl.textContent = 'Synced' + (added>0 ? ' · '+added+' restored from cloud' : '') + ' · ' + new Date().toLocaleTimeString();
+  } catch(e){
+    console.warn('pull failed', e);
+    if(statusEl) statusEl.textContent = 'Local only (cloud unavailable) · ' + new Date().toLocaleTimeString();
+  }
+
+  if(typeof renderHub === 'function') renderHub();
 }
 
-function renderHub(){
-  var q=(document.getElementById('hub-search').value||'').toLowerCase().trim();
-  var all=ga();
-  var slugs=Object.keys(all).sort(function(a,b){return(all[b]._updated||0)-(all[a]._updated||0);});
-  var active=localStorage.getItem(AK);
-  var container=document.getElementById('hub-local-clients');
+// Run sync on page load
+document.addEventListener('DOMContentLoaded', function(){ syncClients(); });
+window.syncClientsToFirestore = syncClients;
+</script>
 
-  if(!slugs.length){
-    container.innerHTML='<div style="text-align:center;padding:40px;color:#9ca3af;font-size:14px;background:#f9fafb;border-radius:12px;border:1.5px dashed #e5e7eb">'
-      +'<div style="font-size:32px;margin-bottom:10px">👥</div>'
-      +'No clients in this browser yet.<br><br>'
-      +'<a href="/vitals/" style="background:#1B2A4A;color:#fff;padding:9px 20px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;font-family:Inter,sans-serif">+ Add First Client</a>'
-      +'<br><br><span style="font-size:11px">Or use 📥 Import to restore from a backup</span>'
-      +'</div>';
+<script>
+var SK='atc_clients_v2', AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
+function fd(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+var STAGES=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+
+function renderHub(){
+  var q = (document.getElementById('hub-search').value||'').toLowerCase().trim();
+  var all = ga();
+  var slugs = Object.keys(all).sort(function(a,b){
+    return ((all[b]._updated||0)) - ((all[a]._updated||0));
+  });
+
+  var lang = window.atcGetLang ? window.atcGetLang() : 'en';
+  var enBtn = document.getElementById('hub-lang-en');
+  var esBtn = document.getElementById('hub-lang-es');
+  if(enBtn){ enBtn.style.background = lang==='en'?'#1B2A4A':'#fff'; enBtn.style.color = lang==='en'?'#fff':'#1B2A4A'; }
+  if(esBtn){ esBtn.style.background = lang==='es'?'#1B2A4A':'#fff'; esBtn.style.color = lang==='es'?'#fff':'#1B2A4A'; }
+
+  if(slugs.length === 0){
+    document.getElementById('hub-local-clients').innerHTML =
+      '<div style="text-align:center;padding:32px;color:#9ca3af;font-size:14px">'+
+      'No active sessions yet — start a new client in <a href="/vitals/" style="color:var(--gold);font-weight:700">Client Vitals</a></div>';
     return;
   }
 
-  var html='', shown=0;
-  for(var i=0;i<slugs.length;i++){
-    var slug=slugs[i];
-    var d=all[slug];
-    var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||slug;
-    var resort=d.resort||'No resort';
-    var fee=fc(parseFloat(d.alphaFee)||0);
-    var stage=d.stage||d.vitalsStage||'Assessment';
-    if(typeof stage==='number'){var S=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];stage=S[stage]||'Assessment';}
-    var mo=fc((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));
-    var initials=(((d.firstName||'')[0]||'?')+((d.lastName||'')[0]||'')).toUpperCase();
-    var bgColor=INITIALS_COLORS[i%INITIALS_COLORS.length];
-    var stageClass=STAGE_CSS[stage]||'';
-    var borderColor=STAGE_COLORS[stage]||'#e5e7eb';
-    var isAct=slug===active;
+  var html = '';
+  var shown = 0;
+  for(var i=0; i<slugs.length; i++){
+    var slug = slugs[i];
+    var d = all[slug];
+    var nm = ((d.firstName||'')+ ' '+(d.lastName||'')).trim() || 'Unnamed';
+    var resort = d.resort || '—';
+    var fee = d.alphaFee ? fc(parseFloat(d.alphaFee)) : '—';
+    var stage = STAGES[typeof d.vitalsStage==='number'?d.vitalsStage:1] || 'Assessment';
+    var mo = (parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+    var updated = fd(d._updated);
+    var isActive = localStorage.getItem(AK) === slug;
 
-    // Filter
-    if(activeFilter!=='all'&&stage.toLowerCase()!==activeFilter.toLowerCase())continue;
-    if(q){var s=(nm+' '+resort+' '+stage+' '+slug).toLowerCase();if(s.indexOf(q)===-1)continue;}
+    // Filter by search
+    var searchStr = (nm+' '+resort+' '+fee+' '+stage).toLowerCase();
+    if(q && searchStr.indexOf(q)===-1) continue;
     shown++;
 
-    html+='<div class="client-card" style="border-left-color:'+borderColor+(isAct?';background:#f0f7ff':'')+'" onclick="openClient(''+slug+'')">'
-      +'<div class="cc-avatar" style="background:'+bgColor+'">'+initials+'</div>'
-      +'<div style="flex:1">'
-        +'<div class="cc-name">'+nm+(isAct?' <span style="font-size:10px;background:#007aff;color:#fff;border-radius:100px;padding:1px 7px;vertical-align:middle;font-family:Inter,sans-serif;font-weight:700">ACTIVE</span>':'')+'</div>'
-        +'<div class="cc-resort">'+resort+'</div>'
-        +'<div class="cc-meta">'
-          +'<span class="cc-chip '+stageClass+'">'+stage+'</span>'
-          +(mo!=='—'?'<span class="cc-chip">'+mo+'/mo</span>':'')
-          +(d._fuAppt?'<span class="cc-chip blue">📅 Appt</span>':'')
+  var fuDate = d._fuAppt ? (function(ts){
+      var dt=new Date(ts);
+      return isNaN(dt.getTime())?ts.split('T')[0]:dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
+    })(d._fuAppt) : null;
+
+    html += '<div style="border:2px solid '+(isActive?'var(--gold)':'var(--border)')+';background:'+(isActive?'#fffdf5':'#fff')+';border-radius:10px;padding:16px 18px;margin-bottom:12px;cursor:pointer" onclick="activateClient(\''+slug+'\')">'
+      +(fuDate?'<div style="background:var(--gold);color:#fff;font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:8px">📞 FU: '+fuDate+'</div>':'')
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'
+        +'<div>'
+          +'<div style="font-size:15px;font-weight:700;color:var(--navy)">'+(isActive?'🟡 ':'')+ nm+'</div>'
+          +'<div style="font-size:12px;color:#6b7280;margin-top:2px">'+resort+'</div>'
+        +'</div>'
+        +'<div style="text-align:right">'
+          +'<div style="font-size:13px;font-weight:700;color:var(--gold)">'+fee+'</div>'
+          +'<div style="font-size:11px;color:#9ca3af">'+stage+'</div>'
         +'</div>'
       +'</div>'
-      +'<div class="cc-right">'
-        +'<div class="cc-fee">'+fee+'</div>'
-        +'<div class="cc-updated">'+fd(d._updated)+'</div>'
+      +'<div style="display:flex;justify-content:space-between;font-size:11px;color:#9ca3af;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">'
+        +'<span>Monthly: <strong style="color:var(--navy)">'+fc(mo)+'/mo</strong></span>'
+        +'<span>Last updated: '+updated+'</span>'
+        +'<span style="color:var(--gold);font-weight:700;cursor:pointer" onclick="event.stopPropagation();activateClient(\''+slug+'\');location.href=\'/vitals/\'">Edit →</span>'
       +'</div>'
-      +'</div>';
+    +'</div>';
   }
 
-  if(!shown){
-    html='<div style="text-align:center;padding:24px;color:#9ca3af;font-size:13px">No clients match this filter.</div>';
+  if(shown === 0){
+    html = '<div style="text-align:center;padding:20px;color:#9ca3af;font-size:13px">No clients match "'+q+'"</div>';
   }
-  container.innerHTML='<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:8px">'+shown+' Client'+(shown!==1?'s':'')+' in this browser</div>'+html;
+
+  document.getElementById('hub-local-clients').innerHTML = html;
 }
 
-window.openClient=function(slug){
-  localStorage.setItem(AK,slug);
-  window.location='/vitals/';
-};
-
-window.exportAll=function(){
-  var data=localStorage.getItem(SK)||'{}';
-  var blob=new Blob([data],{type:'application/json'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='atc-clients-'+new Date().toISOString().split('T')[0]+'.json';
-  a.click();
-};
-
-window.importAll=function(input){
-  var file=input.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      var data=JSON.parse(e.target.result);
-      var existing=ga();
-      var merged=Object.assign({},existing,data);
-      localStorage.setItem(SK,JSON.stringify(merged));
-      renderHub();
-      alert('✓ '+Object.keys(data).length+' clients imported!');
-    }catch(err){alert('Invalid file. Please use a valid ATC export.');}
+function activateClient(slug){
+  // Set active slug
+  localStorage.setItem(AK, slug);
+  // Stamp the record
+  var all=ga();
+  if(all[slug]){ all[slug]._lastOpened=Date.now(); localStorage.setItem(SK,JSON.stringify(all)); }
+  // Navigate to their rep page — slug maps to /{slug}/rep/
+  // For slugs with dots (e.g. l.huston) use the name part after the dot
+  // For hardcoded clients, use the known mapping
+  var repMap = {
+    'l.huston': '/huston/rep/',
+    'j.bates':  '/bates/rep/',
+    'e.equihua':'/equihua/',
+    'e.avila':  '/vitals/'
   };
-  reader.readAsText(file);
-};
+  // For dynamically created clients, derive from slug
+  var dest = repMap[slug];
+  if(!dest){
+    // Try /{lastname}/rep/ using the part after the dot
+    var parts = slug.split('.');
+    var name = parts.length>1 ? parts[1] : slug;
+    // Check if the client has a named page or fall back to vitals
+    dest = '/vitals/';
+  }
+  location.href = dest;
+}
 
-document.addEventListener('DOMContentLoaded',renderHub);
-setTimeout(renderHub,200);
+document.addEventListener('DOMContentLoaded', function(){
+  renderHub();
+  if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+});
+
+function ad(){var s=ac();return s?ga()[s]||null:null;}
+
+function fc(n){
+  if(!n||n===0) return "—";
+  if(n>=1000000) return "$"+Math.round(n/1000)/10+"M";
+  if(n>=10000) return "$"+Math.round(n/1000)+"K";
+  return "$"+Math.round(n).toLocaleString();
+}
+function fcd(n){ return n>0?"$"+Math.round(n).toLocaleString():"—"; }
+
+// MTF projections: sum of geometric series MTF*(1.08^n -1)/0.08
+function mtfTotal(mtfYr, n){
+  if(!mtfYr||mtfYr<=0) return 0;
+  return mtfYr * (Math.pow(1.08, n) - 1) / 0.08;
+}
+
+function breakdown(mtfYr, mtgMo, n){
+  var mtfT = mtfTotal(mtfYr, n);
+  var mtgT = mtgMo * 12 * n;
+  var lines = "";
+  if(mtfYr>0) lines += "<div class='proj-line'><span>Maintenance fees</span><span>"+fcd(mtfT)+"</span></div>";
+  if(mtgMo>0) lines += "<div class='proj-line'><span>Mortgage payments</span><span>"+fcd(mtgT)+"</span></div>";
+  return lines;
+}
+
+function set(id, v){var el=document.getElementById(id);if(el)el.textContent=v;}
+function setHTML(id, v){var el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+function render(){
+  var d = ad();
+  if(!d) d = {};
+
+  // Banner (shows client info if one is selected, otherwise dashes)
+  var mo = (parseFloat(d.monthlyMortgage)||0) + ((parseFloat(d.maitFees)||0)/12);
+  set("vb-name", ((d.firstName||"")+" "+(d.lastName||"")).trim()||"—");
+  set("vb-phone", d.phone||"—");
+  set("vb-resort", d.resort||"—");
+  set("vb-loc", d.location||"—");
+  set("vb-mo", mo>0 ? "$"+Math.round(mo).toLocaleString()+"/mo" : "—");
+  set("vb-yr", mo>0 ? "$"+Math.round(mo*12).toLocaleString()+"/yr" : "—");
+  set("vb-quote", d.alphaFee ? "$"+Math.round(d.alphaFee).toLocaleString() : "—");
+  set("vb-stg", ["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"][d.vitalsStage||1]||"Assessment");
+}
+
+document.addEventListener("DOMContentLoaded", render);
+
+// Live update if localStorage changes in another tab
+window.addEventListener("storage", function(e){
+  if(e.key===SK||e.key===AK) render();
+});
 </script>
 
-</div>>
+
+
+
+
+
+<script>
+(function(){
+  if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  else document.addEventListener('DOMContentLoaded', function(){
+    if(typeof window.atcApplyLang==='function') window.atcApplyLang();
+  });
+  if(typeof window.atcAutoPopulate==='function') window.atcAutoPopulate();
+  else document.addEventListener('DOMContentLoaded', function(){
+    if(typeof window.atcAutoPopulate==='function') window.atcAutoPopulate();
+  });
+})();
+</script>
+</body>
+</html>
