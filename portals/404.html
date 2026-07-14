@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Portal</title>
+<script>
+// Extract slug from path: /portals/b.canizaro -> b.canizaro
+var parts = window.location.pathname.split('/').filter(Boolean);
+var slug = parts[1] || '';
+if(slug) window.location.replace('/portals/?s=' + slug);
+else window.location.replace('/portals/');
+</script>
+</head>
+<body></body>
+</html>
