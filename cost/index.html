@@ -801,88 +801,83 @@ var d={}, mtfMo=0, mtgMo=0, mtgYrs=10, alphaFee=0, mtfYr=0;
   calc();
 })();
 
-function mtfAtYear(y){
-  // MTF grows 8% per year
-  return mtfYr * Math.pow(1.08, y-1);
-}
 function cumMtf(yrs){
-  var t=0;
-  for(var i=1;i<=yrs;i++) t+=mtfAtYear(i);
-  return t;
+  // Each year's MTF payment grows 8% from prior year, sum them all
+  if(yrs<1) return (mtfYr/12)*yrs*12;
+  var total=0;
+  for(var i=1;i<=Math.floor(yrs);i++) total+=mtfYr*Math.pow(1.08,i-1);
+  var frac=yrs-Math.floor(yrs);
+  if(frac>0) total+=mtfYr*Math.pow(1.08,Math.floor(yrs))*frac;
+  return total;
 }
 function cumMtg(yrs){
-  // Mortgage only within loan term
-  var months=Math.min(yrs*12, mtgYrs*12);
-  return mtgMo * months;
+  // Flat monthly payment × months, hard-capped at loan term
+  return mtgMo*Math.min(yrs,mtgYrs)*12;
 }
-function mtgForYears(yrs){
-  if(yrs<=mtgYrs) return mtgMo*12*yrs;
-  return mtgMo*12*mtgYrs; // capped at term
+// Future Value: what those same monthly payments would grow to if invested at 8%/yr
+// Each payment invested from month m earns compound interest for remaining months
+function fvIfInvested(yrs){
+  var r=0.08/12;
+  var totalMonths=Math.max(1,Math.round(yrs*12));
+  var fv=0;
+  for(var m=1;m<=totalMonths;m++){
+    var yr=Math.ceil(m/12);
+    var mtfPmt=(mtfYr*Math.pow(1.08,yr-1))/12;
+    var mtgPmt=(m<=mtgYrs*12)?mtgMo:0;
+    fv+=(mtfPmt+mtgPmt)*Math.pow(1+r,totalMonths-m);
+  }
+  return fv;
 }
 
 function calc(){
   if(!mtfMo && !mtgMo) return;
-
-  // Summary cards
   function set(id,v){var el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+  var combMo=mtfMo+mtgMo;
   set('s-mtg-mo', mtgMo>0?fc(mtgMo):'<span class="zero">None</span>');
   set('s-mtg-mo-yr', mtgMo>0?fc(mtgMo*12)+'/yr':'');
   set('s-mtf-mo', fc(mtfMo));
   set('s-mtf-mo-yr', fc(mtfYr)+'/yr · 8% growth');
-  var combMo=mtfMo+mtgMo;
   set('s-combined-mo', '<span class="red">'+fc(combMo)+'</span>');
   set('s-combined-yr', fc(combMo*12)+'/yr combined');
 
-  // Remaining calculations
-  var mtgMonthsRem=mtgYrs*12;
-  var mtgRem=mtgMo*mtgMonthsRem;
-  var mtfRem=cumMtf(mtgYrs); // MTF through same period
-  var totalRem=mtgRem+mtfRem;
-
+  var mtgRem=cumMtg(mtgYrs), mtfRem=cumMtf(mtgYrs), totalRem=mtgRem+mtfRem;
   set('s-mtg-rem', mtgMo>0?'<span class="red">'+fc(mtgRem)+'</span>':'<span class="zero">None</span>');
   set('s-mtg-rem-sub', mtgMo>0?(mtgYrs+' yr term · '+mtgYrs*12+' payments'):'no mortgage');
   set('s-mtf-rem', '<span class="red">'+fc(mtfRem)+'</span>');
-  set('s-mtf-rem-sub', 'through '+mtgYrs+'-year period at 8% growth');
+  set('s-mtf-rem-sub', 'through loan term at 8% annual growth');
   set('s-total-rem', '<span class="red">'+fc(totalRem)+'</span>');
 
-  // Show alpha save column if fee exists
   var alphaHdr=document.getElementById('alpha-hdr');
+  var fvHdr=document.getElementById('fv-hdr');
   if(alphaHdr) alphaHdr.style.display=alphaFee>0?'':'none';
+  if(fvHdr) fvHdr.style.display='';
 
-  // Build comparison table
-  var rows='';
-  var timeframes=[
-    {label:'1 Month',   yrs:1/12},
-    {label:'1 Year',    yrs:1},
-    {label:'3 Years',   yrs:3},
-    {label:'5 Years',   yrs:5},
-    {label:'7 Years',   yrs:7},
-    {label:'10 Years',  yrs:10, hl:true},
-    {label:'20 Years',  yrs:20},
-    {label:'30 Years',  yrs:30, hl:true},
-    {label:'Loan Term ('+mtgYrs+' yrs)', yrs:mtgYrs, hl:true, isLoan:true}
+  var TF=[
+    {label:'1 Month',  yrs:1/12},
+    {label:'1 Year',   yrs:1},
+    {label:'3 Years',  yrs:3},
+    {label:'5 Years',  yrs:5},
+    {label:'7 Years',  yrs:7},
+    {label:'10 Years', yrs:10, hl:true},
+    {label:'20 Years', yrs:20},
+    {label:'30 Years', yrs:30, hl:true},
+    {label:'Loan Term ('+mtgYrs+' yrs)', yrs:mtgYrs, hl:true}
   ];
 
-  timeframes.forEach(function(tf){
-    var yrs=tf.yrs;
-    var mtg, mtfC;
-    if(yrs<1){
-      // Monthly
-      mtg=mtgMo>0?mtgMo:0;
-      mtfC=mtfMo;
-    } else {
-      mtg=cumMtg(yrs);
-      mtfC=cumMtf(yrs);
-    }
-    var combined=mtg+mtfC;
+  var rows='';
+  TF.forEach(function(tf){
+    var mtg=cumMtg(tf.yrs), mtfC=cumMtf(tf.yrs), combined=mtg+mtfC;
+    var fv=fvIfInvested(tf.yrs);
     var save=alphaFee>0?combined-alphaFee:null;
     var hl=tf.hl?'class="highlight"':'';
     rows+='<tr '+hl+'>'
       +'<td>'+tf.label+'</td>'
-      +'<td class="mtg">'+( mtg>0?fcd(mtg):'<span class="zero">Paid off</span>')+'</td>'
+      +'<td class="mtg">'+(mtg>0?fcd(mtg):'<span class="zero">Paid off</span>')+'</td>'
       +'<td class="mtf">'+fcd(mtfC)+'</td>'
       +'<td class="combined">'+fcd(combined)+'</td>'
-      +(alphaFee>0?'<td class="save">'+(save>0?'+ '+fc(save):'<span class="zero">—</span>')+'</td>':'')
+      +'<td class="save">'+fc(fv)+'</td>'
+      +(alphaFee>0?'<td style="color:#15803d;font-weight:800">'+(save>0?'+'+fc(save):'—')+'</td>':'')
       +'</tr>';
   });
   document.getElementById('cost-tbody').innerHTML=rows;
