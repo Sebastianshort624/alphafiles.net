@@ -775,7 +775,7 @@ function renderHub(){
     var barColor=e.status==='quoted'?'#C8960C':e.status==='absent'?'#9ca3af':'#34c759';
     var stageLabels=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
     var stg=stageLabels[typeof e.d.vitalsStage==='number'?e.d.vitalsStage:1]||'Assessment';
-    return '<div class="cc" style="border-left-color:'+borderColor+(e.active?';background:#f0f7ff':'')+'" onclick="openClient(''+e.slug+'')">'
+    return '<div class="cc" style="border-left-color:'+borderColor+(e.active?';background:#f0f7ff':'')+'" onclick="openClient(this.dataset.slug)">'
       +'<div class="cc-avatar" style="background:'+bgColor+'">'+initials+'</div>'
       +'<div style="flex:1;min-width:0">'
         +'<div class="cc-name">'+e.nm+(e.active?' <span style="font-size:9px;background:#007aff;color:#fff;border-radius:100px;padding:1px 6px;font-family:Inter,sans-serif;font-weight:700">ACTIVE</span>':'')+'</div>'
@@ -800,7 +800,7 @@ function renderHub(){
     var total=entries.length;
     var isCollapsed=collapsed[key];
     return '<div class="pipeline-section">'
-      +'<div class="pipeline-hdr '+key+'" onclick="toggleSection(''+key+'')">'
+      +'<div class="pipeline-hdr '+key+'" onclick="toggleSection(this.dataset.key)">'
         +'<span style="font-size:18px">'+icon+'</span>'
         +'<span class="pipeline-title '+key+'">'+label+'</span>'
         +'<span class="pipeline-badge '+key+'">'+total+' client'+(total!==1?'s':'')+'</span>'
