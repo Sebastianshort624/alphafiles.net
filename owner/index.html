@@ -96,8 +96,8 @@ body{display:flex!important;min-height:100vh!important}
   display:flex!important;flex-direction:column!important;
   overflow-y:auto!important;
 }
-
-
+.sidenav::-webkit-scrollbar{width:3px}
+.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 
 /* RIGHT NAV — tools */
 .rightnav{
@@ -176,7 +176,6 @@ window.atcGetLang=function(){return localStorage.getItem("atc_lang")||"en";};
 window.atcSetLang=function(l){localStorage.setItem("atc_lang",l);window.atcApplyLang&&window.atcApplyLang();buildRightNav();};
 
 var _PG=[
-  {n:"0",ic:"🌐",lb:"Client Presentation",url:"/owner/"},
   {n:1,  ic:"\u{1F4CA}",lb:"Current Situation",      url:"/current/",     email:true},
   {n:2,  ic:"\u2753",   lb:"Why Do You Want Out",    url:"/whyout/",      email:true},
   {n:3,  ic:"\u{1F4AA}",lb:"Leverage",               url:"/leverage/",    email:true},
