@@ -368,7 +368,7 @@ window._toggleDone=function(url){
   buildSB();
 };
 // ── HIDE COMPLETED TOGGLE ─────────────────────────────────────────────
-function _getHideCompleted(){return localStorage.getItem('sb_hide_completed')!=='false';}
+function _getHideCompleted(){return localStorage.getItem('sb_hide_completed')==='true';}
 window.toggleHideCompleted=function(){localStorage.setItem('sb_hide_completed',(!_getHideCompleted()).toString());buildSB();}
 
 var _PG=[
