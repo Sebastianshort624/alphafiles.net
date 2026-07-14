@@ -173,6 +173,8 @@ body{display:flex!important;min-height:100vh!important}
 .pb-status.attended{background:rgba(52,199,89,.2);color:#34c759;border:1px solid rgba(52,199,89,.4)}
 .pb-status.quoted{background:rgba(200,150,12,.2);color:#C8960C;border:1px solid rgba(200,150,12,.4)}
 .pb-status.absent{background:rgba(255,59,48,.2);color:#ff3b30;border:1px solid rgba(255,59,48,.4)}
+.pb-status.vero{background:rgba(88,86,214,.2);color:#5856d6;border:1px solid rgba(88,86,214,.4)}
+.pb-status.sold{background:rgba(52,199,89,.3);color:#15803d;border:2px solid #16a34a}
 .pb-progress{font-size:9px;font-weight:700;color:rgba(255,255,255,.45);flex-shrink:0}
 .pb-spacer{flex:1}
 .pb-saved{font-size:10px;font-weight:600;color:rgba(255,255,255,.4);transition:.3s}
@@ -237,6 +239,8 @@ body{display:flex!important;min-height:100vh!important}
 .status-btn.active-attended{background:rgba(52,199,89,.2);border-color:rgba(52,199,89,.5);color:#34c759}
 .status-btn.active-quoted{background:rgba(200,150,12,.2);border-color:rgba(200,150,12,.5);color:#C8960C}
 .status-btn.active-absent{background:rgba(255,59,48,.2);border-color:rgba(255,59,48,.5);color:#ff3b30}
+.status-btn.active-vero{background:rgba(88,86,214,.2);border-color:rgba(88,86,214,.5);color:#5856d6}
+.status-btn.active-sold{background:rgba(52,199,89,.25);border-color:rgba(52,199,89,.6);color:#15803d;font-size:10px}
 @media print{.sidenav,.rightnav,.portal-banner{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;margin-right:0!important;padding-top:0!important}}
 @media(max-width:900px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
 @media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;padding-top:40px!important}.portal-banner{left:0}}
@@ -449,7 +453,7 @@ function buildSB(){
   var prog=_getProgress();
 
   // Client header
-  var statusBadge=status?'<span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:4px;'+(status==='quoted'?'background:rgba(200,150,12,.2);color:#C8960C':status==='attended'?'background:rgba(52,199,89,.2);color:#34c759':'background:rgba(255,59,48,.2);color:#ff3b30')+'">'+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':'ABSENT')+'</span>':'';
+  var statusBadge=status?'<span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:4px;'+(status==='quoted'?'background:rgba(200,150,12,.2);color:#C8960C':status==='attended'?'background:rgba(52,199,89,.2);color:#34c759':status==='vero'?'background:rgba(88,86,214,.2);color:#5856d6':status==='sold'?'background:rgba(52,199,89,.3);color:#15803d;border:1px solid #16a34a':'background:rgba(255,59,48,.2);color:#ff3b30')+'">'+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'✓ SOLD':'ABSENT')+'</span>':'';
   var ct=d
     ?"<div style='padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>"
       +"<div style='display:flex;align-items:center;flex-wrap:wrap;gap:2px;margin-bottom:2px'><span style='font-size:13px;font-weight:700;color:#fff'>"+(nm||"Unnamed")+"</span>"+statusBadge+"</div>"
@@ -592,7 +596,7 @@ function buildPortalBanner(){
   var prog=_getProgress();
   pb.innerHTML=
     "<span class='pb-client'>"+(d?nm:"No client")+"</span>"
-    +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':'ABSENT')+"</span>":"")
+    +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'SOLD':'ABSENT')+"</span>":"")
     +(prog.done>0?"<span class='pb-progress'>"+prog.done+"/"+prog.total+"</span>":"")
     +(pushed?"<span style='font-size:9px;color:rgba(200,150,12,.7);font-weight:700;flex-shrink:0'>"+pushed+" live</span>":"")
     +"<span class='pb-spacer'></span>"
