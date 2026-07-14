@@ -453,6 +453,8 @@ function buildSB(){
     +"<button class='status-btn"+(status==='attended'?' active-attended':'')+"' onclick=\"window.setClientStatus('attended')\">✓ Attended</button>"
     +"<button class='status-btn"+(status==='quoted'?' active-quoted':'')+"' onclick=\"window.setClientStatus('quoted')\">💰 Quoted</button>"
     +"<button class='status-btn"+(status==='absent'?' active-absent':'')+"' onclick=\"window.setClientStatus('absent')\">✗ Absent</button>"
+    +"<button class='status-btn'+(status==='vero'?' active-vero':'')+' onclick=\"window.setClientStatus(\'vero\')\">🔵 Vero</button>"
+    +"<button class='status-btn'+(status==='sold'?' active-sold':'')+' onclick=\"window.setClientStatus(\'sold\')\">🟢 Sold</button>"
     +"</div>":"";
 
   // Client switcher
