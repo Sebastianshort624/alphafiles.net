@@ -209,6 +209,7 @@ window.atcGetLang=function(){return localStorage.getItem("atc_lang")||"en";};
 window.atcSetLang=function(l){localStorage.setItem("atc_lang",l);window.atcApplyLang&&window.atcApplyLang();buildRightNav();};
 
 var _PG=[
+  {n:"0",ic:"🌐",lb:"Client Presentation",url:"/owner/"},
   {n:1,  ic:"\u{1F4CA}",lb:"Current Situation",      url:"/current/",     email:true},
   {n:2,  ic:"\u2753",   lb:"Why Do You Want Out",    url:"/whyout/",      email:true},
   {n:3,  ic:"\u{1F4AA}",lb:"Leverage",               url:"/leverage/",    email:true},
