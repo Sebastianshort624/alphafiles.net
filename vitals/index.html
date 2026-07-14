@@ -1214,7 +1214,7 @@ function calcTotals(){
   }
 }
 
-function populateFromCRM(){
+window.populateFromCRM = function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
 
@@ -1294,7 +1294,7 @@ function populateFromCRM(){
     try{autoSave();}catch(e){}
     try{calcComparison();}catch(e){}
   },150);
-}
+};
 
 function calcUsage(){
   var yearEl=document.getElementById('v-year');
@@ -2146,7 +2146,7 @@ function copyEmail(){
 })();
 </script>
 </body>
-</html<!-- ALL CLIENTS PANEL -->
+<!-- ALL CLIENTS PANEL -->
 <div id="all-clients-bar" style="background:#1B2A4A;border-radius:10px;padding:14px 16px;margin-bottom:18px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#C8960C">ALL CLIENTS</div>
