@@ -81,6 +81,7 @@ body{font-family:'Inter',sans-serif;font-size:14px;background:var(--bg);color:#1
 [data-lang="es"] .en-only { display: none !important; }
 /* Default to English until atcApplyLang() fires */
 body:not([data-lang]) .es-only { display: none !important; }
+#def-body p,#def-body li{font-size:16px!important;line-height:1.7!important}
 </style>
 </head>
 <body>
@@ -718,31 +719,31 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 var DEFS = {
   fo: {
     title: 'Favorable Outcome',
-    body: '<p>A <strong>Favorable Outcome</strong> is a written, verifiable resolution from the resort that releases the Client from all ownership obligations — including the deed, all ongoing maintenance fees, any remaining mortgage balance held by the developer, and all financial liability.</p><p>Once a Favorable Outcome is obtained, your name is permanently removed from the county deed and the obligation ends completely — for you and your estate.</p>'
+    body: '<p style="font-size:16px;font-weight:700;color:#dc2626;margin-bottom:12px">⚠️ A Favorable Outcome does <u>not</u> include compensation.</p><p style="font-size:16px;line-height:1.7">A <strong>Favorable Outcome</strong> is defined as a written, verifiable release from the resort removing the client from all ownership obligations — the deed, all maintenance fees, any developer mortgage, and all financial liability. Your name is permanently removed from the county record.</p>'
   },
   sf: {
     title: 'Service Fee',
-    body: '<p>The <strong>Service Fee</strong> is the amount charged by Alpha Timeshare Consultants for our services. Payment options include Pay in Full or installment financing plans.</p><p>If a Favorable Outcome is not obtained within 36 months of the Effective Date, you are entitled to a full refund of this fee upon written request — no conditions, no exceptions.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">The one-time fee charged by Alpha for our services. If a Favorable Outcome is not obtained within <strong>36 months</strong>, you receive a <strong>full refund</strong> — no conditions, no exceptions.</p>'
   },
   gf: {
     title: 'Group Filings',
-    body: '<p><strong>Group Filings</strong> are coordinated advocacy actions where Alpha represents multiple clients from the same resort simultaneously.</p><p>The resort must accept or reject the group as a whole — they cannot pick and choose which participants to release. This all-or-nothing approach is the foundation of our guarantee and the reason we can make it unconditionally.</p><p>Resorts treat group filings the way they treat class actions: shared liability across all participants multiplies the financial and reputational pressure to settle quickly.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">Alpha represents multiple clients from the same resort together. The resort must accept or reject the group as a whole — they cannot cherry-pick who gets released. This is why we can guarantee the outcome.</p>'
   },
   rc: {
     title: 'Recoupment of Funds',
-    body: '<p><strong>Recoupment of Funds</strong> refers to recovery of money the client previously paid into the timeshare — purchase price, maintenance fees paid over the years, or other costs.</p><p>Recoupment is <em>not guaranteed</em>, but it is actively pursued in every group filing. Only exit firms that can present documented fine exposure in the tens of millions of dollars have the leverage to negotiate compensation checks from resorts. Typical range when obtained: $8,000–$24,000. Paid directly from the resort to you — Alpha keeps no percentage.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">Recovery of money previously paid into the timeshare — purchase price, fees paid, or other costs. <strong>Not guaranteed</strong>, but actively pursued. When obtained: typically $8,000–$24,000, paid directly from the resort to you. Alpha keeps nothing.</p>'
   },
   gt: {
     title: 'Guarantee Term',
-    body: '<p>The <strong>Guarantee Term</strong> is 36 months from the Effective Date of your contract.</p><p>If a Favorable Outcome has not been obtained within this period, you have two options:</p><ul style="margin:10px 0 10px 20px;font-size:14px;color:#374151;line-height:1.8"><li>Request a <strong>full refund</strong> of your Service Fee</li><li>Receive a <strong>free extension</strong> of services at no additional cost</li></ul><p>The choice is yours. Alpha has never walked away from a case within the guarantee term.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">36 months from your contract date. If no Favorable Outcome by then, you choose: <strong>full refund</strong> of your service fee, or a <strong>free extension</strong> of services. Your call.</p>'
   },
   np: {
     title: 'Normal Pushback',
-    body: '<p><strong>Normal Pushback</strong> describes the predictable pattern of communications you will receive from the resort during your exit process — letters, calls, statements, or legal-sounding notices designed to discourage you from proceeding.</p><p>This is completely expected and handled entirely by your Alpha team. You do not respond to the resort directly at any point.</p><p>By law, Alpha must present every offer the resort makes — including their standard first offer, which is almost always: "We will let you exit with zero money back." You are not required to accept it. You have the full 36 months to negotiate for a better outcome. You must ultimately accept the best offer made — as long as a clean exit is part of it.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">Letters, calls, and notices from the resort designed to scare you into stopping. <strong>Completely normal. Completely expected.</strong> Your Alpha team handles all of it — you do not contact the resort directly at any point.</p>'
   },
   cp: {
     title: 'Credit Protection',
-    body: '<p><strong>Credit Protection</strong> is included in every case at no additional charge.</p><p>Once your Mutual Release is obtained and the deed transfer is recorded at the county, Alpha sends documentation directly to TransUnion, Equifax, and Experian — typically within 30–45 days of recording.</p><p>Under the Fair Credit Reporting Act (15 U.S.C. §1681), the credit bureaus are required to update or remove derogatory marks once the legal obligation is fully discharged and documentation is provided.</p><p>If you are behind on payments at the time of engagement, your case manager advises you on the optimal payment strategy to minimize credit impact during the resolution window.</p>'
+    body: '<p style="font-size:16px;line-height:1.7">Included at no extra charge. Once your release is recorded, Alpha notifies TransUnion, Equifax, and Experian directly. Under federal law, bureaus must update your file once the obligation is discharged.</p>'
   }
 };
 
