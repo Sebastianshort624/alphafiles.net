@@ -111,28 +111,72 @@ body{display:flex!important;min-height:100vh!important}
 .sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 .rightnav{width:195px!important;min-width:195px!important;background:#0f1d33!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .rightnav::-webkit-scrollbar{width:3px}.rightnav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.3);border-radius:2px}
-.main,.main-content,.app,.page-content{margin-left:210px!important;margin-right:195px!important;flex:1!important;padding:0 6px!important}
+.main,.main-content,.app,.page-content{margin-left:210px!important;margin-right:195px!important;flex:1!important;padding:0 6px!important;padding-top:44px!important}
 .wrap{max-width:100%!important;margin:0!important}
+/* PORTAL BANNER */
+.portal-banner{position:fixed;top:0;left:210px;right:195px;height:40px;background:linear-gradient(90deg,#1B2A4A,#243a6e);border-bottom:2px solid #C8960C;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:11px;font-family:Inter,sans-serif}
+.pb-client{font-weight:800;color:#fff;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb-stage{background:rgba(200,150,12,.2);border:1px solid rgba(200,150,12,.4);color:#C8960C;border-radius:3px;padding:1px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.pb-spacer{flex:1}
+.pb-saved{font-size:10px;font-weight:600;color:rgba(255,255,255,.4);transition:.3s}
+.pb-saved.dirty{color:#ff9500}
+.pb-saved.saved{color:#34c759}
+.pb-email-wrap{display:flex;align-items:center;gap:4px;cursor:pointer;color:rgba(255,255,255,.6);font-size:10px;font-weight:600}
+.pb-email-wrap input{cursor:pointer;accent-color:#C8960C}
+.pb-btn{border:none;border-radius:4px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s;white-space:nowrap}
+.pb-push{background:#C8960C;color:#fff}.pb-push:hover{background:#a67a08}
+.pb-save{background:#16a34a;color:#fff}.pb-save:hover{background:#15803d}
+/* RIGHT NAV */
 .rn-section{border-bottom:1px solid rgba(255,255,255,.07);padding:8px 0}
 .rn-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:4px 10px 2px}
 .rn-btn{display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:11px;font-weight:600;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:.12s;font-family:Inter,sans-serif}
 .rn-btn:hover,.rn-btn.active{background:rgba(200,150,12,.15);color:#C8960C}
 .rn-btn .rn-ic{font-size:13px;flex-shrink:0;width:18px;text-align:center}
 .rn-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;font-size:11px;padding:5px 7px;font-family:Inter,sans-serif;outline:none;margin:0 0 4px}
-.rn-input::placeholder{color:rgba(255,255,255,.35)}
 .rn-2col{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px 8px}
 .rn-lang-btn{padding:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:rgba(255,255,255,.65);font-size:11px;font-weight:700;cursor:pointer;text-align:center;font-family:Inter,sans-serif;transition:.12s}
 .rn-lang-btn.active{background:#C8960C;border-color:#C8960C;color:#fff}
 .rn-report-btn{display:block;width:calc(100% - 16px);margin:3px 8px;padding:6px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.7);font-size:11px;font-weight:600;cursor:pointer;text-align:left;font-family:Inter,sans-serif;transition:.12s}
 .rn-report-btn:hover{background:rgba(200,150,12,.2);color:#C8960C;border-color:rgba(200,150,12,.4)}
-/* PAGE CHECKBOXES */
-.pg-cb{width:15px;height:15px;border-radius:3px;border:1.5px solid rgba(255,255,255,.2);background:transparent;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;margin-left:auto}
-.pg-cb.done{background:#C8960C;border-color:#C8960C}
-.pg-cb.done::after{content:'✓';font-size:9px;color:#fff;font-weight:900;line-height:1}
-.pg-cb:hover{border-color:#C8960C}
-@media print{.sidenav,.rightnav{display:none!important}.main,.main-content,.app{margin-left:0!important;margin-right:0!important}}
+/* PUSH POPUP */
+.push-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center}
+.push-overlay.open{display:flex}
+.push-box{background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden}
+.push-hdr{background:#1B2A4A;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.push-hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:.5px}
+.push-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;padding:4px 9px;cursor:pointer;font-size:14px}
+.push-body{padding:14px 18px}
+.push-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.push-item{display:flex;align-items:center;gap:7px;padding:7px 10px;background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;color:#374151;transition:.12s}
+.push-item:hover{border-color:#C8960C;background:#fff8e0}
+.push-item input{accent-color:#C8960C;cursor:pointer}
+.push-item.pushed{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.push-actions{display:flex;gap:8px;align-items:center}
+.push-btn-all{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;color:#374151}
+.push-btn-go{background:#C8960C;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;flex:1;transition:.15s}
+.push-btn-go:hover{background:#a67a08}
+/* NEW SESSION DIALOG */
+.session-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9500;align-items:center;justify-content:center}
+.session-overlay.open{display:flex}
+.session-box{background:#fff;border-radius:14px;width:340px;max-width:95vw;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:center}
+.session-icon{font-size:36px;margin-bottom:12px}
+.session-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#1B2A4A;margin-bottom:8px}
+.session-msg{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:20px}
+.session-btns{display:flex;flex-direction:column;gap:7px}
+.sbtn{border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s}
+.sbtn.save{background:#16a34a;color:#fff}.sbtn.save:hover{background:#15803d}
+.sbtn.nosave{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}.sbtn.nosave:hover{background:#e5e7eb}
+.sbtn.cancel{background:none;color:#9ca3af;font-size:12px}.sbtn.cancel:hover{color:#374151}
+/* UNSAVED DIALOG */
+.unsaved-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9600;align-items:center;justify-content:center}
+.unsaved-overlay.open{display:flex}
+.unsaved-box{background:#fff;border-radius:14px;width:320px;max-width:95vw;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.unsaved-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#1B2A4A;margin-bottom:6px}
+.unsaved-msg{font-size:12px;color:#6b7280;margin-bottom:16px;line-height:1.5}
+.unsaved-btns{display:flex;flex-direction:column;gap:6px}
+@media print{.sidenav,.rightnav,.portal-banner{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;margin-right:0!important;padding-top:0!important}}
 @media(max-width:900px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
-@media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important}}
+@media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;padding-top:40px!important}.portal-banner{left:0}}
 </style>
 
 <script id="atc-sb">
@@ -144,48 +188,201 @@ function _aD(){var s=_aC();return s?_gA()[s]||null:null;}
 function _fC(n){return "$"+Math.round(n||0).toLocaleString();}
 function _fD(ts){if(!ts)return"--";return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
 
-// ── SESSION PROGRESS ──────────────────────────────────────────────────
-var _SESS_KEY='atc_session';
-function _getSessId(){
-  var s=_aC();if(!s)return null;
-  var key='atc_sess_'+s;
-  var id=localStorage.getItem(key);
-  if(!id){id=Date.now().toString();localStorage.setItem(key,id);}
-  return id;
+// ── UNSAVED CHANGES TRACKING ─────────────────────────────────────────
+window._dirty=false;
+window._pendingNav=null;
+function setDirty(v){
+  window._dirty=v;
+  var el=document.getElementById('pb-saved');
+  if(el)el.className='pb-saved'+(v?' dirty':' saved'),el.textContent=v?'Unsaved changes':'Saved';
 }
-function _getProgress(){
-  var id=_getSessId();if(!id)return{};
-  try{return JSON.parse(localStorage.getItem('atc_prog_'+id)||'{}');}catch(e){return{};}
-}
-function _setProgress(pageId,val){
-  var id=_getSessId();if(!id)return;
-  var p=_getProgress();
-  if(val===false){delete p[pageId];}else{p[pageId]=true;}
-  localStorage.setItem('atc_prog_'+id,JSON.stringify(p));
-}
-window.newSession=function(){
-  var s=_aC();if(!s)return;
-  var key='atc_sess_'+s;
-  var newId=Date.now().toString();
-  localStorage.setItem(key,newId);
-  localStorage.setItem('atc_prog_'+newId,'{}');
-  buildSB();
-  if(typeof toast==='function')toast('New session started ✓','#C8960C');
-};
-// Auto-check current page's predecessor when page loads
-(function(){
-  var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
-  var _PG_URLS=["/owner/","/current/","/whyout/","/leverage/","/credit/","/wait/","/group/","/approval/","/heirs/","/compensation/","/proof/","/letter/","/exit-methods/","/guarantee/","/history/","/rights/","/cost/","/quote/","/free/","/better/","/included/","/recap/","/contract/","/checklist/","/timeshare-free/"];
-  var idx=_PG_URLS.indexOf(cur);
-  if(idx>0){_setProgress(_PG_URLS[idx-1],true);}
-})();
+window.addEventListener('beforeunload',function(e){
+  if(window._dirty){e.preventDefault();e.returnValue='You have unsaved changes.';}
+});
+// Track all inputs on page
+document.addEventListener('input',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')setDirty(true);
+},true);
 
-window.sf=function(k,v){var s=_aC();if(!s)return;var a=_gA();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_sA(a);};
-window.swC=function(s){if(!s)return;localStorage.setItem(_AK,s);setTimeout(function(){location.reload();},400);};
-window.toast=function(msg,color){var t=document.getElementById("_t");if(!t){t=document.createElement("div");t.id="_t";t.style.cssText="display:none;position:fixed;bottom:24px;left:220px;background:#16A34A;color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700";document.body.appendChild(t);}t.style.background=color||"#16A34A";t.textContent=msg;t.style.display="block";setTimeout(function(){t.style.display="none";},2500);};
-window.newC=function(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setTimeout(function(){location.reload();},300);};
+// ── SESSION-BASED SELECTIONS ─────────────────────────────────────────
+window.atcSel={
+  key:function(){return 'sel_'+(_aC()||'_none_');},
+  get:function(){try{return JSON.parse(localStorage.getItem(this.key())||'{}');}catch(e){return{};}},
+  set:function(k,v){var d=this.get();v===null?delete d[k]:d[k]=v;localStorage.setItem(this.key(),JSON.stringify(d));},
+  clear:function(){localStorage.removeItem(this.key());}
+};
+
+// ── PORTAL SYSTEM ─────────────────────────────────────────────────────
+var PORTAL_PAGES=[
+  {id:'owner',label:'Owner Info',url:'/owner/'},
+  {id:'current',label:'Current Situation',url:'/current/'},
+  {id:'whyout',label:'Why Do You Want Out',url:'/whyout/'},
+  {id:'leverage',label:'Leverage',url:'/leverage/'},
+  {id:'credit',label:'Credit Protection',url:'/credit/'},
+  {id:'wait',label:'If You Do Nothing',url:'/wait/'},
+  {id:'group',label:'Finding Your Group',url:'/group/'},
+  {id:'approval',label:'Group Filing Spot',url:'/approval/'},
+  {id:'heirs',label:'Heirs & Estate',url:'/heirs/'},
+  {id:'compensation',label:'Resort Compensation',url:'/compensation/'},
+  {id:'proof',label:'Proof',url:'/proof/'},
+  {id:'letter',label:'Mutual Release Letter',url:'/letter/'},
+  {id:'guarantee',label:'Certificate of Guarantee',url:'/guarantee/'},
+  {id:'exit-methods',label:'4 Ways to Exit',url:'/exit-methods/'},
+  {id:'history',label:'Our Track Record',url:'/history/'},
+  {id:'rights',label:'Consumer Rights',url:'/rights/'},
+  {id:'cost',label:'True Cost',url:'/cost/'},
+  {id:'quote',label:'Your Quote',url:'/quote/'},
+  {id:'included',label:"What's Included",url:'/included/'},
+  {id:'better',label:'What Makes Alpha Better',url:'/better/'}
+];
+function _portalKey(slug){return 'portal_'+slug;}
+function _getPortal(slug){try{return JSON.parse(localStorage.getItem(_portalKey(slug))||'{}');}catch(e){return{};}}
+function _savePortal(slug,data){localStorage.setItem(_portalKey(slug),JSON.stringify(data));}
+function _portalDir(){try{return JSON.parse(localStorage.getItem('portal_dir')||'[]');}catch(e){return[];}}
+function _addToDir(slug,name){
+  var dir=_portalDir();
+  if(!dir.find(function(x){return x.slug===slug;}))dir.push({slug:slug,name:name,created:Date.now()});
+  localStorage.setItem('portal_dir',JSON.stringify(dir));
+}
+
+window.openPushPopup=function(){
+  var slug=_aC();if(!slug){toast('No active client','#dc2626');return;}
+  var d=_aD();
+  var portal=_getPortal(slug);
+  var items=PORTAL_PAGES.map(function(p){
+    var pushed=portal[p.id];
+    return '<label class="push-item'+(pushed?' pushed':'')+'"><input type="checkbox" value="'+p.id+'"'+(pushed?' checked':'')+'>'+p.label+(pushed?'<span style="margin-left:auto;font-size:9px;opacity:.6">✓ pushed</span>':'')+'</label>';
+  }).join('');
+  document.getElementById('push-box-inner').innerHTML=
+    '<div class="push-hdr"><div class="push-hdr-title">📤 Push to Client Portal</div><button class="push-x" onclick="closePushPopup()">✕</button></div>'
+    +'<div class="push-body">'
+    +'<div style="font-size:12px;color:#6b7280;margin-bottom:10px">Select pages to publish for <strong>'+((d&&(d.firstName||'Client'))||'Client')+'</strong></div>'
+    +'<div class="push-grid">'+items+'</div>'
+    +'<div class="push-actions"><button class="push-btn-all" onclick="toggleAllPush(this)">Select All</button><button class="push-btn-go" onclick="doPush()">🚀 Push Selected</button></div>'
+    +'</div>';
+  document.getElementById('push-overlay').classList.add('open');
+};
+window.closePushPopup=function(){document.getElementById('push-overlay').classList.remove('open');};
+window.toggleAllPush=function(btn){
+  var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]');
+  var allChecked=Array.from(cbs).every(function(c){return c.checked;});
+  cbs.forEach(function(c){c.checked=!allChecked;});
+  btn.textContent=allChecked?'Select All':'Deselect All';
+};
+window.doPush=function(){
+  var slug=_aC();if(!slug)return;
+  var d=_aD();
+  var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]:checked');
+  if(!cbs.length){toast('Select at least one page','#dc2626');return;}
+  var portal=_getPortal(slug);
+  var emailEnabled=document.getElementById('pb-email')&&document.getElementById('pb-email').checked;
+  var now=Date.now();
+  var pushedPages=[];
+  cbs.forEach(function(cb){
+    var pid=cb.value;
+    var pg=PORTAL_PAGES.find(function(p){return p.id===pid;});
+    portal[pid]={pushed:now,pushedBy:'Sebastian',url:pg?pg.url:'',label:pg?pg.label:pid};
+    pushedPages.push(pg?pg.label:pid);
+  });
+  _savePortal(slug,portal);
+  var nm=(d&&((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim())||'Client';
+  _addToDir(slug,nm);
+  // Update portal dir page count
+  var cnt=Object.keys(portal).length;
+  closePushPopup();
+  toast('✅ Pushed '+pushedPages.length+' page'+(pushedPages.length!==1?'s':'')+' to portal','#16a34a');
+  if(emailEnabled) toast('📧 Pages will be emailed to client','#0891b2');
+  buildPortalBanner();
+};
+
+// ── CLIENT FUNCTIONS ─────────────────────────────────────────────────
+window.toast=function(msg,color){
+  var t=document.getElementById("_t");
+  if(!t){t=document.createElement("div");t.id="_t";t.style.cssText="display:none;position:fixed;bottom:24px;left:220px;color:#fff;padding:10px 18px;font-size:13px;font-weight:600;border-radius:8px;z-index:700;transition:opacity .3s";document.body.appendChild(t);}
+  t.style.background=color||"#16A34A";t.textContent=msg;t.style.display="block";t.style.opacity="1";
+  clearTimeout(t._timer);t._timer=setTimeout(function(){t.style.opacity="0";setTimeout(function(){t.style.display="none";},300);},2500);
+};
+
+window.swC=function(s){
+  if(!s)return;
+  if(window._dirty){
+    showUnsaved(function(){doSwitch(s);});return;
+  }
+  doSwitch(s);
+};
+function doSwitch(s){
+  localStorage.setItem(_AK,s);setDirty(false);setTimeout(function(){location.reload();},300);
+}
+
 window.atcGetLang=function(){return localStorage.getItem("atc_lang")||"en";};
 window.atcSetLang=function(l){localStorage.setItem("atc_lang",l);window.atcApplyLang&&window.atcApplyLang();buildRightNav();};
+
+// ── SESSION MANAGEMENT ────────────────────────────────────────────────
+window.saveSession=function(){
+  try{if(typeof autoSave==='function')autoSave();if(typeof autoSaveAck==='function')autoSaveAck();if(typeof savePageData==='function')savePageData();}catch(e){}
+  setDirty(false);toast('Session saved ✓','#16a34a');
+};
+window.saveAndClear=function(){
+  window.saveSession();
+  setTimeout(function(){
+    localStorage.removeItem(_AK);
+    window.location.href='/owner/';
+  },400);
+};
+window.newSession=function(){
+  if(window._dirty){
+    showSessionDialog();
+  } else {
+    showSessionDialog();
+  }
+};
+function showSessionDialog(){
+  document.getElementById('session-overlay').classList.add('open');
+}
+window.sessionSaveAndContinue=function(){
+  window.saveSession();
+  closeSessionDialog();
+  setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},500);
+};
+window.sessionDontSave=function(){
+  closeSessionDialog();
+  setDirty(false);
+  localStorage.removeItem(_AK);
+  window.location.href='/owner/';
+};
+window.closeSessionDialog=function(){document.getElementById('session-overlay').classList.remove('open');};
+
+// ── UNSAVED DIALOG ────────────────────────────────────────────────────
+var _unsavedCallback=null;
+function showUnsaved(cb){
+  _unsavedCallback=cb;
+  document.getElementById('unsaved-overlay').classList.add('open');
+}
+window.unsavedSave=function(){
+  window.saveSession();
+  document.getElementById('unsaved-overlay').classList.remove('open');
+  if(_unsavedCallback){var cb=_unsavedCallback;_unsavedCallback=null;cb();}
+};
+window.unsavedDontSave=function(){
+  setDirty(false);
+  document.getElementById('unsaved-overlay').classList.remove('open');
+  if(_unsavedCallback){var cb=_unsavedCallback;_unsavedCallback=null;cb();}
+};
+window.unsavedCancel=function(){
+  _unsavedCallback=null;
+  document.getElementById('unsaved-overlay').classList.remove('open');
+};
+
+// ── OWNER ↔ VITALS REAL-TIME SYNC ────────────────────────────────────
+window.addEventListener('storage',function(e){
+  if(e.key===_SK){
+    var slug=_aC();if(!slug)return;
+    // Update banner if client data changed
+    buildPortalBanner();
+    if(typeof initBanner==='function')initBanner();
+    if(typeof loadVitals==='function')loadVitals();
+  }
+});
 
 var _PG=[
   {n:"0",ic:"\u{1F310}",lb:"Client Presentation",url:"/owner/"},
@@ -215,6 +412,7 @@ var _PG=[
   {n:24, ic:"\u{1F389}",lb:"Let's Be Timeshare Free",url:"/timeshare-free/"}
 ];
 
+// ── BUILD LEFT NAV ─────────────────────────────────────────────────────
 function buildSB(){
   var el=document.querySelector(".sidenav");
   if(!el){el=document.createElement("div");el.className="sidenav";document.body.insertBefore(el,document.body.firstChild);}
@@ -222,7 +420,6 @@ function buildSB(){
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   var mo=d?(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12):0;
   var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():null;
-  var prog=_getProgress();
 
   var ct=d
     ?"<div style='padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>"
@@ -231,112 +428,197 @@ function buildSB(){
       +"<div style='display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.55);margin-bottom:1px'><span>Monthly</span><strong style='color:#fff'>"+_fC(mo)+"</strong></div>"
       +"<div style='display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.55)'><span>MTF/yr</span><strong style='color:#fff'>"+_fC(parseFloat(d.maitFees)||0)+"</strong></div>"
       +(d.alphaFee&&parseFloat(d.alphaFee)>0?"<div style='background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:3px 6px;margin-top:4px;font-size:12px;color:#C8960C;font-weight:600'>"+_fC(d.alphaFee)+"</div>":"")
+      +"<div style='font-size:10px;color:rgba(255,255,255,.25);margin-top:3px'>"+_fD(d._updated)+"</div>"
       +"</div>"
     :"<div style='padding:10px 12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)'>No client selected</div>";
 
-  var opts=Object.keys(all).map(function(k){var c=all[k];var n=(c.firstName||c.lastName?(c.firstName||"")+" "+(c.lastName||""):"Unnamed").trim();return "<option value='"+k+"'"+(k===slug?" selected":"")+">"+(n+(c.resort?" \u2014 "+c.resort:""))+"</option>";}).join("");
-  var sw="<div style='padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.1)'>"
-    +"<select onchange=\"window.swC(this.value)\" style='width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;color:#fff;font-size:11px;padding:4px 6px;font-family:Inter,sans-serif;cursor:pointer'><option value=''>— select client —</option>"+opts+"</select>"
-    +"<div style='display:flex;gap:5px;margin-top:5px'>"
-    +"<button onclick=\"window.newC()\" style='flex:1;background:#C8960C;color:#fff;border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>+ New</button>"
-    +"<a href='/vitals/' style='flex:1;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;text-decoration:none;text-align:center'>Vitals</a>"
-    +"<button onclick=\"window.newSession()\" title='New CRM Session — clears all checkboxes' style='flex:1;background:rgba(255,255,255,.06);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>New Session</button>"
-    +"</div></div>";
+  var opts=Object.keys(all).sort(function(a,b){return(all[b]._updated||0)-(all[a]._updated||0);}).map(function(k){
+    var c=all[k];var n=(c.firstName||c.lastName?(c.firstName||"")+" "+(c.lastName||""):"Unnamed").trim();
+    return "<option value='"+k+"'"+(k===slug?" selected":"")+">"+(n+(c.resort?" — "+c.resort:""))+"</option>";
+  }).join("");
 
-  // Pages with checkboxes
+  var sw="<div style='padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.1)'>"
+    +"<select onchange=\"window.swC(this.value)\" style='width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;color:#fff;font-size:11px;padding:4px 6px;font-family:Inter,sans-serif;cursor:pointer;margin-bottom:5px'>"
+    +"<option value=''>— select client —</option>"+opts+"</select>"
+    +"<div style='display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:4px'>"
+    +"<button onclick=\"window.saveSession()\" style='background:#16a34a;color:#fff;border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>💾 Save</button>"
+    +"<button onclick=\"window.saveAndClear()\" style='background:#0891b2;color:#fff;border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>Save & Clear</button>"
+    +"</div>"
+    +"<button onclick=\"window.newSession()\" style='width:100%;background:#C8960C;color:#fff;border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>＋ New Session</button>"
+    +"</div>";
+
   var nav=_PG.map(function(p){
     var act=cur===p.url;
-    var checked=!!prog[p.url];
-    return "<div style='display:flex;align-items:center;border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+";transition:.12s'>"
-      +"<a href='"+p.url+"' style='display:flex;align-items:center;gap:5px;padding:6px 8px;text-decoration:none;color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";flex:1;min-width:0'>"
-      +"<span style='font-size:10px;font-weight:700;background:rgba(255,255,255,.1);border-radius:3px;padding:1px 4px;min-width:18px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.3)")+";flex-shrink:0'>"+p.n+"</span>"
-      +"<span style='flex:1;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>"+p.lb+"</span>"
-      +"</a>"
-      +"<div class='pg-cb"+(checked?" done":"")+"' onclick='togglePgCb(\""+p.url+"\",this)' title='"+(checked?"Uncheck":"Mark done")+"'></div>"
-      +"<span style='width:6px'></span>"
-      +"</div>";
+    return "<a href='"+p.url+"' onclick='return _navClick(event,\""+p.url+"\")' style='display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;"
+      +"color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
+      +"border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
+      +"<span style='font-size:10px;font-weight:700;background:rgba(255,255,255,.1);border-radius:3px;padding:1px 4px;min-width:18px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.35)")+"'>"+p.n+"</span>"
+      +"<span style='flex:1;line-height:1.3'>"+p.lb+"</span>"
+      +"</a>";
   }).join("");
 
   el.innerHTML=ct+sw
-    +"<div style='padding:4px 0;flex:1;overflow-y:auto'>"+nav+"</div>"
+    +"<div style='padding:5px 0;flex:1;overflow-y:auto'>"+nav+"</div>"
     +"<div style='padding:6px 10px;border-top:1px solid rgba(255,255,255,.08)'>"
-    +"<a href='/agreement/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>\uD83D\uDCD1 EN Agreement</a>"
-    +"<a href='/acuerdo/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>\uD83D\uDCD1 ES Acuerdo</a>"
+    +"<a href='/agreement/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>📑 EN Agreement</a>"
+    +"<a href='/acuerdo/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>📑 ES Acuerdo</a>"
+    +"<a href='/portals/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(200,150,12,.7);font-size:10px;margin-top:4px'>🌐 Client Portals</a>"
     +"</div>";
 
   buildRightNav();
+  buildPortalBanner();
 }
 
-window.togglePgCb=function(url,el){
-  var prog=_getProgress();
-  if(prog[url]){_setProgress(url,false);el.classList.remove('done');el.title='Mark done';}
-  else{_setProgress(url,true);el.classList.add('done');el.title='Uncheck';}
+// Nav click intercept for unsaved changes
+window._navClick=function(e,url){
+  if(window._dirty){e.preventDefault();showUnsaved(function(){setDirty(false);window.location.href=url;});return false;}
+  return true;
 };
 
+// ── BUILD RIGHT NAV ───────────────────────────────────────────────────
 function buildRightNav(){
   var rn=document.querySelector(".rightnav");
   if(!rn){rn=document.createElement("div");rn.className="rightnav";document.body.appendChild(rn);}
-  var d=_aD();
-  var lang=window.atcGetLang();
+  var d=_aD();var lang=window.atcGetLang();
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
-  function tool(url,ic,lb){var act=cur===url;return "<a href='"+url+"' class='rn-btn"+(act?" active":"")+"'><span class='rn-ic'>"+ic+"</span>"+lb+"</a>";}
+  function tool(url,ic,lb){var act=cur===url;return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-btn"+(act?" active":"")+"'><span class='rn-ic'>"+ic+"</span>"+lb+"</a>";}
+
   rn.innerHTML=
     "<div class='rn-section' style='padding:8px 8px 6px'>"
       +"<div class='rn-label'>Language / Idioma</div>"
-      +"<div class='rn-2col'>"
-        +"<button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
-        +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button>"
-      +"</div></div>"
-    +"<div class='rn-section'>"
-      +"<div class='rn-label'>Navigation</div>"
+      +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
+      +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div>"
+    +"</div>"
+    +"<div class='rn-section'><div class='rn-label'>Navigation</div>"
       +tool("/home/","🏠","Dashboard")
       +tool("/clients/","📄","Clients")
       +tool("/vitals/","⚾","Client Vitals")
       +tool("/quick-quote/","⚡","Quick Quote")
       +tool("/screenshare/","📺","Screen Share")
       +tool("/followup/","⏰","Follow-Up Scheduler")
+      +tool("/portals/","🌐","Client Portals")
     +"</div>"
     +"<div class='rn-section' style='padding:6px 8px'>"
       +"<div class='rn-label'>📅 Today Appt</div>"
-      +"<input class='rn-input' type='datetime-local' id='rn-today' value='"+(d&&d._todayAppt?d._todayAppt:"")+"' onchange=\"sf('_todayAppt',this.value);\">"
+      +"<input class='rn-input' type='datetime-local' id='rn-today' value='"+(d&&d._todayAppt?d._todayAppt:"")+"' onchange=\"_sf('_todayAppt',this.value);\">"
       +"<div class='rn-label' style='margin-top:4px'>📅 Follow-Up</div>"
-      +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:"")+"' onchange=\"sf('_fuAppt',this.value);\">"
+      +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:"")+"' onchange=\"_sf('_fuAppt',this.value);\">"
       +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a>"
     +"</div>"
-    +"<div class='rn-section'>"
-      +"<div class='rn-label'>📊 Reports</div>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.openCRMNote==='function'?window.openCRMNote():alert('Open Client Vitals')\">📝 CRM Note</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():alert('Open Client Vitals')\">📱 SMS</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.openFullSummary==='function'?window.openFullSummary():(window._emailFull?window._emailFull():alert('Open Client Vitals'))\">📋 Full Summary</button>"
+    +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
+      +"<button class='rn-report-btn' onclick=\"typeof window.openCRMNote==='function'?window.openCRMNote():toast('Open Client Vitals','#C8960C')\">📝 CRM Note</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Client Vitals','#C8960C')\">📱 SMS</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Client Vitals','#C8960C')\">📋 Full Summary</button>"
     +"</div>";
 }
 
-function initBanner(){var d=_aD();if(!d)return;var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];var stg=stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment";function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}set("vb-name",(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim());set("vb-phone",d.phone||"--");set("vb-resort",d.resort||"--");set("vb-loc",d.location||"--");set("vb-mo",mo>0?_fC(mo)+"/mo":"--");set("vb-yr",mo>0?_fC(mo*12)+"/yr":"--");set("vb-quote",d.alphaFee?_fC(parseFloat(d.alphaFee)):"No quote yet");set("vb-stg",stg);}
-window.initBanner=initBanner;
-document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();_buildTopSave();});
-window.atcApplyLang=function(){var lang="en";try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;};
-function _buildTopSave(){if(document.getElementById("_topSaveBtn"))return;var btn=document.createElement("button");btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";btn.style.cssText="position:fixed;top:14px;right:205px;z-index:99999;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25)";btn.onclick=_topSaveClick;document.body.appendChild(btn);}
-function _topSaveClick(){try{if(typeof autoSave==="function")autoSave();if(typeof autoSaveAck==="function")autoSaveAck();if(typeof upd==="function")upd();if(typeof savePageData==="function")savePageData();}catch(e){}var btn=document.getElementById("_topSaveBtn");if(btn){btn.innerHTML="\u2713 Saved";btn.style.background="#16A34A";btn.style.borderColor="#16A34A";clearTimeout(window._topSaveTimer);window._topSaveTimer=setTimeout(function(){btn.innerHTML="\ud83d\udcbe Save";btn.style.background="#1B2A4A";btn.style.borderColor="#C8960C";},1500);}}
-// ── ITEM 1: SESSION-BASED SELECTIONS ──────────────────────────────
-// Selections stored per client slug — never bleed between sessions
-window.atcSel={
-  key:function(){return 'sel_'+(localStorage.getItem('atc_active')||'_none_');},
-  get:function(){try{return JSON.parse(localStorage.getItem(this.key())||'{}');}catch(e){return{};}},
-  set:function(k,v){var d=this.get();if(v===null||v===undefined){delete d[k];}else{d[k]=v;}localStorage.setItem(this.key(),JSON.stringify(d));},
-  clear:function(){localStorage.removeItem(this.key());},
-  restore:function(){return this.get();}
-};
-// On client switch — clear old selections from prior client
-(function(){
-  var prev=localStorage.getItem('_atc_prev_client');
-  var cur=localStorage.getItem('atc_active');
-  if(prev!==cur){
-    // Client changed — selections already namespaced by slug, nothing to clear
-    localStorage.setItem('_atc_prev_client',cur||'');
-  }
-})();
-// ─────────────────────────────────────────────────────────────────
+window._sf=function(k,v){var s=_aC();if(!s)return;var a=_gA();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_sA(a);};
 
+// ── PORTAL BANNER ──────────────────────────────────────────────────────
+function buildPortalBanner(){
+  var pb=document.getElementById('portal-banner');
+  if(!pb)return;
+  var d=_aD();var slug=_aC();
+  var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():"No Client";
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  var stg=d?(stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment"):"—";
+  var portal=slug?_getPortal(slug):{};
+  var pushed=Object.keys(portal).length;
+  pb.innerHTML=
+    "<span class='pb-client'>"+(d?nm:"No client")+"</span>"
+    +(d?"<span class='pb-stage'>"+stg+"</span>":"")
+    +(pushed?"<span style='font-size:9px;color:rgba(200,150,12,.8);font-weight:700;flex-shrink:0'>"+pushed+" pages live</span>":"")
+    +"<span class='pb-spacer'></span>"
+    +"<span class='pb-saved' id='pb-saved'>Saved</span>"
+    +"<label class='pb-email-wrap' title='Auto-email when pushing'><input type='checkbox' id='pb-email'> 📧 Email</label>"
+    +(slug?"<button class='pb-btn pb-push' onclick='window.openPushPopup()'>📤 Push to Portal</button>":"")
+    +"<button class='pb-btn pb-save' onclick='window.saveSession()'>💾 Save</button>";
+}
+
+function initBanner(){
+  var d=_aD();if(!d)return;
+  var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  var stg=stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment";
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+  set("vb-name",(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim());
+  set("vb-phone",d.phone||"--");set("vb-resort",d.resort||"--");set("vb-loc",d.location||"--");
+  set("vb-mo",mo>0?_fC(mo)+"/mo":"--");set("vb-yr",mo>0?_fC(mo*12)+"/yr":"--");
+  set("vb-quote",d.alphaFee?_fC(parseFloat(d.alphaFee)):"No quote yet");set("vb-stg",stg);
+}
+window.initBanner=initBanner;
+
+window.atcApplyLang=function(){
+  var lang="en";
+  try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}
+  localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;
+};
+
+// ── INJECT DIALOGS + BANNER ────────────────────────────────────────────
+function _injectGlobals(){
+  if(document.getElementById('push-overlay'))return;
+  var div=document.createElement('div');
+  div.innerHTML=
+    // Push popup
+    '<div class="push-overlay" id="push-overlay"><div class="push-box" id="push-box-inner"></div></div>'
+    // New session dialog
+    +'<div class="session-overlay" id="session-overlay">'
+      +'<div class="session-box">'
+        +'<div class="session-icon">💾</div>'
+        +'<div class="session-title">Start New Session?</div>'
+        +'<div class="session-msg">Do you want to save the current client before starting a new session?</div>'
+        +'<div class="session-btns">'
+          +'<button class="sbtn save" onclick="window.sessionSaveAndContinue()">💾 Save &amp; Continue</button>'
+          +'<button class="sbtn nosave" onclick="window.sessionDontSave()">Don\'t Save</button>'
+          +'<button class="sbtn cancel" onclick="window.closeSessionDialog()">Cancel — Stay on Current Client</button>'
+        +'</div>'
+      +'</div>'
+    +'</div>'
+    // Unsaved changes dialog
+    +'<div class="unsaved-overlay" id="unsaved-overlay">'
+      +'<div class="unsaved-box">'
+        +'<div class="unsaved-title">⚠️ Unsaved Changes</div>'
+        +'<div class="unsaved-msg">You have unsaved changes on this page. What would you like to do?</div>'
+        +'<div class="unsaved-btns">'
+          +'<button class="sbtn save" onclick="window.unsavedSave()">💾 Save</button>'
+          +'<button class="sbtn nosave" onclick="window.unsavedDontSave()">Don\'t Save</button>'
+          +'<button class="sbtn cancel" onclick="window.unsavedCancel()">Cancel</button>'
+        +'</div>'
+      +'</div>'
+    +'</div>'
+    // Portal banner
+    +'<div class="portal-banner" id="portal-banner"></div>';
+  document.body.appendChild(div);
+}
+
+// ── TOP SAVE BUTTON ────────────────────────────────────────────────────
+function _buildTopSave(){
+  if(document.getElementById("_topSaveBtn"))return;
+  var btn=document.createElement("button");
+  btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";
+  btn.style.cssText="position:fixed;top:44px;right:205px;z-index:198;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:0 0 6px 6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)";
+  btn.onclick=window.saveSession;document.body.appendChild(btn);
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  _injectGlobals();
+  buildSB();
+  initBanner();
+  _buildTopSave();
+});
+
+window.newC=function(){
+  if(window._dirty){showUnsaved(function(){_doNewC();});return;}
+  _doNewC();
+};
+function _doNewC(){
+  var fn=prompt("First name:");if(!fn)return;
+  var ln=prompt("Last name:");
+  var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);
+  var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};
+  _sA(all);localStorage.setItem(_AK,slug);setDirty(false);
+  setTimeout(function(){location.reload();},300);
+}
 </script>
 <div class="sidenav" id="sidenav"></div>
 <div class="main"><div class="wrap">
