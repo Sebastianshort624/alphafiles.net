@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Client Portal — Alpha Files</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--bg:#f8fafc;--text:#1a1a2e;--green:#16a34a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{background:var(--navy);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.tl{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:#fff;display:flex;align-items:center;gap:8px}
+.tl span{color:var(--gold)}
+.wrap{max-width:800px;margin:0 auto;padding:24px 16px}
+.client-hdr{background:linear-gradient(135deg,var(--navy),#243a6e);border-radius:12px;padding:24px;margin-bottom:24px;color:#fff}
+.ch-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.8);margin-bottom:6px}
+.ch-name{font-family:"Barlow Condensed",sans-serif;font-size:32px;font-weight:900;margin-bottom:4px}
+.ch-resort{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:16px}
+.ch-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ch-stat{background:rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;text-align:center}
+.ch-stat-val{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--gold)}
+.ch-stat-label{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+.page-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:500px){.page-grid{grid-template-columns:1fr}}
+.page-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;color:var(--text);display:block;transition:.15s;border-left:4px solid var(--gold)}
+.page-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-1px)}
+.pc-title{font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.pc-meta{font-size:10px;color:#9ca3af}
+.no-pages{text-align:center;padding:40px;color:#9ca3af;font-size:13px}
+.footer{text-align:center;padding:20px;font-size:11px;color:#9ca3af;border-top:1px solid var(--border);margin-top:20px}
+.sec{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="tl">⚡ <span>Alpha Files</span></div>
+  <a href="/portals/" style="margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;text-decoration:none">← All Portals</a>
+</div>
+<div class="wrap">
+  <div id="portal-content"></div>
+  <div class="footer">
+    <div>Alpha Timeshare Consultants · Client Portal</div>
+    <div style="margin-top:4px">Questions? Call Sebastian · Ext. 134</div>
+  </div>
+</div>
+<script>
+(function(){
+  var SK='atc_clients_v2';
+  function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+
+  // Get slug from URL: /portals/{slug}/
+  var parts=window.location.pathname.split('/').filter(Boolean);
+  var slug=parts[1]||'';
+  if(!slug){document.getElementById('portal-content').innerHTML='<div class="no-pages">No client specified.</div>';return;}
+
+  var all=ga();
+  var client=all[slug]||{};
+  var portal={};try{portal=JSON.parse(localStorage.getItem('portal_'+slug)||'{}');}catch(e){}
+
+  var nm=((client.firstName||'')+(client.lastName?' '+client.lastName:'')).trim()||slug;
+  var mo=(parseFloat(client.monthlyMortgage)||0)+((parseFloat(client.maitFees)||0)/12);
+  function fc(n){return n?'$'+Math.round(n).toLocaleString():'—';}
+
+  var pages=Object.keys(portal).sort(function(a,b){return(portal[a].pushed||0)-(portal[b].pushed||0);});
+
+  document.getElementById('portal-content').innerHTML=
+    '<div class="client-hdr">'
+      +'<div class="ch-label">Your Personal Portal</div>'
+      +'<div class="ch-name">'+nm+'</div>'
+      +'<div class="ch-resort">'+(client.resort||'Alpha Timeshare Consultants')+'</div>'
+      +'<div class="ch-stats">'
+        +'<div class="ch-stat"><div class="ch-stat-val">'+fc(mo)+'/mo</div><div class="ch-stat-label">Monthly Cost</div></div>'
+        +'<div class="ch-stat"><div class="ch-stat-val">'+pages.length+'</div><div class="ch-stat-label">Pages Published</div></div>'
+        +'<div class="ch-stat"><div class="ch-stat-val">'+(client.alphaFee?fc(client.alphaFee):'TBD')+'</div><div class="ch-stat-label">Alpha Fee</div></div>'
+      +'</div>'
+    +'</div>'
+    +(pages.length
+      ?'<div class="sec">Your Published Pages</div><div class="page-grid">'
+        +pages.map(function(pid){
+          var p=portal[pid];
+          var date=p.pushed?new Date(p.pushed).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+          return '<a class="page-card" href="https://alphafiles.net'+p.url+'" target="_blank">'
+            +'<div class="pc-title">'+p.label+'</div>'
+            +'<div class="pc-meta">Published '+date+(p.pushedBy?' by '+p.pushedBy:'')+'</div>'
+            +'</a>';
+        }).join('')+'</div>'
+      :'<div class="no-pages">No pages have been published to this portal yet.</div>');
+})();
+</script>
+</body>
+</html>
