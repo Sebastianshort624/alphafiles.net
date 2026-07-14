@@ -785,7 +785,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 <script>
 var AK='atc_active', SK='atc_clients_v2';
 function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function fc(n){if(!n||n===0)return '$0';return '$'+Math.round(n).toLocaleString();}
+function fc(n){if(!n||n===0)return '$0.00';return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fcd(n){return n>0?fc(n):'<span class="zero">—</span>';}
 
 // ── ITEM 1: SESSION-BASED SELECTIONS ──
