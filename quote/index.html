@@ -1394,4 +1394,265 @@ document.addEventListener('DOMContentLoaded',function(){if(typeof buildSB==='fun
 })();
 </script>
 </body>
+</html<div class="main">
+<div class="wrap">
+
+<div class="ph">
+  <div class="ph-num">17</div>
+  <div class="ph-title">Your Quote</div>
+  <div class="ph-sub">Alpha Timeshare Consultants — Service Fee Proposal</div>
+</div>
+
+<!-- HERO STATEMENT -->
+<div class="hero-statement">
+  <div class="hero-quote">"Would you rather be putting those payments toward the problem… or toward the solution?"</div>
+  <div class="hero-sub">Redirecting your existing monthly payments toward a permanent resolution often delivers far greater long-term value than continuing to pay without solving the underlying issue. Every month you wait is another payment that disappears into the timeshare — forever.</div>
+</div>
+
+<!-- CLIENT BANNER -->
+<div class="vb">
+  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div></div>
+  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div></div>
+  <div class="vbc"><div class="vbl">Monthly Cost</div><div class="vbv" id="vb-mo">—</div></div>
+  <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
+</div>
+
+<!-- CURRENT vs SOLUTION COMPARISON -->
+<div class="compare-grid">
+  <div class="compare-card current">
+    <div class="compare-label">⚠️ Current Path</div>
+    <div class="compare-title">Keep Paying</div>
+    <div class="compare-rows" id="current-rows"></div>
+    <div class="compare-total-label">10-Year Total</div>
+    <div class="compare-total red" id="current-10yr">—</div>
+  </div>
+  <div class="compare-arrow">vs</div>
+  <div class="compare-card solution">
+    <div class="compare-label">✅ Our Solution</div>
+    <div class="compare-title">Alpha Exit</div>
+    <div class="compare-rows" id="solution-rows"></div>
+    <div class="compare-total-label">One-Time Fee</div>
+    <div class="compare-total green" id="solution-fee">—</div>
+  </div>
+</div>
+
+<!-- NET SAVINGS BANNER -->
+<div class="savings-banner" id="savings-banner" style="display:none">
+  <div class="savings-label">💰 You Save Over 10 Years</div>
+  <div class="savings-amount" id="savings-amount">—</div>
+  <div class="savings-sub">by choosing Alpha today instead of continuing to pay</div>
+</div>
+
+<!-- PAYMENT OPTIONS TABLE -->
+<div class="cost-table-wrap" id="payment-section" style="display:none">
+  <div class="cost-table-hdr">💳 Payment Options — Alpha Service Fee</div>
+  <div class="cost-table-sub">$0 down to start · First payment begins month 2 · 20% APR financing</div>
+  <div style="overflow-x:auto">
+  <table class="cost-tbl">
+    <thead>
+      <tr>
+        <th style="text-align:left">Option</th>
+        <th>Fee</th>
+        <th>Down</th>
+        <th>Monthly</th>
+        <th>Term</th>
+      </tr>
+    </thead>
+    <tbody id="payment-tbody"></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- QUOTE SUMMARY CARDS -->
+<div class="sum-grid" id="quote-sum-grid" style="display:none">
+  <div class="sum-card accent">
+    <div class="sum-label">Alpha Service Fee</div>
+    <div class="sum-val" id="q-fee">—</div>
+    <div class="sum-sub">one-time · then $0 forever</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">Pay-in-Full (5% off)</div>
+    <div class="sum-val green" id="q-pif">—</div>
+    <div class="sum-sub">best value</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">Monthly Payment</div>
+    <div class="sum-val" id="q-mo">—</div>
+    <div class="sum-sub" id="q-mo-sub">60-month plan</div>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <a class="np" href="/cost/">← True Cost</a>
+  <span class="ns">17 — Your Quote</span>
+  <a class="nn" href="/free/">Free →</a>
+</div>
+</div>
+</div>
+
+<style>
+.vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:20px}
+.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
+.vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+.vbv{font-size:14px;font-weight:700;color:var(--navy)}
+
+/* HERO */
+.hero-statement{background:var(--navy);border-radius:10px;padding:24px 28px;margin-bottom:20px;text-align:center}
+.hero-quote{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:12px;font-style:italic}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.6);line-height:1.7;max-width:600px;margin:0 auto}
+
+/* COMPARE */
+.compare-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch;margin-bottom:16px}
+@media(max-width:600px){.compare-grid{grid-template-columns:1fr};.compare-arrow{display:none}}
+.compare-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;display:flex;flex-direction:column}
+.compare-card.current{border-top:4px solid var(--red)}
+.compare-card.solution{border-top:4px solid var(--green)}
+.compare-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:4px}
+.compare-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:var(--navy);margin-bottom:14px}
+.compare-rows{flex:1;margin-bottom:14px}
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
+.compare-row:last-child{border:none}
+.compare-row-label{color:#6b7280;font-weight:500}
+.compare-row-val{font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:700;color:var(--navy)}
+.compare-row-val.red{color:var(--red)}
+.compare-row-val.green{color:var(--green)}
+.compare-total-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-top:auto;margin-bottom:4px}
+.compare-total{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:700}
+.compare-total.red{color:var(--red)}
+.compare-total.green{color:var(--green)}
+.compare-arrow{display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:#9ca3af;padding:0 4px}
+
+/* SAVINGS BANNER */
+.savings-banner{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:10px;padding:18px;text-align:center;margin-bottom:16px}
+.savings-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#15803d;margin-bottom:6px}
+.savings-amount{font-family:"Cormorant Garamond",serif;font-size:42px;font-weight:700;color:#15803d;line-height:1}
+.savings-sub{font-size:12px;color:#16a34a;margin-top:6px}
+
+/* TABLE */
+.cost-table-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.cost-table-hdr{background:var(--navy);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:800;padding:14px 18px}
+.cost-table-sub{padding:8px 18px;font-size:11px;color:#6b7280;background:#f8fafc;border-bottom:1px solid var(--border)}
+.cost-tbl{width:100%;border-collapse:collapse}
+.cost-tbl th{padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;border-bottom:2px solid var(--border);background:#f8fafc}
+.cost-tbl th:first-child{text-align:left}
+.cost-tbl td{padding:11px 16px;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy);border-bottom:1px solid #f0f0f0}
+.cost-tbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
+.cost-tbl tr:last-child td{border:none}
+
+/* SUMMARY */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:600px){.sum-grid{grid-template-columns:1fr 1fr}}
+.sum-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;border-top:3px solid var(--border)}
+.sum-card.accent{border-top-color:var(--gold)}
+.sum-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:6px}
+.sum-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;color:var(--navy);line-height:1}
+.sum-val.green{color:var(--green)}
+.sum-sub{font-size:11px;color:#9ca3af;margin-top:4px}
+.green{color:var(--green)}
+.red{color:var(--red)}
+</style>
+
+<script>
+var AK='atc_active',SK='atc_clients_v2';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+
+var d={},mtfMo=0,mtgMo=0,mtgYrs=10,alphaFee=0,mtfYr=0;
+
+(function init(){
+  var slug=localStorage.getItem(AK);if(!slug)return;
+  var all=ga();d=all[slug]||{};
+  mtfMo=(parseFloat(d.maitFees)||0)/12;
+  mtfYr=parseFloat(d.maitFees)||0;
+  mtgMo=parseFloat(d.monthlyMortgage)||0;
+  mtgYrs=parseInt(d.mtgTerm)||10;
+  alphaFee=parseFloat(d.alphaFee)||0;
+
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+  function set(id,v){var el=document.getElementById(id);if(el)el.innerHTML=v||'—';}
+  set('vb-name',nm);set('vb-resort',d.resort||'—');
+  set('vb-mo',fc(mtfMo+mtgMo)+'/mo');set('vb-stg',stg);
+
+  buildCompare();
+  if(alphaFee>0) buildPayments();
+})();
+
+function cumMtf(yrs){
+  var t=0;for(var i=1;i<=yrs;i++)t+=mtfYr*Math.pow(1.08,i-1);return t;
+}
+function cumMtg(yrs){return mtgMo*12*Math.min(yrs,mtgYrs);}
+
+function buildCompare(){
+  var y10_mtg=cumMtg(10);
+  var y10_mtf=cumMtf(10);
+  var y10_total=y10_mtg+y10_mtf;
+
+  document.getElementById('current-rows').innerHTML=
+    '<div class="compare-row"><span class="compare-row-label">Monthly Mortgage</span><span class="compare-row-val red">'+fc(mtgMo)+'</span></div>'+
+    '<div class="compare-row"><span class="compare-row-label">Monthly MTF</span><span class="compare-row-val red">'+fc(mtfMo)+'</span></div>'+
+    '<div class="compare-row"><span class="compare-row-label">Combined Monthly</span><span class="compare-row-val red">'+fc(mtfMo+mtgMo)+'</span></div>'+
+    '<div class="compare-row"><span class="compare-row-label">1-Year Cost</span><span class="compare-row-val red">'+fc((mtfMo+mtgMo)*12)+'</span></div>'+
+    '<div class="compare-row"><span class="compare-row-label">5-Year Cost</span><span class="compare-row-val red">'+fc(cumMtg(5)+cumMtf(5))+'</span></div>';
+  document.getElementById('current-10yr').innerHTML='<span class="red">'+fc(y10_total)+'</span>';
+
+  if(alphaFee>0){
+    document.getElementById('solution-rows').innerHTML=
+      '<div class="compare-row"><span class="compare-row-label">Service Fee</span><span class="compare-row-val green">'+fc(alphaFee)+'</span></div>'+
+      '<div class="compare-row"><span class="compare-row-label">Pay-in-Full (5% off)</span><span class="compare-row-val green">'+fc(alphaFee*0.95)+'</span></div>'+
+      '<div class="compare-row"><span class="compare-row-label">Monthly Payments</span><span class="compare-row-val green">'+fc(moPayment(alphaFee,60))+'/mo</span></div>'+
+      '<div class="compare-row"><span class="compare-row-label">After Exit — Monthly</span><span class="compare-row-val green">$0</span></div>'+
+      '<div class="compare-row"><span class="compare-row-label">After Exit — Forever</span><span class="compare-row-val green">$0</span></div>';
+    document.getElementById('solution-fee').innerHTML='<span class="green">'+fc(alphaFee)+'</span>';
+
+    var savings=y10_total-alphaFee;
+    if(savings>0){
+      document.getElementById('savings-banner').style.display='block';
+      document.getElementById('savings-amount').textContent=fc(savings);
+    }
+    document.getElementById('quote-sum-grid').style.display='grid';
+    document.getElementById('q-fee').textContent=fc(alphaFee);
+    document.getElementById('q-pif').textContent=fc(alphaFee*0.95);
+  } else {
+    document.getElementById('solution-rows').innerHTML=
+      '<div class="compare-row"><span class="compare-row-label">Fee</span><span class="compare-row-val" style="color:#9ca3af">Enter in Vitals</span></div>';
+    document.getElementById('solution-fee').innerHTML='<span style="color:#9ca3af">TBD</span>';
+  }
+}
+
+function moPayment(principal,months){
+  var r=0.20/12;
+  return principal*r*Math.pow(1+r,months)/(Math.pow(1+r,months)-1);
+}
+
+function buildPayments(){
+  document.getElementById('payment-section').style.display='block';
+  var balance=alphaFee;
+  var rows='';
+  // Pay in full
+  rows+='<tr><td>Pay in Full (Best)</td><td>'+fc(alphaFee)+'</td><td>'+fc(alphaFee*0.95)+'</td><td><strong style="color:var(--green)">$0/mo after</strong></td><td>Immediate</td></tr>';
+  // 60-month
+  var mo60=moPayment(balance,60);
+  rows+='<tr><td>60-Month Plan</td><td>'+fc(alphaFee)+'</td><td>$0</td><td>'+fc(mo60)+'/mo</td><td>60 months</td></tr>';
+  // 36-month (if smaller balance)
+  if(balance<=13000){
+    var mo36=moPayment(balance,36);
+    rows+='<tr><td>36-Month Plan</td><td>'+fc(alphaFee)+'</td><td>$0</td><td>'+fc(mo36)+'/mo</td><td>36 months</td></tr>';
+  }
+  // Split lenders if >$15k
+  if(balance>15000){
+    var l1=Math.min(15000,balance),l2=balance-l1;
+    if(l2<=13000){
+      var mo1=moPayment(l1,60),mo2=moPayment(l2,36);
+      rows+='<tr class="highlight"><td>Split Lenders</td><td>'+fc(alphaFee)+'</td><td>$0</td><td>'+fc(mo1+mo2)+'/mo</td><td>60/36 split</td></tr>';
+    }
+  }
+  document.getElementById('payment-tbody').innerHTML=rows;
+  var mo=moPayment(balance,60);
+  document.getElementById('q-mo').textContent=fc(mo)+'/mo';
+}
+</script>
+
+</body>
 </html>
