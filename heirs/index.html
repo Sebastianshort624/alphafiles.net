@@ -297,6 +297,26 @@ document.addEventListener("DOMContentLoaded",function(){buildSB();initBanner();_
 window.atcApplyLang=function(){var lang="en";try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;};
 function _buildTopSave(){if(document.getElementById("_topSaveBtn"))return;var btn=document.createElement("button");btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";btn.style.cssText="position:fixed;top:14px;right:205px;z-index:99999;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25)";btn.onclick=_topSaveClick;document.body.appendChild(btn);}
 function _topSaveClick(){try{if(typeof autoSave==="function")autoSave();if(typeof autoSaveAck==="function")autoSaveAck();if(typeof upd==="function")upd();if(typeof savePageData==="function")savePageData();}catch(e){}var btn=document.getElementById("_topSaveBtn");if(btn){btn.innerHTML="\u2713 Saved";btn.style.background="#16A34A";btn.style.borderColor="#16A34A";clearTimeout(window._topSaveTimer);window._topSaveTimer=setTimeout(function(){btn.innerHTML="\ud83d\udcbe Save";btn.style.background="#1B2A4A";btn.style.borderColor="#C8960C";},1500);}}
+// ── ITEM 1: SESSION-BASED SELECTIONS ──────────────────────────────
+// Selections stored per client slug — never bleed between sessions
+window.atcSel={
+  key:function(){return 'sel_'+(localStorage.getItem('atc_active')||'_none_');},
+  get:function(){try{return JSON.parse(localStorage.getItem(this.key())||'{}');}catch(e){return{};}},
+  set:function(k,v){var d=this.get();if(v===null||v===undefined){delete d[k];}else{d[k]=v;}localStorage.setItem(this.key(),JSON.stringify(d));},
+  clear:function(){localStorage.removeItem(this.key());},
+  restore:function(){return this.get();}
+};
+// On client switch — clear old selections from prior client
+(function(){
+  var prev=localStorage.getItem('_atc_prev_client');
+  var cur=localStorage.getItem('atc_active');
+  if(prev!==cur){
+    // Client changed — selections already namespaced by slug, nothing to clear
+    localStorage.setItem('_atc_prev_client',cur||'');
+  }
+})();
+// ─────────────────────────────────────────────────────────────────
+
 </script>
 
 
