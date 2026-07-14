@@ -671,6 +671,12 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .pipeline-hdr.quoted{background:linear-gradient(90deg,rgba(200,150,12,.12),rgba(200,150,12,.04));border-left:4px solid #C8960C}
 .pipeline-hdr.attended{background:linear-gradient(90deg,rgba(52,199,89,.12),rgba(52,199,89,.04));border-left:4px solid #34c759}
 .pipeline-hdr.absent{background:linear-gradient(90deg,rgba(107,114,128,.1),rgba(107,114,128,.04));border-left:4px solid #9ca3af}
+.pipeline-hdr.vero{background:linear-gradient(90deg,rgba(88,86,214,.1),rgba(88,86,214,.04));border-left:4px solid #5856d6}
+.pipeline-hdr.sold{background:linear-gradient(90deg,rgba(52,199,89,.15),rgba(52,199,89,.04));border-left:4px solid #16a34a}
+.pipeline-title.vero{color:#4338ca}
+.pipeline-title.sold{color:#15803d}
+.pipeline-badge.vero{background:#ede9fe;color:#4338ca;border:1px solid #c4b5fd}
+.pipeline-badge.sold{background:#dcfce7;color:#15803d;border:1px solid #86efac}
 .pipeline-title{font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:900;flex:1}
 .pipeline-title.quoted{color:#92400e}
 .pipeline-title.attended{color:#15803d}
@@ -709,9 +715,9 @@ function fd(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleDateStrin
 function getCompleted(slug){try{return JSON.parse(localStorage.getItem('completed_'+slug)||'{}');}catch(e){return{};}}
 
 var TOTAL_PAGES=24;
-var STATUS_COLORS={quoted:'#C8960C',attended:'#34c759',absent:'#9ca3af',null:'#e5e7eb'};
+var STATUS_COLORS={sold:'#16a34a',quoted:'#C8960C',vero:'#5856d6',attended:'#34c759',absent:'#9ca3af',null:'#e5e7eb'};
 var BG_COLORS=['#1B2A4A','#7c3aed','#0891b2','#16a34a','#ea580c','#db2777','#2563eb','#C8960C'];
-var collapsed={quoted:false,attended:false,absent:false};
+var collapsed={sold:false,quoted:false,vero:false,attended:false,absent:false};
 
 function renderHub(){
   var q=(document.getElementById('hub-search').value||'').toLowerCase().trim();
@@ -719,7 +725,7 @@ function renderHub(){
   var active=localStorage.getItem(AK);
   var slugs=Object.keys(all).sort(function(a,b){return(all[b]._updated||0)-(all[a]._updated||0);});
 
-  var buckets={quoted:[],attended:[],absent:[]};
+  var buckets={sold:[],quoted:[],vero:[],attended:[],absent:[]};
 
   slugs.forEach(function(slug){
     var d=all[slug];
@@ -735,10 +741,12 @@ function renderHub(){
 
     var entry={slug:slug,d:d,nm:nm,resort:resort,status:status,fee:fee,done:done,active:slug===active};
 
-    if(status==='quoted') buckets.quoted.push(entry);
+    if(status==='sold') buckets.sold.push(entry);
+    else if(status==='quoted') buckets.quoted.push(entry);
+    else if(status==='vero') buckets.vero.push(entry);
     else if(status==='attended') buckets.attended.push(entry);
     else if(status==='absent') buckets.absent.push(entry);
-    else buckets.attended.push(entry); // default to attended bucket
+    else buckets.attended.push(entry);
   });
 
   function makeCard(e,i){
@@ -787,7 +795,9 @@ function renderHub(){
       +'</div>';
   }
 
-  var html=makeSection('quoted','Quoted','💰',buckets.quoted);
+  var html=makeSection('sold','Sold','🟢',buckets.sold);
+  html+=makeSection('quoted','Quoted','💰',buckets.quoted);
+  html+=makeSection('vero','Vero','🔵',buckets.vero);
   html+=makeSection('attended','Attended','✅',buckets.attended);
   html+=makeSection('absent','Absent','✗',buckets.absent);
 
