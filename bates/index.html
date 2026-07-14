@@ -299,7 +299,8 @@ window.doPush=function(){
   var nm=(d&&((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim())||'Client';
   _addToDir(slug,nm);
   closePushPopup();
-  toast('✅ Pushed '+pushedPages.length+' page'+(pushedPages.length!==1?'s':'')+' to portal','#16a34a');
+  var portalUrl='https://alphafiles.net/portals/?s='+slug;
+  toast('✅ Pushed '+pushedPages.length+' page'+(pushedPages.length!==1?'s':'')+' — '+portalUrl,'#16a34a');
   buildPortalBanner();
 };
 
