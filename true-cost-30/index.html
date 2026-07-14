@@ -258,6 +258,16 @@ window.doPush=function(){
     pushedPages.push(pg?pg.label:pid);
     if(pid==='quote')pushedQuote=true;else pushedOther=true;
   });
+  // Capture full client data snapshot at push time
+  var snap={
+    firstName:d.firstName||'',lastName:d.lastName||'',resort:d.resort||'',
+    location:d.location||'',phone:d.phone||'',email:d.email||'',
+    maitFees:d.maitFees||0,monthlyMortgage:d.monthlyMortgage||0,
+    balanceAmount:d.balanceAmount||0,alphaFee:d.alphaFee||0,
+    mtgTerm:d.mtgTerm||10,yearPurchased:d.yearPurchased||'',
+    purchasePrice:d.purchasePrice||0,_pushedAt:Date.now()
+  };
+  localStorage.setItem('portal_snap_'+slug, JSON.stringify(snap));
   _savePortal(slug,portal);
   // Auto-update status
   var currentStatus=_getStatus();
