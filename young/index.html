@@ -90,17 +90,28 @@ body{display:flex!important;min-height:100vh!important}
 .wrap{max-width:100%!important;margin:0!important}
 /* PORTAL BANNER */
 .portal-banner{position:fixed;top:0;left:210px;right:195px;height:40px;background:linear-gradient(90deg,#1B2A4A,#243a6e);border-bottom:2px solid #C8960C;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:11px;font-family:Inter,sans-serif}
-.pb-client{font-weight:800;color:#fff;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pb-stage{background:rgba(200,150,12,.2);border:1px solid rgba(200,150,12,.4);color:#C8960C;border-radius:3px;padding:1px 6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.pb-client{font-weight:800;color:#fff;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;flex-shrink:0}
+.pb-status.attended{background:rgba(52,199,89,.2);color:#34c759;border:1px solid rgba(52,199,89,.4)}
+.pb-status.quoted{background:rgba(200,150,12,.2);color:#C8960C;border:1px solid rgba(200,150,12,.4)}
+.pb-status.absent{background:rgba(255,59,48,.2);color:#ff3b30;border:1px solid rgba(255,59,48,.4)}
+.pb-progress{font-size:9px;font-weight:700;color:rgba(255,255,255,.45);flex-shrink:0}
 .pb-spacer{flex:1}
 .pb-saved{font-size:10px;font-weight:600;color:rgba(255,255,255,.4);transition:.3s}
-.pb-saved.dirty{color:#ff9500}
-.pb-saved.saved{color:#34c759}
+.pb-saved.dirty{color:#ff9500}.pb-saved.saved{color:#34c759}
 .pb-email-wrap{display:flex;align-items:center;gap:4px;cursor:pointer;color:rgba(255,255,255,.6);font-size:10px;font-weight:600}
 .pb-email-wrap input{cursor:pointer;accent-color:#C8960C}
 .pb-btn{border:none;border-radius:4px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s;white-space:nowrap}
 .pb-push{background:#C8960C;color:#fff}.pb-push:hover{background:#a67a08}
 .pb-save{background:#16a34a;color:#fff}.pb-save:hover{background:#15803d}
+/* NAV SECTIONS */
+.nav-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 10px 4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;user-select:none}
+.nav-sec-hdr.remaining{color:rgba(255,255,255,.4)}
+.nav-sec-hdr.completed-hdr{color:rgba(52,199,89,.6)}
+.nav-sec-hdr.completed-hdr .nav-sec-count{background:rgba(52,199,89,.15);color:#34c759}
+.nav-sec-count{font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.4)}
+.nav-sec-toggle{font-size:10px;color:rgba(255,255,255,.3);transition:.15s}
+.nav-completed-body{overflow:hidden;transition:max-height .25s ease}
 /* RIGHT NAV */
 .rn-section{border-bottom:1px solid rgba(255,255,255,.07);padding:8px 0}
 .rn-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.3);padding:4px 10px 2px}
@@ -130,25 +141,24 @@ body{display:flex!important;min-height:100vh!important}
 .push-btn-all{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;color:#374151}
 .push-btn-go{background:#C8960C;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;flex:1;transition:.15s}
 .push-btn-go:hover{background:#a67a08}
-/* NEW SESSION DIALOG */
-.session-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9500;align-items:center;justify-content:center}
-.session-overlay.open{display:flex}
-.session-box{background:#fff;border-radius:14px;width:340px;max-width:95vw;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:center}
-.session-icon{font-size:36px;margin-bottom:12px}
-.session-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#1B2A4A;margin-bottom:8px}
-.session-msg{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:20px}
-.session-btns{display:flex;flex-direction:column;gap:7px}
-.sbtn{border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s}
-.sbtn.save{background:#16a34a;color:#fff}.sbtn.save:hover{background:#15803d}
-.sbtn.nosave{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}.sbtn.nosave:hover{background:#e5e7eb}
-.sbtn.cancel{background:none;color:#9ca3af;font-size:12px}.sbtn.cancel:hover{color:#374151}
-/* UNSAVED DIALOG */
-.unsaved-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9600;align-items:center;justify-content:center}
-.unsaved-overlay.open{display:flex}
-.unsaved-box{background:#fff;border-radius:14px;width:320px;max-width:95vw;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-.unsaved-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#1B2A4A;margin-bottom:6px}
-.unsaved-msg{font-size:12px;color:#6b7280;margin-bottom:16px;line-height:1.5}
-.unsaved-btns{display:flex;flex-direction:column;gap:6px}
+/* SESSION + UNSAVED DIALOGS */
+.session-overlay,.unsaved-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9500;align-items:center;justify-content:center}
+.session-overlay.open,.unsaved-overlay.open{display:flex}
+.session-box,.unsaved-box{background:#fff;border-radius:14px;width:340px;max-width:95vw;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.session-icon{font-size:36px;margin-bottom:12px;text-align:center}
+.session-title,.unsaved-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#1B2A4A;margin-bottom:8px}
+.session-msg,.unsaved-msg{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:20px}
+.session-btns,.unsaved-btns{display:flex;flex-direction:column;gap:7px}
+.sbtn{border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s;text-align:center}
+.sbtn.save{background:#16a34a;color:#fff}.sbtn.nosave{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+.sbtn.cancel{background:none;color:#9ca3af;font-size:12px}
+/* STATUS SELECTOR (owner page) */
+.status-selector{display:flex;gap:6px;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.status-btn{flex:1;padding:5px 4px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);font-size:9px;font-weight:700;cursor:pointer;text-align:center;font-family:Inter,sans-serif;transition:.15s;text-transform:uppercase;letter-spacing:.5px}
+.status-btn:hover{background:rgba(255,255,255,.1)}
+.status-btn.active-attended{background:rgba(52,199,89,.2);border-color:rgba(52,199,89,.5);color:#34c759}
+.status-btn.active-quoted{background:rgba(200,150,12,.2);border-color:rgba(200,150,12,.5);color:#C8960C}
+.status-btn.active-absent{background:rgba(255,59,48,.2);border-color:rgba(255,59,48,.5);color:#ff3b30}
 @media print{.sidenav,.rightnav,.portal-banner{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;margin-right:0!important;padding-top:0!important}}
 @media(max-width:900px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
 @media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;padding-top:40px!important}.portal-banner{left:0}}
@@ -163,23 +173,14 @@ function _aD(){var s=_aC();return s?_gA()[s]||null:null;}
 function _fC(n){return "$"+Math.round(n||0).toLocaleString();}
 function _fD(ts){if(!ts)return"--";return new Date(ts).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
 
-// ── UNSAVED CHANGES TRACKING ─────────────────────────────────────────
+// ── UNSAVED TRACKING ────────────────────────────────────────────────
 window._dirty=false;
 window._pendingNav=null;
-function setDirty(v){
-  window._dirty=v;
-  var el=document.getElementById('pb-saved');
-  if(el)el.className='pb-saved'+(v?' dirty':' saved'),el.textContent=v?'Unsaved changes':'Saved';
-}
-window.addEventListener('beforeunload',function(e){
-  if(window._dirty){e.preventDefault();e.returnValue='You have unsaved changes.';}
-});
-// Track all inputs on page
-document.addEventListener('input',function(e){
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')setDirty(true);
-},true);
+function setDirty(v){window._dirty=v;var el=document.getElementById('pb-saved');if(el)el.className='pb-saved'+(v?' dirty':' saved'),el.textContent=v?'Unsaved':'Saved';}
+window.addEventListener('beforeunload',function(e){if(window._dirty){e.preventDefault();e.returnValue='Unsaved changes.';}});
+document.addEventListener('input',function(e){if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')setDirty(true);},true);
 
-// ── SESSION-BASED SELECTIONS ─────────────────────────────────────────
+// ── SESSION SELECTIONS ──────────────────────────────────────────────
 window.atcSel={
   key:function(){return 'sel_'+(_aC()||'_none_');},
   get:function(){try{return JSON.parse(localStorage.getItem(this.key())||'{}');}catch(e){return{};}},
@@ -187,7 +188,36 @@ window.atcSel={
   clear:function(){localStorage.removeItem(this.key());}
 };
 
-// ── PORTAL SYSTEM ─────────────────────────────────────────────────────
+// ── CLIENT STATUS ────────────────────────────────────────────────────
+// status: 'attended' | 'quoted' | 'absent'
+function _getStatus(){var d=_aD();return d?d._status||null:null;}
+function _setStatus(status){
+  var slug=_aC();if(!slug)return;
+  var all=_gA();if(!all[slug])return;
+  all[slug]._status=status;all[slug]._updated=Date.now();
+  _sA(all);buildPortalBanner();buildStatusSelector();
+}
+window.setClientStatus=function(s){_setStatus(s);};
+
+// ── PAGE COMPLETION TRACKING ─────────────────────────────────────────
+function _getCompleted(){
+  var slug=_aC();if(!slug)return {};
+  try{return JSON.parse(localStorage.getItem('completed_'+slug)||'{}');}catch(e){return{};}
+}
+function _markPageCompleted(url){
+  var slug=_aC();if(!slug)return;
+  var comp=_getCompleted();
+  comp[url]={ts:Date.now()};
+  localStorage.setItem('completed_'+slug,JSON.stringify(comp));
+}
+function _getProgress(){
+  var comp=_getCompleted();
+  var total=_PG.filter(function(p){return typeof p.n==='number';}).length;
+  var done=Object.keys(comp).length;
+  return{done:done,total:total};
+}
+
+// ── PORTAL SYSTEM ────────────────────────────────────────────────────
 var PORTAL_PAGES=[
   {id:'owner',label:'Owner Info',url:'/owner/'},
   {id:'current',label:'Current Situation',url:'/current/'},
@@ -214,59 +244,50 @@ function _portalKey(slug){return 'portal_'+slug;}
 function _getPortal(slug){try{return JSON.parse(localStorage.getItem(_portalKey(slug))||'{}');}catch(e){return{};}}
 function _savePortal(slug,data){localStorage.setItem(_portalKey(slug),JSON.stringify(data));}
 function _portalDir(){try{return JSON.parse(localStorage.getItem('portal_dir')||'[]');}catch(e){return[];}}
-function _addToDir(slug,name){
-  var dir=_portalDir();
-  if(!dir.find(function(x){return x.slug===slug;}))dir.push({slug:slug,name:name,created:Date.now()});
-  localStorage.setItem('portal_dir',JSON.stringify(dir));
-}
+function _addToDir(slug,name){var dir=_portalDir();if(!dir.find(function(x){return x.slug===slug;}))dir.push({slug:slug,name:name,created:Date.now()});localStorage.setItem('portal_dir',JSON.stringify(dir));}
 
 window.openPushPopup=function(){
   var slug=_aC();if(!slug){toast('No active client','#dc2626');return;}
-  var d=_aD();
-  var portal=_getPortal(slug);
+  var d=_aD();var portal=_getPortal(slug);
   var items=PORTAL_PAGES.map(function(p){
     var pushed=portal[p.id];
-    return '<label class="push-item'+(pushed?' pushed':'')+'"><input type="checkbox" value="'+p.id+'"'+(pushed?' checked':'')+'>'+p.label+(pushed?'<span style="margin-left:auto;font-size:9px;opacity:.6">✓ pushed</span>':'')+'</label>';
+    var isQuote=p.id==='quote';
+    return '<label class="push-item'+(pushed?' pushed':'')+'"><input type="checkbox" value="'+p.id+'"'+(pushed?' checked':'')+'>'
+      +p.label+(isQuote?' 💰':'')+(pushed?'<span style="margin-left:auto;font-size:9px;opacity:.6">✓</span>':'')+'</label>';
   }).join('');
   document.getElementById('push-box-inner').innerHTML=
     '<div class="push-hdr"><div class="push-hdr-title">📤 Push to Client Portal</div><button class="push-x" onclick="closePushPopup()">✕</button></div>'
-    +'<div class="push-body">'
-    +'<div style="font-size:12px;color:#6b7280;margin-bottom:10px">Select pages to publish for <strong>'+((d&&(d.firstName||'Client'))||'Client')+'</strong></div>'
+    +'<div class="push-body"><div style="font-size:12px;color:#6b7280;margin-bottom:10px">Select pages to publish for <strong>'+((d&&(d.firstName||'Client'))||'Client')+'</strong></div>'
     +'<div class="push-grid">'+items+'</div>'
-    +'<div class="push-actions"><button class="push-btn-all" onclick="toggleAllPush(this)">Select All</button><button class="push-btn-go" onclick="doPush()">🚀 Push Selected</button></div>'
-    +'</div>';
+    +'<div class="push-actions"><button class="push-btn-all" onclick="toggleAllPush(this)">Select All</button>'
+    +'<button class="push-btn-go" onclick="doPush()">🚀 Push Selected</button></div></div>';
   document.getElementById('push-overlay').classList.add('open');
 };
 window.closePushPopup=function(){document.getElementById('push-overlay').classList.remove('open');};
-window.toggleAllPush=function(btn){
-  var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]');
-  var allChecked=Array.from(cbs).every(function(c){return c.checked;});
-  cbs.forEach(function(c){c.checked=!allChecked;});
-  btn.textContent=allChecked?'Select All':'Deselect All';
-};
+window.toggleAllPush=function(btn){var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]');var all=Array.from(cbs).every(function(c){return c.checked;});cbs.forEach(function(c){c.checked=!all;});btn.textContent=all?'Select All':'Deselect All';};
+
 window.doPush=function(){
   var slug=_aC();if(!slug)return;
   var d=_aD();
   var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]:checked');
   if(!cbs.length){toast('Select at least one page','#dc2626');return;}
   var portal=_getPortal(slug);
-  var emailEnabled=document.getElementById('pb-email')&&document.getElementById('pb-email').checked;
-  var now=Date.now();
-  var pushedPages=[];
+  var now=Date.now();var pushedPages=[];var pushedQuote=false;var pushedOther=false;
   cbs.forEach(function(cb){
-    var pid=cb.value;
-    var pg=PORTAL_PAGES.find(function(p){return p.id===pid;});
+    var pid=cb.value;var pg=PORTAL_PAGES.find(function(p){return p.id===pid;});
     portal[pid]={pushed:now,pushedBy:'Sebastian',url:pg?pg.url:'',label:pg?pg.label:pid};
     pushedPages.push(pg?pg.label:pid);
+    if(pid==='quote')pushedQuote=true;else pushedOther=true;
   });
   _savePortal(slug,portal);
+  // Auto-update status
+  var currentStatus=_getStatus();
+  if(pushedQuote&&currentStatus!=='absent'){_setStatus('quoted');}
+  else if(pushedOther&&!currentStatus){_setStatus('attended');}
   var nm=(d&&((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim())||'Client';
   _addToDir(slug,nm);
-  // Update portal dir page count
-  var cnt=Object.keys(portal).length;
   closePushPopup();
   toast('✅ Pushed '+pushedPages.length+' page'+(pushedPages.length!==1?'s':'')+' to portal','#16a34a');
-  if(emailEnabled) toast('📧 Pages will be emailed to client','#0891b2');
   buildPortalBanner();
 };
 
@@ -277,87 +298,29 @@ window.toast=function(msg,color){
   t.style.background=color||"#16A34A";t.textContent=msg;t.style.display="block";t.style.opacity="1";
   clearTimeout(t._timer);t._timer=setTimeout(function(){t.style.opacity="0";setTimeout(function(){t.style.display="none";},300);},2500);
 };
-
-window.swC=function(s){
-  if(!s)return;
-  if(window._dirty){
-    showUnsaved(function(){doSwitch(s);});return;
-  }
-  doSwitch(s);
-};
-function doSwitch(s){
-  localStorage.setItem(_AK,s);setDirty(false);setTimeout(function(){location.reload();},300);
-}
-
+window.swC=function(s){if(!s)return;if(window._dirty){showUnsaved(function(){doSwitch(s);});return;}doSwitch(s);};
+function doSwitch(s){localStorage.setItem(_AK,s);setDirty(false);setTimeout(function(){location.reload();},300);}
 window.atcGetLang=function(){return localStorage.getItem("atc_lang")||"en";};
 window.atcSetLang=function(l){localStorage.setItem("atc_lang",l);window.atcApplyLang&&window.atcApplyLang();buildRightNav();};
-
-// ── SESSION MANAGEMENT ────────────────────────────────────────────────
-window.saveSession=function(){
-  try{if(typeof autoSave==='function')autoSave();if(typeof autoSaveAck==='function')autoSaveAck();if(typeof savePageData==='function')savePageData();}catch(e){}
-  setDirty(false);toast('Session saved ✓','#16a34a');
-};
-window.saveAndClear=function(){
-  window.saveSession();
-  setTimeout(function(){
-    localStorage.removeItem(_AK);
-    window.location.href='/owner/';
-  },400);
-};
-window.newSession=function(){
-  if(window._dirty){
-    showSessionDialog();
-  } else {
-    showSessionDialog();
-  }
-};
-function showSessionDialog(){
-  document.getElementById('session-overlay').classList.add('open');
-}
-window.sessionSaveAndContinue=function(){
-  window.saveSession();
-  closeSessionDialog();
-  setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},500);
-};
-window.sessionDontSave=function(){
-  closeSessionDialog();
-  setDirty(false);
-  localStorage.removeItem(_AK);
-  window.location.href='/owner/';
-};
+window.saveSession=function(){try{if(typeof autoSave==='function')autoSave();if(typeof autoSaveAck==='function')autoSaveAck();if(typeof savePageData==='function')savePageData();}catch(e){}setDirty(false);toast('Session saved ✓','#16a34a');};
+window.saveAndClear=function(){window.saveSession();setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},400);};
+window.newSession=function(){showSessionDialog();};
+window.sessionSaveAndContinue=function(){window.saveSession();closeSessionDialog();setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},500);};
+window.sessionDontSave=function(){closeSessionDialog();setDirty(false);localStorage.removeItem(_AK);window.location.href='/owner/';};
 window.closeSessionDialog=function(){document.getElementById('session-overlay').classList.remove('open');};
+var _unsavedCb=null;
+function showUnsaved(cb){_unsavedCb=cb;document.getElementById('unsaved-overlay').classList.add('open');}
+function showSessionDialog(){document.getElementById('session-overlay').classList.add('open');}
+window.unsavedSave=function(){window.saveSession();document.getElementById('unsaved-overlay').classList.remove('open');if(_unsavedCb){var c=_unsavedCb;_unsavedCb=null;c();}};
+window.unsavedDontSave=function(){setDirty(false);document.getElementById('unsaved-overlay').classList.remove('open');if(_unsavedCb){var c=_unsavedCb;_unsavedCb=null;c();}};
+window.unsavedCancel=function(){_unsavedCb=null;document.getElementById('unsaved-overlay').classList.remove('open');};
+window.addEventListener('storage',function(e){if(e.key===_SK){buildPortalBanner();if(typeof initBanner==='function')initBanner();}});
+window._navClick=function(e,url){if(window._dirty){e.preventDefault();showUnsaved(function(){setDirty(false);window.location.href=url;});return false;}return true;};
+window._sf=function(k,v){var s=_aC();if(!s)return;var a=_gA();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_sA(a);};
 
-// ── UNSAVED DIALOG ────────────────────────────────────────────────────
-var _unsavedCallback=null;
-function showUnsaved(cb){
-  _unsavedCallback=cb;
-  document.getElementById('unsaved-overlay').classList.add('open');
-}
-window.unsavedSave=function(){
-  window.saveSession();
-  document.getElementById('unsaved-overlay').classList.remove('open');
-  if(_unsavedCallback){var cb=_unsavedCallback;_unsavedCallback=null;cb();}
-};
-window.unsavedDontSave=function(){
-  setDirty(false);
-  document.getElementById('unsaved-overlay').classList.remove('open');
-  if(_unsavedCallback){var cb=_unsavedCallback;_unsavedCallback=null;cb();}
-};
-window.unsavedCancel=function(){
-  _unsavedCallback=null;
-  document.getElementById('unsaved-overlay').classList.remove('open');
-};
-
-// ── OWNER ↔ VITALS REAL-TIME SYNC ────────────────────────────────────
-window.addEventListener('storage',function(e){
-  if(e.key===_SK){
-    var slug=_aC();if(!slug)return;
-    // Update banner if client data changed
-    buildPortalBanner();
-    if(typeof initBanner==='function')initBanner();
-    if(typeof loadVitals==='function')loadVitals();
-  }
-});
+// ── HIDE COMPLETED TOGGLE ─────────────────────────────────────────────
+function _getHideCompleted(){return localStorage.getItem('sb_hide_completed')!=='false';}
+window.toggleHideCompleted=function(){localStorage.setItem('sb_hide_completed',(!_getHideCompleted()).toString());buildSB();}
 
 var _PG=[
   {n:"0",ic:"\u{1F310}",lb:"Client Presentation",url:"/owner/"},
@@ -387,6 +350,13 @@ var _PG=[
   {n:24, ic:"\u{1F389}",lb:"Let's Be Timeshare Free",url:"/timeshare-free/"}
 ];
 
+// ── MARK CURRENT PAGE AS COMPLETED ───────────────────────────────────
+(function(){
+  var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
+  var pg=_PG.find(function(p){return p.url===cur&&typeof p.n==='number'&&p.n>0;});
+  if(pg)_markPageCompleted(cur);
+})();
+
 // ── BUILD LEFT NAV ─────────────────────────────────────────────────────
 function buildSB(){
   var el=document.querySelector(".sidenav");
@@ -395,23 +365,36 @@ function buildSB(){
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   var mo=d?(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12):0;
   var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():null;
+  var status=d?d._status||null:null;
+  var comp=_getCompleted();
+  var hideCompleted=_getHideCompleted();
+  var prog=_getProgress();
 
+  // Client header
+  var statusBadge=status?'<span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:4px;'+(status==='quoted'?'background:rgba(200,150,12,.2);color:#C8960C':status==='attended'?'background:rgba(52,199,89,.2);color:#34c759':'background:rgba(255,59,48,.2);color:#ff3b30')+'">'+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':'ABSENT')+'</span>':'';
   var ct=d
     ?"<div style='padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>"
-      +"<div style='font-size:14px;font-weight:700;color:#fff;margin-bottom:2px'>"+(nm||"Unnamed")+"</div>"
-      +"<div style='font-size:12px;color:#C8960C;font-weight:600;margin-bottom:4px'>"+(d.resort||"No resort")+"</div>"
-      +"<div style='display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.55);margin-bottom:1px'><span>Monthly</span><strong style='color:#fff'>"+_fC(mo)+"</strong></div>"
-      +"<div style='display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.55)'><span>MTF/yr</span><strong style='color:#fff'>"+_fC(parseFloat(d.maitFees)||0)+"</strong></div>"
-      +(d.alphaFee&&parseFloat(d.alphaFee)>0?"<div style='background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:3px;padding:3px 6px;margin-top:4px;font-size:12px;color:#C8960C;font-weight:600'>"+_fC(d.alphaFee)+"</div>":"")
-      +"<div style='font-size:10px;color:rgba(255,255,255,.25);margin-top:3px'>"+_fD(d._updated)+"</div>"
+      +"<div style='display:flex;align-items:center;flex-wrap:wrap;gap:2px;margin-bottom:2px'><span style='font-size:13px;font-weight:700;color:#fff'>"+(nm||"Unnamed")+"</span>"+statusBadge+"</div>"
+      +"<div style='font-size:11px;color:#C8960C;font-weight:600;margin-bottom:3px'>"+(d.resort||"No resort")+"</div>"
+      +"<div style='display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.45)'><span>Monthly</span><span style='color:rgba(255,255,255,.7);font-weight:600'>"+_fC(mo)+"</span></div>"
+      +(d.alphaFee&&parseFloat(d.alphaFee)>0?"<div style='background:rgba(200,150,12,.1);border:1px solid rgba(200,150,12,.25);border-radius:3px;padding:2px 6px;margin-top:3px;font-size:11px;color:#C8960C;font-weight:600;display:flex;justify-content:space-between'><span>Quote</span><span>"+_fC(d.alphaFee)+"</span></div>":"")
+      +"<div style='margin-top:4px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;height:4px'><div style='height:4px;background:#C8960C;width:"+Math.min(100,(prog.done/Math.max(1,prog.total)*100).toFixed(0))+"%;transition:.3s'></div></div>"
+      +"<div style='font-size:9px;color:rgba(255,255,255,.3);margin-top:2px;display:flex;justify-content:space-between'><span>Progress</span><span>"+prog.done+"/"+prog.total+" pages</span></div>"
       +"</div>"
     :"<div style='padding:10px 12px;font-size:12px;color:rgba(255,100,100,.9);font-weight:600;border-bottom:1px solid rgba(255,255,255,.1)'>No client selected</div>";
 
+  // Status selector
+  var statusSel=d?"<div class='status-selector'>"
+    +"<button class='status-btn"+(status==='attended'?' active-attended':'')+"' onclick=\"window.setClientStatus('attended')\">✓ Attended</button>"
+    +"<button class='status-btn"+(status==='quoted'?' active-quoted':'')+"' onclick=\"window.setClientStatus('quoted')\">💰 Quoted</button>"
+    +"<button class='status-btn"+(status==='absent'?' active-absent':'')+"' onclick=\"window.setClientStatus('absent')\">✗ Absent</button>"
+    +"</div>":"";
+
+  // Client switcher
   var opts=Object.keys(all).sort(function(a,b){return(all[b]._updated||0)-(all[a]._updated||0);}).map(function(k){
     var c=all[k];var n=(c.firstName||c.lastName?(c.firstName||"")+" "+(c.lastName||""):"Unnamed").trim();
     return "<option value='"+k+"'"+(k===slug?" selected":"")+">"+(n+(c.resort?" — "+c.resort:""))+"</option>";
   }).join("");
-
   var sw="<div style='padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.1)'>"
     +"<select onchange=\"window.swC(this.value)\" style='width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;color:#fff;font-size:11px;padding:4px 6px;font-family:Inter,sans-serif;cursor:pointer;margin-bottom:5px'>"
     +"<option value=''>— select client —</option>"+opts+"</select>"
@@ -422,91 +405,122 @@ function buildSB(){
     +"<button onclick=\"window.newSession()\" style='width:100%;background:#C8960C;color:#fff;border:none;border-radius:4px;padding:5px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>＋ New Session</button>"
     +"</div>";
 
-  var nav=_PG.map(function(p){
-    var act=cur===p.url;
-    return "<a href='"+p.url+"' onclick='return _navClick(event,\""+p.url+"\")' style='display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;"
-      +"color:"+(act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
-      +"border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
-      +"<span style='font-size:10px;font-weight:700;background:rgba(255,255,255,.1);border-radius:3px;padding:1px 4px;min-width:18px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.35)")+"'>"+p.n+"</span>"
-      +"<span style='flex:1;line-height:1.3'>"+p.lb+"</span>"
-      +"</a>";
-  }).join("");
+  // Split pages into remaining vs completed
+  var presPages=_PG.filter(function(p){return typeof p.n==='number'&&p.n>0;});
+  var remainingPages=presPages.filter(function(p){return !comp[p.url];});
+  var completedPages=presPages.filter(function(p){return !!comp[p.url];}).sort(function(a,b){return(comp[a.url].ts||0)-(comp[b.url].ts||0);});
+  var specialPages=_PG.filter(function(p){return typeof p.n!=='number'||p.n===0||p.n>24;});
 
-  el.innerHTML=ct+sw
-    +"<div style='padding:5px 0;flex:1;overflow-y:auto'>"+nav+"</div>"
+  function navItem(p,done){
+    var act=cur===p.url;
+    return "<a href='"+p.url+"' onclick='return _navClick(event,\""+p.url+"\")' style='display:flex;align-items:center;gap:6px;padding:"+(done?"5px":"6px")+" 10px;text-decoration:none;"
+      +"color:"+(done?"rgba(52,199,89,.6)":act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
+      +"border-left:3px solid "+(done?"rgba(52,199,89,.3)":act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
+      +(done?"<span style='font-size:10px;color:rgba(52,199,89,.6)'>✓</span>":"<span style='font-size:10px;font-weight:700;background:rgba(255,255,255,.08);border-radius:3px;padding:1px 4px;min-width:18px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.3)")+"'>"+p.n+"</span>")
+      +"<span style='flex:1;line-height:1.3"+(done?";text-decoration:line-through;opacity:.6":"")+"'>"+p.lb+"</span>"
+      +"</a>";
+  }
+
+  // Toggle checkbox
+  var toggleHdr="<div style='display:flex;align-items:center;justify-content:space-between;padding:4px 10px;border-bottom:1px solid rgba(255,255,255,.07)'>"
+    +"<label style='display:flex;align-items:center;gap:5px;cursor:pointer;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.35)'>"
+    +"<input type='checkbox' "+(hideCompleted?'checked':'')+" onchange='window.toggleHideCompleted()' style='accent-color:#34c759;cursor:pointer'> Hide Completed</label>"
+    +"</div>";
+
+  var navHtml="<div style='flex:1;overflow-y:auto;padding:5px 0'>";
+
+  // Special pages (0 = Client Presentation)
+  navHtml+=specialPages.map(function(p){return navItem(p,false);}).join('');
+
+  // Remaining pages
+  if(remainingPages.length){
+    navHtml+="<div class='nav-sec-hdr remaining'><span>Remaining</span><span class='nav-sec-count'>"+remainingPages.length+"</span></div>";
+    navHtml+=remainingPages.map(function(p){return navItem(p,false);}).join('');
+  }
+
+  // Completed section
+  if(completedPages.length){
+    if(hideCompleted){
+      navHtml+="<div class='nav-sec-hdr completed-hdr' onclick='window.toggleHideCompleted()'>"
+        +"<span>Completed</span><span class='nav-sec-count'>"+completedPages.length+"</span>"
+        +"<span class='nav-sec-toggle'>▸</span></div>";
+    } else {
+      navHtml+="<div class='nav-sec-hdr completed-hdr' onclick='window.toggleHideCompleted()'>"
+        +"<span>Completed</span><span class='nav-sec-count'>"+completedPages.length+"</span>"
+        +"<span class='nav-sec-toggle'>▾</span></div>";
+      navHtml+=completedPages.map(function(p){return navItem(p,true);}).join('');
+    }
+  }
+
+  navHtml+="</div>";
+
+  el.innerHTML=ct+statusSel+sw+toggleHdr+navHtml
     +"<div style='padding:6px 10px;border-top:1px solid rgba(255,255,255,.08)'>"
-    +"<a href='/agreement/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>📑 EN Agreement</a>"
-    +"<a href='/acuerdo/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(255,255,255,.5);font-size:10px'>📑 ES Acuerdo</a>"
-    +"<a href='/portals/' style='display:flex;align-items:center;gap:5px;padding:4px 2px;text-decoration:none;color:rgba(200,150,12,.7);font-size:10px;margin-top:4px'>🌐 Client Portals</a>"
+    +"<a href='/agreement/' style='display:flex;align-items:center;gap:5px;padding:3px 2px;text-decoration:none;color:rgba(255,255,255,.4);font-size:10px'>📑 EN Agreement</a>"
+    +"<a href='/acuerdo/' style='display:flex;align-items:center;gap:5px;padding:3px 2px;text-decoration:none;color:rgba(255,255,255,.4);font-size:10px'>📑 ES Acuerdo</a>"
+    +"<a href='/portals/' style='display:flex;align-items:center;gap:5px;padding:3px 2px;text-decoration:none;color:rgba(200,150,12,.6);font-size:10px;margin-top:2px'>🌐 Client Portals</a>"
     +"</div>";
 
   buildRightNav();
   buildPortalBanner();
 }
 
-// Nav click intercept for unsaved changes
-window._navClick=function(e,url){
-  if(window._dirty){e.preventDefault();showUnsaved(function(){setDirty(false);window.location.href=url;});return false;}
-  return true;
+window.buildStatusSelector=function(){
+  var sel=document.querySelector('.status-selector');if(!sel)return;
+  var d=_aD();if(!d)return;
+  var status=d._status||null;
+  sel.querySelectorAll('.status-btn').forEach(function(btn){
+    btn.className='status-btn';
+    if(status==='attended'&&btn.textContent.includes('Attended'))btn.className='status-btn active-attended';
+    if(status==='quoted'&&btn.textContent.includes('Quoted'))btn.className='status-btn active-quoted';
+    if(status==='absent'&&btn.textContent.includes('Absent'))btn.className='status-btn active-absent';
+  });
 };
 
-// ── BUILD RIGHT NAV ───────────────────────────────────────────────────
+// ── BUILD RIGHT NAV ────────────────────────────────────────────────────
 function buildRightNav(){
   var rn=document.querySelector(".rightnav");
   if(!rn){rn=document.createElement("div");rn.className="rightnav";document.body.appendChild(rn);}
   var d=_aD();var lang=window.atcGetLang();
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   function tool(url,ic,lb){var act=cur===url;return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-btn"+(act?" active":"")+"'><span class='rn-ic'>"+ic+"</span>"+lb+"</a>";}
-
   rn.innerHTML=
-    "<div class='rn-section' style='padding:8px 8px 6px'>"
-      +"<div class='rn-label'>Language / Idioma</div>"
+    "<div class='rn-section' style='padding:8px 8px 6px'><div class='rn-label'>Language</div>"
       +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
-      +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div>"
-    +"</div>"
+      +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
     +"<div class='rn-section'><div class='rn-label'>Navigation</div>"
-      +tool("/home/","🏠","Dashboard")
-      +tool("/clients/","📄","Clients")
-      +tool("/vitals/","⚾","Client Vitals")
-      +tool("/quick-quote/","⚡","Quick Quote")
-      +tool("/screenshare/","📺","Screen Share")
-      +tool("/followup/","⏰","Follow-Up Scheduler")
-      +tool("/portals/","🌐","Client Portals")
-    +"</div>"
-    +"<div class='rn-section' style='padding:6px 8px'>"
-      +"<div class='rn-label'>📅 Today Appt</div>"
+      +tool("/home/","🏠","Dashboard")+tool("/clients/","📄","Clients")+tool("/vitals/","⚾","Vitals")
+      +tool("/quick-quote/","⚡","Quick Quote")+tool("/screenshare/","📺","Screen Share")
+      +tool("/followup/","⏰","Follow-Up")+tool("/portals/","🌐","Client Portals")+"</div>"
+    +"<div class='rn-section' style='padding:6px 8px'><div class='rn-label'>📅 Today Appt</div>"
       +"<input class='rn-input' type='datetime-local' id='rn-today' value='"+(d&&d._todayAppt?d._todayAppt:"")+"' onchange=\"_sf('_todayAppt',this.value);\">"
       +"<div class='rn-label' style='margin-top:4px'>📅 Follow-Up</div>"
       +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:"")+"' onchange=\"_sf('_fuAppt',this.value);\">"
-      +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a>"
-    +"</div>"
+      +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a></div>"
     +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.openCRMNote==='function'?window.openCRMNote():toast('Open Client Vitals','#C8960C')\">📝 CRM Note</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Client Vitals','#C8960C')\">📱 SMS</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Client Vitals','#C8960C')\">📋 Full Summary</button>"
-    +"</div>";
+      +"<button class='rn-report-btn' onclick=\"typeof window.openCRMNote==='function'?window.openCRMNote():toast('Open Vitals','#C8960C')\">📝 CRM Note</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8960C')\">📱 SMS</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8960C')\">📋 Full Summary</button></div>";
 }
-
-window._sf=function(k,v){var s=_aC();if(!s)return;var a=_gA();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_sA(a);};
 
 // ── PORTAL BANNER ──────────────────────────────────────────────────────
 function buildPortalBanner(){
-  var pb=document.getElementById('portal-banner');
-  if(!pb)return;
+  var pb=document.getElementById('portal-banner');if(!pb)return;
   var d=_aD();var slug=_aC();
   var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():"No Client";
-  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
-  var stg=d?(stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment"):"—";
+  var status=d?d._status||null:null;
   var portal=slug?_getPortal(slug):{};
   var pushed=Object.keys(portal).length;
+  var prog=_getProgress();
   pb.innerHTML=
     "<span class='pb-client'>"+(d?nm:"No client")+"</span>"
-    +(d?"<span class='pb-stage'>"+stg+"</span>":"")
-    +(pushed?"<span style='font-size:9px;color:rgba(200,150,12,.8);font-weight:700;flex-shrink:0'>"+pushed+" pages live</span>":"")
+    +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':'ABSENT')+"</span>":"")
+    +(prog.done>0?"<span class='pb-progress'>"+prog.done+"/"+prog.total+"</span>":"")
+    +(pushed?"<span style='font-size:9px;color:rgba(200,150,12,.7);font-weight:700;flex-shrink:0'>"+pushed+" live</span>":"")
     +"<span class='pb-spacer'></span>"
     +"<span class='pb-saved' id='pb-saved'>Saved</span>"
-    +"<label class='pb-email-wrap' title='Auto-email when pushing'><input type='checkbox' id='pb-email'> 📧 Email</label>"
-    +(slug?"<button class='pb-btn pb-push' onclick='window.openPushPopup()'>📤 Push to Portal</button>":"")
+    +"<label class='pb-email-wrap'><input type='checkbox' id='pb-email'> 📧 Email</label>"
+    +(slug?"<button class='pb-btn pb-push' onclick='window.openPushPopup()'>📤 Push</button>":"")
     +"<button class='pb-btn pb-save' onclick='window.saveSession()'>💾 Save</button>";
 }
 
@@ -522,78 +536,29 @@ function initBanner(){
   set("vb-quote",d.alphaFee?_fC(parseFloat(d.alphaFee)):"No quote yet");set("vb-stg",stg);
 }
 window.initBanner=initBanner;
+window.atcApplyLang=function(){var lang="en";try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;};
 
-window.atcApplyLang=function(){
-  var lang="en";
-  try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}
-  localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;
-};
-
-// ── INJECT DIALOGS + BANNER ────────────────────────────────────────────
 function _injectGlobals(){
   if(document.getElementById('push-overlay'))return;
   var div=document.createElement('div');
   div.innerHTML=
-    // Push popup
     '<div class="push-overlay" id="push-overlay"><div class="push-box" id="push-box-inner"></div></div>'
-    // New session dialog
-    +'<div class="session-overlay" id="session-overlay">'
-      +'<div class="session-box">'
-        +'<div class="session-icon">💾</div>'
-        +'<div class="session-title">Start New Session?</div>'
-        +'<div class="session-msg">Do you want to save the current client before starting a new session?</div>'
-        +'<div class="session-btns">'
-          +'<button class="sbtn save" onclick="window.sessionSaveAndContinue()">💾 Save &amp; Continue</button>'
-          +'<button class="sbtn nosave" onclick="window.sessionDontSave()">Don\'t Save</button>'
-          +'<button class="sbtn cancel" onclick="window.closeSessionDialog()">Cancel — Stay on Current Client</button>'
-        +'</div>'
-      +'</div>'
-    +'</div>'
-    // Unsaved changes dialog
-    +'<div class="unsaved-overlay" id="unsaved-overlay">'
-      +'<div class="unsaved-box">'
-        +'<div class="unsaved-title">⚠️ Unsaved Changes</div>'
-        +'<div class="unsaved-msg">You have unsaved changes on this page. What would you like to do?</div>'
-        +'<div class="unsaved-btns">'
-          +'<button class="sbtn save" onclick="window.unsavedSave()">💾 Save</button>'
-          +'<button class="sbtn nosave" onclick="window.unsavedDontSave()">Don\'t Save</button>'
-          +'<button class="sbtn cancel" onclick="window.unsavedCancel()">Cancel</button>'
-        +'</div>'
-      +'</div>'
-    +'</div>'
-    // Portal banner
+    +'<div class="session-overlay" id="session-overlay"><div class="session-box"><div class="session-icon">💾</div><div class="session-title">Start New Session?</div><div class="session-msg">Save the current client before starting a new session?</div><div class="session-btns"><button class="sbtn save" onclick="window.sessionSaveAndContinue()">💾 Save &amp; Continue</button><button class="sbtn nosave" onclick="window.sessionDontSave()">Don\'t Save</button><button class="sbtn cancel" onclick="window.closeSessionDialog()">Cancel</button></div></div></div>'
+    +'<div class="unsaved-overlay" id="unsaved-overlay"><div class="unsaved-box"><div class="unsaved-title">⚠️ Unsaved Changes</div><div class="unsaved-msg">You have unsaved changes. What would you like to do?</div><div class="unsaved-btns"><button class="sbtn save" onclick="window.unsavedSave()">💾 Save</button><button class="sbtn nosave" onclick="window.unsavedDontSave()">Don\'t Save</button><button class="sbtn cancel" onclick="window.unsavedCancel()">Cancel</button></div></div></div>'
     +'<div class="portal-banner" id="portal-banner"></div>';
   document.body.appendChild(div);
 }
 
-// ── TOP SAVE BUTTON ────────────────────────────────────────────────────
 function _buildTopSave(){
   if(document.getElementById("_topSaveBtn"))return;
-  var btn=document.createElement("button");
-  btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";
+  var btn=document.createElement("button");btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";
   btn.style.cssText="position:fixed;top:44px;right:205px;z-index:198;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:0 0 6px 6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)";
   btn.onclick=window.saveSession;document.body.appendChild(btn);
 }
 
-document.addEventListener("DOMContentLoaded",function(){
-  _injectGlobals();
-  buildSB();
-  initBanner();
-  _buildTopSave();
-});
-
-window.newC=function(){
-  if(window._dirty){showUnsaved(function(){_doNewC();});return;}
-  _doNewC();
-};
-function _doNewC(){
-  var fn=prompt("First name:");if(!fn)return;
-  var ln=prompt("Last name:");
-  var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);
-  var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};
-  _sA(all);localStorage.setItem(_AK,slug);setDirty(false);
-  setTimeout(function(){location.reload();},300);
-}
+document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();initBanner();_buildTopSave();});
+window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
+function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
 <div class="main">
 
