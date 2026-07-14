@@ -360,6 +360,23 @@ window.swC=function(s){if(!s)return;if(window._dirty){showUnsaved(function(){doS
 function doSwitch(s){localStorage.setItem(_AK,s);setDirty(false);setTimeout(function(){location.reload();},300);}
 window.atcGetLang=function(){return localStorage.getItem("atc_lang")||"en";};
 window.atcSetLang=function(l){localStorage.setItem("atc_lang",l);window.atcApplyLang&&window.atcApplyLang();buildRightNav();};
+window.deleteClient=function(){
+  var slug=_aC();if(!slug)return;
+  var d=_aD();
+  var nm=d?(d.firstName||d.lastName?(d.firstName||'')+(d.lastName?' '+d.lastName:''):'this client').trim():'this client';
+  if(!confirm('Delete '+nm+'? This cannot be undone.')){return;}
+  var all=_gA();
+  delete all[slug];
+  _sA(all);
+  localStorage.removeItem(_AK);
+  localStorage.removeItem('sel_'+slug);
+  localStorage.removeItem('completed_'+slug);
+  localStorage.removeItem('portal_'+slug);
+  // Remove from portal dir
+  try{var dir=JSON.parse(localStorage.getItem('portal_dir')||'[]');dir=dir.filter(function(x){return x.slug!==slug;});localStorage.setItem('portal_dir',JSON.stringify(dir));}catch(e){}
+  toast('Client deleted','#6b7280');
+  setTimeout(function(){window.location.href='/clients/';},600);
+};
 window.saveSession=function(){try{if(typeof autoSave==='function')autoSave();if(typeof autoSaveAck==='function')autoSaveAck();if(typeof savePageData==='function')savePageData();}catch(e){}setDirty(false);toast('Session saved ✓','#16a34a');};
 window.saveAndClear=function(){window.saveSession();setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},400);};
 window.newSession=function(){showSessionDialog();};
