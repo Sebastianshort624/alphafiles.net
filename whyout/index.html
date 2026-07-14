@@ -404,49 +404,7 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 
 <div id="selected-count" class="selected-count" style="display:none"></div>
 
-<!-- ── MOTIVATION SCALE ───────────────────────────────────────── -->
-<div style="background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;overflow:hidden">
-  <div style="background:var(--navy);padding:12px 18px">
-    <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Motivation Scale</div>
-    <div style="font-size:14px;color:rgba(255,255,255,.85);font-style:italic">"On a scale from 1 to 10, how strong is your desire to get out of this as quickly as possible?"</div>
-  </div>
-  <div style="padding:16px 18px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <span style="font-size:11px;color:#9ca3af">Not urgent</span>
-      <div style="background:var(--navy);color:#fff;font-size:22px;font-weight:800;padding:6px 16px;border-radius:8px;min-width:56px;text-align:center" id="scale-display">5</div>
-      <span style="font-size:11px;color:#9ca3af">Get me out NOW</span>
-    </div>
-    <input type="range" min="1" max="10" value="5" id="scale-slider" style="width:100%;accent-color:var(--navy);height:6px" oninput="updateScale(this.value)">
-    <div style="display:grid;grid-template-columns:repeat(10,1fr);margin-top:6px;text-align:center">
-      <div style="font-size:9px;color:#9ca3af">1<br>Not<br>urgent</div>
-      <div style="font-size:9px;color:#9ca3af">2<br>Low</div>
-      <div style="font-size:9px;color:#9ca3af">3<br>Some</div>
-      <div style="font-size:9px;color:#9ca3af">4<br>Mod</div>
-      <div style="font-size:9px;color:#9ca3af">5<br>Motiv</div>
-      <div style="font-size:9px;color:#9ca3af">6<br>Clear</div>
-      <div style="font-size:9px;color:#9ca3af">7<br>Strong</div>
-      <div style="font-size:9px;color:#9ca3af">8<br>Very</div>
-      <div style="font-size:9px;color:#9ca3af">9<br>Urgent</div>
-      <div style="font-size:9px;color:var(--navy);font-weight:700">10<br>NOW</div>
-    </div>
-    <div id="scale-label" style="text-align:center;margin-top:10px;padding:8px;background:#EAF0F8;border-radius:6px;font-size:13px;font-weight:600;color:var(--navy)">Motivated</div>
-  </div>
-</div>
 
-<!-- ── QUALIFYING QUESTION ────────────────────────────────────── -->
-<div style="background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;padding:18px">
-  <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Qualifying Question</div>
-  <div style="font-size:15px;font-style:italic;color:var(--navy);font-weight:600;margin-bottom:14px;line-height:1.5">"If we could offer a guaranteed service, $0 down today, fair payments, and credit protection — would you move forward?"</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-    <button onclick="setQualify('yes',this)" id="q-yes" style="padding:14px;background:#f0fdf4;border:2px solid #86efac;border-radius:8px;font-size:15px;font-weight:800;color:var(--green);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s">YES</button>
-    <button onclick="setQualify('not-yet',this)" id="q-notyet" style="padding:14px;background:#f9faf9;border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s">NOT YET</button>
-  </div>
-
-
-<div style="background:#EAF0F8;border-left:3px solid var(--navy);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;font-style:italic;color:var(--navy)">"Would you rather put payments toward the problem — or the solution?"</div>
-</div>
-
-<!-- ── CATEGORY GRID ──────────────────────────────────────────── -->
 <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Now select all reasons that apply:</div>
 
 <div id="cat-grid">
@@ -533,6 +491,50 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 </div>
 </div>
 
+
+<!-- ── MOTIVATION SCALE ───────────────────────────────────────── -->
+<div style="background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;overflow:hidden">
+  <div style="background:var(--navy);padding:12px 18px">
+    <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Motivation Scale</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.85);font-style:italic">"On a scale from 1 to 10, how strong is your desire to get out of this as quickly as possible?"</div>
+  </div>
+  <div style="padding:16px 18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;color:#9ca3af">Not urgent</span>
+      <div style="background:var(--navy);color:#fff;font-size:22px;font-weight:800;padding:6px 16px;border-radius:8px;min-width:56px;text-align:center" id="scale-display">5</div>
+      <span style="font-size:11px;color:#9ca3af">Get me out NOW</span>
+    </div>
+    <input type="range" min="1" max="10" value="5" id="scale-slider" style="width:100%;accent-color:var(--navy);height:6px" oninput="updateScale(this.value)">
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);margin-top:6px;text-align:center">
+      <div style="font-size:9px;color:#9ca3af">1<br>Not<br>urgent</div>
+      <div style="font-size:9px;color:#9ca3af">2<br>Low</div>
+      <div style="font-size:9px;color:#9ca3af">3<br>Some</div>
+      <div style="font-size:9px;color:#9ca3af">4<br>Mod</div>
+      <div style="font-size:9px;color:#9ca3af">5<br>Motiv</div>
+      <div style="font-size:9px;color:#9ca3af">6<br>Clear</div>
+      <div style="font-size:9px;color:#9ca3af">7<br>Strong</div>
+      <div style="font-size:9px;color:#9ca3af">8<br>Very</div>
+      <div style="font-size:9px;color:#9ca3af">9<br>Urgent</div>
+      <div style="font-size:9px;color:var(--navy);font-weight:700">10<br>NOW</div>
+    </div>
+    <div id="scale-label" style="text-align:center;margin-top:10px;padding:8px;background:#EAF0F8;border-radius:6px;font-size:13px;font-weight:600;color:var(--navy)">Motivated</div>
+  </div>
+</div>
+
+<!-- ── QUALIFYING QUESTION ────────────────────────────────────── -->
+<div style="background:#fff;border-radius:10px;border:1px solid var(--border);margin-bottom:14px;padding:18px">
+  <div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Qualifying Question</div>
+  <div style="font-size:15px;font-style:italic;color:var(--navy);font-weight:600;margin-bottom:14px;line-height:1.5">"If we could offer a guaranteed service, $0 down today, fair payments, and credit protection — would you move forward?"</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <button onclick="setQualify('yes',this)" id="q-yes" style="padding:14px;background:#f0fdf4;border:2px solid #86efac;border-radius:8px;font-size:15px;font-weight:800;color:var(--green);cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s">YES</button>
+    <button onclick="setQualify('not-yet',this)" id="q-notyet" style="padding:14px;background:#f9faf9;border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:700;color:#6b7280;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s">NOT YET</button>
+  </div>
+
+
+<div style="background:#EAF0F8;border-left:3px solid var(--navy);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;font-style:italic;color:var(--navy)">"Would you rather put payments toward the problem — or the solution?"</div>
+</div>
+
+<!-- ── CATEGORY GRID ──────────────────────────────────────────── -->
 <div class="nav-bar">
   <a href="/vitals/" class="np">← Client Vitals</a>
   <span class="ns">2 — Why Do You Want Out</span>
