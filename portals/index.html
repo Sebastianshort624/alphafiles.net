@@ -6,267 +6,204 @@
 <title>Client Portal — Alpha Timeshare Consultants</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--bg:#f0f4f8;--text:#1a1a2e;--green:#16a34a;--red:#dc2626}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--bg:#f0f4f8;--green:#16a34a;--red:#dc2626}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.topbar{background:var(--navy);padding:0 20px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+body{font-family:Inter,sans-serif;background:var(--bg);min-height:100vh}
+.topbar{background:var(--navy);height:52px;display:flex;align-items:center;padding:0 20px;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .tl{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:#fff}
 .tl span{color:var(--gold)}
+.back-btn{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:none}
 .wrap{max-width:760px;margin:0 auto;padding:24px 16px}
-.client-hdr{background:linear-gradient(135deg,var(--navy),#243a6e);border-radius:12px;padding:24px;margin-bottom:20px;color:#fff}
-.ch-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.8);margin-bottom:6px}
-.ch-name{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;margin-bottom:4px}
-.ch-resort{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:16px}
+/* CLIENT HEADER */
+.client-hdr{background:linear-gradient(135deg,var(--navy),#243a6e);border-radius:12px;padding:22px 24px;margin-bottom:20px;color:#fff}
+.ch-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.8);margin-bottom:5px}
+.ch-name{font-family:"Barlow Condensed",sans-serif;font-size:34px;font-weight:900;margin-bottom:3px}
+.ch-resort{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:14px}
 .ch-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .ch-stat{background:rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;text-align:center}
-.ch-stat-val{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--gold)}
-.ch-stat-lbl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.sec{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px;margin-top:22px}
+.ch-val{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--gold)}
+.ch-lbl{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+/* PAGE CARDS (directory) */
+.page-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:8px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.15s;border-left:4px solid var(--gold);text-decoration:none;color:inherit}
+.page-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-1px)}
+.pc-icon{font-size:24px;flex-shrink:0}
+.pc-name{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;color:var(--navy)}
+.pc-meta{font-size:11px;color:#9ca3af;margin-top:2px}
+.pc-arrow{margin-left:auto;font-size:18px;color:#C8960C;flex-shrink:0}
+/* PAGE CONTENT VIEW */
+.sec{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px;margin-top:20px}
 .card{background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px;margin-bottom:12px}
-.card-title{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:var(--navy);margin-bottom:10px}
+.card-title{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:var(--navy);margin-bottom:12px}
 .meta-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px}
 .meta-row:last-child{border:none}
-.meta-lbl{color:#6b7280;font-weight:500}
-.meta-val{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;color:var(--navy)}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.meta-lbl{color:#6b7280}
+.meta-val{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700;color:var(--navy)}
+.tbl{width:100%;border-collapse:collapse}
 .tbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .tbl th:first-child{text-align:left}
 .tbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
 .tbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
 .tbl tr.hl{background:#fff8e0}
 .tbl tr:last-child td{border:none}
-.hero{background:var(--navy);border-radius:10px;padding:20px 24px;text-align:center;margin-bottom:14px}
-.hero-q{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:#fff;font-style:italic;line-height:1.5;margin-bottom:6px}
-.hero-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
 .pay-opt{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;margin-bottom:8px}
 .pay-lbl{font-weight:700;font-size:14px;color:var(--navy)}
-.pay-val{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--green)}
 .pay-sub{font-size:11px;color:#9ca3af;margin-top:2px}
-.info-card{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:8px}
-.info-title{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:5px}
-.info-text{font-size:12px;color:#374151;line-height:1.7}
+.pay-val{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--green)}
+.hero{background:var(--navy);border-radius:10px;padding:20px 24px;text-align:center;margin-bottom:12px}
+.hero-q{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:#fff;font-style:italic;line-height:1.5;margin-bottom:6px}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
 .guarantee-box{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #16a34a;border-radius:10px;padding:20px 24px;text-align:center;margin-bottom:12px}
-.g-icon{font-size:36px;margin-bottom:8px}
-.g-title{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:#15803d;margin-bottom:6px}
-.g-text{font-size:13px;color:#166534;line-height:1.7}
-.footer{text-align:center;padding:24px 16px;font-size:11px;color:#9ca3af;border-top:1px solid var(--border);margin-top:24px}
-.empty{text-align:center;padding:40px;color:#9ca3af}
-.no-portal{text-align:center;padding:60px 20px}
-.no-portal h2{font-family:"Barlow Condensed",sans-serif;font-size:24px;color:var(--navy);margin-bottom:8px}
-.no-portal p{font-size:13px;color:#6b7280}
-@media(max-width:500px){.ch-stats{grid-template-columns:1fr 1fr}.tbl{font-size:12px}}
+.info-card{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.info-title{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.info-text{font-size:12px;color:#374151;line-height:1.7}
+.footer{text-align:center;padding:24px;font-size:11px;color:#9ca3af;border-top:1px solid var(--border);margin-top:20px}
+@media(max-width:500px){.ch-stats{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="topbar">
   <div class="tl">⚡ <span>Alpha Timeshare Consultants</span></div>
+  <a id="back-btn" class="back-btn" href="#">← My Portal</a>
 </div>
-
-<div class="wrap">
-  <div id="portal-root"></div>
-</div>
+<div class="wrap" id="root"></div>
 
 <script>
 var params=new URLSearchParams(window.location.search);
 var slug=params.get('s')||'';
+var page=params.get('page')||'';
 
-function fc(n){if(!n||n===0)return '$0.00';return '$'+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fc0(n){if(!n||n===0)return '$0';return '$'+Math.round(n).toLocaleString();}
+function fc(n){return n?'$'+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'$0.00';}
+function fc0(n){return n?'$'+Math.round(n).toLocaleString():'$0';}
 
 function getSnap(){
-  // Try snapshot first (captured at push time)
   try{var s=localStorage.getItem('portal_snap_'+slug);if(s)return JSON.parse(s);}catch(e){}
-  // Fallback to live client data (same browser only)
-  try{var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');return all[slug]||null;}catch(e){return null;}
+  try{var a=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');return a[slug]||null;}catch(e){return null;}
 }
+function getPortal(){try{return JSON.parse(localStorage.getItem('portal_'+slug)||'{}');}catch(e){return{};}}
 
-function getPortal(){
-  try{return JSON.parse(localStorage.getItem('portal_'+slug)||'{}');}catch(e){return{};}
-}
+function cumMtf(y,yr){if(y<1)return(yr/12)*y*12;var t=0;for(var i=1;i<=Math.floor(y);i++)t+=yr*Math.pow(1.08,i-1);var f=y-Math.floor(y);if(f>0)t+=yr*Math.pow(1.08,Math.floor(y))*f;return t;}
+function cumMtg(y,mo,yrs){return mo*Math.min(y,yrs)*12;}
+function fvInv(y,mo,yr,yrs){var r=0.08/12,n=Math.max(1,Math.round(y*12)),fv=0;for(var m=1;m<=n;m++){var ky=Math.ceil(m/12);fv+=((yr*Math.pow(1.08,ky-1))/12+(m<=yrs*12?mo:0))*Math.pow(1+r,n-m);}return fv;}
+function moPmt(p,mo){var r=0.20/12;return p*r*Math.pow(1+r,mo)/(Math.pow(1+r,mo)-1);}
 
-function cumMtf(yrs,mtfYr){
-  if(yrs<1)return(mtfYr/12)*yrs*12;
-  var t=0;for(var i=1;i<=Math.floor(yrs);i++)t+=mtfYr*Math.pow(1.08,i-1);
-  var f=yrs-Math.floor(yrs);if(f>0)t+=mtfYr*Math.pow(1.08,Math.floor(yrs))*f;
-  return t;
-}
-function cumMtg(yrs,mtgMo,mtgYrs){return mtgMo*Math.min(yrs,mtgYrs)*12;}
-function fvInvested(yrs,mtgMo,mtfYr,mtgYrs){
-  var r=0.08/12,n=Math.max(1,Math.round(yrs*12)),fv=0;
-  for(var m=1;m<=n;m++){
-    var yr=Math.ceil(m/12);
-    fv+=((mtfYr*Math.pow(1.08,yr-1))/12+((m<=mtgYrs*12)?mtgMo:0))*Math.pow(1+r,n-m);
-  }
-  return fv;
-}
-function moPmt(principal,months){
-  var r=0.20/12;
-  return principal*r*Math.pow(1+r,months)/(Math.pow(1+r,months)-1);
-}
+// PAGE ICONS
+var ICONS={owner:'🏠',current:'📊',whyout:'❓',leverage:'💪',credit:'💳',wait:'⚠️',group:'🔍',approval:'✅',heirs:'👨‍👩‍👧',compensation:'💵',proof:'🔗',letter:'✉️',guarantee:'🛡️','exit-methods':'🚪',history:'⭐',rights:'⚖️',cost:'💰',quote:'📄',free:'🔗',better:'🏆',included:'📦',recap:'📋',contract:'📝',checklist:'✅','timeshare-free':'🎉'};
 
-// ── PAGE RENDERERS ──────────────────────────────────────────────────
+// ── RENDERERS ────────────────────────────────────────────────────────
 function renderCost(snap){
-  var mtfYr=parseFloat(snap.maitFees)||0;
-  var mtfMo=mtfYr/12;
-  var mtgMo=parseFloat(snap.monthlyMortgage)||0;
-  var mtgYrs=parseInt(snap.mtgTerm)||10;
-  if(!mtfMo&&!mtgMo)return '<p style="color:#9ca3af;font-size:13px">No financial data available.</p>';
-  var TF=[
-    {l:'1 Month',y:1/12},{l:'1 Year',y:1},{l:'3 Years',y:3},{l:'5 Years',y:5},
-    {l:'7 Years',y:7},{l:'10 Years',y:10,hl:true},{l:'20 Years',y:20},
-    {l:'30 Years',y:30,hl:true},{l:'Loan Term ('+mtgYrs+' yrs)',y:mtgYrs,hl:true}
-  ];
-  var rows=TF.map(function(tf){
-    var mtg=cumMtg(tf.y,mtgMo,mtgYrs),mtf=cumMtf(tf.y,mtfYr),comb=mtg+mtf;
-    var fv=fvInvested(tf.y,mtgMo,mtfYr,mtgYrs);
-    return'<tr'+(tf.hl?' class="hl"':'')+'><td>'+tf.l+'</td><td>'+(mtg>0?fc0(mtg):'Paid off')+'</td><td>'+fc0(mtf)+'</td><td>'+fc0(comb)+'</td><td style="color:#16a34a">'+fc0(fv)+'</td></tr>';
-  }).join('');
-  return'<div class="card"><p style="font-size:13px;color:#374151;margin-bottom:14px">Your current monthly cost of <strong>'+fc(mtfMo+mtgMo)+'</strong> continues to grow every year. Below is what staying in will cost you — and what those same payments would be worth if invested at 8% instead.</p>'
-    +'<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Timeframe</th><th>Mortgage</th><th>MTF</th><th>Total Cost</th><th style="color:#86efac">If Invested @ 8%</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  var yr=parseFloat(snap.maitFees)||0,mo=yr/12,mtgMo=parseFloat(snap.monthlyMortgage)||0,yrs=parseInt(snap.mtgTerm)||10;
+  if(!mo&&!mtgMo)return '<p style="color:#9ca3af">No financial data on file.</p>';
+  var TF=[{l:'1 Month',y:1/12},{l:'1 Year',y:1},{l:'3 Years',y:3},{l:'5 Years',y:5},{l:'7 Years',y:7},{l:'10 Years',y:10,h:1},{l:'20 Years',y:20},{l:'30 Years',y:30,h:1}];
+  var rows=TF.map(function(tf){var m=cumMtg(tf.y,mtgMo,yrs),mf=cumMtf(tf.y,yr),c=m+mf,fv=fvInv(tf.y,mtgMo,yr,yrs);return'<tr'+(tf.h?' class="hl"':'')+'><td>'+tf.l+'</td><td>'+(m>0?fc0(m):'—')+'</td><td>'+fc0(mf)+'</td><td>'+fc0(c)+'</td><td style="color:#16a34a">'+fc0(fv)+'</td></tr>';}).join('');
+  return'<div class="card"><p style="font-size:13px;color:#374151;margin-bottom:14px">Your current monthly cost of <strong>'+fc(mo+mtgMo)+'</strong> grows every year. Here is what staying in costs you — and what those same payments could be worth if invested at 8% instead.</p><div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Timeframe</th><th>Mortgage</th><th>MTF</th><th>Total Cost</th><th style="color:#86efac">If Invested @ 8%</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
 }
 
 function renderQuote(snap){
   var fee=parseFloat(snap.alphaFee)||0;
-  if(!fee)return '<p style="color:#9ca3af;font-size:13px">Quote not yet available.</p>';
-  var mo60=moPmt(fee,60);
-  var pif=fee*0.95;
-  var mtfYr=parseFloat(snap.maitFees)||0,mtgMo=parseFloat(snap.monthlyMortgage)||0,mtgYrs=parseInt(snap.mtgTerm)||10;
-  var cost10=cumMtg(10,mtgMo,mtgYrs)+cumMtf(10,mtfYr);
-  var savings=cost10-fee;
-  return'<div class="hero"><div class="hero-q">"Would you rather put those payments toward the problem — or the solution?"</div><div class="hero-sub">Redirecting your existing payments toward a permanent resolution delivers greater long-term value than continuing to pay without solving the issue.</div></div>'
-    +'<div class="card"><div class="card-title">Alpha Service Fee</div>'
+  if(!fee)return '<p style="color:#9ca3af">Quote not yet available.</p>';
+  var yr=parseFloat(snap.maitFees)||0,mtgMo=parseFloat(snap.monthlyMortgage)||0,yrs=parseInt(snap.mtgTerm)||10;
+  var cost10=cumMtg(10,mtgMo,yrs)+cumMtf(10,yr),savings=cost10-fee,mo60=moPmt(fee,60);
+  return'<div class="hero"><div class="hero-q">"Would you rather put payments toward the problem — or the solution?"</div><div class="hero-sub">Redirecting existing payments toward a permanent resolution delivers far greater long-term value.</div></div>'
+    +'<div class="card"><div class="card-title">Your Alpha Service Fee</div>'
     +'<div class="meta-row"><span class="meta-lbl">One-Time Fee</span><span class="meta-val">'+fc(fee)+'</span></div>'
-    +(savings>0?'<div class="meta-row"><span class="meta-lbl">10-Year Savings vs. Staying In</span><span class="meta-val" style="color:var(--green)">+'+fc0(savings)+'</span></div>':'')
+    +(savings>0?'<div class="meta-row"><span class="meta-lbl">You Save Over 10 Years</span><span class="meta-val" style="color:var(--green)">+'+fc0(savings)+'</span></div>':'')
     +'</div>'
     +'<div class="card"><div class="card-title">Payment Options</div>'
-    +'<div class="pay-opt"><div><div class="pay-lbl">💰 Pay in Full (Best Value)</div><div class="pay-sub">5% discount applied</div></div><div style="text-align:right"><div class="pay-val">'+fc(pif)+'</div></div></div>'
-    +'<div class="pay-opt"><div><div class="pay-lbl">Monthly Plan</div><div class="pay-sub">60-month · $0 down · starts month 2</div></div><div style="text-align:right"><div class="pay-val">'+fc(mo60)+'/mo</div></div></div>'
-    +(fee>15000?'<div class="pay-opt"><div><div class="pay-lbl">Split Lenders</div><div class="pay-sub">Two lenders · lowest possible payments</div></div><div style="text-align:right"><div class="pay-val">'+fc(moPmt(Math.min(15000,fee),60)+moPmt(fee-Math.min(15000,fee),36))+'/mo</div></div></div>':'')
+    +'<div class="pay-opt"><div><div class="pay-lbl">💰 Pay in Full</div><div class="pay-sub">5% discount — best value</div></div><div><div class="pay-val">'+fc(fee*0.95)+'</div></div></div>'
+    +'<div class="pay-opt"><div><div class="pay-lbl">Monthly Plan</div><div class="pay-sub">60 months · $0 down · starts month 2</div></div><div><div class="pay-val">'+fc(mo60)+'/mo</div></div></div>'
+    +(fee>15000?'<div class="pay-opt"><div><div class="pay-lbl">Split Lenders</div><div class="pay-sub">Two lenders · lowest monthly</div></div><div><div class="pay-val">'+fc(moPmt(Math.min(15000,fee),60)+moPmt(fee-Math.min(15000,fee),36))+'/mo</div></div></div>':'')
     +'</div>';
 }
 
 function renderGuarantee(){
-  return'<div class="guarantee-box"><div class="g-icon">🛡️</div><div class="g-title">Written Money-Back Guarantee</div><div class="g-text">If Alpha Timeshare Consultants does not obtain a Favorable Outcome within <strong>36 months</strong>, you will receive a <strong>full refund</strong> of your service fee. This guarantee is in writing, signed by us, in your contract.</div></div>'
-    +'<div class="card"><div class="info-text">This is not a promise made verbally in a sales presentation. It is a contractual obligation Alpha Timeshare Consultants assumes in writing at the time of enrollment. No fine print. No exceptions.</div></div>';
+  return'<div class="guarantee-box"><div style="font-size:36px;margin-bottom:8px">🛡️</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:900;color:#15803d;margin-bottom:8px">Written Money-Back Guarantee</div><div style="font-size:13px;color:#166534;line-height:1.7">If Alpha Timeshare Consultants does not obtain a Favorable Outcome within <strong>36 months</strong>, you receive a <strong>full refund</strong> of your service fee. In writing. Signed by us. In your contract.</div></div>';
 }
 
 function renderRights(){
-  var rows=[
-    ['Full Cost Disclosure','TILA §128 · 15 U.S.C. §1638','Total maintenance fee cost over 10–30 years not disclosed at signing','Up to $75,000'],
-    ['Rescission Rights','State Contract Law','Cancellation window misrepresented or not clearly disclosed','Up to $60,000'],
-    ['Resale Market Disclosure','FTC Act §5 · State UDAP','No viable secondary resale market not disclosed at purchase','Up to $50,000'],
-    ['Annual Fee Growth','TILA §128 · State UDAP','8% average annual MTF increase rate not disclosed at signing','Up to $55,000']
-  ].map(function(r){return'<tr><td>'+r[0]+'</td><td style="font-size:11px;color:#6b7280">'+r[1]+'</td><td style="font-size:12px">'+r[2]+'</td><td style="color:var(--red);font-weight:700">'+r[3]+'</td></tr>';}).join('');
-  return'<div class="card"><p style="font-size:13px;color:#374151;margin-bottom:14px">The following consumer protection laws may apply to your ownership. When violations are documented and presented collectively, they create the financial risk that motivates the resort to negotiate.</p>'
-    +'<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Consumer Right</th><th>Statute</th><th>Example Violation</th><th>Possible Penalty</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  var rows=[['Full Cost Disclosure','TILA §128','30-year MTF cost never disclosed at signing','Up to $75,000'],['Rescission Rights','State Contract Law','Cancellation window misrepresented','Up to $60,000'],['Resale Market','FTC Act §5','No secondary market not disclosed','Up to $50,000'],['Annual Fee Growth','TILA §128','8% annual MTF increase not disclosed','Up to $55,000']];
+  return'<div class="card"><div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Consumer Right</th><th>Statute</th><th>Violation</th><th>Possible Fine</th></tr></thead><tbody>'+rows.map(function(r){return'<tr><td>'+r[0]+'</td><td style="font-size:11px;color:#6b7280">'+r[1]+'</td><td style="font-size:12px">'+r[2]+'</td><td style="color:var(--red);font-weight:700">'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div></div>';
 }
 
 function renderIncluded(){
-  var items=[['✅','Exit Your Timeshare','Permanent release from all ownership obligations — or your money back'],['⚖️','Legal Review','Full statutory analysis of your purchase and ownership history'],['📋','Documentation Prep','All supporting documents prepared and submitted on your behalf'],['🤝','Resort Negotiation','Our team handles all communication with the resort directly'],['🛡️','Written Guarantee','36-month money-back guarantee in your signed contract'],['💳','Credit Protection','We handle the process to minimize impact on your credit profile']];
-  return'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +items.map(function(i){return'<div class="info-card"><div class="info-title">'+i[0]+' '+i[1]+'</div><div class="info-text">'+i[2]+'</div></div>';}).join('')+'</div>';
-}
-
-function renderGroup(){
-  return'<div class="card"><div class="card-title">Why We File as a Group</div>'
-    +'<p style="font-size:13px;color:#374151;line-height:1.7;margin-bottom:14px">When multiple owners from the same resort present documented claims together, the financial exposure grows substantially. The resort must consider cumulative risk — not isolated cases.</p>'
-    +'<div style="display:flex;flex-direction:column;gap:8px">'
-    +[['🔒','All Qualified Members Included','The resort cannot selectively release only certain participants.'],['🏆','Guaranteed Results','Exit your timeshare or your money back — in writing.'],['⚡','Faster Resolutions','Resorts prefer resolving multiple matters simultaneously.'],['💵','Possible Compensation','Some settlements include financial reimbursement from the resort.']]
-    .map(function(i){return'<div style="display:flex;gap:10px;align-items:flex-start;padding:10px;background:#f8fafc;border-radius:7px"><div style="font-size:18px;flex-shrink:0">'+i[0]+'</div><div><div style="font-weight:700;font-size:13px;color:var(--navy)">'+i[1]+'</div><div style="font-size:12px;color:#6b7280;margin-top:2px">'+i[2]+'</div></div></div>';}).join('')+'</div></div>';
+  return[['✅','Exit Your Timeshare','Permanent release from all ownership obligations — or your money back'],['⚖️','Legal Review','Full statutory analysis of your purchase and ownership history'],['📋','Documentation','All supporting documents prepared and submitted on your behalf'],['🤝','Resort Negotiation','We handle all communication with the resort directly'],['🛡️','Written Guarantee','36-month money-back guarantee in your signed contract'],['💳','Credit Protection','Process managed to minimize impact on your credit profile']]
+    .map(function(i){return'<div class="info-card"><div class="info-title">'+i[0]+' '+i[1]+'</div><div class="info-text">'+i[2]+'</div></div>';}).join('');
 }
 
 function renderGeneric(label){
-  return'<div class="card"><div class="info-text" style="font-size:13px;line-height:1.8;color:#374151">This page has been shared with you by your Alpha Timeshare Consultants representative as part of your case file. Your representative will walk you through this section during your consultation.</div></div>';
+  return'<div class="card"><div class="info-text">Your Alpha Timeshare Consultants representative will walk you through this section during your consultation.</div></div>';
 }
 
-var PAGE_RENDERERS={
-  'cost':renderCost,'quote':renderQuote,'guarantee':renderGuarantee,
-  'rights':renderRights,'included':renderIncluded,'better':renderIncluded,
-  'group':renderGroup,'approval':renderGroup
-};
+var RENDERERS={cost:renderCost,quote:renderQuote,guarantee:renderGuarantee,rights:renderRights,included:renderIncluded,better:renderIncluded};
 
-// ── RENDER PORTAL ───────────────────────────────────────────────────
-(function(){
-  // Handle directory view
-  var isDirectory=!slug;
-  if(isDirectory){
-    renderDirectory(); return;
-  }
-
-  var snap=getSnap();
-  var portal=getPortal();
-  var pages=Object.keys(portal).sort(function(a,b){return(portal[a].pushed||0)-(portal[b].pushed||0);});
-
-  if(!pages.length){
-    document.getElementById('portal-root').innerHTML=
-      '<div class="no-portal"><h2>Portal Not Ready</h2><p>Your representative hasn\'t published any pages to your portal yet.<br>Please check back soon.</p></div>';
-    return;
-  }
-
+// ── CLIENT HEADER ────────────────────────────────────────────────────
+function clientHeader(snap,portal){
   var nm=snap?((snap.firstName||'')+(snap.lastName?' '+snap.lastName:'')).trim():'Client';
   var resort=snap?snap.resort||'':'';
-  var mtfYr=snap?parseFloat(snap.maitFees)||0:0;
-  var mtgMo=snap?parseFloat(snap.monthlyMortgage)||0:0;
+  var mo=snap?(parseFloat(snap.maitFees)||0)/12+(parseFloat(snap.monthlyMortgage)||0):0;
   var fee=snap?parseFloat(snap.alphaFee)||0:0;
-  var mo=mtfYr/12+mtgMo;
+  var cnt=Object.keys(portal).length;
+  return'<div class="client-hdr"><div class="ch-eye">Your Personal Case File</div><div class="ch-name">'+nm+'</div><div class="ch-resort">'+resort+'</div>'
+    +'<div class="ch-stats"><div class="ch-stat"><div class="ch-val">'+(mo>0?fc(mo):' — ')+'</div><div class="ch-lbl">Monthly Cost</div></div>'
+    +'<div class="ch-stat"><div class="ch-val">'+cnt+'</div><div class="ch-lbl">Pages Published</div></div>'
+    +'<div class="ch-stat"><div class="ch-val">'+(fee>0?'$'+Math.round(fee).toLocaleString():' TBD')+'</div><div class="ch-lbl">Alpha Fee</div></div></div></div>';
+}
 
-  document.title=nm+' — Alpha Timeshare Consultants';
-
-  var hdr='<div class="client-hdr">'
-    +'<div class="ch-eye">Your Personal Case File</div>'
-    +'<div class="ch-name">'+nm+'</div>'
-    +'<div class="ch-resort">'+resort+'</div>'
-    +'<div class="ch-stats">'
-      +'<div class="ch-stat"><div class="ch-stat-val">'+(mo>0?'$'+mo.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):' — ')+'</div><div class="ch-stat-lbl">Monthly Cost</div></div>'
-      +'<div class="ch-stat"><div class="ch-stat-val">'+pages.length+'</div><div class="ch-stat-lbl">Pages Published</div></div>'
-      +'<div class="ch-stat"><div class="ch-stat-val">'+(fee>0?'$'+Math.round(fee).toLocaleString():' TBD')+'</div><div class="ch-stat-lbl">Alpha Fee</div></div>'
-    +'</div></div>';
-
-  var content=pages.map(function(pid){
+// ── DIRECTORY VIEW ────────────────────────────────────────────────────
+function showDirectory(){
+  if(!slug){renderDir();return;}
+  var snap=getSnap();var portal=getPortal();
+  var pages=Object.keys(portal).sort(function(a,b){return(portal[a].pushed||0)-(portal[b].pushed||0);});
+  if(!pages.length){document.getElementById('root').innerHTML='<div style="text-align:center;padding:60px;color:#9ca3af"><div style="font-size:36px;margin-bottom:12px">📭</div><p>No pages published yet.</p></div>';return;}
+  document.title=(snap?((snap.firstName||'')+(snap.lastName?' '+snap.lastName:'')).trim():'Client')+' — Alpha Portal';
+  var cards=pages.map(function(pid){
     var p=portal[pid];
-    var renderer=PAGE_RENDERERS[pid];
-    var body=renderer?(pid==='cost'||pid==='quote'?renderer(snap):renderer()):renderGeneric(p.label);
-    var date=p.pushed?new Date(p.pushed).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'';
-    return'<div class="sec">'+p.label+'</div>'+body
-      +'<div style="font-size:10px;color:#9ca3af;text-align:right;margin-top:4px;margin-bottom:16px">Published '+date+(p.pushedBy?' by '+p.pushedBy:'')+'</div>';
+    var date=p.pushed?new Date(p.pushed).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+    var icon=ICONS[pid]||'📄';
+    return'<a class="page-card" href="/portals/?s='+slug+'&page='+pid+'">'
+      +'<div class="pc-icon">'+icon+'</div>'
+      +'<div><div class="pc-name">'+p.label+'</div><div class="pc-meta">Published '+date+'</div></div>'
+      +'<div class="pc-arrow">›</div></a>';
   }).join('');
+  document.getElementById('root').innerHTML=clientHeader(snap,portal)+cards
+    +'<div class="footer"><strong>Alpha Timeshare Consultants</strong><br>Questions? Contact your representative directly.<br><br><span style="font-size:10px">Confidential — prepared for '+(snap?((snap.firstName||'')+(snap.lastName?' '+snap.lastName:'')).trim():'you')+' only</span></div>';
+}
 
-  var footer='<div class="footer"><div style="margin-bottom:4px"><strong>Alpha Timeshare Consultants</strong></div>'
-    +'<div>Questions? Contact your representative directly.</div>'
-    +'<div style="margin-top:8px;font-size:10px">This portal contains confidential information prepared specifically for '+nm+'. Do not share or distribute.</div></div>';
+// ── PAGE VIEW ─────────────────────────────────────────────────────────
+function showPage(pid){
+  var snap=getSnap();var portal=getPortal();
+  var p=portal[pid];if(!p){showDirectory();return;}
+  var icon=ICONS[pid]||'📄';
+  document.title=p.label+' — Alpha Portal';
+  var backBtn=document.getElementById('back-btn');
+  if(backBtn){backBtn.style.display='block';backBtn.href='/portals/?s='+slug;}
+  var renderer=RENDERERS[pid];
+  var body=renderer?(pid==='cost'||pid==='quote'?renderer(snap):renderer()):renderGeneric(p.label);
+  var date=p.pushed?new Date(p.pushed).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}):'';
+  document.getElementById('root').innerHTML=clientHeader(snap,portal)
+    +'<div class="sec">'+icon+' '+p.label+'</div>'
+    +body
+    +'<div style="font-size:10px;color:#9ca3af;text-align:right;margin-top:8px">Published '+date+(p.pushedBy?' by '+p.pushedBy:'')+'</div>'
+    +'<div style="margin-top:16px"><a href="/portals/?s='+slug+'" style="display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-size:13px;font-weight:700;text-decoration:none;padding:10px 18px;background:#fff;border:1.5px solid var(--border);border-radius:8px">← Back to My Portal</a></div>'
+    +'<div class="footer"><strong>Alpha Timeshare Consultants</strong><br>Confidential — prepared for '+(snap?((snap.firstName||'')+(snap.lastName?' '+snap.lastName:'')).trim():'you')+' only</div>';
+}
 
-  document.getElementById('portal-root').innerHTML=hdr+content+footer;
-})();
-
-// ── DIRECTORY VIEW ──────────────────────────────────────────────────
-function renderDirectory(){
+// ── PORTAL DIRECTORY (no slug) ────────────────────────────────────────
+function renderDir(){
   document.title='Client Portals — Alpha Files';
   var all={};try{all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');}catch(e){}
   var dir=[];try{dir=JSON.parse(localStorage.getItem('portal_dir')||'[]');}catch(e){}
-  Object.keys(all).forEach(function(s){
-    var p={};try{p=JSON.parse(localStorage.getItem('portal_'+s)||'{}');}catch(e){}
-    if(Object.keys(p).length&&!dir.find(function(x){return x.slug===s;})){
-      var c=all[s];dir.push({slug:s,name:((c.firstName||'')+(c.lastName?' '+c.lastName:'')).trim()||s,created:c._created||Date.now()});
-    }
-  });
+  Object.keys(all).forEach(function(s){var p={};try{p=JSON.parse(localStorage.getItem('portal_'+s)||'{}');}catch(e){}if(Object.keys(p).length&&!dir.find(function(x){return x.slug===s;})){var c=all[s];dir.push({slug:s,name:((c.firstName||'')+(c.lastName?' '+c.lastName:'')).trim()||s,created:c._created||Date.now()});}});
   localStorage.setItem('portal_dir',JSON.stringify(dir));
   dir.sort(function(a,b){return(b.created||0)-(a.created||0);});
-  if(!dir.length){
-    document.getElementById('portal-root').innerHTML='<div class="empty"><div style="font-size:36px;margin-bottom:12px">🌐</div><div style="font-weight:700;margin-bottom:6px">No portals yet</div><div style="font-size:12px">Push pages to a client to create their portal.</div></div>';
-    return;
-  }
-  document.getElementById('portal-root').innerHTML='<h2 style="font-family:\'Barlow Condensed\',sans-serif;font-size:24px;font-weight:900;color:var(--navy);margin-bottom:16px">🌐 Client Portals</h2>'
-    +dir.map(function(e){
-      var p={};try{p=JSON.parse(localStorage.getItem('portal_'+e.slug)||'{}');}catch(ex){}
-      var cnt=Object.keys(p).length;
-      var initials=(e.name||'?').split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();
-      return'<a href="/portals/?s='+e.slug+'" style="display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:14px 16px;margin-bottom:8px;text-decoration:none;color:var(--text)">'
-        +'<div style="width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:17px;font-weight:900;flex-shrink:0">'+initials+'</div>'
-        +'<div style="flex:1"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:17px;font-weight:800;color:var(--navy)">'+e.name+'</div></div>'
-        +'<div style="text-align:right"><div style="font-family:\'Cormorant Garamond\',sans-serif;font-size:22px;font-weight:700;color:var(--gold)">'+cnt+'</div><div style="font-size:10px;color:#9ca3af">pages live</div></div>'
-        +'</a>';
-    }).join('');
+  var html='<h2 style="font-family:\'Barlow Condensed\',sans-serif;font-size:26px;font-weight:900;color:var(--navy);margin-bottom:16px">🌐 Client Portals</h2>'
+    +(dir.length?dir.map(function(e){var p={};try{p=JSON.parse(localStorage.getItem('portal_'+e.slug)||'{}');}catch(ex){}var cnt=Object.keys(p).length;var initials=(e.name||'?').split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();return'<a href="/portals/?s='+e.slug+'" class="page-card"><div style="width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:17px;font-weight:900;flex-shrink:0">'+initials+'</div><div><div class="pc-name">'+e.name+'</div></div><div style="margin-left:auto;text-align:right"><div style="font-family:\'Cormorant Garamond\',serif;font-size:22px;font-weight:700;color:var(--gold)">'+cnt+'</div><div style="font-size:10px;color:#9ca3af">pages</div></div></a>';}).join(''):'<div style="text-align:center;padding:40px;color:#9ca3af">No portals yet.</div>');
+  document.getElementById('root').innerHTML=html;
 }
+
+// ── INIT ──────────────────────────────────────────────────────────────
+if(!slug){renderDir();}
+else if(page){showPage(page);}
+else{showDirectory();}
 </script>
 </body>
 </html>
