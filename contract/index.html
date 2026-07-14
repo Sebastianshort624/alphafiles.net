@@ -418,6 +418,15 @@ window.addEventListener('storage',function(e){if(e.key===_SK){buildPortalBanner(
 window._navClick=function(e,url){if(window._dirty){e.preventDefault();showUnsaved(function(){setDirty(false);window.location.href=url;});return false;}return true;};
 window._sf=function(k,v){var s=_aC();if(!s)return;var a=_gA();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();_sA(a);};
 
+// ── TOGGLE INDIVIDUAL PAGE DONE ──────────────────────────────────────
+window._toggleDone=function(url){
+  var slug=_aC();if(!slug)return;
+  var comp=_getCompleted();
+  if(comp[url])delete comp[url];
+  else comp[url]={ts:Date.now()};
+  localStorage.setItem('completed_'+slug,JSON.stringify(comp));
+  buildSB();
+};
 // ── HIDE COMPLETED TOGGLE ─────────────────────────────────────────────
 function _getHideCompleted(){return localStorage.getItem('sb_hide_completed')!=='false';}
 window.toggleHideCompleted=function(){localStorage.setItem('sb_hide_completed',(!_getHideCompleted()).toString());buildSB();}
@@ -450,12 +459,14 @@ var _PG=[
   {n:24, ic:"\u{1F389}",lb:"Let's Be Timeshare Free",url:"/timeshare-free/"}
 ];
 
-// ── MARK CURRENT PAGE AS COMPLETED ───────────────────────────────────
-(function(){
-  var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
-  var pg=_PG.find(function(p){return p.url===cur&&typeof p.n==='number'&&p.n>0;});
-  if(pg)_markPageCompleted(cur);
-})();
+// ── MARK PAGE DONE WHEN NEXT IS CLICKED ─────────────────────────────
+document.addEventListener('click', function(e){
+  var a=e.target.closest('a.nn, a[class*="nn"], button.nn');
+  if(a){
+    var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
+    _markPageCompleted(cur);
+  }
+}, true);
 
 // ── BUILD LEFT NAV ─────────────────────────────────────────────────────
 function buildSB(){
@@ -516,11 +527,15 @@ function buildSB(){
 
   function navItem(p,done){
     var act=cur===p.url;
-    return "<a href='"+p.url+"' onclick='return _navClick(event,\""+p.url+"\")' style='display:flex;align-items:center;gap:6px;padding:"+(done?"5px":"6px")+" 10px;text-decoration:none;"
-      +"color:"+(done?"rgba(52,199,89,.6)":act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
-      +"border-left:3px solid "+(done?"rgba(52,199,89,.3)":act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
-      +(done?"<span style='font-size:10px;color:rgba(52,199,89,.6)'>✓</span>":"<span style='font-size:10px;font-weight:700;background:rgba(255,255,255,.08);border-radius:3px;padding:1px 4px;min-width:18px;text-align:center;color:"+(act?"#C8960C":"rgba(255,255,255,.3)")+"'>"+p.n+"</span>")
-      +"<span style='flex:1;line-height:1.3"+(done?";text-decoration:line-through;opacity:.6":"")+"'>"+p.lb+"</span>"
+    var url=p.url;
+    // Checkbox click toggles completion without navigating
+    var cbk="event.stopPropagation();event.preventDefault();window._toggleDone('"+url+"');return false;";
+    var cb="<span onclick=\""+cbk+"\" style='display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1.5px solid "+(done?"rgba(52,199,89,.6)":"rgba(255,255,255,.2)")+";border-radius:3px;background:"+(done?"rgba(52,199,89,.2)":"transparent")+";cursor:pointer;flex-shrink:0'>"+(done?"<span style='font-size:8px;color:#34c759'>✓</span>":"")+"</span>";
+    return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' style='display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;"
+      +"color:"+(done?"rgba(255,255,255,.4)":act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
+      +"border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
+      +cb
+      +"<span style='flex:1;line-height:1.3'>"+p.lb+"</span>"
       +"</a>";
   }
 
