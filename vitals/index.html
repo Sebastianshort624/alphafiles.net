@@ -1008,7 +1008,14 @@ function _topSaveClick(){
 <div class="card">
   <div class="card-hdr">Resort &amp; Purchase Info</div>
   <div class="card-body">
-    <div class="ff"><label>Resort Name</label><input id="v-resort" class="hi" oninput="autoSave();calcComparison()"></div>
+    <div class="ff">
+  <label>Resort Name</label>
+  <div style="display:flex;gap:6px">
+    <input id="v-resort" class="hi" list="resort-list" placeholder="Type or select..." oninput="autoSave();calcComparison()" style="flex:1">
+    <button type="button" onclick="addCustomResort()" title="Add custom resort" style="background:var(--gold);color:#fff;border:none;border-radius:6px;padding:0 10px;font-size:16px;cursor:pointer;font-weight:700;flex-shrink:0">+</button>
+  </div>
+  <datalist id="resort-list" id="resort-list"></datalist>
+</div>
     <div class="frow">
       <div class="ff"><label>City</label><input id="v-rescity" placeholder="" oninput="autoSave()"></div>
       <div class="ff"><label>State</label><input id="v-loc" placeholder="" oninput="autoSave()"></div>
@@ -1084,10 +1091,23 @@ function _topSaveClick(){
   </div>
   <!-- Owes / Behind — payment fields -->
   <div class="ps" id="mtg-details">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
       <div class="ff">
         <label>Monthly Payment</label>
         <input id="v-mtg" type="number" placeholder="" oninput="autoSave();calcTotals();calcMtgRemaining();calcPurchaseFinance();calcComparison()">
+      </div>
+      <div class="ff">
+        <label>Loan Term (years)</label>
+        <select id="v-mtg-term" onchange="autoSave();calcMtgRemaining();calcPurchaseFinance()">
+          <option value="5">5 years</option>
+          <option value="7">7 years</option>
+          <option value="10" selected>10 years (default)</option>
+          <option value="12">12 years</option>
+          <option value="15">15 years</option>
+          <option value="20">20 years</option>
+          <option value="25">25 years</option>
+          <option value="30">30 years</option>
+        </select>
       </div>
       <div class="ff ro">
         <label>Annual</label>
@@ -2105,7 +2125,7 @@ function loadData(){
     'v-first':'firstName','v-last':'lastName','v-phone':'phone','v-phone2':'phone2','v-email':'email',
     'v-co':'coFirst','v-col':'coLast','v-resort':'resort','v-loc':'location','v-rescity':'resortCity',
     'v-year':'yearPurchased','v-pprice':'purchasePrice','v-why':'whyOut',
-    'v-mtf':'maitFees','v-mtg':'monthlyMortgage','v-balance':'balanceAmount',
+    'v-mtf':'maitFees','v-mtg':'monthlyMortgage','v-balance':'balanceAmount','v-mtg-term':'mtgTerm',
     'v-mtfb':'mtfBehind','v-mtgb':'mtgBehind','v-fee':'alphaFee','v-term':'selectedTerm',
     'v-fund':'fundingStatus','v-obj':'objection','v-objstat':'objStatus','v-note':'notes',
     'v-credit-affected':'creditAffected','v-fico':'ficoScore','v-resort-threat':'resortThreat',
@@ -2115,6 +2135,9 @@ function loadData(){
     var el=document.getElementById(id);
     if(el&&d[map[id]]!==undefined&&d[map[id]]!=='')el.value=d[map[id]];
   });
+  // Alpha fee: ALWAYS default to blank unless explicitly saved & non-zero
+  var feeEl=document.getElementById('v-fee');
+  if(feeEl) feeEl.value=(d.alphaFee&&parseFloat(d.alphaFee)>0)?d.alphaFee:'';
   var mtgSet = d.mortgageType || (parseFloat(d.monthlyMortgage)>0 ? 'ow' : 'pf');
   setMtg(mtgSet);
   if(typeof d.vitalsStage==='number'){var pills=document.querySelectorAll('.sp');if(pills[d.vitalsStage])setStage(d.vitalsStage,pills[d.vitalsStage]);}
@@ -2168,6 +2191,37 @@ window.addEventListener('beforeunload', function(){
   });
   sa(all);
 });
+
+
+// ── RESORT AUTOCOMPLETE ──────────────────────────────────────────────
+var _DEFAULT_RESORTS = ["Wyndham", "Marriott Vacation Club", "Hilton Grand Vacations", "Diamond Resorts", "Bluegreen Vacations", "Holiday Inn Club Vacations", "Westgate Resorts", "Sunterra", "Shell Vacations", "Vistana Resorts", "Hyatt Residence Club", "Disney Vacation Club", "Bahia Principe", "Club de Soleil", "Starwood Vacation", "Capital Vacations", "Vacation Village", "Grand Crowne", "Silverleaf Resorts", "Festiva", "Massanutten", "Orange Lake", "Club Exploria", "Sunset Group", "Vidanta", "RCI", "Interval International", "Sands Ocean Club", "King"s Creek Plantation", "Blue Water Resort", "Smugglers" Notch"];
+
+function buildResortList(){
+  var custom = [];
+  try{custom=JSON.parse(localStorage.getItem('atc_resorts')||'[]');}catch(e){}
+  var all = _DEFAULT_RESORTS.concat(custom);
+  var dl = document.getElementById('resort-list');
+  if(!dl) return;
+  dl.innerHTML = all.map(function(r){return '<option value="'+r+'">';}).join('');
+}
+
+window.addCustomResort = function(){
+  var inp = document.getElementById('v-resort');
+  var val = inp ? inp.value.trim() : '';
+  if(!val){val = prompt('Resort name:','');if(!val)return;}
+  var custom = [];
+  try{custom=JSON.parse(localStorage.getItem('atc_resorts')||'[]');}catch(e){}
+  if(custom.indexOf(val)<0 && _DEFAULT_RESORTS.indexOf(val)<0){
+    custom.push(val);
+    localStorage.setItem('atc_resorts',JSON.stringify(custom));
+    buildResortList();
+    if(typeof toast==='function') toast('Resort saved: '+val,'#16a34a');
+  }
+  if(inp) inp.value = val;
+  autoSave();
+};
+
+document.addEventListener('DOMContentLoaded', buildResortList);
 
 // ── EMAIL GENERATOR ──────────────────────────────────────────────────────
 function _clientHeader(){
