@@ -651,10 +651,82 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="card-hdr" style="color:var(--gold)">📋 Paste CRM Data → Auto-Populate</div>
   <div class="card-body">
     <textarea id="crm-paste-box" placeholder="Paste all client info from CRM here — names, resort, phone, email, fees, mortgage, MTF, purchase date, why they want out, etc. Then click POPULATE." style="width:100%;min-height:90px;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:Inter,sans-serif;font-size:12px;resize:vertical;margin-bottom:10px"></textarea>
-    <button onclick="populateFromCRM()" style="padding:8px 20px;background:#C8960C;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">⚡ POPULATE</button>
+    <button id="populate-btn" style="padding:8px 20px;background:#C8960C;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">⚡ POPULATE</button>
     <span id="pop-status" style="margin-left:12px;font-size:12px;color:#16A34A;display:none">✓ Fields populated — review and save</span>
   </div>
 </div>
+<script>
+(function(){
+  function doPopulate(){
+    var raw=document.getElementById('crm-paste-box').value;
+    if(!raw||!raw.trim()){alert('Paste CRM data first.');return;}
+    var t=raw.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/^\s*[*\-]\s*/gm,'');
+    function field(names){
+      for(var i=0;i<names.length;i++){
+        var nm=names[i].replace(/[.*+?^${}()|[\]\]/g,'\$&');
+        var m=t.match(new RegExp(nm+'[^\t\n]*\t\n?([^\t\n][^\n]{0,150})','i'));
+        if(!m)m=t.match(new RegExp(nm+'[^\n]*\n([^\n]{1,150})','i'));
+        if(m&&m[1]){
+          var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
+          if(v&&v!=='-'&&v.toLowerCase()!=='n/a'&&v!=='NA')return v;
+        }
+      }
+      return '';
+    }
+    function setf(id,val){
+      if(!val)return;
+      var el=document.getElementById(id);
+      if(!el)return;
+      el.value=val;
+      try{el.dispatchEvent(new Event('input',{bubbles:true}));}catch(e){}
+    }
+    var fn=field(['First Name','Lead Name']);
+    // Handle "Andrew Hwang -" style names
+    if(fn&&fn.indexOf(' ')>-1){
+      var parts=fn.replace(/\s*-\s*$/,'').trim().split(/\s+/);
+      if(parts.length>=2){setf('v-first',parts[0]);setf('v-last',parts.slice(1).join(' '));}
+      else{setf('v-first',parts[0]);}
+    } else {
+      setf('v-first',fn);
+      setf('v-last',field(['Last Name']));
+    }
+    var email=field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,'');
+    setf('v-email',email);
+    var phone=field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,'');
+    setf('v-phone',phone);
+    setf('v-resort',field(['R1-Resort Name']));
+    setf('v-rescity',field(['R1-Resort City']));
+    setf('v-loc',field(['R1-Resort State']));
+    var yr=field(['R1-Date Purchased','Date Purchased']);
+    var ym=yr.match(/(20\d{2}|19\d{2})/);if(ym)setf('v-year',ym[1]);
+    var pp=field(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');if(pp)setf('v-pprice',pp);
+    var mf=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','Maintenance']).replace(/[^0-9.]/g,'');if(mf)setf('v-mtf',mf);
+    var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
+    if(ms.indexOf('paid')>-1){
+      setf('v-mtg','0');var b=document.getElementById('mt-pf');if(b)b.click();
+    } else {
+      var mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');if(mg)setf('v-mtg',mg);
+      var bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');if(bl)setf('v-balance',bl);
+    }
+    var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');if(fee)setf('v-fee',fee);
+    var why=field(['R1-Why do they want out','Why do they want out']);if(why)setf('v-why',why);
+    var lang=field(['Preffered Language','Preferred Language']).toLowerCase();
+    if(lang.indexOf('spanish')>-1&&typeof window.atcSetLang==='function')window.atcSetLang('es');
+    var st=document.getElementById('pop-status');if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},3000);}
+    setTimeout(function(){
+      try{if(typeof calcTotals==='function')calcTotals();}catch(e){}
+      try{if(typeof autoSave==='function')autoSave();}catch(e){}
+      try{if(typeof calcComparison==='function')calcComparison();}catch(e){}
+    },150);
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('populate-btn');
+    if(btn)btn.addEventListener('click',doPopulate);
+  });
+  // Also set global as backup
+  window.populateFromCRM=doPopulate;
+})();
+</script>
 
 <div class="card">
   <div class="card-hdr">Owner Information</div>
