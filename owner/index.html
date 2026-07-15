@@ -754,10 +754,9 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <!-- Tab Bar -->
   <div class="r-tabbar">
     <button class="r-tab active" onclick="switchResort(0)" id="rtab-0">R-1</button>
-    <button class="r-tab" onclick="switchResort(1)" id="rtab-1" style="display:none">R-2</button>
-    <button class="r-tab" onclick="switchResort(2)" id="rtab-2" style="display:none">R-3</button>
-    <button class="r-tab" onclick="switchResort(3)" id="rtab-3" style="display:none">R-4</button>
-    <button class="r-tab-add" onclick="addResort()" id="r-add-btn">+ Add Resort</button>
+    <button class="r-tab inactive" onclick="activateResort(1)" id="rtab-1">R-2</button>
+    <button class="r-tab inactive" onclick="activateResort(2)" id="rtab-2">R-3</button>
+    <button class="r-tab inactive" onclick="activateResort(3)" id="rtab-3">R-4</button>
   </div>
 
   <!-- Resort Panels — one per resort -->
@@ -769,7 +768,8 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .r-tabbar{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid #e5e7eb;align-items:center;flex-wrap:wrap}
 .r-tab{padding:7px 18px;font-size:13px;font-weight:700;border-radius:8px 8px 0 0;border:1.5px solid #e5e7eb;border-bottom:none;background:#f8fafc;color:#374151;cursor:pointer;transition:.1s}
 .r-tab.active{background:#1B2A4A;color:#C8960C;border-color:#1B2A4A}
-.r-tab-add{margin-left:auto;padding:5px 12px;font-size:11px;font-weight:700;border-radius:6px;border:1.5px dashed #C8960C;background:rgba(200,150,12,.07);color:#C8960C;cursor:pointer}
+.r-tab.inactive{background:#f3f3f3;color:#c0c0c0;border-color:#e0e0e0;border-style:dashed}
+.r-tab.has-data{background:#fff;color:#374151;border-color:#c8960c;border-style:solid}
 .r-panel{padding:14px;display:none}
 .r-panel.active{display:block}
 .r-panel-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -923,21 +923,27 @@ function _autoSaveResorts(){
 function switchResort(ri){
   _activeResort=ri;
   document.querySelectorAll('.r-panel').forEach(function(p,i){p.classList.toggle('active',i===ri);});
-  document.querySelectorAll('.r-tab').forEach(function(t,i){t.classList.toggle('active',i===ri);});
+  document.querySelectorAll('.r-tab').forEach(function(t,i){
+    var resorts=_getResorts();
+    var hasData=resorts[i]&&resorts[i].name;
+    t.classList.remove('active','inactive','has-data');
+    if(i===ri){t.classList.add('active');}
+    else if(hasData){t.classList.add('has-data');}
+    else{t.classList.add('inactive');}
+  });
 }
 
-function addResort(){
+function activateResort(ri){
+  // If already has data, just switch to it
   var resorts=_getResorts();
-  for(var i=1;i<4;i++){
-    var tab=document.getElementById('rtab-'+i);
-    if(tab&&tab.style.display==='none'){
-      tab.style.display='';
-      // Check if we need to update the add button visibility
-      if(i===3){var addBtn=document.getElementById('r-add-btn');if(addBtn)addBtn.style.display='none';}
-      switchResort(i);
-      return;
-    }
+  var tab=document.getElementById('rtab-'+ri);
+  if(resorts[ri]&&resorts[ri].name){
+    switchResort(ri);
+    return;
   }
+  // Activate empty tab for data entry
+  if(tab){tab.classList.remove('inactive');tab.classList.add('active');}
+  switchResort(ri);
 }
 
 function removeResort(ri){
@@ -945,13 +951,9 @@ function removeResort(ri){
   var resorts=_getResorts();
   resorts[ri]={};
   _saveResorts(resorts);
-  // Hide the tab
   var tab=document.getElementById('rtab-'+ri);
-  if(tab)tab.style.display='none';
-  // Clear the panel
+  if(tab){tab.classList.remove('active','has-data');tab.classList.add('inactive');}
   _fillPanel(ri,{});
-  // Show add button again
-  var addBtn=document.getElementById('r-add-btn');if(addBtn)addBtn.style.display='';
   switchResort(0);
 }
 
@@ -968,12 +970,12 @@ function removeResort(ri){
     _fillPanel(j,resorts[j]);
     var hasData=resorts[j]&&resorts[j].name;
     var tab=document.getElementById('rtab-'+j);
-    if(j>0&&tab){tab.style.display=hasData?'':'none';}
+    if(tab&&j>0){
+      tab.classList.remove('active','inactive','has-data');
+      if(hasData){tab.classList.add('has-data');}
+      else{tab.classList.add('inactive');}
+    }
   }
-  // Hide add button if all 4 are used
-  var allUsed=resorts[1]&&resorts[1].name&&resorts[2]&&resorts[2].name&&resorts[3]&&resorts[3].name;
-  var addBtn=document.getElementById('r-add-btn');
-  if(addBtn&&allUsed)addBtn.style.display='none';
 })();
 </script>
 
