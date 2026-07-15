@@ -634,13 +634,24 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
-<!-- YOUR COSTS -->
+<!-- YOUR COSTS — Box 1: Total Cost (navy/gold) | Box 2: Mortgage (teal) | Box 3: MTF (green) -->
 <div class="sc">
   <div class="slbl">Your Costs</div>
   <div class="cost-grid">
 
-    <div class="cost-col" id="mtg-col" style="display:none">
-      <div class="cost-col-hdr">Mortgage</div>
+    <!-- BOX 1: TOTAL COST — primary -->
+    <div class="cost-col total-col">
+      <div class="cost-col-hdr">💳 Total Cost</div>
+      <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-tot-mo">—</span></div>
+      <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-tot-yr">—</span></div>
+      <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-tot-2">—</span></div>
+      <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-tot-3">—</span></div>
+      <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-tot-5">—</span></div>
+    </div>
+
+    <!-- BOX 2: MORTGAGE — teal -->
+    <div class="cost-col mtg-col" id="mtg-col" style="display:none">
+      <div class="cost-col-hdr">🏦 Mortgage</div>
       <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-mtg-mo">—</span></div>
       <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-mtg-yr">—</span></div>
       <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-mtg-2">—</span></div>
@@ -648,22 +659,14 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
       <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-mtg-5">—</span></div>
     </div>
 
-    <div class="cost-col">
-      <div class="cost-col-hdr">Maintenance Fees</div>
+    <!-- BOX 3: MTF — green -->
+    <div class="cost-col mtf-col">
+      <div class="cost-col-hdr">📈 Maintenance Fees</div>
       <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-mtf-mo">—</span></div>
       <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-mtf-yr">—</span></div>
       <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-mtf-2">—</span></div>
       <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-mtf-3">—</span></div>
       <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-mtf-5">—</span></div>
-    </div>
-
-    <div class="cost-col total-col">
-      <div class="cost-col-hdr">Total Cost</div>
-      <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-tot-mo">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-tot-yr">—</span></div>
-      <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-tot-2">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-tot-3">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-tot-5">—</span></div>
     </div>
 
   </div>
@@ -693,26 +696,38 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .slbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:18px}
 .cost-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 @media(max-width:600px){.cost-grid{grid-template-columns:1fr}}
-.cost-col{background:#f8fafc;border-radius:8px;overflow:hidden}
-.cost-col.total-col{background:var(--navy)}
-.cost-col-hdr{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;background:rgba(0,0,0,.05);color:#374151}
-.cost-col.total-col .cost-col-hdr{background:rgba(200,150,12,.2);color:var(--gold)}
+/* BOX 1 — Total Cost (navy/gold) */
+.cost-col.total-col{background:var(--navy);border-radius:8px;overflow:hidden}
+.cost-col.total-col .cost-col-hdr{background:rgba(200,150,12,.15);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px}
+.cost-col.total-col .cost-row{border-bottom-color:rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.cost-col.total-col .cost-row:last-child{border:none}
+.cost-col.total-col .cost-row.hl{background:rgba(200,150,12,.12)}
+.cost-col.total-col .cr-lbl{color:rgba(255,255,255,.5);font-size:12px;font-weight:500}
+.cost-col.total-col .cr-val{color:var(--gold);font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700}
+/* BOX 2 — Mortgage (teal) */
+.cost-col.mtg-col{background:#0e7490;border-radius:8px;overflow:hidden}
+.cost-col.mtg-col .cost-col-hdr{background:rgba(0,0,0,.15);color:#a5f3fc;font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px}
+.cost-col.mtg-col .cost-row{border-bottom-color:rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.cost-col.mtg-col .cost-row:last-child{border:none}
+.cost-col.mtg-col .cost-row.hl{background:rgba(255,255,255,.08)}
+.cost-col.mtg-col .cr-lbl{color:rgba(255,255,255,.55);font-size:12px;font-weight:500}
+.cost-col.mtg-col .cr-val{color:#fff;font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700}
+/* BOX 3 — MTF Fees (green) */
+.cost-col.mtf-col{background:#15803d;border-radius:8px;overflow:hidden}
+.cost-col.mtf-col .cost-col-hdr{background:rgba(0,0,0,.15);color:#86efac;font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px}
+.cost-col.mtf-col .cost-row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.cost-col.mtf-col .cost-row:last-child{border:none}
+.cost-col.mtf-col .cost-row.hl{background:rgba(255,255,255,.08)}
+.cost-col.mtf-col .cr-lbl{color:rgba(255,255,255,.55);font-size:12px;font-weight:500}
+.cost-col.mtf-col .cr-val{color:#fff;font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700}
+/* Shared */
+.cost-col{border-radius:8px;overflow:hidden}
+.cost-col-hdr{font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;background:rgba(0,0,0,.05);color:#374151}
 .cost-row{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #e5e7eb}
-.cost-col.total-col .cost-row{border-bottom-color:rgba(255,255,255,.08)}
 .cost-row:last-child{border:none}
-.cost-row.hl{background:rgba(200,150,12,.08)}
-.cost-col.total-col .cost-row.hl{background:rgba(200,150,12,.15)}
+.cost-row.hl{background:rgba(0,0,0,.04)}
 .cr-lbl{font-size:12px;color:#6b7280;font-weight:500}
-.cost-col.total-col .cr-lbl{color:rgba(255,255,255,.5)}
-.cr-val{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--navy)}
-.cost-col.total-col .cr-val{color:var(--gold)}
-.dark-q{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:12px;font-weight:500}
-.dark-a{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;font-style:italic;line-height:1.4}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
-.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
-.nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
-.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-</style>
+.cr-val{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700;color:var(--navy)}</style>
 
 <script>
 (function(){
