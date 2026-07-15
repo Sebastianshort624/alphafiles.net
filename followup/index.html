@@ -293,9 +293,21 @@ window.doPush=function(){
   else if(pushedOther&&!currentStatus){_setStatus('attended');}
   var nm=(d&&((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim())||'Client';
   _addToDir(slug,nm);
+  // Generate shareable hash URL with all data embedded (works on any device)
+  var payload={snap:snap,portal:portal,slug:slug,agent:{name:'Sebastian Short',ext:'134',company:'Alpha Timeshare Consultants',phone:'(800) 000-0000'}};
+  var encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  var shareUrl='https://alphafiles.net/portals/#'+encoded;
+  localStorage.setItem('portal_share_'+slug, shareUrl);
   closePushPopup();
-  var portalUrl='https://alphafiles.net/portals/?s='+slug;
-  toast('✅ Pushed '+pushedPages.length+' page'+(pushedPages.length!==1?'s':'')+' — '+portalUrl,'#16a34a');
+  // Show share URL for copying
+  var toast2=document.createElement('div');
+  toast2.style.cssText='position:fixed;bottom:80px;left:220px;right:210px;background:#1B2A4A;border:2px solid #C8960C;color:#fff;padding:14px 16px;border-radius:10px;z-index:800;font-size:12px';
+  toast2.innerHTML='<div style="font-size:10px;color:#C8960C;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">✅ Portal Ready — Client Share Link</div>'
+    +'<div style="font-family:monospace;font-size:11px;word-break:break-all;color:rgba(255,255,255,.7);margin-bottom:8px">'+shareUrl.substring(0,80)+'...</div>'
+    +'<button onclick="navigator.clipboard.writeText(''+shareUrl+'').then(function(){this.textContent='✓ Copied!';}.bind(this))" style="background:#C8960C;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Link</button>'
+    +'<button onclick="this.parentNode.remove()" style="background:transparent;color:rgba(255,255,255,.4);border:none;cursor:pointer;float:right;font-size:16px">✕</button>';
+  document.body.appendChild(toast2);
+  setTimeout(function(){if(toast2.parentNode)toast2.remove();},12000);
   buildPortalBanner();
 };
 
