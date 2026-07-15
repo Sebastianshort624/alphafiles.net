@@ -618,13 +618,12 @@ window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});ret
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
 <div class="sidenav" id="sidenav"></div>
-<div class="main">
-<div class="wrap">
+<div class="main"><div class="wrap">
 
 <div class="ph">
   <div class="ph-num">3</div>
   <div class="ph-title">Leverage</div>
-  <div class="ph-sub">Why resorts choose to negotiate</div>
+  <div class="ph-sub">Why Resorts Choose to Negotiate</div>
 </div>
 
 <div class="vb">
@@ -634,182 +633,205 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
-<!-- HOOK STATEMENT -->
-<div style="background:var(--navy);border-radius:10px;padding:20px 24px;margin-bottom:14px;text-align:center">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.7);margin-bottom:10px">The Core Truth</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.5;font-style:italic">"Resorts don't make decisions based on fairness.</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#C8960C;line-height:1.5;font-style:italic">They make decisions based on financial risk."</div>
+<!-- CORE TRUTH -->
+<div class="hook-card">
+  <div class="hook-eye">The Core Truth</div>
+  <div class="hook-line">Resorts do not make decisions based on emotion.</div>
+  <div class="hook-line gold">They make decisions based on risk.</div>
+  <div class="hook-sub">A resort evaluates the facts, the documentation, the potential exposure, and the cost of resolving the issue.</div>
 </div>
 
-<!-- PROCESS STEPS -->
-<div class="pb">
-  <div class="slbl">How We Build Your Leverage</div>
-  <div style="display:flex;flex-direction:column;gap:0">
+<!-- HOW WE BUILD LEVERAGE -->
+<div class="sc">
+  <div class="slbl">How We Build Leverage</div>
+  <div class="steps">
 
-    <div style="display:flex;gap:0;align-items:stretch">
-      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:52px">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--navy);border:3px solid #C8960C;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎙️</div>
-        <div style="width:2px;flex:1;background:#e5e7eb;margin:4px 0"></div>
-      </div>
-      <div style="padding:0 0 18px 14px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--navy);margin-bottom:4px">Step 1 — Your Interview</div>
-        <div style="font-size:13px;color:#374151;line-height:1.7">We walk through every stage of your ownership — purchase, financing, how it was sold to you, what you were promised, and any attempts to resell. Every detail matters.</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Your Interview</div>
+        <div class="step-text">We document your ownership history — how you purchased, how it was financed, what was presented during the sale, what you were told, and any attempts to sell or exit. Every detail matters.</div>
       </div>
     </div>
 
-    <div style="display:flex;gap:0;align-items:stretch">
-      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:52px">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--navy);border:3px solid #C8960C;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🖥️</div>
-        <div style="width:2px;flex:1;background:#e5e7eb;margin:4px 0"></div>
-      </div>
-      <div style="padding:0 0 18px 14px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--navy);margin-bottom:4px">Step 2 — Software Review</div>
-        <div style="font-size:13px;color:#374151;line-height:1.7">Our proprietary software maps every finding to applicable federal and state consumer protection statutes — identifying exactly which rights may have been violated.</div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Software Review</div>
+        <div class="step-text">Our software organizes the findings and compares them against applicable federal and state consumer protection statutes. This identifies which issues may apply to your situation.</div>
       </div>
     </div>
 
-    <div style="display:flex;gap:0;align-items:stretch">
-      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:52px">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--navy);border:3px solid #C8960C;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📊</div>
-        <div style="width:2px;flex:1;background:#e5e7eb;margin:4px 0"></div>
-      </div>
-      <div style="padding:0 0 18px 14px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--navy);margin-bottom:4px">Step 3 — Exposure Calculation</div>
-        <div style="font-size:13px;color:#374151;line-height:1.7">Each violation is matched to its potential fine or penalty. These aren't estimates — they are the regulatory consequences the resort's legal team must consider.</div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Exposure Calculation</div>
+        <div class="step-text">Each documented issue is evaluated against the potential penalties and regulatory consequences of the applicable laws. This creates a clear picture of potential exposure.</div>
       </div>
     </div>
 
-    <div style="display:flex;gap:0;align-items:stretch">
-      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:52px">
-        <div style="width:40px;height:40px;border-radius:50%;background:#C8960C;border:3px solid #C8960C;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">⚖️</div>
-      </div>
-      <div style="padding:0 0 4px 14px">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--navy);margin-bottom:4px">Step 4 — The Resort's Decision</div>
-        <div style="font-size:13px;color:#374151;line-height:1.7">When the total documented exposure is presented, the resort's legal team faces a choice: defend every claim in court — or negotiate a mutual release. When the math favors settlement, they settle.</div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">The Resort's Decision</div>
+        <div class="step-text">Once documented exposure is presented, the resort has a business decision — defend each claim, or negotiate a resolution. When settlement is the more practical option, both sides have a reason to resolve the matter.</div>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- RESORT DECISION VISUAL -->
-<div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:14px">
-  <div style="background:#fff5f5;border:1.5px solid #fecaca;border-radius:10px;padding:14px;text-align:center">
-    <div style="font-size:22px;margin-bottom:6px">⚔️</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#dc2626;margin-bottom:4px">Defend in Court</div>
-    <div style="font-size:11px;color:#9ca3af;line-height:1.5">Legal fees · Discovery · Regulatory scrutiny · Potential fines · Public exposure</div>
-    <div style="margin-top:8px;font-size:11px;font-weight:700;color:#dc2626">HIGH COST · HIGH RISK</div>
+<!-- TWO PATHS -->
+<div class="two-col">
+  <div class="path-card defend">
+    <div class="path-label">Defend</div>
+    <div class="path-items">
+      <div class="path-item">Legal fees</div>
+      <div class="path-item">Discovery</div>
+      <div class="path-item">Regulatory review</div>
+      <div class="path-item">Potential penalties</div>
+      <div class="path-item">Public exposure</div>
+    </div>
+    <div class="path-verdict bad">Higher Cost · Higher Risk</div>
   </div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#9ca3af;text-align:center">VS</div>
-  <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:14px;text-align:center">
-    <div style="font-size:22px;margin-bottom:6px">🤝</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#16a34a;margin-bottom:4px">Negotiate Release</div>
-    <div style="font-size:11px;color:#9ca3af;line-height:1.5">Controlled settlement · Defined cost · No court · No regulatory risk · Clean resolution</div>
-    <div style="margin-top:8px;font-size:11px;font-weight:700;color:#16a34a">LOWER COST · LOWER RISK</div>
+  <div class="path-card settle">
+    <div class="path-label">Negotiate Release</div>
+    <div class="path-items">
+      <div class="path-item">Defined resolution</div>
+      <div class="path-item">Controlled process</div>
+      <div class="path-item">Avoided litigation expense</div>
+      <div class="path-item">Clean agreement</div>
+    </div>
+    <div class="path-verdict good">Lower Cost · Lower Risk</div>
   </div>
 </div>
 
-<div style="background:linear-gradient(135deg,#fff8e0,#fef3c7);border:1.5px solid #C8960C;border-radius:10px;padding:16px 20px;margin-bottom:14px">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#92400e;margin-bottom:6px">💡 The Objective</div>
-  <div style="font-size:13px;color:#a16207;line-height:1.7">We are not threatening litigation. We are presenting documented financial exposure that makes settlement the resort's most rational business decision. The goal is a mutual release — not a courtroom.</div>
+<!-- THE OBJECTIVE -->
+<div class="sc objective-card">
+  <div class="obj-line">The goal is not to threaten litigation.</div>
+  <div class="obj-line">The goal is to present documented facts and financial exposure that give the resort a reason to negotiate.</div>
+  <div class="obj-emphasis">The objective is a mutual release — not a courtroom.</div>
 </div>
 
-<div class="pb">
-  <div class="slbl">How Leverage Is Built</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px">
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:24px;margin-bottom:6px">🔍</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px">Identify Violations</div>
-      <div style="font-size:11px;color:#6b7280;line-height:1.5">Every potential consumer rights violation is identified through our interview and software review</div>
-    </div>
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:24px;margin-bottom:6px">⚖️</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px">Map to Statutes</div>
-      <div style="font-size:11px;color:#6b7280;line-height:1.5">Each violation is matched to the applicable federal and state consumer protection laws</div>
-    </div>
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center">
-      <div style="font-size:24px;margin-bottom:6px">📊</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px">Calculate Exposure</div>
-      <div style="font-size:11px;color:#6b7280;line-height:1.5">Potential penalties and regulatory exposure are estimated and documented for each violation</div>
-    </div>
-  </div>
-  <p style="font-size:13px;color:#6b7280;font-style:italic">The objective is not litigation. The objective is creating enough documented financial risk that settlement becomes the resort's most practical business decision.</p>
-</div>
-
-<div class="pb">
+<!-- STATUTE TABLE -->
+<div class="sc">
   <div class="slbl">Four Primary Consumer Protections — Examples</div>
-  <p style="font-size:12px;color:#9ca3af;margin-bottom:14px;font-style:italic">These are examples only. Applicable violations vary by case. Not a promise of any specific outcome.</p>
-  <table style="width:100%;border-collapse:collapse;font-size:13px">
+  <p style="font-size:11px;color:#9ca3af;margin-bottom:14px;font-style:italic">Examples only. Applicable issues vary by case. Not a promise of any specific outcome.</p>
+  <div style="overflow-x:auto">
+  <table class="stat-tbl">
     <thead>
-      <tr style="background:var(--navy);color:#fff">
-        <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Consumer Right</th>
-        <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Statute</th>
-        <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Example Violation</th>
-        <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Possible Penalty</th>
-      </tr>
+      <tr><th>Consumer Right</th><th>Statute</th><th>Example Issue</th><th>Possible Penalty</th></tr>
     </thead>
     <tbody>
-      <tr style="border-bottom:1px solid var(--border)">
-        <td style="padding:11px 12px;font-weight:700;color:var(--navy)">Full Cost Disclosure</td>
-        <td style="padding:11px 12px;color:#6b7280">TILA §128<br>15 U.S.C. §1638</td>
-        <td style="padding:11px 12px;color:#374151">Cumulative maintenance fee cost over 10–30 years was never disclosed at signing</td>
-        <td style="padding:11px 12px;font-weight:700;color:var(--red)">Up to $75,000</td>
+      <tr>
+        <td class="rt">Full Cost Disclosure</td>
+        <td class="st">TILA §128<br>15 U.S.C. §1638</td>
+        <td class="ex">Cumulative maintenance fee cost over 10–30 years was never disclosed at signing</td>
+        <td class="pen">Up to $75,000</td>
       </tr>
-      <tr style="border-bottom:1px solid var(--border);background:#f8fafc">
-        <td style="padding:11px 12px;font-weight:700;color:var(--navy)">Rescission Rights</td>
-        <td style="padding:11px 12px;color:#6b7280">State Contract Law<br>Varies by state</td>
-        <td style="padding:11px 12px;color:#374151">Cancellation rights were not clearly disclosed or the rescission window was misrepresented</td>
-        <td style="padding:11px 12px;font-weight:700;color:var(--red)">Up to $60,000</td>
+      <tr>
+        <td class="rt">Rescission Rights</td>
+        <td class="st">State Contract Law<br>Varies by state</td>
+        <td class="ex">Cancellation rights were not clearly disclosed or the rescission window was misrepresented</td>
+        <td class="pen">Up to $60,000</td>
       </tr>
-      <tr style="border-bottom:1px solid var(--border)">
-        <td style="padding:11px 12px;font-weight:700;color:var(--navy)">Resale Market Disclosure</td>
-        <td style="padding:11px 12px;color:#6b7280">FTC Act §5<br>State UDAP Laws</td>
-        <td style="padding:11px 12px;color:#374151">Owner was not informed that timeshares have no viable secondary resale market</td>
-        <td style="padding:11px 12px;font-weight:700;color:var(--red)">Up to $50,000</td>
+      <tr>
+        <td class="rt">Resale Market Disclosure</td>
+        <td class="st">FTC Act §5<br>State UDAP Laws</td>
+        <td class="ex">Owner was not informed that timeshares have no viable secondary resale market</td>
+        <td class="pen">Up to $50,000</td>
       </tr>
-      <tr style="background:#f8fafc">
-        <td style="padding:11px 12px;font-weight:700;color:var(--navy)">Annual Fee Growth</td>
-        <td style="padding:11px 12px;color:#6b7280">TILA §128<br>State UDAP Laws</td>
-        <td style="padding:11px 12px;color:#374151">The 8% average annual MTF increase rate was never disclosed at the time of purchase</td>
-        <td style="padding:11px 12px;font-weight:700;color:var(--red)">Up to $55,000</td>
+      <tr>
+        <td class="rt">Annual Fee Growth</td>
+        <td class="st">TILA §128<br>State UDAP Laws</td>
+        <td class="ex">The 8% average annual MTF increase rate was never disclosed at the time of purchase</td>
+        <td class="pen">Up to $55,000</td>
       </tr>
     </tbody>
   </table>
+  </div>
 </div>
 
-<div class="pb" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1.5px solid #7dd3fc">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#0369a1;margin-bottom:8px">One owner creates leverage. Multiple owners from the same resort multiply it.</div>
-  <div style="font-size:13px;color:#0284c7;line-height:1.7">When multiple owners from the same property each present documented violations, the resort is no longer evaluating isolated cases — they are evaluating a pattern of institutional misconduct. That distinction significantly changes how their legal team approaches the decision to negotiate.</div>
+<!-- TRANSITION TO GROUPS -->
+<div class="dark-close">
+  <div class="dc-pre">One owner creates a documented case.</div>
+  <div class="dc-main">Multiple owners from the same resort create a documented pattern.</div>
+  <div class="dc-sub">When several owners present similar concerns, the resort is no longer evaluating isolated situations. They are evaluating a broader pattern that may require a different response from their legal team.</div>
 </div>
 
 <div class="nav-bar">
-  <a class="np" href="/credit/">← Credit Protection</a>
+  <a class="np" href="/whyout/">← Why Do You Want Out</a>
   <span class="ns">3 — Leverage</span>
-  <a class="nn" href="/group/">Finding Your Group →</a>
+  <a class="nn" href="/credit/">Continue →</a>
 </div>
 
 <style>
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--red:#dc2626;--green:#16a34a}
 .vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
 .vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
 .vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
 .vbv{font-size:14px;font-weight:700;color:var(--navy)}
-.pb{background:#fff;border-radius:8px;border:1px solid var(--border);padding:20px 22px;margin-bottom:14px}
-.slbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px}
+.hook-card{background:var(--navy);border-radius:10px;padding:26px 28px;margin-bottom:14px}
+.hook-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(200,150,12,.6);margin-bottom:10px}
+.hook-line{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:#fff;line-height:1.4}
+.hook-line.gold{color:var(--gold);margin-bottom:14px}
+.hook-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7}
+.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:22px 24px;margin-bottom:14px}
+.slbl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:18px}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border:none;padding-bottom:0}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-title{font-family:"Barlow Condensed",sans-serif;font-size:17px;font-weight:900;color:var(--navy);margin-bottom:4px}
+.step-text{font-size:13px;color:#374151;line-height:1.7}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}}
+.path-card{border-radius:10px;padding:18px 20px;border:1.5px solid}
+.path-card.defend{background:#fff5f5;border-color:#fecaca}
+.path-card.settle{background:#f0fdf4;border-color:#86efac}
+.path-label{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.path-card.defend .path-label{color:var(--red)}
+.path-card.settle .path-label{color:var(--green)}
+.path-items{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.path-item{font-size:13px;color:#374151;padding:6px 10px;background:rgba(255,255,255,.6);border-radius:5px}
+.path-verdict{font-size:11px;font-weight:700;text-align:center;padding:6px;border-radius:5px}
+.path-verdict.bad{background:rgba(220,38,38,.1);color:var(--red)}
+.path-verdict.good{background:rgba(22,163,74,.1);color:var(--green)}
+.objective-card{border-left:4px solid var(--navy)}
+.obj-line{font-size:14px;color:#374151;line-height:1.7;margin-bottom:8px}
+.obj-emphasis{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:900;color:var(--navy);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.stat-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.stat-tbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.stat-tbl td{padding:10px 12px;border-bottom:1px solid #f3f4f6;vertical-align:top;line-height:1.5}
+.stat-tbl tr:last-child td{border:none}
+.rt{font-weight:700;color:var(--navy);font-size:13px}
+.st{font-size:11px;color:#6b7280}
+.ex{font-size:12px;color:#374151}
+.pen{font-weight:700;color:var(--red);white-space:nowrap}
+.dark-close{background:var(--navy);border-radius:10px;padding:24px 28px;margin-bottom:14px}
+.dc-pre{font-size:14px;color:rgba(255,255,255,.45);margin-bottom:6px}
+.dc-main{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:#fff;font-style:italic;line-height:1.4;margin-bottom:14px}
+.dc-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
 </style>
 
 <script>
 (function(){
   var AK='atc_active',SK='atc_clients_v2';
   function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-  function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
+  function fc(n){return n?'$'+Math.round(n).toLocaleString():'—';}
   var slug=localStorage.getItem(AK);if(!slug)return;
-  var d=(ga()[slug])||{};
+  var d=ga()[slug]||{};
   var mo=(parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12);
   var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
-  var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
   function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||'—';}
-  set('vb-name',nm);set('vb-resort',d.resort||'—');set('vb-mo',mo>0?fc(mo)+'/mo':'—');set('vb-stg',stg);
+  set('vb-name',nm);set('vb-resort',d.resort||'—');
+  set('vb-mo',mo>0?fc(mo)+'/mo':'—');
+  set('vb-stg',stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment');
 })();
 </script>
 </div></div>
