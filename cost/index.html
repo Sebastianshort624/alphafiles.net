@@ -718,7 +718,10 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
     var comb=mtg+mtf8;
     var save=alphaFee>0?comb-alphaFee:null;
     var hl=tf.hl?' class="hl"':"";
-    rows+="<tr"+hl+"><td>"+tf.l+"</td><td>"+fcd(comb)+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td>"
+    var flat=cumMtg(tf.yrs,mtgMo,mtgYrs)+mtfYr*tf.yrs;
+    rows+="<tr"+hl+"><td>"+tf.l+"</td>"
+      +"<td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td>"
+      +"<td style='color:#6b7280'>"+fcd(flat)+"</td>"
       +(alphaFee>0?"<td style='color:#C8960C;font-weight:800'>"+(save>0?"+"+fc(save):"—")+"</td>":"")
       +"</tr>";
     brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
