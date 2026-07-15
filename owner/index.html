@@ -574,8 +574,10 @@ function initBanner(){
   function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
   set("vb-name",(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim());
   set("vb-phone",d.phone||"--");set("vb-resort",d.resort||"--");set("vb-loc",d.location||"--");
-  set("vb-mo",mo>0?_fC(mo)+"/mo":"--");set("vb-yr",mo>0?_fC(mo*12)+"/yr":"--");
-  set("vb-quote",d.alphaFee?_fC(parseFloat(d.alphaFee)):"No quote yet");set("vb-stg",stg);
+  var mtgMo=parseFloat(d.monthlyMortgage)||0;var mtfYr=parseFloat(d.maitFees)||0;
+  set("vb-mo",mtgMo>0?_fC(mtgMo)+"/mo mtg":"No mtg");
+  set("vb-yr",mtfYr>0?_fC(mtfYr/12)+"/mo MTF":"No MTF");
+  set("vb-stg",stg);
 }
 window.initBanner=initBanner;
 window.atcApplyLang=function(){var lang="en";try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;};
@@ -666,16 +668,16 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   if(urlEl) urlEl.textContent=url;
 })();
 </script>
-  <div class="ph-title">Owner &amp; Resort Info</div>
-  <div class="ph-sub">Core client record — saves automatically as you type</div>
+  <div class="ph-title" id="pg-name-title">Client Presentation</div>
+  <div class="ph-sub">Alpha Timeshare Consultants · Page 0</div>
 </div>
 
 <!-- 4-CORNER VITALS BANNER -->
 <div class="vb">
-  <div class="vbc"><div class="vbl">👤 Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
-  <div class="vbc"><div class="vbl">🏨 Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
-  <div class="vbc"><div class="vbl">💰 Monthly / Yearly</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
-  <div class="vbc"><div class="vbl">📄 Quote / Stage</div><div class="vbv" id="vb-quote">—</div><div class="vbs" id="vb-stg">—</div></div>
+  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div><div class="vbs" id="vb-phone">—</div></div>
+  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div><div class="vbs" id="vb-loc">—</div></div>
+  <div class="vbc"><div class="vbl">Mortgage / MTF</div><div class="vbv" id="vb-mo">—</div><div class="vbs" id="vb-yr">—</div></div>
+  <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
 <!-- PRIMARY OWNER -->
