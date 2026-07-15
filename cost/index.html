@@ -604,8 +604,8 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
     <thead><tr>
       <th style="text-align:left">Timeframe</th>
       <th style="color:#86efac">Cost With 8% Annual Growth Rate</th>
-      <th>Total Amount You Will Pay Them</th>
-      <th id="alpha-hdr" style="display:none;color:#fcd34d">You Save with Alpha</th>
+      
+      
     </tr></thead>
     <tbody id="cost-tbody"></tbody>
   </table>
@@ -717,7 +717,7 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
   set("s-mtf-yr",fcd(mtfYr)+"/yr");
   set("s-comb-mo",fcd(mtfMo+mtgMo));
   set("s-comb-yr",fcd((mtfYr+mtgMo*12))+"/yr combined");
-  if(alphaFee>0)document.getElementById("alpha-hdr").style.display="";
+  
 
   var TF=[
     {l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},
@@ -735,8 +735,6 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
     var flat=cumMtg(tf.yrs,mtgMo,mtgYrs)+mtfYr*tf.yrs;
     rows+="<tr"+hl+"><td>"+tf.l+"</td>"
       +"<td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td>"
-      +"<td style='color:#6b7280'>"+fcd(flat)+"</td>"
-      +(alphaFee>0?"<td style='color:#C8960C;font-weight:800'>"+(save>0?"+"+fc(save):"—")+"</td>":"")
       +"</tr>";
     brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
   });
