@@ -157,7 +157,7 @@ function loadData(){
   var snap={};try{snap=JSON.parse(localStorage.getItem("portal_snap_"+slug)||"{}");}catch(e){}
   var portal={};try{portal=JSON.parse(localStorage.getItem("portal_"+slug)||"{}");}catch(e){}
   if(!Object.keys(portal).length)return null;
-  return{snap:snap,portal:portal,slug:slug,agent:{name:"Sebastian Short",ext:"134",company:"Alpha Timeshare Consultants"}};
+  return{snap:snap,portal:portal,slug:slug,agent:{name:"Sebastian Short",title:"Account Specialist",ext:"134",company:"Alpha Timeshare Consultants",biz:"18778483948",bizDisplay:"1 (877) 848-3948",office:"16892333259",officeDisplay:"1 (689) 233-3259",email:"Sebastian@AlphaTimeshareConsultants.com"}};
 }
 
 function checkIcon(){return'<svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg>';}
@@ -192,9 +192,13 @@ function showDirectory(data){
   // Contact
   var a=agent;
   var contactHtml='<div class="contact-card"><div class="cc-ava">👤</div><div style="flex:1"><div class="cc-name">'+(a.name||"Your Consultant")+'</div><div class="cc-title">'+(a.company||"Alpha Timeshare Consultants")+(a.ext?" · Ext. "+a.ext:"")+'</div><div class="cc-btns">'
-    +(a.phone?'<a href="tel:'+a.phone+'" class="cc-btn">📞 Call</a>':'')+
-    +(a.email?'<a href="mailto:'+a.email+'" class="cc-btn">✉️ Email</a>':'')
-    +'</div>'+(a.hours?'<div class="cc-hours">'+a.hours+'</div>':'<div class="cc-hours">Monday–Friday · 9:00 AM – 6:00 PM EST</div>')+'</div></div>';
+    +'<a href="tel:'+(a.biz||a.phone||'')+'" class="cc-btn">📞 Call</a>'
+    +(a.biz?'<a href="sms:'+(a.biz)+'" class="cc-btn">💬 Text</a>':'')
+    +(a.email?'<a href="mailto:'+(a.email)+'" class="cc-btn">✉️ Email</a>':'')
+    +'</div>'
+    +'<div class="cc-hours">'+(a.bizDisplay?'Bus: '+a.bizDisplay+(a.ext?' Ext '+a.ext:''):'')+(a.officeDisplay?' · Office: '+a.officeDisplay:'')+'</div>'
+    +(a.email?'<div class="cc-hours">'+(a.email)+'</div>':'')
+    +'</div></div>';
 
   document.getElementById("root").innerHTML=
     // Welcome
@@ -216,6 +220,14 @@ function showDirectory(data){
     +(annualCost>0?'<div class="sec-hdr">Your Personalized Quote</div><div class="quote-block"><div class="qb-hdr">Financial Summary</div><div class="qb-rows"><div class="qb-cell"><div class="qb-lbl">Monthly Ownership Cost</div><div class="qb-val">'+fcd(moCost)+'</div></div><div class="qb-cell"><div class="qb-lbl">Annual Ownership Cost</div><div class="qb-val">'+fc(annualCost)+'</div></div>'+(fee>0?'<div class="qb-cell"><div class="qb-lbl">Alpha Fee</div><div class="qb-val">'+fc(fee)+'</div></div><div class="qb-cell"><div class="qb-lbl">Pay in Full (3% off)</div><div class="qb-val" style="color:#15803d">'+fc(fee*.97)+'</div></div>':'')+'</div>'+(rem20>0?'<div class="qb-full"><div class="qb-full-lbl">Estimated Remaining Ownership Cost</div><div class="qb-full-val">'+fc(rem20)+'</div></div>':'')+'</div>':"")
 
     // CTA
+    +'<div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:14px">'
+    +'<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:#C8960C;margin-bottom:12px">Our Exit Program Includes</div>'
+    +'<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px">'
+    +['Written Money-Back Guarantee upon Program Completion','Permanent Legal Termination of Your Timeshare','Elimination of Future Maintenance Obligations','Resolution of Delinquent Fees','Credit Protection & Repair Support','Proof of Performance Documentation','Consumer Protection & BBB Credibility']
+    .map(function(s){return'<div style="display:flex;gap:8px;font-size:13px;color:#374151"><span style="color:#16a34a;flex-shrink:0">•</span>'+s+'</div>';}).join('')
+    +'</div>'
+    +'<div style="font-style:italic;font-size:13px;color:#6b7280;border-top:1px solid #f3f4f6;padding-top:10px">&ldquo;Would you rather be putting those payments toward the problem or toward the solution?&rdquo;</div>'
+    +'</div>'
     +'<div class="cta-block"><div class="cta-title">Your Portal</div><div class="cta-sub">Every page from your consultation is available below. Review any topic at your own pace.</div></div>'
 
     // Page links
