@@ -751,110 +751,233 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   </div>
 </div>
 
-<!-- RESORT INFO -->
-<div class="pb">
-  <div class="slbl">🏨 Resort Information</div>
-  <div class="frow">
-    <div class="ff"><label>Resort Name</label><input id="f-resort" class="hi" placeholder="e.g. Westgate Lakes" oninput="autoSave()"></div>
-    <div class="ff"><label>State</label><input id="f-resstate" placeholder="e.g. FL" oninput="autoSave()"></div>
+<!-- MULTI-RESORT TABS -->
+<div class="pb" style="padding:0">
+  <!-- Tab Bar -->
+  <div class="r-tabbar">
+    <button class="r-tab active" onclick="switchResort(0)" id="rtab-0">R-1</button>
+    <button class="r-tab" onclick="switchResort(1)" id="rtab-1" style="display:none">R-2</button>
+    <button class="r-tab" onclick="switchResort(2)" id="rtab-2" style="display:none">R-3</button>
+    <button class="r-tab" onclick="switchResort(3)" id="rtab-3" style="display:none">R-4</button>
+    <button class="r-tab-add" onclick="addResort()" id="r-add-btn">+ Add Resort</button>
   </div>
 
-  <!-- + Resort Details -->
-  <div class="plus-toggle" onclick="togglePlus('resort-details')">
-    <div class="pt-icon" id="pt-resort-details">+</div>
-    <span>Add Resort Details — City, Purchase Year, Purchase Price</span>
-  </div>
-  <div class="plus-sec" id="resort-details">
-    <div class="frow three">
-      <div class="ff"><label>Resort City</label><input id="f-rescity" placeholder="City" oninput="autoSave()"></div>
-      <div class="ff"><label>Year Purchased</label><input id="f-year" type="number" placeholder="e.g. 2019" oninput="autoSave()"></div>
-      <div class="ff"><label>Purchase Price</label><input id="f-purchase" type="number" placeholder="e.g. 18000" oninput="autoSave()"></div>
-    </div>
-    <div class="frow full">
-      <div class="ff"><label>Why Do They Want Out?</label><textarea id="f-why" placeholder="Main reason for wanting to exit..." oninput="autoSave()"></textarea></div>
-    </div>
+  <!-- Resort Panels — one per resort -->
+  <div id="resort-panels">
   </div>
 </div>
 
-<!-- FEES + MORTGAGE -->
-<div class="pb">
-  <div class="slbl">💰 Maintenance Fees &amp; Mortgage</div>
+<style>
+.r-tabbar{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid #e5e7eb;align-items:center;flex-wrap:wrap}
+.r-tab{padding:7px 18px;font-size:13px;font-weight:700;border-radius:8px 8px 0 0;border:1.5px solid #e5e7eb;border-bottom:none;background:#f8fafc;color:#374151;cursor:pointer;transition:.1s}
+.r-tab.active{background:#1B2A4A;color:#C8960C;border-color:#1B2A4A}
+.r-tab-add{margin-left:auto;padding:5px 12px;font-size:11px;font-weight:700;border-radius:6px;border:1.5px dashed #C8960C;background:rgba(200,150,12,.07);color:#C8960C;cursor:pointer}
+.r-panel{padding:14px;display:none}
+.r-panel.active{display:block}
+.r-panel-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.r-panel-title{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;color:#1B2A4A;text-transform:uppercase;letter-spacing:.5px}
+.r-del-btn{font-size:11px;color:#dc2626;background:none;border:1px solid #fecaca;border-radius:5px;padding:3px 8px;cursor:pointer}
+.r-owners{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.r-owner-row{display:flex;gap:6px;align-items:center}
+.r-owner-row input{flex:1;padding:7px 10px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:13px;font-family:Inter,sans-serif;color:#1B2A4A;outline:none}
+.r-owner-row input:focus{border-color:#1B2A4A}
+</style>
 
-  <!-- MTF -->
-  <div class="frow">
-    <div class="ff">
-      <label style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        Maintenance Fee (MTF)
-        <span style="display:flex;gap:12px;font-size:11px;font-weight:600">
-          <label style="cursor:pointer;display:flex;align-items:center;gap:3px;color:#374151">
-            <input type="radio" name="mtf-freq" id="mtf-annual" value="annual" checked onchange="calcTotals()">Annual
-          </label>
-          <label style="cursor:pointer;display:flex;align-items:center;gap:3px;color:#374151">
-            <input type="radio" name="mtf-freq" id="mtf-monthly" value="monthly" onchange="calcTotals()">Monthly
-          </label>
-        </span>
-      </label>
-      <input id="f-mtf" type="number" class="hi" placeholder="Enter amount" oninput="autoSave();calcTotals()">
-    </div>
-    <div class="ff readonly"><label id="mtf-display-lbl">Monthly / Annual MTF</label><input id="f-mtf-mo" readonly placeholder="Auto"></div>
-  </div>
+<script>
+var _activeResort=0;
 
-  <!-- MORTGAGE TYPE -->
-  <div class="slbl" style="margin-top:14px">Mortgage Status</div>
-  <div class="mtg-type-row">
-    <button class="mt-btn" id="mt-paidfull" onclick="selectMtgType('paidfull')">✅ Paid in Full</button>
-    <button class="mt-btn" id="mt-owes" onclick="selectMtgType('owes')">💳 Still Has Mortgage</button>
-    <button class="mt-btn" id="mt-behind" onclick="selectMtgType('behind')">⚠️ Behind on Payments</button>
-  </div>
+function _getResorts(){
+  var d=ad();if(!d)return[{},{},{},{}];
+  if(!d.resorts||!d.resorts.length){
+    // Migrate existing single-resort data to R-1
+    d.resorts=[{
+      name:d.resort||'',state:d.resstate||'',city:d.rescity||'',
+      owners:[((d.firstName||'')+' '+(d.lastName||'')).trim(),'','',''],
+      maitFees:d.maitFees||0,mtfFreq:'annual',
+      monthlyMortgage:d.monthlyMortgage||0,mtgType:d.mtgType||'paidfull',
+      balanceAmount:d.balanceAmount||0,mtgTerm:d.mtgTerm||10,
+      yearPurchased:d.yearPurchased||'',purchasePrice:d.purchasePrice||0,why:d.why||''
+    },{},{},{}];
+  }
+  while(d.resorts.length<4)d.resorts.push({});
+  return d.resorts;
+}
 
-  <!-- + Mortgage Info (shows when owes or behind) -->
-  <div class="plus-sec" id="mtg-info">
-    <div class="frow three">
-      <div class="ff"><label>Monthly Mortgage Payment</label><input id="f-mtg" type="number" class="hi" placeholder="e.g. 350" oninput="autoSave();calcTotals()"></div>
-      <div class="ff"><label>Remaining Balance</label><input id="f-balance" type="number" placeholder="e.g. 12000" oninput="autoSave()"></div>
-      <div class="ff"><label>Interest Rate (%)</label><input id="f-rate" type="number" placeholder="e.g. 17.9" step="0.1" oninput="autoSave()"></div>
-    </div>
-  </div>
+function _saveResorts(resorts){
+  var s=ac();if(!s)return;
+  var all=ga();if(!all[s])return;
+  all[s].resorts=resorts;
+  // Also sync R-1 to top-level fields for backward compat
+  var r1=resorts[0]||{};
+  all[s].resort=r1.name||'';all[s].resstate=r1.state||'';all[s].rescity=r1.city||'';
+  all[s].maitFees=r1.maitFees||0;all[s].monthlyMortgage=r1.monthlyMortgage||0;
+  all[s].balanceAmount=r1.balanceAmount||0;all[s].mtgTerm=r1.mtgTerm||10;
+  all[s].yearPurchased=r1.yearPurchased||'';all[s].purchasePrice=r1.purchasePrice||0;
+  all[s]._updated=Date.now();
+  localStorage.setItem(SK,JSON.stringify(all));
+}
 
-  <!-- + Behind info -->
-  <div class="plus-sec" id="behind-info">
-    <div class="frow">
-      <div class="ff"><label>Months Behind — Mortgage</label><input id="f-mtgb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
-      <div class="ff"><label>Months Behind — MTF</label><input id="f-mtfb" type="number" placeholder="0" oninput="autoSave();calcTotals()"></div>
-    </div>
-  </div>
+function _panelHTML(ri){
+  var n=ri+1;
+  return '<div class="r-panel'+(ri===0?' active':'')+'" id="rpanel-'+ri+'">'
+    +'<div class="r-panel-hdr"><div class="r-panel-title">Resort '+n+'</div>'
+    +(ri>0?'<button class="r-del-btn" onclick="removeResort('+ri+')">Remove</button>':'')
+    +'</div>'
+    // Resort name + state
+    +'<div class="frow">'
+    +'<div class="ff"><label>Resort Name</label><input id="r'+ri+'-name" class="hi" placeholder="e.g. Wyndham" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>State</label><input id="r'+ri+'-state" placeholder="e.g. FL" oninput="_autoSaveResorts()"></div>'
+    +'</div>'
+    // City + Year + Price
+    +'<div class="frow three">'
+    +'<div class="ff"><label>City</label><input id="r'+ri+'-city" placeholder="City" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Year Purchased</label><input id="r'+ri+'-year" type="number" placeholder="e.g. 2019" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Purchase Price</label><input id="r'+ri+'-price" type="number" placeholder="e.g. 18000" oninput="_autoSaveResorts()"></div>'
+    +'</div>'
+    // Owners (up to 4)
+    +'<div class="slbl" style="margin-top:10px">Owners</div>'
+    +'<div class="r-owners">'
+    +'<div class="r-owner-row"><span style="font-size:11px;color:#9ca3af;width:16px;flex-shrink:0">1</span><input id="r'+ri+'-o0" placeholder="Owner 1 full name" oninput="_autoSaveResorts()"></div>'
+    +'<div class="r-owner-row"><span style="font-size:11px;color:#9ca3af;width:16px;flex-shrink:0">2</span><input id="r'+ri+'-o1" placeholder="Owner 2 (optional)" oninput="_autoSaveResorts()"></div>'
+    +'<div class="r-owner-row"><span style="font-size:11px;color:#9ca3af;width:16px;flex-shrink:0">3</span><input id="r'+ri+'-o2" placeholder="Owner 3 (optional)" oninput="_autoSaveResorts()"></div>'
+    +'<div class="r-owner-row"><span style="font-size:11px;color:#9ca3af;width:16px;flex-shrink:0">4</span><input id="r'+ri+'-o3" placeholder="Owner 4 (optional)" oninput="_autoSaveResorts()"></div>'
+    +'</div>'
+    // MTF
+    +'<div class="slbl" style="margin-top:10px">💰 Fees & Mortgage</div>'
+    +'<div class="frow">'
+    +'<div class="ff"><label>Maintenance Fee (MTF)<span style="margin-left:8px;font-size:10px">'
+    +'<label style="cursor:pointer"><input type="radio" name="r'+ri+'-freq" id="r'+ri+'-annual" value="annual" checked onchange="_autoSaveResorts()"> Annual</label> '
+    +'<label style="cursor:pointer"><input type="radio" name="r'+ri+'-freq" id="r'+ri+'-monthly" value="monthly" onchange="_autoSaveResorts()"> Monthly</label>'
+    +'</span></label>'
+    +'<input id="r'+ri+'-mtf" type="number" class="hi" placeholder="Enter amount" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff readonly"><label id="r'+ri+'-mtflbl">Calculated</label><input id="r'+ri+'-mtfcalc" readonly placeholder="Auto"></div>'
+    +'</div>'
+    // Mortgage
+    +'<div class="frow">'
+    +'<div class="ff"><label>Monthly Mortgage</label><input id="r'+ri+'-mtg" type="number" class="hi" placeholder="0 if paid off" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Loan Term (years)</label><input id="r'+ri+'-term" type="number" placeholder="e.g. 10" oninput="_autoSaveResorts()"></div>'
+    +'</div>'
+    +'<div class="frow">'
+    +'<div class="ff"><label>Balance Remaining</label><input id="r'+ri+'-bal" type="number" placeholder="e.g. 15000" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff readonly"><label>Combined Monthly</label><input id="r'+ri+'-comb" readonly placeholder="Auto"></div>'
+    +'</div>'
+    +'</div>';
+}
 
-  <!-- TOTALS -->
-  <div class="totals-bar">
-    <div class="tp"><div class="tv" id="tot-mo">$0</div><div class="tl">Monthly</div></div>
-    <div class="tp"><div class="tv" id="tot-yr">$0</div><div class="tl">Yearly</div></div>
-    <div class="tp"><div class="tv" id="tot-arr">$0</div><div class="tl">Arrears</div></div>
-    <div class="tp"><div class="tv" id="tot-3yr">$0</div><div class="tl">3-Year Total</div></div>
-  </div>
+function _fillPanel(ri, resort){
+  var r=resort||{};
+  function sv(id,v){var el=document.getElementById(id);if(el)el.value=v||'';}
+  sv('r'+ri+'-name',r.name);sv('r'+ri+'-state',r.state);sv('r'+ri+'-city',r.city);
+  sv('r'+ri+'-year',r.yearPurchased);sv('r'+ri+'-price',r.purchasePrice);
+  var owners=r.owners||[];
+  for(var o=0;o<4;o++)sv('r'+ri+'-o'+o,owners[o]||'');
+  sv('r'+ri+'-mtf',r.maitFees||'');
+  sv('r'+ri+'-mtg',r.monthlyMortgage||'');
+  sv('r'+ri+'-term',r.mtgTerm||'');
+  sv('r'+ri+'-bal',r.balanceAmount||'');
+  if(r.mtfFreq==='monthly'){var el=document.getElementById('r'+ri+'-monthly');if(el)el.checked=true;}
+  _calcPanel(ri);
+}
 
-  <!-- + Notes -->
-  <div class="plus-toggle" onclick="togglePlus('notes-section')" style="margin-top:14px">
-    <div class="pt-icon" id="pt-notes-section">+</div>
-    <span>Add Notes</span>
-  </div>
-  <div class="plus-sec" id="notes-section">
-    <div class="ff full"><textarea id="f-notes" placeholder="Any additional notes..." oninput="autoSave()"></textarea></div>
-  </div>
-</div>
+function _calcPanel(ri){
+  var raw=parseFloat((document.getElementById('r'+ri+'-mtf')||{}).value)||0;
+  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
+  var mtfYr=isMonthly?raw*12:raw;
+  var mtfMo=mtfYr/12;
+  var mtg=parseFloat((document.getElementById('r'+ri+'-mtg')||{}).value)||0;
+  var lbl=document.getElementById('r'+ri+'-mtflbl');
+  var calc=document.getElementById('r'+ri+'-mtfcalc');
+  var comb=document.getElementById('r'+ri+'-comb');
+  if(lbl)lbl.textContent=isMonthly?'Annual (calculated)':'Monthly (calculated)';
+  if(calc)calc.value=raw>0?(isMonthly?'$'+Math.round(mtfYr).toLocaleString()+'/yr':'$'+mtfMo.toFixed(2)+'/mo'):'';
+  if(comb)comb.value=(mtfMo+mtg)>0?'$'+((mtfMo+mtg).toFixed(2))+'/mo':'';
+}
 
-<div class="btn-row">
-  <button class="btn p" onclick="ownerSubmit()">Save &amp; Continue →</button>
-  <button class="btn o" onclick="window.print()">🖨 Print</button>
-</div>
+function _readResort(ri){
+  function gv(id){return(document.getElementById(id)||{}).value||'';}
+  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
+  var raw=parseFloat(gv('r'+ri+'-mtf'))||0;
+  return{
+    name:gv('r'+ri+'-name'),state:gv('r'+ri+'-state'),city:gv('r'+ri+'-city'),
+    yearPurchased:gv('r'+ri+'-year'),purchasePrice:parseFloat(gv('r'+ri+'-price'))||0,
+    owners:[gv('r'+ri+'-o0'),gv('r'+ri+'-o1'),gv('r'+ri+'-o2'),gv('r'+ri+'-o3')],
+    maitFees:isMonthly?raw*12:raw,mtfFreq:isMonthly?'monthly':'annual',
+    monthlyMortgage:parseFloat(gv('r'+ri+'-mtg'))||0,
+    mtgTerm:parseInt(gv('r'+ri+'-term'))||10,
+    balanceAmount:parseFloat(gv('r'+ri+'-bal'))||0
+  };
+}
 
-<div class="nav-bar">
-  <a href="/home/" class="np">← Dashboard</a>
-  <span class="ns">Page 1 of 16</span>
-  <a href="/current/" class="nn">Client Vitals →</a>
-</div>
+function _autoSaveResorts(){
+  var resorts=_getResorts();
+  // Update all visible panels
+  for(var i=0;i<4;i++){
+    var panel=document.getElementById('rpanel-'+i);
+    if(panel&&panel.style.display!=='none'&&panel.offsetParent!==null){
+      resorts[i]=_readResort(i);
+    }
+    _calcPanel(i);
+  }
+  _saveResorts(resorts);
+  updateBanner();
+}
 
-</div><!-- wrap -->
-</div><!-- main -->
+function switchResort(ri){
+  _activeResort=ri;
+  document.querySelectorAll('.r-panel').forEach(function(p,i){p.classList.toggle('active',i===ri);});
+  document.querySelectorAll('.r-tab').forEach(function(t,i){t.classList.toggle('active',i===ri);});
+}
+
+function addResort(){
+  var resorts=_getResorts();
+  for(var i=1;i<4;i++){
+    var tab=document.getElementById('rtab-'+i);
+    if(tab&&tab.style.display==='none'){
+      tab.style.display='';
+      // Check if we need to update the add button visibility
+      if(i===3){var addBtn=document.getElementById('r-add-btn');if(addBtn)addBtn.style.display='none';}
+      switchResort(i);
+      return;
+    }
+  }
+}
+
+function removeResort(ri){
+  if(!confirm('Remove Resort '+(ri+1)+'? This will clear all data for this resort.'))return;
+  var resorts=_getResorts();
+  resorts[ri]={};
+  _saveResorts(resorts);
+  // Hide the tab
+  var tab=document.getElementById('rtab-'+ri);
+  if(tab)tab.style.display='none';
+  // Clear the panel
+  _fillPanel(ri,{});
+  // Show add button again
+  var addBtn=document.getElementById('r-add-btn');if(addBtn)addBtn.style.display='';
+  switchResort(0);
+}
+
+// Initialize panels on page load
+(function initResortPanels(){
+  var container=document.getElementById('resort-panels');
+  if(!container)return;
+  var html='';
+  for(var i=0;i<4;i++)html+=_panelHTML(i);
+  container.innerHTML=html;
+  // Load data
+  var resorts=_getResorts();
+  for(var j=0;j<4;j++){
+    _fillPanel(j,resorts[j]);
+    var hasData=resorts[j]&&resorts[j].name;
+    var tab=document.getElementById('rtab-'+j);
+    if(j>0&&tab){tab.style.display=hasData?'':'none';}
+  }
+  // Hide add button if all 4 are used
+  var allUsed=resorts[1]&&resorts[1].name&&resorts[2]&&resorts[2].name&&resorts[3]&&resorts[3].name;
+  var addBtn=document.getElementById('r-add-btn');
+  if(addBtn&&allUsed)addBtn.style.display='none';
+})();
+</script>
 
 <script>
 var SK='atc_clients_v2',AK='atc_active';
