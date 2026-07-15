@@ -530,55 +530,20 @@ function buildSB(){
     +"<button onclick=\"window.deleteClient()\" style='width:100%;margin-top:4px;background:none;color:rgba(255,59,48,.7);border:1px solid rgba(255,59,48,.3);border-radius:4px;padding:4px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>🗑 Delete Client</button>"
     +"</div>";
 
-  // Split pages into remaining vs completed
-  var presPages=_PG.filter(function(p){return typeof p.n==='number'&&p.n>0;});
-  var remainingPages=presPages.filter(function(p){return !comp[p.url];});
-  var completedPages=presPages.filter(function(p){return !!comp[p.url];}).sort(function(a,b){return(comp[a.url].ts||0)-(comp[b.url].ts||0);});
-  var specialPages=_PG.filter(function(p){return typeof p.n!=='number'||p.n===0||p.n>24;});
-
-  function navItem(p,done){
+  // All pages in order — checkbox in place, nothing moves
+  function navItem(p){
+    var done=!!comp[p.url];
     var act=cur===p.url;
     var url=p.url;
-    // Checkbox click toggles completion without navigating
+    var isSpecial=typeof p.n!=='number'||p.n===0;
     var cbk="event.stopPropagation();event.preventDefault();window._toggleDone('"+url+"');return false;";
-    var cb="<span onclick=\""+cbk+"\" style='display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1.5px solid "+(done?"rgba(52,199,89,.6)":"rgba(255,255,255,.2)")+";border-radius:3px;background:"+(done?"rgba(52,199,89,.2)":"transparent")+";cursor:pointer;flex-shrink:0'>"+(done?"<span style='font-size:8px;color:#34c759'>✓</span>":"")+"</span>";
+    var cb=isSpecial?"":"<span onclick=\""+cbk+"\" style='display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1.5px solid "+(done?"rgba(52,199,89,.7)":"rgba(255,255,255,.2)")+";border-radius:3px;background:"+(done?"rgba(52,199,89,.2)":"transparent")+";cursor:pointer;flex-shrink:0'>"+(done?"<span style='font-size:9px;color:#34c759;font-weight:700'>✓</span>":"")+"</span>";
     return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' style='display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;"
-      +"color:"+(done?"rgba(255,255,255,.4)":act?"#C8960C":"rgba(255,255,255,.65)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
+      +"color:"+(act?"#C8960C":"rgba(255,255,255,.7)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
       +"border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
-      +cb
-      +"<span style='flex:1;line-height:1.3'>"+p.lb+"</span>"
-      +"</a>";
+      +cb+"<span style='flex:1;line-height:1.3"+(done&&!isSpecial?";opacity:.5":"")+"'>"+p.lb+"</span></a>";
   }
-
-  // Toggle checkbox
-  var toggleHdr="<div style='padding:4px 10px 2px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center'>"    +"<span style='font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.25)'>Pages</span>"    +"<span onclick='window.toggleHideCompleted()' style='font-size:9px;color:rgba(200,150,12,.6);cursor:pointer;padding:1px 5px;border:1px solid rgba(200,150,12,.25);border-radius:3px'>"+(hideCompleted?'Show all':'Collapse done')+"</span>"    +"</div>";
-
-  var navHtml="<div style='flex:1;overflow-y:auto;padding:5px 0'>";
-
-  // Special pages (0 = Client Presentation)
-  navHtml+=specialPages.map(function(p){return navItem(p,false);}).join('');
-
-  // Remaining pages
-  if(remainingPages.length){
-    navHtml+="<div class='nav-sec-hdr remaining'><span>Remaining</span><span class='nav-sec-count'>"+remainingPages.length+"</span></div>";
-    navHtml+=remainingPages.map(function(p){return navItem(p,false);}).join('');
-  }
-
-  // Completed section
-  if(completedPages.length){
-    if(hideCompleted){
-      navHtml+="<div class='nav-sec-hdr completed-hdr' onclick='window.toggleHideCompleted()'>"
-        +"<span>Completed</span><span class='nav-sec-count'>"+completedPages.length+"</span>"
-        +"<span class='nav-sec-toggle'>▸</span></div>";
-    } else {
-      navHtml+="<div class='nav-sec-hdr completed-hdr' onclick='window.toggleHideCompleted()'>"
-        +"<span>Completed</span><span class='nav-sec-count'>"+completedPages.length+"</span>"
-        +"<span class='nav-sec-toggle'>▾</span></div>";
-      navHtml+=completedPages.map(function(p){return navItem(p,true);}).join('');
-    }
-  }
-
-  navHtml+="</div>";
+  var navHtml="<div style='flex:1;overflow-y:auto;padding:5px 0'>"+_PG.map(navItem).join('')+"</div>";
 
   el.innerHTML=ct+statusSel+sw+toggleHdr+navHtml
     +"<div style='padding:6px 10px;border-top:1px solid rgba(255,255,255,.08)'>"
