@@ -890,8 +890,9 @@ function calcTotals(){
   document.getElementById('tot-3yr').textContent=fc(three);
 
   // Update banner
-  document.getElementById('vb-mo').textContent=fc(mo)+'/mo';
-  document.getElementById('vb-yr').textContent=fc(mo*12)+'/yr';
+  var mtgM=parseFloat(d.monthlyMortgage)||0;var mtfA=parseFloat(d.maitFees)||0;
+  document.getElementById('vb-mo').textContent=mtgM>0?fc(mtgM)+'/mo mtg':'No mtg';
+  document.getElementById('vb-yr').textContent=mtfA>0?fc(mtfA/12)+'/mo MTF':'No MTF';
 }
 
 var _timer=null;
