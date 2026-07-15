@@ -638,8 +638,8 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <div class="ph">
   <div class="ph-num">1</div>
-  <div class="ph-title">Your Current Ownership Situation</div>
-  <div class="ph-sub">Let's look at where things stand today</div>
+  <div class="ph-title">Where Things Stand Today</div>
+  <div class="ph-sub">Your actual numbers — no estimates, no projections</div>
 </div>
 
 <div class="vb">
@@ -649,9 +649,9 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
-<!-- SLIDE 1: OWNERSHIP OVERVIEW -->
+<!-- WHAT YOU OWN -->
 <div class="slide-card">
-  <div class="slide-label">Ownership Overview</div>
+  <div class="slide-label">What You Own</div>
   <div class="overview-grid">
     <div class="ov-item">
       <div class="ov-label">Resort</div>
@@ -666,62 +666,56 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
       <div class="ov-val" id="ov-price">—</div>
     </div>
     <div class="ov-item">
-      <div class="ov-label">Mortgage Balance</div>
+      <div class="ov-label">Remaining Balance</div>
       <div class="ov-val" id="ov-balance">—</div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 1: CURRENT ANNUAL COST -->
+<!-- WHAT YOU PAY NOW -->
 <div class="slide-card">
-  <div class="slide-label">Current Annual Cost</div>
+  <div class="slide-label">What You Pay Every Year</div>
   <div class="cost-hero">
     <div class="cost-item">
       <div class="cost-lbl">Maintenance Fee</div>
-      <div class="cost-mo" id="c-mo">—/month</div>
+      <div class="cost-mo" id="c-mo">—</div>
       <div class="cost-yr" id="c-yr">—/year</div>
     </div>
-    <div class="cost-divider"></div>
+    <div class="cost-divider" id="mtg-divider" style="display:none"></div>
     <div class="cost-item" id="mtg-section" style="display:none">
-      <div class="cost-lbl">Mortgage Payment</div>
-      <div class="cost-mo" id="c-mtg">—/month</div>
+      <div class="cost-lbl">Mortgage</div>
+      <div class="cost-mo" id="c-mtg">—</div>
       <div class="cost-yr" id="c-mtg-yr">—/year</div>
     </div>
     <div class="cost-total-wrap">
-      <div class="cost-lbl">Total Monthly</div>
+      <div class="cost-lbl">You Pay Monthly</div>
       <div class="cost-total" id="c-total">—</div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 1: 5-YEAR PROJECTION -->
+<!-- WHERE THIS IS HEADED -->
 <div class="slide-card">
-  <div class="slide-label">Projected Cost — First 5 Years</div>
-  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px">Assumes maintenance fees increase 8% annually</div>
+  <div class="slide-label">Where This Is Headed</div>
+  <div style="font-size:12px;color:#9ca3af;margin-bottom:12px">Maintenance fees increase an average of 8% per year. This is ARDA's own data.</div>
   <table class="yr-tbl">
     <thead>
-      <tr><th>Year</th><th>Annual MTF</th><th>Cumulative Cost</th></tr>
+      <tr><th>Year</th><th>Annual Fee</th><th>Total Paid</th></tr>
     </thead>
     <tbody id="yr-tbody"></tbody>
   </table>
   <div class="yr-total">
-    <span>5-Year Cost of Ownership</span>
-    <span id="yr-5total" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--red)">—</span>
+    <span>5-Year Total</span>
+    <span id="yr-5total">—</span>
   </div>
 </div>
 
-<!-- SLIDE 2: WHY THIS MATTERS -->
+<!-- THE QUESTION -->
 <div class="slide-card matters">
-  <div class="slide-label light">Why This Matters</div>
-  <div class="matters-title">The Cost Continues to Grow</div>
-  <div class="matters-points">
-    <div class="matters-pt">📈 Annual fees continue rising — every year, without exception</div>
-    <div class="matters-pt">📋 Future costs were not always clearly disclosed at the time of purchase</div>
-    <div class="matters-pt">🔗 This commitment continues for the rest of your life — and beyond</div>
-  </div>
-  <div class="matters-q">
-    <div class="matters-q-lbl">The Key Question</div>
-    <div class="matters-q-text">"Was the full financial impact of this ownership clearly explained to you before you signed?"</div>
+  <div class="matters-title">One question worth asking.</div>
+  <div class="matters-q-text">"Before you signed — did anyone show you these numbers?"</div>
+  <div class="matters-pts">
+    <div class="matters-pt">If not, you were not fully informed. That has legal weight.</div>
   </div>
 </div>
 
@@ -732,45 +726,45 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 </div>
 
 <style>
-:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--red:#dc2626;--bg:#f8fafc}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--red:#dc2626}
 .vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
 .vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
 .vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
 .vbv{font-size:14px;font-weight:700;color:var(--navy)}
 .slide-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:14px}
 .slide-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:16px}
-.slide-label.light{color:rgba(255,255,255,.6);border-bottom-color:rgba(255,255,255,.2)}
-.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ov-item{background:#f8fafc;border-radius:8px;padding:12px 14px}
 .ov-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:4px}
 .ov-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--navy)}
 .cost-hero{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.cost-item{flex:1;min-width:120px}
+.cost-item{flex:1;min-width:100px}
 .cost-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:4px}
-.cost-mo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.cost-mo{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--navy);line-height:1}
 .cost-yr{font-size:13px;color:#6b7280;margin-top:3px}
 .cost-divider{width:1px;height:60px;background:var(--border);flex-shrink:0}
-.cost-total-wrap{flex:1;min-width:120px;background:linear-gradient(135deg,var(--navy),#243a6e);border-radius:8px;padding:12px 16px}
+.cost-total-wrap{flex:1;min-width:100px;background:var(--navy);border-radius:8px;padding:14px 16px}
 .cost-total{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--gold);line-height:1;margin-top:4px}
+.cost-total-wrap .cost-lbl{color:rgba(255,255,255,.5)}
 .yr-tbl{width:100%;border-collapse:collapse}
 .yr-tbl th{background:var(--navy);color:#fff;padding:9px 14px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .yr-tbl th:first-child{text-align:left}
 .yr-tbl td{padding:10px 14px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--navy)}
 .yr-tbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:#374151}
-.yr-tbl tr:last-child td{border:none;font-weight:800}
+.yr-tbl tr.hl{background:#fff8e0}
+.yr-tbl tr:last-child td{border:none}
 .yr-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:2px solid var(--navy);font-size:13px;font-weight:700;color:var(--navy)}
-.matters{background:var(--navy)}
-.matters-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:14px}
-.matters-points{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.matters-pt{font-size:14px;color:rgba(255,255,255,.8);line-height:1.5;padding:10px 14px;background:rgba(255,255,255,.06);border-radius:7px;border-left:3px solid var(--gold)}
-.matters-q{background:rgba(200,150,12,.1);border:1px solid rgba(200,150,12,.3);border-radius:8px;padding:16px}
-.matters-q-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
-.matters-q-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#fff;line-height:1.6;font-style:italic}
+.yr-total span:last-child{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--red)}
+.matters{background:var(--navy);border-color:var(--navy)}
+.matters-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:rgba(255,255,255,.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.matters-q-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.5;font-style:italic;margin-bottom:14px}
+.matters-pts{border-top:1px solid rgba(255,255,255,.1);padding-top:14px}
+.matters-pt{font-size:14px;color:rgba(255,255,255,.7);line-height:1.6}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
 .np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
 .nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
 .ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-@media(max-width:500px){.cost-hero{flex-direction:column}.cost-divider{display:none}.overview-grid{grid-template-columns:1fr}}
+@media(max-width:500px){.cost-hero{flex-direction:column}.cost-divider{display:none!important}.overview-grid{grid-template-columns:1fr}}
 </style>
 
 <script>
@@ -780,14 +774,13 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   function fc(n){return n?'$'+Math.round(n).toLocaleString():'—';}
   var slug=localStorage.getItem(AK);if(!slug)return;
   var d=ga()[slug]||{};
-  var mtfMo=parseFloat(d.maitFees)||0;
-  var mtfYr=mtfMo;
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var mtfMo=mtfYr/12;
   var mtgMo=parseFloat(d.monthlyMortgage)||0;
-  var combMo=mtfMo/12+mtgMo;
+  var combMo=mtfMo+mtgMo;
   var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
   var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
-
   function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||'—';}
   set('vb-name',nm);set('vb-resort',d.resort||'—');
   set('vb-mo',combMo>0?fc(combMo)+'/mo':'—');set('vb-stg',stg);
@@ -795,33 +788,20 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   set('ov-year',d.yearPurchased||'—');
   set('ov-price',d.purchasePrice?fc(parseFloat(d.purchasePrice)):'—');
   set('ov-balance',d.balanceAmount?fc(parseFloat(d.balanceAmount)):'—');
-
-  // Monthly/Yearly cost
-  if(mtfMo>0){
-    set('c-mo',fc(mtfMo/12)+'/month');
-    set('c-yr',fc(mtfMo)+'/year');
-  }
+  if(mtfMo>0){set('c-mo',fc(mtfMo)+'/mo');set('c-yr',fc(mtfYr)+'/yr');}
   if(mtgMo>0){
     document.getElementById('mtg-section').style.display='block';
-    set('c-mtg',fc(mtgMo)+'/month');
-    set('c-mtg-yr',fc(mtgMo*12)+'/year');
+    document.getElementById('mtg-divider').style.display='block';
+    set('c-mtg',fc(mtgMo)+'/mo');set('c-mtg-yr',fc(mtgMo*12)+'/yr');
   }
-  var totalMoEl=document.getElementById('c-total');
-  if(totalMoEl){totalMoEl.textContent=combMo>0?fc(combMo)+'/mo':'—';}
-
-  // 5-year projection — MTF only (per Sebastian: no 10/20/30)
-  var annualMTF=mtfMo; // stored as annual
-  if(annualMTF>0){
+  set('c-total',combMo>0?fc(combMo)+'/mo':'—');
+  if(mtfYr>0){
     var rows='';var cum=0;
     [1,2,3,4,5].forEach(function(yr){
-      var thisYr=annualMTF*Math.pow(1.08,yr-1);
+      var thisYr=Math.round(mtfYr*Math.pow(1.08,yr-1));
       cum+=thisYr;
-      var highlight=yr===1||yr===3||yr===5;
-      rows+='<tr'+(highlight?' style="background:#fff8e0;font-weight:800"':'')+'>'
-        +'<td>Year '+yr+(yr===5?' ⭐':'')+'</td>'
-        +'<td>'+fc(thisYr)+'</td>'
-        +'<td>'+fc(cum)+'</td>'
-        +'</tr>';
+      var hl=yr===1||yr===3||yr===5;
+      rows+='<tr class="'+(hl?'hl':'')+'"><td>Year '+yr+'</td><td>'+fc(thisYr)+'</td><td>'+fc(cum)+'</td></tr>';
     });
     document.getElementById('yr-tbody').innerHTML=rows;
     set('yr-5total',fc(cum));
