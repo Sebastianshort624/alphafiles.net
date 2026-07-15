@@ -588,87 +588,91 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
-<!-- RESORT COST CARDS: 3yr and 5yr -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-  <div class="cost-box">
-    <div class="cb-eye">🏨 Resort — 3-Year Cost</div>
-    <div class="cb-val" id="resort-3yr">—</div>
-    <div class="cb-sub" id="resort-3yr-sub">—</div>
-  </div>
-  <div class="cost-box gold">
-    <div class="cb-eye">🏨 Resort — 5-Year Cost</div>
-    <div class="cb-val" id="resort-5yr">—</div>
-    <div class="cb-sub" id="resort-5yr-sub">—</div>
-  </div>
-</div>
+<!-- ① ALPHA FEE — hero section, big and prominent -->
+<div class="fee-hero">
+  <div class="fh-eye">Alpha Service Fee</div>
 
-<!-- ALPHA SERVICE FEE CALCULATOR -->
-<div class="sc">
-  <div class="slbl">Alpha Service Fee</div>
-
-  <div class="fee-row">
-    <label class="fee-lbl">Service Fee <span style="color:#9ca3af;font-size:10px">default = 5-yr resort cost</span></label>
-    <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-fee" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
+  <div class="fee-row-inp">
+    <label class="fee-lbl">Service Fee</label>
+    <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-fee" type="number" class="fee-input" placeholder="Enter fee" oninput="calc()"></div>
   </div>
-  <div class="fee-row">
+  <div class="fee-row-inp">
     <label class="fee-lbl">Discount 1</label>
     <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-d1" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
   </div>
-  <div class="fee-row">
+  <div class="fee-row-inp">
     <label class="fee-lbl">Discount 2</label>
     <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-d2" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
   </div>
-  <div class="fee-row" style="background:#f0fdf4;border-radius:6px;padding:9px 10px;margin:4px -10px;border:1px solid #86efac">
-    <label class="fee-lbl" style="color:#15803d">💰 Pay-in-Full Discount (3%)</label>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#15803d" id="out-pif-disc">—</div>
+
+  <!-- Total discount line -->
+  <div class="disc-line">
+    <span class="disc-lbl">Total Discount</span>
+    <span class="disc-val" id="out-disc">$0</span>
   </div>
-  <div class="fee-row total-disc">
-    <label class="fee-lbl">Total Discount</label>
-    <div class="fee-total" id="out-disc">$0</div>
-  </div>
-  <div class="fee-row">
-    <label class="fee-lbl">Down Payment</label>
-    <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-down" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
-  </div>
-  <div class="fee-row total-bal">
-    <label class="fee-lbl">Balance After Down</label>
-    <div class="fee-total gold" id="out-bal">—</div>
+
+  <!-- PAY OPTIONS — big boxes -->
+  <div id="pay-boxes" style="display:none">
+    <div class="pay-hero-grid">
+      <div class="pay-box pif-box">
+        <div class="pb-eye">💰 Pay-in-Full (3% off)</div>
+        <div class="pb-val" id="out-pif">—</div>
+        <div class="pb-sub">Best value · one payment</div>
+      </div>
+      <div class="pay-box mo-box">
+        <div class="pb-eye">Monthly Plan</div>
+        <div class="pb-val" id="out-mo60">—</div>
+        <div class="pb-sub" id="out-mo-sub">60 mo · 20% APR</div>
+      </div>
+    </div>
+
+    <!-- Down payment -->
+    <div class="fee-row-inp" style="margin-top:10px">
+      <label class="fee-lbl">Down Payment</label>
+      <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-down" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
+    </div>
+    <div class="disc-line" style="background:#fff8e0;border-radius:6px;padding:10px 14px;margin-top:6px">
+      <span class="disc-lbl">Balance After Down</span>
+      <span class="disc-val" style="color:var(--gold);font-size:22px" id="out-bal">—</span>
+    </div>
+
+    <!-- Split lenders -->
+    <div id="split-opt" style="display:none;margin-top:8px">
+      <div class="pay-box" style="background:#f0f4ff;border:1.5px solid #c7d2fe;padding:14px 16px">
+        <div class="pb-eye" style="color:#4338ca">Split Lenders</div>
+        <div class="pb-val" style="color:#4338ca" id="out-split">—</div>
+        <div class="pb-sub">Two lenders · lowest monthly</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- PAYMENT OPTIONS -->
-<div class="sc" id="pay-section" style="display:none">
-  <div class="slbl">Payment Options</div>
-  <div style="display:flex;flex-direction:column;gap:8px">
-    <div class="pay-opt pif">
-      <div><div class="pay-lbl">💰 Pay in Full</div><div class="pay-sub">3% discount — best value</div></div>
-      <div class="pay-val" id="out-pif">—</div>
+<!-- ② RESORT COMPARISON — secondary, below -->
+<div class="sc" style="margin-top:14px">
+  <div class="slbl">Instead of continuing to pay that money to the resort</div>
+  <div class="resort-compare">
+    <div class="rc-tile">
+      <div class="rct-lbl">Monthly to Resort</div>
+      <div class="rct-val" id="r-mo">—</div>
     </div>
-    <div class="pay-opt">
-      <div><div class="pay-lbl">Monthly Plan</div><div class="pay-sub">60 months · 20% APR · <span id="out-mo-sub">$0 down</span></div></div>
-      <div class="pay-val" id="out-mo60">—</div>
+    <div class="rc-tile">
+      <div class="rct-lbl">Annual to Resort</div>
+      <div class="rct-val" id="r-yr">—</div>
     </div>
-    <div class="pay-opt split" id="split-opt" style="display:none">
-      <div><div class="pay-lbl">Split Lenders</div><div class="pay-sub">Two lenders · lowest monthly</div></div>
-      <div class="pay-val" id="out-split">—</div>
+    <div class="rc-tile">
+      <div class="rct-lbl">3-Year Cost</div>
+      <div class="rct-val" id="r-3yr">—</div>
+    </div>
+    <div class="rc-tile accent">
+      <div class="rct-lbl">5-Year Cost (8% growth)</div>
+      <div class="rct-val" id="r-5yr">—</div>
     </div>
   </div>
-</div>
 
-<!-- SAVINGS BANNER -->
-<div id="savings-banner" style="display:none;background:var(--navy);border-radius:10px;padding:18px 22px;margin-bottom:14px">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.7);margin-bottom:10px">Instead of continuing to pay that money to the resort</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-    <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px 14px">
-      <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">You currently pay monthly</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff" id="out-mo-amt">—</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px">to the resort every month</div>
-    </div>
-    <div style="background:rgba(200,150,12,.12);border:1px solid rgba(200,150,12,.3);border-radius:8px;padding:12px 14px">
-      <div style="font-size:10px;color:rgba(200,150,12,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Total you save</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--gold)" id="out-save">—</div>
-      <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px" id="out-save-period">over 5 years</div>
-    </div>
+  <!-- You save banner -->
+  <div id="savings-banner" style="display:none;background:var(--navy);border-radius:8px;padding:14px 16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:13px;color:rgba(255,255,255,.7)">Total you save vs. continuing to pay</div>
+    <div style="font-size:22px;font-weight:600;color:var(--gold)" id="out-save">—</div>
   </div>
 </div>
 
@@ -684,92 +688,80 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
 .vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
 .vbv{font-size:14px;font-weight:700;color:var(--navy)}
-.cost-box{background:var(--navy);border-radius:10px;padding:18px 20px}
-.cost-box.gold{background:linear-gradient(135deg,#92400e,#a16207)}
-.cb-eye{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);margin-bottom:8px}
-.cb-val{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:700;color:var(--gold);line-height:1}
-.cost-box.gold .cb-val{color:#fde68a}
-.cb-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;line-height:1.5}
-.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:14px}
-.slbl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:16px}
-.fee-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f3f4f6}
-.fee-row:last-child{border:none}
-.fee-row.total-disc{background:#fff5f5;border-radius:6px;padding:9px 10px;margin:4px -10px;border:none}
-.fee-row.total-bal{background:#fff8e0;border-radius:6px;padding:9px 10px;margin:4px -10px 0;border:none}
-.fee-lbl{font-size:13px;font-weight:600;color:#374151}
-.fee-input-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;width:140px}
-.fee-dollar{padding:8px 10px;background:#f8fafc;color:#9ca3af;font-size:13px;border-right:1px solid var(--border)}
-.fee-input{border:none;outline:none;padding:8px 10px;font-size:14px;font-weight:700;color:var(--navy);font-family:Inter,sans-serif;width:100%}
-.fee-total{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;color:var(--red)}
-.fee-total.gold{color:var(--gold)}
-.pay-opt{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px}
-.pay-opt.pif{border-color:var(--green);background:#f0fdf4}
-.pay-lbl{font-weight:700;font-size:14px;color:var(--navy)}
-.pay-sub{font-size:11px;color:#9ca3af;margin-top:2px}
-.pay-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;color:var(--navy)}
-.pay-opt.pif .pay-val{color:var(--green)}
+/* FEE HERO */
+.fee-hero{background:var(--navy);border-radius:12px;padding:22px;margin-bottom:0}
+.fh-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(200,150,12,.7);margin-bottom:16px}
+.fee-row-inp{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.fee-row-inp:last-of-type{border:none}
+.fee-lbl{font-size:13px;font-weight:600;color:rgba(255,255,255,.7)}
+.fee-input-wrap{display:flex;align-items:center;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:7px;overflow:hidden;width:150px}
+.fee-dollar{padding:8px 10px;color:rgba(255,255,255,.4);font-size:13px;border-right:1px solid rgba(255,255,255,.12)}
+.fee-input{border:none;outline:none;padding:8px 10px;font-size:15px;font-weight:700;color:#fff;background:transparent;width:100%}
+.fee-input::placeholder{color:rgba(255,255,255,.25)}
+.disc-line{display:flex;align-items:center;justify-content:space-between;padding:10px 0;margin-top:6px;border-top:1px solid rgba(255,255,255,.08)}
+.disc-lbl{font-size:12px;color:rgba(255,255,255,.5)}
+.disc-val{font-size:18px;font-weight:700;color:rgba(255,59,48,.8)}
+/* PAY BOXES */
+.pay-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pay-box{border-radius:10px;padding:16px}
+.pif-box{background:rgba(52,199,89,.15);border:1.5px solid rgba(52,199,89,.4)}
+.mo-box{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15)}
+.pb-eye{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.pif-box .pb-eye{color:rgba(52,199,89,.8)}
+.pb-val{font-size:30px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px}
+.pif-box .pb-val{color:#34c759}
+.pb-sub{font-size:11px;color:rgba(255,255,255,.35)}
+/* RESORT COMPARE */
+.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.slbl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px}
+.resort-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc-tile{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.rc-tile.accent{background:var(--navy)}
+.rct-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:4px}
+.rc-tile.accent .rct-lbl{color:rgba(255,255,255,.4)}
+.rct-val{font-size:22px;font-weight:700;color:var(--navy)}
+.rc-tile.accent .rct-val{color:var(--gold)}
+/* NAV */
 .nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
 .np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
 .nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
 .ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+@media(max-width:500px){.pay-hero-grid,.resort-compare{grid-template-columns:1fr}}
 </style>
 
 <script>
 var _mtfYr=0,_mtgMo=0,_mtgYrs=10,_resort3=0,_resort5=0,_combMo=0;
-
-function fc(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—";}
-function fc0(n){return n?"$"+Math.round(n).toLocaleString():"—";}
-function moPmt(p,mo){var r=0.20/12;return p>0?p*r*Math.pow(1+r,mo)/(Math.pow(1+r,mo)-1):0;}
+function fc(n){return n?"$"+Math.round(n).toLocaleString():"—";}
+function fcd(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—";}
+function moPmt(p,mo){var r=.20/12;return p>0?p*r*Math.pow(1+r,mo)/(Math.pow(1+r,mo)-1):0;}
+function cumMtf(y){var t=0;for(var i=1;i<=y;i++)t+=_mtfYr*Math.pow(1.08,i-1);return t;}
 function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||"—";}
 
 function calc(){
-  var feeRaw=parseFloat(document.getElementById("inp-fee").value)||0;
-  var fee=feeRaw;
-  // Save fee to client record when typed
-  if(feeRaw>0){
-    var AK2="atc_active",SK2="atc_clients_v2";
-    var slug2=localStorage.getItem(AK2);
-    if(slug2){try{var all=JSON.parse(localStorage.getItem(SK2)||"{}");if(all[slug2]){all[slug2].alphaFee=feeRaw;all[slug2]._updated=Date.now();localStorage.setItem(SK2,JSON.stringify(all));}}catch(e){}}
-  }
+  var fee=parseFloat(document.getElementById("inp-fee").value)||0;
   var d1=parseFloat(document.getElementById("inp-d1").value)||0;
   var d2=parseFloat(document.getElementById("inp-d2").value)||0;
   var down=parseFloat(document.getElementById("inp-down").value)||0;
+  // Save fee
+  if(fee>0){var AK2="atc_active",SK2="atc_clients_v2",slug2=localStorage.getItem(AK2);if(slug2){try{var all=JSON.parse(localStorage.getItem(SK2)||"{}");if(all[slug2]){all[slug2].alphaFee=fee;all[slug2]._updated=Date.now();localStorage.setItem(SK2,JSON.stringify(all));}}catch(e){}}}
   var disc=d1+d2;
   var net=Math.max(0,fee-disc);
-  var pifDisc=net*0.03;
-  var pifPrice=net*0.97;
+  var pif=net*0.97;
   var bal=Math.max(0,net-down);
-  set("out-disc","$"+Math.round(disc).toLocaleString());
-  set("out-pif-disc",pifDisc>0?"-$"+Math.round(pifDisc).toLocaleString()+" → "+fc0(pifPrice):"—");
-  set("out-bal",bal>0?fc0(bal):"$0");
-  if(bal>0){
-    document.getElementById("pay-section").style.display="block";
-    set("out-pif",fc0(bal*0.97));
-    set("out-mo60",fc(moPmt(bal,60))+"/mo");
-    set("out-mo-sub",down>0?"$"+Math.round(down).toLocaleString()+" down · then":"$0 down ·");
-    if(bal>15000){
-      document.getElementById("split-opt").style.display="flex";
-      var l1=Math.min(15000,bal);var l2=bal-l1;
-      set("out-split",fc(moPmt(l1,60)+moPmt(l2,36))+"/mo");
-    } else {
-      document.getElementById("split-opt").style.display="none";
-    }
+  set("out-disc",disc>0?"-"+fc(disc):"$0");
+  if(net>0){
+    document.getElementById("pay-boxes").style.display="block";
+    set("out-pif",fcd(pif));
+    set("out-mo60",fcd(moPmt(bal,60))+"/mo");
+    set("out-mo-sub","60 mo · 20% APR"+(down>0?" · "+fc(down)+" down":""));
+    set("out-bal",fc(bal));
+    if(bal>15000){document.getElementById("split-opt").style.display="block";set("out-split",fcd(moPmt(Math.min(15000,bal),60)+moPmt(Math.max(0,bal-15000),36))+"/mo");}
+    else{document.getElementById("split-opt").style.display="none";}
     var save=_resort5-fee;
     var sb=document.getElementById("savings-banner");
-    if(sb&&save>0){
-      sb.style.display="block";
-      set("out-mo-amt",fc(_resort5/60)+"/mo");
-      var yrs=Math.round(fee/_combMo/12*10)/10;
-      if(yrs>=1){
-        set("out-save","+"+fc0(save));
-        set("out-save-period","over "+(yrs>5?"5+":"~"+yrs.toFixed(1))+" years vs. continuing to pay");
-      } else {
-        set("out-save","+"+fc0(save/12)+"/yr");
-        set("out-save-period","per year you are no longer paying the resort");
-      }
-    }
+    if(sb&&save>0){sb.style.display="flex";set("out-save","+"+fc(save));}
   } else {
-    document.getElementById("pay-section").style.display="none";
+    document.getElementById("pay-boxes").style.display="none";
   }
 }
 
@@ -786,24 +778,19 @@ function calc(){
   var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"—";
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
   set("vb-name",nm);set("vb-resort",d.resort||"—");
-  set("vb-mo",_combMo>0?fc(_combMo)+"/mo":"—");
+  set("vb-mo",_combMo>0?fcd(_combMo)+"/mo":"—");
   set("vb-stg",stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment");
-
-  function cumMtf(y){var t=0;for(var i=1;i<=y;i++)t+=_mtfYr*Math.pow(1.08,i-1);return t;}
-
-  // 3-year resort cost (MTG + MTF with 8% growth)
+  // Resort cost tiles
   _resort3=_mtgMo*36+cumMtf(3);
   _resort5=_mtgMo*60+cumMtf(5);
-
-  set("resort-3yr",fc0(_resort3));
-  var s3=document.getElementById("resort-3yr-sub");
-  if(s3)s3.textContent=fc((_mtfYr/12))+" MTF + "+fc(_mtgMo)+" mortgage × 3 yr · 8% growth";
-  set("resort-5yr",fc0(_resort5));
-  var s5=document.getElementById("resort-5yr-sub");
-  if(s5)s5.textContent=fc((_mtfYr/12))+" MTF + "+fc(_mtgMo)+" mortgage × 5 yr · 8% growth";
-
-  // Fee always starts blank — never pre-populated
+  set("r-mo",fcd(_combMo));
+  set("r-yr",fc(_mtfYr+_mtgMo*12));
+  set("r-3yr",fc(_resort3));
+  set("r-5yr",fc(_resort5));
+  // Fee always blank
   calc();
 })();
 </script>
 </div></div>
+</body>
+</html>
