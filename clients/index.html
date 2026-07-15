@@ -764,6 +764,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .cc-right{margin-left:auto;text-align:right;flex-shrink:0}
 .cc-updated{font-size:9px;color:#9ca3af;margin-bottom:4px}
 .cc-open{background:#1B2A4A;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
+.cc-portal{font-size:11px;font-weight:700;color:#C8960C;background:#fff8e0;border:1.5px solid #fcd34d;border-radius:6px;padding:5px 10px;cursor:pointer;white-space:nowrap}
 .empty-pipeline{font-size:12px;color:#9ca3af;text-align:center;padding:14px;font-style:italic}
 </style>
 
@@ -780,7 +781,7 @@ var COLORS={sold:'#16a34a',quoted:'#C8960C',vero:'#5856d6',attended:'#34c759',ab
 var AVATARS=['#1B2A4A','#7c3aed','#0891b2','#16a34a','#ea580c','#db2777','#2563eb','#C8960C'];
 
 window.toggleSection=function(key){collapsed[key]=!collapsed[key];renderHub();};
-window.openClient=function(slug){localStorage.setItem(AK,slug);window.location='/vitals/';};
+window.openClient=function(slug){localStorage.setItem(AK,slug);window.location='/owner/';};
 
 function makeCard(e,idx){
   var card=document.createElement('div');
@@ -813,7 +814,8 @@ function makeCard(e,idx){
     +'</div>'
     +'<div class="cc-right">'
       +'<div class="cc-updated">'+fd(e.d._updated)+'</div>'
-      +'<button class="cc-open">Open →</button>'
+      +'<button class="cc-open">▶ Present</button>'
+      +'<button class="cc-portal">🔗 Portal</button>'
     +'</div>';
 
   // Attach events using closures — no onclick string interpolation
@@ -822,7 +824,16 @@ function makeCard(e,idx){
   card.addEventListener('dragstart',function(ev){ev.dataTransfer.setData('slug',e.slug);card.style.opacity='.4';});
   card.addEventListener('dragend',function(){card.style.opacity='1';});
   card.addEventListener('click', function(){openClient(e.slug);});
-  card.querySelector('.cc-open').addEventListener('click', function(ev){ev.stopPropagation();openClient(e.slug);});
+  card.querySelector('.cc-open').addEventListener('click', function(ev){
+    ev.stopPropagation();
+    openClient(e.slug);
+  });
+  card.querySelector('.cc-portal').addEventListener('click', function(ev){
+    ev.stopPropagation();
+    var shareUrl=localStorage.getItem('portal_share_'+e.slug);
+    if(shareUrl){window.open(shareUrl,'_blank');}
+    else{alert('No portal pushed yet for this client. Go to their presentation and push pages first.');}
+  });
   return card;
 }
 
