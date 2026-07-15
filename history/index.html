@@ -349,9 +349,11 @@ window.doPush=function(){
   toast2.style.cssText='position:fixed;bottom:80px;left:220px;right:210px;background:#1B2A4A;border:2px solid #C8960C;color:#fff;padding:14px 16px;border-radius:10px;z-index:800;font-size:12px';
   toast2.innerHTML='<div style="font-size:10px;color:#C8960C;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">✅ Portal Ready — Client Share Link</div>'
     +'<div style="font-family:monospace;font-size:11px;word-break:break-all;color:rgba(255,255,255,.7);margin-bottom:8px">'+shareUrl.substring(0,80)+'...</div>'
-    +'<button onclick="navigator.clipboard.writeText(''+shareUrl+'').then(function(){this.textContent='✓ Copied!';}.bind(this))" style="background:#C8960C;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Link</button>'
+    +'<button id="_cpyBtn" style="background:#C8960C;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Link</button>'
     +'<button onclick="this.parentNode.remove()" style="background:transparent;color:rgba(255,255,255,.4);border:none;cursor:pointer;float:right;font-size:16px">✕</button>';
   document.body.appendChild(toast2);
+  var cpyBtn=document.getElementById('_cpyBtn');
+  if(cpyBtn)cpyBtn.onclick=function(){navigator.clipboard.writeText(shareUrl).then(function(){cpyBtn.textContent='✓ Copied!';setTimeout(function(){cpyBtn.textContent='📋 Copy Link';},2000);});};
   setTimeout(function(){if(toast2.parentNode)toast2.remove();},12000);
   buildPortalBanner();
 };
