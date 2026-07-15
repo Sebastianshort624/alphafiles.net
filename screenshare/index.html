@@ -677,17 +677,21 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   </div>
 </div>
 
-<div class="sc">
-  <div class="slbl">Share with Client</div>
-  <div id="share-section" style="display:none">
-    <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:14px 16px;margin-bottom:10px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#15803d;margin-bottom:6px">Link Ready</div>
-      <div id="meet-display" style="font-family:monospace;font-size:13px;color:#166534;word-break:break-all;line-height:1.6"></div>
-    </div>
-    <div style="font-size:12px;color:#6b7280;line-height:1.7">Send this link to your client via SMS or email so they can join the screen share session. Once they're connected, proceed through the presentation as normal.</div>
+<div class="sc" id="share-section" style="display:none">
+  <div class="slbl">Send to Client</div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <button onclick="copyMeetEmail()" id="copy-email-btn"
+      style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:16px 20px;font-size:15px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;width:100%">
+      <span style="font-size:20px">📧</span> Copy Link — Ready to Email or Text
+    </button>
+    <button onclick="openMeet()"
+      style="display:flex;align-items:center;justify-content:center;gap:10px;background:#f3f4f6;color:var(--navy);border:1.5px solid var(--border);border-radius:10px;padding:14px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;width:100%">
+      <span style="font-size:18px">🖥️</span> Open Meet in New Tab
+    </button>
   </div>
-  <div id="no-link" style="font-size:13px;color:#9ca3af;font-style:italic">No link saved yet. Paste a Google Meet link above.</div>
+  <div style="font-size:11px;color:#9ca3af;margin-top:10px;text-align:center">Link is saved — not visible on screen</div>
 </div>
+<div id="no-link" style="font-size:13px;color:#9ca3af;font-style:italic;padding:14px 0">No link saved yet. Paste a Google Meet link above.</div>
 
 <div class="nav-bar">
   <a class="np" href="/vitals/">← Vitals</a>
@@ -717,11 +721,9 @@ function saveMeetLink(val){
   updateDisplay(val);
 }
 function updateDisplay(val){
-  var d=document.getElementById("meet-display");
   var s=document.getElementById("share-section");
   var n=document.getElementById("no-link");
   if(val&&val.trim()){
-    if(d)d.textContent=val.trim();
     if(s)s.style.display="block";
     if(n)n.style.display="none";
   } else {
@@ -738,9 +740,15 @@ function copyMeet(){
   var v=(document.getElementById("meet-input").value||"").trim();
   if(!v){alert("No link to copy.");return;}
   navigator.clipboard.writeText(v).then(function(){
-    var btn=event.target;btn.textContent="✓ Copied!";
-    setTimeout(function(){btn.textContent="📋 Copy Link";},2000);
+    var btn=document.getElementById("copy-email-btn")||event.target;
+    var orig=btn.innerHTML;
+    btn.innerHTML='<span style="font-size:20px">✅</span> Copied — Ready to Paste';
+    btn.style.background="#15803d";
+    setTimeout(function(){btn.innerHTML=orig;btn.style.background="var(--navy)";},2500);
   });
+}
+function copyMeetEmail(){
+  copyMeet();
 }
 function clearMeet(){
   document.getElementById("meet-input").value="";
