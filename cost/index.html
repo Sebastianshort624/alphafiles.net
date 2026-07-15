@@ -714,16 +714,27 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <table class="cost-tbl" id="cost-tbl">
     <thead>
       <tr>
-        <th>Timeframe</th>
-        <th>Mortgage</th>
-        <th>MTF</th>
-        <th>Combined Cost</th>
-        <th id="fv-hdr">If Invested @ 8%</th>
-        <th id="alpha-hdr" style="display:none">You Save with Alpha</th>
+        <th style="text-align:left">Timeframe</th>
+        <th>MTG + MTF</th>
+        <th style="color:#86efac">If Fees Continue to Rise 8%</th>
+        <th id="alpha-hdr" style="display:none;color:#fcd34d">You Save with Alpha</th>
       </tr>
     </thead>
     <tbody id="cost-tbody"></tbody>
   </table>
+  <!-- BREAKDOWN in grey -->
+  <div style="background:#f3f4f6;border-radius:8px;padding:12px;margin-top:12px">
+    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px">Individual Breakdown — Reference</div>
+    <table class="cost-tbl" id="breakdown-tbody-wrap" style="font-size:12px">
+      <thead><tr>
+        <th style="text-align:left;background:#e5e7eb;color:#6b7280">Timeframe</th>
+        <th style="background:#e5e7eb;color:#6b7280">Mortgage Alone</th>
+        <th style="background:#e5e7eb;color:#6b7280">MTF Alone (8%)</th>
+        <th style="background:#e5e7eb;color:#6b7280">MTF Flat (no growth)</th>
+      </tr></thead>
+      <tbody id="breakdown-tbody"></tbody>
+    </table>
+  </div>
   </div>
 </div>
 
