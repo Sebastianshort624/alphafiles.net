@@ -607,9 +607,35 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="dc-main">or simply delaying the decision?</div>
 </div>
 
+<!-- WITH ALPHA vs WITHOUT -->
+<div class="contrast-grid">
+  <div class="contrast-card without">
+    <div class="contrast-hdr">Without a Plan</div>
+    <div class="contrast-items">
+      <div class="contrast-item">❌ Stop paying with no protection in place</div>
+      <div class="contrast-item">❌ Resort reports to all three credit bureaus</div>
+      <div class="contrast-item">❌ Collections begin — phone calls, letters, pressure</div>
+      <div class="contrast-item">❌ Possible foreclosure proceedings</div>
+      <div class="contrast-item">❌ Estate liability passes to your heirs</div>
+      <div class="contrast-item">❌ No one managing the process for you</div>
+    </div>
+  </div>
+  <div class="contrast-card with">
+    <div class="contrast-hdr">With Alpha</div>
+    <div class="contrast-items">
+      <div class="contrast-item">✅ Your case is documented before anything happens</div>
+      <div class="contrast-item">✅ We manage all communication with the resort</div>
+      <div class="contrast-item">✅ Credit monitoring and repair support included</div>
+      <div class="contrast-item">✅ Structured process — no guessing, no reacting</div>
+      <div class="contrast-item">✅ Estate liability addressed as part of resolution</div>
+      <div class="contrast-item">✅ Written guarantee — Favorable Outcome or refund</div>
+    </div>
+  </div>
+</div>
+
 <!-- TIMING -->
 <div class="sc timing-card">
-  <div class="timing-text">The earlier your situation is reviewed and documented, the more options you may have.</div>
+  <div class="timing-text">The earlier your situation is reviewed and documented, the more options you have. Waiting does not improve your position — it narrows it.</div>
 </div>
 
 <div class="nav-bar">
@@ -636,6 +662,16 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .dark-close{background:var(--navy);border-radius:10px;padding:26px 28px;margin-bottom:14px;text-align:center}
 .dc-pre{font-size:15px;color:rgba(255,255,255,.55);margin-bottom:10px}
 .dc-main{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;color:#fff;font-style:italic;line-height:1.4}
+.contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:560px){.contrast-grid{grid-template-columns:1fr}}
+.contrast-card{border-radius:10px;padding:18px 20px;border:1.5px solid}
+.contrast-card.without{background:#fff5f5;border-color:#fecaca}
+.contrast-card.with{background:#f0fdf4;border-color:#86efac}
+.contrast-hdr{font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.contrast-card.without .contrast-hdr{color:#dc2626}
+.contrast-card.with .contrast-hdr{color:#15803d}
+.contrast-items{display:flex;flex-direction:column;gap:7px}
+.contrast-item{font-size:12px;color:#374151;line-height:1.5;padding:6px 10px;background:rgba(255,255,255,.6);border-radius:5px}
 .timing-card{background:#f8fafc;border-left:4px solid var(--gold)}
 .timing-text{font-size:15px;font-weight:600;color:var(--navy);line-height:1.6}
 .nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
