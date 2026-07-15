@@ -284,7 +284,7 @@ window.doPush=function(){
     location:d.location||'',phone:d.phone||'',email:d.email||'',
     maitFees:d.maitFees||0,monthlyMortgage:d.monthlyMortgage||0,
     balanceAmount:d.balanceAmount||0,
-    alphaFee:0, // ALWAYS $0 until manually priced — never pull from CRM
+    alphaFee:parseFloat(d.alphaFee)||0, // pull saved fee; quote page input stays blank independently
     mtgTerm:d.mtgTerm||10,yearPurchased:d.yearPurchased||'',
     purchasePrice:d.purchasePrice||0,_pushedAt:Date.now()
   };
