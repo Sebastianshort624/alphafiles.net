@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Your Alpha Case File</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--bg:#f0f4f8;--green:#16a34a}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:#1a1a1a;min-height:100vh}
 
 /* TOP BAR */
 .topbar{background:var(--navy);padding:0 20px;height:52px;display:flex;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-.tb-logo{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:900;color:#fff;letter-spacing:.3px}
+.tb-logo{font-size:19px;font-weight:900;color:#fff;letter-spacing:.3px}
 .tb-logo span{color:var(--gold)}
 .tb-back{margin-left:auto;display:none;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:13px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 12px;text-decoration:none}
 .tb-back:hover{color:#fff}
@@ -22,7 +22,7 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 /* WELCOME */
 .welcome{margin-bottom:6px}
 .welcome-eye{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:6px}
-.welcome-name{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;color:var(--navy);line-height:1.1;margin-bottom:2px}
+.welcome-name{font-size:36px;font-weight:900;color:var(--navy);line-height:1.1;margin-bottom:2px}
 .welcome-sub{font-size:13px;color:#6b7280}
 
 /* DASHBOARD */
@@ -31,7 +31,7 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 .db-tile{background:rgba(255,255,255,.07);border-radius:10px;padding:14px}
 .db-tile.gold-border{border:1px solid rgba(200,150,12,.4)}
 .db-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.4);margin-bottom:5px}
-.db-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;color:#fff;line-height:1}
+.db-val{font-size:26px;font-weight:700;color:#fff;line-height:1}
 .db-val.gold{color:var(--gold)}
 .db-val.sm{font-size:18px}
 .db-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:4px}
@@ -41,7 +41,7 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 .ns-text{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6}
 
 /* DIVIDER */
-.sec-hdr{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:#9ca3af;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.sec-hdr{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:#9ca3af;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 
 /* REVIEWED CHECKLIST */
 .reviewed-list{display:flex;flex-direction:column;gap:0;background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
@@ -54,20 +54,20 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 
 /* QUOTE SUMMARY */
 .quote-block{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
-.qb-hdr{background:var(--navy);padding:14px 20px;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
+.qb-hdr{background:var(--navy);padding:14px 20px;font-size:15px;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:.5px}
 .qb-rows{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #f3f4f6}
 .qb-cell{padding:14px 20px;border-right:1px solid #f3f4f6}
 .qb-cell:nth-child(2n){border-right:none}
 .qb-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:4px}
-.qb-val{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--navy)}
+.qb-val{font-size:24px;font-weight:700;color:var(--navy)}
 .qb-val.red{color:var(--gold)}
 .qb-full{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:#f8fafc}
 .qb-full-lbl{font-size:13px;color:#374151;font-weight:600}
-.qb-full-val{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:#dc2626}
+.qb-full-val{font-size:20px;font-weight:700;color:#dc2626}
 
 /* NEXT STEP CTA */
 .cta-block{background:linear-gradient(135deg,#1B2A4A,#243a6e);border-radius:12px;padding:22px 24px;margin-bottom:20px;text-align:center}
-.cta-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:6px}
+.cta-title{font-size:20px;font-weight:900;color:#fff;margin-bottom:6px}
 .cta-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px}
 .cta-btn{display:inline-block;background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:12px 28px;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
 
@@ -82,7 +82,7 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 /* CONTACT */
 .contact-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 24px;display:flex;gap:16px;align-items:center}
 .cc-ava{width:52px;height:52px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:2px solid var(--gold)}
-.cc-name{font-family:"Barlow Condensed",sans-serif;font-size:22px;font-weight:900;color:var(--navy);margin-bottom:1px}
+.cc-name{font-size:22px;font-weight:900;color:var(--navy);margin-bottom:1px}
 .cc-title{font-size:12px;color:#9ca3af;margin-bottom:8px}
 .cc-btns{display:flex;gap:6px;flex-wrap:wrap}
 .cc-btn{background:#f3f4f6;color:var(--navy);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;text-decoration:none}
@@ -96,7 +96,7 @@ body{font-family:Inter,sans-serif;background:var(--bg);color:#1a1a1a;min-height:
 .ctbl{width:100%;border-collapse:collapse}
 .ctbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .ctbl th:first-child{text-align:left}
-.ctbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
+.ctbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-size:16px;font-weight:600;color:var(--navy)}
 .ctbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
 .ctbl tr:last-child td{border:none}
 .pay-opt{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;margin-bottom:8px}
@@ -244,9 +244,9 @@ function renderPage(data,pid){
   } else if(pid==="quote"){
     var fee=parseFloat(s.alphaFee)||0;
     if(!fee){body="<div class='sc'><p style='color:#9ca3af;font-size:13px'>Quote not yet available. Contact your representative.</p></div>";}
-    else{var mo60=moPmt(fee,60);body="<div class='sc'><div class='slbl'>Your Service Fee</div><div class='pay-opt' style='border-color:#15803d;background:#f0fdf4;margin-bottom:8px'><div><div style='font-weight:700;color:var(--navy)'>💰 Pay in Full (3% off)</div><div style='font-size:11px;color:#9ca3af'>Best value</div></div><div style='font-family:Cormorant Garamond,serif;font-size:26px;font-weight:700;color:#15803d'>"+fcd(fee*.97)+"</div></div><div class='pay-opt'><div><div style='font-weight:700;color:var(--navy)'>Monthly Plan</div><div style='font-size:11px;color:#9ca3af'>60 months · $0 down · starts month 2</div></div><div style='font-family:Cormorant Garamond,serif;font-size:26px;font-weight:700;color:var(--navy)'>"+fcd(mo60)+"/mo</div></div></div>";}
+    else{var mo60=moPmt(fee,60);body="<div class='sc'><div class='slbl'>Your Service Fee</div><div class='pay-opt' style='border-color:#15803d;background:#f0fdf4;margin-bottom:8px'><div><div style='font-weight:700;color:var(--navy)'>💰 Pay in Full (3% off)</div><div style='font-size:11px;color:#9ca3af'>Best value</div></div><div style='font-size:26px;font-weight:700;color:#15803d'>"+fcd(fee*.97)+"</div></div><div class='pay-opt'><div><div style='font-weight:700;color:var(--navy)'>Monthly Plan</div><div style='font-size:11px;color:#9ca3af'>60 months · $0 down · starts month 2</div></div><div style='font-size:26px;font-weight:700;color:var(--navy)'>"+fcd(mo60)+"/mo</div></div></div>";}
   } else if(pid==="guarantee"){
-    body="<div class='sc' style='background:#f0fdf4;border-color:#86efac;text-align:center'><div style='font-size:42px;margin-bottom:12px'>🛡️</div><div style='font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:#15803d;margin-bottom:10px'>Written Money-Back Guarantee</div><div style='font-size:14px;color:#166534;line-height:1.8'>If Alpha Timeshare Consultants does not obtain a Favorable Outcome within <strong>36 months</strong>, your service fee is refunded in full — per your written contract.</div></div>";
+    body="<div class='sc' style='background:#f0fdf4;border-color:#86efac;text-align:center'><div style='font-size:42px;margin-bottom:12px'>🛡️</div><div style='font-size:24px;font-weight:900;color:#15803d;margin-bottom:10px'>Written Money-Back Guarantee</div><div style='font-size:14px;color:#166534;line-height:1.8'>If Alpha Timeshare Consultants does not obtain a Favorable Outcome within <strong>36 months</strong>, your service fee is refunded in full — per your written contract.</div></div>";
   } else {
     var info=PAGE_REVIEWED[pid]||{title:p.label,desc:"Reviewed during your consultation."};
     body="<div class='sc'><div style='font-size:14px;color:#374151;line-height:1.8;margin-bottom:14px'>"+info.desc+"</div><p style='font-size:13px;color:#9ca3af'>For a detailed review of this section, contact your Alpha consultant.</p></div>";
@@ -255,10 +255,10 @@ function renderPage(data,pid){
   document.getElementById("root").innerHTML=
     '<div style="margin-bottom:16px"><a href="javascript:history.back()" style="font-size:13px;font-weight:700;color:var(--gold);text-decoration:none">← My Case File</a></div>'
     +'<div style="margin-bottom:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:4px">'+(PAGE_ICONS[pid]||"📄")+" Your Portal</div>"
-    +'<div style="font-family:Barlow Condensed,sans-serif;font-size:28px;font-weight:900;color:var(--navy)">'+(info2.title||p.label)+'</div>'
+    +'<div style="font-size:28px;font-weight:900;color:var(--navy)">'+(info2.title||p.label)+'</div>'
     +(info2.desc?'<div style="font-size:13px;color:#6b7280;margin-top:4px">'+info2.desc+'</div>':'')+'</div>'
     +body
-    +'<div style="margin-top:20px"><div style="font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px">Need Help?</div>'
+    +'<div style="margin-top:20px"><div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin-bottom:10px">Need Help?</div>'
     +'<div class="contact-card" style="background:#f8fafc"><div class="cc-ava">👤</div><div><div class="cc-name">'+(agent.name||"Sebastian Short")+'</div><div class="cc-title">'+(agent.company||"Alpha Timeshare Consultants")+(agent.ext?" · Ext. "+agent.ext:"")+'</div></div></div></div>'
     +'<div class="footer" style="margin-top:24px">Alpha Timeshare Consultants · Confidential</div>';
 }
@@ -266,7 +266,7 @@ function renderPage(data,pid){
 // MAIN
 var data=loadData();
 if(!data){
-  document.getElementById("root").innerHTML='<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:16px">🔒</div><h2 style="font-family:Barlow Condensed,sans-serif;font-size:26px;color:var(--navy);margin-bottom:10px">Portal Not Available</h2><p style="font-size:13px;color:#6b7280;line-height:1.7;max-width:340px;margin:0 auto">This link may have expired or the portal hasn\'t been published yet.<br><br>Contact your Alpha Timeshare Consultants representative for an updated link.</p></div>';
+  document.getElementById("root").innerHTML='<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:16px">🔒</div><h2 style="font-size:26px;color:var(--navy);margin-bottom:10px">Portal Not Available</h2><p style="font-size:13px;color:#6b7280;line-height:1.7;max-width:340px;margin:0 auto">This link may have expired or the portal hasn\'t been published yet.<br><br>Contact your Alpha Timeshare Consultants representative for an updated link.</p></div>';
 } else if(data.page){
   renderPage(data,data.page);
 } else {
