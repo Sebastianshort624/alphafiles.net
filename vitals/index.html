@@ -1363,6 +1363,35 @@ function populateFromCRM(){
   var ph=clientMap['phone']||field(['Phone','Plain Phone']);
   if(ph) setf('v-phone',ph.replace(/\D/g,'').replace(/^1/,''));
 
+  // ── Co-owner (2nd owner) — first/last name + phone ──
+  // From markdown client section: rows with "Co-Owner" and following "Phone"
+  var coOwner=''; var coPhone='';
+  // Try markdown table rows — "Co-Owner | Name" then next "Phone | number"
+  var coMatch=t.match(/Co-Owner[^|\n]*\|([^|\n]+)/i);
+  if(!coMatch) coMatch=t.match(/Co-?Owner[^\n]*\n([^\n]{1,80})/i);
+  if(!coMatch) coMatch=t.match(/2nd owner first name[^|\n]*\|([^|\n]+)/i);
+  if(coMatch) coOwner=coMatch[1].replace(/[|*]/g,'').trim();
+
+  // Phone for co-owner — look for second Phone entry after co-owner mention
+  var coPhoneMatch=t.match(/Co-Owner[\s\S]{0,200}?\|([^|\n]+)[\s\S]{0,100}?Phone[^|\n]*\|([^|\n]+)/i);
+  if(!coPhoneMatch){
+    // Try: "Phone	(xxx)" patterns — get the 2nd one
+    var allPhones=[];var phoneReg=/Phone[^|\n]*[|\t]([^|\n\t]{6,20})/gi;var pm;
+    while((pm=phoneReg.exec(t))!==null) allPhones.push(pm[1].trim());
+    if(allPhones.length>=2) coPhone=allPhones[1];
+  } else {
+    coPhone=coPhoneMatch[2].replace(/[|*]/g,'').trim();
+  }
+  // Also try Secondary Phone field
+  if(!coPhone) coPhone=field(['Secondary Phone','Phone 2','Co-Owner Phone']);
+
+  if(coOwner){
+    var coParts=coOwner.trim().split(' ');
+    setf('v-co',coParts[0]);
+    if(coParts.length>1) setf('v-col',coParts.slice(1).join(' '));
+  }
+  if(coPhone) setf('v-phone2',coPhone.replace(/\D/g,'').replace(/^1/,''));
+
   // Alpha fee
   var feeSection='';
   var fsMatch=t.match(/###\s*Alpha Fee([\s\S]*?)(?=###|$)/i);
@@ -1394,11 +1423,19 @@ function populateFromCRM(){
       var mtfYr=cleanNum(m['annual maintenance fee']||m['annual mtf']||'');
       var mtfVal=mtfYr?parseFloat(mtfYr):(mtfMo?parseFloat(mtfMo)*12:0);
       var yrMatch=(m['purchase date']||'').match(/(20\d{2}|19\d{2})/);
+      // Build owners list — prefer explicit owners field, fall back to primary+co for R-1
+      var ownerList=(m['owners']||'').split(/,\s*/).map(function(o){return o.trim();}).filter(Boolean);
+      if(ownerList.length===0&&resorts.length===0){
+        // R-1 with no owners listed — use primary and co-owner
+        if(primaryOwner) ownerList.push(primaryOwner);
+        if(coOwner) ownerList.push(coOwner);
+      }
+      while(ownerList.length<4) ownerList.push('');
       resorts.push({
         name:name,
         state:m['state']||'',
         city:m['city']||m['resort city']||'',
-        owners:(m['owners']||'').split(/,\s*/).concat(['','','']).slice(0,4),
+        owners:ownerList.slice(0,4),
         maitFees:mtfVal, mtfFreq:'annual',
         monthlyMortgage:parseFloat(cleanNum(m['monthly mortgage']))||0,
         mtgTerm:3,
