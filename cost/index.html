@@ -614,63 +614,45 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="scard accent"><div class="slb">Combined Monthly</div><div class="sv red" id="s-comb-mo">—</div><div class="ss" id="s-comb-yr">—/yr</div></div>
 </div>
 
-<!-- MAIN TABLE: 2 cols only -->
-<div class="tbl-wrap" style="margin-bottom:10px">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Long-Term — What You've Already Committed To</div>
-  <table class="ctbl narrow">
-    <thead><tr>
-      <th style="text-align:left;padding-right:40px">Timeframe</th>
-      <th style="color:#86efac;text-align:right">Total Paid to Resort</th>
-    </tr></thead>
-    <tbody id="cost-tbody-long"></tbody>
-  </table>
-</div>
-
+<!-- TABLES: side by side — short-term left, long-term right -->
 <div class="tbl-wrap">
   <div style="background:var(--navy);border-radius:8px 8px 0 0;padding:14px 20px;margin:-18px -20px 16px;text-align:center">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase">How Much More Will You Give Them?</div>
-  </div>
-  <div style="display:flex;justify-content:center"><table class="ctbl narrow" id="cost-tbl">
-    <thead><tr>
-      <th style="text-align:left">Timeframe</th>
-      <th style="color:#86efac">Total Paid to Resort</th>
-      
-      
-    </tr></thead>
-    <tbody id="cost-tbody"></tbody>
-  </table>
-
-<!-- $1 QUESTION — before breakdown -->
-  <div style="background:var(--navy);border-radius:10px;padding:20px 22px;margin-top:14px;margin-bottom:0;text-align:center">
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.6);margin-bottom:10px">One More Question</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#fff;line-height:1.5;margin-bottom:6px">If this timeshare was completely paid off today —</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);line-height:1.5;margin-bottom:12px">would you buy it again on eBay for $1?</div>
-    <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.6">Knowing you would still owe maintenance fees every year. For the rest of your life. And beyond.</div>
+    <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase">How Much More Will You Give Them?</div>
   </div>
 
-    <!-- GREY BREAKDOWN -->
-  <div class="bkdn">
-    <div class="bkdn-lbl">Removed Columns — Reference Only</div>
-    <table class="ctbl bkdn-tbl">
-      <thead><tr>
-        <th style="text-align:left">Timeframe</th>
-        <th>Mortgage Alone</th>
-        <th>MTF Alone</th>
-        <th>MTF Flat (No 8%)</th>
-      </tr></thead>
-      <tbody id="bkdn-tbody"></tbody>
-    </table>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;justify-items:center">
+    <!-- LEFT: 1mo – 5yr -->
+    <div style="width:100%">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Short-Term</div>
+      <table class="ctbl narrow" id="cost-tbl">
+        <thead><tr>
+          <th style="text-align:left">Timeframe</th>
+          <th style="color:#86efac">Total Paid to Resort</th>
+        </tr></thead>
+        <tbody id="cost-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- RIGHT: 10 – 30yr -->
+    <div style="width:100%">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Long-Term</div>
+      <table class="ctbl narrow">
+        <thead><tr>
+          <th style="text-align:left">Timeframe</th>
+          <th style="color:#86efac">Total Paid to Resort</th>
+        </tr></thead>
+        <tbody id="cost-tbody-long"></tbody>
+      </table>
+    </div>
   </div>
-  <div style="font-size:10px;color:#9ca3af;margin-top:10px">ARDA data: avg maintenance fee rose 102% from 2010–2024 · 8% per year.</div>
 </div>
 
-<!-- 3 QUESTIONS -->
-<div class="dark-box">
-  <div class="dq">Was the full long-term cost of ownership explained to you before you signed?</div>
-  <div class="dd"></div>
-  <div class="dq">If you had seen these numbers — would you still have purchased?</div>
-  <div class="dd"></div>
-  <div class="dq">If this timeshare were paid off today, would you buy it again for $1 knowing you'd still owe these fees?</div>
+<!-- $1 QUESTION -->
+<div style="background:var(--navy);border-radius:10px;padding:20px 22px;margin-bottom:14px;text-align:center">
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.6);margin-bottom:10px">One More Question</div>
+  <div style="font-size:18px;font-weight:600;color:#fff;line-height:1.6;margin-bottom:4px">If this timeshare was completely paid off today —</div>
+  <div style="font-size:18px;font-weight:700;color:var(--gold);line-height:1.6;margin-bottom:10px">would you buy it again on eBay for $1?</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.6">Knowing you would still owe maintenance fees every year. For the rest of your life. And beyond.</div>
 </div>
 
 <div class="nav-bar">
