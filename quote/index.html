@@ -725,12 +725,7 @@ function calc(){
   var s5=document.getElementById("resort-5yr-sub");
   if(s5)s5.textContent=fc((_mtfYr/12))+" MTF + "+fc(_mtgMo)+" mortgage × 5 yr · 8% growth";
 
-  // Pre-fill fee from saved alphaFee if exists
-  var savedFee=parseFloat(d.alphaFee)||0;
-  var feeInput=document.getElementById("inp-fee");
-  if(feeInput){
-    feeInput.value=savedFee>0?savedFee:Math.round(_resort5);
-  }
+  // Fee always starts blank — never pre-populated
   calc();
 })();
 </script>
