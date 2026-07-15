@@ -1,4 +1,4 @@
-// Service worker disabled — clears all caches and unregisters
+// v3 — kills cache AND force-reloads all open tabs
 self.addEventListener('install', function(e) {
   self.skipWaiting();
 });
@@ -9,6 +9,11 @@ self.addEventListener('activate', function(e) {
     }).then(function() {
       return self.clients.claim();
     }).then(function() {
+      return self.clients.matchAll({ type: 'window' });
+    }).then(function(clients) {
+      clients.forEach(function(client) {
+        client.navigate(client.url);
+      });
       return self.registration.unregister();
     })
   );
