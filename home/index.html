@@ -283,7 +283,8 @@ window.doPush=function(){
     firstName:d.firstName||'',lastName:d.lastName||'',resort:d.resort||'',
     location:d.location||'',phone:d.phone||'',email:d.email||'',
     maitFees:d.maitFees||0,monthlyMortgage:d.monthlyMortgage||0,
-    balanceAmount:d.balanceAmount||0,alphaFee:d.alphaFee||0,
+    balanceAmount:d.balanceAmount||0,
+    alphaFee:0, // ALWAYS $0 until manually priced — never pull from CRM
     mtgTerm:d.mtgTerm||10,yearPurchased:d.yearPurchased||'',
     purchasePrice:d.purchasePrice||0,_pushedAt:Date.now()
   };
