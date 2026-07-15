@@ -843,10 +843,7 @@ function _panelHTML(ri){
     // MTF
     +'<div class="slbl" style="margin-top:10px">💰 Fees & Mortgage</div>'
     +'<div class="frow">'
-    +'<div class="ff"><label>Maintenance Fee (MTF)<span style="margin-left:8px;font-size:10px">'
-    +'<label style="cursor:pointer"><input type="radio" name="r'+ri+'-freq" id="r'+ri+'-annual" value="annual" checked onchange="_autoSaveResorts()"> Annual</label> '
-    +'<label style="cursor:pointer"><input type="radio" name="r'+ri+'-freq" id="r'+ri+'-monthly" value="monthly" onchange="_autoSaveResorts()"> Monthly</label>'
-    +'</span></label>'
+    +'<div class="ff"><label>Maintenance Fee (MTF) <label style="cursor:pointer;font-size:11px;color:#6b7280;display:flex;align-items:center;gap:4px"><input type="checkbox" id="r'+ri+'-monthly" onchange="_autoSaveResorts()"> Paid Monthly</label>
     +'<input id="r'+ri+'-mtf" type="number" class="hi" placeholder="Enter amount" oninput="_autoSaveResorts()"></div>'
     +'<div class="ff readonly"><label id="r'+ri+'-mtflbl">Calculated</label><input id="r'+ri+'-mtfcalc" readonly placeholder="Auto"></div>'
     +'</div>'
