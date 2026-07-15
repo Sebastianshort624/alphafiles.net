@@ -721,7 +721,14 @@ function moPmt(p,mo){var r=0.20/12;return p>0?p*r*Math.pow(1+r,mo)/(Math.pow(1+r
 function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||"—";}
 
 function calc(){
-  var fee=parseFloat(document.getElementById("inp-fee").value)||_resort5;
+  var feeRaw=parseFloat(document.getElementById("inp-fee").value)||0;
+  var fee=feeRaw;
+  // Save fee to client record when typed
+  if(feeRaw>0){
+    var AK2="atc_active",SK2="atc_clients_v2";
+    var slug2=localStorage.getItem(AK2);
+    if(slug2){try{var all=JSON.parse(localStorage.getItem(SK2)||"{}");if(all[slug2]){all[slug2].alphaFee=feeRaw;all[slug2]._updated=Date.now();localStorage.setItem(SK2,JSON.stringify(all));}}catch(e){}}
+  }
   var d1=parseFloat(document.getElementById("inp-d1").value)||0;
   var d2=parseFloat(document.getElementById("inp-d2").value)||0;
   var down=parseFloat(document.getElementById("inp-down").value)||0;
@@ -772,11 +779,11 @@ function calc(){
   _mtfYr=parseFloat(d.maitFees)||0;
   _mtgMo=parseFloat(d.monthlyMortgage)||0;
   _mtgYrs=parseInt(d.mtgTerm)||10;
-  var mo=(_mtfYr/12)+_mtgMo;
+  var mtfMo=_mtfYr/12;
+  _combMo=mtfMo+_mtgMo;
   var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"—";
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
   set("vb-name",nm);set("vb-resort",d.resort||"—");
-  _combMo=(mtfMo+mtgMo);
   set("vb-mo",_combMo>0?fc(_combMo)+"/mo":"—");
   set("vb-stg",stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment");
 
