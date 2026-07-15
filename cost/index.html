@@ -889,22 +889,24 @@ function calc(){
     {label:'30 Years', yrs:30, hl:true},
   ];
 
-  var rows='';
+  var rows=''; var brows='';
   TF.forEach(function(tf){
     var mtg=cumMtg(tf.yrs), mtfC=cumMtf(tf.yrs), combined=mtg+mtfC;
-    var fv=fvIfInvested(tf.yrs);
+    var mtfFlat=mtfYr*tf.yrs;
     var save=alphaFee>0?combined-alphaFee:null;
     var hl=tf.hl?'class="highlight"':'';
+    // Main table: MTG+MTF flat | MTG+MTF with 8% growth
     rows+='<tr '+hl+'>'
-      +'<td>'+tf.label+'</td>'
-      +'<td class="mtg">'+(mtg>0?fcd(mtg):'<span class="zero">Paid off</span>')+'</td>'
-      +'<td class="mtf">'+fcd(mtfC)+'</td>'
-      +'<td class="combined">'+fcd(combined)+'</td>'
-      +'<td class="save">'+fc(fv)+'</td>'
-      +(alphaFee>0?'<td style="color:#15803d;font-weight:800">'+(save>0?'+'+fc(save):'—')+'</td>':'')
+      +'<td style="text-align:left">'+tf.label+'</td>'
+      +'<td>'+fcd(combined)+'</td>'
+      +'<td style="color:#15803d;font-weight:700">'+fcd(combined)+'</td>'
+      +(alphaFee>0?'<td style="color:#C8960C;font-weight:800">'+(save>0?'+'+fc(save):'—')+'</td>':'')
       +'</tr>';
+    // Breakdown table: MTG alone | MTF 8% | MTF flat
+    brows+='<tr style="color:#6b7280"><td>'+tf.label+'</td><td>'+fcd(mtg)+'</td><td>'+fcd(mtfC)+'</td><td>'+fcd(mtfFlat)+'</td></tr>';
   });
   document.getElementById('cost-tbody').innerHTML=rows;
+  var bb=document.getElementById('breakdown-tbody');if(bb)bb.innerHTML=brows;
 }
 </script>
 
