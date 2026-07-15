@@ -958,7 +958,7 @@ function removeResort(ri){
 }
 
 // Initialize panels on page load
-(function initResortPanels(){
+window._initResortPanels=window.initResortPanels=function initResortPanels(){
   var container=document.getElementById('resort-panels');
   if(!container)return;
   var html='';
@@ -976,7 +976,8 @@ function removeResort(ri){
       else{tab.classList.add('inactive');}
     }
   }
-})();
+};
+document.addEventListener("DOMContentLoaded",function(){window._initResortPanels();});
 </script>
 
 <script>
