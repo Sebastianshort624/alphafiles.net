@@ -1303,20 +1303,18 @@ function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
 
-  // Strip markdown links [text](url) -> text
-  var t=raw.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
-  // Strip bullet markers
-  t=t.replace(/^\s*[*\-]\s*/gm,'');
+  // Strip markdown links and bullets
+  var t=raw.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/^\s*[*\-]\s*/gm,'');
 
-  function field(names){
+  function field(names,prefix){
+    var haystack=prefix?t:t;
     for(var ni=0;ni<names.length;ni++){
-      var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-      // Try tab-delimited (Zoho copy-all): FieldName\tValue or FieldName\t\nValue
-      var m=t.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,150})','i'));
-      // Try newline-separated (browser paste): FieldName\nValue
-      if(!m) m=t.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,150})','i'));
+      var nm=(prefix?prefix:'')+names[ni];
+      nm=nm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      var m=haystack.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,150})','i'));
+      if(!m) m=haystack.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,150})','i'));
       if(m&&m[1]){
-        var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
+        var v=m[1].trim().replace(/^\$\s*/,'').replace(/,(?=\d)/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
         if(v&&v!=='-'&&v!=='N/A'&&v!=='NA') return v;
       }
     }
@@ -1331,54 +1329,93 @@ function populateFromCRM(){
     el.dispatchEvent(new Event('input'));
   }
 
-  setf('v-first',  field(['First Name']));
-  setf('v-last',   field(['Last Name']));
-  setf('v-email',  field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
-  setf('v-phone',  field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
-  setf('v-resort', field(['R1-Resort Name']));
-  setf('v-rescity',field(['R1-Resort City']));
-  setf('v-loc',    field(['R1-Resort State']));
-
-  var yr=field(['R1-Date Purchased']);
-  var ym=yr.match(/(20\d{2}|19\d{2})/);
-  if(ym) setf('v-year', ym[1]);
-
-  var pp=field(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');
-  if(pp) setf('v-pprice', pp);
-
-  var mf=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance']).replace(/[^0-9.]/g,'');
-  if(mf) setf('v-mtf', mf);
-
-  var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
-  var paid=ms.indexOf('paid')>-1;
-  if(paid){
-    setf('v-mtg','0');
-    var btn=document.getElementById('mt-pf'); if(btn) btn.click();
-  } else {
-    var mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
-    if(mg) setf('v-mtg', mg);
-    var bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
-    if(bl) setf('v-balance', bl);
-  }
-
-  var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');
-  if(fee) setf('v-fee', fee);
-
-  var why=field(['R1-Why do they want out','Why do they want out']);
-  if(why) setf('v-why', why);
+  // Owner info
+  setf('v-first', field(['First Name']));
+  setf('v-last',  field(['Last Name']));
+  setf('v-email', field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+  setf('v-phone', field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
 
   // Preferred language
   var lang=field(['Preffered Language','Preferred Language']).toLowerCase();
   if(lang.indexOf('spanish')>-1 && typeof window.atcSetLang==='function') window.atcSetLang('es');
 
+  // Alpha fee
+  var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');
+  if(fee) setf('v-fee', fee);
+
+  // Build resorts array from CRM data
+  var SK='atc_clients_v2', AK='atc_active';
+  var slug=localStorage.getItem(AK); if(!slug) return;
+  var all=JSON.parse(localStorage.getItem(SK)||'{}');
+  if(!all[slug]) return;
+
+  var totalResorts=parseInt(field(['Total Resorts']))||1;
+  var resorts=[];
+
+  for(var ri=0;ri<totalResorts&&ri<4;ri++){
+    var px='R'+(ri+1)+'-';
+    var name=field([px+'Resort Name', px+'Resort']);
+    if(!name) break;
+
+    var purchased=field([px+'Date Purchased']);
+    var yrMatch=purchased.match(/(20\d{2}|19\d{2})/);
+    var yr=yrMatch?yrMatch[1]:'';
+
+    var mtfRaw=field([px+'Mait / Tax fees',px+'Mait',px+'Maintenance']).replace(/[^0-9.]/g,'');
+    var mtgRaw=field([px+'Monthly Mortgage payment',px+'Monthly Mortgage']).replace(/[^0-9.]/g,'');
+    var balRaw=field([px+'Balance Amount',px+'Balance']).replace(/[^0-9.]/g,'');
+    var ppRaw =field([px+'Purchase Price']).replace(/[^0-9.]/g,'');
+    var ms=field([px+'Mortgage status']).toLowerCase();
+    var paid=ms.indexOf('paid')>-1&&ms.indexOf('still')<0;
+    var city=field([px+'Resort City']);
+    var state=field([px+'Resort State']);
+    var why=field([px+'Why do they want out']);
+
+    resorts.push({
+      name:name, state:state, city:city,
+      owners:['','','',''],
+      maitFees:parseFloat(mtfRaw)||0, mtfFreq:'annual',
+      monthlyMortgage:paid?0:(parseFloat(mtgRaw)||0),
+      mtgTerm:3, balanceAmount:parseFloat(balRaw)||0,
+      yearPurchased:yr, purchasePrice:parseFloat(ppRaw)||0,
+      why:why
+    });
+  }
+
+  // Save resorts to client record
+  if(resorts.length>0){
+    while(resorts.length<4) resorts.push({});
+    all[slug].resorts=resorts;
+    // Sync R-1 to top-level fields
+    var r1=resorts[0];
+    all[slug].resort=r1.name||'';
+    all[slug].resstate=r1.state||'';
+    all[slug].rescity=r1.city||'';
+    all[slug].maitFees=r1.maitFees||0;
+    all[slug].monthlyMortgage=r1.monthlyMortgage||0;
+    all[slug].balanceAmount=r1.balanceAmount||0;
+    all[slug].yearPurchased=r1.yearPurchased||'';
+    all[slug].purchasePrice=r1.purchasePrice||0;
+    all[slug]._updated=Date.now();
+    localStorage.setItem(SK,JSON.stringify(all));
+
+    // If on owner page, reload the resort panels
+    if(typeof window.initResortPanels==='function'){
+      window.initResortPanels();
+    }
+  }
+
   var st=document.getElementById('pop-status');
-  if(st){st.style.display='inline';setTimeout(function(){st.style.display='none';},3000);}
+  if(st){
+    st.textContent='\u2713 '+resorts.filter(function(r){return r.name;}).length+' resort(s) populated — review and save';
+    st.style.display='inline';
+    setTimeout(function(){st.style.display='none';},4000);
+  }
 
   setTimeout(function(){
     try{calcTotals();}catch(e){}
     try{autoSave();}catch(e){}
-    try{calcComparison();}catch(e){}
-  },150);
+  },100);
 }
 
 function calcUsage(){
