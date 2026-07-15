@@ -781,8 +781,21 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
   <!-- MTF -->
   <div class="frow">
-    <div class="ff"><label>Annual Maintenance Fee (MTF)</label><input id="f-mtf" type="number" class="hi" placeholder="e.g. 1600" oninput="autoSave();calcTotals()"></div>
-    <div class="ff readonly"><label>Monthly MTF</label><input id="f-mtf-mo" readonly placeholder="Auto"></div>
+    <div class="ff">
+      <label style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        Maintenance Fee (MTF)
+        <span style="display:flex;gap:12px;font-size:11px;font-weight:600">
+          <label style="cursor:pointer;display:flex;align-items:center;gap:3px;color:#374151">
+            <input type="radio" name="mtf-freq" id="mtf-annual" value="annual" checked onchange="calcTotals()">Annual
+          </label>
+          <label style="cursor:pointer;display:flex;align-items:center;gap:3px;color:#374151">
+            <input type="radio" name="mtf-freq" id="mtf-monthly" value="monthly" onchange="calcTotals()">Monthly
+          </label>
+        </span>
+      </label>
+      <input id="f-mtf" type="number" class="hi" placeholder="Enter amount" oninput="autoSave();calcTotals()">
+    </div>
+    <div class="ff readonly"><label id="mtf-display-lbl">Monthly / Annual MTF</label><input id="f-mtf-mo" readonly placeholder="Auto"></div>
   </div>
 
   <!-- MORTGAGE TYPE -->
@@ -886,16 +899,25 @@ function selectMtgType(type){
 }
 
 function calcTotals(){
-  var mtf=parseFloat(document.getElementById('f-mtf').value)||0;
+  var raw=parseFloat(document.getElementById('f-mtf').value)||0;
+  var isMonthly=document.getElementById('mtf-monthly')&&document.getElementById('mtf-monthly').checked;
+  var mtf=isMonthly?raw*12:raw; // always work in annual internally
   var mtfMo=mtf/12;
   var mtgMo=parseFloat(document.getElementById('f-mtg').value)||0;
   var mo=mtfMo+(_mtgType==='paidfull'?0:mtgMo);
   var mtgBehind=(parseInt(document.getElementById('f-mtgb').value)||0)*mtgMo;
   var mtfBehind=(parseInt(document.getElementById('f-mtfb').value)||0)*mtfMo;
 
-  // Update monthly MTF display
+  // Update display label and readonly field
+  var lbl=document.getElementById('mtf-display-lbl');
   var moEl=document.getElementById('f-mtf-mo');
-  if(moEl)moEl.value=mtf>0?fc(mtfMo):'';
+  if(isMonthly){
+    if(lbl)lbl.textContent='Annual MTF (calculated)';
+    if(moEl)moEl.value=mtf>0?fc(mtf)+'/yr':'';
+  } else {
+    if(lbl)lbl.textContent='Monthly MTF (calculated)';
+    if(moEl)moEl.value=mtf>0?fc(mtfMo)+'/mo':'';
+  }
 
   // 3-year with 8% MTF growth
   var annMtf=mtf, annMtg=(_mtgType==='paidfull'?0:mtgMo*12);
