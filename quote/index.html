@@ -611,10 +611,20 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 </div>
 
 <!-- SAVINGS BANNER -->
-<div id="savings-banner" style="display:none;background:#15803d;border-radius:10px;padding:16px 20px;margin-bottom:14px;display:none">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.6);margin-bottom:6px">You Save Over 5 Years</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff" id="out-save">—</div>
-  <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:4px">by choosing Alpha today vs. continuing to pay</div>
+<div id="savings-banner" style="display:none;background:var(--navy);border-radius:10px;padding:18px 22px;margin-bottom:14px">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.7);margin-bottom:10px">Instead of continuing to pay that money to the resort</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px 14px">
+      <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">You currently pay monthly</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff" id="out-mo-amt">—</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px">to the resort every month</div>
+    </div>
+    <div style="background:rgba(200,150,12,.12);border:1px solid rgba(200,150,12,.3);border-radius:8px;padding:12px 14px">
+      <div style="font-size:10px;color:rgba(200,150,12,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Total you save</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--gold)" id="out-save">—</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:3px" id="out-save-period">over 5 years</div>
+    </div>
+  </div>
 </div>
 
 <div class="nav-bar">
@@ -660,7 +670,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 </style>
 
 <script>
-var _mtfYr=0,_mtgMo=0,_mtgYrs=10,_resort3=0,_resort5=0;
+var _mtfYr=0,_mtgMo=0,_mtgYrs=10,_resort3=0,_resort5=0,_combMo=0;
 
 function fc(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—";}
 function fc0(n){return n?"$"+Math.round(n).toLocaleString():"—";}
@@ -691,7 +701,18 @@ function calc(){
     }
     var save=_resort5-fee;
     var sb=document.getElementById("savings-banner");
-    if(sb&&save>0){sb.style.display="block";set("out-save","+"+fc0(save)+" saved");}
+    if(sb&&save>0){
+      sb.style.display="block";
+      set("out-mo-amt",fc(_resort5/60)+"/mo");
+      var yrs=Math.round(fee/_combMo/12*10)/10;
+      if(yrs>=1){
+        set("out-save","+"+fc0(save));
+        set("out-save-period","over "+(yrs>5?"5+":"~"+yrs.toFixed(1))+" years vs. continuing to pay");
+      } else {
+        set("out-save","+"+fc0(save/12)+"/yr");
+        set("out-save-period","per year you are no longer paying the resort");
+      }
+    }
   } else {
     document.getElementById("pay-section").style.display="none";
   }
@@ -709,7 +730,8 @@ function calc(){
   var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"—";
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
   set("vb-name",nm);set("vb-resort",d.resort||"—");
-  set("vb-mo",mo>0?fc(mo)+"/mo":"—");
+  _combMo=(mtfMo+mtgMo);
+  set("vb-mo",_combMo>0?fc(_combMo)+"/mo":"—");
   set("vb-stg",stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment");
 
   function cumMtf(y){var t=0;for(var i=1;i<=y;i++)t+=_mtfYr*Math.pow(1.08,i-1);return t;}
