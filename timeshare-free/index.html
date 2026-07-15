@@ -524,79 +524,98 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <div class="sidenav" id="sidenav"></div>
 <div class="main"><div class="wrap">
-
-<div class="ph">
-  <div class="ph-num">24</div>
-  <div class="ph-title">Let's Get Started</div>
-  <div class="ph-sub">Transfer to Verification Department</div>
-</div>
-
+<div class="ph"><div class="ph-num">24</div><div class="ph-title">Transfer</div><div class="ph-sub">Final step — Verification Department</div></div>
 <div class="vb">
   <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div></div>
   <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div></div>
   <div class="vbc"><div class="vbl">Monthly</div><div class="vbv" id="vb-mo">—</div></div>
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
-
+<!-- SCRIPT CARD -->
 <div class="script-card">
-  <div class="script-label">Final Script — Transfer</div>
-  <div class="script-text">"Now like I said earlier, the agreement is going to outline everything I told you in black and white — the guarantees, the scope of our representation, and the cost of the service.<br><br>The last page is the Payment Authorization Form — it shows the cost, your payment information, and signature panel. As long as everything is as we discussed, you would sign it and give us permission to process the payment. We accept all major credit cards.<br><br>Once the agreement is signed, you become a client and we represent you immediately. You will never be expected to make another payment to the resort — ever, as long as you are approved.<br><br>Within a day or so, a dedicated Case Manager will be assigned. They will formally petition the resort and notify you immediately whenever the resort makes a settlement offer.<br><br>Before we move forward, I need one promise from you — you must promise me: you will never attend another timeshare presentation again."</div>
-  <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-    <span style="font-size:22px">✅</span>
-    <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--navy)">"Perfect. I will now prepare your agreement and transfer you to our Verification Department."</span>
+  <div class="sc-badge">Agent Script</div>
+  <div class="sc-lines">
+    <div class="sc-line">"The agreement outlines everything I told you — in black and white."</div>
+    <div class="sc-line">"The last page is the Payment Authorization Form. Sign it and we process your payment. We accept all major credit cards."</div>
+    <div class="sc-line">"Once signed, you become a client immediately. You will never make another payment to the resort — as long as you are approved."</div>
+    <div class="sc-line">"A Case Manager will be assigned within a day. They petition the resort and notify you the moment there is a response."</div>
+    <div class="sc-line bold">"One promise — you will never attend another timeshare presentation again."</div>
+  </div>
+  <div class="sc-confirm">Client confirms ✅ → "Perfect. I will now prepare your agreement and transfer you to Verification."</div>
+</div>
+
+<!-- 3 STATUS CARDS -->
+<div class="status-grid">
+  <div class="status-card green">
+    <div class="status-icon">✅</div>
+    <div class="status-title">Risk Team</div>
+    <div class="status-text">Case reviewed and approved</div>
+  </div>
+  <div class="status-card gold">
+    <div class="status-icon">⚖️</div>
+    <div class="status-title">Liability Review</div>
+    <div class="status-text">Issues documented</div>
+  </div>
+  <div class="status-card navy">
+    <div class="status-icon">🎯</div>
+    <div class="status-title">Strategy Set</div>
+    <div class="status-text">Process begins now</div>
   </div>
 </div>
 
+<!-- WHAT HAPPENS NOW -->
 <div class="sc">
-  <div class="slbl">Risk Team Review</div>
-  <div class="rv-item"><div class="rv-icon">✅</div>Case reviewed by Risk Assessment Team</div>
-  <div class="rv-item" style="margin-top:8px"><div class="rv-icon">✅</div>Situation matched against prior successful release cases — written exit guarantee applies</div>
-</div>
-
-<div class="sc">
-  <div class="slbl">Liability Review — Documented Issues</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-    <div class="lb-item">Deceptive or high-pressure sales conduct</div>
-    <div class="lb-item">Failure to disclose material contract terms</div>
-    <div class="lb-item">Misrepresentation of value or resale potential</div>
-    <div class="lb-item">Contract execution concerns</div>
-    <div class="lb-item">Failure to deliver promised benefits</div>
-    <div class="lb-item">Other applicable consumer protection issues</div>
+  <div class="slbl">What Happens Now</div>
+  <div class="next-list">
+    <div class="next-row"><div class="next-dot" style="background:#16a34a"></div><div><strong>Case Manager assigned</strong> within one business day</div></div>
+    <div class="next-row"><div class="next-dot" style="background:#C8960C"></div><div><strong>Resort formally petitioned</strong> — we handle all communication</div></div>
+    <div class="next-row"><div class="next-dot" style="background:#1B2A4A"></div><div><strong>You are notified immediately</strong> when the resort responds</div></div>
+    <div class="next-row"><div class="next-dot" style="background:#7c3aed"></div><div><strong>90% of the process is handled by us</strong> — you stay available when needed</div></div>
   </div>
 </div>
 
-<div class="sc">
-  <div class="slbl">Exit Strategy</div>
-  <div style="display:flex;flex-direction:column;gap:10px">
-    <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#374151;line-height:1.6"><div style="font-size:20px;flex-shrink:0">🎯</div><div><strong>Strategy customized to your case</strong> based on documented findings and applicable consumer protections.</div></div>
-    <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#374151;line-height:1.6"><div style="font-size:20px;flex-shrink:0">⚙️</div><div><strong>90% of the process handled by us.</strong> Your role is to stay available and provide documents when requested.</div></div>
-    <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#374151;line-height:1.6"><div style="font-size:20px;flex-shrink:0">👥</div><div><strong>Group filing used when applicable</strong> to create additional leverage for your situation.</div></div>
-    <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#374151;line-height:1.6"><div style="font-size:20px;flex-shrink:0">🏁</div><div><strong>Primary goal:</strong> Permanent exit — with future payment protection, credit protection, and legal stress avoided.</div></div>
-  </div>
-</div>
-
-<div class="dark-close">
-  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(52,199,89,.8);margin-bottom:10px">✅ Case Approved — Ready to Transfer</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:12px">Welcome to Alpha Timeshare Consultants.</div>
-  <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.7">Your Case Manager will be in touch within one business day. They will formally petition the resort and notify you the moment the resort responds.</div>
+<!-- WELCOME -->
+<div style="background:var(--navy);border-radius:10px;padding:24px;margin-bottom:14px;text-align:center">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(52,199,89,.7);margin-bottom:10px">✅ Welcome</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:8px">Alpha Timeshare Consultants</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.55)">Your case is active. Your team is ready.</div>
 </div>
 
 <div class="nav-bar">
-  <a class="np" href="/contract/">← Your Agreement</a>
+  <a class="np" href="/contract/">← Agreement</a>
   <span class="ns">24 — Transfer</span>
   <a class="nn" href="/owner/">New Session</a>
 </div>
-
 <style>
-.script-card{background:#f8fafc;border:1.5px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:18px 20px;margin-bottom:14px}
-.script-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
-.script-text{font-family:"Cormorant Garamond",serif;font-size:17px;color:var(--navy);line-height:1.8;font-style:italic}
-.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:22px 24px;margin-bottom:14px}
-.slbl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:18px}
-.rv-item{display:flex;gap:12px;align-items:center;padding:12px 14px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;font-size:13px;color:#15803d;font-weight:600}
-.rv-icon{font-size:18px;flex-shrink:0}
-.lb-item{font-size:12px;color:#374151;padding:10px 12px;background:#f8fafc;border:1px solid var(--border);border-radius:7px;line-height:1.5}
-.dark-close{background:var(--navy);border-radius:10px;padding:24px 28px;margin-bottom:14px}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--green:#16a34a}
+.vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
+.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
+.vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+.vbv{font-size:14px;font-weight:700;color:var(--navy)}
+.script-card{background:#f8fafc;border-left:4px solid var(--gold);border:1.5px solid var(--border);border-left-width:4px;border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.sc-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);border:1px solid rgba(200,150,12,.3);border-radius:100px;padding:2px 10px;margin-bottom:12px}
+.sc-lines{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.sc-line{font-size:14px;color:var(--navy);line-height:1.6;padding:10px 12px;background:#fff;border-radius:6px;border-left:3px solid #e5e7eb}
+.sc-line.bold{border-left-color:var(--gold);font-weight:700}
+.sc-confirm{font-size:13px;color:var(--green);font-weight:600;padding-top:12px;border-top:1px solid var(--border)}
+.status-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.status-card{border-radius:10px;padding:16px;text-align:center}
+.status-card.green{background:#f0fdf4;border:1.5px solid #86efac}
+.status-card.gold{background:#fff8e0;border:1.5px solid rgba(200,150,12,.3)}
+.status-card.navy{background:#f0f4ff;border:1.5px solid #c7d2fe}
+.status-icon{font-size:24px;margin-bottom:6px}
+.status-title{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;color:var(--navy);margin-bottom:4px}
+.status-text{font-size:11px;color:#6b7280}
+.sc{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:14px}
+.slbl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:16px}
+.next-list{display:flex;flex-direction:column;gap:10px}
+.next-row{display:flex;gap:12px;align-items:center;font-size:13px;color:#374151;line-height:1.5}
+.next-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+@media(max-width:500px){.status-grid{grid-template-columns:1fr}}
 </style>
 
 <script>
