@@ -879,14 +879,38 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   var mb=document.getElementById("main-tbody");if(mb)mb.innerHTML=r1;
   var bb=document.getElementById("breakdown-tbody");if(bb)bb.innerHTML=r2;
 
-  // Remaining (small)
+  // Remaining (small) — only show if meaningful
+  var remBlock=document.querySelector(".remaining-block");
   if(mtgMo>0){
+    // Has mortgage — show all 3 cells
     var rw=document.getElementById("rem-mtg-wrap");if(rw)rw.style.display="block";
     set("rem-mtg",fc(mtgMo*mtgYrs*12));
-    var rs=document.getElementById("rem-mtg-sub");if(rs)rs.textContent=mtgYrs+" yr · "+(mtgYrs*12)+" payments";
+    var rs=document.getElementById("rem-mtg-sub");if(rs)rs.textContent=mtgYrs+" yr term · "+(mtgYrs*12)+" payments";
+    set("rem-mtf",fc(cumMtf8(mtgYrs)));
+    // Fix total label
+    var tl=document.querySelector(".rem-sm.navy-sm .rem-sm-sub");if(tl)tl.textContent="mortgage + MTF combined";
+    set("rem-tot",fc(mtgMo*mtgYrs*12+cumMtf8(mtgYrs)));
+  } else if(mtfYr>0){
+    // MTF only — show just one cell with clear label
+    if(remBlock){
+      remBlock.innerHTML="<div style='font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#9ca3af;margin-bottom:10px'>Maintenance Fee Projection</div>"
+        +"<div style='display:grid;grid-template-columns:1fr 1fr;gap:8px'>"
+        +"<div style='padding:10px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px'>"
+        +"<div style='font-size:9px;color:#9ca3af;text-transform:uppercase;margin-bottom:3px'>MTF over 10 years</div>"
+        +"<div style='font-size:15px;font-weight:600;color:#1B2A4A'>"+fc(cumMtf8(10))+"</div>"
+        +"<div style='font-size:9px;color:#9ca3af'>at 8% annual growth</div>"
+        +"</div>"
+        +"<div style='padding:10px 12px;background:#1B2A4A;border-radius:6px'>"
+        +"<div style='font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:3px'>MTF over 20 years</div>"
+        +"<div style='font-size:15px;font-weight:600;color:#C8960C'>"+fc(cumMtf8(20))+"</div>"
+        +"<div style='font-size:9px;color:rgba(255,255,255,.35)'>at 8% annual growth</div>"
+        +"</div>"
+        +"</div>"
+        +"<div style='font-size:10px;color:#9ca3af;margin-top:8px'>No mortgage on file — showing maintenance fee projections only.</div>";
+    }
+  } else {
+    if(remBlock)remBlock.style.display="none";
   }
-  set("rem-mtf",fc(cumMtf8(mtgYrs)));
-  set("rem-tot",fc(mtgMo*mtgYrs*12+cumMtf8(mtgYrs)));
 })();
 </script>
 </div></div>
