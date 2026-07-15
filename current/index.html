@@ -636,90 +636,62 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <!-- YOUR COSTS -->
 <div class="sc">
-  <div class="slbl">Your Costs</div>
+  <div class="slbl">Cost of Ownership — Timeline Breakdown</div>
 
-  <!-- 3 TIME-PERIOD COLUMNS -->
-  <div class="time-grid">
+  <!-- MAIN TABLE: Years | MTG+MTF | If fees rise 8% -->
+  <table class="cost-tbl">
+    <thead>
+      <tr>
+        <th style="text-align:left">Years</th>
+        <th>MTG + MTF</th>
+        <th style="color:#86efac">If Fees Continue to Rise 8%</th>
+      </tr>
+    </thead>
+    <tbody id="main-tbody"></tbody>
+  </table>
 
-    <!-- MONTHLY -->
-    <div class="time-col">
-      <div class="time-hdr">Monthly</div>
-      <div class="time-row mtg" id="r-mtg-mo" style="display:none">
-        <div class="time-lbl">🏦 Mortgage</div>
-        <div class="time-main" id="c-mtg-mo">—</div>
-      </div>
-      <div class="time-row mtf">
-        <div class="time-lbl">📈 Maint. Fee</div>
-        <div class="time-main" id="c-mtf-mo">—</div>
-      </div>
-      <div class="time-row total">
-        <div class="time-lbl">Combined</div>
-        <div class="time-main" id="c-tot-mo">—</div>
-        <div class="time-sub" id="c-tot-mo-yr">—/yr</div>
-      </div>
-    </div>
-
-    <!-- YEARLY -->
-    <div class="time-col">
-      <div class="time-hdr">Yearly</div>
-      <div class="time-row mtg" id="r-mtg-yr" style="display:none">
-        <div class="time-lbl">🏦 Mortgage</div>
-        <div class="time-main" id="c-mtg-yr">—</div>
-      </div>
-      <div class="time-row mtf">
-        <div class="time-lbl">📈 Maint. Fee</div>
-        <div class="time-main" id="c-mtf-yr">—</div>
-        <div class="time-sub">8% growth</div>
-      </div>
-      <div class="time-row total">
-        <div class="time-lbl">Combined</div>
-        <div class="time-main" id="c-tot-yr">—</div>
-      </div>
-    </div>
-
-    <!-- 3 YEARS -->
-    <div class="time-col">
-      <div class="time-hdr">3 Years</div>
-      <div class="time-row mtg" id="r-mtg-3" style="display:none">
-        <div class="time-lbl">🏦 Mortgage</div>
-        <div class="time-main" id="c-mtg-3">—</div>
-      </div>
-      <div class="time-row mtf">
-        <div class="time-lbl">📈 Maint. Fee</div>
-        <div class="time-main" id="c-mtf-3">—</div>
-      </div>
-      <div class="time-row total">
-        <div class="time-lbl">Combined</div>
-        <div class="time-main" id="c-tot-3">—</div>
-      </div>
-    </div>
-
+  <!-- BREAKDOWN in light grey -->
+  <div class="breakdown-block">
+    <div class="breakdown-label">Detailed Breakdown</div>
+    <table class="cost-tbl breakdown-tbl">
+      <thead>
+        <tr>
+          <th style="text-align:left">Years</th>
+          <th>Mortgage Alone</th>
+          <th>MTF Alone</th>
+          <th>MTF (Flat · No Growth)</th>
+        </tr>
+      </thead>
+      <tbody id="breakdown-tbody"></tbody>
+    </table>
   </div>
 
-  <!-- REMAINING OVER LOAN TERM — smaller, below -->
-  <div class="remaining-block">
-    <div class="rem-label">Over the time remaining on your mortgage</div>
-    <div class="rem-grid">
-      <div class="rem-item" id="rem-mtg-wrap" style="display:none">
-        <div class="rem-title">Mortgage Remaining</div>
-        <div class="rem-val" id="rem-mtg">—</div>
-        <div class="rem-sub" id="rem-mtg-sub">— term · — payments</div>
-      </div>
-      <div class="rem-item">
-        <div class="rem-title">MTF Remaining</div>
-        <div class="rem-val" id="rem-mtf">—</div>
-        <div class="rem-sub">through loan term at 8% annual growth</div>
-      </div>
-      <div class="rem-item total-rem">
-        <div class="rem-title">Total Remaining Cost</div>
-        <div class="rem-val gold" id="rem-tot">—</div>
-        <div class="rem-sub">mortgage + MTF combined</div>
-      </div>
-    </div>
-    <div style="font-size:10px;color:#9ca3af;margin-top:8px">Maintenance fees increase an average of 8% per year — ARDA data.</div>
-  </div>
-
+  <div style="font-size:10px;color:#9ca3af;margin-top:10px">ARDA data confirms maintenance fees rose an average of 8% per year from 2010–2024.</div>
 </div>
+
+<!-- REMAINING OVER LOAN TERM -->
+<div class="sc">
+  <div class="slbl" style="margin-bottom:12px">Remaining Over Loan Term</div>
+  <div class="rem-grid">
+    <div class="rem-item" id="rem-mtg-wrap" style="display:none">
+      <div class="rem-title">Mortgage Remaining</div>
+      <div class="rem-val" id="rem-mtg">—</div>
+      <div class="rem-sub" id="rem-mtg-sub">—</div>
+    </div>
+    <div class="rem-item">
+      <div class="rem-title">MTF Remaining</div>
+      <div class="rem-val" id="rem-mtf">—</div>
+      <div class="rem-sub">through loan term at 8% growth</div>
+    </div>
+    <div class="rem-item total-rem">
+      <div class="rem-title">Total Remaining</div>
+      <div class="rem-val gold" id="rem-tot">—</div>
+      <div class="rem-sub">mortgage + MTF combined</div>
+    </div>
+  </div>
+</div>
+
+
 <!-- TWO QUESTIONS -->
 <div class="sc dark">
   <div class="dark-q">Was this the financial commitment you expected when you purchased?</div>
@@ -745,6 +717,30 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .slbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:18px}
 .cost-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 @media(max-width:600px){.cost-grid{grid-template-columns:1fr}}
+/* COST TABLE */
+.cost-tbl{width:100%;border-collapse:collapse;margin-bottom:0;font-size:13px}
+.cost-tbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.cost-tbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
+.cost-tbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
+.cost-tbl tr.hl{background:#fff8e0}
+.cost-tbl tr:last-child td{border:none}
+/* BREAKDOWN */
+.breakdown-block{background:#f3f4f6;border-radius:8px;padding:14px;margin-top:14px}
+.breakdown-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:10px}
+.breakdown-tbl th{background:#e5e7eb;color:#6b7280}
+.breakdown-tbl td{color:#6b7280;font-size:14px}
+.breakdown-tbl tr.hl{background:#ebebeb}
+/* REMAINING */
+.rem-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:500px){.rem-grid{grid-template-columns:1fr}}
+.rem-item{padding:12px 14px;background:#f8fafc;border:1px solid var(--border);border-radius:8px}
+.rem-item.total-rem{background:var(--navy)}
+.rem-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:4px}
+.rem-item.total-rem .rem-title{color:rgba(255,255,255,.4)}
+.rem-val{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.rem-val.gold{color:var(--gold)}
+.rem-sub{font-size:10px;color:#9ca3af;line-height:1.4}
+.rem-item.total-rem .rem-sub{color:rgba(255,255,255,.3)}
 /* TIME-PERIOD GRID */
 .time-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
 @media(max-width:500px){.time-grid{grid-template-columns:1fr}}
@@ -828,37 +824,48 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   set('vb-mo',combMo>0?fc(combMo)+'/mo':'—');
   set('vb-stg',stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment');
 
-  function cumMtf(yrs){var t=0;for(var i=1;i<=yrs;i++)t+=mtfYr*Math.pow(1.08,i-1);return t;}
+  function cumMtf8(yrs){var t=0;for(var i=1;i<=yrs;i++)t+=mtfYr*Math.pow(1.08,i-1);return t;}
+  function cumMtfFlat(yrs){return mtfYr*yrs;}
 
-  if(mtfYr>0||mtgMo>0){
-    // Show mortgage rows only if mortgage exists
-    if(mtgMo>0){
-      ['r-mtg-mo','r-mtg-yr','r-mtg-3','rem-mtg-wrap'].forEach(function(id){
-        var el=document.getElementById(id);if(el)el.style.display='block';
-      });
-    }
-    // Monthly column
-    set('c-mtg-mo',mtgMo>0?fc(mtgMo):'');
-    set('c-mtf-mo',fc(mtfYr/12));
-    set('c-tot-mo',fc(combMo));
-    set('c-tot-mo-yr',fc(combMo*12)+'/yr');
-    // Yearly column
-    set('c-mtg-yr',mtgMo>0?fc(mtgMo*12):'');
-    set('c-mtf-yr',fc(mtfYr));
-    set('c-tot-yr',fc(mtfYr+mtgMo*12));
-    // 3-Year column
-    set('c-mtg-3',mtgMo>0?fc(mtgMo*36):'');
-    set('c-mtf-3',fc(cumMtf(3)));
-    set('c-tot-3',fc(cumMtf(3)+mtgMo*36));
-    // Remaining over loan term
-    var remMtg=mtgMo*mtgYrs*12;
-    var remMtf=cumMtf(mtgYrs);
-    set('rem-mtg',fc(remMtg));
-    var sub=document.getElementById('rem-mtg-sub');
-    if(sub)sub.textContent=mtgYrs+' yr term · '+(mtgYrs*12)+' payments';
-    set('rem-mtf',fc(remMtf));
-    set('rem-tot',fc(remMtg+remMtf));
+  var TF=[{l:'1 Year',y:1},{l:'3 Years',y:3,hl:true},{l:'5 Years',y:5},{l:'10 Years',y:10,hl:true},{l:'20 Years',y:20}];
+
+  // Main table: MTG+MTF flat | MTG+MTF 8% growth
+  var mainRows='';
+  TF.forEach(function(tf){
+    var mtg=mtgMo*12*tf.y;
+    var flat=mtg+cumMtfFlat(tf.y);
+    var growth=mtg+cumMtf8(tf.y);
+    mainRows+='<tr'+(tf.hl?' class="hl"':'')+'>'
+      +'<td>'+tf.l+'</td>'
+      +'<td>'+fc(flat)+'</td>'
+      +'<td style="color:#15803d;font-weight:700">'+fc(growth)+'</td>'
+      +'</tr>';
+  });
+  var mb=document.getElementById('main-tbody');if(mb)mb.innerHTML=mainRows;
+
+  // Breakdown table: MTG alone | MTF alone | MTF flat
+  var bRows='';
+  TF.forEach(function(tf){
+    var mtg=mtgMo*12*tf.y;
+    var mtfA=cumMtf8(tf.y);
+    var mtfF=cumMtfFlat(tf.y);
+    bRows+='<tr'+(tf.hl?' class="hl"':'')+'>'
+      +'<td>'+tf.l+'</td>'
+      +'<td>'+fc(mtg)+'</td>'
+      +'<td>'+fc(mtfA)+'</td>'
+      +'<td>'+fc(mtfF)+'</td>'
+      +'</tr>';
+  });
+  var bb=document.getElementById('breakdown-tbody');if(bb)bb.innerHTML=bRows;
+
+  // Remaining over loan term
+  if(mtgMo>0){
+    var rw=document.getElementById('rem-mtg-wrap');if(rw)rw.style.display='block';
+    set('rem-mtg',fc(mtgMo*mtgYrs*12));
+    var rs=document.getElementById('rem-mtg-sub');if(rs)rs.textContent=mtgYrs+' yr term · '+(mtgYrs*12)+' payments';
   }
+  set('rem-mtf',fc(cumMtf8(mtgYrs)));
+  set('rem-tot',fc(mtgMo*mtgYrs*12+cumMtf8(mtgYrs)));
 })();
 </script>
 </div></div>
