@@ -1883,9 +1883,11 @@ function autoSave(){
       _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
       _updated:Date.now()
     };
+    var _savedResorts=all[s].resorts;
     Object.keys(_new).forEach(function(k){
       if(_new[k]!==''&&_new[k]!==null&&_new[k]!==undefined){all[s][k]=_new[k];}
     });
+    if(_savedResorts) all[s].resorts=_savedResorts;
     sa(all);updateProgress();
   },600);
 }
@@ -1969,6 +1971,7 @@ window.addEventListener('beforeunload', function(){
   var s=ac(); if(!s) return;
   var all=ga(); if(!all[s]) return;
   function g(id){var el=document.getElementById(id);return el?(el.type==='checkbox'?el.checked:(el.value||'').trim()):''}
+  var _existingResorts=all[s].resorts;
   all[s]=Object.assign(all[s],{
     firstName:g('v-first'),lastName:g('v-last'),phone:g('v-phone'),phone2:g('v-phone2'),phone3:g('v-phone3'),email:g('v-email'),
     coFirst:g('v-co'),coLast:g('v-col'),
@@ -1986,6 +1989,7 @@ window.addEventListener('beforeunload', function(){
     _fuAppt:g('v-fudate')+(g('v-futime')?'T'+g('v-futime'):''),
     _updated:Date.now()
   });
+  if(_existingResorts) all[s].resorts=_existingResorts;
   sa(all);
 });
 
