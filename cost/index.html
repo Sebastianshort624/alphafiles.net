@@ -760,18 +760,22 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
   ];
   var TF=TF_SHORT;
 
-  var rows="",brows="";
-  TF.forEach(function(tf){
+  var rows="",lrows="",brows="";
+  // Long-term table (10/20/30yr)
+  TF_LONG.forEach(function(tf){
     var mtg=cumMtg(tf.y,mtgMo,mtgYrs);
     var mtf8=cumMtf(tf.y,mtfYr);
-    var flat=mtg+mtfYr*(tf.y<1?tf.y:Math.floor(tf.y));
     var comb=mtg+mtf8;
-    var save=alphaFee>0?comb-alphaFee:null;
     var hl=tf.hl?' class="hl"':"";
-    var flat=cumMtg(tf.yrs,mtgMo,mtgYrs)+mtfYr*tf.yrs;
-    rows+="<tr"+hl+"><td>"+tf.l+"</td>"
-      +"<td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td>"
-      +"</tr>";
+    lrows+="<tr"+hl+"><td>"+tf.l+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td></tr>";
+  });
+  // Short-term table (1mo/1yr/3yr/5yr)
+  TF_SHORT.forEach(function(tf){
+    var mtg=cumMtg(tf.y,mtgMo,mtgYrs);
+    var mtf8=cumMtf(tf.y,mtfYr);
+    var comb=mtg+mtf8;
+    var hl=tf.hl?' class="hl"':"";
+    rows+="<tr"+hl+"><td>"+tf.l+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td></tr>";
     brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
   });
   var lt=document.getElementById("cost-tbody-long");if(lt)lt.innerHTML=lrows;
