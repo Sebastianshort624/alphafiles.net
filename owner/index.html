@@ -1209,4 +1209,367 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 })();
 </script>
 </body>
+</html+'<label style="display:flex;align-items:center;gap:10px">Maintenance Fee (MTF) <label style="cursor:pointer;font-size:11px;color:#6b7280;display:flex;align-items:center;gap:4px"><input type="checkbox" id="r'+ri+'-monthly" onchange="_autoSaveResorts()"> Paid Monthly</label></label>'
+    +'<input id="r'+ri+'-mtf" type="number" class="hi" placeholder="Enter amount" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff readonly"><label id="r'+ri+'-mtflbl">Calculated</label><input id="r'+ri+'-mtfcalc" readonly placeholder="Auto"></div>'
+    +'</div>'
+    // Mortgage
+    +'<div class="frow">'
+    +'<div class="ff"><label>Monthly Mortgage</label><input id="r'+ri+'-mtg" type="number" class="hi" placeholder="0 if paid off" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Loan Term (years)</label><input id="r'+ri+'-term" type="number" placeholder="e.g. 10" oninput="_autoSaveResorts()"></div>'
+    +'</div>'
+    +'<div class="frow">'
+    +'<div class="ff"><label>Balance Remaining</label><input id="r'+ri+'-bal" type="number" placeholder="e.g. 15000" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff readonly"><label>Combined Monthly</label><input id="r'+ri+'-comb" readonly placeholder="Auto"></div>'
+    +'</div>'
+    +'</div>';
+}
+
+function _fillPanel(ri, resort){
+  var r=resort||{};
+  function sv(id,v){var el=document.getElementById(id);if(el)el.value=v||'';}
+  sv('r'+ri+'-name',r.name);sv('r'+ri+'-state',r.state);sv('r'+ri+'-city',r.city);
+  sv('r'+ri+'-year',r.yearPurchased);sv('r'+ri+'-price',r.purchasePrice);
+  var owners=r.owners||[];
+  for(var o=0;o<4;o++)sv('r'+ri+'-o'+o,owners[o]||'');
+  sv('r'+ri+'-mtf',r.maitFees||'');
+  sv('r'+ri+'-mtg',r.monthlyMortgage||'');
+  sv('r'+ri+'-term',r.mtgTerm||'');
+  sv('r'+ri+'-bal',r.balanceAmount||'');
+  if(r.mtfFreq==='monthly'){var el=document.getElementById('r'+ri+'-monthly');if(el)el.checked=true;}
+  _calcPanel(ri);
+}
+
+function _calcPanel(ri){
+  var raw=parseFloat((document.getElementById('r'+ri+'-mtf')||{}).value)||0;
+  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
+  var mtfYr=isMonthly?raw*12:raw;
+  var mtfMo=mtfYr/12;
+  var mtg=parseFloat((document.getElementById('r'+ri+'-mtg')||{}).value)||0;
+  var lbl=document.getElementById('r'+ri+'-mtflbl');
+  var calc=document.getElementById('r'+ri+'-mtfcalc');
+  var comb=document.getElementById('r'+ri+'-comb');
+  if(lbl)lbl.textContent=isMonthly?'Annual (calculated)':'Monthly (calculated)';
+  if(calc)calc.value=raw>0?(isMonthly?'$'+Math.round(mtfYr).toLocaleString()+'/yr':'$'+mtfMo.toFixed(2)+'/mo'):'';
+  if(comb)comb.value=(mtfMo+mtg)>0?'$'+((mtfMo+mtg).toFixed(2))+'/mo':'';
+}
+
+function _readResort(ri){
+  function gv(id){return(document.getElementById(id)||{}).value||'';}
+  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
+  var raw=parseFloat(gv('r'+ri+'-mtf'))||0;
+  return{
+    name:gv('r'+ri+'-name'),state:gv('r'+ri+'-state'),city:gv('r'+ri+'-city'),
+    yearPurchased:gv('r'+ri+'-year'),purchasePrice:parseFloat(gv('r'+ri+'-price'))||0,
+    owners:[gv('r'+ri+'-o0'),gv('r'+ri+'-o1'),gv('r'+ri+'-o2'),gv('r'+ri+'-o3')],
+    maitFees:isMonthly?raw*12:raw,mtfFreq:isMonthly?'monthly':'annual',
+    monthlyMortgage:parseFloat(gv('r'+ri+'-mtg'))||0,
+    mtgTerm:parseInt(gv('r'+ri+'-term'))||10,
+    balanceAmount:parseFloat(gv('r'+ri+'-bal'))||0
+  };
+}
+
+function _autoSaveResorts(){
+  var resorts=_getResorts();
+  // Update all visible panels
+  for(var i=0;i<4;i++){
+    var panel=document.getElementById('rpanel-'+i);
+    if(panel&&panel.style.display!=='none'&&panel.offsetParent!==null){
+      resorts[i]=_readResort(i);
+    }
+    _calcPanel(i);
+  }
+  _saveResorts(resorts);
+  updateBanner();
+}
+
+function switchResort(ri){
+  _activeResort=ri;
+  document.querySelectorAll('.r-panel').forEach(function(p,i){p.classList.toggle('active',i===ri);});
+  document.querySelectorAll('.r-tab').forEach(function(t,i){
+    var resorts=_getResorts();
+    var hasData=resorts[i]&&resorts[i].name;
+    t.classList.remove('active','inactive','has-data');
+    if(i===ri){t.classList.add('active');}
+    else if(hasData){t.classList.add('has-data');}
+    else{t.classList.add('inactive');}
+  });
+}
+
+function activateResort(ri){
+  // If already has data, just switch to it
+  var resorts=_getResorts();
+  var tab=document.getElementById('rtab-'+ri);
+  if(resorts[ri]&&resorts[ri].name){
+    switchResort(ri);
+    return;
+  }
+  // Activate empty tab for data entry
+  if(tab){tab.classList.remove('inactive');tab.classList.add('active');}
+  switchResort(ri);
+}
+
+function removeResort(ri){
+  if(!confirm('Remove Resort '+(ri+1)+'? This will clear all data for this resort.'))return;
+  var resorts=_getResorts();
+  resorts[ri]={};
+  _saveResorts(resorts);
+  var tab=document.getElementById('rtab-'+ri);
+  if(tab){tab.classList.remove('active','has-data');tab.classList.add('inactive');}
+  _fillPanel(ri,{});
+  switchResort(0);
+}
+
+// Initialize panels on page load
+window._initResortPanels=window.initResortPanels=function initResortPanels(){
+  var container=document.getElementById('resort-panels');
+  if(!container)return;
+  var html='';
+  for(var i=0;i<4;i++)html+=_panelHTML(i);
+  container.innerHTML=html;
+  // Load data
+  var resorts=_getResorts();
+  for(var j=0;j<4;j++){
+    _fillPanel(j,resorts[j]);
+    var hasData=resorts[j]&&resorts[j].name;
+    var tab=document.getElementById('rtab-'+j);
+    if(tab&&j>0){
+      tab.classList.remove('active','inactive','has-data');
+      if(hasData){tab.classList.add('has-data');}
+      else{tab.classList.add('inactive');}
+    }
+  }
+};
+document.addEventListener("DOMContentLoaded",function(){window._initResortPanels();});
+</script>
+
+<script>
+var SK='atc_clients_v2',AK='atc_active';
+function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
+function sa(o){localStorage.setItem(SK,JSON.stringify(o));}
+function ac(){return localStorage.getItem(AK)||null;}
+function ad(){var s=ac();return s?ga()[s]||null:null;}
+function fc(n){return '$'+Math.round(n||0).toLocaleString();}
+
+var _mtgType='paidfull';
+
+function togglePlus(id){
+  var el=document.getElementById(id);if(!el)return;
+  el.classList.toggle('open');
+  var ic=document.getElementById('pt-'+id);
+  if(ic)ic.textContent=el.classList.contains('open')?'−':'+';
+}
+
+function selectMtgType(type){
+  _mtgType=type;
+  ['paidfull','owes','behind'].forEach(function(t){
+    var b=document.getElementById('mt-'+t);
+    if(b)b.classList.remove('active','paidfull','owes','behind');
+  });
+  var btn=document.getElementById('mt-'+type);
+  if(btn){btn.classList.add('active',type);}
+
+  // Show/hide sections
+  var mtgInfo=document.getElementById('mtg-info');
+  var behindInfo=document.getElementById('behind-info');
+  if(type==='paidfull'){
+    if(mtgInfo)mtgInfo.classList.remove('open');
+    if(behindInfo)behindInfo.classList.remove('open');
+  } else if(type==='owes'){
+    if(mtgInfo)mtgInfo.classList.add('open');
+    if(behindInfo)behindInfo.classList.remove('open');
+  } else {
+    if(mtgInfo)mtgInfo.classList.add('open');
+    if(behindInfo)behindInfo.classList.add('open');
+  }
+  calcTotals();
+  autoSave();
+}
+
+function calcTotals(){
+  var raw=parseFloat(document.getElementById('f-mtf').value)||0;
+  var isMonthly=document.getElementById('mtf-monthly')&&document.getElementById('mtf-monthly').checked;
+  var mtf=isMonthly?raw*12:raw; // always work in annual internally
+  var mtfMo=mtf/12;
+  var mtgMo=parseFloat(document.getElementById('f-mtg').value)||0;
+  var mo=mtfMo+(_mtgType==='paidfull'?0:mtgMo);
+  var mtgBehind=(parseInt(document.getElementById('f-mtgb').value)||0)*mtgMo;
+  var mtfBehind=(parseInt(document.getElementById('f-mtfb').value)||0)*mtfMo;
+
+  // Update display label and readonly field
+  var lbl=document.getElementById('mtf-display-lbl');
+  var moEl=document.getElementById('f-mtf-mo');
+  if(isMonthly){
+    if(lbl)lbl.textContent='Annual MTF (calculated)';
+    if(moEl)moEl.value=mtf>0?fc(mtf)+'/yr':'';
+  } else {
+    if(lbl)lbl.textContent='Monthly MTF (calculated)';
+    if(moEl)moEl.value=mtf>0?fc(mtfMo)+'/mo':'';
+  }
+
+  // 3-year with 8% MTF growth
+  var annMtf=mtf, annMtg=(_mtgType==='paidfull'?0:mtgMo*12);
+  var three=(annMtf+annMtg)+(annMtf*1.08+annMtg)+(annMtf*1.08*1.08+annMtg);
+
+  document.getElementById('tot-mo').textContent=fc(mo);
+  document.getElementById('tot-yr').textContent=fc(mo*12);
+  document.getElementById('tot-arr').textContent=fc(mtgBehind+mtfBehind);
+  document.getElementById('tot-3yr').textContent=fc(three);
+
+  // Update banner
+  var mtgM=parseFloat(d.monthlyMortgage)||0;var mtfA=parseFloat(d.maitFees)||0;
+  document.getElementById('vb-mo').textContent=mtgM>0?fc(mtgM)+'/mo mtg':'No mtg';
+  document.getElementById('vb-yr').textContent=mtfA>0?fc(mtfA/12)+'/mo MTF':'No MTF';
+}
+
+var _timer=null;
+function autoSave(){
+  updateBanner();
+  clearTimeout(_timer);
+  _timer=setTimeout(function(){
+    var s=ac();if(!s)return;
+    var all=ga();if(!all[s])return;
+    var g=function(id){var el=document.getElementById(id);return el?(el.value||'').trim():'';};
+    all[s]=Object.assign(all[s],{
+      firstName:g('f-first'),lastName:g('f-last'),
+      phone:g('f-phone'),email:g('f-email'),
+      coFirst:g('f-cofirst'),coLast:g('f-colast'),
+      coPhone:g('f-cophone'),coEmail:g('f-coemail'),
+      address:g('f-address'),city:g('f-city'),state:g('f-state'),zip:g('f-zip'),
+      phone2:g('f-phone2'),
+      resort:g('f-resort'),resortState:g('f-resstate'),resortCity:g('f-rescity'),
+      yearPurchased:g('f-year'),purchasePrice:g('f-purchase'),
+      whyOut:g('f-why'),
+      maitFees:g('f-mtf'),monthlyMortgage:(_mtgType==='paidfull'?'0':g('f-mtg')),
+      balanceAmount:g('f-balance'),interestRate:g('f-rate'),
+      mtgBehind:g('f-mtgb'),mtfBehind:g('f-mtfb'),
+      mortgageType:_mtgType,
+      notes:g('f-notes'),
+      _updated:Date.now()
+    });
+    sa(all);
+  },600);
+}
+
+function updateBanner(){
+  var f=(document.getElementById('f-first').value||'').trim();
+  var l=(document.getElementById('f-last').value||'').trim();
+  var r=(document.getElementById('f-resort').value||'').trim();
+  var p=(document.getElementById('f-phone').value||'').trim();
+  var rs=(document.getElementById('f-resstate').value||'').trim();
+  var rc=(document.getElementById('f-rescity').value||'').trim();
+  var loc=(rc?rc+', ':'')+rs;
+  if(f||l){document.getElementById('vb-name').textContent=(f+' '+l).trim();}
+  if(p)document.getElementById('vb-phone').textContent=p;
+  if(r)document.getElementById('vb-resort').textContent=r;
+  if(loc.trim())document.getElementById('vb-loc').textContent=loc.trim();
+  calcTotals();
+}
+
+function loadData(){
+  var d=ad();if(!d)return;
+  var map={
+    'f-first':'firstName','f-last':'lastName','f-phone':'phone','f-email':'email',
+    'f-cofirst':'coFirst','f-colast':'coLast','f-cophone':'coPhone','f-coemail':'coEmail',
+    'f-address':'address','f-city':'city','f-state':'state','f-zip':'zip',
+    'f-phone2':'phone2','f-resort':'resort','f-resstate':'resortState','f-rescity':'resortCity',
+    'f-year':'yearPurchased','f-purchase':'purchasePrice','f-why':'whyOut',
+    'f-mtf':'maitFees','f-mtg':'monthlyMortgage','f-balance':'balanceAmount',
+    'f-rate':'interestRate','f-mtgb':'mtgBehind','f-mtfb':'mtfBehind','f-notes':'notes'
+  };
+  Object.keys(map).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&d[map[id]]!==undefined&&d[map[id]]!=='')el.value=d[map[id]];
+  });
+
+  // Mortgage type
+  if(d.mortgageType)selectMtgType(d.mortgageType);
+  else if(d.monthlyMortgage&&parseFloat(d.monthlyMortgage)>0)selectMtgType('owes');
+  else selectMtgType('paidfull');
+
+  // Auto-open plus sections if data exists
+  if(d.coFirst||d.coLast){document.getElementById('second-owner').classList.add('open');document.getElementById('pt-second-owner').textContent='−';}
+  if(d.address||d.phone2){document.getElementById('contact-info').classList.add('open');document.getElementById('pt-contact-info').textContent='−';}
+  if(d.resortCity||d.yearPurchased||d.purchasePrice||d.whyOut){document.getElementById('resort-details').classList.add('open');document.getElementById('pt-resort-details').textContent='−';}
+  if(d.notes){document.getElementById('notes-section').classList.add('open');document.getElementById('pt-notes-section').textContent='−';}
+
+  calcTotals();updateBanner();
+
+  // Update banner quote/stage
+  var stages=['Intro','Assessment','True Cost','Quote','Acknowledgment','Contract','Funding','Completed'];
+  var stg=stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment';
+  document.getElementById('vb-quote').textContent=d.alphaFee?fc(parseFloat(d.alphaFee)):'No quote yet';
+  document.getElementById('vb-stg').textContent=stg;
+}
+
+function ownerSubmit(){
+  autoSave();
+  var s=ac();if(!s)return;
+  var all=ga();if(!all[s])return;
+  var sp=all[s]._savedPages||[];
+  if(sp.indexOf('/owner/')<0)sp.push('/owner/');
+  all[s]._savedPages=sp;all[s]._updated=Date.now();sa(all);
+  var d=all[s];
+  var sum='<strong>'+(d.firstName||'')+(d.lastName?' '+d.lastName:'')+'</strong>'
+    +(d.resort?' &nbsp;·&nbsp; '+d.resort:'')
+    +(d.maitFees?'<br>MTF: '+fc(parseFloat(d.maitFees))+'/yr':'')
+    +(d.monthlyMortgage&&parseFloat(d.monthlyMortgage)>0?' &nbsp;·&nbsp; Mtg: '+fc(parseFloat(d.monthlyMortgage))+'/mo':'');
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center';
+  ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:28px;max-width:460px;width:100%;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,.2)"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:12px">✓ Owner Info Saved</div><div style="background:#EAF0F8;border-left:3px solid #1B2A4A;border-radius:4px;padding:12px 14px;font-size:14px;line-height:1.6;color:#1B2A4A;margin-bottom:16px">'+sum+'</div><div style="display:flex;gap:8px"><button onclick="this.closest(\'div[style]\').remove()" style="flex:1;padding:11px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">← Edit</button><button onclick="location.href=\'/vitals/\'" style="flex:1;padding:11px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Continue →</button></div></div>';
+  document.body.appendChild(ov);
+}
+
+// ── SIDEBAR ENGINE ────────────────────────────────────────────────────────
+(function(){
+function ga2(){try{return JSON.parse(localStorage.getItem('atc_clients_v2'))||{};}catch(e){return{};}}
+function ac2(){return localStorage.getItem('atc_active')||null;}
+function ad2(){var s=ac2();return s?ga2()[s]||null:null;}
+function fc2(n){return '$'+Math.round(n||0).toLocaleString();}
+function fd2(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+window.sf=function(k,v){var s=ac2();if(!s)return;var a=ga2();if(!a[s])return;a[s][k]=v;a[s]._updated=Date.now();localStorage.setItem('atc_clients_v2',JSON.stringify(a));};
+var PG=[
+  {n:0,ic:'🏠',lb:'Dashboard',url:'/home/'},
+  {n:1,ic:'📋',lb:'Owner & Resort Info',url:'/owner/'},
+  {n:'V1',ic:'⚾',lb:'Client Vitals',url:'/vitals/'},
+  {n:2,ic:'❓',lb:'Why Do You Want Out',url:'/whyout/'},
+  {n:3,ic:'⚠️',lb:'If You Do Nothing',url:'/wait/'},
+  {n:4,ic:'🔍',lb:'Finding Your Group',url:'/group/'},
+  {n:'4a',ic:'✅',lb:'Money-Back Approval',url:'/approval/'},
+  {n:'4b',ic:'👨‍👩‍👧',lb:'Heirs & Estate Liability',url:'/heirs/'},
+  {n:'4c',ic:'💵',lb:'Resort Compensation',url:'/compensation/'},
+  {n:'4d',ic:'💳',lb:'To Pay or Not to Pay',url:'/credit/'},
+  {n:'4e',ic:'✉️',lb:'Mutual Release Letter',url:'/letter/'},
+  {n:5,ic:'🛡',lb:'Certificate of Guarantee',url:'/guarantee/'},
+  {n:6,ic:'⭐',lb:'Our Track Record',url:'/history/'},
+  {n:7,ic:'⚖️',lb:'Consumer Rights',url:'/rights/'},
+  {n:8,ic:'💰',lb:'True Cost',url:'/cost/'},
+  {n:9,ic:'📄',lb:'Your Quote',url:'/quote/'},
+  {n:10,ic:'⏰',lb:'30 & 90 Day Follow-Up',url:'/followup/'},
+  {n:11,ic:'🏆',lb:'What Makes Alpha Better',url:'/better/'},
+  {n:12,ic:'📦',lb:"What's Included",url:'/included/'},
+  {n:13,ic:'📋',lb:'Recap',url:'/recap/'},
+  {n:14,ic:'✅',lb:'Client Acknowledgment',url:'/checklist/'},
+  {n:15,ic:'📝',lb:'Alpha Contract',url:'/contract/'},
+  {n:16,ic:'🎉',lb:"Let's Be Timeshare Free",url:'/free/'}
+];
+/* old buildSB removed — using atc-sb version */
+function swC(s){if(!s)return;localStorage.setItem('atc_active',s);setTimeout(function(){location.reload();},400);}
+window.swC=swC;
+function newC(){var m=document.getElementById('_ncm');if(!m){m=document.createElement('div');m.id='_ncm';m.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:600;display:none;align-items:center;justify-content:center';m.innerHTML='<div style="background:#fff;border-radius:12px;padding:24px;max-width:360px;width:100%;margin:20px"><div style="font-size:18px;font-weight:700;color:#1B2A4A;margin-bottom:14px">New Client</div><div style="margin-bottom:10px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">First Name</label><input id="_ncf" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="First"></div><div style="margin-bottom:10px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Last Name</label><input id="_ncl" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="Last"></div><div style="margin-bottom:14px"><label style="display:block;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">Resort</label><input id="_ncr" style="width:100%;border:1.5px solid #E0E4ED;border-radius:6px;padding:9px 11px;font-size:14px" placeholder="e.g. Westgate — Orlando, FL"></div><div style="display:flex;gap:8px"><button onclick="document.getElementById(\'_ncm\').style.display=\'none\'" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:1.5px solid #1B2A4A;background:#fff;cursor:pointer">Cancel</button><button onclick="createC()" style="flex:1;padding:10px;font-size:14px;font-weight:600;border-radius:6px;border:none;background:#C8960C;color:#fff;cursor:pointer">Create &amp; Start</button></div></div>';m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});document.body.appendChild(m);}m.style.display='flex';setTimeout(function(){var f=document.getElementById('_ncf');if(f)f.focus();},100);}
+window.newC=newC;
+function createC(){var f=(document.getElementById('_ncf')||{}).value||'';var l=(document.getElementById('_ncl')||{}).value||'';var r=(document.getElementById('_ncr')||{}).value||'';f=f.trim();l=l.trim();r=r.trim();if(!f&&!l){alert('Please enter a name.');return;}var slug=((f||'x')[0]+'.'+(l||'client')).toLowerCase().replace(/[^a-z0-9.]/g,'');var all=ga2();all[slug]=Object.assign(all[slug]||{_created:Date.now()},{firstName:f,lastName:l,resort:r,_visits:1,_updated:Date.now()});localStorage.setItem('atc_clients_v2',JSON.stringify(all));localStorage.setItem('atc_active',slug);var m=document.getElementById('_ncm');if(m)m.style.display='none';setTimeout(function(){location.reload();},500);}
+window.createC=createC;
+function saveClear(){localStorage.removeItem('atc_active');setTimeout(function(){location.href='/home/';},500);}
+window.saveClear=saveClear;
+function addCal(){var d=ad2();var fu=d&&d._fuAppt;if(!fu){alert('Set a follow-up date first.');return;}var dt=new Date(fu);var fmt=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';};window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent((d.firstName||'Client')+' — ATC Follow-Up')+'&dates='+fmt(dt)+'/'+fmt(new Date(dt.getTime()+3600000)),'_blank');}
+window.addCal=addCal;
+function rpt(type){var d=ad2();if(!d){toast('No active client','#DC2626');return;}var name=((d.firstName||'')+' '+(d.lastName||'')).trim();var mo=fc2((parseFloat(d.monthlyMortgage)||0)+((parseFloat(d.maitFees)||0)/12));var txt='';if(type==='vero')txt='Name: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\n2nd: '+(d.phone2||'—')+'\nEmail: '+(d.email||'—')+'\nAddress: '+(d.address||'—');else if(type==='crm')txt='=== CALL NOTES '+new Date().toLocaleDateString()+' ===\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nMonthly: '+mo+'\nMTF: '+fc2(d.maitFees)+'/yr\nMortgage: '+fc2(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc2(d.alphaFee):'Not given')+'\nTerm: '+(d.selectedTerm||'—')+' mo\nNotes: '+(d.notes||'—');else if(type==='sms')txt='Hi '+(d.firstName||'there')+', this is Sebastian at Alpha Timeshare Consultants. Following up on your '+(d.resort||'timeshare')+' ownership. Good time to connect? (877) 848-3948 Ext. 134';else txt='ALPHA TIMESHARE CONSULTANTS\n'+new Date().toLocaleDateString()+'\n\nClient: '+name+'\nResort: '+(d.resort||'—')+'\nPhone: '+(d.phone||'—')+'\nEmail: '+(d.email||'—')+'\nMonthly: '+mo+'\nMTF: '+fc2(d.maitFees)+'/yr\nMortgage: '+fc2(d.monthlyMortgage)+'/mo\nQuote: '+(d.alphaFee?fc2(d.alphaFee):'—')+'\nNotes: '+(d.notes||'—');try{navigator.clipboard.writeText(txt).then(function(){toast('✓ Copied');});}catch(e){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('✓ Copied');}}
+window.rpt=rpt;
+function toast(msg,color){var t=document.getElementById('_t');if(!t){t=document.createElement('div');t.id='_t';t.style.cssText='display:none;position:fixed;bottom:24px;left:240px;background:#16A34A;color:#fff;padding:10px 18px;font-size:14px;font-weight:600;border-radius:8px;z-index:700;box-shadow:0 4px 16px rgba(0,0,0,.2)';document.body.appendChild(t);}t.style.background=color||'#16A34A';t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+window.toast=toast;
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){buildSB();loadData();});}else{buildSB();loadData();}
+})();
+</script>
+</body>
 </html>
