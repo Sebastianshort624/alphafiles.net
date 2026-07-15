@@ -583,12 +583,14 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <!-- MAIN TABLE: 2 cols only -->
 <div class="tbl-wrap">
-  <div class="tbl-hdr">Cost of Ownership — Timeline Breakdown</div>
+  <div style="background:var(--navy);border-radius:8px 8px 0 0;padding:14px 20px;margin:-18px -20px 16px;text-align:center">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase">How Much More Will You Give Them?</div>
+  </div>
   <table class="ctbl">
     <thead><tr>
       <th style="text-align:left">Timeframe</th>
-      <th>MTG + MTF</th>
-      <th style="color:#86efac">If Fees Continue to Rise 8%</th>
+      <th style="color:#86efac">Cost With 8% Annual Growth Rate</th>
+      <th>Total Amount You Will Pay Them</th>
       <th id="alpha-hdr" style="display:none;color:#fcd34d">You Save with Alpha</th>
     </tr></thead>
     <tbody id="cost-tbody"></tbody>
