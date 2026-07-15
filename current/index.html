@@ -828,7 +828,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   function cumMtf8(yrs){var t=0;for(var i=1;i<=yrs;i++)t+=mtfYr*Math.pow(1.08,i-1);return t;}
   function cumMtfFlat(yrs){return mtfYr*yrs;}
 
-  var TF=[{l:'1 Year',y:1},{l:'3 Years',y:3,hl:true},{l:'5 Years',y:5},{l:'10 Years',y:10,hl:true},{l:'20 Years',y:20}];
+  var TF=[{l:'1 Year',y:1},{l:'2 Years',y:2},{l:'3 Years',y:3,hl:true},{l:'5 Years',y:5,hl:true}];
 
   // Main table: MTG+MTF flat | MTG+MTF 8% growth
   var mainRows='';
