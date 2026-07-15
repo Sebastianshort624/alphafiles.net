@@ -460,21 +460,31 @@ function buildSB(){
     +"<button onclick=\"window.deleteClient()\" style='width:100%;margin-top:4px;background:none;color:rgba(255,59,48,.7);border:1px solid rgba(255,59,48,.3);border-radius:4px;padding:4px 0;font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif'>🗑 Delete Client</button>"
     +"</div>";
 
-  // All pages in order — checkbox in place, nothing moves
+  // Flat nav - all pages in order, checkboxes in place
   function navItem(p){
     var done=!!comp[p.url];
     var act=cur===p.url;
     var url=p.url;
-    var isSpecial=typeof p.n!=='number'||p.n===0;
-    var cbk="event.stopPropagation();event.preventDefault();window._toggleDone('"+url+"');return false;";
-    var cb=isSpecial?"":"<span onclick=\""+cbk+"\" style='display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border:1.5px solid "+(done?"rgba(52,199,89,.7)":"rgba(255,255,255,.2)")+";border-radius:3px;background:"+(done?"rgba(52,199,89,.2)":"transparent")+";cursor:pointer;flex-shrink:0'>"+(done?"<span style='font-size:9px;color:#34c759;font-weight:700'>✓</span>":"")+"</span>";
-    return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' style='display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;"
-      +"color:"+(act?"#C8960C":"rgba(255,255,255,.7)")+";font-size:11px;font-weight:"+(act?"700":"500")+";"
-      +"border-left:3px solid "+(act?"#C8960C":"transparent")+";background:"+(act?"rgba(200,150,12,.12)":"transparent")+"'>"
-      +cb+"<span style='flex:1;line-height:1.3"+(done&&!isSpecial?";opacity:.5":"")+"'>"+p.lb+"</span></a>";
+    var isNum=typeof p.n==='number'&&p.n>0;
+    var checkHtml=isNum?('<span onclick="event.stopPropagation();event.preventDefault();window._toggleDone(\''
+      +url+'\');return false;" style="display:inline-flex;align-items:center;justify-content:center;'
+      +'width:14px;height:14px;border:1.5px solid '+(done?'rgba(52,199,89,.6)':'rgba(255,255,255,.15)')
+      +';border-radius:3px;background:'+(done?'rgba(52,199,89,.15)':'transparent')
+      +';cursor:pointer;flex-shrink:0">'+(done?'<span style="font-size:9px;color:#34c759">&#10003;</span>':'')
+      +'</span>'):'';
+    var color=act?'#C8960C':(done?'rgba(255,255,255,.4)':'rgba(255,255,255,.7)');
+    var bg=act?'rgba(200,150,12,.1)':'transparent';
+    var bl=act?'#C8960C':'transparent';
+    return '<a href="'+url+'" onclick="return _navClick(event,\''+url+'\')" '
+      +'style="display:flex;align-items:center;gap:7px;padding:6px 10px;text-decoration:none;'
+      +'color:'+color+';font-size:11px;font-weight:'+(act?'700':'500')+';'
+      +'border-left:3px solid '+bl+';background:'+bg+'">'
+      +checkHtml
+      +'<span style="flex:1;line-height:1.3">'+p.lb+'</span>'
+      +'</a>';
   }
-  var toggleHdr="<div style='padding:4px 10px 2px;border-bottom:1px solid rgba(255,255,255,.07)'><span style='font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.25)'>Pages</span></div>";
-  var navHtml="<div style='flex:1;overflow-y:auto;padding:5px 0'>"+_PG.map(navItem).join('')+"</div>";
+  var toggleHdr='';
+  var navHtml='<div style="flex:1;overflow-y:auto;padding:5px 0">'+_PG.map(navItem).join('')+'</div>';
 
   el.innerHTML=ct+statusSel+sw+toggleHdr+navHtml
     +"<div style='padding:6px 10px;border-top:1px solid rgba(255,255,255,.08)'>"
