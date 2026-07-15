@@ -604,6 +604,10 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
     <label class="fee-lbl">Discount 2</label>
     <div class="fee-input-wrap"><span class="fee-dollar">$</span><input id="inp-d2" type="number" class="fee-input" placeholder="0" oninput="calc()"></div>
   </div>
+  <div class="fee-row" style="background:#f0fdf4;border-radius:6px;padding:9px 10px;margin:4px -10px;border:1px solid #86efac">
+    <label class="fee-lbl" style="color:#15803d">💰 Pay-in-Full Discount (3%)</label>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#15803d" id="out-pif-disc">—</div>
+  </div>
   <div class="fee-row total-disc">
     <label class="fee-lbl">Total Discount</label>
     <div class="fee-total" id="out-disc">$0</div>
@@ -711,8 +715,11 @@ function calc(){
   var down=parseFloat(document.getElementById("inp-down").value)||0;
   var disc=d1+d2;
   var net=Math.max(0,fee-disc);
+  var pifDisc=net*0.03;
+  var pifPrice=net*0.97;
   var bal=Math.max(0,net-down);
   set("out-disc","$"+Math.round(disc).toLocaleString());
+  set("out-pif-disc",pifDisc>0?"-$"+Math.round(pifDisc).toLocaleString()+" → "+fc0(pifPrice):"—");
   set("out-bal",bal>0?fc0(bal):"$0");
   if(bal>0){
     document.getElementById("pay-section").style.display="block";
