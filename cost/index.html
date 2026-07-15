@@ -3,127 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>True Cost of Ownership — Alpha Timeshare Consultants</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style id="page-css">
-:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e8edf3;--red:#DC2626;--green:#16A34A;--orange:#ea580c}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Inter",sans-serif;background:#ffffff;color:#1a1a1a;font-size:14px}
-.main{padding:24px;min-height:100vh}
-.wrap{max-width:780px;margin:0 auto}
-
-/* Page header */
-.ph{margin-bottom:28px;background:var(--navy);border-radius:10px;padding:20px 24px}
-.ph-eyebrow{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.ph-title{font-size:28px;font-weight:300;color:#fff;margin-bottom:4px;letter-spacing:-.3px}
-.ph-sub{font-size:14px;color:#c7d0e0;font-weight:400}
-
-/* Client banner — dark navy, white & gold */
-.vb{display:grid;grid-template-columns:repeat(4,1fr);background:var(--navy);border-radius:10px;margin-bottom:32px;overflow:hidden}
-.vbc{padding:14px 16px;border-right:1px solid rgba(255,255,255,.12)}
-.vbc:last-child{border-right:none}
-.vbl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.vbv{font-size:14px;font-weight:600;color:#fff}
-.vbs{font-size:12px;color:#aab4c8;margin-top:2px}
-
-/* Numbers summary — pulled from vitals */
-.summary-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px}
-.sum-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px}
-.sum-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.sum-val{font-size:22px;font-weight:600;color:var(--navy);line-height:1}
-.sum-sub{font-size:12px;color:#b0bac9;margin-top:5px}
-
-/* Behind alert */
-.behind-alert{border:1px solid #fecdd3;background:#fff5f5;border-radius:10px;padding:14px 18px;margin-bottom:28px;display:none}
-.behind-alert.show{display:flex;gap:14px;align-items:flex-start}
-.behind-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-.behind-text{font-size:13px;color:#7f1d1d;line-height:1.6}
-.behind-text strong{color:var(--red)}
-
-/* Section divider */
-.section-label{font-size:11px;font-weight:700;color:#b0bac9;text-transform:uppercase;letter-spacing:.8px;margin-bottom:20px;display:flex;align-items:center;gap:10px}
-.section-label::after{content:"";flex:1;height:1px;background:var(--border)}
-
-/* Projections — the main display */
-.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:36px}
-.proj-card{border:1px solid var(--border);border-radius:12px;padding:22px 24px;position:relative}
-.proj-card.highlight{border-color:#fecaca;background:#fff8f8}
-.proj-yr{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.proj-val{font-size:36px;font-weight:300;color:var(--navy);letter-spacing:-.5px;line-height:1}
-.proj-val.hot{color:var(--red);font-weight:400}
-.proj-cents{font-size:16px;font-weight:400;vertical-align:super;margin-right:2px;letter-spacing:0}
-.proj-breakdown{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.proj-line{display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:3px}
-.proj-line span:last-child{color:#64748b;font-weight:500}
-
-/* VS breakeven */
-.vs-section{border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:36px}
-.vs-inner{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center}
-.vs-box{text-align:center}
-.vs-box-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.vs-box-val{font-size:28px;font-weight:300;color:var(--navy);letter-spacing:-.3px}
-.vs-box-val.green{color:var(--green);font-weight:500}
-.vs-box-sub{font-size:12px;color:#b0bac9;margin-top:6px}
-.vs-divider{font-size:13px;font-weight:700;color:#d1d5db;text-align:center}
-.be-box{background:#f8fffe;border:1px solid #bbf7d0;border-radius:10px;padding:16px;text-align:center;margin-top:18px}
-.be-val{font-size:20px;font-weight:600;color:var(--green)}
-.be-sub{font-size:12px;color:#6b7280;margin-top:4px}
-
-/* No client notice */
-.no-client{text-align:center;padding:60px 24px;color:#b0bac9}
-.no-client-icon{font-size:40px;margin-bottom:12px}
-.no-client-title{font-size:16px;font-weight:500;color:#6b7280;margin-bottom:6px}
-.no-client-sub{font-size:13px}
-
-/* Nav */
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
-.np{padding:10px 20px;font-size:13px;font-weight:600;border-radius:8px;text-decoration:none;background:#f8fafc;color:#374151;border:1px solid var(--border)}
-.nn{padding:10px 20px;font-size:13px;font-weight:600;border-radius:8px;text-decoration:none;background:var(--gold);color:#fff}
-.ns{font-size:12px;color:#b0bac9;text-align:center;flex:1}
-.btn-row{display:flex;gap:10px;margin-top:20px}
-.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:8px;border:none;cursor:pointer;font-family:"Inter",sans-serif}
-.btn.p{background:var(--gold);color:#fff}
-.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--border)}
-.btn-row .btn{flex:1}
-
-/* Edit link */
-.edit-link{font-size:12px;color:var(--gold);text-decoration:none;font-weight:600}
-.edit-link:hover{text-decoration:underline}
-
-/* New True-Cost breakdown cards */
-.cost-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px}
-.cost-card.total{border-color:var(--navy);background:#f8faff}
-.cost-card-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:6px}
-.cost-card-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.4px}
-.cost-card-badge{font-size:12px;color:#9ca3af;font-weight:500}
-.cost-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.cost-tile-lbl{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
-.cost-tile-val{font-size:19px;font-weight:600;color:var(--navy);letter-spacing:-.2px}
-.cost-tile-val.behind{color:var(--red)}
-.cost-tile-val.tot{color:var(--navy);font-size:22px}
-.cost-note{font-size:12px;color:#b0bac9;margin-top:10px}
-
-/* Projection groups */
-.proj-group{margin-bottom:22px}
-.proj-group-hdr{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:0;background:var(--navy);padding:10px 14px;border-radius:8px 8px 0 0}
-.proj-group-hdr span:last-child{color:#C8960C;font-weight:700;letter-spacing:0}
-.proj-list{border:1px solid var(--border);border-radius:10px;overflow:hidden}
-.proj-list-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--border)}
-.proj-list-row:last-child{border-bottom:none}
-.proj-list-yrs{font-size:14px;font-weight:600;color:var(--navy)}
-.proj-list-val{font-size:17px;font-weight:600;color:var(--red)}
-.proj-list-val.save{color:var(--green)}
-
-/* Our Fee card */
-.fee-card{border:2px solid var(--gold);border-radius:10px;padding:20px 22px;background:#fffaf0;margin-bottom:8px}
-.fee-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
-.fee-tile-lbl{font-size:10px;font-weight:700;color:#b08a2e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
-.fee-tile-val{font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.3px}
-.fee-note{font-size:12px;color:#8a7142;margin-top:2px}
-.fee-divider{border-top:1px dashed #e8d9b0;margin:14px 0}
-
-@media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}
-</style>
+<title>Finding Your Group — Alpha Timeshare Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style id="page-css">:root{--navy:#1B2A4A;--gold:#C8960C;--bg:#F4F6FA;--border:#E0E4ED;--green:#16A34A;--red:#DC2626;--orange:#ea580c;--blue:#2563EB}*{box-sizing:border-box;margin:0;padding:0}body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1a1a1a}.main{padding:20px;min-height:100vh}.wrap{max-width:760px;margin:0 auto}.ph{background:var(--navy);color:#fff;border-radius:8px 8px 0 0;padding:18px 24px}.ph-num{font-size:12px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}.ph-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}.ph-sub{font-size:14px;color:rgba(255,255,255,.65)}.vb{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border-right:none}.vbl{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}.vbv{font-size:14px;font-weight:700;color:var(--navy)}.vbs{font-size:12px;color:#6b7280;margin-top:2px}.pb{background:#fff;border-radius:8px;border:1px solid var(--border);padding:22px;margin-bottom:14px}.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px}.card.navy{background:var(--navy);color:#fff;border-color:var(--navy)}.card.gold-top{border-top:3px solid var(--gold)}.sec{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 8px;display:flex;align-items:center;gap:8px}.sec::after{content:"";flex:1;height:1px;background:var(--border)}.body-text{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}.con{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);align-items:flex-start}.con:last-child{border-bottom:none}.con-n{width:26px;height:26px;background:var(--navy);color:var(--gold);border-radius:50%;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}.con-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}.con-text{font-size:14px;color:#374151;line-height:1.6}.alert-box{border-radius:6px;padding:11px 14px;margin:8px 0;font-size:14px;line-height:1.5}.alert-box.info{background:#EAF0F8;border:1.5px solid var(--blue);color:#1e3a5f}.alert-box.success{background:#f0fdf4;border:1.5px solid var(--green);color:#14532d}.alert-box.danger{background:#fef2f2;border:1.5px solid var(--red);color:#7f1d1d}.alert-box.warn{background:#fff8f0;border:1.5px solid var(--orange);color:#7c2d12}.btn{padding:11px 22px;font-size:14px;font-weight:600;border-radius:6px;border:none;cursor:pointer;font-family:"Inter",sans-serif}.btn.p{background:var(--gold);color:#fff}.btn.n{background:var(--navy);color:#fff}.btn.o{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn-row .btn{flex:1}.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}.nn{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}@media print{.sidenav,.btn-row,.nav-bar{display:none!important}.main{margin-left:0!important}}</style>
 
 <style id="atc-lang-css">
 /* Language show/hide system — controlled by data-lang attribute on body */
@@ -655,260 +537,159 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 
 <div class="sidenav" id="sidenav"></div>
-<div class="main">
-<div class="wrap">
+<div class="main"><div class="wrap">
+<div class="ph"><div class="ph-num">16</div><div class="ph-title">True Cost of Ownership</div><div class="ph-sub">What staying in actually costs you</div></div>
 
-<div class="ph">
-  <div class="ph-num">16</div>
-  <div class="ph-title">True Cost of Ownership</div>
-  <div class="ph-sub">What staying in actually costs you — year by year</div>
-</div>
-
-<!-- CLIENT BANNER -->
 <div class="vb">
   <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div></div>
   <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div></div>
-  <div class="vbc"><div class="vbl">Monthly Total</div><div class="vbv" id="vb-mo">—</div></div>
+  <div class="vbc"><div class="vbl">Monthly</div><div class="vbv" id="vb-mo">—</div></div>
   <div class="vbc"><div class="vbl">Alpha Fee</div><div class="vbv" id="vb-quote">—</div></div>
 </div>
 
-<!-- EXECUTIVE SUMMARY CARDS -->
-<div class="sum-grid" id="sum-grid">
-  <div class="sum-card">
-    <div class="sum-label">Monthly Mortgage</div>
-    <div class="sum-val" id="s-mtg-mo">—</div>
-    <div class="sum-sub" id="s-mtg-mo-yr">— /yr</div>
-  </div>
-  <div class="sum-card">
-    <div class="sum-label">Monthly MTF</div>
-    <div class="sum-val" id="s-mtf-mo">—</div>
-    <div class="sum-sub" id="s-mtf-mo-yr">— /yr · 8% growth</div>
-  </div>
-  <div class="sum-card accent">
-    <div class="sum-label">Combined Monthly</div>
-    <div class="sum-val red" id="s-combined-mo">—</div>
-    <div class="sum-sub" id="s-combined-yr">— /yr combined</div>
-  </div>
-  <div class="sum-card">
-    <div class="sum-label">Mortgage Remaining</div>
-    <div class="sum-val" id="s-mtg-rem">—</div>
-    <div class="sum-sub" id="s-mtg-rem-sub">over loan term</div>
-  </div>
-  <div class="sum-card">
-    <div class="sum-label">MTF Remaining</div>
-    <div class="sum-val" id="s-mtf-rem">—</div>
-    <div class="sum-sub" id="s-mtf-rem-sub">through loan term</div>
-  </div>
-  <div class="sum-card accent red-card">
-    <div class="sum-label">Total Remaining Cost</div>
-    <div class="sum-val red" id="s-total-rem">—</div>
-    <div class="sum-sub">mortgage + MTF combined</div>
-  </div>
+<!-- SUMMARY CARDS -->
+<div class="sum3">
+  <div class="scard"><div class="slb">Monthly Mortgage</div><div class="sv" id="s-mtg-mo">—</div><div class="ss" id="s-mtg-yr">—/yr</div></div>
+  <div class="scard"><div class="slb">Monthly MTF</div><div class="sv" id="s-mtf-mo">—</div><div class="ss" id="s-mtf-yr">—/yr · 8% growth</div></div>
+  <div class="scard accent"><div class="slb">Combined Monthly</div><div class="sv red" id="s-comb-mo">—</div><div class="ss" id="s-comb-yr">—/yr</div></div>
 </div>
 
-<!-- COMPARISON TABLE -->
-<div class="cost-table-wrap">
-  <div class="cost-table-hdr">Cost of Ownership — Timeline Breakdown</div>
-  <div class="cost-table-sub">Mortgage ends after your loan term · MTF grows 8% annually per ARDA data</div>
-  <div style="overflow-x:auto">
-  <table class="cost-tbl" id="cost-tbl">
-    <thead>
-      <tr>
-        <th style="text-align:left">Timeframe</th>
-        <th>MTG + MTF</th>
-        <th style="color:#86efac">If Fees Continue to Rise 8%</th>
-        <th id="alpha-hdr" style="display:none;color:#fcd34d">You Save with Alpha</th>
-      </tr>
-    </thead>
+<!-- MAIN TABLE: 2 cols only -->
+<div class="tbl-wrap">
+  <div class="tbl-hdr">Cost of Ownership — Timeline Breakdown</div>
+  <table class="ctbl">
+    <thead><tr>
+      <th style="text-align:left">Timeframe</th>
+      <th>MTG + MTF</th>
+      <th style="color:#86efac">If Fees Continue to Rise 8%</th>
+      <th id="alpha-hdr" style="display:none;color:#fcd34d">You Save with Alpha</th>
+    </tr></thead>
     <tbody id="cost-tbody"></tbody>
   </table>
-  <!-- BREAKDOWN in grey -->
-  <div style="background:#f3f4f6;border-radius:8px;padding:12px;margin-top:12px">
-    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px">Individual Breakdown — Reference</div>
-    <table class="cost-tbl" id="breakdown-tbody-wrap" style="font-size:12px">
+
+  <!-- GREY BREAKDOWN -->
+  <div class="bkdn">
+    <div class="bkdn-lbl">Removed Columns — Reference Only</div>
+    <table class="ctbl bkdn-tbl">
       <thead><tr>
-        <th style="text-align:left;background:#e5e7eb;color:#6b7280">Timeframe</th>
-        <th style="background:#e5e7eb;color:#6b7280">Mortgage Alone</th>
-        <th style="background:#e5e7eb;color:#6b7280">MTF Alone (8%)</th>
-        <th style="background:#e5e7eb;color:#6b7280">MTF Flat (no growth)</th>
+        <th style="text-align:left">Timeframe</th>
+        <th>Mortgage Alone</th>
+        <th>MTF Alone</th>
+        <th>MTF Flat (No 8%)</th>
       </tr></thead>
-      <tbody id="breakdown-tbody"></tbody>
+      <tbody id="bkdn-tbody"></tbody>
     </table>
   </div>
-  </div>
+  <div style="font-size:10px;color:#9ca3af;margin-top:10px">ARDA data: avg maintenance fee rose 102% from 2010–2024 · 8% per year.</div>
 </div>
 
-<!-- ARDA PROOF -->
-<div class="proof-box">
-  <div class="proof-label">📊 ARDA Industry Data — Verified</div>
-  <div class="proof-text">Average U.S. maintenance fee: <strong>$731 (2010) → $1,120 (2017) → $1,480 (2024)</strong>. That is a <strong>102% increase in 14 years</strong> — outpacing inflation by 4.5–5.5 percentage points every single year. At 8% annual growth, a $500/yr MTF becomes <strong>$5,031/yr in 30 years</strong>.</div>
+<!-- 3 QUESTIONS -->
+<div class="dark-box">
+  <div class="dq">Was the full long-term cost of ownership explained to you before you signed?</div>
+  <div class="dd"></div>
+  <div class="dq">If you had seen these numbers — would you still have purchased?</div>
+  <div class="dd"></div>
+  <div class="dq">If this timeshare were paid off today, would you buy it again for $1 knowing you'd still owe these fees?</div>
 </div>
 
 <div class="nav-bar">
-  <a class="np" href="/compensation/">← Resort Compensation</a>
-  <span class="ns">16 — True Cost of Ownership</span>
+  <a class="np" href="/rights/">← Consumer Rights</a>
+  <span class="ns">16 — True Cost</span>
   <a class="nn" href="/quote/">Your Quote →</a>
-</div>
-</div>
 </div>
 
 <style>
-.vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:20px}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--red:#dc2626;--green:#16a34a}
+.vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
 .vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
 .vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
 .vbv{font-size:14px;font-weight:700;color:var(--navy)}
-@media(max-width:600px){.vb{grid-template-columns:1fr 1fr}}
-
-/* SUMMARY GRID */
-.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-@media(max-width:700px){.sum-grid{grid-template-columns:1fr 1fr}}
-.sum-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;border-top:3px solid var(--border)}
-.sum-card.accent{border-top-color:var(--navy)}
-.sum-card.red-card{border-top-color:var(--red)}
-.sum-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6b7280;margin-bottom:6px}
-.sum-val{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;color:var(--navy);line-height:1}
-.sum-val.red{color:var(--red)}
-.sum-sub{font-size:11px;color:#9ca3af;margin-top:4px}
-
-/* COMPARISON TABLE */
-.cost-table-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
-.cost-table-hdr{background:var(--navy);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:800;letter-spacing:.5px;padding:14px 18px}
-.cost-table-sub{padding:8px 18px;font-size:11px;color:#6b7280;background:#f8fafc;border-bottom:1px solid var(--border)}
-.cost-tbl{width:100%;border-collapse:collapse}
-.cost-tbl th{padding:10px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;border-bottom:2px solid var(--border);background:#f8fafc}
-.cost-tbl th:first-child{text-align:left}
-.cost-tbl td{padding:11px 16px;text-align:right;font-size:13px;color:var(--navy);border-bottom:1px solid #f0f0f0;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600}
-.cost-tbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
-.cost-tbl tr:last-child td{border:none}
-.cost-tbl tr.highlight{background:linear-gradient(90deg,#fff8e0,#fff)}
-.cost-tbl tr.highlight td{color:var(--navy);font-weight:800}
-.cost-tbl .mtg{color:#2563eb}
-.cost-tbl .mtf{color:#dc2626}
-.cost-tbl .combined{color:var(--navy);font-weight:800}
-.cost-tbl .save{color:#16a34a;font-weight:800}
-.cost-tbl .zero{color:#9ca3af;font-style:italic}
-
-/* PROOF */
-.proof-box{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px 16px;margin-bottom:16px}
-.proof-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#0369a1;margin-bottom:6px}
-.proof-text{font-size:12px;color:#0369a1;line-height:1.7}
+.sum3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.scard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.scard.accent{background:var(--navy)}
+.slb{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:5px}
+.scard.accent .slb{color:rgba(255,255,255,.45)}
+.sv{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:3px}
+.sv.red{color:var(--gold)}
+.scard.accent .sv{color:var(--gold)}
+.ss{font-size:11px;color:#9ca3af}
+.scard.accent .ss{color:rgba(255,255,255,.35)}
+.tbl-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.tbl-hdr{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px}
+.ctbl{width:100%;border-collapse:collapse}
+.ctbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ctbl th:first-child{text-align:left}
+.ctbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
+.ctbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
+.ctbl tr.hl{background:#fff8e0}
+.ctbl tr:last-child td{border:none}
+.bkdn{background:#f3f4f6;border-radius:8px;padding:12px;margin-top:14px}
+.bkdn-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px}
+.bkdn-tbl th{background:#e5e7eb;color:#6b7280;font-size:9px}
+.bkdn-tbl td{color:#9ca3af;font-size:13px;border-bottom-color:#e5e7eb}
+.dark-box{background:var(--navy);border-radius:10px;padding:22px 24px;margin-bottom:14px;text-align:center}
+.dq{font-size:14px;color:#fff;line-height:1.7;font-weight:500}
+.dd{width:40px;height:1px;background:rgba(255,255,255,.12);margin:14px auto}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
+.nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
+.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
+@media(max-width:500px){.sum3{grid-template-columns:1fr}}
 </style>
 
 <script>
-var AK='atc_active', SK='atc_clients_v2';
+var SK="atc_clients_v2",AK="atc_active";
 function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function fc(n){if(!n||n===0)return '$0.00';return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fcd(n){return n>0?fc(n):'<span class="zero">—</span>';}
+function fc(n){return n?"$"+Math.round(n).toLocaleString():"$0";}
+function fcd(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"$0.00";}
 
-// ── ITEM 1: SESSION-BASED SELECTIONS ──
-function getSelKey(){return 'cost_sel_'+(localStorage.getItem(AK)||'_');}
+function cumMtf(yrs,yr){var t=0;for(var i=1;i<=yrs;i++)t+=yr*Math.pow(1.08,i-1);return t;}
+function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
 
-// ── LOAD CLIENT DATA ──
-var d={}, mtfMo=0, mtgMo=0, mtgYrs=10, alphaFee=0, mtfYr=0;
-
-(function init(){
-  var slug=localStorage.getItem(AK); if(!slug)return;
-  var all=ga(); d=all[slug]||{};
-  mtfMo=(parseFloat(d.maitFees)||0)/12;
-  mtfYr=parseFloat(d.maitFees)||0;
-  mtgMo=parseFloat(d.monthlyMortgage)||0;
-  mtgYrs=parseInt(d.mtgTerm)||10;
-  alphaFee=parseFloat(d.alphaFee)||0;
-
-  // Banner
-  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
-  function set(id,v){var el=document.getElementById(id);if(el)el.innerHTML=v||'—';}
-  set('vb-name',nm); set('vb-resort',d.resort||'—');
-  var mo=mtfMo+mtgMo;
-  set('vb-mo',mo>0?fc(mo)+'/mo':'—');
-  set('vb-quote',alphaFee>0?fc(alphaFee):'No quote');
-
-  calc();
-})();
-
-function cumMtf(yrs){
-  // Each year's MTF payment grows 8% from prior year, sum them all
-  if(yrs<1) return (mtfYr/12)*yrs*12;
-  var total=0;
-  for(var i=1;i<=Math.floor(yrs);i++) total+=mtfYr*Math.pow(1.08,i-1);
-  var frac=yrs-Math.floor(yrs);
-  if(frac>0) total+=mtfYr*Math.pow(1.08,Math.floor(yrs))*frac;
-  return total;
-}
-function cumMtg(yrs){
-  // Flat monthly payment × months, hard-capped at loan term
-  return mtgMo*Math.min(yrs,mtgYrs)*12;
-}
-// Future Value: what those same monthly payments would grow to if invested at 8%/yr
-// Each payment invested from month m earns compound interest for remaining months
-function fvIfInvested(yrs){
-  var r=0.08/12;
-  var totalMonths=Math.max(1,Math.round(yrs*12));
-  var fv=0;
-  for(var m=1;m<=totalMonths;m++){
-    var yr=Math.ceil(m/12);
-    var mtfPmt=(mtfYr*Math.pow(1.08,yr-1))/12;
-    var mtgPmt=(m<=mtgYrs*12)?mtgMo:0;
-    fv+=(mtfPmt+mtgPmt)*Math.pow(1+r,totalMonths-m);
-  }
-  return fv;
-}
-
-function calc(){
-  if(!mtfMo && !mtgMo) return;
-  function set(id,v){var el=document.getElementById(id);if(el)el.innerHTML=v;}
-
-  var combMo=mtfMo+mtgMo;
-  set('s-mtg-mo', mtgMo>0?fc(mtgMo):'<span class="zero">None</span>');
-  set('s-mtg-mo-yr', mtgMo>0?fc(mtgMo*12)+'/yr':'');
-  set('s-mtf-mo', fc(mtfMo));
-  set('s-mtf-mo-yr', fc(mtfYr)+'/yr · 8% growth');
-  set('s-combined-mo', '<span class="red">'+fc(combMo)+'</span>');
-  set('s-combined-yr', fc(combMo*12)+'/yr combined');
-
-  var mtgRem=cumMtg(mtgYrs), mtfRem=cumMtf(mtgYrs), totalRem=mtgRem+mtfRem;
-  set('s-mtg-rem', mtgMo>0?'<span class="red">'+fc(mtgRem)+'</span>':'<span class="zero">None</span>');
-  set('s-mtg-rem-sub', mtgMo>0?(mtgYrs+' yr term · '+mtgYrs*12+' payments'):'no mortgage');
-  set('s-mtf-rem', '<span class="red">'+fc(mtfRem)+'</span>');
-  set('s-mtf-rem-sub', 'through loan term at 8% annual growth');
-  set('s-total-rem', '<span class="red">'+fc(totalRem)+'</span>');
-
-  var alphaHdr=document.getElementById('alpha-hdr');
-  var fvHdr=document.getElementById('fv-hdr');
-  if(alphaHdr) alphaHdr.style.display=alphaFee>0?'':'none';
-  if(fvHdr) fvHdr.style.display='';
+(function(){
+  var slug=localStorage.getItem(AK);if(!slug)return;
+  var d=ga()[slug]||{};
+  var mtfYr=parseFloat(d.maitFees)||0, mtfMo=mtfYr/12;
+  var mtgMo=parseFloat(d.monthlyMortgage)||0;
+  var mtgYrs=parseInt(d.mtgTerm)||10;
+  var alphaFee=parseFloat(d.alphaFee)||0;
+  var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"—";
+  var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
+  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||"—";}
+  set("vb-name",nm);set("vb-resort",d.resort||"—");
+  set("vb-mo",(mtfMo+mtgMo)>0?fcd(mtfMo+mtgMo)+"/mo":"—");
+  set("vb-quote",alphaFee>0?fc(alphaFee):"Not quoted");
+  set("vb-stg",stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment");
+  set("s-mtg-mo",mtgMo>0?fcd(mtgMo):"None");
+  set("s-mtg-yr",mtgMo>0?fcd(mtgMo*12)+"/yr":"");
+  set("s-mtf-mo",fcd(mtfMo));
+  set("s-mtf-yr",fcd(mtfYr)+"/yr");
+  set("s-comb-mo",fcd(mtfMo+mtgMo));
+  set("s-comb-yr",fcd((mtfYr+mtgMo*12))+"/yr combined");
+  if(alphaFee>0)document.getElementById("alpha-hdr").style.display="";
 
   var TF=[
-    {label:'1 Month',  yrs:1/12},
-    {label:'1 Year',   yrs:1},
-    {label:'3 Years',  yrs:3},
-    {label:'5 Years',  yrs:5},
-    {label:'7 Years',  yrs:7},
-    {label:'10 Years', yrs:10, hl:true},
-    {label:'20 Years', yrs:20},
-    {label:'30 Years', yrs:30, hl:true},
+    {l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},
+    {l:"5 Years",y:5,hl:true},{l:"10 Years",y:10},{l:"20 Years",y:20},{l:"30 Years",y:30,hl:true}
   ];
 
-  var rows=''; var brows='';
+  var rows="",brows="";
   TF.forEach(function(tf){
-    var mtg=cumMtg(tf.yrs), mtfC=cumMtf(tf.yrs), combined=mtg+mtfC;
-    var mtfFlat=mtfYr*tf.yrs;
-    var save=alphaFee>0?combined-alphaFee:null;
-    var hl=tf.hl?'class="highlight"':'';
-    // Main table: MTG+MTF flat | MTG+MTF with 8% growth
-    rows+='<tr '+hl+'>'
-      +'<td style="text-align:left">'+tf.label+'</td>'
-      +'<td>'+fcd(combined)+'</td>'
-      +'<td style="color:#15803d;font-weight:700">'+fcd(combined)+'</td>'
-      +(alphaFee>0?'<td style="color:#C8960C;font-weight:800">'+(save>0?'+'+fc(save):'—')+'</td>':'')
-      +'</tr>';
-    // Breakdown table: MTG alone | MTF 8% | MTF flat
-    brows+='<tr style="color:#6b7280"><td>'+tf.label+'</td><td>'+fcd(mtg)+'</td><td>'+fcd(mtfC)+'</td><td>'+fcd(mtfFlat)+'</td></tr>';
+    var mtg=cumMtg(tf.y,mtgMo,mtgYrs);
+    var mtf8=cumMtf(tf.y,mtfYr);
+    var flat=mtg+mtfYr*(tf.y<1?tf.y:Math.floor(tf.y));
+    var comb=mtg+mtf8;
+    var save=alphaFee>0?comb-alphaFee:null;
+    var hl=tf.hl?' class="hl"':"";
+    rows+="<tr"+hl+"><td>"+tf.l+"</td><td>"+fcd(comb)+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td>"
+      +(alphaFee>0?"<td style='color:#C8960C;font-weight:800'>"+(save>0?"+"+fc(save):"—")+"</td>":"")
+      +"</tr>";
+    brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
   });
-  document.getElementById('cost-tbody').innerHTML=rows;
-  var bb=document.getElementById('breakdown-tbody');if(bb)bb.innerHTML=brows;
-}
+  document.getElementById("cost-tbody").innerHTML=rows;
+  document.getElementById("bkdn-tbody").innerHTML=brows;
+})();
 </script>
-
+</div></div>
 </body>
 </html>
