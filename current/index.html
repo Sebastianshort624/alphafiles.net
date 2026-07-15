@@ -817,33 +817,48 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   function fc(n){return n?'$'+Math.round(n).toLocaleString():'—';}
   var slug=localStorage.getItem(AK);if(!slug)return;
   var d=ga()[slug]||{};
-  var mtfYr=parseFloat(d.maitFees)||0, mtfMo=mtfYr/12;
+  var mtfYr=parseFloat(d.maitFees)||0;
   var mtgMo=parseFloat(d.monthlyMortgage)||0;
+  var mtgYrs=parseInt(d.mtgTerm)||10;
   var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
   function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||'—';}
   set('vb-name',nm);set('vb-resort',d.resort||'—');
-  set('vb-mo',(mtfMo+mtgMo)>0?fc(mtfMo+mtgMo)+'/mo':'—');
+  var combMo=(mtfYr/12)+mtgMo;
+  set('vb-mo',combMo>0?fc(combMo)+'/mo':'—');
   set('vb-stg',stages[typeof d.vitalsStage==='number'?d.vitalsStage:1]||'Assessment');
 
-  // Cumulative MTF with 8% growth
   function cumMtf(yrs){var t=0;for(var i=1;i<=yrs;i++)t+=mtfYr*Math.pow(1.08,i-1);return t;}
-  var mtf2=cumMtf(2),mtf3=cumMtf(3),mtf5=cumMtf(5);
-  var mtg2=mtgMo*24,mtg3=mtgMo*36,mtg5=mtgMo*60;
 
-  set('c-mtf-mo',fc(mtfMo));set('c-mtf-yr',fc(mtfYr));
-  set('c-mtf-2',fc(mtf2));set('c-mtf-3',fc(mtf3));set('c-mtf-5',fc(mtf5));
-
-  if(mtgMo>0){
-    document.getElementById('mtg-col').style.display='block';
-    set('c-mtg-mo',fc(mtgMo));set('c-mtg-yr',fc(mtgMo*12));
-    set('c-mtg-2',fc(mtg2));set('c-mtg-3',fc(mtg3));set('c-mtg-5',fc(mtg5));
-    document.querySelector('.cost-grid').style.gridTemplateColumns='1fr 1fr 1fr';
-  } else {
-    document.querySelector('.cost-grid').style.gridTemplateColumns='1fr 1fr';
+  if(mtfYr>0||mtgMo>0){
+    // Show mortgage rows only if mortgage exists
+    if(mtgMo>0){
+      ['r-mtg-mo','r-mtg-yr','r-mtg-3','rem-mtg-wrap'].forEach(function(id){
+        var el=document.getElementById(id);if(el)el.style.display='block';
+      });
+    }
+    // Monthly column
+    set('c-mtg-mo',mtgMo>0?fc(mtgMo):'');
+    set('c-mtf-mo',fc(mtfYr/12));
+    set('c-tot-mo',fc(combMo));
+    set('c-tot-mo-yr',fc(combMo*12)+'/yr');
+    // Yearly column
+    set('c-mtg-yr',mtgMo>0?fc(mtgMo*12):'');
+    set('c-mtf-yr',fc(mtfYr));
+    set('c-tot-yr',fc(mtfYr+mtgMo*12));
+    // 3-Year column
+    set('c-mtg-3',mtgMo>0?fc(mtgMo*36):'');
+    set('c-mtf-3',fc(cumMtf(3)));
+    set('c-tot-3',fc(cumMtf(3)+mtgMo*36));
+    // Remaining over loan term
+    var remMtg=mtgMo*mtgYrs*12;
+    var remMtf=cumMtf(mtgYrs);
+    set('rem-mtg',fc(remMtg));
+    var sub=document.getElementById('rem-mtg-sub');
+    if(sub)sub.textContent=mtgYrs+' yr term · '+(mtgYrs*12)+' payments';
+    set('rem-mtf',fc(remMtf));
+    set('rem-tot',fc(remMtg+remMtf));
   }
-  set('c-tot-mo',fc(mtfMo+mtgMo));set('c-tot-yr',fc(mtfYr+mtgMo*12));
-  set('c-tot-2',fc(mtf2+mtg2));set('c-tot-3',fc(mtf3+mtg3));set('c-tot-5',fc(mtf5+mtg5));
 })();
 </script>
 </div></div>
