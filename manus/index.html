@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-(function(){
-  var killAndReload=false;
-  if(navigator.serviceWorker){
-    navigator.serviceWorker.getRegistrations().then(function(r){
-      if(r.length>0){killAndReload=true;r.forEach(function(sw){sw.unregister();});}
-    });
-  }
-  if(window.caches){
-    caches.keys().then(function(keys){
-      if(keys.length>0){killAndReload=true;Promise.all(keys.map(function(k){return caches.delete(k);})).then(function(){if(killAndReload)window.location.reload(true);});}
-    });
-  }
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thomas &amp; Cozette Manus — Alpha Timeshare Consultants</title>
