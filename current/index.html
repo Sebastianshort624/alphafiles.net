@@ -634,45 +634,92 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
 </div>
 
-<!-- YOUR COSTS — Box 1: Total Cost (navy/gold) | Box 2: Mortgage (teal) | Box 3: MTF (green) -->
+<!-- YOUR COSTS -->
 <div class="sc">
   <div class="slbl">Your Costs</div>
-  <div class="cost-grid">
 
-    <!-- BOX 1: TOTAL COST — primary -->
-    <div class="cost-col total-col">
-      <div class="cost-col-hdr">💳 Total Cost</div>
-      <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-tot-mo">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-tot-yr">—</span></div>
-      <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-tot-2">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-tot-3">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-tot-5">—</span></div>
+  <!-- 3 TIME-PERIOD COLUMNS -->
+  <div class="time-grid">
+
+    <!-- MONTHLY -->
+    <div class="time-col">
+      <div class="time-hdr">Monthly</div>
+      <div class="time-row mtg" id="r-mtg-mo" style="display:none">
+        <div class="time-lbl">🏦 Mortgage</div>
+        <div class="time-main" id="c-mtg-mo">—</div>
+      </div>
+      <div class="time-row mtf">
+        <div class="time-lbl">📈 Maint. Fee</div>
+        <div class="time-main" id="c-mtf-mo">—</div>
+      </div>
+      <div class="time-row total">
+        <div class="time-lbl">Combined</div>
+        <div class="time-main" id="c-tot-mo">—</div>
+        <div class="time-sub" id="c-tot-mo-yr">—/yr</div>
+      </div>
     </div>
 
-    <!-- BOX 2: MORTGAGE — teal -->
-    <div class="cost-col mtg-col" id="mtg-col" style="display:none">
-      <div class="cost-col-hdr">🏦 Mortgage</div>
-      <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-mtg-mo">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-mtg-yr">—</span></div>
-      <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-mtg-2">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-mtg-3">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-mtg-5">—</span></div>
+    <!-- YEARLY -->
+    <div class="time-col">
+      <div class="time-hdr">Yearly</div>
+      <div class="time-row mtg" id="r-mtg-yr" style="display:none">
+        <div class="time-lbl">🏦 Mortgage</div>
+        <div class="time-main" id="c-mtg-yr">—</div>
+      </div>
+      <div class="time-row mtf">
+        <div class="time-lbl">📈 Maint. Fee</div>
+        <div class="time-main" id="c-mtf-yr">—</div>
+        <div class="time-sub">8% growth</div>
+      </div>
+      <div class="time-row total">
+        <div class="time-lbl">Combined</div>
+        <div class="time-main" id="c-tot-yr">—</div>
+      </div>
     </div>
 
-    <!-- BOX 3: MTF — green -->
-    <div class="cost-col mtf-col">
-      <div class="cost-col-hdr">📈 Maintenance Fees</div>
-      <div class="cost-row"><span class="cr-lbl">Monthly</span><span class="cr-val" id="c-mtf-mo">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">Annual</span><span class="cr-val" id="c-mtf-yr">—</span></div>
-      <div class="cost-row hl"><span class="cr-lbl">2 Years</span><span class="cr-val" id="c-mtf-2">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">3 Years</span><span class="cr-val" id="c-mtf-3">—</span></div>
-      <div class="cost-row"><span class="cr-lbl">5 Years</span><span class="cr-val" id="c-mtf-5">—</span></div>
+    <!-- 3 YEARS -->
+    <div class="time-col">
+      <div class="time-hdr">3 Years</div>
+      <div class="time-row mtg" id="r-mtg-3" style="display:none">
+        <div class="time-lbl">🏦 Mortgage</div>
+        <div class="time-main" id="c-mtg-3">—</div>
+      </div>
+      <div class="time-row mtf">
+        <div class="time-lbl">📈 Maint. Fee</div>
+        <div class="time-main" id="c-mtf-3">—</div>
+      </div>
+      <div class="time-row total">
+        <div class="time-lbl">Combined</div>
+        <div class="time-main" id="c-tot-3">—</div>
+      </div>
     </div>
 
   </div>
-  <div style="font-size:11px;color:#9ca3af;margin-top:10px">Maintenance fees increase an average of 8% per year — ARDA data.</div>
-</div>
 
+  <!-- REMAINING OVER LOAN TERM — smaller, below -->
+  <div class="remaining-block">
+    <div class="rem-label">Over the time remaining on your mortgage</div>
+    <div class="rem-grid">
+      <div class="rem-item" id="rem-mtg-wrap" style="display:none">
+        <div class="rem-title">Mortgage Remaining</div>
+        <div class="rem-val" id="rem-mtg">—</div>
+        <div class="rem-sub" id="rem-mtg-sub">— term · — payments</div>
+      </div>
+      <div class="rem-item">
+        <div class="rem-title">MTF Remaining</div>
+        <div class="rem-val" id="rem-mtf">—</div>
+        <div class="rem-sub">through loan term at 8% annual growth</div>
+      </div>
+      <div class="rem-item total-rem">
+        <div class="rem-title">Total Remaining Cost</div>
+        <div class="rem-val gold" id="rem-tot">—</div>
+        <div class="rem-sub">mortgage + MTF combined</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:#9ca3af;margin-top:8px">Maintenance fees increase an average of 8% per year — ARDA data.</div>
+  </div>
+
+</div>
 <!-- TWO QUESTIONS -->
 <div class="sc dark">
   <div class="dark-q">Was this the financial commitment you expected when you purchased?</div>
@@ -698,6 +745,38 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .slbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:18px}
 .cost-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 @media(max-width:600px){.cost-grid{grid-template-columns:1fr}}
+/* TIME-PERIOD GRID */
+.time-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+@media(max-width:500px){.time-grid{grid-template-columns:1fr}}
+.time-col{border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.time-hdr{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:9px 12px;background:var(--navy);color:var(--gold);text-align:center}
+.time-row{padding:10px 12px;border-bottom:1px solid var(--border)}
+.time-row:last-child{border:none}
+.time-row.mtg{background:#e0f7fa}
+.time-row.mtf{background:#f0fdf4}
+.time-row.total{background:var(--navy)}
+.time-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#6b7280;margin-bottom:3px}
+.time-row.total .time-lbl{color:rgba(255,255,255,.5)}
+.time-main{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--navy)}
+.time-row.mtg .time-main{color:#0e7490}
+.time-row.mtf .time-main{color:#15803d}
+.time-row.total .time-main{color:var(--gold)}
+.time-sub{font-size:10px;color:#9ca3af;margin-top:2px}
+.time-row.total .time-sub{color:rgba(255,255,255,.35)}
+/* REMAINING BLOCK */
+.remaining-block{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-top:4px}
+.rem-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9ca3af;margin-bottom:12px}
+.rem-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:500px){.rem-grid{grid-template-columns:1fr}}
+.rem-item{padding:10px 12px;background:#fff;border:1px solid var(--border);border-radius:7px}
+.rem-item.total-rem{background:var(--navy)}
+.rem-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:4px}
+.rem-item.total-rem .rem-title{color:rgba(255,255,255,.45)}
+.rem-val{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.rem-val.gold{color:var(--gold)}
+.rem-sub{font-size:10px;color:#9ca3af;line-height:1.4}
+.rem-item.total-rem .rem-sub{color:rgba(255,255,255,.35)}
+/* OLD BOX STYLES */
 /* BOX 1 — Total Cost (navy/gold) */
 .cost-col.total-col{background:var(--navy);border-radius:8px;overflow:hidden}
 .cost-col.total-col .cost-col-hdr{background:rgba(200,150,12,.15);color:var(--gold);font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px}
