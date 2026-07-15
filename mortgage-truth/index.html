@@ -564,9 +564,36 @@ function _injectGlobals(){
 
 function _buildTopSave(){
   if(document.getElementById("_topSaveBtn"))return;
+  // Save button
   var btn=document.createElement("button");btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";
   btn.style.cssText="position:fixed;top:44px;right:205px;z-index:198;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:0 0 6px 6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)";
   btn.onclick=window.saveSession;document.body.appendChild(btn);
+  // Prev/Next slide arrows
+  var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
+  var pages=_PG.filter(function(p){return typeof p.n==="number"&&p.n>=0;});
+  var idx=pages.findIndex(function(p){return p.url===cur;});
+  var prev=idx>0?pages[idx-1]:null;
+  var next=idx>=0&&idx<pages.length-1?pages[idx+1]:null;
+  var baseStyle="position:fixed;top:0;z-index:201;background:rgba(27,42,74,.85);color:#fff;border:none;width:38px;height:38px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;";
+  if(prev){
+    var lBtn=document.createElement("button");
+    lBtn.id="_navPrev";lBtn.innerHTML="&#8249;";
+    lBtn.title=prev.lb;
+    lBtn.style.cssText=baseStyle+"left:210px;border-radius:0 0 8px 0;";
+    lBtn.onclick=function(){if(window._dirty){showUnsaved(function(){window.location.href=prev.url;});}else{window.location.href=prev.url;}};
+    document.body.appendChild(lBtn);
+  }
+  if(next){
+    var rBtn=document.createElement("button");
+    rBtn.id="_navNext";rBtn.innerHTML="&#8250;";
+    rBtn.title=next.lb;
+    rBtn.style.cssText=baseStyle+"right:200px;border-radius:0 0 0 8px;";
+    rBtn.onclick=function(){
+      _markPageCompleted(cur);
+      if(window._dirty){showUnsaved(function(){window.location.href=next.url;});}else{window.location.href=next.url;}
+    };
+    document.body.appendChild(rBtn);
+  }
 }
 
 document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();initBanner();_buildTopSave();});
