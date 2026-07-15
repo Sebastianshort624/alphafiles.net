@@ -210,8 +210,15 @@ function showDirectory(data){
     +'<div class="db-tile"><div class="db-lbl">Current Annual Cost</div><div class="db-val gold">'+fc(annualCost)+'</div><div class="db-sub">'+(moCost>0?fcd(moCost)+"/mo":"")+'</div></div>'
     +'<div class="db-tile"'+(fee>0?' style="border:1px solid rgba(200,150,12,.4)"':'')+'><div class="db-lbl">Alpha Service Fee</div><div class="db-val '+(fee>0?'gold':'sm')+'">'+(fee>0?fc(fee):'Pending')+'</div></div>'
     +'<div class="db-tile"><div class="db-lbl">Pages Reviewed</div><div class="db-val">'+cnt+'</div><div class="status-pill">✓ Assessment Complete</div></div>'
-    +'<div class="nextstep-tile db-wide"><div class="ns-lbl">Your Next Step</div><div class="ns-text">Everything discussed during your consultation is available below. Use these pages to review any topic at your own pace — or contact your consultant with any questions.</div></div>'
     +'</div>'
+    // Financial Summary — right under dashboard
+    +(annualCost>0?'<div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:14px">'
+    +'<div style="background:#1B2A4A;padding:10px 16px;font-size:11px;font-weight:600;color:#C8960C;text-transform:uppercase;letter-spacing:1px">Financial Summary</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr">'
+    +'<div style="padding:12px 16px;border-right:1px solid #f3f4f6;border-bottom:1px solid #f3f4f6"><div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Monthly Ownership Cost</div><div style="font-size:18px;font-weight:600;color:#1B2A4A">'+fcd(moCost)+'</div></div>'
+    +'<div style="padding:12px 16px;border-bottom:1px solid #f3f4f6"><div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Annual Ownership Cost</div><div style="font-size:18px;font-weight:600;color:#1B2A4A">'+fc(annualCost)+'</div></div>'
+    +'<div style="padding:12px 16px;grid-column:span 2"><div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px">Estimated Remaining Ownership Cost</div><div style="font-size:18px;font-weight:600;color:#dc2626">'+fc(rem20)+'</div><div style="font-size:10px;color:#9ca3af;margin-top:2px">Based on 20 years at 8% annual MTF growth</div></div>'
+    +'</div></div>':'')
 
     // Reviewed
     +(reviewedHtml?'<div class="sec-hdr">Here\'s What We Reviewed Together</div><div class="reviewed-list">'+reviewedHtml+'</div>':"")
@@ -228,7 +235,7 @@ function showDirectory(data){
     +'</div>'
     +'<div style="font-style:italic;font-size:13px;color:#6b7280;border-top:1px solid #f3f4f6;padding-top:10px">&ldquo;Would you rather be putting those payments toward the problem or toward the solution?&rdquo;</div>'
     +'</div>'
-    +'<div class="cta-block"><div class="cta-title">Your Portal</div><div class="cta-sub">Every page from your consultation is available below. Review any topic at your own pace.</div></div>'
+    +'<div class="sec-hdr">Your Portal</div>'
 
     // Page links
     +(linkHtml?'<div class="page-links">'+linkHtml+'</div>':"")
