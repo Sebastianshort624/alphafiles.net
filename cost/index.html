@@ -594,6 +594,21 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="vbc"><div class="vbl">Alpha Fee</div><div class="vbv" id="vb-quote">—</div></div>
 </div>
 
+<!-- RESORT SELECTOR -->
+<div id="resort-selector" style="display:none;margin-bottom:14px">
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px">Select Resort</div>
+  <div style="display:flex;gap:6px">
+    <button class="rs-btn active" id="rs-0" onclick="selectResort(0)">R-1</button>
+    <button class="rs-btn" id="rs-1" style="display:none" onclick="selectResort(1)">R-2</button>
+    <button class="rs-btn" id="rs-2" style="display:none" onclick="selectResort(2)">R-3</button>
+    <button class="rs-btn" id="rs-3" style="display:none" onclick="selectResort(3)">R-4</button>
+  </div>
+</div>
+<style>
+.rs-btn{padding:7px 20px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #e5e7eb;background:#f8fafc;color:#374151;cursor:pointer;transition:.1s}
+.rs-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+</style>
+
 <!-- SUMMARY CARDS -->
 <div class="sum3">
   <div class="scard"><div class="slb">Monthly Mortgage</div><div class="sv" id="s-mtg-mo">—</div><div class="ss" id="s-mtg-yr">—/yr</div></div>
