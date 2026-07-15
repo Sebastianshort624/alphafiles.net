@@ -309,7 +309,9 @@ window.toggleAllPush=function(btn){var cbs=document.querySelectorAll('#push-box-
 
 window.doPush=function(){
   var slug=_aC();if(!slug)return;
-  var d=_aD();
+  // Force-refresh client data to pick up any unsaved fee
+  var d=_gA()[slug]||null;
+  if(!d)return;
   var cbs=document.querySelectorAll('#push-box-inner input[type=checkbox]:checked');
   if(!cbs.length){toast('Select at least one page','#dc2626');return;}
   var portal=_getPortal(slug);
