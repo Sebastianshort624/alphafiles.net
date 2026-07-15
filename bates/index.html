@@ -273,6 +273,9 @@ window.openPushPopup=function(){
     +'<div class="push-grid">'+items+'</div>'
     +'<div class="push-actions"><button class="push-btn-all" onclick="toggleAllPush(this)">Select All</button>'
     +'<button class="push-btn-go" onclick="doPush()">🚀 Push Selected</button></div></div>';
+  // Force-save fee from quote page input if present
+  var feeEl=document.getElementById('inp-fee');
+  if(feeEl){var feeVal=parseFloat(feeEl.value)||0;if(feeVal>0){var slug2=_aC();var all2=_gA();if(slug2&&all2[slug2]){all2[slug2].alphaFee=feeVal;all2[slug2]._updated=Date.now();localStorage.setItem('atc_clients_v2',JSON.stringify(all2));}}}
   document.getElementById('push-overlay').classList.add('open');
 };
 window.closePushPopup=function(){document.getElementById('push-overlay').classList.remove('open');};
