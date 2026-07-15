@@ -617,6 +617,17 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 </div>
 
 <!-- MAIN TABLE: 2 cols only -->
+<div class="tbl-wrap" style="margin-bottom:10px">
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Long-Term — What You've Already Committed To</div>
+  <table class="ctbl" style="width:auto;min-width:320px;margin:0 auto">
+    <thead><tr>
+      <th style="text-align:left;padding-right:40px">Timeframe</th>
+      <th style="color:#86efac;text-align:right">Total Paid to Resort</th>
+    </tr></thead>
+    <tbody id="cost-tbody-long"></tbody>
+  </table>
+</div>
+
 <div class="tbl-wrap">
   <div style="background:var(--navy);border-radius:8px 8px 0 0;padding:14px 20px;margin:-18px -20px 16px;text-align:center">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:1px;text-transform:uppercase">How Much More Will You Give Them?</div>
@@ -624,7 +635,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <table class="ctbl">
     <thead><tr>
       <th style="text-align:left">Timeframe</th>
-      <th style="color:#86efac">Cost With 8% Annual Growth Rate</th>
+      <th style="color:#86efac">Total Paid to Resort</th>
       
       
     </tr></thead>
@@ -691,7 +702,8 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .ctbl{width:100%;border-collapse:collapse}
 .ctbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .ctbl th:first-child{text-align:left}
-.ctbl td{padding:9px 12px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
+.ctbl{border-collapse:separate;border-spacing:0}
+.ctbl td{padding:9px 24px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
 .ctbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
 .ctbl tr.hl{background:#fff8e0}
 .ctbl tr:last-child td{border:none}
@@ -740,10 +752,13 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
   set("s-comb-yr",fcd((mtfYr+mtgMo*12))+"/yr combined");
   
 
-  var TF=[
-    {l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},
-    {l:"5 Years",y:5,hl:true},{l:"10 Years",y:10},{l:"20 Years",y:20},{l:"30 Years",y:30,hl:true}
+  var TF_LONG=[
+    {l:"10 Years",y:10,hl:true},{l:"20 Years",y:20},{l:"30 Years",y:30,hl:true}
   ];
+  var TF_SHORT=[
+    {l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},{l:"5 Years",y:5,hl:true}
+  ];
+  var TF=TF_SHORT;
 
   var rows="",brows="";
   TF.forEach(function(tf){
@@ -759,6 +774,7 @@ function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
       +"</tr>";
     brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
   });
+  var lt=document.getElementById("cost-tbody-long");if(lt)lt.innerHTML=lrows;
   document.getElementById("cost-tbody").innerHTML=rows;
   document.getElementById("bkdn-tbody").innerHTML=brows;
 })();
