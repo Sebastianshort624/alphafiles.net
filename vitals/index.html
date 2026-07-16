@@ -1351,177 +1351,116 @@ function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
 
-  // Clean markdown
-  var t=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/^\s*[*\-]\s*/gm,'');
+  var t=raw.replace(/\*\*([^*]+)\*\*/g,'$1')
+           .replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
 
-  function cleanNum(s){return (s||'').toString().replace(/[^0-9.]/g,'');}
-
-  // Generic field extractor — "Label: Value" or "Label	Value" or "| Label | Value |"
-  function getField(txt, names){
-    for(var ni=0;ni<names.length;ni++){
-      var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-      var patterns=[
-        new RegExp(nm+'\\s*:\s*([^\n]{1,150})','i'),
-        new RegExp(nm+'[^\t\n]*\t([^\t\n]{1,150})','i'),
-        new RegExp('\\|\\s*'+nm+'\\s*\\|\\s*([^|\n]{1,150})\\|','i')
-      ];
-      for(var pi=0;pi<patterns.length;pi++){
-        var m=txt.match(patterns[pi]);
-        if(m&&m[1]){
-          var v=m[1].trim().replace(/^[$~\s]*/,'').replace(/,(?=\d)/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
-          if(v&&v!=='-'&&v!=='N/A'&&v!=='None'&&v!=='Value') return v;
-        }
-      }
+  // Simple key:value extractor
+  function get(txt,keys){
+    for(var ki=0;ki<keys.length;ki++){
+      var k=keys[ki].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      var m=txt.match(new RegExp(k+'\\s*[:\\|]\\s*([^\\n\\|]{1,150})','i'));
+      if(m&&m[1]){var v=m[1].trim().replace(/^\s*[$~]*/,'').replace(/,(?=\d)/g,'').replace(/\/yr.*$/i,'').replace(/\/mo.*$/i,'');if(v&&v!=='-'&&v!=='None'&&v!=='Value'&&v.length>0)return v;}
     }
     return '';
   }
+  function num(s){return s?(s+'').replace(/[^0-9.]/g,''):'';};
+  function setf(id,val){if(!val)return;var el=document.getElementById(id);if(el){el.value=val;el.dispatchEvent(new Event('input'));}}
 
-  function setf(id,val){
-    if(!val) return;
-    var el=document.getElementById(id); if(!el) return;
-    el.value=val; el.dispatchEvent(new Event('input'));
-  }
-
-  // Owner info
-  var primaryOwner=getField(t,['First Name','Primary Owner','CLIENT','Name']);
-  // Handle "Kim Whittemore / Freddy" format
-  if(primaryOwner&&primaryOwner.indexOf('/')>-1) primaryOwner=primaryOwner.split('/')[0].trim();
-  if(primaryOwner){
-    var parts=primaryOwner.trim().split(' ');
-    setf('v-first',parts[0]);
-    if(parts.length>1) setf('v-last',parts.slice(1).join(' '));
-  } else {
-    setf('v-first',getField(t,['First Name']));
-    setf('v-last',getField(t,['Last Name']));
-  }
-  setf('v-email',getField(t,['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
-  var ph=getField(t,['Phone','Plain Phone']); if(ph) setf('v-phone',ph.replace(/\D/g,'').replace(/^1/,''));
-  var ph2=getField(t,['Secondary Phone']); if(ph2) setf('v-phone2',ph2.replace(/\D/g,'').replace(/^1/,''));
+  // Owner
+  var fullName=get(t,['CLIENT','Primary Owner','Lead Name','Name']);
+  if(fullName&&fullName.indexOf('/')>-1)fullName=fullName.split('/')[0].trim();
+  if(fullName){var p=fullName.trim().split(' ');setf('v-first',p[0]);if(p.length>1)setf('v-last',p.slice(1).join(' '));}
+  else{setf('v-first',get(t,['First Name']));setf('v-last',get(t,['Last Name']));}
+  setf('v-phone',get(t,['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
+  setf('v-phone2',get(t,['Secondary Phone']).replace(/\D/g,'').replace(/^1/,''));
+  setf('v-email',get(t,['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
 
   // Co-owner
-  var coOwner=getField(t,['Co-Owner','2nd owner','Second Owner']);
-  if(!coOwner){
-    var rawName=getField(t,['CLIENT','Name']);
-    if(rawName&&rawName.indexOf('/')>-1) coOwner=rawName.split('/')[1].trim();
-  }
-  if(coOwner){var cp=coOwner.split(' ');setf('v-co',cp[0]);if(cp.length>1)setf('v-col',cp.slice(1).join(' '));}
+  var co=get(t,['Co-Owner','2nd Owner','Coowner']);
+  if(!co){var rawN=get(t,['CLIENT','Name']);if(rawN&&rawN.indexOf('/')>-1)co=rawN.split('/')[1].trim();}
+  if(co){var cp=co.split(' ');setf('v-co',cp[0]);if(cp.length>1)setf('v-col',cp.slice(1).join(' '));}
 
-  // Alpha fee
-  var fee=cleanNum(getField(t,['Alpha Fee','Total Amount Charging','Recommended Pricing','Amount Charging','R1-Amount Charging']));
-  if(fee) setf('v-fee',fee);
+  // Fee
+  var fee=num(get(t,['Alpha Fee','Total Amount Charging','Recommended Pricing','Amount Charging']));
+  if(fee)setf('v-fee',fee);
 
-  // Language
-  var lang=getField(t,['Preffered Language','Preferred Language']).toLowerCase();
-  if(lang.indexOf('spanish')>-1&&typeof window.atcSetLang==='function') window.atcSetLang('es');
-
-  // ── Build resorts ──
+  // Split text into sections by RESORT/RESORTT N headers
   var SK='atc_clients_v2',AK='atc_active';
-  var slug=localStorage.getItem(AK); if(!slug) return;
+  var slug=localStorage.getItem(AK);if(!slug)return;
   var all=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(!all[slug]) return;
+  if(!all[slug])return;
 
   var resorts=[];
+  var sections=t.split(/\n(?=RESOR(?:TT?)\s*\d)/i);
+  // Also try R1-/R2- Zoho format
+  var hasZoho=/R1-Resort Name/i.test(t)||/Total Resorts/i.test(t);
+  var hasMd=/###\s*Resort\s*\d/i.test(t);
 
-  // FORMAT A: ### Resort N or RESORT N or RESORTT N section headers
-  var mdSecs=t.match(/(?:###\s*|\n)RESOR(?:TT?|T)\s*(\d)[\s\S]*?(?=(?:###\s*|\n)RESOR(?:TT?|T)\s*\d|FINANCIAL|WHY OUT|NOTES|$)/gi);
-  if(!mdSecs){
-    // Try split on RESORT/RESORTT N
-    var splitParts=t.split(/(?:###\s*)?RESOR(?:TT?|T)\s*(\d)/i);
-    if(splitParts.length>2){
-      mdSecs=[];
-      for(var si=1;si<splitParts.length;si+=2){
-        mdSecs.push('RESORT '+splitParts[si]+'\n'+splitParts[si+1]);
-      }
-    }
-  }
-
-  if(mdSecs&&mdSecs.length>0){
-    mdSecs.forEach(function(sec){
-      var name=getField(sec,['Resort Name','Resort','Name']);
-      if(!name) return;
-      var mtf=cleanNum(getField(sec,['MTF','Mait','Maintenance Fee','Annual MTF','Mait / Tax']));
-      var mtfVal=mtf?parseFloat(mtf):0;
-      // MTF might be monthly — if label says /mo multiply by 12
-      if(sec.match(/MTF[^\n]*\/mo/i)&&mtfVal<200) mtfVal*=12;
-      var mtg=cleanNum(getField(sec,['Monthly Payment','Monthly Mortgage','Mortgage Payment']));
-      var bal=cleanNum(getField(sec,['Balance','Balance Amount']));
-      var pp=cleanNum(getField(sec,['Purchase Price']));
-      var yr=(getField(sec,['Date Purchased','Purchase Date'])||'').match(/(20\d{2}|19\d{2})/);
-      var city=getField(sec,['City']).replace(/\s*\|.*$/,'').trim();
-      var state=getField(sec,['State']).replace(/.*\|\s*/,'').trim();
+  if(sections.length>1){
+    // Plain text RESORT N format
+    sections.forEach(function(sec){
+      if(!/RESOR(?:TT?)\s*\d/i.test(sec))return;
+      var name=get(sec,['Resort Name','Name']);
+      if(!name)return;
+      var mtfRaw=get(sec,['MTF','Mait','Maintenance Fee','Mait / Tax fees']);
+      var mtfVal=parseFloat(num(mtfRaw))||0;
+      var mtfLabel=(sec.match(/MTF[^\n]*\/mo/i)||sec.match(/Maint[^\n]*\/mo/i))?'monthly':'annual';
+      if(mtfLabel==='monthly'&&mtfVal<500)mtfVal*=12;
+      var city=get(sec,['City']).split('|')[0].trim();
+      var state=get(sec,['State']).split('|').pop().trim();
       resorts.push({
-        name:name,state:state,city:city,
-        owners:['','','',''],
+        name:name,state:state,city:city,owners:['','','',''],
         maitFees:mtfVal,mtfFreq:'annual',
-        monthlyMortgage:parseFloat(mtg)||0,
-        mtgTerm:10,balanceAmount:parseFloat(bal)||0,
-        yearPurchased:yr?yr[1]:'',purchasePrice:parseFloat(pp)||0
+        monthlyMortgage:parseFloat(num(get(sec,['Monthly Payment','Monthly Mortgage','Mortgage Payment'])))||0,
+        mtgTerm:10,balanceAmount:parseFloat(num(get(sec,['Balance Amount','Balance'])))||0,
+        yearPurchased:'',purchasePrice:parseFloat(num(get(sec,['Purchase Price'])))||0
       });
     });
   }
 
-  // FORMAT B: Zoho R1-/R2- prefixes
-  if(resorts.length===0){
-    var totalR=parseInt(getField(t,['Total Resorts']))||1;
-    for(var ri=0;ri<totalR&&ri<4;ri++){
+  if(resorts.length===0&&hasMd){
+    var mdParts=t.split(/###\s*Resort\s*\d/i);
+    mdParts.slice(1).forEach(function(sec){
+      var name=get(sec,['Resort','Resort Name']);if(!name)return;
+      var mtfMo=num(get(sec,['Monthly Maintenance Fee']));
+      var mtfYr=num(get(sec,['Annual Maintenance Fee','MTF']));
+      var mtfV=mtfYr?parseFloat(mtfYr):(mtfMo?parseFloat(mtfMo)*12:0);
+      resorts.push({name:name,state:get(sec,['State']),city:get(sec,['City']),owners:['','','',''],
+        maitFees:mtfV,mtfFreq:'annual',monthlyMortgage:parseFloat(num(get(sec,['Monthly Mortgage'])))||0,
+        mtgTerm:3,balanceAmount:parseFloat(num(get(sec,['Balance'])))||0,
+        yearPurchased:'',purchasePrice:parseFloat(num(get(sec,['Purchase Price'])))||0});
+    });
+  }
+
+  if(resorts.length===0&&hasZoho){
+    var total=parseInt(get(t,['Total Resorts']))||1;
+    for(var ri=0;ri<total&&ri<4;ri++){
       var px='R'+(ri+1)+'-';
-      var nm=getField(t,[px+'Resort Name',px+'Resort']); if(!nm) break;
-      var mtf2=cleanNum(getField(t,[px+'Mait / Tax fees',px+'Mait']));
-      var mtg2=cleanNum(getField(t,[px+'Monthly Mortgage payment',px+'Monthly Mortgage']));
-      var bal2=cleanNum(getField(t,[px+'Balance Amount']));
-      var pp2=cleanNum(getField(t,[px+'Purchase Price']));
-      var pd=(getField(t,[px+'Date Purchased'])||'').match(/(20\d{2}|19\d{2})/);
-      resorts.push({
-        name:nm,state:getField(t,[px+'Resort State']),city:getField(t,[px+'Resort City']),
-        owners:['','','',''],maitFees:parseFloat(mtf2)||0,mtfFreq:'annual',
-        monthlyMortgage:parseFloat(mtg2)||0,mtgTerm:3,
-        balanceAmount:parseFloat(bal2)||0,yearPurchased:pd?pd[1]:'',
-        purchasePrice:parseFloat(pp2)||0,why:getField(t,[px+'Why do they want out'])
-      });
+      var nm=get(t,[px+'Resort Name',px+'Resort']);if(!nm)break;
+      resorts.push({name:nm,state:get(t,[px+'Resort State']),city:get(t,[px+'Resort City']),
+        owners:['','','',''],maitFees:parseFloat(num(get(t,[px+'Mait / Tax fees'])))||0,mtfFreq:'annual',
+        monthlyMortgage:parseFloat(num(get(t,[px+'Monthly Mortgage payment'])))||0,mtgTerm:3,
+        balanceAmount:parseFloat(num(get(t,[px+'Balance Amount'])))||0,
+        yearPurchased:'',purchasePrice:parseFloat(num(get(t,[px+'Purchase Price'])))||0,
+        why:get(t,[px+'Why do they want out'])});
     }
   }
 
-  // FORMAT C: Markdown ### Resort N tables
-  if(resorts.length===0){
-    var mdTables=t.match(/###\s*Resort\s*(\d)[\s\S]*?(?=###|$)/gi);
-    if(mdTables) mdTables.forEach(function(sec){
-      var name=getField(sec,['Resort','Resort Name']);
-      if(!name) return;
-      var mtfMo=cleanNum(getField(sec,['Monthly Maintenance Fee','Monthly MTF']));
-      var mtfYr=cleanNum(getField(sec,['Annual Maintenance Fee','Annual MTF']));
-      var mtfV=mtfYr?parseFloat(mtfYr):(mtfMo?parseFloat(mtfMo)*12:0);
-      var yrM=(getField(sec,['Purchase Date'])||'').match(/(20\d{2}|19\d{2})/);
-      resorts.push({
-        name:name,state:getField(sec,['State']),city:getField(sec,['City']),
-        owners:['','','',''],maitFees:mtfV,mtfFreq:'annual',
-        monthlyMortgage:parseFloat(cleanNum(getField(sec,['Monthly Mortgage'])))||0,
-        mtgTerm:3,balanceAmount:parseFloat(cleanNum(getField(sec,['Balance'])))||0,
-        yearPurchased:yrM?yrM[1]:'',purchasePrice:parseFloat(cleanNum(getField(sec,['Purchase Price'])))||0
-      });
-    });
-  }
-
-  // Save
   if(resorts.length>0){
-    var _existing=all[slug].resorts;
-    while(resorts.length<4) resorts.push({});
+    while(resorts.length<4)resorts.push({});
     all[slug].resorts=resorts;
     var r1=resorts[0];
-    all[slug].resort=r1.name||'';all[slug].resstate=r1.state||'';all[slug].rescity=r1.city||'';
-    all[slug].maitFees=r1.maitFees||0;all[slug].monthlyMortgage=r1.monthlyMortgage||0;
-    all[slug].balanceAmount=r1.balanceAmount||0;all[slug].yearPurchased=r1.yearPurchased||'';
-    all[slug].purchasePrice=r1.purchasePrice||0;all[slug]._updated=Date.now();
+    all[slug].resort=r1.name||'';all[slug].maitFees=r1.maitFees||0;
+    all[slug].monthlyMortgage=r1.monthlyMortgage||0;all[slug].balanceAmount=r1.balanceAmount||0;
+    all[slug].yearPurchased=r1.yearPurchased||'';all[slug].purchasePrice=r1.purchasePrice||0;
+    all[slug]._updated=Date.now();
     localStorage.setItem(SK,JSON.stringify(all));
-    if(typeof window.initResortPanels==='function') window.initResortPanels();
+    if(typeof window.initResortPanels==='function')window.initResortPanels();
   }
 
   var count=resorts.filter(function(r){return r&&r.name;}).length;
   var st=document.getElementById('pop-status');
-  if(st){
-    st.textContent='\u2713 '+count+' resort'+(count!==1?'s':'')+' populated';
-    st.style.display='inline';
-    setTimeout(function(){st.style.display='none';},4000);
-  }
+  if(st){st.textContent='\u2713 '+(count||'?')+' resort'+(count!==1?'s':'')+' populated';st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
   setTimeout(function(){try{calcTotals();}catch(e){}try{autoSave();}catch(e){}},100);
 }
 
