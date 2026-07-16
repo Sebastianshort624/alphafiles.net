@@ -107,7 +107,8 @@ body:not([data-lang]) .es-only { display: none !important; }
 </style>
 </head>
 <body>
-<style id="atc-sb-css">
+
+  {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},<style id="atc-sb-css">
 body{display:block!important;min-height:100vh!important;font-size:15px!important}
 .sidenav{width:190px!important;min-width:190px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
@@ -1351,149 +1352,225 @@ function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
 
-  // Strip markdown links
-  var t=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
-  var lines=t.split('\n').map(function(l){return l.trim();}).filter(function(l){return l;});
+  // Strip **bold** markdown and clean up
+  var t=raw.replace(/\*\*([^*]+)\*\*/g,'$1')
+           .replace(/\[([^\]]*)\]\([^)]*\)/g,'$1')
+           .replace(/^\s*[*\-]\s*/gm,'');
 
-  // Build a map: label -> value (next non-empty line)
-  var map={};
-  for(var i=0;i<lines.length-1;i++){
-    var key=lines[i].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();
-    var val=lines[i+1];
-    // Skip if val looks like another label (all caps or ends with ?)
-    if(val&&val!=='-'&&val!=='None'&&key.length>1) map[key]=val;
-  }
-  // Also parse "Label: Value" on same line
-  lines.forEach(function(l){
-    var m=l.match(/^([^:]{2,40}):\s*(.+)$/);
-    if(m){
-      var key=m[1].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();
-      if(!map[key]) map[key]=m[2].trim();
+  // ── Parse markdown table section: returns {field:value} map ──
+  function parseSection(txt){
+    var map={};
+    var lines=txt.split('\n');
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i].trim();
+      if(!line.startsWith('|')) continue;
+      var cols=line.split('|').map(function(c){return c.trim();}).filter(function(c){return c;});
+      if(cols.length<2) continue;
+      if(cols[0].match(/^[-:]+$/) || cols[1].match(/^[-:]+$/)) continue; // separator row
+      var k=cols[0].replace(/\*/g,'').trim().toLowerCase();
+      var v=cols[1].replace(/^[$~\s]*/,'').replace(/,(?=\d)/g,'').trim();
+      if(k && v && v!=='-' && k!=='field') map[k]=v;
     }
-  });
+    return map;
+  }
 
-  function get(keys){
-    for(var ki=0;ki<keys.length;ki++){
-      var k=keys[ki].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();
-      if(map[k]&&map[k]!=='-') return map[k];
+  // ── Plain key:value field extractor (for non-markdown formats) ──
+  function field(names){
+    for(var ni=0;ni<names.length;ni++){
+      var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      var m=t.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,200})','i'));
+      if(!m) m=t.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,200})','i'));
+      if(m&&m[1]){
+        var v=m[1].trim().replace(/^[$~\s]*/,'').replace(/,(?=\d)/g,'');
+        if(v&&v!=='-'&&v!=='N/A') return v;
+      }
     }
     return '';
   }
-  function num(s){return (s||'').replace(/[^0-9.]/g,'');}
-  function setf(id,val){
-    if(!val)return;
-    var el=document.getElementById(id);
-    if(el){el.value=val;el.dispatchEvent(new Event('input'));}
-  }
 
-  // Owner fields
-  var fn=get(['first name']);
-  var ln=get(['last name']);
-  var lead=get(['lead name']);
-  if(!fn&&lead){var p=lead.split(' ');fn=p[0];ln=p.slice(1).join(' ');}
-  setf('v-first',fn);
-  setf('v-last',ln);
-  setf('v-phone',get(['phone','plain phone']).replace(/\D/g,'').replace(/^1/,''));
-  setf('v-phone2',get(['secondary phone']).replace(/\D/g,'').replace(/^1/,''));
-  setf('v-email',get(['email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+  function setf(id,val){
+    if(!val) return;
+    var el=document.getElementById(id); if(!el) return;
+    el.value=val; el.dispatchEvent(new Event('input'));
+  }
+  function cleanNum(s){return (s||'').toString().replace(/[^0-9.]/g,'');}
+
+  // ── Owner info ──
+  // Try markdown Client Information section first
+  var clientSection='';
+  var csMatch=t.match(/###\s*Client Information([\s\S]*?)(?=###|$)/i);
+  if(csMatch) clientSection=csMatch[1];
+  var clientMap=clientSection?parseSection(clientSection):{};
+
+  var primaryOwner=clientMap['primary owner']||field(['Primary Owner','Lead Name','First Name']);
+  if(primaryOwner){
+    var parts=primaryOwner.trim().split(' ');
+    setf('v-first',parts[0]);
+    if(parts.length>1) setf('v-last',parts.slice(1).join(' '));
+  }
+  setf('v-email',field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+  var ph=clientMap['phone']||field(['Phone','Plain Phone']);
+  if(ph) setf('v-phone',ph.replace(/\D/g,'').replace(/^1/,''));
+
+  // ── Co-owner (2nd owner) — first/last name + phone ──
+  // From markdown client section: rows with "Co-Owner" and following "Phone"
+  var coOwner=''; var coPhone='';
+  // Try markdown table rows — "Co-Owner | Name" then next "Phone | number"
+  var coMatch=t.match(/Co-Owner[^|\n]*\|([^|\n]+)/i);
+  if(!coMatch) coMatch=t.match(/Co-?Owner[^\n]*\n([^\n]{1,80})/i);
+  if(!coMatch) coMatch=t.match(/2nd owner first name[^|\n]*\|([^|\n]+)/i);
+  if(coMatch) coOwner=coMatch[1].replace(/[|*]/g,'').trim();
+
+  // Phone for co-owner — look for second Phone entry after co-owner mention
+  var coPhoneMatch=t.match(/Co-Owner[\s\S]{0,200}?\|([^|\n]+)[\s\S]{0,100}?Phone[^|\n]*\|([^|\n]+)/i);
+  if(!coPhoneMatch){
+    // Try: "Phone	(xxx)" patterns — get the 2nd one
+    var allPhones=[];var phoneReg=/Phone[^|\n]*[|\t]([^|\n\t]{6,20})/gi;var pm;
+    while((pm=phoneReg.exec(t))!==null) allPhones.push(pm[1].trim());
+    if(allPhones.length>=2) coPhone=allPhones[1];
+  } else {
+    coPhone=coPhoneMatch[2].replace(/[|*]/g,'').trim();
+  }
+  // Also try Secondary Phone field
+  if(!coPhone) coPhone=field(['Secondary Phone','Phone 2','Co-Owner Phone']);
+
+  if(coOwner){
+    var coParts=coOwner.trim().split(' ');
+    setf('v-co',coParts[0]);
+    if(coParts.length>1) setf('v-col',coParts.slice(1).join(' '));
+  }
+  if(coPhone) setf('v-phone2',coPhone.replace(/\D/g,'').replace(/^1/,''));
 
   // Alpha fee
-  var fee=num(get(['total amount charging','recommended pricing','r1 amount charging']));
-  if(fee) setf('v-fee',fee);
+  var feeSection='';
+  var fsMatch=t.match(/###\s*Alpha Fee([\s\S]*?)(?=###|$)/i);
+  if(fsMatch) feeSection=fsMatch[1];
+  var feeMap=feeSection?parseSection(feeSection):{};
+  var feeVal=cleanNum(feeMap['total alpha fee']||field(['Total Alpha Fee','R1-Amount Charging','Total Amount Charging','Recommended Pricing']));
+  if(feeVal) setf('v-fee',feeVal);
 
   // Language
-  var lang=get(['preffered language','preferred language']).toLowerCase();
-  if(lang.indexOf('spanish')>-1&&typeof window.atcSetLang==='function') window.atcSetLang('es');
+  var lang=field(['Preffered Language','Preferred Language']).toLowerCase();
+  if(lang.indexOf('spanish')>-1 && typeof window.atcSetLang==='function') window.atcSetLang('es');
 
-  // Build resorts from R1-/R2- keys
-  var SK='atc_clients_v2',AK='atc_active';
-  var slug=localStorage.getItem(AK);
+  // ── Build resorts array ──
+  var SK='atc_clients_v2', AK='atc_active';
+  var slug=localStorage.getItem(AK); if(!slug) return;
   var all=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(!slug||!all[slug]){
-    slug='client.'+Date.now();
-    all[slug]={_created:Date.now(),firstName:'',lastName:'',_status:'attended'};
-    localStorage.setItem(AK,slug);
-  }
+  if(!all[slug]) return;
 
-  var totalR=parseInt(get(['total resorts']))||1;
   var resorts=[];
-  for(var ri=0;ri<totalR&&ri<4;ri++){
-    var px='r'+(ri+1)+' ';
-    var nm=get([px+'resort name',px+'resort']);
-    if(!nm) break;
-    var ms=get([px+'mortgage status']).toLowerCase();
-    var paid=ms.indexOf('paid')>-1&&ms.indexOf('still')<0;
-    var pdStr=get([px+'date purchased']);
-    var yrM=pdStr.match(/(20\d{2}|19\d{2})/);
-    resorts.push({
-      name:nm,
-      state:get([px+'resort state']),
-      city:get([px+'resort city']),
-      owners:['','','',''],
-      maitFees:parseFloat(num(get([px+'mait tax fees',px+'mait / tax fees'])))||0,
-      mtfFreq:'annual',
-      monthlyMortgage:paid?0:(parseFloat(num(get([px+'monthly mortgage payment',px+'monthly mortgage'])))||0),
-      mtgTerm:10,
-      balanceAmount:parseFloat(num(get([px+'balance amount'])))||0,
-      yearPurchased:yrM?yrM[1]:'',
-      purchasePrice:parseFloat(num(get([px+'purchase price'])))||0,
-      why:get([px+'why do they want out'])
-    });
-  }
 
-  // Also handle RESORTT N plain text sections
-  if(resorts.length===0){
-    var parts=t.split(/\n(?=RESOR(?:TT?)\s*\d)/i);
-    parts.forEach(function(sec){
-      if(!/RESOR/i.test(sec))return;
-      var slines=sec.split('\n').map(function(l){return l.trim();}).filter(Boolean);
-      var smap={};
-      for(var si=0;si<slines.length-1;si++){
-        var sk=slines[si].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();
-        smap[sk]=slines[si+1];
+  // FORMAT A: Markdown "### Resort N" sections
+  var mdSections=t.match(/###\s*Resort\s*(\d)[\s\S]*?(?=###\s*Resort|###\s*Alpha|###\s*Combined|$)/gi);
+  if(mdSections&&mdSections.length>0){
+    mdSections.forEach(function(sec){
+      var m=parseSection(sec);
+      if(!m['resort'] && !m['name']) return;
+      var name=m['resort']||m['name']||'';
+      var mtfMo=cleanNum(m['monthly maintenance fee']||m['monthly mtf']||'');
+      var mtfYr=cleanNum(m['annual maintenance fee']||m['annual mtf']||'');
+      var mtfVal=mtfYr?parseFloat(mtfYr):(mtfMo?parseFloat(mtfMo)*12:0);
+      var yrMatch=(m['purchase date']||'').match(/(20\d{2}|19\d{2})/);
+      // Build owners list — prefer explicit owners field, fall back to primary+co for R-1
+      var ownerList=(m['owners']||'').split(/,\s*/).map(function(o){return o.trim();}).filter(Boolean);
+      if(ownerList.length===0&&resorts.length===0){
+        // R-1 with no owners listed — use primary and co-owner
+        if(primaryOwner) ownerList.push(primaryOwner);
+        if(coOwner) ownerList.push(coOwner);
       }
-      function sg(keys){for(var ki=0;ki<keys.length;ki++){var k=keys[ki];if(smap[k])return smap[k];}return '';}
-      var nm=sg(['name','resort name']);if(!nm)return;
-      var mtfRaw=sg(['mtf','mait','maintenance fee']);
-      var mtfVal=parseFloat(num(mtfRaw))||0;
-      if(mtfVal&&(sec.match(/MTF[^\n]*\/mo/i))&&mtfVal<500) mtfVal*=12;
-      resorts.push({name:nm,state:sg(['state']),city:sg(['city']).split('|')[0].trim(),
-        owners:['','','',''],maitFees:mtfVal,mtfFreq:'annual',
-        monthlyMortgage:parseFloat(num(sg(['monthly payment','monthly mortgage'])))||0,
-        mtgTerm:10,balanceAmount:parseFloat(num(sg(['balance'])))||0,
-        yearPurchased:'',purchasePrice:parseFloat(num(sg(['purchase price'])))||0});
+      while(ownerList.length<4) ownerList.push('');
+      resorts.push({
+        name:name,
+        state:m['state']||'',
+        city:m['city']||m['resort city']||'',
+        owners:ownerList.slice(0,4),
+        maitFees:mtfVal, mtfFreq:'annual',
+        monthlyMortgage:parseFloat(cleanNum(m['monthly mortgage']))||0,
+        mtgTerm:3,
+        balanceAmount:parseFloat(cleanNum(m['balance']))||0,
+        yearPurchased:yrMatch?yrMatch[1]:'',
+        purchasePrice:parseFloat(cleanNum(m['purchase price']||m['financed']))||0
+      });
     });
   }
 
+  // FORMAT B: Tab-separated section headers "Resort 1\nField\tValue"
+  if(resorts.length===0){
+    var tabSections=t.split(/\bResort\s+(\d)\b/i);
+    if(tabSections.length>2){
+      for(var si=1;si<tabSections.length;si+=2){
+        var sec=tabSections[si+1]||'';
+        if(!sec.trim()) continue;
+        function fld(txt,names){
+          for(var ni=0;ni<names.length;ni++){
+            var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+            var mm=txt.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,200})','i'));
+            if(!mm) mm=txt.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,200})','i'));
+            if(mm&&mm[1]){var v=mm[1].trim().replace(/^[$~\s]*/,'').replace(/,(?=\d)/g,'');if(v&&v!=='-')return v;}
+          }
+          return '';
+        }
+        var name=fld(sec,['Resort']);
+        if(!name) continue;
+        var mtfMo2=cleanNum(fld(sec,['Monthly Maintenance Fee','Monthly MTF']));
+        var mtfYr2=cleanNum(fld(sec,['Annual Maintenance Fee','Annual MTF']));
+        var mtfV=mtfYr2?parseFloat(mtfYr2):(mtfMo2?parseFloat(mtfMo2)*12:0);
+        var yr2=(fld(sec,['Purchase Date'])||'').match(/(20\d{2}|19\d{2})/);
+        resorts.push({
+          name:name,state:fld(sec,['State']),city:fld(sec,['City']),
+          owners:['','','',''],maitFees:mtfV,mtfFreq:'annual',
+          monthlyMortgage:parseFloat(cleanNum(fld(sec,['Monthly Mortgage'])))||0,
+          mtgTerm:3,balanceAmount:parseFloat(cleanNum(fld(sec,['Balance'])))||0,
+          yearPurchased:yr2?yr2[1]:'',
+          purchasePrice:parseFloat(cleanNum(fld(sec,['Purchase Price'])))||0
+        });
+      }
+    }
+  }
+
+  // FORMAT C: Zoho R1-/R2- prefixes
+  if(resorts.length===0){
+    var totalR=parseInt(field(['Total Resorts']))||1;
+    for(var ri=0;ri<totalR&&ri<4;ri++){
+      var px='R'+(ri+1)+'-';
+      var nm=field([px+'Resort Name',px+'Resort']); if(!nm) break;
+      var mtf=cleanNum(field([px+'Mait / Tax fees',px+'Mait']));
+      var mtg=cleanNum(field([px+'Monthly Mortgage payment',px+'Monthly Mortgage']));
+      var bal=cleanNum(field([px+'Balance Amount']));
+      var pp=cleanNum(field([px+'Purchase Price']));
+      var pd=(field([px+'Date Purchased'])||'').match(/(20\d{2}|19\d{2})/);
+      resorts.push({
+        name:nm,state:field([px+'Resort State']),city:field([px+'Resort City']),
+        owners:['','','',''],maitFees:parseFloat(mtf)||0,mtfFreq:'annual',
+        monthlyMortgage:parseFloat(mtg)||0,mtgTerm:3,
+        balanceAmount:parseFloat(bal)||0,yearPurchased:pd?pd[1]:'',
+        purchasePrice:parseFloat(pp)||0,why:field([px+'Why do they want out'])
+      });
+    }
+  }
+
+  // ── Save ──
   if(resorts.length>0){
-    while(resorts.length<4)resorts.push({});
+    var _existing=all[slug].resorts;
+    while(resorts.length<4) resorts.push({});
     all[slug].resorts=resorts;
     var r1=resorts[0];
-    all[slug].resort=r1.name||'';all[slug].maitFees=r1.maitFees||0;
-    all[slug].monthlyMortgage=r1.monthlyMortgage||0;all[slug].balanceAmount=r1.balanceAmount||0;
-    all[slug].yearPurchased=r1.yearPurchased||'';all[slug].purchasePrice=r1.purchasePrice||0;
-    // Update visible form fields
-    setf('v-resort',r1.name||'');
-    setf('v-loc',r1.state||'');
-    setf('v-rescity',r1.city||'');
-    setf('v-mtf',(r1.maitFees||'').toString());
-    setf('v-mtg',(r1.monthlyMortgage||'').toString());
-    setf('v-balance',(r1.balanceAmount||'').toString());
-    setf('v-year',r1.yearPurchased||'');
-    setf('v-pprice',(r1.purchasePrice||'').toString());
-    setf('v-why',r1.why||'');
-    if(r1.monthlyMortgage===0){var pfEl=document.getElementById('v-mtgtype-pf');if(pfEl)pfEl.checked=true;}
+    all[slug].resort=r1.name||'';all[slug].resstate=r1.state||'';all[slug].rescity=r1.city||'';
+    all[slug].maitFees=r1.maitFees||0;all[slug].monthlyMortgage=r1.monthlyMortgage||0;
+    all[slug].balanceAmount=r1.balanceAmount||0;all[slug].yearPurchased=r1.yearPurchased||'';
+    all[slug].purchasePrice=r1.purchasePrice||0;all[slug]._updated=Date.now();
+    localStorage.setItem(SK,JSON.stringify(all));
+    if(typeof window.initResortPanels==='function') window.initResortPanels();
   }
-  all[slug].firstName=all[slug].firstName||(fn||'');
-  all[slug].lastName=all[slug].lastName||(ln||'');
-  all[slug].phone=all[slug].phone||(get(['phone']).replace(/\D/g,'').replace(/^1/,'')||'');
-  all[slug]._updated=Date.now();
-  localStorage.setItem(SK,JSON.stringify(all));
-  if(typeof window.initResortPanels==='function')window.initResortPanels();
 
   var count=resorts.filter(function(r){return r&&r.name;}).length;
   var st=document.getElementById('pop-status');
-  if(st){st.textContent='\u2713 Populated'+(count?' — '+count+' resort'+(count!==1?'s':''):'');st.style.display='inline';setTimeout(function(){st.style.display='none';},4000);}
+  if(st){
+    st.textContent='\u2713 '+count+' resort'+(count!==1?'s':'')+' populated — review and save';
+    st.style.display='inline';
+    setTimeout(function(){st.style.display='none';},4000);
+  }
   setTimeout(function(){try{calcTotals();}catch(e){}try{autoSave();}catch(e){}},100);
 }
 
