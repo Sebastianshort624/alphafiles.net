@@ -1551,6 +1551,38 @@ function populateFromCRM(){
     }
   }
 
+  // ── FORMAT D: Zoho next-line (label on one line, value on next) ──
+  if(resorts.length===0){
+    var zlines=t.split('\n').map(function(l){return l.trim();}).filter(function(l){return l&&l!=='-';});
+    var zmap={};
+    for(var zi=0;zi<zlines.length-1;zi++){
+      var zk=zlines[zi].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();
+      if(zk.length>2&&zk.length<60) zmap[zk]=zlines[zi+1];
+    }
+    function zget(keys){for(var ki=0;ki<keys.length;ki++){var k=keys[ki].toLowerCase().replace(/[^a-z0-9]/g,' ').replace(/\s+/g,' ').trim();if(zmap[k]&&zmap[k]!=='-')return zmap[k];}return '';}
+    var totalRz=parseInt(zget(['total resorts']))||0;
+    for(var riz=0;riz<totalRz&&riz<4;riz++){
+      var pxz='r'+(riz+1)+' ';
+      var nmz=zget([pxz+'resort name']);if(!nmz)continue;
+      var msz=zget([pxz+'mortgage status']).toLowerCase();
+      var paidz=msz.indexOf('paid')>-1&&msz.indexOf('still')<0;
+      var pdz=zget([pxz+'date purchased']);var yrz=((pdz.match(/(20\d{2}|19\d{2})/)||[])[1])||'';
+      resorts.push({name:nmz,state:zget([pxz+'resort state']),city:zget([pxz+'resort city']),
+        owners:['','','',''],
+        maitFees:parseFloat((zget([pxz+'mait tax fees',pxz+'mait / tax fees'])||'').replace(/[^0-9.]/g,''))||0,
+        mtfFreq:'annual',
+        monthlyMortgage:paidz?0:parseFloat((zget([pxz+'monthly mortgage payment'])||'').replace(/[^0-9.]/g,''))||0,
+        mtgTerm:10,
+        balanceAmount:parseFloat((zget([pxz+'balance amount'])||'').replace(/[^0-9.]/g,''))||0,
+        yearPurchased:yrz,purchasePrice:parseFloat((zget([pxz+'purchase price'])||'').replace(/[^0-9.]/g,''))||0,
+        why:zget([pxz+'why do they want out'])});
+    }
+    var co2=zget(['2nd owner first name']);var col2=zget(['2nd owner last name','2nd owner last name']);
+    if(co2){var cel=document.getElementById('v-co');if(cel)cel.value=co2;var lel=document.getElementById('v-col');if(lel)lel.value=col2;}
+    var zfee=(zget(['total amount charging','recommended pricing'])||'').replace(/[^0-9.]/g,'');
+    if(zfee){var fel=document.getElementById('v-fee');if(fel&&!fel.value)fel.value=zfee;}
+  }
+
   // ── Save ──
   if(resorts.length>0){
     var _existing=all[slug].resorts;
