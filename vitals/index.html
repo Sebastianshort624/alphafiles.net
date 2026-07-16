@@ -1386,9 +1386,17 @@ function populateFromCRM(){
 
   // Split text into sections by RESORT/RESORTT N headers
   var SK='atc_clients_v2',AK='atc_active';
-  var slug=localStorage.getItem(AK);if(!slug)return;
+  var slug=localStorage.getItem(AK);
   var all=JSON.parse(localStorage.getItem(SK)||'{}');
-  if(!all[slug])return;
+  // Auto-create client if none active
+  if(!slug||!all[slug]){
+    slug='new.client.'+Date.now();
+    all[slug]={_created:Date.now(),firstName:'',lastName:'',_status:'attended'};
+    localStorage.setItem(AK,slug);
+    localStorage.setItem(SK,JSON.stringify(all));
+    // Refresh the page client selector if function exists
+    if(typeof window._loadClient==='function')window._loadClient(slug);
+  }
 
   var resorts=[];
   var sections=t.split(/\n(?=RESOR(?:TT?)\s*\d)/i);
