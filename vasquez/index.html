@@ -90,6 +90,7 @@ p{font-size:14px;color:#374151;line-height:1.7;margin-bottom:10px}
   {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},
   {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},
   {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},
+  {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},
   {n:9.5,ic:"\\u2696",   lb:"Comp Calculator",       url:"/comp-calculator/",email:false},<style id="atc-sb-css">
 body{display:block!important;min-height:100vh!important;font-size:15px!important}
 .sidenav{width:190px!important;min-width:190px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
@@ -564,7 +565,7 @@ function buildRightNav(){
       +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:"")+"' onchange=\"_sf('_fuAppt',this.value);\">"
       +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a></div>"
     +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.openCRMNote==='function'?window.openCRMNote():toast('Open Vitals','#C8960C')\">📝 CRM Note</button>"
+      +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">📝 CRM Note</button>"
       +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8960C')\">📱 SMS</button>"
       +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8960C')\">📋 Full Summary</button></div>"
     +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"+tool("/cost/","\u{1F4B0}","True Cost")+tool("/quote/","\u{1F4C4}","Quote")+"</div>";
@@ -649,6 +650,45 @@ function _buildTopSave(){
     document.body.appendChild(rBtn);
   }
 }
+
+
+window._openNotesPanel=function(){
+  var slug=_aC();if(!slug){toast('No active client','#dc2626');return;}
+  var d=_aD()||{};
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'Client';
+  var existing=d.notes||'';
+  var overlay=document.getElementById('notes-overlay');
+  if(!overlay){
+    overlay=document.createElement('div');
+    overlay.id='notes-overlay';
+    overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center';
+    overlay.innerHTML='<div style="background:#fff;border-radius:12px;width:500px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden">'
+      +'<div style="background:#1B2A4A;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center">'
+      +'<div style="font-size:14px;font-weight:700" id="notes-title">Notes</div>'
+      +'<button onclick="document.getElementById('notes-overlay').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;line-height:1">×</button>'
+      +'</div>'
+      +'<textarea id="notes-ta" style="flex:1;border:none;outline:none;padding:16px;font-family:Inter,sans-serif;font-size:14px;line-height:1.7;resize:none;min-height:280px;color:#1a1a1a" placeholder="Type notes here..."></textarea>'
+      +'<div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:8px">'
+      +'<button onclick="document.getElementById('notes-overlay').style.display='none'" style="padding:8px 16px;border-radius:6px;border:1px solid #e5e7eb;background:#f3f4f6;color:#374151;font-size:13px;cursor:pointer">Close</button>'
+      +'<button onclick="_saveNotes()" style="padding:8px 20px;border-radius:6px;border:none;background:#C8960C;color:#fff;font-size:13px;font-weight:700;cursor:pointer">Save Notes</button>'
+      +'</div>'
+      +'</div>';
+    document.body.appendChild(overlay);
+  }
+  document.getElementById('notes-title').textContent='Notes — '+nm;
+  document.getElementById('notes-ta').value=existing;
+  overlay.style.display='flex';
+  setTimeout(function(){document.getElementById('notes-ta').focus();},100);
+};
+window._saveNotes=function(){
+  var slug=_aC();if(!slug)return;
+  var all=_gA();if(!all[slug])return;
+  all[slug].notes=document.getElementById('notes-ta').value;
+  all[slug]._updated=Date.now();
+  localStorage.setItem('atc_clients_v2',JSON.stringify(all));
+  document.getElementById('notes-overlay').style.display='none';
+  toast('Notes saved','#16a34a');
+};
 
 document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
