@@ -123,7 +123,7 @@ body{display:block!important;min-height:100vh!important;font-size:15px!important
 .sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 .rightnav{width:162px!important;min-width:195px!important;background:#0f1d33!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .rightnav::-webkit-scrollbar{width:3px}.rightnav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.3);border-radius:2px}
-.main,.main-content,.app,.page-content{margin-left:190px!important;margin-right:162px!important;flex:1!important;padding:0 6px!important;padding-top:44px!important;padding-bottom:120px!important}
+.main,.main-content,.app,.page-content{margin-left:190px!important;margin-right:175px!important;flex:1!important;padding:0 6px!important;padding-top:44px!important;padding-bottom:120px!important}
 .wrap{max-width:100%!important;margin:0!important}
 /* PORTAL BANNER */
 .portal-banner{position:fixed;top:0;left:210px;right:195px;height:40px;background:linear-gradient(90deg,#1B2A4A,#243a6e);border-bottom:2px solid #C8960C;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;font-family:Inter,sans-serif}
@@ -230,7 +230,7 @@ window.atcSel={
 };
 
 // ── CLIENT STATUS ────────────────────────────────────────────────────
-// status: 'attended' | 'quoted' | 'absent'
+// status: 'attended' | 'quoted' | 'vero'
 function _getStatus(){var d=_aD();return d?d._status||null:null;}
 function _setStatus(status){
   var slug=_aC();if(!slug)return;
@@ -339,7 +339,7 @@ window.doPush=function(){
   _savePortal(slug,portal);
   // Auto-update status
   var currentStatus=_getStatus();
-  if(pushedQuote&&currentStatus!=='absent'){_setStatus('quoted');}
+  if(pushedQuote&&currentStatus!=='vero'){_setStatus('quoted');}
   else if(pushedOther&&!currentStatus){_setStatus('attended');}
   var nm=(d&&((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim())||'Client';
   _addToDir(slug,nm);
@@ -471,7 +471,7 @@ function buildSB(){
   var prog=_getProgress();
 
   // Client header
-  var statusBadge=status?'<span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:4px;'+(status==='quoted'?'background:rgba(200,150,12,.2);color:#C8960C':status==='attended'?'background:rgba(52,199,89,.2);color:#34c759':status==='vero'?'background:rgba(88,86,214,.2);color:#5856d6':status==='sold'?'background:rgba(52,199,89,.3);color:#15803d;border:1px solid #16a34a':'background:rgba(255,59,48,.2);color:#ff3b30')+'">'+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'✓ SOLD':'ABSENT')+'</span>':'';
+  var statusBadge=status?'<span style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:4px;'+(status==='quoted'?'background:rgba(200,150,12,.2);color:#C8960C':status==='attended'?'background:rgba(52,199,89,.2);color:#34c759':status==='vero'?'background:rgba(88,86,214,.2);color:#5856d6':status==='sold'?'background:rgba(52,199,89,.3);color:#15803d;border:1px solid #16a34a':'background:rgba(255,59,48,.2);color:#ff3b30')+'">'+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'✓ SOLD':'VERO')+'</span>':'';
   var ct=d
     ?"<div style='padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.1)'>"
       +"<div style='display:flex;align-items:center;flex-wrap:wrap;gap:2px;margin-bottom:2px'><span style='font-size:13px;font-weight:700;color:#fff'>"+(nm||"Unnamed")+"</span>"+statusBadge+"</div>"
@@ -487,7 +487,7 @@ function buildSB(){
   var statusSel=d?"<div class='status-selector'>"
     +"<button class='status-btn"+(status==='attended'?' active-attended':'')+"' onclick=\"window.setClientStatus('attended')\">✓ Attended</button>"
     +"<button class='status-btn"+(status==='quoted'?' active-quoted':'')+"' onclick=\"window.setClientStatus('quoted')\">💰 Quoted</button>"
-    +"<button class='status-btn"+(status==='absent'?' active-absent':'')+"' onclick=\"window.setClientStatus('absent')\">✗ Absent</button>"
+    +"<button class='status-btn"+(status==='vero'?' active-absent':'')+"' onclick=\"window.setClientStatus('vero')\">✗ Absent</button>"
     +"<button class='status-btn'+(status==='vero'?' active-vero':'')+' onclick=\"window.setClientStatus(\'vero\')\">🔵 Vero</button>"
     +"<button class='status-btn'+(status==='sold'?' active-sold':'')+' onclick=\"window.setClientStatus(\'sold\')\">🟢 Sold</button>"
     +"</div>":"";
@@ -566,7 +566,7 @@ window.buildStatusSelector=function(){
     btn.className='status-btn';
     if(status==='attended'&&btn.textContent.includes('Attended'))btn.className='status-btn active-attended';
     if(status==='quoted'&&btn.textContent.includes('Quoted'))btn.className='status-btn active-quoted';
-    if(status==='absent'&&btn.textContent.includes('Absent'))btn.className='status-btn active-absent';
+    if(status==='vero'&&btn.textContent.includes('Absent'))btn.className='status-btn active-absent';
   });
 };
 
@@ -608,7 +608,7 @@ function buildPortalBanner(){
   var prog=_getProgress();
   pb.innerHTML=
     "<span class='pb-client'>"+(d?nm:"No client")+"</span>"
-    +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'SOLD':'ABSENT')+"</span>":"")
+    +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'SOLD':'VERO')+"</span>":"")
     +(prog.done>0?"<span class='pb-progress'>"+prog.done+"/"+prog.total+"</span>":"")
     +(pushed?"<a href='https://alphafiles.net/portals/?s="+slug+"' target='_blank' style='font-size:9px;color:rgba(200,150,12,.9);font-weight:700;flex-shrink:0;text-decoration:none;border:1px solid rgba(200,150,12,.35);border-radius:4px;padding:1px 7px'>"+pushed+" live 🔗</a>":"")
     +"<span class='pb-spacer'></span>"
