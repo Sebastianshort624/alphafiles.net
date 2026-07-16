@@ -1472,6 +1472,17 @@ function populateFromCRM(){
     all[slug].resort=r1.name||'';all[slug].maitFees=r1.maitFees||0;
     all[slug].monthlyMortgage=r1.monthlyMortgage||0;all[slug].balanceAmount=r1.balanceAmount||0;
     all[slug].yearPurchased=r1.yearPurchased||'';all[slug].purchasePrice=r1.purchasePrice||0;
+    // Update visible form fields
+    setf('v-resort',r1.name||'');
+    setf('v-loc',r1.state||'');
+    setf('v-rescity',r1.city||'');
+    setf('v-mtf',(r1.maitFees||'').toString());
+    setf('v-mtg',(r1.monthlyMortgage||'').toString());
+    setf('v-balance',(r1.balanceAmount||'').toString());
+    setf('v-year',r1.yearPurchased||'');
+    setf('v-pprice',(r1.purchasePrice||'').toString());
+    setf('v-why',r1.why||'');
+    if(r1.monthlyMortgage===0){var pfEl=document.getElementById('v-mtgtype-pf');if(pfEl)pfEl.checked=true;}
   }
   all[slug].firstName=all[slug].firstName||(fn||'');
   all[slug].lastName=all[slug].lastName||(ln||'');
