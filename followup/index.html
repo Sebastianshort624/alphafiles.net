@@ -376,7 +376,7 @@ function _getHideCompleted(){return localStorage.getItem('sb_hide_completed')===
 window.toggleHideCompleted=function(){localStorage.setItem('sb_hide_completed',(!_getHideCompleted()).toString());buildSB();}
 
 var _PG=[
-  {n:0,  ic:"\u{1F3E0}",lb:"Client Presentation",    url:"/owner/",       email:false},
+  {n:0,  ic:"\u{1F3E0}",lb:"Client Presentation",    url:"/ownership/",       email:false},
   {n:1,  ic:"\u{1F4CA}",lb:"Current Situation",       url:"/current/",     email:true},
   {n:2,  ic:"\u2753",   lb:"Why Do You Want Out",     url:"/whyout/",      email:true},
   {n:3,  ic:"\u{1F4AA}",lb:"Leverage",                url:"/leverage/",    email:true},
@@ -549,7 +549,7 @@ function buildRightNav(){
       +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">📝 CRM Note</button>"
       +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8960C')\">📱 SMS</button>"
       +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8960C')\">📋 Full Summary</button></div>"
-    +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"+tool("/cost/","\u{1F4B0}","True Cost")+tool("/quote/","\u{1F4C4}","Quote")+"</div>";
+    +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"+tool("/ownership/","\u{1F464}","Client Pres.")+tool("/cost/","\u{1F4B0}","True Cost")+tool("/quote/","\u{1F4C4}","Quote")+"</div>";
 }
 
 // ── PORTAL BANNER ──────────────────────────────────────────────────────
