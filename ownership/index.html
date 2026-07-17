@@ -899,12 +899,12 @@ function _panelHTML(ri){
     +'</div>'
     // Mortgage
     +'<div class="frow">'
-    +'<div class="ff"><label>Monthly Mortgage</label><input id="r'+ri+'-mtg" type="number" class="hi" placeholder="0 if paid off" oninput="_autoSaveResorts()"></div>'
-    +'<div class="ff"><label>Loan Term (years)</label><input id="r'+ri+'-term" type="number" placeholder="e.g. 10" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Monthly Mortgage</label><input id="r'+ri+'-mtg" type="number" class="hi" placeholder="0 if paid off" oninput="_autoSaveResorts();_toggleMtgFields('+ri+')"></div>'
+    +'<div class="ff" id="r'+ri+'-term-wrap" style="display:none"><label>Loan Term (years)</label><input id="r'+ri+'-term" type="number" placeholder="e.g. 10" oninput="_autoSaveResorts()"></div>'
     +'</div>'
     +'<div class="frow">'
     +'<div class="ff"><label>Balance Remaining</label><input id="r'+ri+'-bal" type="number" placeholder="e.g. 15000" oninput="_autoSaveResorts()"></div>'
-    +'<div class="ff readonly"><label>Combined Monthly</label><input id="r'+ri+'-comb" readonly placeholder="Auto"></div>'
+    +'<div class="ff readonly" id="r'+ri+'-comb-wrap" style="display:none"><label>Combined Monthly</label><input id="r'+ri+'-comb" readonly placeholder="Auto"></div>'
     +'</div>'
     +'</div>';
 }
@@ -922,6 +922,7 @@ function _fillPanel(ri, resort){
   sv('r'+ri+'-bal',r.balanceAmount||'');
   if(r.mtfFreq==='monthly'){var el=document.getElementById('r'+ri+'-monthly');if(el)el.checked=true;}
   _calcPanel(ri);
+  _toggleMtgFields(ri);
 }
 
 function _calcPanel(ri){
@@ -1005,6 +1006,15 @@ function removeResort(ri){
 }
 
 // Initialize panels on page load
+
+function _toggleMtgFields(ri){
+  var mtg=parseFloat(document.getElementById('r'+ri+'-mtg').value)||0;
+  var show=mtg>0;
+  var tw=document.getElementById('r'+ri+'-term-wrap');
+  var cw=document.getElementById('r'+ri+'-comb-wrap');
+  if(tw) tw.style.display=show?'':'none';
+  if(cw) cw.style.display=show?'':'none';
+}
 window._initResortPanels=window.initResortPanels=function initResortPanels(){
   var container=document.getElementById('resort-panels');
   if(!container)return;
