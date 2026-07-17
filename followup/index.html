@@ -570,7 +570,9 @@ function buildPortalBanner(){
     +"<span class='pb-saved' id='pb-saved'>Saved</span>"
     +"<label class='pb-email-wrap'><input type='checkbox' id='pb-email'> 📧 Email</label>"
     +(slug?"<button class='pb-btn pb-push' onclick='window.openPushPopup()'>📤 Push</button>":"")
-    +"<button class='pb-btn pb-save' onclick='window.saveSession()'>💾 Save</button>";
+    +"<button class='pb-btn pb-save' onclick='window.saveSession()'>💾 Save</button>"
+    +"<a href='/cost/' class='pb-btn' style='background:rgba(255,255,255,.12);color:#fff;text-decoration:none'>💰</a>"
+    +"<a href='/quote/' class='pb-btn' style='background:rgba(200,150,12,.3);color:#C8960C;text-decoration:none'>📄</a>";
 }
 
 function initBanner(){
