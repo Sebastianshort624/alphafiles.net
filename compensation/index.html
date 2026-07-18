@@ -875,330 +875,52 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="comp-section-num">06</div>
   <div class="comp-section-body">
     <div class="comp-section-title">Client Impact &amp; Damages Documentation</div>
-    <div class="comp-section-sub">Non-financial harm assessment — document in client's own words for attorney review</div>
+    <div class="comp-section-sub">Non-financial harm assessment — 32 questions across 7 categories — document in client's own words for attorney review</div>
 
-    <div style="background:#f8f9fc;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:#374151;line-height:1.7">
+    <div style="background:#f8f9fc;border:1px solid #e5e7eb;border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:#374151;line-height:1.7;font-family:Inter,sans-serif">
       The impact of a timeshare dispute isn't only measured in dollars. Attorneys need your story — how this affected your credit, your peace of mind, your daily life, and your future. <strong>Select each area that applies, then document in the client's own words.</strong>
     </div>
 
     <div id="pain-list">
-
-      <div class="pain-item" id="pi-0"><div class="pain-row" onclick="togglePain(0)"><div class="pain-circle" id="pc-0"></div><div class="pain-body"><div class="pain-cat">Emotional Distress</div><div class="pain-q">How has owning this timeshare made you feel over time?</div><div class="pain-followup">↳ "Tell me more about that. How long have you felt this way?"</div></div></div><div class="pain-note-wrap" id="pn-0" style="display:none"><textarea class="pain-ta" data-key="emotional_distress" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-1"><div class="pain-row" onclick="togglePain(1)"><div class="pain-circle" id="pc-1"></div><div class="pain-body"><div class="pain-cat">Stress &amp; Anxiety</div><div class="pain-q">Has this situation caused you stress or anxiety? Have you ever lost sleep over it?</div><div class="pain-followup">↳ "How often? What does that feel like?"</div></div></div><div class="pain-note-wrap" id="pn-1" style="display:none"><textarea class="pain-ta" data-key="stress_anxiety" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-2"><div class="pain-row" onclick="togglePain(2)"><div class="pain-circle" id="pc-2"></div><div class="pain-body"><div class="pain-cat">Loss of Peace of Mind</div><div class="pain-q">Has this been something that's constantly in the back of your mind? Has it affected your overall peace of mind?</div><div class="pain-followup">↳ "What has been the hardest part of dealing with this?"</div></div></div><div class="pain-note-wrap" id="pn-2" style="display:none"><textarea class="pain-ta" data-key="peace_of_mind" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-3"><div class="pain-row" onclick="togglePain(3)"><div class="pain-circle" id="pc-3"></div><div class="pain-body"><div class="pain-cat">Feeling Trapped</div><div class="pain-q">Do you feel trapped or stuck in this contract? Why?</div><div class="pain-followup">↳ "How has that feeling affected your daily life?"</div></div></div><div class="pain-note-wrap" id="pn-3" style="display:none"><textarea class="pain-ta" data-key="feeling_trapped" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-4"><div class="pain-row" onclick="togglePain(4)"><div class="pain-circle" id="pc-4"></div><div class="pain-body"><div class="pain-cat">Credit Damage</div><div class="pain-q">How has this situation affected your credit score or your ability to borrow money? Have you been denied anything because of this?</div><div class="pain-followup">↳ "Can you describe what that was like for you?"</div></div></div><div class="pain-note-wrap" id="pn-4" style="display:none"><textarea class="pain-ta" data-key="credit_damage" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-5"><div class="pain-row" onclick="togglePain(5)"><div class="pain-circle" id="pc-5"></div><div class="pain-body"><div class="pain-cat">Collection &amp; Harassment</div><div class="pain-q">Have you continued receiving collection calls, letters, or notices even after you stopped engaging?</div><div class="pain-followup">↳ "How often? How has dealing with their contact affected your day-to-day life?"</div></div></div><div class="pain-note-wrap" id="pn-5" style="display:none"><textarea class="pain-ta" data-key="collection_harassment" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-6"><div class="pain-row" onclick="togglePain(6)"><div class="pain-circle" id="pc-6"></div><div class="pain-body"><div class="pain-cat">Fear of Foreclosure</div><div class="pain-q">How concerned are you about them forcing foreclosure or taking further legal action?</div><div class="pain-followup">↳ "What worries you most about where this could lead if it stays unresolved?"</div></div></div><div class="pain-note-wrap" id="pn-6" style="display:none"><textarea class="pain-ta" data-key="fear_foreclosure" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-7"><div class="pain-row" onclick="togglePain(7)"><div class="pain-circle" id="pc-7"></div><div class="pain-body"><div class="pain-cat">Family &amp; Lifestyle Impact</div><div class="pain-q">Has this limited your ability to spend money on family or personal priorities? Has it prevented vacations you wanted to take?</div><div class="pain-followup">↳ "How did your family experience this with you?"</div></div></div><div class="pain-note-wrap" id="pn-7" style="display:none"><textarea class="pain-ta" data-key="family_impact" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-8"><div class="pain-row" onclick="togglePain(8)"><div class="pain-circle" id="pc-8"></div><div class="pain-body"><div class="pain-cat">Regret Over Purchase</div><div class="pain-q">If you had known what you know now, would you have signed? Did you feel fully informed at the time?</div><div class="pain-followup">↳ "What were you told that turned out not to be true?"</div></div></div><div class="pain-note-wrap" id="pn-8" style="display:none"><textarea class="pain-ta" data-key="regret_purchase" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-9"><div class="pain-row" onclick="togglePain(9)"><div class="pain-circle" id="pc-9"></div><div class="pain-body"><div class="pain-cat">Sales Misrepresentation</div><div class="pain-q">Were you told anything during the sales process that turned out not to be accurate? Did you feel pressured or rushed to sign?</div><div class="pain-followup">↳ "Can you describe exactly what was said to you?"</div></div></div><div class="pain-note-wrap" id="pn-9" style="display:none"><textarea class="pain-ta" data-key="misrepresentation" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-10"><div class="pain-row" onclick="togglePain(10)"><div class="pain-circle" id="pc-10"></div><div class="pain-body"><div class="pain-cat">Heir &amp; Estate Concern</div><div class="pain-q">Have you thought about what happens to this obligation as you get older or what it means for your heirs?</div><div class="pain-followup">↳ "How does it feel knowing this could be passed down to your family?"</div></div></div><div class="pain-note-wrap" id="pn-10" style="display:none"><textarea class="pain-ta" data-key="heir_concern" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
-      <div class="pain-item" id="pi-11"><div class="pain-row" onclick="togglePain(11)"><div class="pain-circle" id="pc-11"></div><div class="pain-body"><div class="pain-cat">Time &amp; Energy Cost</div><div class="pain-q">How much time and energy have you spent dealing with this resort — calls, disputes, paperwork, worrying?</div><div class="pain-followup">↳ "How long has this been impacting you? What would you have done with that time?"</div></div></div><div class="pain-note-wrap" id="pn-11" style="display:none"><textarea class="pain-ta" data-key="time_energy" placeholder="" oninput="savePain(this)"></textarea></div></div>
-
+      <div class="pain-item" id="pi-0"><div class="pain-row" onclick="togglePain(0)"><div class="pain-circle" id="pc-0"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">How has this situation affected your overall peace of mind over the years?</div><div class="pain-followup">↳ "Tell me more about that. How long have you felt this way?"</div></div></div><div class="pain-note-wrap" id="pn-0" style="display:none"><textarea class="pain-ta" data-key="credit_damage_general" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-1"><div class="pain-row" onclick="togglePain(1)"><div class="pain-circle" id="pc-1"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">Would you say this situation has caused you stress or anxiety? How often does it come up?</div><div class="pain-followup">↳ "What does that feel like? Is this something that comes up regularly?"</div></div></div><div class="pain-note-wrap" id="pn-1" style="display:none"><textarea class="pain-ta" data-key="stress_frequency" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-2"><div class="pain-row" onclick="togglePain(2)"><div class="pain-circle" id="pc-2"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">Have you ever lost sleep worrying about this situation or what they might do next?</div><div class="pain-followup">↳ "How often? What were you afraid of?"</div></div></div><div class="pain-note-wrap" id="pn-2" style="display:none"><textarea class="pain-ta" data-key="lost_sleep" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-3"><div class="pain-row" onclick="togglePain(3)"><div class="pain-circle" id="pc-3"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">Do you feel trapped or stuck because of this? Why?</div><div class="pain-followup">↳ "How has that feeling affected your daily life?"</div></div></div><div class="pain-note-wrap" id="pn-3" style="display:none"><textarea class="pain-ta" data-key="feeling_trapped" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-4"><div class="pain-row" onclick="togglePain(4)"><div class="pain-circle" id="pc-4"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">Do you ever feel frustrated or helpless dealing with this situation?</div><div class="pain-followup">↳ "What has been the hardest part of dealing with this?"</div></div></div><div class="pain-note-wrap" id="pn-4" style="display:none"><textarea class="pain-ta" data-key="helpless" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-5"><div class="pain-row" onclick="togglePain(5)"><div class="pain-circle" id="pc-5"></div><div class="pain-body"><div class="pain-cat">Emotional & Mental Stress</div><div class="pain-q">Has this been something that's constantly in the back of your mind?</div><div class="pain-followup">↳ "How long has this been weighing on you?"</div></div></div><div class="pain-note-wrap" id="pn-5" style="display:none"><textarea class="pain-ta" data-key="constant_mind" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-6"><div class="pain-row" onclick="togglePain(6)"><div class="pain-circle" id="pc-6"></div><div class="pain-body"><div class="pain-cat">Credit Damage & Financial Reputation</div><div class="pain-q">How has this situation affected your credit score over the past few years?</div><div class="pain-followup">↳ "Have you seen your score drop because of this account?"</div></div></div><div class="pain-note-wrap" id="pn-6" style="display:none"><textarea class="pain-ta" data-key="credit_score_drop" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-7"><div class="pain-row" onclick="togglePain(7)"><div class="pain-circle" id="pc-7"></div><div class="pain-body"><div class="pain-cat">Credit Damage & Financial Reputation</div><div class="pain-q">Has the damage to your credit prevented you from doing anything important — buying a car, a home, getting a loan?</div><div class="pain-followup">↳ "Have you been denied anything because of this showing on your credit?"</div></div></div><div class="pain-note-wrap" id="pn-7" style="display:none"><textarea class="pain-ta" data-key="credit_denied" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-8"><div class="pain-row" onclick="togglePain(8)"><div class="pain-circle" id="pc-8"></div><div class="pain-body"><div class="pain-cat">Credit Damage & Financial Reputation</div><div class="pain-q">How frustrating is it to see this continue to impact your financial reputation even though you want to move on?</div><div class="pain-followup">↳ "What has it cost you to have this on your record?"</div></div></div><div class="pain-note-wrap" id="pn-8" style="display:none"><textarea class="pain-ta" data-key="credit_frustration" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-9"><div class="pain-row" onclick="togglePain(9)"><div class="pain-circle" id="pc-9"></div><div class="pain-body"><div class="pain-cat">Credit Damage & Financial Reputation</div><div class="pain-q">Has this situation caused you to rely on credit or other debt in ways you otherwise wouldn't have?</div><div class="pain-followup">↳ "How has that affected your overall financial situation?"</div></div></div><div class="pain-note-wrap" id="pn-9" style="display:none"><textarea class="pain-ta" data-key="debt_impact" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-10"><div class="pain-row" onclick="togglePain(10)"><div class="pain-circle" id="pc-10"></div><div class="pain-body"><div class="pain-cat">Credit Damage & Financial Reputation</div><div class="pain-q">If this continues, how do you see it impacting your financial future long-term?</div><div class="pain-followup">↳ "What are you most concerned about?"</div></div></div><div class="pain-note-wrap" id="pn-10" style="display:none"><textarea class="pain-ta" data-key="future_finances" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-11"><div class="pain-row" onclick="togglePain(11)"><div class="pain-circle" id="pc-11"></div><div class="pain-body"><div class="pain-cat">Ongoing Harassment & Pressure</div><div class="pain-q">How often do they contact you about this — calls, letters, notices?</div><div class="pain-followup">↳ "Would you describe their contact as stressful or overwhelming?"</div></div></div><div class="pain-note-wrap" id="pn-11" style="display:none"><textarea class="pain-ta" data-key="contact_frequency" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-12"><div class="pain-row" onclick="togglePain(12)"><div class="pain-circle" id="pc-12"></div><div class="pain-body"><div class="pain-cat">Ongoing Harassment & Pressure</div><div class="pain-q">Have they continued reaching out even after you stopped engaging?</div><div class="pain-followup">↳ "How long has this been going on?"</div></div></div><div class="pain-note-wrap" id="pn-12" style="display:none"><textarea class="pain-ta" data-key="continued_contact" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-13"><div class="pain-row" onclick="togglePain(13)"><div class="pain-circle" id="pc-13"></div><div class="pain-body"><div class="pain-cat">Ongoing Harassment & Pressure</div><div class="pain-q">Do you feel like they are intentionally trying to pressure or wear you down?</div><div class="pain-followup">↳ "What has that been like for you mentally?"</div></div></div><div class="pain-note-wrap" id="pn-13" style="display:none"><textarea class="pain-ta" data-key="pressure_wearing" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-14"><div class="pain-row" onclick="togglePain(14)"><div class="pain-circle" id="pc-14"></div><div class="pain-body"><div class="pain-cat">Ongoing Harassment & Pressure</div><div class="pain-q">How has dealing with their calls or notices affected your day-to-day life?</div><div class="pain-followup">↳ "What does it feel like when you see their number or a letter from them?"</div></div></div><div class="pain-note-wrap" id="pn-14" style="display:none"><textarea class="pain-ta" data-key="daily_life_contact" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-15"><div class="pain-row" onclick="togglePain(15)"><div class="pain-circle" id="pc-15"></div><div class="pain-body"><div class="pain-cat">Ongoing Harassment & Pressure</div><div class="pain-q">Does it bother you that this keeps following you even though you want to be done with it?</div><div class="pain-followup">↳ "How long has it been since you stopped engaging and they still won't stop?"</div></div></div><div class="pain-note-wrap" id="pn-15" style="display:none"><textarea class="pain-ta" data-key="wont_let_go" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-16"><div class="pain-row" onclick="togglePain(16)"><div class="pain-circle" id="pc-16"></div><div class="pain-body"><div class="pain-cat">Lifestyle & Family Impact</div><div class="pain-q">Has this situation prevented you from taking vacations or experiences you actually wanted?</div><div class="pain-followup">↳ "What did you miss out on?"</div></div></div><div class="pain-note-wrap" id="pn-16" style="display:none"><textarea class="pain-ta" data-key="vacation_prevented" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-17"><div class="pain-row" onclick="togglePain(17)"><div class="pain-circle" id="pc-17"></div><div class="pain-body"><div class="pain-cat">Lifestyle & Family Impact</div><div class="pain-q">Do you feel like you have been paying for something you do not use or enjoy?</div><div class="pain-followup">↳ "How does that make you feel knowing money went toward something with no benefit?"</div></div></div><div class="pain-note-wrap" id="pn-17" style="display:none"><textarea class="pain-ta" data-key="not_use_enjoy" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-18"><div class="pain-row" onclick="togglePain(18)"><div class="pain-circle" id="pc-18"></div><div class="pain-body"><div class="pain-cat">Lifestyle & Family Impact</div><div class="pain-q">Has this limited your ability to spend money on your family, your kids, or your personal priorities?</div><div class="pain-followup">↳ "What would you have done with that money instead?"</div></div></div><div class="pain-note-wrap" id="pn-18" style="display:none"><textarea class="pain-ta" data-key="family_spending" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-19"><div class="pain-row" onclick="togglePain(19)"><div class="pain-circle" id="pc-19"></div><div class="pain-body"><div class="pain-cat">Lifestyle & Family Impact</div><div class="pain-q">Have you avoided travel or vacations altogether because of the stress or cost related to this?</div><div class="pain-followup">↳ "How has that affected your quality of life?"</div></div></div><div class="pain-note-wrap" id="pn-19" style="display:none"><textarea class="pain-ta" data-key="avoided_travel" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-20"><div class="pain-row" onclick="togglePain(20)"><div class="pain-circle" id="pc-20"></div><div class="pain-body"><div class="pain-cat">Lifestyle & Family Impact</div><div class="pain-q">Has this situation caused stress or conflict within your family or household?</div><div class="pain-followup">↳ "How did your family experience this with you?"</div></div></div><div class="pain-note-wrap" id="pn-20" style="display:none"><textarea class="pain-ta" data-key="family_stress" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-21"><div class="pain-row" onclick="togglePain(21)"><div class="pain-circle" id="pc-21"></div><div class="pain-body"><div class="pain-cat">Sales Misrepresentation & Regret</div><div class="pain-q">Do you feel like everything was fully explained to you at the time you signed?</div><div class="pain-followup">↳ "What was left out or misrepresented?"</div></div></div><div class="pain-note-wrap" id="pn-21" style="display:none"><textarea class="pain-ta" data-key="fully_explained" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-22"><div class="pain-row" onclick="togglePain(22)"><div class="pain-circle" id="pc-22"></div><div class="pain-body"><div class="pain-cat">Sales Misrepresentation & Regret</div><div class="pain-q">Were you told anything during the sales process that turned out not to be true?</div><div class="pain-followup">↳ "Can you describe exactly what was said to you?"</div></div></div><div class="pain-note-wrap" id="pn-22" style="display:none"><textarea class="pain-ta" data-key="told_not_true" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-23"><div class="pain-row" onclick="togglePain(23)"><div class="pain-circle" id="pc-23"></div><div class="pain-body"><div class="pain-cat">Sales Misrepresentation & Regret</div><div class="pain-q">If you had known what you know now, would you have signed?</div><div class="pain-followup">↳ "What was the one thing that made you sign that you now regret?"</div></div></div><div class="pain-note-wrap" id="pn-23" style="display:none"><textarea class="pain-ta" data-key="would_sign_again" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-24"><div class="pain-row" onclick="togglePain(24)"><div class="pain-circle" id="pc-24"></div><div class="pain-body"><div class="pain-cat">Sales Misrepresentation & Regret</div><div class="pain-q">Did you feel pressured or rushed during the sales presentation?</div><div class="pain-followup">↳ "Were there any tactics used that you feel were unfair or dishonest?"</div></div></div><div class="pain-note-wrap" id="pn-24" style="display:none"><textarea class="pain-ta" data-key="pressured_rushed" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-25"><div class="pain-row" onclick="togglePain(25)"><div class="pain-circle" id="pc-25"></div><div class="pain-body"><div class="pain-cat">Fear of Foreclosure & Legal Consequences</div><div class="pain-q">How concerned are you about them eventually forcing foreclosure or escalating legally?</div><div class="pain-followup">↳ "What worries you most about where this could lead?"</div></div></div><div class="pain-note-wrap" id="pn-25" style="display:none"><textarea class="pain-ta" data-key="fear_foreclosure_level" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-26"><div class="pain-row" onclick="togglePain(26)"><div class="pain-circle" id="pc-26"></div><div class="pain-body"><div class="pain-cat">Fear of Foreclosure & Legal Consequences</div><div class="pain-q">Does the uncertainty of not knowing what they might do next bother you?</div><div class="pain-followup">↳ "How has living with that uncertainty affected you?"</div></div></div><div class="pain-note-wrap" id="pn-26" style="display:none"><textarea class="pain-ta" data-key="uncertainty_next" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-27"><div class="pain-row" onclick="togglePain(27)"><div class="pain-circle" id="pc-27"></div><div class="pain-body"><div class="pain-cat">Fear of Foreclosure & Legal Consequences</div><div class="pain-q">Have you thought about the long-term consequences of this staying unresolved?</div><div class="pain-followup">↳ "What does the worst-case scenario look like to you?"</div></div></div><div class="pain-note-wrap" id="pn-27" style="display:none"><textarea class="pain-ta" data-key="long_term_consequences" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-28"><div class="pain-row" onclick="togglePain(28)"><div class="pain-circle" id="pc-28"></div><div class="pain-body"><div class="pain-cat">Fear of Foreclosure & Legal Consequences</div><div class="pain-q">How important is it to you to finally put a permanent and legal end to this?</div><div class="pain-followup">↳ "What would it mean to wake up one day and know this is completely resolved?"</div></div></div><div class="pain-note-wrap" id="pn-28" style="display:none"><textarea class="pain-ta" data-key="permanent_end" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-29"><div class="pain-row" onclick="togglePain(29)"><div class="pain-circle" id="pc-29"></div><div class="pain-body"><div class="pain-cat">Long-Term Burden & Heir Concern</div><div class="pain-q">What concerns you most about being stuck with this long-term?</div><div class="pain-followup">↳ "How do you see this affecting you five or ten years from now?"</div></div></div><div class="pain-note-wrap" id="pn-29" style="display:none"><textarea class="pain-ta" data-key="long_term_stuck" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-30"><div class="pain-row" onclick="togglePain(30)"><div class="pain-circle" id="pc-30"></div><div class="pain-body"><div class="pain-cat">Long-Term Burden & Heir Concern</div><div class="pain-q">Have you thought about what happens to this obligation as you get older or what it means for your heirs?</div><div class="pain-followup">↳ "How does it feel knowing this could be passed on to your family?"</div></div></div><div class="pain-note-wrap" id="pn-30" style="display:none"><textarea class="pain-ta" data-key="heir_obligation" placeholder="" oninput="savePain(this)"></textarea></div></div>
+      <div class="pain-item" id="pi-31"><div class="pain-row" onclick="togglePain(31)"><div class="pain-circle" id="pc-31"></div><div class="pain-body"><div class="pain-cat">Long-Term Burden & Heir Concern</div><div class="pain-q">How much time and mental energy have you spent dealing with this resort over the years?</div><div class="pain-followup">↳ "What would you have done with that time if this had never happened?"</div></div></div><div class="pain-note-wrap" id="pn-31" style="display:none"><textarea class="pain-ta" data-key="time_energy" placeholder="" oninput="savePain(this)"></textarea></div></div>
     </div>
 
     <div id="pain-complete" style="display:none;background:var(--navy,#1B2A4A);border-radius:10px;padding:20px 24px;margin-top:16px;text-align:center">
       <div style="font-size:28px;margin-bottom:8px">📋</div>
-      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px">Documentation Complete</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.7">Saved and ready for attorney review. The client's own words are the most powerful evidence of harm.</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px;font-family:Inter,sans-serif">Documentation Complete</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;font-family:Inter,sans-serif">Saved and ready for attorney review. The client's own words are the most powerful evidence of harm.</div>
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- SECTION 7: ATTORNEY REVIEW SUMMARY -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="comp-section" id="sec-summary" style="display:none">
-  <div class="comp-section-num">07</div>
-  <div class="comp-section-body">
-    <div class="comp-section-title">Attorney Review Summary</div>
-    <div class="comp-section-sub">Compiled from all sections above</div>
-    <table class="result-table">
-      <tbody>
-        <tr><td>Client Name</td><td id="s-name">—</td></tr>
-        <tr><td>Resort</td><td id="s-resort">—</td></tr>
-        <tr><td>Years Owned</td><td id="s-yrs">—</td></tr>
-        <tr><td>Total Estimated Paid</td><td id="s-paid">—</td></tr>
-        <tr><td>Nights Entitled</td><td id="s-entitled">—</td></tr>
-        <tr><td>Nights Used</td><td id="s-used">—</td></tr>
-        <tr><td>Unused Nights</td><td id="s-unused">—</td></tr>
-        <tr><td>Actual Cost Per Night Used</td><td id="s-cpn">—</td></tr>
-        <tr class="highlight-row"><td>Potential Compensation Value</td><td id="s-comp">—</td></tr>
-        <tr><td>Impact Areas Documented</td><td id="s-pain-count">—</td></tr>
-      </tbody>
-    </table>
-    <div class="info-note" style="margin-top:12px">This document is prepared for attorney evaluation purposes only. No specific outcome or compensation amount is guaranteed.</div>
-  </div>
-</div>
-
-<style>
-:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--text:#1a1a1a;--muted:#6b7280}
-*{box-sizing:border-box}
-.doc-header{border-bottom:2px solid var(--navy);padding-bottom:18px;margin-bottom:24px}
-.doc-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:8px;font-family:Inter,sans-serif}
-.doc-title{font-family:Inter,sans-serif;font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.2}
-.doc-sub{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);margin:0}
-.summary-card{background:#f8f9fc;border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:0 0 6px 6px;margin-bottom:24px}
-.sc-row{display:grid;grid-template-columns:repeat(4,1fr)}
-.sc-cell{padding:12px 16px;border-right:1px solid var(--border)}
-.sc-cell:last-child{border:none}
-.sc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:4px;font-family:Inter,sans-serif}
-.sc-val{font-size:14px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif}
-.comp-section{display:flex;gap:20px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.comp-section:last-of-type{border:none}
-.comp-section-num{font-size:36px;font-weight:900;color:#e5e7eb;flex-shrink:0;line-height:1;width:40px;font-family:'Barlow Condensed',Inter,sans-serif;padding-top:2px}
-.comp-section-body{flex:1}
-.comp-section-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px;font-family:Inter,sans-serif}
-.comp-section-sub{font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic;font-family:Inter,sans-serif}
-.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field-block label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:block;margin-bottom:5px;font-family:Inter,sans-serif;line-height:1.4}
-.field-block input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:6px;font-size:14px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;outline:none}
-.field-block input:focus{border-color:var(--navy)}
-.auto-field input{background:#f0fdf4;border-color:#86efac}
-.auto-badge{font-size:8px;font-weight:700;background:#dcfce7;color:#16a34a;padding:1px 5px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;vertical-align:middle;margin-left:4px}
-.dollar-wrap{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden}
-.auto-field .dollar-wrap{border-color:#86efac}
-.dollar-wrap span{padding:9px 10px;background:#f8f9fc;color:var(--muted);font-size:13px;border-right:1px solid var(--border);font-family:Inter,sans-serif}
-.dollar-wrap input{border:none;outline:none;padding:9px 10px;font-size:14px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;flex:1;width:100%;background:transparent}
-.result-table{width:100%;border-collapse:collapse;font-family:Inter,sans-serif;margin-top:8px}
-.result-table th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:9px 12px;border-bottom:2px solid var(--border);text-align:left}
-.result-table th:last-child{text-align:right}
-.result-table td{font-size:13px;color:var(--text);padding:10px 12px;border-bottom:1px solid #f3f4f6;font-family:Inter,sans-serif}
-.result-table td:last-child{text-align:right;font-weight:600;color:var(--navy)}
-.result-table tr.total-row td{font-weight:700;font-size:15px;color:var(--navy);border-top:2px solid var(--border);border-bottom:none;background:#f8f9fc}
-.result-table tr.highlight-row td{background:#fff8e0;color:var(--gold);font-weight:700}
-.result-table tr.highlight-row td:last-child{color:#92400e}
-.info-note{font-size:11px;color:var(--muted);font-style:italic;margin-top:10px;padding:8px 12px;background:#f8f9fc;border-left:3px solid var(--border);border-radius:0 4px 4px 0;line-height:1.6;font-family:Inter,sans-serif}
-.comp-hero{background:var(--navy);border-radius:10px;padding:24px;margin-top:16px;text-align:center}
-.comp-hero-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(200,150,12,.6);margin-bottom:8px;font-family:Inter,sans-serif}
-.comp-hero-num{font-size:48px;font-weight:700;color:var(--gold);line-height:1;font-family:Inter,sans-serif}
-.comp-hero-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:6px;font-family:Inter,sans-serif}
-.comp-hero-disclaimer{font-size:11px;color:rgba(255,255,255,.4);margin-top:10px;font-style:italic;font-family:Inter,sans-serif}
-.nepq-close{background:#f8f9fc;border:1px solid var(--border);border-left:4px solid var(--navy);border-radius:0 6px 6px 0;padding:14px 18px;margin-top:12px;font-size:14px;color:var(--text);line-height:1.7;font-family:Inter,sans-serif}
-.pain-item{border-bottom:1px solid var(--border);padding:13px 0}
-.pain-item:last-child{border:none}
-.pain-row{display:flex;gap:14px;align-items:flex-start;cursor:pointer;user-select:none}
-.pain-circle{width:22px;height:22px;border-radius:50%;border:2px solid #d1d5db;background:#fff;flex-shrink:0;margin-top:2px;transition:all .15s;display:flex;align-items:center;justify-content:center}
-.pain-circle.selected{background:var(--navy);border-color:var(--navy)}
-.pain-circle.selected::after{content:"✓";color:#fff;font-size:11px;font-weight:700}
-.pain-body{flex:1}
-.pain-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:4px;font-family:Inter,sans-serif}
-.pain-q{font-size:14px;font-weight:600;color:var(--navy);line-height:1.5;margin-bottom:4px;font-family:Inter,sans-serif}
-.pain-followup{font-size:11px;color:var(--muted);font-style:italic;line-height:1.5;font-family:Inter,sans-serif}
-.pain-note-wrap{padding:10px 0 4px 36px}
-.pain-ta{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;line-height:1.7;color:var(--text);resize:vertical;min-height:72px;outline:none}
-.pain-ta:focus{border-color:var(--navy)}
-@media(max-width:600px){.sc-row,.field-grid{grid-template-columns:1fr}.sc-cell{border-right:none;border-bottom:1px solid var(--border)}.comp-section{flex-direction:column;gap:8px}}
-</style>
-
-<script>
-var _d={},_slug='';
-var _painSelected={};
-
-// ── UTILITIES ──
-function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
-function fcd(n){return n>0?'$'+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';}
-function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||'—';}
-function show(id,vis){var el=document.getElementById(id);if(el)el.style.display=vis?'':'none';}
-function gv(id){return parseFloat(document.getElementById(id).value)||0;}
-
-function cumMtf(yrs,annualMtf,growthRate){
-  var t=0;for(var i=0;i<yrs;i++)t+=annualMtf*Math.pow(1+growthRate,i);return t;
-}
-
-// ── MAIN CALCULATION ──
-function runCalc(){
-  var purchYr=gv('f-yr'); var currYr=2026;
-  var yrsOwned=purchYr>0?Math.max(0,currYr-purchYr):0;
-  var mtg=gv('f-mtg'); var mtf=gv('f-mtf');
-  var down=gv('f-down');
-
-  // Auto-set years owned display
-  var yoEl=document.getElementById('f-yrsowned');
-  if(yoEl) yoEl.value=yrsOwned||'';
-
-  // MTF estimation: backward 6% projection
-  var startMTF=mtf>0&&yrsOwned>0?mtf/Math.pow(1.06,yrsOwned):0;
-  var totalEstMTF=startMTF>0?startMTF*((Math.pow(1.06,yrsOwned)-1)/0.06):0;
-  var avgMTF=yrsOwned>0?totalEstMTF/yrsOwned:0;
-
-  // Mortgage: max 10yr
-  var mtgYrs=Math.min(yrsOwned,10);
-  var totalMtgPaid=mtg*12*mtgYrs;
-  var totalPaid=down+totalMtgPaid+totalEstMTF;
-
-  // Section 2 — Financial Exposure
-  var hasFinancial=totalPaid>0;
-  show('financial-results',hasFinancial);
-  if(hasFinancial){
-    set('r-down',fcd(down));
-    set('r-mtg-calc','$'+mtg.toFixed(2)+'/mo × '+mtgYrs+' yrs (max 10)');
-    set('r-mtg',fc(totalMtgPaid));
-    set('r-mtf-calc','Est. avg $'+Math.round(avgMTF)+'/yr over '+yrsOwned+' yrs');
-    set('r-mtf-avg',fc(avgMTF));
-    set('r-mtf-total',fc(totalEstMTF));
-    set('r-total-paid',fcd(totalPaid));
-  }
-
-  // Section 3 — Usage
-  var visYr=gv('f-visits-yr'); var nightsPromised=gv('f-nights-promised');
-  var totalVisits=gv('f-total-visits'); var actualNights=gv('f-actual-nights');
-  var entitled=visYr*nightsPromised*yrsOwned;
-  var used=totalVisits*actualNights;
-  var unused=Math.max(0,entitled-used);
-  var util=entitled>0?(used/entitled*100).toFixed(1)+'%':'—';
-
-  var hasUsage=entitled>0;
-  show('usage-results',hasUsage);
-  if(hasUsage){
-    set('r-entitled-formula',visYr+'x/yr × '+nightsPromised+' nights × '+yrsOwned+' yrs');
-    set('r-entitled',entitled+' nights');
-    set('r-used-formula',totalVisits+' visits × '+actualNights+' nights');
-    set('r-used',used+' nights');
-    set('r-unused',unused+' nights');
-    set('r-utilization',util);
-  }
-
-  // Section 4 — Cost Per Night
-  var hasCPN=hasFinancial&&hasUsage&&used>0;
-  show('sec-cpn',hasFinancial&&hasUsage);
-  if(hasFinancial&&hasUsage){
-    var cpnActual=used>0?totalPaid/used:0;
-    var cpnFull=entitled>0?totalPaid/entitled:0;
-    var compValue=unused*cpnFull;
-    set('r-cpn-actual',cpnActual>0?fcd(cpnActual)+'/night':'—');
-    set('r-cpn-full',cpnFull>0?fcd(cpnFull)+'/night':'—');
-    set('r-comp-value',fc(compValue));
-    show('comp-hero',compValue>0);
-    show('nepq-close',compValue>0&&used>0);
-    set('r-comp-hero',fc(compValue));
-    set('nc-paid',fcd(totalPaid));
-    set('nc-used',used+' nights');
-    set('nc-entitled',entitled+' nights');
-  }
-
-  // Section 5 — Full Utilization
-  show('sec-util',hasFinancial&&mtf>0);
-  if(hasFinancial&&mtf>0){
-    var cpnFull2=entitled>0?totalPaid/entitled:0;
-    var futMTF10=cumMtf(10,mtf,0.08);
-    var futMTF20=cumMtf(20,mtf,0.08);
-    set('r-util-cpn',cpnFull2>0?fcd(cpnFull2)+'/night at 100% usage':'—');
-    set('r-util-mtf10',fc(futMTF10));
-    set('r-util-mtf20',fc(futMTF20));
-    set('r-util-total20',fc(futMTF20));
-  }
-
-  // Section 7 — Attorney Summary
-  var hasSummary=hasFinancial||hasUsage;
-  show('sec-summary',hasSummary);
-  if(hasSummary){
-    var compVal2=entitled>0&&unused>0?unused*(totalPaid/entitled):0;
-    set('s-name',_d.firstName?(_d.firstName+' '+(_d.lastName||'')).trim():'—');
-    set('s-resort',_d.resort||'—');
-    set('s-yrs',yrsOwned>0?yrsOwned+' years':'—');
-    set('s-paid',fcd(totalPaid));
-    set('s-entitled',entitled>0?entitled+' nights':'—');
-    set('s-used',used>0?used+' nights':'—');
-    set('s-unused',unused>0?unused+' nights':'—');
-    var cpnS=used>0?totalPaid/used:0;
-    set('s-cpn',cpnS>0?fcd(cpnS)+'/night':'—');
-    set('s-comp',compVal2>0?fc(compVal2):'Pending usage data');
-    var painCount=Object.keys(_painSelected).filter(function(k){return _painSelected[k];}).length;
-    set('s-pain-count',painCount+' of 12 areas documented');
-  }
-
-  // Save calc data
-  if(_slug){try{
-    var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');
-    if(all[_slug]){all[_slug].compCalc2={yrsOwned,totalPaid,entitled,used,unused,avgMTF,totalEstMTF};all[_slug]._updated=Date.now();localStorage.setItem('atc_clients_v2',JSON.stringify(all));}
-  }catch(e){}}
-}
-
-// ── PAIN SECTION ──
-function togglePain(i){
-  var sel=!_painSelected[i]; _painSelected[i]=sel;
-  var c=document.getElementById('pc-'+i);
-  var n=document.getElementById('pn-'+i);
-  var item=document.getElementById('pi-'+i);
-  if(c)c.className='pain-circle'+(sel?' selected':'');
-  if(n){n.style.display=sel?'block':'none';if(sel){var ta=n.querySelector('textarea');if(ta)setTimeout(function(){ta.focus();},50);}}
-  if(item)item.style.background=sel?'#f8f9fc':'';
-  updateSummaryPainCount();
-  checkPainComplete();
-}
-function savePain(el){
-  var key=el.dataset.key;
-  if(_slug){try{var all=JSON.parse(localStorage.getItem('atc_clients_v2')||'{}');if(all[_slug]){if(!all[_slug].painDoc)all[_slug].painDoc={};all[_slug].painDoc[key]=el.value.trim();all[_slug]._updated=Date.now();localStorage.setItem('atc_clients_v2',JSON.stringify(all));}}catch(e){}}
-  checkPainComplete();
-}
-function checkPainComplete(){
-  var filled=[].filter.call(document.querySelectorAll('.pain-ta'),function(t){return t.value.trim().length>0;}).length;
-  show('pain-complete',filled>=4);
-}
-function updateSummaryPainCount(){
-  var c=Object.keys(_painSelected).filter(function(k){return _painSelected[k];}).length;
-  set('s-pain-count',c+' of 12 areas documented');
-}
-
-// ── INIT ──
-document.addEventListener('DOMContentLoaded',function(){
-  var AK='atc_active',SK='atc_clients_v2';
-  _slug=localStorage.getItem(AK)||'';
-  if(_slug){
-    var all=JSON.parse(localStorage.getItem(SK)||'{}');
-    _d=all[_slug]||{};
-  }
-  var nm=_d.firstName?((_d.firstName+' '+(_d.lastName||'')).trim()):null;
-  if(nm){
-    show('client-summary',true);
-    set('cs-name',nm); set('cs-resort',_d.resort||'—');
-    var py=parseInt(_d.yearPurchased)||0;
-    set('cs-year',py||'—');
-    set('cs-yrs',py>0?(2026-py)+' yrs':'—');
-  }
-
-  // Auto-fill fields
-  var py=parseInt(_d.yearPurchased)||0;
-  var el=document.getElementById('f-yr'); if(el&&py>0)el.value=py;
-  var me=document.getElementById('f-mtg'); if(me&&_d.monthlyMortgage)me.value=parseFloat(_d.monthlyMortgage)||'';
-  var mf=document.getElementById('f-mtf'); if(mf&&_d.maitFees)mf.value=parseFloat(_d.maitFees)||'';
-  var pp=document.getElementById('f-pp'); if(pp&&_d.purchasePrice)pp.value=parseFloat(_d.purchasePrice)||'';
-
-  // Mark auto fields — prevent overwriting on blur
-  ['f-yr','f-mtg','f-mtf'].forEach(function(id){
-    var e=document.getElementById(id);
-    if(e) e.addEventListener('input',function(){this._manual=true;});
-  });
-
-  // Restore pain doc
-  var doc=(_d.painDoc)||{};
-  var keys=['emotional_distress','stress_anxiety','peace_of_mind','feeling_trapped','credit_damage','collection_harassment','fear_foreclosure','family_impact','regret_purchase','misrepresentation','heir_concern','time_energy'];
-  document.querySelectorAll('.pain-ta').forEach(function(ta,i){
-    var key=ta.dataset.key;
-    if(doc[key]&&doc[key].trim()){ta.value=doc[key];togglePain(i);}
-  });
-
-  runCalc();
-});
-</script>
-
-<div class="nav-bar">
-  <a class="np" href="/heirs/">← Heirs &amp; Estate</a>
-  <span class="ns">9 — Resort Compensation</span>
-  <a class="nn" href="/proof/">Proof →</a>
-</div>
-</div></div>
-</body></html>
+>
