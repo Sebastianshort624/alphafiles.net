@@ -693,6 +693,77 @@ window._saveNotes=function(){
   toast('Notes saved','#16a34a');
 };
 
+
+// ── EMAIL GENERATOR ──────────────────────────────────────────────────────
+window._openEmailGen=function(){
+  var slug=_aC();
+  var d=_aD()||{};
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'there';
+  var resort=d.resort||'your resort';
+  var mtfYr=parseFloat(d.maitFees)||0;
+  var mtg=parseFloat(d.monthlyMortgage)||0;
+  var combined=(mtfYr/12+mtg).toFixed(2);
+  var fee=parseFloat(d.alphaFee)||0;
+  var cur=window.location.pathname;
+
+  // Build page-specific email body
+  var subject='Your Alpha Timeshare Consultants Summary';
+  var body='';
+
+  if(cur.indexOf('/current/')>-1){
+    subject='Your Current Ownership Costs — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nThank you for taking the time to speak with me today about your '+resort+' ownership.\n\nHere is a quick summary of what you are currently paying:\n\n• Monthly Cost: $'+combined+'/mo\n• Annual Cost: $'+(parseFloat(combined)*12).toFixed(2)+'/yr\n• Annual Maintenance Fee: $'+mtfYr.toFixed(2)+'/yr (growing 8% every year)\n\nThese costs never stop — and they only go up. That\'s exactly why we are here.\n\nIf you have any questions reviewing this, feel free to call or text me anytime.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  } else if(cur.indexOf('/cost/')>-1){
+    subject='How Much More Will You Give Them? — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nFollowing up on what we discussed — here is how much you will continue to pay '+resort+' if nothing changes:\n\n• Monthly: $'+combined+'/mo\n• 1 Year: $'+(parseFloat(combined)*12).toFixed(2)+'\n• 5 Years: $'+(parseFloat(combined)*60).toFixed(2)+' (with 8% annual growth)\n\nEvery dollar you pay them is money you will never get back. And it grows every year.\n\nLet\'s talk about getting you out.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  } else if(cur.indexOf('/quote/')>-1){
+    subject='Your Alpha Service Fee Quote — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nAs promised, here is your personalized quote to exit '+resort+':\n\n'+(fee>0?'• Alpha Service Fee: $'+fee.toFixed(2)+'\n• Pay-in-Full saves an additional 3%\n• Monthly plan available — first payment August 15\n\n':'• Your quote is being finalized — I will follow up shortly.\n\n')+'This fee covers complete permanent termination of your timeshare, credit protection, and your 100% money-back guarantee.\n\nReady to move forward? Call or text me and we will get started today.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  } else if(cur.indexOf('/credit/')>-1){
+    subject='Protecting Your Credit During Your Exit — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nI wanted to follow up on our conversation about your credit protection.\n\nAlpha Timeshare Consultants has an in-house credit team that has been working since 1986. We dispute every negative mark related to your timeshare at no additional charge — directly with Equifax, Experian, and TransUnion.\n\nOnce we have the county recording and mutual release, your credit file is cleared completely.\n\nIf you have any questions about this process, do not hesitate to reach out.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  } else if(cur.indexOf('/guarantee/')>-1){
+    subject='Your 100% Money-Back Guarantee — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nI wanted to put in writing what I shared with you today:\n\nAlpha Timeshare Consultants guarantees that if we do not get you a Favorable Outcome within 36 months, you receive 100% of your service fee back — in writing.\n\nNo other company in this industry offers this. That is how confident we are in our process.\n\nYour guarantee is included in your enrollment documents. Once signed, you are protected.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  } else {
+    subject='Following Up — Alpha Timeshare Consultants';
+    body='Hi '+nm+',\n\nThank you for your time today. It was a pleasure speaking with you about your '+resort+' ownership.\n\nI am here whenever you are ready to take the next step. Feel free to call, text, or email me directly.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  }
+
+  // Show modal
+  var existing=document.getElementById('email-gen-overlay');
+  if(existing) existing.remove();
+  var overlay=document.createElement('div');
+  overlay.id='email-gen-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center';
+  var box=document.createElement('div');
+  box.style.cssText='background:#fff;border-radius:12px;width:560px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden';
+  var hdr=document.createElement('div');
+  hdr.style.cssText='background:#1B2A4A;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
+  hdr.innerHTML='<div style="font-size:14px;font-weight:700;color:#fff">✉️ Client Email</div><button onclick="document.getElementById(\'email-gen-overlay\').remove()" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer">×</button>';
+  var subWrap=document.createElement('div');
+  subWrap.style.cssText='padding:12px 16px;border-bottom:1px solid #e5e7eb;background:#f8f9fc';
+  subWrap.innerHTML='<div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Subject</div><div style="font-size:13px;font-weight:600;color:#1B2A4A" id="email-subj">'+subject+'</div>';
+  var ta=document.createElement('textarea');
+  ta.id='email-body-ta';
+  ta.value=body;
+  ta.style.cssText='flex:1;border:none;outline:none;padding:16px;font-family:Inter,sans-serif;font-size:13px;line-height:1.8;resize:none;min-height:240px;color:#374151';
+  var footer=document.createElement('div');
+  footer.style.cssText='padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end';
+  var copySubj=document.createElement('button');
+  copySubj.textContent='Copy Subject';
+  copySubj.style.cssText='padding:8px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#f3f4f6;color:#374151;font-size:12px;cursor:pointer';
+  copySubj.onclick=function(){navigator.clipboard.writeText(subject).then(function(){copySubj.textContent='✓ Copied!';setTimeout(function(){copySubj.textContent='Copy Subject';},2000);});};
+  var copyBody=document.createElement('button');
+  copyBody.textContent='Copy Email';
+  copyBody.style.cssText='padding:8px 18px;border-radius:6px;border:none;background:#C8960C;color:#fff;font-size:12px;font-weight:700;cursor:pointer';
+  copyBody.onclick=function(){navigator.clipboard.writeText(document.getElementById('email-body-ta').value).then(function(){copyBody.textContent='✓ Copied!';setTimeout(function(){copyBody.textContent='Copy Email';},2000);});};
+  footer.appendChild(copySubj);footer.appendChild(copyBody);
+  box.appendChild(hdr);box.appendChild(subWrap);box.appendChild(ta);box.appendChild(footer);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+};
+
 document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
