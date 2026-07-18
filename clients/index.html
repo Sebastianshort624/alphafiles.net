@@ -811,7 +811,7 @@ window._openEmailGen=function(){
   document.body.appendChild(overlay);
 };
 
-document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();initBanner();_buildTopSave();});
+document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();buildRightNav();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
