@@ -682,187 +682,231 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <div class="sidenav" id="sidenav"></div>
 <div class="main"><div class="wrap">
-<div class="ph"><div class="ph-num">16</div><div class="ph-title">True Cost of Ownership</div><div class="ph-sub">What staying in actually costs you</div></div>
 
-<div class="vb">
-  <div class="vbc"><div class="vbl">Client</div><div class="vbv" id="vb-name">—</div></div>
-  <div class="vbc"><div class="vbl">Resort</div><div class="vbv" id="vb-resort">—</div></div>
-  <div class="vbc"><div class="vbl">Monthly</div><div class="vbv" id="vb-mo">—</div></div>
-  <div class="vbc"><div class="vbl">Stage</div><div class="vbv" id="vb-stg">—</div></div>
+<!-- PAGE HEADER -->
+<div class="doc-header">
+  <div class="doc-eyebrow">Financial Assessment</div>
+  <h1 class="doc-title">True Cost of Ownership</h1>
+  <p class="doc-sub">What staying in actually costs you — short term and long term</p>
+</div>
+
+<!-- CLIENT SUMMARY -->
+<div class="summary-card">
+  <div class="sc-row">
+    <div class="sc-cell"><div class="sc-lbl">Client</div><div class="sc-val" id="vb-name">—</div></div>
+    <div class="sc-cell"><div class="sc-lbl">Resort</div><div class="sc-val" id="vb-resort">—</div></div>
+    <div class="sc-cell"><div class="sc-lbl">Monthly</div><div class="sc-val" id="vb-mo">—</div></div>
+    <div class="sc-cell"><div class="sc-lbl">Stage</div><div class="sc-val" id="vb-stg">—</div></div>
+  </div>
 </div>
 
 <!-- RESORT SELECTOR -->
-<div id="resort-selector" style="display:none;margin-bottom:14px">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px">Select Resort</div>
-  <div style="display:flex;gap:6px">
+<div id="resort-selector" style="display:none;margin-bottom:20px">
+  <div class="section-label">Select Resort</div>
+  <div style="display:flex;gap:6px;margin-top:8px">
     <button class="rs-btn active" id="rs-0" onclick="selectResort(0)">R-1</button>
     <button class="rs-btn" id="rs-1" style="display:none" onclick="selectResort(1)">R-2</button>
     <button class="rs-btn" id="rs-2" style="display:none" onclick="selectResort(2)">R-3</button>
     <button class="rs-btn" id="rs-3" style="display:none" onclick="selectResort(3)">R-4</button>
   </div>
 </div>
-<style>
-.rs-btn{padding:7px 20px;font-size:13px;font-weight:700;border-radius:8px;border:1.5px solid #e5e7eb;background:#f8fafc;color:#374151;cursor:pointer;transition:.1s}
-.rs-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
-</style>
 
-<!-- SUMMARY CARDS -->
-<div class="sum3">
-  <div class="scard"><div class="slb">Monthly Mortgage</div><div class="sv" id="s-mtg-mo">—</div><div class="ss" id="s-mtg-yr">—/yr</div></div>
-  <div class="scard"><div class="slb">Monthly MTF</div><div class="sv" id="s-mtf-mo">—</div><div class="ss" id="s-mtf-yr">—/yr · 8% growth</div></div>
-  <div class="scard accent"><div class="slb">Combined Monthly</div><div class="sv red" id="s-comb-mo">—</div><div class="ss" id="s-comb-yr">—/yr</div></div>
+<!-- CURRENT ANNUAL COST BREAKDOWN -->
+<div class="doc-section">
+  <div class="section-label">Current Annual Cost Breakdown</div>
+  <table class="breakdown-table">
+    <thead>
+      <tr><th>Category</th><th>Monthly</th><th>Annual</th></tr>
+    </thead>
+    <tbody>
+      <tr id="row-mtg" style="display:none">
+        <td>Mortgage Payment</td>
+        <td id="b-mtg-mo">—</td>
+        <td id="b-mtg-yr">—</td>
+      </tr>
+      <tr>
+        <td>Maintenance Fees</td>
+        <td id="b-mtf-mo">—</td>
+        <td id="b-mtf-yr">—</td>
+      </tr>
+      <tr class="total-row">
+        <td>Total Monthly Obligation</td>
+        <td id="b-total-mo">—</td>
+        <td id="b-total-yr">—</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- TABLES: side by side — short-term left, long-term right -->
-<div class="tbl-wrap">
-  <div style="background:var(--navy);border-radius:8px 8px 0 0;padding:14px 20px;margin:-18px -20px 16px;text-align:center">
-    <div style="font-size:20px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase">How Much More Will You Give Them?</div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;justify-items:center">
-    <!-- LEFT: 1mo – 5yr -->
-    <div style="width:100%">
-      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Short-Term</div>
-      <table class="ctbl narrow" id="cost-tbl">
-        <thead><tr>
-          <th style="text-align:left">Timeframe</th>
-          <th style="color:#86efac">Total Paid to Resort</th>
-        </tr></thead>
+<!-- PROJECTION TABLES SIDE BY SIDE -->
+<div class="doc-section">
+  <div class="tables-grid">
+    <div>
+      <div class="section-label">Short-Term Cost</div>
+      <table class="proj-table" id="cost-tbl">
+        <thead><tr><th>Timeframe</th><th>Total Paid to Resort</th></tr></thead>
         <tbody id="cost-tbody"></tbody>
       </table>
     </div>
-
-    <!-- RIGHT: 10 – 30yr -->
-    <div style="width:100%">
-      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px">Long-Term</div>
-      <table class="ctbl narrow">
-        <thead><tr>
-          <th style="text-align:left">Timeframe</th>
-          <th style="color:#86efac">Total Paid to Resort</th>
-        </tr></thead>
+    <div>
+      <div class="section-label">Long-Term Cost</div>
+      <table class="proj-table">
+        <thead><tr><th>Timeframe</th><th>Total Paid to Resort</th></tr></thead>
         <tbody id="cost-tbody-long"></tbody>
       </table>
     </div>
   </div>
 </div>
 
-<!-- $1 QUESTION -->
-<div style="background:var(--navy);border-radius:10px;padding:20px 22px;margin-bottom:14px;text-align:center">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(200,150,12,.6);margin-bottom:10px">One More Question</div>
-  <div style="font-size:18px;font-weight:600;color:#fff;line-height:1.6;margin-bottom:4px">If this timeshare was completely paid off today —</div>
-  <div style="font-size:18px;font-weight:700;color:var(--gold);line-height:1.6;margin-bottom:10px">would you buy it again on eBay for $1?</div>
-  <div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.6">Knowing you would still owe maintenance fees every year. For the rest of your life. And beyond.</div>
+<!-- CLOSING QUESTION -->
+<div class="doc-section callout-section">
+  <div class="callout-eyebrow">One More Question</div>
+  <p class="callout-q">If this timeshare was completely paid off today — would you buy it again on eBay for $1?</p>
+  <p class="callout-body">Knowing you would still owe maintenance fees every year, for the rest of your life. And beyond.</p>
 </div>
 
 <div class="nav-bar">
-  <a class="np" href="/rights/">← Consumer Rights</a>
-  <span class="ns">16 — True Cost</span>
+  <a class="np" href="/current/">← Current Situation</a>
+  <span class="ns">True Cost</span>
   <a class="nn" href="/quote/">Your Quote →</a>
 </div>
 
 <style>
-:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--red:#dc2626;--green:#16a34a}
-.vb{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:0 0 8px 8px;margin-bottom:18px}
-.vbc{padding:9px 13px;border-right:1px solid var(--border)}.vbc:last-child{border:none}
-.vbl{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
-.vbv{font-size:14px;font-weight:700;color:var(--navy)}
-.sum3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
-.scard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.scard.accent{background:var(--navy)}
-.slb{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#9ca3af;margin-bottom:5px}
-.scard.accent .slb{color:rgba(255,255,255,.45)}
-.sv{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:3px}
-.sv.red{color:var(--gold)}
-.scard.accent .sv{color:var(--gold)}
-.ss{font-size:11px;color:#9ca3af}
-.scard.accent .ss{color:rgba(255,255,255,.35)}
-.tbl-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
-.tbl-hdr{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid #fef3c7;padding-bottom:5px;margin-bottom:14px}
-.ctbl{border-collapse:collapse}
-.ctbl.narrow{width:auto;margin:0 auto;min-width:280px;display:table}
-.ctbl th{background:var(--navy);color:#fff;padding:9px 12px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.ctbl th:first-child{text-align:left}
-.ctbl{border-collapse:separate;border-spacing:0}
-.ctbl td{padding:9px 20px;border-bottom:1px solid #f3f4f6;text-align:right;font-family:"Cormorant Garamond",serif;font-size:16px;font-weight:600;color:var(--navy)}
-.ctbl td:first-child{text-align:left;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#374151}
-.ctbl tr.hl{background:#fff8e0}
-.ctbl tr:last-child td{border:none}
-.bkdn{background:#f3f4f6;border-radius:8px;padding:12px;margin-top:14px}
-.bkdn-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;margin-bottom:8px}
-.bkdn-tbl th{background:#e5e7eb;color:#6b7280;font-size:9px}
-.bkdn-tbl td{color:#9ca3af;font-size:13px;border-bottom-color:#e5e7eb}
-.dark-box{background:var(--navy);border-radius:10px;padding:22px 24px;margin-bottom:14px;text-align:center}
-.dq{font-size:14px;color:#fff;line-height:1.7;font-weight:500}
-.dd{width:40px;height:1px;background:rgba(255,255,255,.12);margin:14px auto}
-.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
-.np{padding:10px 18px;font-size:14px;font-weight:600;border-radius:6px;text-decoration:none;background:#f3f4f6;color:#374151;border:1px solid var(--border)}
-.nn{padding:10px 18px;font-size:14px;font-weight:700;border-radius:6px;text-decoration:none;background:var(--gold);color:#fff}
-.ns{font-size:12px;color:#9ca3af;text-align:center;flex:1}
-@media(max-width:500px){.sum3{grid-template-columns:1fr}}
+:root{--navy:#1B2A4A;--gold:#C8960C;--border:#e5e7eb;--text:#1a1a1a;--muted:#6b7280}
+*{box-sizing:border-box}
+
+/* PAGE HEADER */
+.doc-header{border-bottom:2px solid var(--navy);padding-bottom:18px;margin-bottom:24px}
+.doc-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.doc-title{font-family:Inter,sans-serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:6px;line-height:1.2}
+.doc-sub{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);margin:0}
+
+/* CLIENT SUMMARY */
+.summary-card{background:#f8f9fc;border:1px solid var(--border);border-top:3px solid var(--navy);border-radius:0 0 6px 6px;margin-bottom:24px}
+.sc-row{display:grid;grid-template-columns:repeat(4,1fr)}
+.sc-cell{padding:12px 16px;border-right:1px solid var(--border)}
+.sc-cell:last-child{border:none}
+.sc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);margin-bottom:4px}
+.sc-val{font-size:14px;font-weight:600;color:var(--navy)}
+
+/* SECTIONS */
+.doc-section{margin-bottom:24px}
+.section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+
+/* BREAKDOWN TABLE */
+.breakdown-table{width:100%;border-collapse:collapse;font-family:Inter,sans-serif}
+.breakdown-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
+.breakdown-table th:not(:first-child){text-align:right}
+.breakdown-table td{font-size:14px;color:var(--text);padding:12px 14px;border-bottom:1px solid var(--border)}
+.breakdown-table td:not(:first-child){text-align:right;font-weight:500;font-variant-numeric:tabular-nums}
+.breakdown-table tr.total-row td{font-weight:700;color:var(--navy);border-top:2px solid var(--border);border-bottom:none;font-size:15px}
+
+/* PROJECTION TABLES */
+.tables-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.proj-table{width:100%;border-collapse:collapse;font-family:Inter,sans-serif}
+.proj-table th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:10px 14px;border-bottom:2px solid var(--border);text-align:left}
+.proj-table th:last-child{text-align:right}
+.proj-table td{font-size:14px;color:var(--text);padding:11px 14px;border-bottom:1px solid #f3f4f6}
+.proj-table td:last-child{text-align:right;font-weight:600;color:var(--navy);font-variant-numeric:tabular-nums}
+.proj-table tr.hl td{background:#f0f7ff}
+.proj-table tr.hl td:last-child{color:var(--navy)}
+
+/* CALLOUT */
+.callout-section{background:#f8f9fc;border:1px solid var(--border);border-left:4px solid var(--navy);border-radius:0 6px 6px 0;padding:22px 24px}
+.callout-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px}
+.callout-q{font-family:Inter,sans-serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:8px;line-height:1.5}
+.callout-body{font-family:Inter,sans-serif;font-size:13px;color:var(--muted);line-height:1.7;margin:0}
+
+/* RS BUTTONS */
+.rs-btn{padding:6px 18px;font-size:12px;font-weight:700;border-radius:6px;border:1.5px solid var(--border);background:#f8f9fc;color:var(--muted);cursor:pointer;font-family:Inter,sans-serif}
+.rs-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy)}
+
+/* NAV */
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)}
+.np{padding:9px 16px;font-size:13px;font-weight:600;border-radius:5px;text-decoration:none;background:#f3f4f6;color:var(--text);border:1px solid var(--border);font-family:Inter,sans-serif}
+.nn{padding:9px 20px;font-size:13px;font-weight:700;border-radius:5px;text-decoration:none;background:var(--navy);color:#fff;font-family:Inter,sans-serif}
+.ns{font-size:11px;color:var(--muted);text-align:center;flex:1;font-family:Inter,sans-serif}
+
+@media(max-width:600px){.sc-row,.tables-grid{grid-template-columns:1fr}.sc-cell{border-right:none;border-bottom:1px solid var(--border)}}
 </style>
 
 <script>
-var SK="atc_clients_v2",AK="atc_active";
-function ga(){try{return JSON.parse(localStorage.getItem(SK))||{};}catch(e){return{};}}
-function fc(n){return n?"$"+Math.round(n).toLocaleString():"$0";}
-function fcd(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"$0.00";}
+var _mtfYr=0,_mtgMo=0,_mtgYrs=10,_resortIdx=0,_resortData=[];
+function fc(n){return n?"$"+Math.round(n).toLocaleString():"—";}
+function fcd(n){return n?"$"+parseFloat(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—";}
+function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||"—";}
 
-function cumMtf(yrs,yr){var t=0;for(var i=1;i<=yrs;i++)t+=yr*Math.pow(1.08,i-1);return t;}
-function cumMtg(yrs,mo,term){return mo*Math.min(yrs,term)*12;}
+function cumMtf(y){var t=0;for(var i=1;i<=y;i++)t+=_mtfYr*Math.pow(1.08,i-1);return t;}
+function cumMtg(y,mo,term){if(mo<=0)return 0;var months=Math.min(y*12,term*12);return mo*months;}
+
+function renderCosts(){
+  var mtgMo=_mtgMo; var mtfYr=_mtfYr; var mtfMo=mtfYr/12;
+  var totalMo=mtfMo+(mtgMo>0?mtgMo:0);
+
+  // Breakdown table
+  var rowMtg=document.getElementById('row-mtg');
+  if(rowMtg) rowMtg.style.display=mtgMo>0?'':'none';
+  set('b-mtg-mo',fcd(mtgMo)); set('b-mtg-yr',fc(mtgMo*12));
+  set('b-mtf-mo',fcd(mtfMo)); set('b-mtf-yr',fc(mtfYr));
+  set('b-total-mo',fcd(totalMo)); set('b-total-yr',fc(totalMo*12));
+
+  // Short-term rows
+  var TF_SHORT=[{l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},{l:"5 Years",y:5,hl:true}];
+  var TF_LONG=[{l:"10 Years",y:10,hl:true},{l:"20 Years",y:20},{l:"30 Years",y:30,hl:true}];
+  function makeRows(tfs){
+    return tfs.map(function(tf){
+      var v=cumMtg(tf.y,mtgMo,_mtgYrs)+cumMtf(tf.y);
+      return "<tr"+(tf.hl?" class='hl'":"")+">"
+        +"<td>"+tf.l+"</td>"
+        +"<td>"+fcd(v)+"</td>"
+        +"</tr>";
+    }).join("");
+  }
+  var sb=document.getElementById("cost-tbody"); if(sb) sb.innerHTML=makeRows(TF_SHORT);
+  var lb=document.getElementById("cost-tbody-long"); if(lb) lb.innerHTML=makeRows(TF_LONG);
+}
+
+function selectResort(ri){
+  _resortIdx=ri;
+  document.querySelectorAll('.rs-btn').forEach(function(b,i){b.classList.toggle('active',i===ri);});
+  loadResortData(ri);
+}
+function loadResortData(ri){
+  var r=_resortData[ri]||{};
+  _mtfYr=parseFloat(r.maitFees)||0;
+  _mtgMo=parseFloat(r.monthlyMortgage)||0;
+  _mtgYrs=parseInt(r.mtgTerm)||10;
+  set('vb-resort',(r.name||'—')+(ri>0?' (R-'+(ri+1)+')':''));
+  renderCosts();
+}
 
 (function(){
-  var slug=localStorage.getItem(AK);if(!slug)return;
-  var d=ga()[slug]||{};
-  var mtfYr=parseFloat(d.maitFees)||0, mtfMo=mtfYr/12;
-  var mtgMo=parseFloat(d.monthlyMortgage)||0;
-  var mtgYrs=parseInt(d.mtgTerm)||10;
-  var alphaFee=parseFloat(d.alphaFee)||0;
-  var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"—";
+  var AK='atc_active',SK='atc_clients_v2';
+  var slug=localStorage.getItem(AK); if(!slug)return;
+  var d=(JSON.parse(localStorage.getItem(SK)||'{}'))[slug]||{};
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'—';
   var stages=["Intro","Assessment","True Cost","Quote","Acknowledgment","Contract","Funding","Completed"];
-  function set(id,v){var el=document.getElementById(id);if(el)el.textContent=v||"—";}
-  set("vb-name",nm);set("vb-resort",d.resort||"—");
-  set("vb-mo",(mtfMo+mtgMo)>0?fcd(mtfMo+mtgMo)+"/mo":"—");
-  set("vb-quote",alphaFee>0?fc(alphaFee):"Not quoted");
-  set("vb-stg",stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||"Assessment");
-  set("s-mtg-mo",mtgMo>0?fcd(mtgMo):"None");
-  set("s-mtg-yr",mtgMo>0?fcd(mtgMo*12)+"/yr":"");
-  set("s-mtf-mo",fcd(mtfMo));
-  set("s-mtf-yr",fcd(mtfYr)+"/yr");
-  set("s-comb-mo",fcd(mtfMo+mtgMo));
-  set("s-comb-yr",fcd((mtfYr+mtgMo*12))+"/yr combined");
-  
+  set('vb-name',nm);
+  set('vb-stg',stages[typeof d.vitalsStage==="number"?d.vitalsStage:1]||'Assessment');
 
-  var TF_LONG=[
-    {l:"10 Years",y:10,hl:true},{l:"20 Years",y:20},{l:"30 Years",y:30,hl:true}
-  ];
-  var TF_SHORT=[
-    {l:"1 Month",y:1/12},{l:"1 Year",y:1},{l:"3 Years",y:3,hl:true},{l:"5 Years",y:5,hl:true}
-  ];
-  var TF=TF_SHORT;
+  var resorts=d.resorts||[];
+  if(!resorts.length||!resorts[0].name){
+    resorts=[{name:d.resort||'',maitFees:d.maitFees||0,monthlyMortgage:d.monthlyMortgage||0,mtgTerm:d.mtgTerm||10}];
+  }
+  _resortData=resorts;
+  _mtfYr=parseFloat(resorts[0].maitFees)||0;
+  _mtgMo=parseFloat(resorts[0].monthlyMortgage)||0;
+  _mtgYrs=parseInt(resorts[0].mtgTerm)||10;
+  set('vb-resort',resorts[0].name||'—');
+  set('vb-mo',fcd((_mtfYr/12)+_mtgMo)+'/mo');
 
-  var rows="",lrows="",brows="";
-  // Long-term table (10/20/30yr)
-  TF_LONG.forEach(function(tf){
-    var mtg=cumMtg(tf.y,mtgMo,mtgYrs);
-    var mtf8=cumMtf(tf.y,mtfYr);
-    var comb=mtg+mtf8;
-    var hl=tf.hl?' class="hl"':"";
-    lrows+="<tr"+hl+"><td>"+tf.l+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td></tr>";
-  });
-  // Short-term table (1mo/1yr/3yr/5yr)
-  TF_SHORT.forEach(function(tf){
-    var mtg=cumMtg(tf.y,mtgMo,mtgYrs);
-    var mtf8=cumMtf(tf.y,mtfYr);
-    var comb=mtg+mtf8;
-    var hl=tf.hl?' class="hl"':"";
-    rows+="<tr"+hl+"><td>"+tf.l+"</td><td style='color:#15803d;font-weight:700'>"+fcd(comb)+"</td></tr>";
-    brows+="<tr><td>"+tf.l+"</td><td>"+fcd(mtg)+"</td><td>"+fcd(mtf8)+"</td><td>"+fcd(mtfYr*tf.y)+"</td></tr>";
-  });
-  var lt=document.getElementById("cost-tbody-long");if(lt)lt.innerHTML=lrows;
-  document.getElementById("cost-tbody").innerHTML=rows;
-  document.getElementById("bkdn-tbody").innerHTML=brows;
+  var hasMultiple=resorts.some(function(r,i){return i>0&&r&&r.name;});
+  if(hasMultiple){
+    document.getElementById('resort-selector').style.display='block';
+    resorts.forEach(function(r,i){if(i>0&&r&&r.name){var btn=document.getElementById('rs-'+i);if(btn)btn.style.display='';}});
+  }
+  renderCosts();
 })();
 </script>
 </div></div>
-</body>
-</html>
+</body></html>
