@@ -751,146 +751,168 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div style="font-size:13px;color:#a16207;line-height:1.7">Regardless of compensation, every Alpha enrollment includes a written money-back guarantee — if we do not obtain a Favorable Outcome within 36 months, you receive a full refund of your service fee. That commitment is in writing, signed by us, in your contract.</div>
 </div>
 
-<!-- NEPQ COMPENSATION CALCULATOR -->
+<!-- NEPQ COMPENSATION CALCULATOR v2 -->
 <div style="margin-bottom:20px">
 
-  <!-- SECTION HEADER -->
   <div style="background:var(--navy);border-radius:10px;padding:20px 24px;margin-bottom:16px;text-align:center">
     <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(200,150,12,.6);margin-bottom:8px">What You Were Never Told</div>
     <div style="font-size:22px;font-weight:700;color:#fff;line-height:1.4">Resort Compensation Analysis</div>
-    <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:8px">"Just so I can get a full picture of your situation…"</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:8px;font-style:italic">"Just so I can get a full picture of your situation…"</div>
   </div>
 
-  <!-- STEP 1: WHAT THEY WERE PROMISED -->
-  <div class="comp-step" id="cs-1">
+  <!-- AUTO-POPULATED SUMMARY -->
+  <div id="comp-auto-summary" style="background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin-bottom:16px;display:none">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#1e40af;margin-bottom:10px">Auto-filled from Vitals</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <div><div style="font-size:10px;color:#6b7280;margin-bottom:2px">Purchase Year</div><div style="font-size:15px;font-weight:700;color:#1B2A4A" id="cas-year">—</div></div>
+      <div><div style="font-size:10px;color:#6b7280;margin-bottom:2px">Years Owned</div><div style="font-size:15px;font-weight:700;color:#1B2A4A" id="cas-yrs">—</div></div>
+      <div><div style="font-size:10px;color:#6b7280;margin-bottom:2px">Mortgage Payment</div><div style="font-size:15px;font-weight:700;color:#1B2A4A" id="cas-mtg">—</div></div>
+      <div><div style="font-size:10px;color:#6b7280;margin-bottom:2px">Current Annual MTF</div><div style="font-size:15px;font-weight:700;color:#1B2A4A" id="cas-mtf">—</div></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: WHAT THEY WERE ENTITLED TO -->
+  <div class="comp-step">
     <div class="cs-num">01</div>
     <div class="cs-body">
-      <div class="cs-q">"How many nights per year did your contract promise you could use this?"</div>
-      <div class="cs-hint">Standard is 7 nights/yr. Points owners may not know — help them estimate.</div>
+      <div class="cs-q">"How many times per year were you allowed to use it?"</div>
+      <div class="cs-hint">Usually once per year. Some have even/odd year contracts — that counts as 0.5x/yr.</div>
       <div class="cs-input-row">
         <div class="cs-field">
-          <label>Nights Per Year (Promised)</label>
-          <input id="c-nights-yr" type="number" placeholder="e.g. 7" oninput="calcComp()">
+          <label>Visits Allowed Per Year</label>
+          <input id="c-visits-yr" type="number" placeholder="" oninput="calcComp()">
         </div>
-        <div class="cs-auto">
-          <label>Years Owned (auto)</label>
-          <div class="cs-auto-val" id="c-years-owned">—</div>
+        <div class="cs-field">
+          <label>Nights Promised Per Visit</label>
+          <input id="c-nights-visit-promised" type="number" placeholder="" oninput="calcComp()">
         </div>
       </div>
-      <div class="cs-reveal" id="c-entitled-reveal" style="display:none">
-        <div class="cs-reveal-lbl">Total Nights You Were Promised</div>
-        <div class="cs-reveal-val" id="c-entitled">—</div>
-        <div class="cs-reveal-sub">nights over your ownership</div>
-      </div>
+      <div class="cs-hint" style="margin-top:8px;margin-bottom:0">"And about how many nights per visit were you promised?"  — Usually 3–7 nights.</div>
     </div>
   </div>
 
   <!-- STEP 2: WHAT ACTUALLY HAPPENED -->
-  <div class="comp-step" id="cs-2">
+  <div class="comp-step">
     <div class="cs-num">02</div>
     <div class="cs-body">
-      <div class="cs-q">"And in reality — how many times were you actually able to get out there and use it?"</div>
+      <div class="cs-q">"And in reality — how many total times did you actually get out there and use it?"</div>
       <div class="cs-hint">Let them sit with the silence. They usually laugh or sigh. That's the moment.</div>
       <div class="cs-input-row">
         <div class="cs-field">
-          <label>Total Visits</label>
-          <input id="c-visits" type="number" placeholder="e.g. 3" oninput="calcComp()">
+          <label>Total Visits Ever Used</label>
+          <input id="c-total-visits" type="number" placeholder="" oninput="calcComp()">
         </div>
         <div class="cs-field">
-          <label>Avg Nights Per Visit</label>
-          <input id="c-nights-visit" type="number" placeholder="e.g. 5" oninput="calcComp()">
+          <label>Avg Actual Nights Per Visit</label>
+          <input id="c-actual-nights" type="number" placeholder="" oninput="calcComp()">
         </div>
-      </div>
-      <div class="cs-reveal" id="c-used-reveal" style="display:none">
-        <div class="cs-reveal-lbl">Nights You Actually Used</div>
-        <div class="cs-reveal-val" id="c-used">—</div>
-        <div class="cs-reveal-sub">out of <span id="c-entitled-ref">—</span> promised</div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 3: WHAT THEY PAID -->
-  <div class="comp-step" id="cs-3">
+  <!-- STEP 3: FINANCIAL — MOSTLY AUTO -->
+  <div class="comp-step">
     <div class="cs-num">03</div>
     <div class="cs-body">
-      <div class="cs-q">"Roughly how much did you put down at signing, and what's the monthly been?"</div>
-      <div class="cs-hint">Don't rush. Let them calculate. Their number, their words, their pain.</div>
+      <div class="cs-q">"Roughly how much did you put down at signing?"</div>
+      <div class="cs-hint">Mortgage payment and years paying are calculated automatically from vitals data.</div>
       <div class="cs-input-row">
         <div class="cs-field">
           <label>Down Payment</label>
-          <div class="cs-dollar-wrap"><span>$</span><input id="c-down" type="number" placeholder="0" oninput="calcComp()"></div>
+          <div class="cs-dollar-wrap"><span>$</span><input id="c-down" type="number" placeholder="" oninput="calcComp()"></div>
         </div>
-        <div class="cs-field">
-          <label>Monthly Payment</label>
-          <div class="cs-dollar-wrap"><span>$</span><input id="c-monthly" type="number" placeholder="e.g. 279" oninput="calcComp()"></div>
+        <div class="cs-field cs-auto-field">
+          <label>Mortgage Payment <span style="color:#16a34a;font-size:9px">● auto</span></label>
+          <div class="cs-dollar-wrap"><span>$</span><input id="c-monthly" type="number" placeholder="" oninput="calcComp()"></div>
         </div>
       </div>
       <div class="cs-input-row" style="margin-top:8px">
-        <div class="cs-field">
-          <label>Years Paying</label>
-          <input id="c-yrs-paid" type="number" placeholder="e.g. 4" oninput="calcComp()">
+        <div class="cs-field cs-auto-field">
+          <label>Years Paying <span style="color:#16a34a;font-size:9px">● auto</span></label>
+          <input id="c-yrs-paid" type="number" placeholder="" oninput="calcComp()">
         </div>
-        <div class="cs-field">
-          <label>Total MTF Paid (optional)</label>
-          <div class="cs-dollar-wrap"><span>$</span><input id="c-mtf-paid" type="number" placeholder="0" oninput="calcComp()"></div>
+        <div class="cs-field cs-auto-field">
+          <label>Est. Total MTF Paid <span style="color:#9ca3af;font-size:9px">● estimated</span></label>
+          <div class="cs-dollar-wrap"><span>$</span><input id="c-mtf-paid" type="number" placeholder="" oninput="calcComp()"></div>
         </div>
       </div>
+      <div style="font-size:10px;color:#9ca3af;margin-top:6px;font-style:italic">MTF estimated using 6%/yr backward projection — not exact accounting. Override if client knows actual total.</div>
       <div style="margin-top:8px">
-        <label style="font-size:12px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:6px">
-          <input type="checkbox" id="c-override-toggle" onchange="toggleOverride()"> 
-          Client knows their total paid directly
+        <label style="font-size:11px;color:#6b7280;cursor:pointer;display:flex;align-items:center;gap:6px">
+          <input type="checkbox" id="c-override-toggle" onchange="toggleOverride()">
+          Client knows their total amount paid
         </label>
         <div id="c-override-wrap" style="display:none;margin-top:8px">
           <div class="cs-field">
-            <label>Override — Total Paid</label>
-            <div class="cs-dollar-wrap"><span>$</span><input id="c-override" type="number" placeholder="e.g. 40000" oninput="calcComp()"></div>
+            <label>Override — Total Paid Directly</label>
+            <div class="cs-dollar-wrap"><span>$</span><input id="c-override" type="number" placeholder="" oninput="calcComp()"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Missing mortgage prompt -->
+      <div id="c-no-mtg-prompt" style="display:none;margin-top:10px;background:#fff8e0;border:1px solid #fcd34d;border-radius:6px;padding:10px 14px">
+        <div style="font-size:12px;font-weight:600;color:#92400e;margin-bottom:6px">No mortgage on file — ask one of the following:</div>
+        <div style="font-size:12px;color:#374151;margin-bottom:4px">Option 1: "Do you remember your approximate monthly mortgage payment?"</div>
+        <div style="font-size:12px;color:#374151">Option 2: "What was the total purchase price of the timeshare?"</div>
+        <div class="cs-input-row" style="margin-top:8px">
+          <div class="cs-field">
+            <label>Monthly Mortgage (if remembered)</label>
+            <div class="cs-dollar-wrap"><span>$</span><input id="c-mtg-manual" type="number" placeholder="" oninput="calcComp()"></div>
+          </div>
+          <div class="cs-field">
+            <label>OR Purchase Price (to estimate)</label>
+            <div class="cs-dollar-wrap"><span>$</span><input id="c-pp-manual" type="number" placeholder="" oninput="calcComp()"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- RESULT CARD -->
+  <!-- RESULT -->
   <div id="comp-result" style="display:none;background:var(--navy);border-radius:12px;padding:26px;margin-top:4px">
     <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(200,150,12,.6);margin-bottom:14px;text-align:center">Compensation Analysis</div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Nights Entitled</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Nights Entitled</div>
         <div style="font-size:22px;font-weight:700;color:#fff" id="r-entitled">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25)" id="r-entitled-sub"></div>
       </div>
       <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Nights Used</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Nights Used</div>
         <div style="font-size:22px;font-weight:700;color:#fff" id="r-used">—</div>
       </div>
       <div style="background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:8px;padding:12px;text-align:center">
-        <div style="font-size:10px;color:rgba(200,150,12,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Unused Nights</div>
+        <div style="font-size:9px;color:rgba(200,150,12,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Unused Nights</div>
         <div style="font-size:22px;font-weight:700;color:var(--gold)" id="r-unused">—</div>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
       <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:12px">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Total Paid</div>
-        <div style="font-size:18px;font-weight:700;color:#fff" id="r-total-paid">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Total Paid</div>
+        <div style="font-size:16px;font-weight:700;color:#fff" id="r-total-paid">—</div>
       </div>
       <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:12px">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Cost Per Night</div>
-        <div style="font-size:18px;font-weight:700;color:#fff" id="r-cost-per-night">—</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">Total Paid ÷ Nights Entitled</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Cost Per Night</div>
+        <div style="font-size:16px;font-weight:700;color:#fff" id="r-cost-per-night">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25)">÷ Nights Entitled</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:8px;padding:12px">
+        <div style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Est. MTF Paid</div>
+        <div style="font-size:16px;font-weight:700;color:#fff" id="r-mtf-breakdown">—</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.25)">6% backward projection</div>
       </div>
     </div>
 
-    <!-- THE NUMBER -->
     <div style="background:rgba(200,150,12,.1);border:1.5px solid rgba(200,150,12,.4);border-radius:10px;padding:20px;text-align:center">
       <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(200,150,12,.7);margin-bottom:8px">Potential Compensation Demand</div>
       <div style="font-size:48px;font-weight:700;color:var(--gold);line-height:1" id="r-comp">—</div>
-      <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:8px">Unused Nights × Cost Per Night</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:6px">Unused Nights × Cost Per Night (Total Paid ÷ Nights Entitled)</div>
     </div>
 
-    <!-- NEPQ CLOSE LINE -->
-    <div style="margin-top:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:8px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;font-style:italic;text-align:center">
-      "So just so I understand — you paid <strong style="color:#fff" id="r-total-paid-inline">$X</strong> for something you used <strong style="color:#fff" id="r-used-inline">N</strong> times, out of <strong style="color:var(--gold)" id="r-entitled-inline">N</strong> opportunities. Does that feel like you got what you paid for?"
+    <div style="margin-top:14px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:8px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;font-style:italic;text-align:center">
+      "So just so I understand — you paid <strong style="color:#fff" id="r-paid-inline">$X</strong> for something you used <strong style="color:#fff" id="r-used-inline">N</strong> nights, out of <strong style="color:var(--gold)" id="r-entitled-inline">N</strong> nights you were promised. Does that feel like you got what you paid for?"
     </div>
   </div>
 
@@ -904,17 +926,14 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .cs-q{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;line-height:1.5}
 .cs-hint{font-size:11px;color:#9ca3af;font-style:italic;margin-bottom:14px;line-height:1.5}
 .cs-input-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.cs-field label,.cs-auto label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;display:block;margin-bottom:5px}
+.cs-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;display:block;margin-bottom:5px}
 .cs-field input{width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:15px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;outline:none}
 .cs-field input:focus{border-color:var(--navy)}
-.cs-auto-val{font-size:22px;font-weight:700;color:var(--navy);padding:6px 0}
+.cs-auto-field input{background:#f0fdf4;border-color:#86efac}
 .cs-dollar-wrap{display:flex;border:1.5px solid #e5e7eb;border-radius:6px;overflow:hidden}
+.cs-auto-field .cs-dollar-wrap{border-color:#86efac}
 .cs-dollar-wrap span{padding:9px 10px;background:#f8f9fc;color:#9ca3af;font-size:13px;border-right:1px solid #e5e7eb}
 .cs-dollar-wrap input{border:none;outline:none;padding:9px 10px;font-size:15px;font-weight:600;color:var(--navy);font-family:Inter,sans-serif;flex:1;width:100%}
-.cs-reveal{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;margin-top:12px;display:flex;align-items:center;gap:16px}
-.cs-reveal-lbl{font-size:11px;color:#1e40af;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.cs-reveal-val{font-size:22px;font-weight:700;color:#1e40af}
-.cs-reveal-sub{font-size:11px;color:#3b82f6}
 </style>
 
 <script>
@@ -925,78 +944,113 @@ function toggleOverride(){
 }
 
 function calcComp(){
-  var d=window._aD?window._aD():(typeof _aD==='function'?_aD():null);
-  var purchaseYr=d?parseInt(d.yearPurchased)||0:0;
-  var yrsOwned=purchaseYr>0?Math.max(0,2026-purchaseYr):0;
+  var d=window._aD?window._aD():(typeof _aD==='function'?_aD():null)||{};
+  var purchYr=parseInt(d.yearPurchased)||0;
+  var currYr=2026;
+  var yrsOwned=purchYr>0?Math.max(0,currYr-purchYr):0;
+  var currentMTF=parseFloat(d.maitFees)||0;
 
-  // Auto-fill years owned
-  var yoEl=document.getElementById('c-years-owned');
-  if(yoEl) yoEl.textContent=yrsOwned>0?yrsOwned+' years':'Enter purchase year in vitals';
+  // Auto-fill years paid
+  var ypEl=document.getElementById('c-yrs-paid');
+  if(ypEl&&!ypEl._manuallyEdited) ypEl.value=yrsOwned||'';
 
-  var nightsYr=parseFloat(document.getElementById('c-nights-yr').value)||0;
-  var visits=parseFloat(document.getElementById('c-visits').value)||0;
-  var nightsVisit=parseFloat(document.getElementById('c-nights-visit').value)||0;
+  // Mortgage: max 10yr exposure
+  var mtgFromVitals=parseFloat(d.monthlyMortgage)||0;
+  var yrsRemaining=Math.max(0,10-yrsOwned);
+  var mtgEl=document.getElementById('c-monthly');
+  if(mtgEl&&!mtgEl._manuallyEdited&&mtgFromVitals>0) mtgEl.value=mtgFromVitals;
+
+  // Show no-mortgage prompt if needed
+  var noMtgPrompt=document.getElementById('c-no-mtg-prompt');
+  if(noMtgPrompt) noMtgPrompt.style.display=(mtgFromVitals===0&&yrsOwned>0?'block':'none');
+
+  // MTF backward estimate using 6% growth
+  // startMTF = currentMTF / (1.06 ^ yrsOwned)
+  // total = startMTF * ((1.06^yrsOwned - 1) / 0.06)
+  var estMTFPaid=0;
+  if(currentMTF>0&&yrsOwned>0){
+    var startMTF=currentMTF/Math.pow(1.06,yrsOwned);
+    estMTFPaid=startMTF*((Math.pow(1.06,yrsOwned)-1)/0.06);
+  }
+  var mtfEl=document.getElementById('c-mtf-paid');
+  if(mtfEl&&!mtfEl._manuallyEdited&&estMTFPaid>0) mtfEl.value=Math.round(estMTFPaid);
+
+  // Inputs
+  var visitsPerYr=parseFloat(document.getElementById('c-visits-yr').value)||0;
+  var nightsPromised=parseFloat(document.getElementById('c-nights-visit-promised').value)||0;
+  var totalVisits=parseFloat(document.getElementById('c-total-visits').value)||0;
+  var actualNights=parseFloat(document.getElementById('c-actual-nights').value)||0;
   var down=parseFloat(document.getElementById('c-down').value)||0;
-  var monthly=parseFloat(document.getElementById('c-monthly').value)||(d?parseFloat(d.monthlyMortgage)||0:0);
-  var yrsPaid=parseFloat(document.getElementById('c-yrs-paid').value)||yrsOwned;
-  var mtfPaid=parseFloat(document.getElementById('c-mtf-paid').value)||(d?(parseFloat(d.maitFees)||0)*yrsOwned:0);
+
+  // Mortgage: use manual if vitals missing
+  var mtgManual=parseFloat((document.getElementById('c-mtg-manual')||{}).value)||0;
+  var ppManual=parseFloat((document.getElementById('c-pp-manual')||{}).value)||0;
+  var mtgPayment=parseFloat(mtgEl.value)||mtgManual;
+  // Estimate from purchase price if needed: assume 15% down, 7% rate, 10yr
+  if(mtgPayment===0&&ppManual>0){
+    var loan=ppManual*0.85; var r=0.07/12; var n=120;
+    mtgPayment=loan*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+    if(mtgEl) mtgEl.value=mtgPayment.toFixed(2);
+  }
+
+  var yrsPaid=parseFloat(ypEl.value)||yrsOwned;
+  var mtfPaid=parseFloat(mtfEl.value)||estMTFPaid;
   var override=document.getElementById('c-override-toggle').checked?parseFloat(document.getElementById('c-override').value)||0:0;
 
-  var entitled=yrsOwned*nightsYr;
-  var used=visits*nightsVisit;
+  // Calculations
+  var nightsPerYrEntitled=visitsPerYr*nightsPromised;
+  var entitled=nightsPerYrEntitled*yrsOwned;
+  var used=totalVisits*actualNights;
   var unused=Math.max(0,entitled-used);
-  var totalPaid=override>0?override:(down+(monthly*12*yrsPaid)+mtfPaid);
+
+  // Total paid: mortgage applies only up to 10yr max
+  var mtgYrsApplied=Math.min(yrsPaid,10);
+  var totalPaid=override>0?override:(down+(mtgPayment*12*mtgYrsApplied)+mtfPaid);
   var costPerNight=entitled>0?totalPaid/entitled:0;
   var comp=unused*costPerNight;
 
   function fc(n){return n>0?'$'+Math.round(n).toLocaleString():'—';}
+  function fn(n){return n>0?n.toFixed(0):'—';}
 
-  // Step reveals
-  var er=document.getElementById('c-entitled-reveal');
-  var ur=document.getElementById('c-used-reveal');
-  if(er) er.style.display=(entitled>0?'flex':'none');
-  if(ur) ur.style.display=(used>=0&&entitled>0?'flex':'none');
+  // Update auto summary
+  var sum=document.getElementById('comp-auto-summary');
+  if(sum){
+    sum.style.display=purchYr>0?'block':'none';
+    document.getElementById('cas-year').textContent=purchYr||'—';
+    document.getElementById('cas-yrs').textContent=yrsOwned>0?yrsOwned+' yrs':'—';
+    document.getElementById('cas-mtg').textContent=mtgFromVitals>0?fc(mtgFromVitals)+'/mo':'Not on file';
+    document.getElementById('cas-mtf').textContent=currentMTF>0?fc(currentMTF)+'/yr':'—';
+  }
 
-  var cel=document.getElementById('c-entitled'); if(cel) cel.textContent=entitled>0?entitled+' nights':'—';
-  var uel=document.getElementById('c-used'); if(uel) uel.textContent=used+' nights';
-  var uref=document.getElementById('c-entitled-ref'); if(uref) uref.textContent=entitled>0?entitled:'?';
-
-  // Result card
+  // Result
   var res=document.getElementById('comp-result');
   if(res) res.style.display=(comp>0?'block':'none');
-
-  document.getElementById('r-entitled').textContent=entitled>0?entitled:'—';
-  document.getElementById('r-used').textContent=entitled>0?used:'—';
-  document.getElementById('r-unused').textContent=unused>0?unused:'—';
+  document.getElementById('r-entitled').textContent=fn(entitled);
+  document.getElementById('r-entitled-sub').textContent=entitled>0?(visitsPerYr+'x/yr × '+nightsPromised+' nights × '+yrsOwned+' yrs'):'';
+  document.getElementById('r-used').textContent=fn(used);
+  document.getElementById('r-unused').textContent=fn(unused);
   document.getElementById('r-total-paid').textContent=fc(totalPaid);
   document.getElementById('r-cost-per-night').textContent=costPerNight>0?('$'+costPerNight.toFixed(2)+'/night'):'—';
+  document.getElementById('r-mtf-breakdown').textContent=fc(estMTFPaid);
   document.getElementById('r-comp').textContent=fc(comp);
-  document.getElementById('r-total-paid-inline').textContent=fc(totalPaid);
-  document.getElementById('r-used-inline').textContent=used;
-  document.getElementById('r-entitled-inline').textContent=entitled>0?entitled:'?';
+  document.getElementById('r-paid-inline').textContent=fc(totalPaid);
+  document.getElementById('r-used-inline').textContent=fn(used);
+  document.getElementById('r-entitled-inline').textContent=fn(entitled);
 
-  // Save to client record
+  // Save
   var SK='atc_clients_v2',AK='atc_active';
   var slug=localStorage.getItem(AK);
-  if(slug){try{var all=JSON.parse(localStorage.getItem(SK)||'{}');if(all[slug]){all[slug].compNights={nightsYr,visits,nightsVisit,down,monthly,yrsPaid,mtfPaid,override,comp,totalPaid,entitled,used,unused,costPerNight};all[slug]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(all));}}catch(e){}}
+  if(slug){try{var all=JSON.parse(localStorage.getItem(SK)||'{}');if(all[slug]){all[slug].compCalc={visitsPerYr,nightsPromised,totalVisits,actualNights,down,mtgPayment,yrsPaid,mtfPaid,override,comp,totalPaid,entitled,used,unused,costPerNight};all[slug]._updated=Date.now();localStorage.setItem(SK,JSON.stringify(all));}}catch(e){}}
 }
 
-// Auto-fill monthly from client data on load
+// Mark manually edited fields so auto-fill doesn't override user input
+['c-yrs-paid','c-monthly','c-mtf-paid'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input',function(){this._manuallyEdited=true;});
+});
+
 document.addEventListener('DOMContentLoaded',function(){
-  setTimeout(function(){
-    var d=window._aD?window._aD():(typeof _aD==='function'?_aD():null);
-    if(!d)return;
-    var mEl=document.getElementById('c-monthly');
-    if(mEl&&!mEl.value&&d.monthlyMortgage) mEl.value=parseFloat(d.monthlyMortgage)||'';
-    var dEl=document.getElementById('c-down');
-    // down payment not in standard record
-    var mtfEl=document.getElementById('c-mtf-paid');
-    if(mtfEl&&!mtfEl.value&&d.maitFees&&d.yearPurchased){
-      var yrs=Math.max(0,2026-parseInt(d.yearPurchased));
-      if(yrs>0) mtfEl.value=Math.round(parseFloat(d.maitFees)*yrs)||'';
-    }
-    calcComp();
-  },500);
+  setTimeout(calcComp,400);
 });
 </script>
 
