@@ -720,6 +720,7 @@ function buildRightNav(){
       +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a></div>"
     +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
       +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">📝 CRM Note</button>"
+      +(window.location.pathname.indexOf('/vitals/')<0&&window.location.pathname.indexOf('/owner')<0?"<button class='rn-report-btn' style='background:#1B2A4A;color:#C8960C' onclick=\"window._openEmailGen()\">✉️ Create Email</button>":"")
       +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8960C')\">📱 SMS</button>"
       +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8960C')\">📋 Full Summary</button></div>"
     +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"+tool("/ownership/","\u{1F464}","Client Pres.")+tool("/cost/","\u{1F4B0}","True Cost")+tool("/quote/","\u{1F4C4}","Quote")+"</div>";
