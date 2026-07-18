@@ -76,11 +76,12 @@ body:not([data-lang]) .es-only { display: none !important; }
 </head>
 <body>
 <style id="atc-sb-css">
-body{display:block!important;min-height:100vh!important;font-size:15px!important}
+body{display:block!important;min-height:100vh!important;font-size:15px!important;background:#f5f7fa!important}
 .sidenav{width:160px!important;min-width:160px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
 .rightnav{width:175px!important;min-width:175px!important;background:#0f1d33!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .rightnav::-webkit-scrollbar{width:3px}.rightnav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.3);border-radius:2px}
+:root{--cat-ownership:#EAF0F8;--cat-financial:#FFF7E6;--cat-legal:#FCE8E6;--cat-pain:#F3E8FF;--cat-comp:#DCFCE7;--cat-docs:#F1F5F9;--cat-exit:#CCFBF1}
 .main,.main-content,.app,.page-content{margin-left:160px!important;margin-right:175px!important;flex:1!important;padding:0 12px!important;padding-top:90px!important;padding-bottom:120px!important}
 .wrap{max-width:100%!important;margin:0!important}
 /* PORTAL BANNER */
@@ -479,6 +480,14 @@ function buildSB(){
 
   // ── LEFT NAV — pages only ───────────────────────────────────────────────
   function navItem(p){
+    var _nc={'/ownership/':'#3b82f6','/owner/':'#3b82f6','/consult/':'#3b82f6',
+      '/vitals/':'#3b82f6','/current/':'#f59e0b','/cost/':'#f59e0b','/quote/':'#f59e0b',
+      '/credit/':'#ef4444','/guarantee/':'#ef4444','/proof/':'#ef4444','/letter/':'#ef4444',
+      '/wait/':'#a855f7','/compensation/':'#10b981','/heirs/':'#ef4444',
+      '/group/':'#14b8a6','/approval/':'#14b8a6','/better/':'#14b8a6','/included/':'#14b8a6',
+      '/exit-methods/':'#14b8a6','/leverage/':'#14b8a6','/checklist/':'#64748b'};
+    var _dotColor=_nc[p.url]||'rgba(255,255,255,.2)';
+
     var done=!!comp[p.url];var act=cur===p.url;var url=p.url;
     var isNum=typeof p.n==="number"&&p.n>0;
     var numLabel="<span style='font-size:9px;color:"+(act?"#C8960C":"rgba(255,255,255,.25)")+";min-width:14px;text-align:right;flex-shrink:0'>"+(typeof p.n==="number"?p.n:"")+"</span>";
@@ -503,6 +512,19 @@ function buildSB(){
     +"<a href='/portals/' onclick='return _navClick(event,\"/portals/\")' style='display:block;padding:4px 8px;font-size:9px;color:rgba(200,150,12,.6);text-decoration:none'>🌐 Client Portals</a>"
     +"</div>";
 
+
+  // Set page category background
+  var _catColors={'/ownership/':'#EAF0F8','/owner/':'#EAF0F8','/consult/':'#EAF0F8',
+    '/vitals/':'#EAF0F8','/current/':'#FFF7E6','/cost/':'#FFF7E6','/quote/':'#FFF7E6',
+    '/credit/':'#FCE8E6','/guarantee/':'#FCE8E6','/proof/':'#FCE8E6','/letter/':'#FCE8E6',
+    '/rights/':'#FCE8E6','/agreement/':'#FCE8E6','/wait/':'#F3E8FF','/compensation/':'#DCFCE7',
+    '/heirs/':'#FCE8E6','/group/':'#CCFBF1','/approval/':'#CCFBF1','/better/':'#CCFBF1',
+    '/included/':'#CCFBF1','/exit-methods/':'#CCFBF1','/leverage/':'#CCFBF1',
+    '/checklist/':'#F1F5F9','/disclaimers/':'#F1F5F9','/clients/':'#EAF0F8'};
+  var _catBg=_catColors[cur]||'#ffffff';
+  var _wrap=document.querySelector('.wrap');
+  if(_wrap){_wrap.style.background=_catBg;_wrap.style.borderRadius='10px';_wrap.style.boxShadow='0 1px 8px rgba(0,0,0,.06)';}
+  document.querySelector('.main')?document.querySelector('.main').style.background='transparent':'';
   el.innerHTML=toggleHdr+navHtml;
   buildRightNav();
 }
