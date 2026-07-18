@@ -1054,6 +1054,130 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
+
+<!-- PAIN & SUFFERING DOCUMENTATION -->
+<div style="margin-bottom:20px">
+
+  <!-- INTRO -->
+  <div style="background:var(--navy);border-radius:10px;padding:22px 24px;margin-bottom:16px">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:rgba(200,150,12,.6);margin-bottom:8px">Attorney Documentation</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.4">The impact of a timeshare dispute isn't only measured in dollars.</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Attorneys need your story — how this affected your credit, your peace of mind, your daily life, and your future. Your words are the documentation.</div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="sc">
+    <div class="slbl">Impact Documentation — In the Client's Own Words</div>
+    <div class="ack-list" id="pain-list">
+
+      <div class="pain-item">
+        <div class="pain-q">Has this situation affected your credit score or your ability to borrow money?</div>
+        <textarea class="pain-ta" data-key="credit_damage" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "Can you tell me more about what that was like?"</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-q">Have you received collection calls, letters, or notices related to this timeshare?</div>
+        <textarea class="pain-ta" data-key="collection_activity" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "How often? How did that affect your daily life?"</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-q">Has this caused you stress, anxiety, or loss of sleep?</div>
+        <textarea class="pain-ta" data-key="stress_anxiety" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "What has been the hardest part of dealing with this?"</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-q">Are you afraid of foreclosure or other legal consequences?</div>
+        <textarea class="pain-ta" data-key="fear_foreclosure" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "How long has that fear been with you?"</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-q">Has this affected your family, your relationships, or your quality of life?</div>
+        <textarea class="pain-ta" data-key="family_impact" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "How did your family experience this with you?"</div>
+      </div>
+
+      <div class="pain-item">
+        <div class="pain-q">What would fully resolving this situation mean for you and your family?</div>
+        <textarea class="pain-ta" data-key="resolution_meaning" placeholder="" oninput="savePain(this)"></textarea>
+        <div class="pain-followup">↳ "What would life look like without this hanging over you?"</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMPLETION CARD -->
+  <div id="pain-complete" style="display:none;background:var(--navy);border-radius:10px;padding:22px 24px;margin-bottom:14px;text-align:center">
+    <div style="font-size:32px;margin-bottom:8px">📋</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px">Documentation Complete</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">These responses have been saved and are ready for attorney review. The client's own words are the most powerful evidence of harm.</div>
+  </div>
+
+</div>
+
+<style>
+.pain-item{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:10px}
+.pain-q{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:10px;line-height:1.5}
+.pain-ta{width:100%;border:1.5px solid #e5e7eb;border-radius:6px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13px;line-height:1.7;color:#374151;resize:vertical;min-height:80px;outline:none}
+.pain-ta:focus{border-color:var(--navy)}
+.pain-ta.filled{border-color:rgba(52,199,89,.5);background:#f0fdf4}
+.pain-followup{font-size:11px;color:#9ca3af;font-style:italic;margin-top:8px}
+.ack-list .ack-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f3f4f6;cursor:pointer;align-items:flex-start}
+.ack-item:last-child{border:none}
+.ack-check{font-size:18px;color:#e5e7eb;flex-shrink:0;width:22px}
+.ack-body .ack-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px}
+.ack-body .ack-desc{font-size:12px;color:#6b7280;line-height:1.5}
+.ack-item.checked .ack-check{color:#16a34a}
+.ack-item.checked .ack-body .ack-title{color:#16a34a}
+</style>
+
+<script>
+function savePain(el){
+  var key=el.dataset.key;
+  var val=el.value.trim();
+  el.classList.toggle('filled',val.length>0);
+  
+  // Save to client record
+  var SK='atc_clients_v2',AK='atc_active';
+  var slug=localStorage.getItem(AK);
+  if(slug){try{
+    var all=JSON.parse(localStorage.getItem(SK)||'{}');
+    if(all[slug]){
+      if(!all[slug].painDoc) all[slug].painDoc={};
+      all[slug].painDoc[key]=val;
+      all[slug]._updated=Date.now();
+      localStorage.setItem(SK,JSON.stringify(all));
+    }
+  }catch(e){}}
+
+  // Show complete card when all filled
+  var tas=document.querySelectorAll('.pain-ta');
+  var filled=[].filter.call(tas,function(t){return t.value.trim().length>0;}).length;
+  var comp=document.getElementById('pain-complete');
+  if(comp) comp.style.display=(filled>=4?'block':'none');
+}
+
+// Restore saved pain doc on load
+document.addEventListener('DOMContentLoaded',function(){
+  setTimeout(function(){
+    var SK='atc_clients_v2',AK='atc_active';
+    var slug=localStorage.getItem(AK);
+    if(!slug)return;
+    try{
+      var d=JSON.parse(localStorage.getItem(SK)||'{}')[slug]||{};
+      var doc=d.painDoc||{};
+      document.querySelectorAll('.pain-ta').forEach(function(ta){
+        var key=ta.dataset.key;
+        if(doc[key]){ta.value=doc[key];ta.classList.add('filled');}
+      });
+    }catch(e){}
+  },400);
+});
+</script>
+
 <div class="nav-bar">
   <a class="np" href="/heirs/">← Heirs &amp; Estate</a>
   <span class="ns">9 — Resort Compensation</span>
