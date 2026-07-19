@@ -143,19 +143,19 @@ body:not([data-lang]) .es-only { display: none !important; }
 <body>
 <style id="atc-sb-css">
 body{display:block!important;min-height:100vh!important;font-size:15px!important;background:#f5f7fa!important}
-.sidenav{width:160px!important;min-width:160px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
-.sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.4);border-radius:2px}
-.rightnav{width:175px!important;min-width:175px!important;background:#1B2A4A!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
-.rightnav::-webkit-scrollbar{width:3px}.rightnav::-webkit-scrollbar-thumb{background:rgba(200,150,12,.3);border-radius:2px}
+.sidenav{width:160px!important;min-width:160px!important;background:linear-gradient(rgba(13,36,68,.93),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&q=50) center/cover fixed!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
+.sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,169,90,.4);border-radius:2px}
+.rightnav{width:175px!important;min-width:175px!important;background:linear-gradient(rgba(13,36,68,.92),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=400&q=50) center/cover fixed!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
+.rightnav::-webkit-scrollbar{width:3px}.rightnav::-webkit-scrollbar-thumb{background:rgba(200,169,90,.3);border-radius:2px}
 :root{--cat-ownership:#EAF0F8;--cat-financial:#FFF7E6;--cat-legal:#FCE8E6;--cat-pain:#F3E8FF;--cat-comp:#DCFCE7;--cat-docs:#F1F5F9;--cat-exit:#CCFBF1}
 .main,.main-content,.app,.page-content{margin-left:160px!important;margin-right:175px!important;flex:1!important;padding:0 12px!important;padding-top:90px!important;padding-bottom:120px!important}
 .wrap{max-width:100%!important;margin:0!important}
 /* PORTAL BANNER */
-.portal-banner{position:fixed;top:0;left:160px;right:175px;height:40px;background:linear-gradient(135deg,#1B2A4A 0%,#243860 60%,#1B2A4A 100%);border-bottom:2px solid #C8960C;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;font-family:Inter,sans-serif}
+.portal-banner{position:fixed;top:0;left:160px;right:175px;height:40px;background:linear-gradient(135deg,#1B3F6B 0%,#1e4d80 60%,#1B3F6B 100%);border-bottom:2px solid #C8A95A;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;font-family:Inter,sans-serif}
 .pb-client{font-weight:800;color:#fff;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pb-status{font-size:10px;font-weight:700;padding:1px 6px;border-radius:100px;flex-shrink:0}
 .pb-status.attended{background:rgba(52,199,89,.2);color:#34c759;border:1px solid rgba(52,199,89,.4)}
-.pb-status.quoted{background:rgba(200,150,12,.2);color:#C8960C;border:1px solid rgba(200,150,12,.4)}
+.pb-status.quoted{background:rgba(200,169,90,.2);color:#C8A95A;border:1px solid rgba(200,169,90,.4)}
 .pb-status.absent{background:rgba(255,59,48,.2);color:#ff3b30;border:1px solid rgba(255,59,48,.4)}
 .pb-status.vero{background:rgba(88,86,214,.2);color:#5856d6;border:1px solid rgba(88,86,214,.4)}
 .pb-status.sold{background:rgba(52,199,89,.3);color:#15803d;border:2px solid #16a34a}
@@ -164,9 +164,9 @@ body{display:block!important;min-height:100vh!important;font-size:15px!important
 .pb-saved{font-size:10px;font-weight:600;color:rgba(255,255,255,.7);transition:.3s}
 .pb-saved.dirty{color:#ff9500}.pb-saved.saved{color:#34c759}
 .pb-email-wrap{display:flex;align-items:center;gap:4px;cursor:pointer;color:rgba(255,255,255,.6);font-size:10px;font-weight:600}
-.pb-email-wrap input{cursor:pointer;accent-color:#C8960C}
+.pb-email-wrap input{cursor:pointer;accent-color:#C8A95A}
 .pb-btn{border:none;border-radius:4px;padding:3px 8px;font-size:9px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s;white-space:nowrap}
-.pb-push{background:#C8960C;color:#fff}.pb-push:hover{background:#a67a08}
+.pb-push{background:#C8A95A;color:#fff}.pb-push:hover{background:#a67a08}
 .pb-save{background:#16a34a;color:#fff}.pb-save:hover{background:#15803d}
 /* NAV SECTIONS */
 .nav-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;user-select:none}
@@ -178,39 +178,39 @@ body{display:block!important;min-height:100vh!important;font-size:15px!important
 .nav-completed-body{transition:max-height .25s ease}
 /* RIGHT NAV */
 .rn-section{border-bottom:1px solid rgba(255,255,255,.07);padding:8px 0}
-.rn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#C8960C;padding:4px 10px 2px}
+.rn-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#C8A95A;padding:4px 10px 2px}
 .rn-btn{display:flex;align-items:center;gap:6px;padding:6px 10px;text-decoration:none;color:rgba(255,255,255,.85);font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:.12s;font-family:Inter,sans-serif}
-.rn-btn:hover,.rn-btn.active{background:rgba(200,150,12,.15);color:#C8960C}
+.rn-btn:hover,.rn-btn.active{background:rgba(200,169,90,.15);color:#C8A95A}
 .rn-btn .rn-ic{font-size:13px;flex-shrink:0;width:18px;text-align:center}
 .rn-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;font-size:11px;padding:5px 7px;font-family:Inter,sans-serif;outline:none;margin:0 0 4px}
 .rn-2col{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px 8px}
 .rn-lang-btn{padding:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:rgba(255,255,255,.85);font-size:13px;font-weight:700;cursor:pointer;text-align:center;font-family:Inter,sans-serif;transition:.12s}
-.rn-lang-btn.active{background:#C8960C;border-color:#C8960C;color:#fff}
+.rn-lang-btn.active{background:#C8A95A;border-color:#C8A95A;color:#fff}
 .rn-report-btn{display:block;width:calc(100% - 16px);margin:3px 8px;padding:6px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.92);font-size:13px;font-weight:600;cursor:pointer;text-align:left;font-family:Inter,sans-serif;transition:.12s}
-.rn-report-btn:hover{background:rgba(200,150,12,.2);color:#C8960C;border-color:rgba(200,150,12,.4)}
+.rn-report-btn:hover{background:rgba(200,169,90,.2);color:#C8A95A;border-color:rgba(200,169,90,.4)}
 /* PUSH POPUP */
 .push-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9000;align-items:center;justify-content:center}
 .push-overlay.open{display:flex}
 .push-box{background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden}
-.push-hdr{background:#1B2A4A;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.push-hdr{background:#1B3F6B;color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
 .push-hdr-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:.5px}
 .push-x{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;padding:4px 9px;cursor:pointer;font-size:14px}
 .push-body{padding:14px 18px}
 .push-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
 .push-item{display:flex;align-items:center;gap:7px;padding:7px 10px;background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;color:#374151;transition:.12s}
-.push-item:hover{border-color:#C8960C;background:#fff8e0}
-.push-item input{accent-color:#C8960C;cursor:pointer}
+.push-item:hover{border-color:#C8A95A;background:#fff8e0}
+.push-item input{accent-color:#C8A95A;cursor:pointer}
 .push-item.pushed{border-color:#16a34a;background:#f0fdf4;color:#15803d}
 .push-actions{display:flex;gap:8px;align-items:center}
 .push-btn-all{background:none;border:1px solid #e5e7eb;border-radius:6px;padding:7px 12px;font-size:11px;font-weight:700;cursor:pointer;color:#374151}
-.push-btn-go{background:#C8960C;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;flex:1;transition:.15s}
+.push-btn-go{background:#C8A95A;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;flex:1;transition:.15s}
 .push-btn-go:hover{background:#a67a08}
 /* SESSION + UNSAVED DIALOGS */
 .session-overlay,.unsaved-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9500;align-items:center;justify-content:center}
 .session-overlay.open,.unsaved-overlay.open{display:flex}
 .session-box,.unsaved-box{background:#fff;border-radius:14px;width:340px;max-width:95vw;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
 .session-icon{font-size:36px;margin-bottom:12px;text-align:center}
-.session-title,.unsaved-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#1B2A4A;margin-bottom:8px}
+.session-title,.unsaved-title{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:#1B3F6B;margin-bottom:8px}
 .session-msg,.unsaved-msg{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:20px}
 .session-btns,.unsaved-btns{display:flex;flex-direction:column;gap:7px}
 .sbtn{border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:.15s;text-align:center}
@@ -221,7 +221,7 @@ body{display:block!important;min-height:100vh!important;font-size:15px!important
 .status-btn{flex:1;padding:5px 4px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.8);font-size:9px;font-weight:700;cursor:pointer;text-align:center;font-family:Inter,sans-serif;transition:.15s;text-transform:uppercase;letter-spacing:.5px}
 .status-btn:hover{background:rgba(255,255,255,.1)}
 .status-btn.active-attended{background:rgba(52,199,89,.2);border-color:rgba(52,199,89,.5);color:#34c759}
-.status-btn.active-quoted{background:rgba(200,150,12,.2);border-color:rgba(200,150,12,.5);color:#C8960C}
+.status-btn.active-quoted{background:rgba(200,169,90,.2);border-color:rgba(200,169,90,.5);color:#C8A95A}
 .status-btn.active-absent{background:rgba(255,59,48,.2);border-color:rgba(255,59,48,.5);color:#ff3b30}
 .status-btn.active-vero{background:rgba(88,86,214,.2);border-color:rgba(88,86,214,.5);color:#5856d6}
 .status-btn.active-sold{background:rgba(52,199,89,.25);border-color:rgba(52,199,89,.6);color:#15803d;font-size:10px}
@@ -376,10 +376,10 @@ window.doPush=function(){
   closePushPopup();
   // Show share URL for copying
   var toast2=document.createElement('div');
-  toast2.style.cssText='position:fixed;bottom:80px;left:220px;right:210px;background:#1B2A4A;border:2px solid #C8960C;color:#fff;padding:14px 16px;border-radius:10px;z-index:800;font-size:12px';
-  toast2.innerHTML='<div style="font-size:10px;color:#C8960C;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">✅ Portal Ready — Client Share Link</div>'
+  toast2.style.cssText='position:fixed;bottom:80px;left:220px;right:210px;background:#1B3F6B;border:2px solid #C8A95A;color:#fff;padding:14px 16px;border-radius:10px;z-index:800;font-size:12px';
+  toast2.innerHTML='<div style="font-size:10px;color:#C8A95A;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">✅ Portal Ready — Client Share Link</div>'
     +'<div style="font-family:monospace;font-size:11px;word-break:break-all;color:rgba(255,255,255,.92);margin-bottom:8px">'+shareUrl.substring(0,80)+'...</div>'
-    +'<button id="_cpyBtn" style="background:#C8960C;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Link</button>'
+    +'<button id="_cpyBtn" style="background:#C8A95A;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:11px;font-weight:700;cursor:pointer">📋 Copy Link</button>'
     +'<button onclick="this.parentNode.remove()" style="background:transparent;color:rgba(255,255,255,.7);border:none;cursor:pointer;float:right;font-size:16px">✕</button>';
   document.body.appendChild(toast2);
   var cpyBtn=document.getElementById('_cpyBtn');
@@ -499,12 +499,12 @@ function buildSB(){
   if(!ch){
     ch=document.createElement("div");
     ch.id="client-header-bar";
-    ch.style.cssText="position:fixed;top:40px;left:160px;right:175px;z-index:197;background:#1B2A4A;border-bottom:2px solid #C8960C;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
+    ch.style.cssText="position:fixed;top:40px;left:160px;right:175px;z-index:197;background:linear-gradient(rgba(13,36,68,.9),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=50) right/cover;border-bottom:2px solid #C8A95A;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
     document.body.appendChild(ch);
   }
 
   // Status badge
-  var statusBadge=status?"<span style='font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;background:"+(status==='quoted'?'rgba(200,150,12,.25)':status==='attended'?'rgba(52,199,89,.2)':status==='vero'?'rgba(99,102,241,.25)':status==='sold'?'rgba(52,199,89,.3)':'rgba(255,255,255,.1)')+"'>"+(status.toUpperCase())+"</span>":"";
+  var statusBadge=status?"<span style='font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;background:"+(status==='quoted'?'rgba(200,169,90,.25)':status==='attended'?'rgba(52,199,89,.2)':status==='vero'?'rgba(99,102,241,.25)':status==='sold'?'rgba(52,199,89,.3)':'rgba(255,255,255,.1)')+"'>"+(status.toUpperCase())+"</span>":"";
 
   // Build all client options
   var opts=Object.keys(all).sort(function(a,b){return(all[b]._updated||0)-(all[a]._updated||0);}).map(function(k){
@@ -524,18 +524,18 @@ function buildSB(){
     +"<a href='mailto:"+d.email+"' style='font-size:11px;font-weight:600;color:rgba(255,255,255,.9);text-decoration:none;white-space:nowrap'>"+d.email+"</a></div>":"")
     // Resort + monthly
     +(d?"<div style='padding:0 12px;border-right:1px solid rgba(255,255,255,.1);height:100%;display:flex;flex-direction:column;justify-content:center'>"
-    +"<div style='font-size:11px;color:#C8960C;font-weight:600;white-space:nowrap'>"+(d.resort||"No resort")+"</div>"
+    +"<div style='font-size:11px;color:#C8A95A;font-weight:600;white-space:nowrap'>"+(d.resort||"No resort")+"</div>"
     +"<div style='font-size:10px;color:rgba(255,255,255,.7)'>"+_fC(mo)+"/mo"+(d.alphaFee&&parseFloat(d.alphaFee)>0?" · "+_fC(d.alphaFee)+" quoted":"")+"</div>"
     +"</div>":"")
     // Progress bar
     +(d?"<div style='padding:0 12px;border-right:1px solid rgba(255,255,255,.1);height:100%;display:flex;flex-direction:column;justify-content:center;min-width:80px'>"
     +"<div style='font-size:9px;color:rgba(255,255,255,.6);margin-bottom:3px'>"+prog.done+"/"+prog.total+" pages</div>"
     +"<div style='background:rgba(255,255,255,.1);border-radius:2px;height:3px;width:80px'>"
-    +"<div style='height:3px;background:#C8960C;width:"+Math.min(100,Math.round(prog.done/Math.max(1,prog.total)*100))+"%;border-radius:2px;transition:.3s'></div>"
+    +"<div style='height:3px;background:#C8A95A;width:"+Math.min(100,Math.round(prog.done/Math.max(1,prog.total)*100))+"%;border-radius:2px;transition:.3s'></div>"
     +"</div></div>":"")
     // Status dropdown
     +(d?"<div style='padding:0 10px;border-right:1px solid rgba(255,255,255,.15);height:100%;display:flex;align-items:center'>"
-    +"<select onchange=\"window.setClientStatus(this.value)\" style='background:#fff;color:#1B2A4A;font-size:12px;font-weight:700;border:none;border-radius:5px;padding:4px 8px;cursor:pointer;outline:none;min-width:130px'>"
+    +"<select onchange=\"window.setClientStatus(this.value)\" style='background:#fff;color:#1B3F6B;font-size:12px;font-weight:700;border:none;border-radius:5px;padding:4px 8px;cursor:pointer;outline:none;min-width:130px'>"
     +"<option value=''>-- Status --</option>"
     +"<option value='attended'"+(status==='attended'?' selected':'')+">Attended</option>"
     +"<option value='noshow'"+(status==='noshow'?' selected':'')+"> No Show</option>"
@@ -548,7 +548,7 @@ function buildSB(){
     +"</select></div>":"")
     // Action buttons
     +"<div style='padding:0 8px;height:100%;display:flex;align-items:center;gap:4px;margin-left:auto'>"
-    +"<button onclick=\"window.newSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#C8960C;color:#fff'>＋ New</button>"
+    +"<button onclick=\"window.newSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#C8A95A;color:#fff'>＋ New</button>"
     +(slug?"<button onclick=\"window.saveSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#16a34a;color:#fff'>💾 Save</button>":"")
     +(slug?"<button onclick=\"window.saveAndClear()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#0891b2;color:#fff'>Clear</button>":"")
     +(slug?"<button onclick=\"window.deleteClient()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:none;color:rgba(255,59,48,.7);border:1px solid rgba(255,59,48,.3)'>🗑</button>":"")
@@ -566,13 +566,13 @@ function buildSB(){
 
     var done=!!comp[p.url];var act=cur===p.url;var url=p.url;
     var isNum=typeof p.n==="number"&&p.n>0;
-    var numLabel="<span style='font-size:9px;color:"+(act?"#C8960C":"rgba(255,255,255,.25)")+";min-width:14px;text-align:right;flex-shrink:0'>"+(typeof p.n==="number"?p.n:"")+"</span>";
+    var numLabel="<span style='font-size:9px;color:"+(act?"#C8A95A":"rgba(255,255,255,.25)")+";min-width:14px;text-align:right;flex-shrink:0'>"+(typeof p.n==="number"?p.n:"")+"</span>";
     var checkHtml=isNum?("<span onclick=\"event.stopPropagation();event.preventDefault();window._toggleDone('"+url+"');return false;\" style=\"display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border:1.5px solid "+(done?"rgba(52,199,89,.6)":"rgba(255,255,255,.15)")+";border-radius:3px;background:"+(done?"rgba(52,199,89,.15)":"transparent")+";cursor:pointer;flex-shrink:0\">"+(done?"<span style='font-size:8px;color:#34c759'>&#10003;</span>":"")+"</span>"):"<span style='width:13px;flex-shrink:0'></span>";
     var _nc2={'/ownership/':'#0ea5e9','/owner/':'#0ea5e9','/consult/':'#0ea5e9','/vitals/':'#0ea5e9','/current/':'#0ea5e9','/clients/':'#0ea5e9','/cost/':'#f97316','/quote/':'#f97316','/wait/':'#a855f7','/whyout/':'#a855f7','/leverage/':'#a855f7','/credit/':'#ef4444','/guarantee/':'#ef4444','/proof/':'#ef4444','/rights/':'#ef4444','/letter/':'#ef4444','/heirs/':'#ef4444','/compensation/':'#10b981','/group/':'#3b82f6','/approval/':'#3b82f6','/exit-methods/':'#3b82f6','/better/':'#3b82f6','/included/':'#3b82f6','/checklist/':'#f59e0b','/agreement/':'#f59e0b','/disclaimers/':'#f59e0b'};
     var secCol=_nc2[p.url]||null;
-    var color=act?"#C8960C":(done?"rgba(255,255,255,.45)":"rgba(255,255,255,.85)");
-    var bg=act?"rgba(200,150,12,.12)":"transparent";
-    var bl=act?"#C8960C":"transparent";
+    var color=act?"#C8A95A":(done?"rgba(255,255,255,.45)":"rgba(255,255,255,.85)");
+    var bg=act?"rgba(200,169,90,.12)":"transparent";
+    var bl=act?"#C8A95A":"transparent";
     return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")'  style='display:flex;align-items:center;gap:5px;padding:5px 8px;text-decoration:none;color:"+color+";font-size:11px;font-weight:"+(act?"700":"500")+";border-left:3px solid "+bl+";background:"+bg+"'>"+numLabel+checkHtml+"<span style='flex:1;line-height:1.3'>"+p.lb+"</span></a>";
   }
 
@@ -585,9 +585,9 @@ function buildSB(){
 
   // EN/ES toggle at top of nav
   var toggleHdr="";
-  var navHtml="<div style='text-align:center;padding:12px 10px 10px;background:linear-gradient(135deg,#0a1628,#1B2A4A);border-bottom:2px solid #C8960C'><div style='font-size:11px;font-weight:900;letter-spacing:4px;color:#C8960C'>ALPHA</div><div style='font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.4);margin-top:1px'>TIMESHARE CONSULTANTS</div></div><div style='flex:1;overflow-y:auto;padding:4px 0'>"+clearAllBtn+_PG.filter(function(p){return p.url!=='/contract/';}).map(navItem).join("")
+  var navHtml="<div style='text-align:center;padding:12px 10px 10px;background:linear-gradient(135deg,#0d2444,#1B3F6B);border-bottom:2px solid #C8A95A'><div style='font-size:11px;font-weight:900;letter-spacing:4px;color:#C8A95A'>ALPHA</div><div style='font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.4);margin-top:1px'>TIMESHARE CONSULTANTS</div></div><div style='flex:1;overflow-y:auto;padding:4px 0'>"+clearAllBtn+_PG.filter(function(p){return p.url!=='/contract/';}).map(navItem).join("")
     +(lang==="es"?"<a href='/es-agreement/' onclick='return _navClick(event,\"/es-agreement/\")' style='display:block;padding:4px 8px;font-size:9px;color:rgba(255,255,255,.6);text-decoration:none'>📋 ES Acuerdo</a>":"")
-    +"<a href='/portals/' onclick='return _navClick(event,\"/portals/\")' style='display:block;padding:4px 8px;font-size:9px;color:rgba(200,150,12,.6);text-decoration:none'>🌐 Client Portals</a>"
+    +"<a href='/portals/' onclick='return _navClick(event,\"/portals/\")' style='display:block;padding:4px 8px;font-size:9px;color:rgba(200,169,90,.6);text-decoration:none'>🌐 Client Portals</a>"
     +"</div>";
 
 
@@ -614,15 +614,15 @@ function buildRightNav(){
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   function tool(url,ic,lb){return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-tool"+(cur===url?" active":"")+"'>"+ic+" <span>"+lb+"</span></a>";}
   rn.innerHTML=
-    "<div style='background:linear-gradient(rgba(10,22,40,.85),rgba(27,42,74,.9)),url(https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=300&q=40) center/cover;padding:14px 12px;border-bottom:2px solid #C8960C'>"
-    +"<div style='font-size:10px;font-weight:800;letter-spacing:2px;color:#C8960C;text-transform:uppercase'>Consultation Tools</div>"
+    "<div style='background:linear-gradient(rgba(10,22,40,.85),rgba(27,42,74,.9)),url(https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=300&q=40) center/cover;padding:14px 12px;border-bottom:2px solid #C8A95A'>"
+    +"<div style='font-size:10px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultation Tools</div>"
     +"<div style='font-size:9px;color:rgba(255,255,255,.5);margin-top:2px'>Alpha Timeshare Consultants</div></div>"
     // ── TOP: Language
     "<div class='rn-section' style='padding:6px 8px 4px'><div class='rn-label'>Language</div>"
       +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
       +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
     // ── CREATE EMAIL
-    +(cur!=='/vitals/'&&cur.indexOf('/owner')<0?"<div class='rn-section' style='padding:4px 8px'><button class='rn-report-btn' style='background:#1e3a5f;color:#C8960C' onclick=\"window._openEmailGen()\">✉️ Create Email</button></div>":"")
+    +(cur!=='/vitals/'&&cur.indexOf('/owner')<0?"<div class='rn-section' style='padding:4px 8px'><button class='rn-report-btn' style='background:#1e3a5f;color:#C8A95A' onclick=\"window._openEmailGen()\">✉️ Create Email</button></div>":"")
     // ── QUICK ACCESS (top per request)
     +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"
       +tool("/ownership/","\uD83D\uDC64","Client Pres.")+tool("/cost/","\uD83D\uDCB0","True Cost")+tool("/quote/","\uD83D\uDCC4","Quote")+"</div>"
@@ -640,10 +640,10 @@ function buildRightNav(){
     // ── REPORTS
     +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
       +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">📝 CRM Note</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8960C')\">📱 SMS</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8960C')\">📋 Full Summary</button></div>"
+      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8A95A')\">📱 SMS</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8A95A')\">📋 Full Summary</button></div>"
     // ── CONTRACT LINK (moved from left nav #24)
-    +"<div class='rn-section'><a href='/agreement/' onclick='return _navClick(event,\"/agreement/\")' style='display:block;padding:6px 10px;font-size:11px;font-weight:700;color:#C8960C;text-decoration:none'>📝 Alpha Contract</a></div>";
+    +"<div class='rn-section'><a href='/agreement/' onclick='return _navClick(event,\"/agreement/\")' style='display:block;padding:6px 10px;font-size:11px;font-weight:700;color:#C8A95A;text-decoration:none'>📝 Alpha Contract</a></div>";
 }
 
 // ── PORTAL BANNER ──────────────────────────────────────────────────────
@@ -659,14 +659,14 @@ function buildPortalBanner(){
     "<span class='pb-client'>"+(d?nm:"No client")+"</span>"
     +(status?"<span class='pb-status "+status+"'>"+(status==='quoted'?'QUOTED':status==='attended'?'ATTENDED':status==='vero'?'VERO':status==='sold'?'SOLD':'VERO')+"</span>":"")
     +(prog.done>0?"<span class='pb-progress'>"+prog.done+"/"+prog.total+"</span>":"")
-    +(pushed?"<a href='https://alphafiles.net/portals/?s="+slug+"' target='_blank' style='font-size:9px;color:rgba(200,150,12,.9);font-weight:700;flex-shrink:0;text-decoration:none;border:1px solid rgba(200,150,12,.35);border-radius:4px;padding:1px 7px'>"+pushed+" live 🔗</a>":"")
+    +(pushed?"<a href='https://alphafiles.net/portals/?s="+slug+"' target='_blank' style='font-size:9px;color:rgba(200,169,90,.9);font-weight:700;flex-shrink:0;text-decoration:none;border:1px solid rgba(200,169,90,.35);border-radius:4px;padding:1px 7px'>"+pushed+" live 🔗</a>":"")
     +"<span class='pb-spacer'></span>"
     +"<span class='pb-saved' id='pb-saved'>Saved</span>"
     +"<label class='pb-email-wrap'><input type='checkbox' id='pb-email'> 📧 Email</label>"
     +(slug?"<button class='pb-btn pb-push' onclick='window.openPushPopup()'>📤 Push</button>":"")
     +"<button class='pb-btn pb-save' onclick='window.saveSession()'>💾 Save</button>"
     +"<a href='/cost/' class='pb-btn' style='background:rgba(255,255,255,.12);color:#fff;text-decoration:none'>💰</a>"
-    +"<a href='/quote/' class='pb-btn' style='background:rgba(200,150,12,.3);color:#C8960C;text-decoration:none'>📄</a>";
+    +"<a href='/quote/' class='pb-btn' style='background:rgba(200,169,90,.3);color:#C8A95A;text-decoration:none'>📄</a>";
 }
 
 function initBanner(){
@@ -699,7 +699,7 @@ function _buildTopSave(){
   if(document.getElementById("_topSaveBtn"))return;
   // Save button
   var btn=document.createElement("button");btn.id="_topSaveBtn";btn.innerHTML="\ud83d\udcbe Save";
-  btn.style.cssText="position:fixed;top:44px;right:168px;z-index:198;background:#1B2A4A;color:#fff;border:2px solid #C8960C;border-radius:0 0 6px 6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)";
+  btn.style.cssText="position:fixed;top:44px;right:168px;z-index:198;background:#1B3F6B;color:#fff;border:2px solid #C8A95A;border-radius:0 0 6px 6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.2)";
   btn.onclick=window.saveSession;document.body.appendChild(btn);
   // Prev/Next slide arrows
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
@@ -743,7 +743,7 @@ window._openNotesPanel=function(){
     var box=document.createElement('div');
     box.style.cssText='background:#fff;border-radius:12px;width:500px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden';
     var hdr=document.createElement('div');
-    hdr.style.cssText='background:#1B2A4A;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
+    hdr.style.cssText='background:#1B3F6B;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
     var title=document.createElement('div');title.id='notes-title';title.style.cssText='font-size:14px;font-weight:700';
     var closeBtn=document.createElement('button');closeBtn.textContent='×';closeBtn.style.cssText='background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer;line-height:1';
     closeBtn.onclick=function(){overlay.style.display='none';};
@@ -753,7 +753,7 @@ window._openNotesPanel=function(){
     var footer=document.createElement('div');footer.style.cssText='padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:8px';
     var cancelBtn=document.createElement('button');cancelBtn.textContent='Close';cancelBtn.style.cssText='padding:8px 16px;border-radius:6px;border:1px solid #e5e7eb;background:#f3f4f6;color:#374151;font-size:13px;cursor:pointer';
     cancelBtn.onclick=function(){overlay.style.display='none';};
-    var saveBtn=document.createElement('button');saveBtn.textContent='Save Notes';saveBtn.style.cssText='padding:8px 20px;border-radius:6px;border:none;background:#C8960C;color:#fff;font-size:13px;font-weight:700;cursor:pointer';
+    var saveBtn=document.createElement('button');saveBtn.textContent='Save Notes';saveBtn.style.cssText='padding:8px 20px;border-radius:6px;border:none;background:#C8A95A;color:#fff;font-size:13px;font-weight:700;cursor:pointer';
     saveBtn.onclick=function(){_saveNotes();};
     footer.appendChild(cancelBtn);footer.appendChild(saveBtn);
     box.appendChild(hdr);box.appendChild(ta);box.appendChild(footer);
@@ -821,11 +821,11 @@ window._openEmailGen=function(){
   var box=document.createElement('div');
   box.style.cssText='background:#fff;border-radius:12px;width:560px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden';
   var hdr=document.createElement('div');
-  hdr.style.cssText='background:#1B2A4A;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
+  hdr.style.cssText='background:#1B3F6B;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
   hdr.innerHTML='<div style="font-size:14px;font-weight:700;color:#fff">✉️ Client Email</div><button onclick="document.getElementById(\'email-gen-overlay\').remove()" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer">×</button>';
   var subWrap=document.createElement('div');
   subWrap.style.cssText='padding:12px 16px;border-bottom:1px solid #e5e7eb;background:#f8f9fc';
-  subWrap.innerHTML='<div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Subject</div><div style="font-size:13px;font-weight:600;color:#1B2A4A" id="email-subj">'+subject+'</div>';
+  subWrap.innerHTML='<div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Subject</div><div style="font-size:13px;font-weight:600;color:#1B3F6B" id="email-subj">'+subject+'</div>';
   var ta=document.createElement('textarea');
   ta.id='email-body-ta';
   ta.value=body;
@@ -838,7 +838,7 @@ window._openEmailGen=function(){
   copySubj.onclick=function(){navigator.clipboard.writeText(subject).then(function(){copySubj.textContent='✓ Copied!';setTimeout(function(){copySubj.textContent='Copy Subject';},2000);});};
   var copyBody=document.createElement('button');
   copyBody.textContent='Copy Email';
-  copyBody.style.cssText='padding:8px 18px;border-radius:6px;border:none;background:#C8960C;color:#fff;font-size:12px;font-weight:700;cursor:pointer';
+  copyBody.style.cssText='padding:8px 18px;border-radius:6px;border:none;background:#C8A95A;color:#fff;font-size:12px;font-weight:700;cursor:pointer';
   copyBody.onclick=function(){navigator.clipboard.writeText(document.getElementById('email-body-ta').value).then(function(){copyBody.textContent='✓ Copied!';setTimeout(function(){copyBody.textContent='Copy Email';},2000);});};
   footer.appendChild(copySubj);footer.appendChild(copyBody);
   box.appendChild(hdr);box.appendChild(subWrap);box.appendChild(ta);box.appendChild(footer);
