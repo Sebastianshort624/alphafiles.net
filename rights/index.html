@@ -577,7 +577,7 @@ function buildRightNav(){
     "<div class='rn-section' style='padding:8px 8px 6px'><div class='rn-label'>Language</div>"
       +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
       +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
-    +"<div class='rn-section'><div class='rn-label'>Navigation</div>"
+    +"<div class='rn-section'>"+(window.location.pathname.indexOf('/vitals/')<0&&window.location.pathname.indexOf('/owner')<0?"<button class='rn-report-btn' style='background:#1B2A4A;color:#C8960C;margin-bottom:4px' onclick=\"window._openEmailGen()\">✉️ Create Email</button>":"")+"</div>"+"<div class='rn-section'><div class='rn-label'>Navigation</div>"
       +tool("/home/","🏠","Dashboard")+tool("/clients/","📄","Clients")+tool("/vitals/","⚾","Vitals")
       +tool("/quick-quote/","⚡","Quick Quote")+tool("/screenshare/","📺","Screen Share")
       +tool("/followup/","⏰","Follow-Up")+tool("/portals/","🌐","Client Portals")+"</div>"
