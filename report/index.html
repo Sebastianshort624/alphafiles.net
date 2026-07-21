@@ -17,9 +17,7 @@ body:not([data-lang]) .es-only { display: none !important; }
 </style>
 </head>
 <body>
-<
-  {n:25, ic:"\\u{2696}",  lb:"Damages Assessment", url:"/damages/",  email:true},
-  {n:26, ic:"\\u{1F4CA}", lb:"Case Report",         url:"/report/",   email:true},style id="atc-sb-css">
+<style id="atc-sb-css">
 body{display:block!important;min-height:100vh!important;font-size:15px!important;background:#f5f7fa!important}
 .sidenav{width:160px!important;min-width:160px!important;background:linear-gradient(rgba(13,36,68,.93),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&q=50) center/cover fixed!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important}
 .sidenav::-webkit-scrollbar{width:3px}.sidenav::-webkit-scrollbar-thumb{background:rgba(200,169,90,.4);border-radius:2px}
@@ -300,7 +298,6 @@ window.deleteClient=function(){
   toast('Client deleted','#6b7280');
   setTimeout(function(){window.location.href='/clients/';},600);
 };
-window.saveAndNew=function(){if(typeof window.saveSession==="function")window.saveSession();localStorage.removeItem("atc_active");sessionStorage.removeItem("alpha_cs");setTimeout(function(){window.location.reload();},150);};
 window.saveSession=function(){try{if(typeof autoSave==='function')autoSave();if(typeof autoSaveAck==='function')autoSaveAck();if(typeof savePageData==='function')savePageData();}catch(e){}setDirty(false);toast('Session saved ✓','#16a34a');};
 window.saveAndClear=function(){window.saveSession();setTimeout(function(){localStorage.removeItem(_AK);window.location.href='/owner/';},400);};
 window.newSession=function(){showSessionDialog();};
@@ -356,6 +353,9 @@ var _PG=[
   {n:23, ic:"\u2705",   lb:"Client Acknowledgment",   url:"/checklist/",   email:false},
   {n:24, ic:"\u{1F4DD}",lb:"Alpha Contract",          url:"/contract/",    email:false},
   {n:25, ic:"\u{1F389}",lb:"Let's Be Timeshare Free", url:"/timeshare-free/",email:false}
+,
+  {n:26, ic:"\\u{2696}",  lb:"Damages Assessment",   url:"/damages/",     email:true},
+  {n:27, ic:"\\u{1F4CA}",lb:"Case Report",            url:"/report/",      email:true}
 ];
 
 // ── MARK PAGE DONE WHEN NEXT IS CLICKED ─────────────────────────────
@@ -434,8 +434,7 @@ function buildSB(){
     // Action buttons
     +"<div style='padding:0 8px;height:100%;display:flex;align-items:center;gap:4px;margin-left:auto'>"
     +"<button onclick=\"window.newSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#C8A95A;color:#fff'>＋ New</button>"
-    +(slug?"<button onclick=\"window.saveSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#16a34a;color:#fff'>💾 Save</button>"
-    +(slug?"<button onclick=\"window.saveAndNew()\" style=\"font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#C8A95A;color:#1B3F6B\">+ New</button>":""):"")
+    +(slug?"<button onclick=\"window.saveSession()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#16a34a;color:#fff'>💾 Save</button>":"")
     +(slug?"<button onclick=\"window.saveAndClear()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:#0891b2;color:#fff'>Clear</button>":"")
     +(slug?"<button onclick=\"window.deleteClient()\" style='font-size:9px;font-weight:700;padding:4px 8px;border-radius:4px;border:none;cursor:pointer;background:none;color:rgba(255,59,48,.7);border:1px solid rgba(255,59,48,.3)'>🗑</button>":"")
     +"</div>";
@@ -503,7 +502,7 @@ function buildRightNav(){
       +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
       +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
     // ── CREATE EMAIL
-    +(cur!=='/vitals/'&&cur.indexOf('/owner')<0?"<div class='rn-section' style='padding:4px 8px'><button class='rn-report-btn' style='background:#1e3a5f;color:#C8A95A' onclick=\"window._emailThisPage()\">✉️ Create Email</button></div>":"")
+    +(cur!=='/vitals/'&&cur.indexOf('/owner')<0?"<div class='rn-section' style='padding:4px 8px'><button class='rn-report-btn' style='background:#1e3a5f;color:#C8A95A' onclick=\"window._openEmailGen()\">✉️ Create Email</button></div>":"")
     // ── QUICK ACCESS (top per request)
     +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"
       +tool("/ownership/","\uD83D\uDC64","Client Pres.")+tool("/cost/","\uD83D\uDCB0","True Cost")+tool("/quote/","\uD83D\uDCC4","Quote")+"</div>"
@@ -727,36 +726,7 @@ window._openEmailGen=function(){
   document.body.appendChild(overlay);
 };
 
-window._emailThisPage=function(){
-  var d=_aD()||{};
-  var nm=((d.firstName||"")+(d.lastName?" "+d.lastName:"")).trim()||"Client";
-  var wrap=document.querySelector(".wrap");
-  if(!wrap){toast("No content found","#dc2626");return;}
-  var clone=wrap.cloneNode(true);
-  clone.querySelectorAll("button,input,select,textarea,.nav-bar,.rs-btn").forEach(function(el){el.remove();});
-  clone.querySelectorAll("[onclick]").forEach(function(el){el.removeAttribute("onclick");});
-  var title=document.querySelector(".ph-title")?document.querySelector(".ph-title").textContent:"Report";
-  var css="body{font-family:Inter,Arial,sans-serif;background:#f0f5fc;margin:0;padding:20px;color:#2D2D2D}.wrap{max-width:760px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden}.ph{background:linear-gradient(135deg,#1B3F6B,#2563a8);padding:24px 28px}.ph-title{font-size:22px;font-weight:700;color:#fff}.ph-sub,.ph-num{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#C8A95A;margin-bottom:6px}table{width:100%;border-collapse:collapse;font-size:13px}th{padding:8px 12px;background:#E6EEF9;color:#1B3F6B;font-size:10px;font-weight:700;text-transform:uppercase;text-align:left}td{padding:10px 12px;border-bottom:1px solid #f0f5fc}";
-  var brand='<div style="background:#1B3F6B;padding:14px 24px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:13px;font-weight:900;letter-spacing:3px;color:#C8A95A">ALPHA</div><div style="font-size:8px;color:rgba(255,255,255,.4);letter-spacing:2px">TIMESHARE CONSULTANTS</div></div><div style="text-align:right"><div style="font-size:11px;color:#C8A95A;font-weight:700">'+title+'</div><div style="font-size:9px;color:rgba(255,255,255,.4)">'+nm+" &middot; "+new Date().toLocaleDateString()+'</div></div></div>';
-  var html="<!DOCTYPE html><html><head><meta charset=UTF-8><style>"+css+"</style></head><body><div class=wrap>"+brand+clone.outerHTML+"</div></body></html>";
-  var ov=document.createElement("div");ov.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;display:flex;align-items:center;justify-content:center";
-  var box=document.createElement("div");box.style.cssText="background:#fff;border-radius:10px;width:680px;max-width:95vw;max-height:88vh;display:flex;flex-direction:column;overflow:hidden";
-  var hdr=document.createElement("div");hdr.style.cssText="background:#1B3F6B;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0";
-  hdr.innerHTML='<div style="font-size:13px;font-weight:700;color:#C8A95A">Email This Page</div><button onclick="this.closest(\'[style*=z-index]\').remove()" style="background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer">x</button>';
-  var fr=document.createElement("iframe");fr.style.cssText="flex:1;border:none;min-height:320px";
-  var ft=document.createElement("div");ft.style.cssText="padding:10px 14px;border-top:1px solid #E6EEF9;display:flex;gap:8px;flex-shrink:0";
-  var cb=document.createElement("button");cb.textContent="Copy HTML";cb.style.cssText="padding:9px 18px;border-radius:6px;border:none;background:#1B3F6B;color:#C8A95A;font-size:12px;font-weight:700;cursor:pointer";
-  cb.onclick=function(){navigator.clipboard.writeText(html).then(function(){cb.textContent="Copied!";setTimeout(function(){cb.textContent="Copy HTML";},2500);});};
-  var xb=document.createElement("button");xb.textContent="Close";xb.style.cssText="padding:9px 14px;border-radius:6px;border:1px solid #E6EEF9;background:#f8fafc;color:#1B3F6B;font-size:12px;cursor:pointer";
-  xb.onclick=function(){ov.remove();};
-  ft.appendChild(cb);ft.appendChild(xb);box.appendChild(hdr);box.appendChild(fr);box.appendChild(ft);ov.appendChild(box);document.body.appendChild(ov);
-  setTimeout(function(){var doc=fr.contentDocument||fr.contentWindow.document;doc.open();doc.write(html);doc.close();},60);
-};
-
-document.addEventListener("DOMContentLoaded",function(){
-  if(!sessionStorage.getItem("alpha_cs")){localStorage.removeItem("atc_active");}
-  _injectGlobals();buildSB();buildRightNav();initBanner();_buildTopSave();
-});
+document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();buildRightNav();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
