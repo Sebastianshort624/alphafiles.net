@@ -1,4 +1,4 @@
-<!-- cache-bust: 1784726929 -->
+<!-- cache-bust: 1784730423 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +91,7 @@ body:not([data-lang]) .es-only { display: none !important; }
 body{display:block!important;min-height:100vh!important;font-size:14px!important;background:#f0f5fc!important}
 
 /* LEFT SIDEBAR */
-.sidenav{width:200px!important;min-width:200px!important;background:#E6EEF9!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;box-shadow:2px 0 10px rgba(0,0,0,.15)!important}
+.sidenav{width:200px!important;min-width:200px!important;background:#E6EEF9!important;position:fixed!important;top:0!important;left:0!important;height:100vh!important;z-index:999!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;box-shadow:2px 0 10px rgba(0,0,0,.15)!important}
 .sidenav::-webkit-scrollbar{width:3px}
 .sidenav::-webkit-scrollbar-thumb{background:#1B3F6B;border-radius:2px}
 
@@ -118,7 +118,7 @@ body{display:block!important;min-height:100vh!important;font-size:14px!important
 .main,.main-content,.app,.page-content{margin-left:200px!important;margin-right:200px!important;flex:1!important;padding:0 16px!important;padding-top:90px!important;padding-bottom:120px!important}
 
 /* PORTAL BANNER */
-.portal-banner{position:fixed;top:0;left:200px;right:200px;height:40px;background:#1B3F6B;border-bottom:2px solid #C8A95A;z-index:199;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:11px;font-family:Inter,sans-serif}
+.portal-banner{position:fixed!important;top:0!important;left:200px!important;right:200px!important;height:40px!important;background:#1B3F6B!important;border-bottom:2px solid #C8A95A!important;z-index:1000!important;display:flex!important;align-items:center!important;gap:8px!important;padding:0 12px!important;font-size:11px!important;font-family:Inter,sans-serif!important}
 .pb-client{font-weight:700;color:#fff;font-size:12px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pb-status{font-size:8px;font-weight:700;padding:2px 6px;border-radius:3px;text-transform:uppercase;background:rgba(200,169,90,.25);color:#C8A95A}
 .pb-progress{font-size:9px;color:rgba(255,255,255,.5)}
@@ -174,7 +174,7 @@ body{display:block!important;min-height:100vh!important;font-size:14px!important
 
 /* PRINT */
 @media print{.sidenav,.rightnav,.portal-banner,#client-header-bar{display:none!important}.main,.main-content,.app,.page-content{margin:0!important;padding:10px!important}}
-@media(max-width:900px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
+@media(max-width:680px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
 @media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;padding-top:44px!important}}
 </style>
 <script id="atc-sb">
