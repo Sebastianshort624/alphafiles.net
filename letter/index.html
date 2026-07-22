@@ -504,7 +504,7 @@ function buildSB(){
   if(!ch){
     ch=document.createElement("div");
     ch.id="client-header-bar";
-    ch.style.cssText="position:fixed;top:40px;left:200px;right:200px;z-index:197;background:linear-gradient(rgba(13,36,68,.9),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=50) right/cover;border-bottom:2px solid #C8A95A;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
+    ch.style.cssText="position:fixed;top:40px;left:200px;right:200px;z-index:197;background:linear-gradient(90deg,#1B3F6B,#243860);border-bottom:2px solid #C8A95A;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
     document.body.appendChild(ch);
   }
 
@@ -614,7 +614,7 @@ function buildRightNav(){
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   function tool(url,ic,lb){return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-tool"+(cur===url?" active":"")+"'>"+ic+" <span>"+lb+"</span></a>";}
   rn.innerHTML=
-    "<div style='background:linear-gradient(rgba(10,22,40,.85),rgba(27,42,74,.9)),url(https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=300&q=40) center/cover;padding:14px 12px;border-bottom:2px solid #C8A95A'>"
+    "<div style='background:linear-gradient(135deg,#1B3F6B,#243860);padding:14px 12px;border-bottom:2px solid #C8A95A'>"
     +"<div style='font-size:10px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultation Tools</div>"
     +"<div style='font-size:9px;color:rgba(255,255,255,.5);margin-top:2px'>Alpha Timeshare Consultants</div></div>"
     // ── TOP: Language
@@ -712,7 +712,7 @@ function _buildTopSave(){
     var lBtn=document.createElement("button");
     lBtn.id="_navPrev";lBtn.innerHTML="&#8249;";
     lBtn.title=prev.lb;
-    lBtn.style.cssText=baseStyle+"left:160px;border-radius:0 0 8px 0;";
+    lBtn.style.cssText=baseStyle+"left:200px;border-radius:0 0 8px 0;";
     lBtn.onclick=function(){if(window._dirty){showUnsaved(function(){window.location.href=prev.url;});}else{window.location.href=prev.url;}};
     document.body.appendChild(lBtn);
   }
@@ -720,7 +720,7 @@ function _buildTopSave(){
     var rBtn=document.createElement("button");
     rBtn.id="_navNext";rBtn.innerHTML="&#8250;";
     rBtn.title=next.lb;
-    rBtn.style.cssText=baseStyle+"right:175px;border-radius:0 0 0 8px;";
+    rBtn.style.cssText=baseStyle+"right:200px;border-radius:0 0 0 8px;";
     rBtn.onclick=function(){
       _markPageCompleted(cur);
       if(window._dirty){showUnsaved(function(){window.location.href=next.url;});}else{window.location.href=next.url;}
@@ -846,7 +846,7 @@ window._openEmailGen=function(){
   document.body.appendChild(overlay);
 };
 
-document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();buildRightNav();initBanner();_buildTopSave();});
+document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();buildRightNav();buildPortalBanner();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
