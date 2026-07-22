@@ -563,11 +563,13 @@ function buildSB(){
 }
 
 function buildRightNav(){
+  console.log('[ATC] buildRightNav running');
   var rn=document.querySelector(".rightnav");
   if(!rn){rn=document.createElement("div");rn.className="rightnav";document.body.appendChild(rn);}
   var d=_aD();var lang=window.atcGetLang?window.atcGetLang():'en';
   var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
   function tool(url,ic,lb){return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-tool"+(cur===url?" active":"")+"'>"+ic+" <span>"+lb+"</span></a>";}
+  console.log('[ATC] rightnav element found:',!!rn,'id:',rn&&rn.id);
   rn.innerHTML=
     "<div style='background:linear-gradient(135deg,#1B3F6B,#243860);padding:14px 12px;border-bottom:2px solid #C8A95A'>"
     +"<div style='font-size:10px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultation Tools</div>"
@@ -603,7 +605,9 @@ function buildRightNav(){
 
 // ── PORTAL BANNER ──────────────────────────────────────────────────────
 function buildPortalBanner(){
-  var pb=document.getElementById('portal-banner');if(!pb)return;
+  console.log('[ATC] buildPortalBanner running');
+  var pb=document.getElementById('portal-banner');
+  if(!pb){console.log('[ATC] portal-banner element NOT FOUND');return;}
   var d=_aD();var slug=_aC();
   var nm=d?(d.firstName||d.lastName?(d.firstName||"")+" "+(d.lastName||""):"Unnamed").trim():"No Client";
   var status=d?d._status||null:null;
@@ -639,7 +643,8 @@ window.initBanner=initBanner;
 window.atcApplyLang=function(){var lang="en";try{var s=localStorage.getItem("atc_active");if(s){var all=JSON.parse(localStorage.getItem("atc_clients_v2")||"{}");if(all[s]&&all[s].lang)lang=all[s].lang;else lang=localStorage.getItem("atc_lang")||"en";}else{lang=localStorage.getItem("atc_lang")||"en";}}catch(e){lang="en";}localStorage.setItem("atc_lang",lang);document.documentElement.setAttribute("data-lang",lang);document.body.setAttribute("data-lang",lang);return lang;};
 
 function _injectGlobals(){
-  if(document.getElementById('push-overlay'))return;
+  console.log('[ATC] _injectGlobals running');
+  if(document.getElementById('push-overlay')){console.log('[ATC] push-overlay already exists - early return');return;}
   var div=document.createElement('div');
   div.innerHTML=
     '<div class="push-overlay" id="push-overlay"><div class="push-box" id="push-box-inner"></div></div>'
@@ -801,7 +806,7 @@ window._openEmailGen=function(){
   document.body.appendChild(overlay);
 };
 
-document.addEventListener("DOMContentLoaded",function(){_injectGlobals();buildSB();buildRightNav();buildPortalBanner();initBanner();_buildTopSave();});
+document.addEventListener("DOMContentLoaded",function(){console.log("[ATC] DOMContentLoaded fired");_injectGlobals();buildSB();buildRightNav();buildPortalBanner();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
 </script>
