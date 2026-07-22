@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Trust Center — Alpha Timeshare Consultants</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,sans-serif;background:#f8fafc;color:#1B3F6B}
+
+/* HEADER */
+.trust-header{background:linear-gradient(135deg,#1B3F6B,#2563a8);padding:48px 40px 40px;text-align:center}
+.trust-eyebrow{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#C8A95A;margin-bottom:12px}
+.trust-title{font-size:36px;font-weight:800;color:#fff;margin-bottom:12px}
+.trust-sub{font-size:15px;color:rgba(255,255,255,.7);max-width:560px;margin:0 auto;line-height:1.7}
+
+/* LOGO WALL */
+.logo-wall{background:#fff;border-bottom:1px solid #e5e7eb;padding:28px 40px}
+.logo-wall-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#9ca3af;text-align:center;margin-bottom:18px}
+.logo-wall-grid{display:flex;flex-wrap:wrap;gap:20px 32px;justify-content:center;align-items:center}
+.logo-wall-item{opacity:.6;transition:opacity .15s;filter:grayscale(1)}
+.logo-wall-item:hover{opacity:1;filter:none}
+.logo-wall-item svg{height:24px;width:auto}
+
+/* MAIN CONTENT */
+.trust-main{max-width:1100px;margin:0 auto;padding:48px 24px}
+
+/* SECTION HEADERS */
+.section-title{font-size:20px;font-weight:800;color:#1B3F6B;margin-bottom:6px}
+.section-sub{font-size:13px;color:#6b7280;margin-bottom:20px}
+
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:48px}
+.source-card{background:#fff;border-radius:10px;border:1px solid #e5e7eb;overflow:hidden;transition:box-shadow .15s,border-color .15s}
+.source-card:hover{box-shadow:0 4px 20px rgba(27,63,107,.1);border-color:#C8A95A}
+.card-logo-bar{background:#f8fafc;padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f3f4f6}
+.card-logo-bar svg{flex-shrink:0;height:22px;width:auto}
+.card-domain{font-size:11px;font-weight:700;color:#6b7280;text-transform:lowercase}
+.card-body{padding:16px 18px}
+.card-title{font-size:14px;font-weight:700;color:#1B3F6B;margin-bottom:8px}
+.card-points{list-style:none;margin-bottom:14px}
+.card-points li{font-size:12px;color:#374151;padding:3px 0;padding-left:16px;position:relative;line-height:1.5}
+.card-points li::before{content:"✓";position:absolute;left:0;color:#C8A95A;font-weight:700;font-size:11px}
+.card-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#1B3F6B;text-decoration:none;padding:6px 12px;border:1.5px solid #d4e3f5;border-radius:5px;transition:.15s}
+.card-link:hover{background:#1B3F6B;color:#C8A95A;border-color:#1B3F6B}
+.card-link::after{content:"→";font-size:10px}
+
+/* DIVIDER */
+.section-divider{margin:40px 0 24px;display:flex;align-items:center;gap:14px}
+.section-divider-line{flex:1;height:1px;background:#e5e7eb}
+.section-divider-badge{background:#1B3F6B;color:#C8A95A;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:100px;white-space:nowrap}
+
+/* FOOTER */
+.trust-footer{background:#1B3F6B;padding:24px 40px;text-align:center}
+.trust-footer p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.8}
+.trust-footer a{color:#C8A95A;text-decoration:none}
+
+@media(max-width:600px){
+  .trust-header{padding:32px 20px}
+  .trust-title{font-size:26px}
+  .trust-main{padding:32px 16px}
+  .logo-wall{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="trust-header">
+  <div class="trust-eyebrow">Verified &amp; Independent</div>
+  <h1 class="trust-title">Trust Center</h1>
+  <p class="trust-sub">Alpha Timeshare Consultants has been helping clients legally exit timeshare contracts since 1986. Our reputation is built on transparency, results, and independent verification.</p>
+</div>
+
+<!-- FEATURED IN LOGO WALL -->
+<div class="logo-wall">
+  <div class="logo-wall-label">As Seen On &amp; Reviewed By</div>
+  <div class="logo-wall-grid">
+
+    <!-- BBB -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 80 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="16" font-weight="900" fill="#006B9E">BBB</text>
+        <text x="40" y="18" font-family="Arial" font-size="9" fill="#333">Accredited</text>
+      </svg>
+    </div>
+
+    <!-- Yelp -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="18" font-weight="900" fill="#d32323">yelp</text>
+      </svg>
+    </div>
+
+    <!-- Yahoo Finance -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#6001D2">Yahoo!</text>
+        <text x="60" y="18" font-family="Arial" font-size="14" font-weight="700" fill="#333">Finance</text>
+      </svg>
+    </div>
+
+    <!-- PR Newswire -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="11" font-weight="700" fill="#004B87">PR Newswire</text>
+      </svg>
+    </div>
+
+    <!-- Facebook -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 90 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="16" font-weight="900" fill="#1877F2">facebook</text>
+      </svg>
+    </div>
+
+    <!-- Reddit -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 70 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#FF4500">reddit</text>
+      </svg>
+    </div>
+
+    <!-- ProvenExpert -->
+    <div class="logo-wall-item">
+      <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="18" font-family="Arial" font-size="11" font-weight="700" fill="#F7931E">ProvenExpert</text>
+      </svg>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="trust-main">
+
+  <!-- INDEPENDENT REVIEWS -->
+  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-badge">Independent Reviews</div><div class="section-divider-line"></div></div>
+  <div class="section-title">What Clients Say Independently</div>
+  <div class="section-sub">Unfiltered reviews on third-party platforms we do not control.</div>
+
+  <div class="cards-grid">
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="18" font-family="Arial" font-size="18" font-weight="900" fill="#d32323">yelp</text></svg>
+        <span class="card-domain">yelp.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Yelp Business Reviews</div>
+        <ul class="card-points">
+          <li>Verified client reviews — not moderated by Alpha</li>
+          <li>Star ratings from actual customers</li>
+          <li>Review dates visible for full transparency</li>
+          <li>Response history shows company accountability</li>
+        </ul>
+        <a class="card-link" href="https://www.yelp.com/biz/alpha-timeshare-consultants-maitland" target="_blank" rel="noopener noreferrer">Visit yelp.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 80 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#F7931E">ProvenExpert</text></svg>
+        <span class="card-domain">provenexpert.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">ProvenExpert Verified Reviews</div>
+        <ul class="card-points">
+          <li>Aggregated ratings from multiple platforms</li>
+          <li>Verified reviewer identities</li>
+          <li>NPS-style satisfaction scoring</li>
+          <li>Industry benchmarking included</li>
+        </ul>
+        <a class="card-link" href="https://www.provenexpert.com/alpha-timeshare-consultants" target="_blank" rel="noopener noreferrer">Visit provenexpert.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="24" rx="4" fill="#006B9E"/><text x="4" y="17" font-family="Arial" font-size="13" font-weight="900" fill="#fff">BBB</text><text x="26" y="17" font-family="Arial" font-size="9" fill="#fff">A+</text></svg>
+        <span class="card-domain">bbb.org</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Better Business Bureau — A+ Rated</div>
+        <ul class="card-points">
+          <li>A+ accredited since 1986</li>
+          <li>Complaint resolution history publicly visible</li>
+          <li>Accreditation requires ongoing compliance</li>
+          <li>One of the oldest BBB-rated timeshare exit firms</li>
+        </ul>
+        <a class="card-link" href="https://www.bbb.org/us/fl/orlando/profile/timeshare-cancellation/alpha-timeshare-consultants-inc-0733-90830855" target="_blank" rel="noopener noreferrer">Visit bbb.org</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 70 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#FF4500">reddit</text></svg>
+        <span class="card-domain">reddit.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Reddit Community Discussions</div>
+        <ul class="card-points">
+          <li>Unfiltered consumer forum discussions</li>
+          <li>r/timeshare and r/personalfinance communities</li>
+          <li>Peer-to-peer advice on exit options</li>
+          <li>Alpha mentioned organically by verified users</li>
+        </ul>
+        <a class="card-link" href="https://www.reddit.com/search/?q=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit reddit.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 80 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#B92B27">Quora</text></svg>
+        <span class="card-domain">quora.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Quora Questions &amp; Answers</div>
+        <ul class="card-points">
+          <li>Consumer Q&amp;A on timeshare exit options</li>
+          <li>Industry experts and former clients respond</li>
+          <li>Alpha referenced in multiple threads</li>
+          <li>Verified writer credentials on responses</li>
+        </ul>
+        <a class="card-link" href="https://www.quora.com/search?q=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit quora.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 90 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="18" font-family="Arial" font-size="14" font-weight="900" fill="#1877F2">facebook</text></svg>
+        <span class="card-domain">facebook.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Facebook Business Page</div>
+        <ul class="card-points">
+          <li>Client reviews and star ratings</li>
+          <li>Community posts and check-ins</li>
+          <li>Video testimonials from real clients</li>
+          <li>Public engagement history</li>
+        </ul>
+        <a class="card-link" href="https://www.facebook.com/alphatimeshareconsultants" target="_blank" rel="noopener noreferrer">Visit facebook.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PRESS & MEDIA -->
+  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-badge">Press &amp; Media</div><div class="section-divider-line"></div></div>
+  <div class="section-title">Coverage &amp; Publications</div>
+  <div class="section-sub">Third-party editorial coverage and press releases.</div>
+
+  <div class="cards-grid">
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="11" font-weight="800" fill="#004B87">PR Newswire</text></svg>
+        <span class="card-domain">prnewswire.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">PR Newswire Press Releases</div>
+        <ul class="card-points">
+          <li>Official announcements distributed to major outlets</li>
+          <li>Company milestones and consumer alerts</li>
+          <li>Timeshare industry warnings and guidance</li>
+          <li>Archived and date-stamped for verification</li>
+        </ul>
+        <a class="card-link" href="https://www.prnewswire.com/news-releases/alpha-timeshare-consultants" target="_blank" rel="noopener noreferrer">Visit prnewswire.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="11" font-weight="800" fill="#6001D2">Yahoo!</text><text x="52" y="17" font-family="Arial" font-size="11" font-weight="700" fill="#333"> Finance</text></svg>
+        <span class="card-domain">finance.yahoo.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Yahoo Finance Coverage</div>
+        <ul class="card-points">
+          <li>Business news and press release syndication</li>
+          <li>Consumer advocacy coverage</li>
+          <li>Financial analysis of timeshare exit industry</li>
+          <li>Wide distribution across Yahoo network</li>
+        </ul>
+        <a class="card-link" href="https://finance.yahoo.com/search/keydown?p=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit finance.yahoo.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 80 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="13" font-weight="800" fill="#0052CC">Tech Times</text></svg>
+        <span class="card-domain">techtimes.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Tech Times — Featured Article</div>
+        <ul class="card-points">
+          <li>Consumer technology and finance crossover coverage</li>
+          <li>Editorial feature on timeshare exit options</li>
+          <li>Recommendations for consumers seeking help</li>
+          <li>Independently written and published</li>
+        </ul>
+        <a class="card-link" href="https://www.techtimes.com/search?q=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit techtimes.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 80 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="13" font-weight="800" fill="#E8352A">Realty Times</text></svg>
+        <span class="card-domain">realtytimes.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Realty Times Coverage</div>
+        <ul class="card-points">
+          <li>Real estate and property industry publication</li>
+          <li>Timeshare industry analysis and consumer guides</li>
+          <li>Editorial perspective on exit strategies</li>
+          <li>Widely read by real estate professionals</li>
+        </ul>
+        <a class="card-link" href="https://realtytimes.com/search?query=alpha+timeshare" target="_blank" rel="noopener noreferrer">Visit realtytimes.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="13" font-weight="800" fill="#e63946">Patch</text></svg>
+        <span class="card-domain">patch.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Patch — Local News Coverage</div>
+        <ul class="card-points">
+          <li>Hyperlocal community news platform</li>
+          <li>Florida-area coverage of consumer services</li>
+          <li>Community-verified business coverage</li>
+          <li>Neighbor-reviewed company information</li>
+        </ul>
+        <a class="card-link" href="https://patch.com/search?q=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit patch.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 70 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="13" font-weight="800" fill="#FF6B6B">Vocal</text></svg>
+        <span class="card-domain">vocal.media</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Vocal Media — Consumer Stories</div>
+        <ul class="card-points">
+          <li>Long-form consumer experience stories</li>
+          <li>Independent author platform</li>
+          <li>Timeshare exit client experiences published</li>
+          <li>Editorial and community fact-checked</li>
+        </ul>
+        <a class="card-link" href="https://vocal.media/search?query=alpha+timeshare" target="_blank" rel="noopener noreferrer">Visit vocal.media</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPANY INFO -->
+  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-badge">Company Information</div><div class="section-divider-line"></div></div>
+  <div class="section-title">About Alpha Timeshare Consultants</div>
+  <div class="section-sub">Publicly verifiable company credentials.</div>
+
+  <div class="cards-grid">
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="24" rx="4" fill="#1B3F6B"/><text x="6" y="17" font-family="Arial" font-size="12" font-weight="900" fill="#C8A95A">ALPHA</text></svg>
+        <span class="card-domain">alphatimeshareconsultants.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Official Company Website</div>
+        <ul class="card-points">
+          <li>Founded 1986 — 38+ years in business</li>
+          <li>A+ BBB accredited</li>
+          <li>100% money-back guarantee in writing</li>
+          <li>In-house credit protection included</li>
+          <li>No upfront fees — results first model</li>
+        </ul>
+        <a class="card-link" href="https://alphatimeshareconsultants.com" target="_blank" rel="noopener noreferrer">Visit alphatimeshareconsultants.com</a>
+      </div>
+    </div>
+
+    <div class="source-card">
+      <div class="card-logo-bar">
+        <svg viewBox="0 0 110 24" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial" font-size="11" font-weight="800" fill="#1a1a1a">Company In Focus</text></svg>
+        <span class="card-domain">companyinfocus.com</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Company In Focus — Business Profile</div>
+        <ul class="card-points">
+          <li>Independent business directory listing</li>
+          <li>Employee count and revenue estimates</li>
+          <li>Industry classification and NAICS codes</li>
+          <li>Registered business address verification</li>
+        </ul>
+        <a class="card-link" href="https://www.companyinfocus.com/search?q=alpha+timeshare+consultants" target="_blank" rel="noopener noreferrer">Visit companyinfocus.com</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="trust-footer">
+  <p>Alpha Timeshare Consultants, Inc. · A+ BBB Rated · Est. 1986<br>
+  877-848-3948 · <a href="https://alphatimeshareconsultants.com">alphatimeshareconsultants.com</a><br>
+  All logos shown are property of their respective owners and are used solely for identification purposes.</p>
+</div>
+
+</body>
+</html>
