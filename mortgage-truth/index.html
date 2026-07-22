@@ -65,7 +65,7 @@ body{display:block!important;min-height:100vh!important;font-size:14px!important
 .sidenav::-webkit-scrollbar-thumb{background:#1B3F6B;border-radius:2px}
 
 /* RIGHT SIDEBAR */
-.rightnav{width:200px!important;min-width:200px!important;background:#E6EEF9!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:200!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;box-shadow:-2px 0 10px rgba(0,0,0,.15)!important}
+.rightnav{width:200px!important;min-width:200px!important;background:#E6EEF9!important;position:fixed!important;top:0!important;right:0!important;height:100vh!important;z-index:999!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;box-shadow:-2px 0 10px rgba(27,63,107,.12)!important}
 .rightnav::-webkit-scrollbar{width:3px}
 .rightnav::-webkit-scrollbar-thumb{background:#1B3F6B;border-radius:2px}
 
@@ -143,7 +143,7 @@ body{display:block!important;min-height:100vh!important;font-size:14px!important
 
 /* PRINT */
 @media print{.sidenav,.rightnav,.portal-banner,#client-header-bar{display:none!important}.main,.main-content,.app,.page-content{margin:0!important;padding:10px!important}}
-@media(max-width:680px){.rightnav{display:none!important}.main,.main-content,.app,.page-content{margin-right:0!important}}
+@media(max-width:680px){.main,.main-content,.app,.page-content{margin-right:0!important}}
 @media(max-width:600px){.sidenav{display:none!important}.main,.main-content,.app,.page-content{margin-left:0!important;padding-top:44px!important}}
 </style>
 <script id="atc-sb">
@@ -522,44 +522,58 @@ function buildSB(){
 }
 
 function buildRightNav(){
-  console.log('[ATC] buildRightNav running');
-  var rn=document.querySelector(".rightnav");
-  if(!rn){rn=document.createElement("div");rn.className="rightnav";document.body.appendChild(rn);}
+  var _PIN='9999';
+  window._ATC_PIN=_PIN;
+  var rn=document.getElementById('rightnav');
+  if(!rn){rn=document.createElement('div');rn.id='rightnav';rn.className='rightnav';document.body.appendChild(rn);}
+  var unlocked=sessionStorage.getItem('atc_rn_unlocked')==='1';
+  if(!unlocked){
+    rn.innerHTML='<div style="padding:20px 12px;text-align:center">'
+      +'<div style="font-size:28px;margin-bottom:8px">\uD83D\uDD12</div>'
+      +'<div style="font-size:10px;font-weight:800;color:#C8A95A;margin-bottom:10px;letter-spacing:2px;text-transform:uppercase">Consultant Tools</div>'
+      +'<div style="font-size:11px;color:rgba(255,255,255,.55);margin-bottom:14px;line-height:1.6">Enter your 4-digit PIN to unlock</div>'
+      +'<input id="rn-pin" type="password" maxlength="4" inputmode="numeric" placeholder="\u2022\u2022\u2022\u2022"'
+      +' style="width:100%;padding:10px;border:1.5px solid rgba(255,255,255,.2);border-radius:6px;background:rgba(255,255,255,.1);color:#fff;font-size:22px;text-align:center;letter-spacing:8px;outline:none;font-family:Inter,sans-serif;margin-bottom:10px">'
+      +'<button id="rn-pin-btn" style="width:100%;padding:9px;background:#C8A95A;color:#1B3F6B;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Unlock</button>'
+      +'<div id="rn-pin-err" style="display:none;color:#ef4444;font-size:11px;margin-top:8px">Incorrect PIN. Try again.</div>'
+      +'</div>';
+    setTimeout(function(){
+      function tryPin(){
+        var v=document.getElementById('rn-pin').value;
+        if(v===window._ATC_PIN){sessionStorage.setItem('atc_rn_unlocked','1');buildRightNav();}
+        else{var e=document.getElementById('rn-pin-err');if(e)e.style.display='block';}
+      }
+      var btn=document.getElementById('rn-pin-btn');if(btn)btn.onclick=tryPin;
+      var inp=document.getElementById('rn-pin');if(inp)inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryPin();});
+    },50);
+    return;
+  }
   var d=_aD();var lang=window.atcGetLang?window.atcGetLang():'en';
-  var cur="/"+window.location.pathname.split("/").filter(Boolean)[0]+"/";
-  function tool(url,ic,lb){return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-tool"+(cur===url?" active":"")+"'>"+ic+" <span>"+lb+"</span></a>";}
-  console.log('[ATC] rightnav element found:',!!rn,'id:',rn&&rn.id);
+  var cur='/'+window.location.pathname.split('/').filter(Boolean)[0]+'/';
+  function tool(url,ic,lb){return "<a href='"+url+"' onclick='return _navClick(event,\""+url+"\")' class='rn-tool"+(cur===url?' active':'')+"'><span style='width:16px;text-align:center;flex-shrink:0'>"+ic+"</span><span>"+lb+"</span></a>";}
   rn.innerHTML=
-    "<div style='background:linear-gradient(135deg,#1B3F6B,#243860);padding:14px 12px;border-bottom:2px solid #C8A95A'>"
-    +"<div style='font-size:10px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultation Tools</div>"
-    +"<div style='font-size:9px;color:rgba(255,255,255,.5);margin-top:2px'>Alpha Timeshare Consultants</div></div>"
-    // ── TOP: Language
-    "<div class='rn-section' style='padding:6px 8px 4px'><div class='rn-label'>Language</div>"
-      +"<div class='rn-2col'><button class='rn-lang-btn"+(lang==="en"?" active":"")+"' onclick=\"window.atcSetLang('en')\">EN</button>"
-      +"<button class='rn-lang-btn"+(lang==="es"?" active":"")+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
-    // ── CREATE EMAIL
-    +(cur!=='/vitals/'&&cur.indexOf('/owner')<0?"<div class='rn-section' style='padding:4px 8px'><button class='rn-report-btn' style='background:#1e3a5f;color:#C8A95A' onclick=\"window._openEmailGen()\">✉️ Create Email</button></div>":"")
-    // ── QUICK ACCESS (top per request)
+    "<div style='background:linear-gradient(135deg,#1B3F6B,#243860);padding:12px 12px 10px;border-bottom:2px solid #C8A95A;display:flex;justify-content:space-between;align-items:center'>"
+    +"<div><div style='font-size:9px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultant Tools</div>"
+    +"<div style='font-size:7px;color:rgba(255,255,255,.45);margin-top:1px'>Alpha Timeshare Consultants</div></div>"
+    +"<button onclick=\"sessionStorage.removeItem('atc_rn_unlocked');buildRightNav()\" style='background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:13px;padding:2px' title='Lock'>\uD83D\uDD12</button>"
+    +"</div>"
+    +"<div class='rn-section'><a href='/agreement/' onclick='return _navClick(event,\"/agreement/\")' style='display:flex;align-items:center;gap:8px;padding:8px 12px;text-decoration:none;font-size:11px;font-weight:700;color:var(--nb)'><span>\uD83D\uDCDD</span><span>#24 Contract</span></a></div>"
+    +(cur.indexOf('/vitals')<0&&cur.indexOf('/owner')<0?"<div class='rn-section'><button class='rn-report-btn' style='background:var(--nb);color:var(--gold);font-weight:700' onclick=\"window._emailThisPage&&_emailThisPage()\">\u2709\uFE0F Email This Page</button></div>":"")
+    +"<div class='rn-section' style='padding:6px 0 8px'><div class='rn-label'>Language</div><div class='rn-2col'><button class='rn-lang-btn"+(lang==='en'?' active':'')+"' onclick=\"window.atcSetLang('en')\">EN</button><button class='rn-lang-btn"+(lang==='es'?' active':'')+"' onclick=\"window.atcSetLang('es')\">ES</button></div></div>"
     +"<div class='rn-section'><div class='rn-label'>Quick Access</div>"
-      +tool("/ownership/","\uD83D\uDC64","Client Pres.")+tool("/cost/","\uD83D\uDCB0","True Cost")+tool("/quote/","\uD83D\uDCC4","Quote")+"</div>"
-    // ── NAVIGATION
+      +tool('/ownership/','\uD83D\uDC64','Client Pres.')+tool('/cost/','\uD83D\uDCB0','True Cost')+tool('/quote/','\uD83D\uDCC4','Quote')+"</div>"
     +"<div class='rn-section'><div class='rn-label'>Navigation</div>"
-      +tool("/home/","🏠","Dashboard")+tool("/clients/","📄","Clients")+tool("/vitals/","⚾","Vitals")
-      +tool("/quick-quote/","⚡","Quick Quote")+tool("/screenshare/","📺","Screen Share")
-      +tool("/portals/","🌐","Client Portals")+"</div>"
-    // ── BOTTOM: Appointments
-    +"<div class='rn-section' style='padding:6px 8px'><div class='rn-label'>📅 Today Appt</div>"
-      +"<input class='rn-input' type='datetime-local' id='rn-today' value='"+(d&&d._todayAppt?d._todayAppt:"")+"' onchange=\"_sf('_todayAppt',this.value);\">"
-      +"<div class='rn-label' style='margin-top:4px'>📅 Follow-Up</div>"
-      +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:"")+"' onchange=\"_sf('_fuAppt',this.value);\">"
-      +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin-top:4px;padding:5px 8px;background:rgba(66,133,244,.2);border:1px solid rgba(66,133,244,.35);border-radius:5px;color:#7ab4ff;font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a></div>"
-    // ── REPORTS
-    +"<div class='rn-section'><div class='rn-label'>📊 Reports</div>"
-      +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">📝 CRM Note</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8A95A')\">📱 SMS</button>"
-      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8A95A')\">📋 Full Summary</button></div>"
-    // ── CONTRACT LINK (moved from left nav #24)
-    +"<div class='rn-section'><a href='/agreement/' onclick='return _navClick(event,\"/agreement/\")' style='display:block;padding:6px 10px;font-size:11px;font-weight:700;color:#C8A95A;text-decoration:none'>📝 Alpha Contract</a></div>";
+      +tool('/home/','\uD83C\uDFE0','Dashboard')+tool('/clients/','\uD83D\uDCC4','Clients')+tool('/vitals/','\u26BE','Vitals')
+      +tool('/screenshare/','\uD83D\uDCFA','Screen Share')+tool('/portals/','\uD83C\uDF10','Client Portals')+"</div>"
+    +"<div class='rn-section'><div class='rn-label'>\uD83D\uDCC5 Today Appt</div>"
+      +"<input class='rn-input' type='datetime-local' id='rn-today' value='"+(d&&d._todayAppt?d._todayAppt:'')+"' onchange=\"_sf('_todayAppt',this.value);\">"
+      +"<div class='rn-label' style='margin-top:4px'>\uD83D\uDCC5 Follow-Up</div>"
+      +"<input class='rn-input' type='datetime-local' id='rn-fu' value='"+(d&&d._fuAppt?d._fuAppt:'')+"' onchange=\"_sf('_fuAppt',this.value);\">"
+      +"<a href='https://calendar.google.com' target='_blank' style='display:block;margin:5px 8px 0;padding:5px 8px;background:var(--nb);border-radius:4px;color:var(--gold);font-size:10px;font-weight:700;text-decoration:none;text-align:center'>+ Google Calendar</a></div>"
+    +"<div class='rn-section'><div class='rn-label'>\uD83D\uDCCA Reports</div>"
+      +"<button class='rn-report-btn' onclick=\"_openNotesPanel()\">\uD83D\uDCDD CRM Note</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window.sendSMS==='function'?window.sendSMS():toast('Open Vitals','#C8A95A')\">\uD83D\uDCF1 SMS</button>"
+      +"<button class='rn-report-btn' onclick=\"typeof window._emailFull==='function'?window._emailFull():toast('Open Vitals','#C8A95A')\">\uD83D\uDCCB Full Summary</button></div>";
 }
 
 // ── PORTAL BANNER ──────────────────────────────────────────────────────
@@ -610,7 +624,7 @@ function _injectGlobals(){
     +'<div class="session-overlay" id="session-overlay"><div class="session-box"><div class="session-icon">💾</div><div class="session-title">Start New Session?</div><div class="session-msg">Save the current client before starting a new session?</div><div class="session-btns"><button class="sbtn save" onclick="window.sessionSaveAndContinue()">💾 Save &amp; Continue</button><button class="sbtn nosave" onclick="window.sessionDontSave()">Don\'t Save</button><button class="sbtn cancel" onclick="window.closeSessionDialog()">Cancel</button></div></div></div>'
     +'<div class="unsaved-overlay" id="unsaved-overlay"><div class="unsaved-box"><div class="unsaved-title">⚠️ Unsaved Changes</div><div class="unsaved-msg">You have unsaved changes. What would you like to do?</div><div class="unsaved-btns"><button class="sbtn save" onclick="window.unsavedSave()">💾 Save</button><button class="sbtn nosave" onclick="window.unsavedDontSave()">Don\'t Save</button><button class="sbtn cancel" onclick="window.unsavedCancel()">Cancel</button></div></div></div>'
     +'<div class="portal-banner" id="portal-banner"></div>'
-    +'<div class="rightnav" id="rightnav"></div>';
+    ;
   document.body.appendChild(div);
 }
 
