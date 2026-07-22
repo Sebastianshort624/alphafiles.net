@@ -89,6 +89,7 @@ tr:last-child td{border-bottom:none}
 </head>
 <body>
 <style id="atc-sb-css">
+:root{--nb:#1B3F6B;--gold:#C8A95A;--bg:#E6EEF9;--bgd:#d4e3f5;--border:#c5d8ee;--text:#1B3F6B;--muted:#5a7a99}
 body{display:block!important;min-height:100vh!important;font-size:14px!important;background:#f0f5fc!important}
 
 /* LEFT SIDEBAR */
@@ -450,7 +451,7 @@ function buildSB(){
   if(!ch){
     ch=document.createElement("div");
     ch.id="client-header-bar";
-    ch.style.cssText="position:fixed;top:40px;left:160px;right:175px;z-index:197;background:linear-gradient(rgba(13,36,68,.9),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=50) right/cover;border-bottom:2px solid #C8A95A;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
+    ch.style.cssText="position:fixed;top:40px;left:200px;right:200px;z-index:197;background:linear-gradient(rgba(13,36,68,.9),rgba(27,63,107,.95)),url(https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&q=50) right/cover;border-bottom:2px solid #C8A95A;display:flex;align-items:center;gap:0;height:44px;font-family:Inter,sans-serif";
     document.body.appendChild(ch);
   }
 
