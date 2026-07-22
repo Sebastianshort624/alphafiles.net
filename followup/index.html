@@ -782,6 +782,27 @@ window._openEmailGen=function(){
   document.body.appendChild(overlay);
 };
 
+
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    var banner=document.getElementById('portal-banner');
+    var rightnav=document.getElementById('rightnav');
+    console.log('[ATC] banner exists:',!!banner);
+    console.log('[ATC] banner html length:',banner?banner.innerHTML.length:null);
+    console.log('[ATC] banner rect:',banner?JSON.stringify(banner.getBoundingClientRect()):null);
+    console.log('[ATC] banner computed:',banner?JSON.stringify({display:getComputedStyle(banner).display,visibility:getComputedStyle(banner).visibility,opacity:getComputedStyle(banner).opacity,position:getComputedStyle(banner).position,top:getComputedStyle(banner).top,left:getComputedStyle(banner).left,right:getComputedStyle(banner).right,width:getComputedStyle(banner).width,height:getComputedStyle(banner).height,zIndex:getComputedStyle(banner).zIndex}):null);
+    console.log('[ATC] rightnav exists:',!!rightnav);
+    console.log('[ATC] rightnav html length:',rightnav?rightnav.innerHTML.length:null);
+    console.log('[ATC] rightnav rect:',rightnav?JSON.stringify(rightnav.getBoundingClientRect()):null);
+    console.log('[ATC] rightnav computed:',rightnav?JSON.stringify({display:getComputedStyle(rightnav).display,visibility:getComputedStyle(rightnav).visibility,opacity:getComputedStyle(rightnav).opacity,position:getComputedStyle(rightnav).position,top:getComputedStyle(rightnav).top,right:getComputedStyle(rightnav).right,width:getComputedStyle(rightnav).width,height:getComputedStyle(rightnav).height,zIndex:getComputedStyle(rightnav).zIndex}):null);
+    var ctr=document.elementFromPoint(window.innerWidth/2,20);
+    var rgt=document.elementFromPoint(window.innerWidth-30,window.innerHeight/2);
+    console.log('[ATC] top element at center top:',ctr?ctr.tagName+' id='+ctr.id+' class='+ctr.className:'null');
+    console.log('[ATC] right element at far right:',rgt?rgt.tagName+' id='+rgt.id+' class='+rgt.className:'null');
+    console.log('[ATC] viewport:',window.innerWidth,'x',window.innerHeight);
+  }, 800);
+});
+
 document.addEventListener("DOMContentLoaded",function(){console.log("[ATC] DOMContentLoaded fired");_injectGlobals();buildSB();buildRightNav();buildPortalBanner();initBanner();_buildTopSave();});
 window.newC=function(){if(window._dirty){showUnsaved(function(){_doNewC();});return;}_doNewC();};
 function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Last name:");var slug=(fn.charAt(0)+(ln||"")).toLowerCase().replace(/[^a-z0-9]/g,"")+"_"+Date.now().toString().slice(-4);var all=_gA();all[slug]={_created:Date.now(),firstName:fn,lastName:ln||"",alphaFee:"",_updated:Date.now()};_sA(all);localStorage.setItem(_AK,slug);setDirty(false);setTimeout(function(){location.reload();},300);}
