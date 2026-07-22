@@ -1108,5 +1108,65 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 })();
 </script>
 </div></div>
+
+<style id="atc-debug-css">
+#portal-banner{display:block!important;visibility:visible!important;opacity:1!important;min-height:60px!important;background:red!important;color:white!important;z-index:2147483647!important;outline:3px solid yellow!important;}
+#rightnav{display:block!important;visibility:visible!important;opacity:1!important;min-width:220px!important;min-height:300px!important;background:blue!important;z-index:2147483646!important;outline:3px solid yellow!important;}
+#atc-debug-panel{position:fixed!important;top:5px!important;left:5px!important;z-index:2147483648!important;background:rgba(0,0,0,.92)!important;color:#0f0!important;font:11px monospace!important;padding:10px 14px!important;border-radius:6px!important;max-width:420px!important;max-height:90vh!important;overflow-y:auto!important;white-space:pre-wrap!important;word-break:break-all!important;}
+</style>
+<script id="atc-debug-js">
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    var banner=document.getElementById('portal-banner');
+    var rn=document.getElementById('rightnav');
+    function cs(el,p){return el?getComputedStyle(el)[p]:'N/A';}
+    function br(el){if(!el)return 'null';var r=el.getBoundingClientRect();return 'x:'+Math.round(r.x)+' y:'+Math.round(r.y)+' w:'+Math.round(r.width)+' h:'+Math.round(r.height);}
+    var topEl=document.elementFromPoint(window.innerWidth/2,20);
+    var rightEl=document.elementFromPoint(window.innerWidth-30,window.innerHeight/2);
+    var lines=[
+      '=== ATC DEBUG PANEL ===',
+      'viewport: '+window.innerWidth+' x '+window.innerHeight,
+      '',
+      '--- #portal-banner ---',
+      'exists: '+(!!banner),
+      'html len: '+(banner?banner.innerHTML.length:0),
+      'rect: '+br(banner),
+      'display: '+cs(banner,'display'),
+      'visibility: '+cs(banner,'visibility'),
+      'opacity: '+cs(banner,'opacity'),
+      'position: '+cs(banner,'position'),
+      'top: '+cs(banner,'top'),
+      'left: '+cs(banner,'left'),
+      'right: '+cs(banner,'right'),
+      'width: '+cs(banner,'width'),
+      'height: '+cs(banner,'height'),
+      'z-index: '+cs(banner,'zIndex'),
+      '',
+      '--- #rightnav ---',
+      'exists: '+(!!rn),
+      'html len: '+(rn?rn.innerHTML.length:0),
+      'rect: '+br(rn),
+      'display: '+cs(rn,'display'),
+      'visibility: '+cs(rn,'visibility'),
+      'opacity: '+cs(rn,'opacity'),
+      'position: '+cs(rn,'position'),
+      'top: '+cs(rn,'top'),
+      'right: '+cs(rn,'right'),
+      'width: '+cs(rn,'width'),
+      'height: '+cs(rn,'height'),
+      'z-index: '+cs(rn,'zIndex'),
+      '',
+      '--- elementFromPoint ---',
+      'top-center: '+(topEl?topEl.tagName+' id='+topEl.id+' cls='+topEl.className:'null'),
+      'right-center: '+(rightEl?rightEl.tagName+' id='+rightEl.id+' cls='+rightEl.className:'null'),
+    ];
+    var panel=document.createElement('div');
+    panel.id='atc-debug-panel';
+    panel.textContent=lines.join('\n');
+    document.body.appendChild(panel);
+  },800);
+});
+</script>
+
 </body>
 </html>
