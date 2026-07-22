@@ -522,11 +522,11 @@ function buildSB(){
 }
 
 function buildRightNav(){
-  var _PIN='9999';
+  var _PIN='0624';
   window._ATC_PIN=_PIN;
   var rn=document.getElementById('rightnav');
   if(!rn){rn=document.createElement('div');rn.id='rightnav';rn.className='rightnav';document.body.appendChild(rn);}
-  var unlocked=sessionStorage.getItem('atc_rn_unlocked')==='1';
+  var unlocked=sessionStorage.getItem('atc_rightnav_unlocked')==='true';
   if(!unlocked){
     rn.innerHTML='<div style="padding:20px 12px;text-align:center">'
       +'<div style="font-size:28px;margin-bottom:8px">\uD83D\uDD12</div>'
@@ -540,7 +540,7 @@ function buildRightNav(){
     setTimeout(function(){
       function tryPin(){
         var v=document.getElementById('rn-pin').value;
-        if(v===window._ATC_PIN){sessionStorage.setItem('atc_rn_unlocked','1');buildRightNav();}
+        if(v===window._ATC_PIN){sessionStorage.setItem('atc_rightnav_unlocked','true');buildRightNav();}
         else{var e=document.getElementById('rn-pin-err');if(e)e.style.display='block';}
       }
       var btn=document.getElementById('rn-pin-btn');if(btn)btn.onclick=tryPin;
@@ -555,7 +555,7 @@ function buildRightNav(){
     "<div style='background:linear-gradient(135deg,#1B3F6B,#243860);padding:12px 12px 10px;border-bottom:2px solid #C8A95A;display:flex;justify-content:space-between;align-items:center'>"
     +"<div><div style='font-size:9px;font-weight:800;letter-spacing:2px;color:#C8A95A;text-transform:uppercase'>Consultant Tools</div>"
     +"<div style='font-size:7px;color:rgba(255,255,255,.45);margin-top:1px'>Alpha Timeshare Consultants</div></div>"
-    +"<button onclick=\"sessionStorage.removeItem('atc_rn_unlocked');buildRightNav()\" style='background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:13px;padding:2px' title='Lock'>\uD83D\uDD12</button>"
+    +"<button onclick=\"sessionStorage.removeItem('atc_rightnav_unlocked');buildRightNav()\" style='background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:13px;padding:2px' title='Lock'>\uD83D\uDD12</button>"
     +"</div>"
     +"<div class='rn-section'><a href='/agreement/' onclick='return _navClick(event,\"/agreement/\")' style='display:flex;align-items:center;gap:8px;padding:8px 12px;text-decoration:none;font-size:11px;font-weight:700;color:var(--nb)'><span>\uD83D\uDCDD</span><span>#24 Contract</span></a></div>"
     +(cur.indexOf('/vitals')<0&&cur.indexOf('/owner')<0?"<div class='rn-section'><button class='rn-report-btn' style='background:var(--nb);color:var(--gold);font-weight:700' onclick=\"window._emailThisPage&&_emailThisPage()\">\u2709\uFE0F Email This Page</button></div>":"")
