@@ -1193,7 +1193,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 .r-tabbar{display:flex;gap:4px;padding:10px 14px 0;border-bottom:1px solid #e5e7eb;align-items:center;flex-wrap:wrap}
 .r-tab{padding:7px 18px;font-size:13px;font-weight:700;border-radius:8px 8px 0 0;border:1.5px solid #e5e7eb;border-bottom:none;background:#f8fafc;color:#374151;cursor:pointer;transition:.1s}
 .r-tab.active{background:#1B2A4A;color:#C8960C;border-color:#1B2A4A}
-.r-tab.inactive{background:#f3f3f3;color:#c0c0c0;border-color:#e0e0e0;border-style:dashed}
+.r-tab.inactive{background:#f3f3f3;color:#aaa;border-color:#ddd;opacity:.7;font-size:12px}
 .r-tab.has-data{background:#fff;color:#374151;border-color:#c8960c;border-style:solid}
 .r-panel{padding:14px;display:none}
 .r-panel.active{display:block}
@@ -1295,11 +1295,18 @@ function _fillPanel(ri, resort){
   sv('r'+ri+'-year',r.yearPurchased);sv('r'+ri+'-price',r.purchasePrice);
   var owners=r.owners||[];
   for(var o=0;o<4;o++)sv('r'+ri+'-o'+o,owners[o]||'');
-  sv('r'+ri+'-mtf',r.maitFees||'');
+  // Restore freq select first, then set MTF display value
+  var _freq=r.mtfFreq||'yearly';
+  var _freqEl=document.getElementById('r'+ri+'-freq');
+  if(_freqEl)_freqEl.value=_freq;
+  // Show the entered amount (reverse convert from annual)
+  var _annualMTF=parseFloat(r.maitFees)||0;
+  var _displayMTF=_freq==='monthly'?String(Math.round(_annualMTF/12)):
+                   _freq==='biyearly'?String(Math.round(_annualMTF/2)):String(_annualMTF);
+  sv('r'+ri+'-mtf',_displayMTF>0?_displayMTF:'');
   sv('r'+ri+'-mtg',r.monthlyMortgage||'');
   sv('r'+ri+'-term',r.mtgTerm||'');
   sv('r'+ri+'-bal',r.balanceAmount||'');
-  if(r.mtfFreq==='monthly'){var el=document.getElementById('r'+ri+'-monthly');if(el)el.checked=true;}
   _calcPanel(ri);
 }
 
@@ -1402,6 +1409,8 @@ window._initResortPanels=window.initResortPanels=function initResortPanels(){
       else{tab.classList.add('inactive');}
     }
   }
+  // Always ensure R-1 is the active tab on initial load
+  switchResort(0);
 };
 document.addEventListener("DOMContentLoaded",function(){window._initResortPanels();});
 </script>
