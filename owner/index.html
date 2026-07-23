@@ -1092,8 +1092,12 @@ function _panelHTML(ri){
     // MTF
     +'<div class="slbl" style="margin-top:10px">💰 Fees & Mortgage</div>'
     +'<div class="frow">'
-    +'<div class="ff"><label>Maintenance Fee (MTF) <label style="cursor:pointer;font-size:11px;color:#6b7280"><input type="checkbox" id="r'+ri+'-monthly" onchange="_autoSaveResorts()"> Paid Monthly</label>'
-    +'<input id="r'+ri+'-mtf" type="number" class="hi" placeholder="Enter amount" oninput="_autoSaveResorts()"></div>'
+    +'<div class="ff"><label>Maintenance Fee (MTF)</label>'
+    +'<div style="display:flex;gap:6px;margin-bottom:4px">'
+    +'<select id="r'+ri+'-freq" onchange="_autoSaveResorts();_calcPanel('+ri+')" style="flex:1;padding:4px;border:1.5px solid #e0e4ed;border-radius:6px;font-size:12px;font-family:Inter,sans-serif">'
+    +'<option value="yearly">Yr</option><option value="biyearly">Bi-Yr</option><option value="monthly">Mo</option>'
+    +'</select></div>'
+    +'<input id="r'+ri+'-mtf" type="number" class="hi" placeholder="Enter amount" oninput="_autoSaveResorts();_calcPanel('+ri+')"></div>'
     +'<div class="ff readonly"><label id="r'+ri+'-mtflbl">Calculated</label><input id="r'+ri+'-mtfcalc" readonly placeholder="Auto"></div>'
     +'</div>'
     // Mortgage
@@ -1125,27 +1129,27 @@ function _fillPanel(ri, resort){
 
 function _calcPanel(ri){
   var raw=parseFloat((document.getElementById('r'+ri+'-mtf')||{}).value)||0;
-  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
-  var mtfYr=isMonthly?raw*12:raw;
+  var _freq=((document.getElementById('r'+ri+'-freq')||{}).value)||'yearly';
+  var mtfYr=_freq==='monthly'?raw*12:_freq==='biyearly'?raw*2:raw;
   var mtfMo=mtfYr/12;
   var mtg=parseFloat((document.getElementById('r'+ri+'-mtg')||{}).value)||0;
   var lbl=document.getElementById('r'+ri+'-mtflbl');
   var calc=document.getElementById('r'+ri+'-mtfcalc');
   var comb=document.getElementById('r'+ri+'-comb');
-  if(lbl)lbl.textContent=isMonthly?'Annual (calculated)':'Monthly (calculated)';
+  if(lbl)lbl.textContent=_freq==='monthly'?'Annual (×12)':_freq==='biyearly'?'Annual (×2)':'Annual'hly?'Annual (calculated)':'Monthly (calculated)';
   if(calc)calc.value=raw>0?(isMonthly?'$'+Math.round(mtfYr).toLocaleString()+'/yr':'$'+mtfMo.toFixed(2)+'/mo'):'';
   if(comb)comb.value=(mtfMo+mtg)>0?'$'+((mtfMo+mtg).toFixed(2))+'/mo':'';
 }
 
 function _readResort(ri){
   function gv(id){return(document.getElementById(id)||{}).value||'';}
-  var isMonthly=(document.getElementById('r'+ri+'-monthly')||{}).checked;
+  var _freq=((document.getElementById('r'+ri+'-freq')||{}).value)||'yearly';
   var raw=parseFloat(gv('r'+ri+'-mtf'))||0;
   return{
     name:gv('r'+ri+'-name'),state:gv('r'+ri+'-state'),city:gv('r'+ri+'-city'),
     yearPurchased:gv('r'+ri+'-year'),purchasePrice:parseFloat(gv('r'+ri+'-price'))||0,
     owners:[gv('r'+ri+'-o0'),gv('r'+ri+'-o1'),gv('r'+ri+'-o2'),gv('r'+ri+'-o3')],
-    maitFees:isMonthly?raw*12:raw,mtfFreq:isMonthly?'monthly':'annual',
+    maitFees:_freq==='monthly'?raw*12:_freq==='biyearly'?raw*2:raw,mtfFreq:_freq,mtfFreq:isMonthly?'monthly':'annual',
     monthlyMortgage:parseFloat(gv('r'+ri+'-mtg'))||0,
     mtgTerm:parseInt(gv('r'+ri+'-term'))||10,
     balanceAmount:parseFloat(gv('r'+ri+'-bal'))||0
