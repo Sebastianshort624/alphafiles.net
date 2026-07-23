@@ -1,4 +1,4 @@
-<!-- cache-bust: 1784828088 -->
+<!-- cache-bust: 1784834586 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -805,74 +805,235 @@ window._saveNotes=function(){
 
 
 // ── EMAIL GENERATOR ──────────────────────────────────────────────────────
-window._openEmailGen=function(){
-  var slug=_aC();
+window._emailThisPage=function(){
   var d=_aD()||{};
-  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'there';
+  var nm=((d.firstName||'')+(d.lastName?' '+d.lastName:'')).trim()||'Client';
   var resort=d.resort||'your resort';
   var mtfYr=parseFloat(d.maitFees)||0;
-  var mtg=parseFloat(d.monthlyMortgage)||0;
-  var combined=(mtfYr/12+mtg).toFixed(2);
+  var mtgMo=parseFloat(d.monthlyMortgage)||0;
+  var combinedMo=(mtfYr/12+mtgMo);
   var fee=parseFloat(d.alphaFee)||0;
   var cur=window.location.pathname;
 
-  // Build page-specific email body
-  var subject='Your Alpha Timeshare Consultants Summary';
-  var body='';
+  // ── Determine page title from URL ──
+  var pageTitle='Alpha Timeshare Consultants';
+  if(cur.indexOf('/current/')>-1) pageTitle='Current Ownership Costs';
+  else if(cur.indexOf('/cost/')>-1) pageTitle='True Cost Analysis';
+  else if(cur.indexOf('/quote/')>-1) pageTitle='Your Alpha Quote';
+  else if(cur.indexOf('/savings/')>-1) pageTitle='Your Potential Savings';
+  else if(cur.indexOf('/compensation/')>-1) pageTitle='Resort Compensation Assessment';
+  else if(cur.indexOf('/damages/')>-1) pageTitle='Damages Assessment';
+  else if(cur.indexOf('/report/')>-1) pageTitle='Case Report';
+  else if(cur.indexOf('/vitals/')>-1) pageTitle='Client Summary';
+  else if(cur.indexOf('/ownership/')>-1||cur.indexOf('/owner/')>-1) pageTitle='Ownership Overview';
+  else if(cur.indexOf('/credit/')>-1) pageTitle='Credit Protection';
+  else if(cur.indexOf('/heirs/')>-1) pageTitle='Heirs & Estate';
+  else if(cur.indexOf('/leverage/')>-1) pageTitle='Leverage & Legal Rights';
 
-  if(cur.indexOf('/current/')>-1){
-    subject='Your Current Ownership Costs — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nThank you for taking the time to speak with me today about your '+resort+' ownership.\n\nHere is a quick summary of what you are currently paying:\n\n• Monthly Cost: $'+combined+'/mo\n• Annual Cost: $'+(parseFloat(combined)*12).toFixed(2)+'/yr\n• Annual Maintenance Fee: $'+mtfYr.toFixed(2)+'/yr (growing 8% every year)\n\nThese costs never stop — and they only go up. That\'s exactly why we are here.\n\nIf you have any questions reviewing this, feel free to call or text me anytime.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
-  } else if(cur.indexOf('/cost/')>-1){
-    subject='How Much More Will You Give Them? — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nFollowing up on what we discussed — here is how much you will continue to pay '+resort+' if nothing changes:\n\n• Monthly: $'+combined+'/mo\n• 1 Year: $'+(parseFloat(combined)*12).toFixed(2)+'\n• 5 Years: $'+(parseFloat(combined)*60).toFixed(2)+' (with 8% annual growth)\n\nEvery dollar you pay them is money you will never get back. And it grows every year.\n\nLet\'s talk about getting you out.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
-  } else if(cur.indexOf('/quote/')>-1){
-    subject='Your Alpha Service Fee Quote — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nAs promised, here is your personalized quote to exit '+resort+':\n\n'+(fee>0?'• Alpha Service Fee: $'+fee.toFixed(2)+'\n• Pay-in-Full saves an additional 3%\n• Monthly plan available — first payment August 15\n\n':'• Your quote is being finalized — I will follow up shortly.\n\n')+'This fee covers complete permanent termination of your timeshare, credit protection, and your 100% money-back guarantee.\n\nReady to move forward? Call or text me and we will get started today.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
-  } else if(cur.indexOf('/credit/')>-1){
-    subject='Protecting Your Credit During Your Exit — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nI wanted to follow up on our conversation about your credit protection.\n\nAlpha Timeshare Consultants has an in-house credit team that has been working since 1986. We dispute every negative mark related to your timeshare at no additional charge — directly with Equifax, Experian, and TransUnion.\n\nOnce we have the county recording and mutual release, your credit file is cleared completely.\n\nIf you have any questions about this process, do not hesitate to reach out.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
-  } else if(cur.indexOf('/guarantee/')>-1){
-    subject='Your 100% Money-Back Guarantee — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nI wanted to put in writing what I shared with you today:\n\nAlpha Timeshare Consultants guarantees that if we do not get you a Favorable Outcome within 36 months, you receive 100% of your service fee back — in writing.\n\nNo other company in this industry offers this. That is how confident we are in our process.\n\nYour guarantee is included in your enrollment documents. Once signed, you are protected.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
-  } else {
-    subject='Following Up — Alpha Timeshare Consultants';
-    body='Hi '+nm+',\n\nThank you for your time today. It was a pleasure speaking with you about your '+resort+' ownership.\n\nI am here whenever you are ready to take the next step. Feel free to call, text, or email me directly.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n📞 1 (877) 848-3948 Ext. 134\nSebastian@AlphaTimeshareConsultants.com';
+  // ── Extract page content — clean clone of .wrap, strip nav/controls ──
+  function getPageHTML(){
+    var wrap=document.querySelector('.wrap')||document.querySelector('.main');
+    if(!wrap) return '<p>No content found.</p>';
+    var clone=wrap.cloneNode(true);
+    // Remove navigation, buttons, overlays, debug panels, sidebars
+    var removeSelectors=[
+      '.nav-bar','.np,.nn','#_topSaveBtn','#_navPrev','#_navNext',
+      '.sidenav','.rightnav','.portal-banner','#client-header-bar',
+      '.push-overlay','.session-overlay','.unsaved-overlay',
+      '#atc-debug-panel','#rightnav-test','#_mob-overlay',
+      '.btn-row','button','select','.pt','#push-box-inner',
+      '[style*="display:none"]','[id*="debug"]'
+    ];
+    removeSelectors.forEach(function(sel){
+      try{clone.querySelectorAll(sel).forEach(function(el){el.remove();});}catch(e){}
+    });
+    // Remove empty elements
+    clone.querySelectorAll('input').forEach(function(inp){
+      var span=document.createElement('span');
+      span.textContent=inp.value||inp.placeholder||'';
+      span.style.cssText='display:inline;font-weight:600;color:#1B3F6B';
+      inp.parentNode.replaceChild(span,inp);
+    });
+    clone.querySelectorAll('textarea').forEach(function(ta){
+      var pre=document.createElement('div');
+      pre.style.cssText='white-space:pre-wrap;font-size:12px;line-height:1.6';
+      pre.textContent=ta.value;
+      ta.parentNode.replaceChild(pre,ta);
+    });
+    return clone.innerHTML;
   }
 
-  // Show modal
-  var existing=document.getElementById('email-gen-overlay');
-  if(existing) existing.remove();
+  // ── Compute the subject line ──
+  var subject=pageTitle+' — '+nm+' ('+resort+') — Alpha Timeshare Consultants';
+
+  // ── Build styled HTML email document ──
+  var content=getPageHTML();
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width">'
+    +'<style>'
+    +'*{box-sizing:border-box;margin:0;padding:0}'
+    +'body{font-family:Inter,Arial,sans-serif;font-size:13px;color:#1a1a1a;background:#f4f6fa;-webkit-print-color-adjust:exact}'
+    +'.email-wrap{max-width:680px;margin:0 auto;background:#fff}'
+    +'.email-header{background:linear-gradient(135deg,#1B3F6B,#243860);padding:28px 32px;text-align:center}'
+    +'.email-header h1{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}'
+    +'.email-header p{font-size:12px;color:rgba(255,255,255,.6)}'
+    +'.email-gold-bar{height:3px;background:#C8A95A}'
+    +'.email-client-bar{background:#f8fafc;padding:14px 32px;border-bottom:1px solid #e5e7eb;display:flex;gap:24px;flex-wrap:wrap}'
+    +'.email-client-bar span{font-size:11px;color:#6b7280;font-weight:600}'
+    +'.email-client-bar strong{color:#1B3F6B}'
+    +'.email-body{padding:24px 32px}'
+    +'.email-section{margin-bottom:24px}'
+    +'.ph{background:linear-gradient(135deg,#1B3F6B,#243860)!important;padding:16px 20px!important;border-radius:8px 8px 0 0}'
+    +'.ph-title{color:#fff!important;font-size:16px!important;font-weight:700!important}'
+    +'.ph-sub{color:rgba(255,255,255,.6)!important;font-size:11px!important}'
+    +'.card,.sc{background:#fff;border:1px solid #e5e7eb;border-radius:0 0 8px 8px;padding:16px 20px;margin-bottom:16px}'
+    +'table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}'
+    +'th{background:#1B3F6B;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:700}'
+    +'td{padding:7px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top}'
+    +'tr:nth-child(even) td{background:#f8fafc}'
+    +'.result-table th{background:#C8A95A;color:#1B3F6B}'
+    +'.big-num{font-size:24px;font-weight:800;color:#1B3F6B}'
+    +'.lbl{font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:1px}'
+    +'label{font-size:10px;font-weight:700;color:#6b7280;display:block;margin-bottom:2px}'
+    +'.ff{margin-bottom:12px}'
+    +'.slbl{font-size:11px;font-weight:700;color:#C8A95A;text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px}'
+    +'.highlight{background:#fffbeb;border-left:3px solid #C8A95A;padding:10px 14px;border-radius:4px;margin:8px 0;font-size:12px}'
+    +'.email-footer{background:#1B3F6B;padding:20px 32px;text-align:center}'
+    +'.email-footer p{font-size:11px;color:rgba(255,255,255,.6);line-height:1.8}'
+    +'.email-footer a{color:#C8A95A;text-decoration:none}'
+    +'</style></head><body>'
+    +'<div class="email-wrap">'
+    +'<div class="email-header">'
+    +'<h1>'+pageTitle+'</h1>'
+    +'<p>Prepared by Alpha Timeshare Consultants</p>'
+    +'</div>'
+    +'<div class="email-gold-bar"></div>'
+    +'<div class="email-client-bar">'
+    +'<span>Client: <strong>'+nm+'</strong></span>'
+    +(resort&&resort!=='your resort'?'<span>Resort: <strong>'+resort+'</strong></span>':'')
+    +(combinedMo>0?'<span>Combined Monthly: <strong>$'+combinedMo.toFixed(2)+'</strong></span>':'')
+    +(fee>0?'<span>Alpha Fee: <strong>$'+fee.toFixed(2)+'</strong></span>':'')
+    +'<span>Date: <strong>'+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+'</strong></span>'
+    +'</div>'
+    +'<div class="email-body">'+content+'</div>'
+    +'<div class="email-footer">'
+    +'<p><strong style="color:#C8A95A">Sebastian Short</strong> &bull; Account Specialist, Ext. 134<br>'
+    +'Alpha Timeshare Consultants &bull; <a href="tel:18778483948">1 (877) 848-3948</a><br>'
+    +'<a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></p>'
+    +'</div>'
+    +'</div></body></html>';
+
+  // ── Build the modal ──
+  var existing=document.getElementById('_email-modal');
+  if(existing)existing.remove();
+
   var overlay=document.createElement('div');
-  overlay.id='email-gen-overlay';
-  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:flex;align-items:center;justify-content:center';
+  overlay.id='_email-modal';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px';
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+
   var box=document.createElement('div');
-  box.style.cssText='background:#fff;border-radius:12px;width:560px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;overflow:hidden';
+  box.style.cssText='background:#fff;border-radius:10px;max-width:720px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)';
+
+  // Header
   var hdr=document.createElement('div');
-  hdr.style.cssText='background:#1B3F6B;padding:14px 18px;display:flex;justify-content:space-between;align-items:center';
-  hdr.innerHTML='<div style="font-size:14px;font-weight:700;color:#fff">✉️ Client Email</div><button onclick="document.getElementById(\'email-gen-overlay\').remove()" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:20px;cursor:pointer">×</button>';
-  var subWrap=document.createElement('div');
-  subWrap.style.cssText='padding:12px 16px;border-bottom:1px solid #e5e7eb;background:#f8f9fc';
-  subWrap.innerHTML='<div style="font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Subject</div><div style="font-size:13px;font-weight:600;color:#1B3F6B" id="email-subj">'+subject+'</div>';
-  var ta=document.createElement('textarea');
-  ta.id='email-body-ta';
-  ta.value=body;
-  ta.style.cssText='flex:1;border:none;outline:none;padding:16px;font-family:Inter,sans-serif;font-size:13px;line-height:1.8;resize:none;min-height:240px;color:#374151';
-  var footer=document.createElement('div');
-  footer.style.cssText='padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end';
-  var copySubj=document.createElement('button');
-  copySubj.textContent='Copy Subject';
-  copySubj.style.cssText='padding:8px 14px;border-radius:6px;border:1px solid #e5e7eb;background:#f3f4f6;color:#374151;font-size:12px;cursor:pointer';
-  copySubj.onclick=function(){navigator.clipboard.writeText(subject).then(function(){copySubj.textContent='✓ Copied!';setTimeout(function(){copySubj.textContent='Copy Subject';},2000);});};
-  var copyBody=document.createElement('button');
-  copyBody.textContent='Copy Email';
-  copyBody.style.cssText='padding:8px 18px;border-radius:6px;border:none;background:#C8A95A;color:#fff;font-size:12px;font-weight:700;cursor:pointer';
-  copyBody.onclick=function(){navigator.clipboard.writeText(document.getElementById('email-body-ta').value).then(function(){copyBody.textContent='✓ Copied!';setTimeout(function(){copyBody.textContent='Copy Email';},2000);});};
-  footer.appendChild(copySubj);footer.appendChild(copyBody);
-  box.appendChild(hdr);box.appendChild(subWrap);box.appendChild(ta);box.appendChild(footer);
+  hdr.style.cssText='padding:14px 20px;background:#1B3F6B;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0';
+  hdr.innerHTML='<span style="font-size:14px;font-weight:700">✉️ Email This Page — '+pageTitle+'</span>'
+    +'<button onclick="document.getElementById(\'_email-modal\').remove()" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;padding:0 4px">×</button>';
+
+  // Subject row
+  var subjRow=document.createElement('div');
+  subjRow.style.cssText='padding:10px 20px;border-bottom:1px solid #e5e7eb;background:#f8fafc;display:flex;align-items:center;gap:10px;flex-shrink:0';
+  subjRow.innerHTML='<span style="font-size:11px;font-weight:700;color:#6b7280;white-space:nowrap">Subject:</span>'
+    +'<input id="_email-subj" value="'+subject.replace(/"/g,'&quot;')+'" style="flex:1;padding:6px 10px;border:1.5px solid #e0e4ed;border-radius:5px;font-size:12px;font-family:Inter,sans-serif">';
+
+  // Preview iframe
+  var previewWrap=document.createElement('div');
+  previewWrap.style.cssText='flex:1;overflow:hidden;position:relative;min-height:300px';
+  var iframe=document.createElement('iframe');
+  iframe.id='_email-preview';
+  iframe.style.cssText='width:100%;height:100%;border:none;display:block';
+  iframe.setAttribute('sandbox','allow-same-origin');
+  previewWrap.appendChild(iframe);
+
+  // Action bar
+  var actions=document.createElement('div');
+  actions.style.cssText='padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#f8fafc;flex-shrink:0';
+
+  function makeBtn(label,primary,fn){
+    var b=document.createElement('button');
+    b.textContent=label;
+    b.style.cssText='padding:8px 16px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;'
+      +(primary?'background:#1B3F6B;color:#C8A95A;':'background:#fff;color:#1B3F6B;border:1.5px solid #d4e3f5;');
+    b.onclick=fn;
+    return b;
+  }
+
+  // Open in new window (best for printing/reviewing)
+  var btnOpen=makeBtn('🔗 Open in New Tab',true,function(){
+    var w=window.open('','_blank');
+    if(w){w.document.write(html);w.document.close();}
+  });
+
+  // Download HTML file
+  var btnDL=makeBtn('⬇️ Download HTML',false,function(){
+    var blob=new Blob([html],{type:'text/html'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=(nm.replace(/\s+/g,'_')+'_'+pageTitle.replace(/\s+/g,'_')+'.html');
+    a.click();URL.revokeObjectURL(a.href);
+  });
+
+  // Copy HTML to clipboard
+  var btnCopy=makeBtn('📋 Copy HTML',false,function(){
+    navigator.clipboard.writeText(html).then(function(){
+      btnCopy.textContent='✓ Copied!';
+      setTimeout(function(){btnCopy.textContent='📋 Copy HTML';},2000);
+    });
+  });
+
+  // Print directly
+  var btnPrint=makeBtn('🖨️ Print',false,function(){
+    var w=window.open('','_blank');
+    if(w){w.document.write(html);w.document.close();setTimeout(function(){w.print();},400);}
+  });
+
+  // Mailto (best effort — most clients won't render HTML)
+  var btnMail=makeBtn('📧 Open in Mail App',false,function(){
+    var subj=encodeURIComponent(document.getElementById('_email-subj').value);
+    var plainText='Hi '+nm+',\n\nPlease find your '+pageTitle+' from Alpha Timeshare Consultants attached or available at your consultant portal.\n\nBest,\nSebastian Short\nAccount Specialist | Alpha Timeshare Consultants\n(877) 848-3948 Ext. 134';
+    window.location.href='mailto:?subject='+subj+'&body='+encodeURIComponent(plainText);
+  });
+
+  var note=document.createElement('span');
+  note.style.cssText='font-size:10px;color:#9ca3af;margin-left:auto';
+  note.textContent='Tip: Use "Open in New Tab" then forward from there for best formatting';
+
+  actions.appendChild(btnOpen);
+  actions.appendChild(btnDL);
+  actions.appendChild(btnCopy);
+  actions.appendChild(btnPrint);
+  actions.appendChild(btnMail);
+  actions.appendChild(note);
+
+  box.appendChild(hdr);
+  box.appendChild(subjRow);
+  box.appendChild(previewWrap);
+  box.appendChild(actions);
   overlay.appendChild(box);
   document.body.appendChild(overlay);
+
+  // Write HTML to iframe after DOM insertion
+  setTimeout(function(){
+    try{
+      var doc=iframe.contentDocument||iframe.contentWindow.document;
+      doc.open();doc.write(html);doc.close();
+    }catch(e){
+      previewWrap.innerHTML='<p style="padding:20px;color:#6b7280">Preview unavailable. Use Open in New Tab.</p>';
+    }
+  },50);
 };
+
+window._openEmailGen=window._emailThisPage;
 
 
 window._toggleMobileNav=function(){
