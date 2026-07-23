@@ -1150,7 +1150,7 @@ function _readResort(ri){
     name:gv('r'+ri+'-name'),state:gv('r'+ri+'-state'),city:gv('r'+ri+'-city'),
     yearPurchased:gv('r'+ri+'-year'),purchasePrice:parseFloat(gv('r'+ri+'-price'))||0,
     owners:[gv('r'+ri+'-o0'),gv('r'+ri+'-o1'),gv('r'+ri+'-o2'),gv('r'+ri+'-o3')],
-    maitFees:_freq==='monthly'?raw*12:_freq==='biyearly'?raw*2:raw,mtfFreq:_freq,mtfFreq:isMonthly?'monthly':'annual',
+    maitFees:_freq==='monthly'?raw*12:_freq==='biyearly'?raw*2:raw,mtfFreq:_freq,
     monthlyMortgage:parseFloat(gv('r'+ri+'-mtg'))||0,
     mtgTerm:parseInt(gv('r'+ri+'-term'))||10,
     balanceAmount:parseFloat(gv('r'+ri+'-bal'))||0
