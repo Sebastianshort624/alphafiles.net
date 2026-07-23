@@ -1,4 +1,4 @@
-<!-- cache-bust: 1784838412 -->
+<!-- cache-bust: 1784847838 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -920,44 +920,7 @@ window._emailThisPage=function(){
     +'Alpha Timeshare Consultants &bull; <a href="tel:18778483948">1 (877) 848-3948</a><br>'
     +'<a href="mailto:Sebastian@AlphaTimeshareConsultants.com">Sebastian@AlphaTimeshareConsultants.com</a></p>'
     +'</div>'
-    +'</div>
-<style id="tab-fix-css">
-/* Force tab buttons clickable - nothing can block them */
-.r-tabbar{position:relative!important;z-index:50!important;pointer-events:auto!important}
-.r-tab{pointer-events:auto!important;cursor:pointer!important;position:relative!important;z-index:51!important;user-select:none!important}
-.r-tab.active{background:#1B2A4A!important;color:#C8960C!important;border-color:#1B2A4A!important}
-.r-tab.has-data{background:#fff!important;color:#374151!important;border-color:#c8960c!important}
-.r-tab.inactive,.r-tab:not(.active):not(.has-data){background:#f3f3f3!important;color:#888!important;border-color:#ddd!important;opacity:.75!important}
-</style>
-<script id="tab-fix-js">
-(function(){
-  function bindTabs(){
-    var tabs=document.querySelectorAll('.r-tab');
-    tabs.forEach(function(btn,i){
-      // Remove then re-add to clear any stale listeners
-      var newBtn=btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn,btn);
-      newBtn.addEventListener('click',function(e){
-        e.stopPropagation();
-        if(i===0){typeof switchResort==='function'&&switchResort(0);}
-        else{typeof activateResort==='function'&&activateResort(i);}
-      });
-    });
-  }
-  // Bind after DOM ready and again after panels init
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',function(){
-      bindTabs();
-      setTimeout(bindTabs,800); // re-bind after _initResortPanels
-    });
-  } else {
-    bindTabs();
-    setTimeout(bindTabs,800);
-  }
-})();
-</script>
-
-</body></html>';
+    +'</div><\/body><\/html>';
 
   // ── Build the modal ──
   var existing=document.getElementById('_email-modal');
@@ -1681,5 +1644,33 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 })();
 </script>
 
+<style id="tab-fix-css">
+.r-tabbar{position:relative!important;z-index:50!important;pointer-events:auto!important}
+.r-tab{pointer-events:auto!important;cursor:pointer!important;position:relative!important;z-index:51!important;user-select:none!important}
+.r-tab.active{background:#1B2A4A!important;color:#C8960C!important;border-color:#1B2A4A!important}
+.r-tab.has-data{background:#fff!important;color:#374151!important;border-color:#c8960c!important}
+.r-tab.inactive,.r-tab:not(.active):not(.has-data){background:#f3f3f3!important;color:#888!important;border-color:#ddd!important;opacity:.75!important}
+</style>
+<script id="tab-fix-js">
+(function(){
+  function bindTabs(){
+    var tabs=document.querySelectorAll('.r-tab');
+    tabs.forEach(function(btn,i){
+      var newBtn=btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn,btn);
+      newBtn.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(i===0){typeof switchResort==='function'&&switchResort(0);}
+        else{typeof activateResort==='function'&&activateResort(i);}
+      });
+    });
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      bindTabs();setTimeout(bindTabs,800);
+    });
+  } else { bindTabs();setTimeout(bindTabs,800); }
+})();
+</script>
 </body>
 </html>
