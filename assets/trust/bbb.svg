@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40">
+  <rect width="120" height="40" rx="4" fill="#005DAA"/>
+  <text x="8" y="28" font-family="Arial Black,Arial" font-size="22" font-weight="900" fill="#fff">BBB</text>
+  <text x="56" y="16" font-family="Arial" font-size="9" font-weight="700" fill="#fff">ACCREDITED</text>
+  <text x="56" y="28" font-family="Arial" font-size="9" font-weight="700" fill="#ffcc00">A+ RATED</text>
+</svg>
