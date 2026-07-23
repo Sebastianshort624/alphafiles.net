@@ -1138,7 +1138,7 @@ function _calcPanel(ri){
   var calc=document.getElementById('r'+ri+'-mtfcalc');
   var comb=document.getElementById('r'+ri+'-comb');
   if(lbl)lbl.textContent=_freq==='monthly'?'Annual (×12)':_freq==='biyearly'?'Annual (×2)':'Annual'hly?'Annual (calculated)':'Monthly (calculated)';
-  if(calc)calc.value=raw>0?(isMonthly?'$'+Math.round(mtfYr).toLocaleString()+'/yr':'$'+mtfMo.toFixed(2)+'/mo'):'';
+  if(calc)calc.value=raw>0?'$'+Math.round(mtfYr).toLocaleString()+'/yr (annual)':'';
   if(comb)comb.value=(mtfMo+mtg)>0?'$'+((mtfMo+mtg).toFixed(2))+'/mo':'';
 }
 
