@@ -1065,7 +1065,7 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   <div class="card-hdr">🌊 Maintenance Fees</div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
     <div class="ff">
-      <label>Annual MTF</label>
+      <label id="v-mtf-lbl">MTF Amount</label>
       <input id="v-mtf" type="number" placeholder="" oninput="autoSave();calcTotals();calcPurchaseFinance();calcComparison()">
     </div>
     <div class="ff ro">
@@ -1074,9 +1074,10 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
     </div>
     <div class="ff">
       <label>Billed</label>
-      <select id="v-mtf-freq" onchange="autoSave()">
-        <option value="yearly">Yearly</option>
-        <option value="monthly">Monthly</option>
+      <select id="v-mtf-freq" onchange="autoSave();calcTotals()">
+        <option value="yearly">Yr</option>
+        <option value="biyearly">Bi-Yr</option>
+        <option value="monthly">Mo</option>
       </select>
     </div>
   </div>
@@ -1490,8 +1491,13 @@ function setMtg(t){
 }
 
 function calcTotals(){
-  var mtfYr  = parseFloat(document.getElementById('v-mtf').value)||0;
+  var _mtfRaw = parseFloat(document.getElementById('v-mtf').value)||0;
+  var _mtfFreq = (document.getElementById('v-mtf-freq')||{value:'yearly'}).value;
+  var mtfYr  = _mtfFreq==='monthly'?_mtfRaw*12:_mtfFreq==='biyearly'?_mtfRaw*2:_mtfRaw;
   var mtfMo  = mtfYr/12;
+  // Update label to reflect what's being entered
+  var _lbl=document.getElementById('v-mtf-lbl');
+  if(_lbl)_lbl.textContent=_mtfFreq==='monthly'?'MTF / Month':_mtfFreq==='biyearly'?'MTF / 6 Months':'MTF / Year';
   var mtgMo  = parseFloat(document.getElementById('v-mtg')&&document.getElementById('v-mtg').value)||0;
   var mtgYr  = mtgMo*12;
   var mtfBeh = parseFloat(document.getElementById('v-mtfb')&&document.getElementById('v-mtfb').value)||0;
@@ -2069,7 +2075,11 @@ function autoSave(){
       yearPurchased:g('v-year'),purchasePrice:g('v-pprice'),whyOut:g('v-why'),
       timesUsed:document.getElementById('v-times-used')?document.getElementById('v-times-used').value:'',
       lastUsed:document.getElementById('v-last-used')?document.getElementById('v-last-used').value:'',
-      maitFees:g('v-mtf'),mtfFreq:g('v-mtf-freq'),
+      maitFees:(function(){
+        var _r=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
+        var _f=(document.getElementById('v-mtf-freq')||{value:'yearly'}).value;
+        return String(_f==='monthly'?_r*12:_f==='biyearly'?_r*2:_r);
+      })(),mtfFreq:g('v-mtf-freq'),
       monthlyMortgage:(_mtgType==='pf'?'0':g('v-mtg')),
       balanceAmount:g('v-balance'),mortgageType:_mtgType,
       mtfBehind:g('v-mtfb'),mtgBehind:g('v-mtgb'),
@@ -2174,7 +2184,11 @@ window.addEventListener('beforeunload', function(){
     coFirst:g('v-co'),coLast:g('v-col'),
     resort:g('v-resort'),location:g('v-loc'),resortCity:g('v-rescity'),
     yearPurchased:g('v-year'),purchasePrice:g('v-pprice'),whyOut:g('v-why'),
-    maitFees:g('v-mtf'),mtfFreq:g('v-mtf-freq'),
+    maitFees:(function(){
+        var _r=parseFloat((document.getElementById('v-mtf')||{}).value)||0;
+        var _f=(document.getElementById('v-mtf-freq')||{value:'yearly'}).value;
+        return String(_f==='monthly'?_r*12:_f==='biyearly'?_r*2:_r);
+      })(),mtfFreq:g('v-mtf-freq'),
     monthlyMortgage:(_mtgType==='pf'?'0':g('v-mtg')),
     balanceAmount:g('v-balance'),mortgageType:_mtgType,
     mtfBehind:g('v-mtfb'),mtgBehind:g('v-mtgb'),
