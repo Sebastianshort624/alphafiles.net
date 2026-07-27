@@ -1,0 +1,324 @@
+{
+  "exchange_companies": [
+    {
+      "id": "rci",
+      "name": "RCI",
+      "website": "rci.com",
+      "notes": ""
+    },
+    {
+      "id": "ii",
+      "name": "Interval International",
+      "website": "intervalworld.com",
+      "notes": ""
+    },
+    {
+      "id": "sfo",
+      "name": "SFX Resorts",
+      "website": "sfxresorts.com",
+      "notes": ""
+    },
+    {
+      "id": "7across",
+      "name": "7Across",
+      "website": "7across.com",
+      "notes": ""
+    }
+  ],
+  "parent_companies": [
+    {
+      "id": "wyndham",
+      "name": "Wyndham Destinations",
+      "hq_country": "US",
+      "hq_state": "TN",
+      "hq_city": "Nashville",
+      "website": "wyndhamdestinations.com",
+      "notes": "Formerly Cendant/Fairfield Resorts",
+      "acquired": []
+    },
+    {
+      "id": "marriott",
+      "name": "Marriott Vacations Worldwide",
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Orlando",
+      "website": "marriottvacationsWorldwide.com",
+      "notes": "Spun off from Marriott International 2011",
+      "acquired": [
+        "ivh"
+      ]
+    },
+    {
+      "id": "hilton",
+      "name": "Hilton Grand Vacations",
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Orlando",
+      "website": "hiltongrandvacations.com",
+      "notes": "Spun off from Hilton 2017",
+      "acquired": [
+        "diamond"
+      ]
+    },
+    {
+      "id": "bluegreen",
+      "name": "Bluegreen Vacations",
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Boca Raton",
+      "website": "bluegreenvacations.com",
+      "notes": "Acquired by Hilton Grand Vacations 2023",
+      "acquired": []
+    },
+    {
+      "id": "diamond",
+      "name": "Diamond Resorts International",
+      "hq_country": "US",
+      "hq_state": "NV",
+      "hq_city": "Las Vegas",
+      "website": "diamondresorts.com",
+      "notes": "Acquired by Hilton Grand Vacations 2021",
+      "acquired": []
+    },
+    {
+      "id": "ivh",
+      "name": "ILM Vacation Holdings (IVH / Vistana)",
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Orlando",
+      "website": "vistana.com",
+      "notes": "Acquired by Marriott Vacations Worldwide 2021",
+      "acquired": []
+    }
+  ],
+  "brands": [
+    {
+      "id": "club-wyndham",
+      "name": "Club Wyndham",
+      "parent_company_id": "wyndham",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "worldmark",
+      "name": "WorldMark by Wyndham",
+      "parent_company_id": "wyndham",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": "Points-based club"
+    },
+    {
+      "id": "shell",
+      "name": "Shell Vacations Club",
+      "parent_company_id": "wyndham",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "mvw",
+      "name": "Marriott Vacation Club",
+      "parent_company_id": "marriott",
+      "exchange_company_ids": [
+        "ii",
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sheraton-vistana",
+      "name": "Sheraton Vistana Resorts",
+      "parent_company_id": "marriott",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "notes": "Formerly IVH brand"
+    },
+    {
+      "id": "westin-vacations",
+      "name": "Westin Vacation Club",
+      "parent_company_id": "marriott",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "notes": "Formerly IVH brand"
+    },
+    {
+      "id": "hgv",
+      "name": "Hilton Grand Vacations Club",
+      "parent_company_id": "hilton",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "bluegreen-brand",
+      "name": "Bluegreen Vacations",
+      "parent_company_id": "hilton",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": "Formerly standalone, now Hilton subsidiary"
+    },
+    {
+      "id": "diamond-brand",
+      "name": "Diamond Resorts",
+      "parent_company_id": "hilton",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "notes": "Formerly standalone, now Hilton subsidiary"
+    }
+  ],
+  "resorts": [
+    {
+      "id": "cwb-001",
+      "name": "Club Wyndham Bonnet Creek",
+      "parent_company_id": "wyndham",
+      "brand_id": "club-wyndham",
+      "address": "9560 Via Encinas",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "phone": "407-238-3800",
+      "website": "clubwyndham.com",
+      "lat": 28.3773,
+      "lng": -81.52,
+      "club_type": "Points",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "original_developer": "Wyndham",
+      "current_owner_id": "wyndham",
+      "status": "Active",
+      "legacy_names": [],
+      "notes": "Adjacent to Walt Disney World"
+    },
+    {
+      "id": "mvw-001",
+      "name": "Marriott's Grand Vista",
+      "parent_company_id": "marriott",
+      "brand_id": "mvw",
+      "address": "8001 Vineland Ave",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "phone": "407-238-7100",
+      "website": "marriottvacationclub.com",
+      "lat": 28.3902,
+      "lng": -81.4988,
+      "club_type": "Points / Fixed Week",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "original_developer": "Marriott",
+      "current_owner_id": "marriott",
+      "status": "Active",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "hgv-001",
+      "name": "Hilton Grand Vacations at SeaWorld",
+      "parent_company_id": "hilton",
+      "brand_id": "hgv",
+      "address": "6924 Grand Vacations Way",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "phone": "407-239-0100",
+      "website": "hiltongrandvacations.com",
+      "lat": 28.4197,
+      "lng": -81.4684,
+      "club_type": "Points",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "original_developer": "Hilton",
+      "current_owner_id": "hilton",
+      "status": "Active",
+      "legacy_names": [
+        "Hilton Grand Vacations Club at SeaWorld"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "sv-001",
+      "name": "Sheraton Vistana Villages Resort Villas",
+      "parent_company_id": "marriott",
+      "brand_id": "sheraton-vistana",
+      "address": "12401 International Dr",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "phone": "407-238-5000",
+      "website": "vistana.com",
+      "lat": 28.4073,
+      "lng": -81.4673,
+      "club_type": "Points / Fixed Week",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "original_developer": "ITT Sheraton",
+      "current_owner_id": "marriott",
+      "status": "Active",
+      "legacy_names": [
+        "Starwood Vistana Villages"
+      ],
+      "notes": "Formerly under Starwood / IVH"
+    },
+    {
+      "id": "bg-001",
+      "name": "Bluegreen Vacations Fountains Resort",
+      "parent_company_id": "hilton",
+      "brand_id": "bluegreen-brand",
+      "address": "12001 International Dr",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "phone": "407-239-7100",
+      "website": "bluegreenvacations.com",
+      "lat": 28.4001,
+      "lng": -81.468,
+      "club_type": "Points",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "original_developer": "Bluegreen",
+      "current_owner_id": "hilton",
+      "status": "Active",
+      "legacy_names": [],
+      "notes": "Hilton subsidiary since 2023"
+    }
+  ],
+  "acquisitions": [
+    {
+      "id": "acq-001",
+      "acquirer_id": "marriott",
+      "acquired_id": "ivh",
+      "date": "2021-05",
+      "notes": "Acquired ILM Vacation Holdings (Vistana brands) for approximately $1.5B"
+    },
+    {
+      "id": "acq-002",
+      "acquirer_id": "hilton",
+      "acquired_id": "diamond",
+      "date": "2021-08",
+      "notes": "Acquired Diamond Resorts for approximately $1.4B"
+    },
+    {
+      "id": "acq-003",
+      "acquirer_id": "hilton",
+      "acquired_id": "bluegreen",
+      "date": "2023-09",
+      "notes": "Acquired Bluegreen Vacations for approximately $1.5B"
+    }
+  ]
+}
