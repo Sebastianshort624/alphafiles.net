@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Resort Intelligence Center — AlphaFiles</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--nb:#1B3F6B;--gold:#C8A95A;--bg:#E6EEF9;--bgd:#d4e3f5;--border:#c5d8ee;--text:#1B3F6B;--muted:#5a7a99;--surface:#fff}
+body{font-family:Inter,-apple-system,sans-serif;background:#f4f7fb;color:var(--text);display:flex;min-height:100vh}
+
+/* ── SIDENAV ─────────────────────────────────── */
+#sidenav{width:220px;min-height:100vh;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100}
+.sn-brand{background:linear-gradient(135deg,var(--nb),#243860);padding:16px;border-bottom:2px solid var(--gold)}
+.sn-brand-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.sn-brand-sub{font-size:9px;color:rgba(255,255,255,.45);letter-spacing:1px;margin-top:2px}
+.sn-section{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 16px 4px}
+.sn-item{display:flex;align-items:center;gap:10px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--text);text-decoration:none;cursor:pointer;border:none;background:none;width:100%;border-left:2px solid transparent;transition:.12s}
+.sn-item:hover{background:var(--bgd);color:var(--nb)}
+.sn-item.active{background:var(--bgd);color:var(--nb);border-left-color:var(--gold)}
+.sn-item .ic{width:16px;text-align:center;font-size:14px}
+.sn-stat{padding:12px 16px;margin-top:auto;border-top:1px solid var(--border);font-size:10px;color:var(--muted)}
+.sn-stat b{color:var(--nb)}
+
+/* ── MAIN ─────────────────────────────────────── */
+#main{margin-left:220px;flex:1;padding:24px;min-height:100vh}
+
+/* ── HEADER ──────────────────────────────────── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:22px;font-weight:700;color:var(--nb)}
+.page-sub{font-size:13px;color:var(--muted);margin-top:2px}
+
+/* ── SEARCH BAR ──────────────────────────────── */
+.search-wrap{display:flex;gap:8px;margin-bottom:20px}
+.search-input{flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:Inter,sans-serif;color:var(--nb);background:#fff;outline:none}
+.search-input:focus{border-color:var(--gold)}
+.search-btn{padding:9px 18px;background:var(--nb);color:var(--gold);border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
+
+/* ── STAT CARDS ──────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
+.stat-n{font-size:32px;font-weight:800;color:var(--nb)}
+.stat-l{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+
+/* ── TABLE ───────────────────────────────────── */
+.tbl-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+.tbl-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg)}
+.tbl-hdr-title{font-size:13px;font-weight:700;color:var(--nb)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--nb);color:var(--gold);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid #f0f4f8;vertical-align:top}
+tr:hover td{background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:var(--bg);color:var(--nb);border:1px solid var(--border)}
+.tag.gold{background:rgba(200,169,90,.1);color:#7a5c1e;border-color:rgba(200,169,90,.3)}
+.tag.green{background:#f0fdf4;color:#166534;border-color:#86efac}
+.tag.red{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+.row-link{color:var(--nb);text-decoration:none;font-weight:600;cursor:pointer}
+.row-link:hover{color:var(--gold);text-decoration:underline}
+
+/* ── CARDS ───────────────────────────────────── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:18px;cursor:pointer;transition:.15s}
+.card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(27,63,107,.1)}
+.card-name{font-size:14px;font-weight:700;color:var(--nb);margin-bottom:4px}
+.card-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
+.card-stats{display:flex;gap:14px}
+.card-stat-n{font-size:20px;font-weight:800;color:var(--nb)}
+.card-stat-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+
+/* ── DETAIL PANEL ────────────────────────────── */
+.detail-panel{background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:20px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.detail-field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+.detail-field span{font-size:13px;color:var(--nb)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:700;color:var(--nb);cursor:pointer;background:#fff;margin-bottom:16px;font-family:Inter,sans-serif}
+.back-btn:hover{background:var(--bg)}
+
+/* ── BUILDER ─────────────────────────────────── */
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.form-field input,.form-field select,.form-field textarea{padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:Inter,sans-serif;color:var(--nb);outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold)}
+.btn{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;border:none}
+.btn-primary{background:var(--nb);color:var(--gold)}
+.btn-secondary{background:var(--bg);color:var(--nb);border:1.5px solid var(--border)}
+.btn-danger{background:#fef2f2;color:#991b1b;border:1.5px solid #fca5a5}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.builder-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0}
+.btab{padding:8px 18px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:Inter,sans-serif}
+.btab.active{color:var(--nb);border-bottom-color:var(--gold)}
+.validation-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:6px;font-size:12px;margin-bottom:6px}
+.validation-ok{background:#f0fdf4;border:1px solid #86efac;color:#166534}
+.validation-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.chart-bar-wrap{margin-bottom:8px}
+.chart-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px}
+.chart-bar-track{height:14px;background:var(--bg);border-radius:4px;overflow:hidden}
+.chart-bar-fill{height:100%;background:var(--nb);border-radius:4px;transition:.4s}
+
+/* ── BREADCRUMB ──────────────────────────────── */
+.breadcrumb{font-size:11px;color:var(--muted);margin-bottom:12px}
+.breadcrumb a{color:var(--nb);cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb span{margin:0 5px}
+
+/* ── EMPTY ───────────────────────────────────── */
+.empty{text-align:center;padding:48px 20px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;margin-bottom:8px}
+
+@media(max-width:700px){
+  #sidenav{display:none}
+  #main{margin-left:0}
+  .detail-grid,.builder-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="sidenav">
+  <div class="sn-brand">
+    <div class="sn-brand-title">Resort Intelligence</div>
+    <div class="sn-brand-sub">AlphaFiles · Industry Database</div>
+  </div>
+
+  <div class="sn-section">Navigation</div>
+  <button class="sn-item" onclick="nav('dashboard')"><span class="ic">⊞</span>Dashboard</button>
+
+  <div class="sn-section">Browse</div>
+  <button class="sn-item" onclick="nav('parent-companies')"><span class="ic">🏢</span>Parent Companies</button>
+  <button class="sn-item" onclick="nav('brands')"><span class="ic">🔖</span>Brands</button>
+  <button class="sn-item" onclick="nav('resorts')"><span class="ic">🏖</span>Resorts</button>
+  <button class="sn-item" onclick="nav('exchange-companies')"><span class="ic">🔄</span>Exchange Companies</button>
+
+  <div class="sn-section">Geography</div>
+  <button class="sn-item" onclick="nav('states')"><span class="ic">📍</span>States</button>
+  <button class="sn-item" onclick="nav('countries')"><span class="ic">🌍</span>Countries</button>
+
+  <div class="sn-section">Tools</div>
+  <button class="sn-item" onclick="nav('search')"><span class="ic">🔍</span>Search</button>
+  <button class="sn-item" onclick="nav('statistics')"><span class="ic">📊</span>Statistics</button>
+  <button class="sn-item" onclick="nav('builder')"><span class="ic">🔧</span>Builder Mode</button>
+
+  <div class="sn-stat" id="sn-stat-block">Loading...</div>
+</nav>
+
+<main id="main">
+  <div id="view"></div>
+</main>
+
+<script>
+// ── DATA LAYER ────────────────────────────────────────────────────────
+// In production this fetches from /resorts/db/resorts_db.json
+// For standalone demo, data is embedded directly.
+var DB = null;
+
+function loadDB(){
+  // Try to fetch from same-origin JSON file first
+  fetch('./db/resorts_db.json')
+    .then(r=>r.json())
+    .then(d=>{DB=d;init();})
+    .catch(()=>{
+      // Fallback: use localStorage or empty skeleton
+      var saved=localStorage.getItem('resorts_db');
+      DB=saved?JSON.parse(saved):SEED_DB;
+      init();
+    });
+}
+
+// Embedded seed — same structure as the JSON file
+var SEED_DB={
+  exchange_companies:[
+    {id:"rci",name:"RCI",website:"rci.com",notes:""},
+    {id:"ii",name:"Interval International",website:"intervalworld.com",notes:""},
+    {id:"sfo",name:"SFX Resorts",website:"sfxresorts.com",notes:""},
+    {id:"7across",name:"7Across",website:"7across.com",notes:""}
+  ],
+  parent_companies:[
+    {id:"wyndham",name:"Wyndham Destinations",hq_country:"US",hq_state:"TN",hq_city:"Nashville",website:"wyndhamdestinations.com",notes:"Formerly Cendant/Fairfield Resorts",acquired:[]},
+    {id:"marriott",name:"Marriott Vacations Worldwide",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"marriottvacationsworldwide.com",notes:"Spun off from Marriott International 2011",acquired:["ivh"]},
+    {id:"hilton",name:"Hilton Grand Vacations",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"hiltongrandvacations.com",notes:"Spun off from Hilton 2017",acquired:["diamond","bluegreen"]},
+    {id:"bluegreen",name:"Bluegreen Vacations",hq_country:"US",hq_state:"FL",hq_city:"Boca Raton",website:"bluegreenvacations.com",notes:"Acquired by Hilton Grand Vacations 2023",acquired:[]},
+    {id:"diamond",name:"Diamond Resorts International",hq_country:"US",hq_state:"NV",hq_city:"Las Vegas",website:"diamondresorts.com",notes:"Acquired by Hilton Grand Vacations 2021",acquired:[]},
+    {id:"ivh",name:"ILM Vacation Holdings (Vistana)",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"vistana.com",notes:"Acquired by Marriott Vacations Worldwide 2021",acquired:[]}
+  ],
+  brands:[
+    {id:"club-wyndham",name:"Club Wyndham",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:""},
+    {id:"worldmark",name:"WorldMark by Wyndham",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:"Points-based club"},
+    {id:"shell",name:"Shell Vacations Club",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:""},
+    {id:"mvw",name:"Marriott Vacation Club",parent_company_id:"marriott",exchange_company_ids:["ii","rci"],notes:""},
+    {id:"sheraton-vistana",name:"Sheraton Vistana Resorts",parent_company_id:"marriott",exchange_company_ids:["ii"],notes:"Formerly IVH brand"},
+    {id:"westin-vacations",name:"Westin Vacation Club",parent_company_id:"marriott",exchange_company_ids:["ii"],notes:"Formerly IVH brand"},
+    {id:"hgv",name:"Hilton Grand Vacations Club",parent_company_id:"hilton",exchange_company_ids:["rci","ii"],notes:""},
+    {id:"bluegreen-brand",name:"Bluegreen Vacations",parent_company_id:"hilton",exchange_company_ids:["rci"],notes:"Formerly standalone"},
+    {id:"diamond-brand",name:"Diamond Resorts",parent_company_id:"hilton",exchange_company_ids:["ii"],notes:"Formerly standalone"}
+  ],
+  resorts:[
+    {id:"cwb-001",name:"Club Wyndham Bonnet Creek",parent_company_id:"wyndham",brand_id:"club-wyndham",address:"9560 Via Encinas",city:"Orlando",state:"FL",country:"US",phone:"407-238-3800",website:"clubwyndham.com",lat:28.3773,lng:-81.5200,club_type:"Points",exchange_company_ids:["rci"],original_developer:"Wyndham",current_owner_id:"wyndham",status:"Active",legacy_names:[],notes:"Adjacent to Walt Disney World"},
+    {id:"mvw-001",name:"Marriott's Grand Vista",parent_company_id:"marriott",brand_id:"mvw",address:"8001 Vineland Ave",city:"Orlando",state:"FL",country:"US",phone:"407-238-7100",website:"marriottvacationclub.com",lat:28.3902,lng:-81.4988,club_type:"Points / Fixed Week",exchange_company_ids:["ii"],original_developer:"Marriott",current_owner_id:"marriott",status:"Active",legacy_names:[],notes:""},
+    {id:"hgv-001",name:"Hilton Grand Vacations at SeaWorld",parent_company_id:"hilton",brand_id:"hgv",address:"6924 Grand Vacations Way",city:"Orlando",state:"FL",country:"US",phone:"407-239-0100",website:"hiltongrandvacations.com",lat:28.4197,lng:-81.4684,club_type:"Points",exchange_company_ids:["rci","ii"],original_developer:"Hilton",current_owner_id:"hilton",status:"Active",legacy_names:["Hilton Grand Vacations Club at SeaWorld"],notes:""},
+    {id:"sv-001",name:"Sheraton Vistana Villages",parent_company_id:"marriott",brand_id:"sheraton-vistana",address:"12401 International Dr",city:"Orlando",state:"FL",country:"US",phone:"407-238-5000",website:"vistana.com",lat:28.4073,lng:-81.4673,club_type:"Points / Fixed Week",exchange_company_ids:["ii"],original_developer:"ITT Sheraton",current_owner_id:"marriott",status:"Active",legacy_names:["Starwood Vistana Villages"],notes:"Formerly under Starwood / IVH"},
+    {id:"bg-001",name:"Bluegreen Vacations Fountains Resort",parent_company_id:"hilton",brand_id:"bluegreen-brand",address:"12001 International Dr",city:"Orlando",state:"FL",country:"US",phone:"407-239-7100",website:"bluegreenvacations.com",lat:28.4001,lng:-81.4680,club_type:"Points",exchange_company_ids:["rci"],original_developer:"Bluegreen",current_owner_id:"hilton",status:"Active",legacy_names:[],notes:"Hilton subsidiary since 2023"}
+  ],
+  acquisitions:[
+    {id:"acq-001",acquirer_id:"marriott",acquired_id:"ivh",date:"2021-05",notes:"Acquired ILM Vacation Holdings (Vistana) for ~$1.5B"},
+    {id:"acq-002",acquirer_id:"hilton",acquired_id:"diamond",date:"2021-08",notes:"Acquired Diamond Resorts for ~$1.4B"},
+    {id:"acq-003",acquirer_id:"hilton",acquired_id:"bluegreen",date:"2023-09",notes:"Acquired Bluegreen Vacations for ~$1.5B"}
+  ]
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────
+function byId(arr,id){return(arr||[]).find(function(x){return x.id===id;})||null;}
+function pc(id){return byId(DB.parent_companies,id);}
+function brand(id){return byId(DB.brands,id);}
+function exc(id){return byId(DB.exchange_companies,id);}
+function resort(id){return byId(DB.resorts,id);}
+function brandsByPC(pcId){return DB.brands.filter(function(b){return b.parent_company_id===pcId;});}
+function resortsByPC(pcId){return DB.resorts.filter(function(r){return r.parent_company_id===pcId;});}
+function resortsByBrand(bId){return DB.resorts.filter(function(r){return r.brand_id===bId;});}
+function resortsByState(st){return DB.resorts.filter(function(r){return r.state===st;});}
+function resortsByCountry(co){return DB.resorts.filter(function(r){return r.country===co;});}
+function resortsByExc(eId){return DB.resorts.filter(function(r){return(r.exchange_company_ids||[]).indexOf(eId)>=0;});}
+function statusTag(s){return '<span class="tag '+(s==='Active'?'green':'red')+'">'+s+'</span>';}
+function excTags(ids){return(ids||[]).map(function(id){var e=exc(id);return e?'<span class="tag">'+e.name+'</span>':id;}).join(' ');}
+function saveDB(){localStorage.setItem('resorts_db',JSON.stringify(DB));}
+function uid(){return'r-'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+
+// ── ROUTER ────────────────────────────────────────────────────────────
+var currentView='dashboard';
+var viewStack=[];
+function nav(view,id){
+  currentView=view;
+  document.querySelectorAll('.sn-item').forEach(function(el){
+    var match=el.getAttribute('onclick')||'';
+    el.classList.toggle('active',match.indexOf("'"+view+"'")>=0||match.indexOf('"'+view+'"')>=0);
+  });
+  render(view,id);
+}
+function render(view,id){
+  var v=document.getElementById('view');
+  if(view==='dashboard') v.innerHTML=viewDashboard();
+  else if(view==='parent-companies') v.innerHTML=id?viewPC(id):viewPCList();
+  else if(view==='brands') v.innerHTML=id?viewBrand(id):viewBrandList();
+  else if(view==='resorts') v.innerHTML=id?viewResort(id):viewResortList();
+  else if(view==='exchange-companies') v.innerHTML=viewExcList();
+  else if(view==='states') v.innerHTML=id?viewState(id):viewStateList();
+  else if(view==='countries') v.innerHTML=viewCountryList();
+  else if(view==='search') v.innerHTML=viewSearch();
+  else if(view==='statistics') v.innerHTML=viewStatistics();
+  else if(view==='builder') v.innerHTML=viewBuilder(id);
+  updateStat();
+}
+
+// ── VIEWS ─────────────────────────────────────────────────────────────
+function viewDashboard(){
+  var pcs=DB.parent_companies.length,brands=DB.brands.length,resorts=DB.resorts.length;
+  var states=[...new Set(DB.resorts.map(function(r){return r.state;}))].filter(Boolean).length;
+  return '<div class="page-header"><div><div class="page-title">Resort Intelligence Center</div><div class="page-sub">Vacation Ownership Industry Database</div></div></div>'
+    +'<div class="stat-grid">'
+    +statCard(resorts,'Resorts')+statCard(DB.brands.length,'Brands')+statCard(pcs,'Parent Companies')
+    +statCard(DB.exchange_companies.length,'Exchange Cos.')+statCard(states,'States')+'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px"><div>'
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Parent Companies</div>'
+    +'<button class="btn btn-secondary" onclick="nav(\'parent-companies\')">View all →</button></div>'
+    +'<table><tr><th>Company</th><th>HQ</th><th>Brands</th><th>Resorts</th></tr>'
+    +DB.parent_companies.map(function(p){return'<tr><td><span class="row-link" onclick="nav(\'parent-companies\',\''+p.id+'\')">'
+      +p.name+'</span></td><td>'+p.hq_city+', '+p.hq_state+'</td><td>'+brandsByPC(p.id).length+'</td><td>'+resortsByPC(p.id).length+'</td></tr>';}).join('')
+    +'</table></div></div><div>'
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Recent Resorts</div>'
+    +'<button class="btn btn-secondary" onclick="nav(\'resorts\')">View all →</button></div>'
+    +'<table><tr><th>Resort</th><th>State</th><th>Brand</th><th>Status</th></tr>'
+    +DB.resorts.slice(0,5).map(function(r){var b=brand(r.brand_id);return'<tr><td><span class="row-link" onclick="nav(\'resorts\',\''+r.id+'\')">'
+      +r.name+'</span></td><td>'+r.state+'</td><td>'+(b?b.name:'—')+'</td><td>'+statusTag(r.status)+'</td></tr>';}).join('')
+    +'</table></div></div></div>';
+}
+
+function statCard(n,l){return'<div class="stat-card"><div class="stat-n">'+n+'</div><div class="stat-l">'+l+'</div></div>';}
+
+function viewPCList(){
+  return '<div class="page-header"><div class="page-title">Parent Companies</div></div>'
+    +'<div class="card-grid">'
+    +DB.parent_companies.map(function(p){
+      var bs=brandsByPC(p.id).length,rs=resortsByPC(p.id).length;
+      return'<div class="card" onclick="nav(\'parent-companies\',\''+p.id+'\')"><div class="card-name">'+p.name+'</div>'
+        +'<div class="card-meta">'+p.hq_city+(p.hq_state?', '+p.hq_state:'')+' · '+p.hq_country+'</div>'
+        +'<div class="card-stats"><div class="card-stat"><div class="card-stat-n">'+rs+'</div><div class="card-stat-l">Resorts</div></div>'
+        +'<div class="card-stat"><div class="card-stat-n">'+bs+'</div><div class="card-stat-l">Brands</div></div></div></div>';
+    }).join('')+'</div>';
+}
+
+function viewPC(id){
+  var p=pc(id); if(!p) return '<div class="empty"><div class="empty-icon">⚠️</div>Not found</div>';
+  var acqs=DB.acquisitions.filter(function(a){return a.acquirer_id===id;});
+  var rs=resortsByPC(id), bs=brandsByPC(id);
+  return '<button class="back-btn" onclick="nav(\'parent-companies\')">← Back</button>'
+    +'<div class="page-header"><div><div class="page-title">'+p.name+'</div><div class="page-sub">Parent Company · '+rs.length+' resorts · '+bs.length+' brands</div></div></div>'
+    +'<div class="detail-panel"><div class="detail-grid">'
+    +df('HQ',p.hq_city+(p.hq_state?', '+p.hq_state:'')+' · '+p.hq_country)
+    +df('Website',p.website?'<a href="https://'+p.website+'" target="_blank">'+p.website+'</a>':'—')
+    +df('Notes',p.notes||'—')+'</div></div>'
+    +(acqs.length?'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Acquisition History</div></div>'
+      +'<table><tr><th>Acquired</th><th>Date</th><th>Notes</th></tr>'
+      +acqs.map(function(a){var tgt=pc(a.acquired_id);return'<tr><td>'+(tgt?tgt.name:a.acquired_id)+'</td><td>'+a.date+'</td><td>'+a.notes+'</td></tr>';}).join('')
+      +'</table></div>':'')
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Brands</div></div>'
+    +'<table><tr><th>Brand</th><th>Exchange</th><th>Resorts</th></tr>'
+    +bs.map(function(b){return'<tr><td><span class="row-link" onclick="nav(\'brands\',\''+b.id+'\')">'+b.name+'</span></td>'
+      +'<td>'+excTags(b.exchange_company_ids)+'</td><td>'+resortsByBrand(b.id).length+'</td></tr>';}).join('')
+    +'</table></div>'
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Resorts</div></div>'
+    +resortTable(rs)+'</div>';
+}
+
+function df(l,v){return'<div class="detail-field"><label>'+l+'</label><span>'+v+'</span></div>';}
+
+function viewBrandList(){
+  return '<div class="page-header"><div class="page-title">Brands</div></div>'
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">All Brands ('+DB.brands.length+')</div></div>'
+    +'<table><tr><th>Brand</th><th>Parent Company</th><th>Exchange</th><th>Resorts</th></tr>'
+    +DB.brands.map(function(b){var p=pc(b.parent_company_id);return'<tr><td><span class="row-link" onclick="nav(\'brands\',\''+b.id+'\')">'+b.name+'</span></td>'
+      +'<td><span class="row-link" onclick="nav(\'parent-companies\',\''+b.parent_company_id+'\')">'+(p?p.name:'—')+'</span></td>'
+      +'<td>'+excTags(b.exchange_company_ids)+'</td><td>'+resortsByBrand(b.id).length+'</td></tr>';}).join('')
+    +'</table></div>';
+}
+
+function viewBrand(id){
+  var b=brand(id); if(!b) return'<div class="empty">Not found</div>';
+  var p=pc(b.parent_company_id), rs=resortsByBrand(id);
+  return'<button class="back-btn" onclick="nav(\'brands\')">← Back</button>'
+    +'<div class="page-header"><div><div class="page-title">'+b.name+'</div><div class="page-sub">Brand · '+(p?p.name:'')+'</div></div></div>'
+    +'<div class="detail-panel"><div class="detail-grid">'
+    +df('Parent Company',p?'<span class="row-link" onclick="nav(\'parent-companies\',\''+p.id+'\')">'+p.name+'</span>':'—')
+    +df('Exchange Companies',excTags(b.exchange_company_ids))
+    +df('Notes',b.notes||'—')+'</div></div>'
+    +'<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Resorts ('+rs.length+')</div></div>'
+    +resortTable(rs)+'</div>';
+}
+
+function viewResortList(){
+  var html='<div class="page-header"><div><div class="page-title">Resorts</div><div class="page-sub">'+DB.resorts.length+' records</div></div>'
+    +'<button class="btn btn-primary" onclick="nav(\'builder\',\'add-resort\')">+ Add Resort</button></div>'
+    +'<div class="search-wrap"><input class="search-input" id="resort-filter" placeholder="Filter resorts..." oninput="filterResortList(this.value)">'
+    +'<button class="search-btn" onclick="nav(\'search\')">Advanced Search</button></div>'
+    +'<div id="resort-list-wrap"><div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">All Resorts</div></div>'
+    +resortTable(DB.resorts)+'</div></div>';
+  return html;
+}
+
+function filterResortList(q){
+  var rs=DB.resorts.filter(function(r){
+    var s=(r.name+r.city+r.state+r.country+(r.legacy_names||[]).join(' ')).toLowerCase();
+    return s.indexOf(q.toLowerCase())>=0;
+  });
+  var wrap=document.getElementById('resort-list-wrap');
+  if(wrap) wrap.innerHTML='<div class="tbl-wrap"><div class="tbl-hdr"><div class="tbl-hdr-title">Results ('+rs.length+')</div></div>'+resortTable(rs)+'</div>';
+}
+
+function resortTable(rs){
+  if(!rs.length) return'<div class="empty"><div class="empty-icon">🏖</div>No resorts found</div>';
+  return'<table><tr><th>Resort</th><th>City</th><th>State</th><th>Brand</th><th>Exchange</th><th>Status</th></tr>'
+    +rs.map(function(r){var b=brand(r.brand_id);return'<tr><td><span class="row-link" onclick="nav(\'resorts\',\''+r.id+'\')">'+r.name+'</span>'
+      +(r.legacy_names&&r.legacy_names.length?'<br><span style="font-size:10px;color:var(--muted)">fka: '+r.legacy_names.join(', ')+'</span>':'')
+      +'</td><td>'+r.city+'</td><td>'+r.state+'</td><td>'+(b?'<span class="row-link" onclick="nav(\'brands\',\''+b.id+'\')">'+b.name+'</span>':'—')+'</td>'
+      +'<td>'+excTags(r.exchange_company_ids)+'</td><td>'+statusTag(r.status)+'</td></tr>';}).join('')
+    +'</table>';
+}
+
+function viewResort(id){
+  var r=resort(id); if(!r) return'<div class="empty">Not found</div>';
+  var b=brand(r.brand_id), p=pc(r.parent_company_id);
+  return'<button class="back-btn" onclick="nav(\'resorts\')">← Back</button>'
+    +'<div class="page-header"><div><div class="page-title">'+r.name+'</div>'
+    +'<div class="page-sub">'+(b?b.name:'')+(b&&p?' · ':'')+( p?p.name:'')+'</div></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button class="btn btn-secondary" onclick="nav(\'builder\',\'edit-resort-'+r.id+'\')">✏️ Edit</button>'
+    +'<button class="btn btn-danger" onclick="deleteResort(\''+r.id+'\')">🗑 Delete</button>'
+    +'</div></div>'
+    +'<div class="detail-panel"><div class="detail-grid">'
+    +df('Parent Company',p?'<span class="row-link" onclick="nav(\'parent-companies\',\''+p.id+'\')">'+p.name+'</span>':'—')
+    +df('Brand',b?'<span class="row-link" onclick="nav(\'brands\',\''+b.id+'\')">'+b.name+'</span>':'—')
+    +df('Status',statusTag(r.status))
+    +df('Club Type',r.club_type||'—')
+    +df('Exchange Companies',excTags(r.exchange_company_ids))
+    +df('Address',[r.address,r.city,r.state,r.country].filter(Boolean).join(', '))
+    +df('Phone',r.phone||'—')
+    +df('Website',r.website?'<a href="https://'+r.website+'" target="_blank">'+r.website+'</a>':'—')
+    +df('Original Developer',r.original_developer||'—')
+    +df('Coordinates',r.lat&&r.lng?r.lat+', '+r.lng:'—')
+    +df('Legacy Names',(r.legacy_names&&r.legacy_names.length)?r.legacy_names.join(', '):'—')
+    +df('Notes',r.notes||'—')
+    +'</div></div>';
+}
+
+function viewExcList(){
+  return'<div class="page-header"><div class="page-title">Exchange Companies</div></div>'
+    +'<div class="card-grid">'
+    +DB.exchange_companies.map(function(e){var rs=resortsByExc(e.id);return'<div class="card">'
+      +'<div class="card-name">'+e.name+'</div><div class="card-meta">'+e.website+'</div>'
+      +'<div class="card-stats"><div class="card-stat"><div class="card-stat-n">'+rs.length+'</div><div class="card-stat-l">Affiliated Resorts</div></div></div>'
+      +'</div>';}).join('')+'</div>';
+}
+
+function viewStateList(){
+  var states={};
+  DB.resorts.forEach(function(r){if(r.state){if(!states[r.state])states[r.state]=0;states[r.state]++;}});
+  var sorted=Object.keys(states).sort();
+  return'<div class="page-header"><div class="page-title">States</div><div class="page-sub">'+sorted.length+' states with resorts</div></div>'
+    +'<div class="tbl-wrap"><table><tr><th>State</th><th>Resorts</th></tr>'
+    +sorted.map(function(s){return'<tr><td><span class="row-link" onclick="nav(\'states\',\''+s+'\')">'+s+'</span></td><td>'+states[s]+'</td></tr>';}).join('')
+    +'</table></div>';
+}
+
+function viewState(st){
+  var rs=resortsByState(st);
+  return'<button class="back-btn" onclick="nav(\'states\')">← Back</button>'
+    +'<div class="page-header"><div class="page-title">'+st+'</div><div class="page-sub">'+rs.length+' resort'+(rs.length!==1?'s':'')+'</div></div>'
+    +'<div class="tbl-wrap">'+resortTable(rs)+'</div>';
+}
+
+function viewCountryList(){
+  var cos={};
+  DB.resorts.forEach(function(r){if(r.country){if(!cos[r.country])cos[r.country]=0;cos[r.country]++;}});
+  var sorted=Object.keys(cos).sort();
+  return'<div class="page-header"><div class="page-title">Countries</div></div>'
+    +'<div class="tbl-wrap"><table><tr><th>Country Code</th><th>Resorts</th></tr>'
+    +sorted.map(function(c){return'<tr><td>'+c+'</td><td>'+cos[c]+'</td></tr>';}).join('')
+    +'</table></div>';
+}
+
+function viewSearch(){
+  return'<div class="page-header"><div class="page-title">Universal Search</div></div>'
+    +'<div class="search-wrap"><input class="search-input" id="global-search" placeholder="Search by resort name, company, brand, city, state, exchange, legacy name..." oninput="runSearch(this.value)" autofocus></div>'
+    +'<div id="search-results"><div class="empty" style="padding:32px"><div class="empty-icon">🔍</div>Type to search across all records</div></div>';
+}
+
+function runSearch(q){
+  var wrap=document.getElementById('search-results');
+  if(!q||q.length<2){wrap.innerHTML='<div class="empty" style="padding:32px"><div class="empty-icon">🔍</div>Type to search</div>';return;}
+  q=q.toLowerCase();
+  var rl=DB.resorts.filter(function(r){
+    return(r.name+r.city+r.state+r.country+r.notes+(r.legacy_names||[]).join(' ')
+      +(brand(r.brand_id)?brand(r.brand_id).name:'')
+      +(pc(r.parent_company_id)?pc(r.parent_company_id).name:'')
+      +(r.exchange_company_ids||[]).map(function(id){var e=exc(id);return e?e.name:'';}).join(' ')
+    ).toLowerCase().indexOf(q)>=0;
+  });
+  var pl=DB.parent_companies.filter(function(p){return(p.name+p.hq_city+p.hq_state).toLowerCase().indexOf(q)>=0;});
+  var bl=DB.brands.filter(function(b){return(b.name).toLowerCase().indexOf(q)>=0;});
+  var html='<div style="font-size:12px;color:var(--muted);margin-bottom:12px">'+(rl.length+pl.length+bl.length)+' results for "'+q+'"</div>';
+  if(pl.length){html+='<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Parent Companies</div>'
+    +pl.map(function(p){return'<div onclick="nav(\'parent-companies\',\''+p.id+'\')" style="padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:13px;font-weight:600;color:var(--nb)">🏢 '+p.name+' <span style="font-size:11px;font-weight:400;color:var(--muted)">'+p.hq_city+'</span></div>';}).join('');}
+  if(bl.length){html+='<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:10px 0 6px">Brands</div>'
+    +bl.map(function(b){return'<div onclick="nav(\'brands\',\''+b.id+'\')" style="padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:6px;margin-bottom:6px;cursor:pointer;font-size:13px;font-weight:600;color:var(--nb)">🔖 '+b.name+'</div>';}).join('');}
+  if(rl.length){html+='<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:10px 0 6px">Resorts</div>'
+    +'<div class="tbl-wrap">'+resortTable(rl)+'</div>';}
+  if(!rl.length&&!pl.length&&!bl.length)html='<div class="empty"><div class="empty-icon">🔍</div>No results for "'+q+'"</div>';
+  wrap.innerHTML=html;
+}
+
+function viewStatistics(){
+  var rs=DB.resorts;
+  function groupBy(arr,fn){var g={};arr.forEach(function(x){var k=fn(x);if(!g[k])g[k]=0;g[k]++;});return g;}
+  function topBars(g,fn,limit){
+    var entries=Object.entries(g).sort(function(a,b){return b[1]-a[1];}).slice(0,limit||10);
+    var max=entries[0]?entries[0][1]:1;
+    return entries.map(function(e){var lbl=fn?fn(e[0]):e[0];return'<div class="chart-bar-wrap"><div class="chart-bar-label"><span>'+lbl+'</span><span><b>'+e[1]+'</b></span></div>'
+      +'<div class="chart-bar-track"><div class="chart-bar-fill" style="width:'+(e[1]/max*100)+'%"></div></div></div>';}).join('');
+  }
+  var byPC=groupBy(rs,function(r){var p=pc(r.parent_company_id);return p?p.name:r.parent_company_id;});
+  var byBrand=groupBy(rs,function(r){var b=brand(r.brand_id);return b?b.name:r.brand_id;});
+  var bySt=groupBy(rs,function(r){return r.state||'Unknown';});
+  var byCo=groupBy(rs,function(r){return r.country||'Unknown';});
+  var byExc={};rs.forEach(function(r){(r.exchange_company_ids||[]).forEach(function(id){var e=exc(id);var k=e?e.name:id;if(!byExc[k])byExc[k]=0;byExc[k]++;});});
+  return'<div class="page-header"><div class="page-title">Statistics</div><div class="page-sub">'+rs.length+' resort records</div></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">'
+    +'<div class="detail-panel"><div class="tbl-hdr-title" style="margin-bottom:14px">By Parent Company</div>'+topBars(byPC,null,10)+'</div>'
+    +'<div class="detail-panel"><div class="tbl-hdr-title" style="margin-bottom:14px">By Brand</div>'+topBars(byBrand,null,10)+'</div>'
+    +'<div class="detail-panel"><div class="tbl-hdr-title" style="margin-bottom:14px">By State</div>'+topBars(bySt,null,10)+'</div>'
+    +'<div class="detail-panel"><div class="tbl-hdr-title" style="margin-bottom:14px">By Exchange Company</div>'+topBars(byExc,null,10)+'</div>'
+    +'</div>';
+}
+
+function viewBuilder(subview){
+  var isAdd=subview==='add-resort'||(subview&&subview.startsWith('edit-resort'));
+  var editId=subview&&subview.startsWith('edit-resort-')?subview.replace('edit-resort-',''):null;
+  var editData=editId?resort(editId):null;
+  function sv(f){return editData?editData[f]||'':'';}
+
+  var tabs=['<div class="builder-tabs">'
+    +'<button class="btab'+((!subview||subview==='add-resort'||subview==='edit-resort'||editId)?' active':'')
+    +'" onclick="nav(\'builder\',\''+(editId?'edit-resort-'+editId:'add-resort')+'\')">'+( editId?'Edit Resort':'Add Resort')+'</button>'
+    +'<button class="btab'+(subview==='import'?' active':'')
+    +'" onclick="nav(\'builder\',\'import\')">Import / Export</button>'
+    +'<button class="btab'+(subview==='validate'?' active':'')
+    +'" onclick="nav(\'builder\',\'validate\')">Validation</button>'
+    +'<button class="btab'+(subview==='dupes'?' active':'')
+    +'" onclick="nav(\'builder\',\'dupes\')">Duplicates</button>'
+    +'</div>'].join('');
+
+  if(subview==='import'||subview==='export'){
+    return'<div class="page-header"><div class="page-title">Builder Mode</div></div>'+tabs
+      +'<div class="btn-row">'
+      +'<button class="btn btn-primary" onclick="importJSON()">📥 Import JSON</button>'
+      +'<button class="btn btn-secondary" onclick="importCSV()">📥 Import CSV</button>'
+      +'<button class="btn btn-secondary" onclick="exportJSON()">📤 Export JSON</button>'
+      +'<button class="btn btn-secondary" onclick="exportCSV()">📤 Export CSV</button>'
+      +'</div>'
+      +'<textarea id="import-area" style="width:100%;height:260px;padding:12px;border:1.5px solid var(--border);border-radius:8px;font-family:monospace;font-size:11px;color:var(--nb)" placeholder="Paste JSON or CSV here..."></textarea>'
+      +'<div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="processImport()">Process Import</button><button class="btn btn-secondary" onclick="document.getElementById(\'import-area\').value=\'\'">Clear</button></div>';
+  }
+  if(subview==='validate'){
+    var issues=validateDB();
+    return'<div class="page-header"><div class="page-title">Builder Mode</div></div>'+tabs
+      +'<div class="tbl-hdr-title" style="margin-bottom:12px">Validation Report</div>'
+      +(issues.length?issues.map(function(i){return'<div class="validation-row validation-warn">⚠️ '+i+'</div>';}).join('')
+        :'<div class="validation-row validation-ok">✅ All records passed validation — no issues found.</div>');
+  }
+  if(subview==='dupes'){
+    var names={};DB.resorts.forEach(function(r){if(!names[r.name])names[r.name]=[];names[r.name].push(r.id);});
+    var dupes=Object.entries(names).filter(function(e){return e[1].length>1;});
+    return'<div class="page-header"><div class="page-title">Builder Mode</div></div>'+tabs
+      +'<div class="tbl-hdr-title" style="margin-bottom:12px">Duplicate Check</div>'
+      +(dupes.length?'<div class="tbl-wrap"><table><tr><th>Name</th><th>IDs</th><th>Count</th></tr>'
+        +dupes.map(function(d){return'<tr><td>'+d[0]+'</td><td style="font-size:10px;font-family:monospace">'+d[1].join(', ')+'</td><td><span class="tag red">'+d[1].length+'</span></td></tr>';}).join('')
+        +'</table></div>'
+        :'<div class="validation-row validation-ok" style="display:flex">✅ No duplicate resort names found.</div>');
+  }
+
+  // Add / Edit Resort Form
+  var pcOpts=DB.parent_companies.map(function(p){return'<option value="'+p.id+'"'+(sv('parent_company_id')===p.id?' selected':'')+'>'+p.name+'</option>';}).join('');
+  var brandOpts='<option value="">— Select brand —</option>'+DB.brands.map(function(b){return'<option value="'+b.id+'"'+(sv('brand_id')===b.id?' selected':'')+'>'+b.name+'</option>';}).join('');
+  var excOpts=DB.exchange_companies.map(function(e){return'<option value="'+e.id+'">'+e.name+'</option>';}).join('');
+
+  return'<div class="page-header"><div class="page-title">Builder Mode</div></div>'+tabs
+    +'<div class="detail-panel">'
+    +'<div class="tbl-hdr-title" style="margin-bottom:16px">'+(editData?'Edit: '+editData.name:'Add New Resort')+'</div>'
+    +'<div class="builder-grid">'
+    +formField('Resort Name','resort-name','text',sv('name'),'Full legal resort name')
+    +formField('Parent Company','resort-pc','select','','',pcOpts)
+    +formField('Brand','resort-brand','select','','',brandOpts)
+    +formField('Status','resort-status','select',sv('status')||'Active','','<option value="Active">Active</option><option value="Inactive">Inactive</option><option value="Closed">Closed</option><option value="Unknown">Unknown</option>')
+    +formField('Address','resort-address','text',sv('address'),'Street address')
+    +formField('City','resort-city','text',sv('city'),'')
+    +formField('State','resort-state','text',sv('state'),'2-letter code')
+    +formField('Country','resort-country','text',sv('country')||'US','ISO 2-letter code')
+    +formField('Phone','resort-phone','text',sv('phone'),'')
+    +formField('Website','resort-website','text',sv('website'),'domain only, no https://')
+    +formField('Latitude','resort-lat','text',sv('lat'),'e.g. 28.3773')
+    +formField('Longitude','resort-lng','text',sv('lng'),'e.g. -81.5200')
+    +formField('Club Type','resort-clubtype','text',sv('club_type'),'Points, Fixed Week, etc.')
+    +formField('Original Developer','resort-dev','text',sv('original_developer'),'')
+    +'<div class="form-field"><label>Exchange Companies</label>'
+    +'<select id="resort-exc" multiple style="height:80px;padding:4px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:Inter,sans-serif">'+excOpts+'</select>'
+    +'<span style="font-size:10px;color:var(--muted);margin-top:3px">Ctrl+click to select multiple</span></div>'
+    +formField('Legacy Names','resort-legacy','text',(sv('legacy_names')||[]).join(', '),'Comma-separated former names')
+    +'</div>'
+    +'<div class="form-field" style="margin-top:12px"><label>Notes</label>'
+    +'<textarea id="resort-notes" rows="3" style="resize:vertical;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:Inter,sans-serif;color:var(--nb)">'+sv('notes')+'</textarea></div>'
+    +'<div class="btn-row" style="margin-top:18px">'
+    +'<button class="btn btn-primary" onclick="saveResort(\''+( editId||'')+'\')">💾 '+(editData?'Update Resort':'Add Resort')+'</button>'
+    +'<button class="btn btn-secondary" onclick="nav(\'resorts\')">Cancel</button>'
+    +(editData?'<button class="btn btn-danger" onclick="deleteResort(\''+editId+'\')">🗑 Delete</button>':'')
+    +'</div></div>';
+}
+
+function formField(l,id,type,val,ph,opts){
+  if(type==='select') return'<div class="form-field"><label>'+l+'</label><select id="'+id+'">'+opts+'</select></div>';
+  return'<div class="form-field"><label>'+l+'</label><input type="'+type+'" id="'+id+'" value="'+( val||'')+'" placeholder="'+(ph||'')+'"></div>';
+}
+
+// ── BUILDER ACTIONS ────────────────────────────────────────────────────
+function saveResort(editId){
+  function gv(id){var el=document.getElementById(id);return el?el.value.trim():'';}
+  var excEl=document.getElementById('resort-exc');
+  var excIds=excEl?Array.from(excEl.selectedOptions).map(function(o){return o.value;}):[]; 
+  var legacy=gv('resort-legacy').split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var r={
+    id:editId||uid(),
+    name:gv('resort-name'),
+    parent_company_id:gv('resort-pc'),
+    brand_id:gv('resort-brand'),
+    address:gv('resort-address'),
+    city:gv('resort-city'),
+    state:gv('resort-state').toUpperCase(),
+    country:gv('resort-country').toUpperCase(),
+    phone:gv('resort-phone'),
+    website:gv('resort-website'),
+    lat:parseFloat(gv('resort-lat'))||null,
+    lng:parseFloat(gv('resort-lng'))||null,
+    club_type:gv('resort-clubtype'),
+    exchange_company_ids:excIds,
+    original_developer:gv('resort-dev'),
+    current_owner_id:gv('resort-pc'),
+    status:gv('resort-status'),
+    legacy_names:legacy,
+    notes:gv('resort-notes'),
+    updated:new Date().toISOString().slice(0,10)
+  };
+  if(!r.name){alert('Resort name is required.');return;}
+  if(editId){DB.resorts=DB.resorts.map(function(x){return x.id===editId?r:x;});}
+  else{r.created=r.updated;DB.resorts.push(r);}
+  saveDB();nav('resorts',r.id);
+}
+
+function deleteResort(id){
+  if(!confirm('Delete this resort? This cannot be undone.')) return;
+  DB.resorts=DB.resorts.filter(function(r){return r.id!==id;});
+  saveDB();nav('resorts');
+}
+
+function validateDB(){
+  var issues=[];
+  DB.resorts.forEach(function(r){
+    if(!r.name) issues.push('Resort '+r.id+': missing name');
+    if(!r.parent_company_id) issues.push(r.name+': missing parent company');
+    if(!r.brand_id) issues.push(r.name+': missing brand');
+    if(!r.status) issues.push(r.name+': missing status');
+    if(r.parent_company_id&&!pc(r.parent_company_id)) issues.push(r.name+': unknown parent company ID "'+r.parent_company_id+'"');
+    if(r.brand_id&&!brand(r.brand_id)) issues.push(r.name+': unknown brand ID "'+r.brand_id+'"');
+  });
+  DB.brands.forEach(function(b){if(!pc(b.parent_company_id)) issues.push('Brand '+b.name+': unknown parent company "'+b.parent_company_id+'"');});
+  return issues;
+}
+
+function exportJSON(){
+  var blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resorts_db.json';a.click();
+}
+
+function exportCSV(){
+  var rows=[['id','name','parent_company','brand','city','state','country','club_type','status','exchange','website']];
+  DB.resorts.forEach(function(r){
+    var p=pc(r.parent_company_id),b=brand(r.brand_id);
+    rows.push([r.id,r.name,p?p.name:'',b?b.name:'',r.city,r.state,r.country,r.club_type,r.status,(r.exchange_company_ids||[]).join('|'),r.website]);
+  });
+  var csv=rows.map(function(r){return r.map(function(c){return'"'+(c||'').toString().replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resorts.csv';a.click();
+}
+
+function importJSON(){document.getElementById('import-area').placeholder='Paste full resorts_db.json content here...';}
+function importCSV(){document.getElementById('import-area').placeholder='Paste CSV (same format as export) here...';}
+
+function processImport(){
+  var raw=document.getElementById('import-area').value.trim();
+  try{
+    var parsed=JSON.parse(raw);
+    if(parsed.resorts){DB=parsed;saveDB();alert('Import successful: '+parsed.resorts.length+' resorts loaded.');nav('dashboard');}
+    else{alert('Invalid format: expected {resorts:[...], brands:[...], ...}');}
+  }catch(e){alert('JSON parse error: '+e.message);}
+}
+
+function updateStat(){
+  var el=document.getElementById('sn-stat-block');
+  if(el) el.innerHTML='<b>'+DB.resorts.length+'</b> resorts · <b>'+DB.brands.length+'</b> brands<br><b>'+DB.parent_companies.length+'</b> companies';
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+function init(){
+  nav('dashboard');
+  var hash=window.location.hash.replace('#/','');
+  if(hash) nav(hash);
+}
+loadDB();
+window.onhashchange=function(){var h=window.location.hash.replace('#/','');if(h)nav(h);};
+</script>
+</body>
+</html>
