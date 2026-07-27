@@ -1159,32 +1159,31 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
 
 <!-- TIMELINE TABLE -->
 <div class="sc" style="margin-top:14px">
-  <div class="slbl">Cost of Ownership — Timeline Breakdown</div>
-  <table class="cost-tbl">
+  <div class="slbl" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span>Cost of Ownership — Timeline Breakdown</span>
+    <span style="font-size:11px;font-weight:500;color:#6b7280;display:flex;align-items:center;gap:8px">
+      Annual MTF increase:
+      <select id="ytd-growth-rate" onchange="calcYTD()" style="padding:3px 7px;border:1.5px solid #d1d5db;border-radius:5px;font-size:11px;font-family:Inter,sans-serif;color:#1B3F6B;background:#fff;font-weight:700">
+        <option value="0.06">6%</option>
+        <option value="0.07">7%</option>
+        <option value="0.08" selected>8%</option>
+        <option value="0.09">9%</option>
+        <option value="0.10">10%</option>
+      </select>
+    </span>
+  </div>
+  <table class="cost-tbl" style="margin-top:8px">
     <thead>
       <tr>
         <th style="text-align:left">Years</th>
-        <th>MTG + MTF</th>
-        <th style="color:#86efac">If Fees Rise 8%</th>
+        <th>Mortgage (YTD)</th>
+        <th>Maintenance Fees (YTD)</th>
+        <th style="background:#1B3F6B;color:#C8A95A">Total Cost (YTD)</th>
       </tr>
     </thead>
-    <tbody id="main-tbody"></tbody>
+    <tbody id="ytd-tbody"></tbody>
   </table>
-  <div class="breakdown-block">
-    <div class="breakdown-label">Individual Breakdown — Reference</div>
-    <table class="cost-tbl breakdown-tbl">
-      <thead>
-        <tr>
-          <th style="text-align:left">Years</th>
-          <th>Mortgage Alone</th>
-          <th>MTF Alone (8%)</th>
-          <th>MTF Flat (no growth)</th>
-        </tr>
-      </thead>
-      <tbody id="breakdown-tbody"></tbody>
-    </table>
-  </div>
-  <div style="font-size:10px;color:#9ca3af;margin-top:10px">ARDA data: maintenance fees rose an average of 8%/yr from 2010–2024.</div>
+  <div style="font-size:10px;color:#9ca3af;margin-top:8px">YTD = cumulative running total from Year 1. Maintenance fees compound at the selected annual rate. ARDA data: fees rose avg. 8%/yr from 2010–2024.</div>
 </div>
 
 <!-- REMAINING — small, secondary -->
@@ -1312,18 +1311,34 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
   set("yr-tot",fcd(mtfYr+mtgMo*12));
   set("yr-tot-sub",fcd(mtfYr+mtgMo*12)+" total per year");
 
-  // Timeline table (1,2,3,5 years)
-  var TF=[{l:"1 Year",y:1},{l:"2 Years",y:2},{l:"3 Years",y:3,hl:true},{l:"5 Years",y:5,hl:true}];
-  var r1="",r2="";
-  TF.forEach(function(tf){
-    var mtg=mtgMo*12*tf.y;
-    var flat=mtg+mtfYr*tf.y;
-    var grow=mtg+cumMtf8(tf.y);
-    r1+="<tr"+(tf.hl?' class="hl"':"")+"><td>"+tf.l+"</td><td>"+fc(flat)+"</td><td style='color:#15803d;font-weight:700'>"+fc(grow)+"</td></tr>";
-    r2+="<tr"+(tf.hl?' class="hl"':"")+"><td>"+tf.l+"</td><td>"+fc(mtg)+"</td><td>"+fc(cumMtf8(tf.y))+"</td><td style='color:#9ca3af'>"+fc(mtfYr*tf.y)+"</td></tr>";
-  });
-  var mb=document.getElementById("main-tbody");if(mb)mb.innerHTML=r1;
-  var bb=document.getElementById("breakdown-tbody");if(bb)bb.innerHTML=r2;
+  // YTD Timeline table — store values on window for recalc
+  window._ytd_mtfYr=mtfYr;
+  window._ytd_mtgMo=mtgMo;
+  window.calcYTD=function(){
+    var rate=parseFloat((document.getElementById("ytd-growth-rate")||{value:"0.08"}).value)||0.08;
+    var _m=window._ytd_mtfYr||0;
+    var _g=window._ytd_mtgMo||0;
+    function cumMtf(y){var t=0;for(var i=1;i<=y;i++)t+=_m*Math.pow(1+rate,i-1);return t;}
+    var rows=[{l:"1 Year",y:1},{l:"2 Years",y:2},{l:"3 Years",y:3},{l:"5 Years",y:5}];
+    var html="";
+    rows.forEach(function(r){
+      var mtgYTD=_g*12*r.y;
+      var mtfYTD=cumMtf(r.y);
+      var totalYTD=mtgYTD+mtfYTD;
+      html+="<tr><td style='text-align:left;font-weight:600'>"+r.l+"</td>"
+           +"<td>"+fc(mtgYTD)+"</td>"
+           +"<td>"+fc(mtfYTD)+"</td>"
+           +"<td style='font-weight:800;color:#1B3F6B'>"+fc(totalYTD)+"</td></tr>";
+    });
+    var tb=document.getElementById("ytd-tbody");if(tb)tb.innerHTML=html;
+    // Also update remaining section with selected rate
+    var remMTF=cumMtf(window._ytd_mtgYrs||10);
+    var remEl=document.getElementById("rem-mtf");if(remEl)remEl.textContent=fc(remMTF);
+    var totEl=document.getElementById("rem-tot");
+    if(totEl)totEl.textContent=fc((_g*(window._ytd_mtgYrs||10)*12)+remMTF);
+  };
+  window._ytd_mtgYrs=mtgYrs;
+  window.calcYTD();
 
   // Remaining (small) — only show if meaningful
   var remBlock=document.querySelector(".remaining-block");
