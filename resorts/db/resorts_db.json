@@ -1,324 +1,1532 @@
 {
+  "schema_version": "2.0",
   "exchange_companies": [
     {
       "id": "rci",
-      "name": "RCI",
+      "name": "RCI (Wyndham)",
       "website": "rci.com",
-      "notes": ""
+      "notes": "Largest exchange network"
     },
     {
       "id": "ii",
       "name": "Interval International",
       "website": "intervalworld.com",
-      "notes": ""
-    },
-    {
-      "id": "sfo",
-      "name": "SFX Resorts",
-      "website": "sfxresorts.com",
-      "notes": ""
+      "notes": "Part of IHG / MVW ecosystem"
     },
     {
       "id": "7across",
-      "name": "7Across",
+      "name": "7Across (formerly SFX)",
       "website": "7across.com",
       "notes": ""
+    },
+    {
+      "id": "dae",
+      "name": "DAE",
+      "website": "daelive.com",
+      "notes": "Independent exchange"
+    },
+    {
+      "id": "mvc-exchange",
+      "name": "MVC Exchange (Marriott)",
+      "website": "marriottvacationclub.com",
+      "notes": "Internal points exchange"
+    },
+    {
+      "id": "hgvc-club",
+      "name": "HGVC Club (Hilton)",
+      "website": "hiltongrandvacations.com",
+      "notes": "Internal points exchange"
     }
   ],
   "parent_companies": [
     {
-      "id": "wyndham",
-      "name": "Wyndham Destinations",
-      "hq_country": "US",
-      "hq_state": "TN",
-      "hq_city": "Nashville",
-      "website": "wyndhamdestinations.com",
-      "notes": "Formerly Cendant/Fairfield Resorts",
-      "acquired": []
-    },
-    {
-      "id": "marriott",
-      "name": "Marriott Vacations Worldwide",
+      "id": "tnl",
+      "name": "Travel + Leisure Co.",
+      "former_names": [
+        "Wyndham Destinations"
+      ],
       "hq_country": "US",
       "hq_state": "FL",
       "hq_city": "Orlando",
-      "website": "marriottvacationsWorldwide.com",
-      "notes": "Spun off from Marriott International 2011",
+      "website": "travelandleisureco.com",
+      "notes": "Rebranded from Wyndham Destinations 2021. Wyndham Hotels spun off separately in 2018.",
       "acquired": [
-        "ivh"
-      ]
+        "shell",
+        "fairfield"
+      ],
+      "status": "Active"
     },
     {
-      "id": "hilton",
+      "id": "mvw",
+      "name": "Marriott Vacations Worldwide",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Orlando",
+      "website": "marriottvacationsworldwide.com",
+      "notes": "Spun off from Marriott International 2011.",
+      "acquired": [
+        "vistana",
+        "welk",
+        "hyatt-vc"
+      ],
+      "status": "Active"
+    },
+    {
+      "id": "hgv",
       "name": "Hilton Grand Vacations",
+      "former_names": [],
       "hq_country": "US",
       "hq_state": "FL",
       "hq_city": "Orlando",
       "website": "hiltongrandvacations.com",
-      "notes": "Spun off from Hilton 2017",
+      "notes": "Spun off from Hilton Hotels 2017.",
       "acquired": [
-        "diamond"
-      ]
+        "diamond",
+        "bluegreen"
+      ],
+      "status": "Active"
     },
     {
-      "id": "bluegreen",
-      "name": "Bluegreen Vacations",
+      "id": "westgate",
+      "name": "Westgate Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Kissimmee",
+      "website": "westgateresorts.com",
+      "notes": "Privately held. Owned by David Siegel.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "ihg-vc",
+      "name": "IHG Vacation Club (Holiday Inn Club Vacations)",
+      "former_names": [
+        "Orange Lake Country Club"
+      ],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Orlando",
+      "website": "holidayinnclubvacations.com",
+      "notes": "IHG acquired a stake; Orange Lake Resorts rebranded to Holiday Inn Club Vacations.",
+      "acquired": [
+        "orange-lake"
+      ],
+      "status": "Active"
+    },
+    {
+      "id": "dvc",
+      "name": "Disney Vacation Club",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Lake Buena Vista",
+      "website": "disneyvacationclub.disney.go.com",
+      "notes": "Wholly owned subsidiary of The Walt Disney Company.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "capital-vac",
+      "name": "Capital Vacations",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "NC",
+      "hq_city": "Charlotte",
+      "website": "capitalvacations.com",
+      "notes": "Third-party resort management and timeshare sales. Manages many Festiva and other resorts.",
+      "acquired": [
+        "festiva"
+      ],
+      "status": "Active"
+    },
+    {
+      "id": "bluegreen-corp",
+      "name": "Bluegreen Vacations (pre-HGV)",
+      "former_names": [
+        "Bluegreen Corporation"
+      ],
       "hq_country": "US",
       "hq_state": "FL",
       "hq_city": "Boca Raton",
       "website": "bluegreenvacations.com",
-      "notes": "Acquired by Hilton Grand Vacations 2023",
-      "acquired": []
+      "notes": "Acquired by Hilton Grand Vacations September 2023 for ~$1.5B.",
+      "acquired": [],
+      "status": "Acquired \u2014 now under HGV"
     },
     {
-      "id": "diamond",
-      "name": "Diamond Resorts International",
+      "id": "diamond-corp",
+      "name": "Diamond Resorts International (pre-HGV)",
+      "former_names": [],
       "hq_country": "US",
       "hq_state": "NV",
       "hq_city": "Las Vegas",
       "website": "diamondresorts.com",
-      "notes": "Acquired by Hilton Grand Vacations 2021",
-      "acquired": []
+      "notes": "Acquired by HGV August 2021 for ~$1.4B. Formerly Apollo Global Management portfolio.",
+      "acquired": [],
+      "status": "Acquired \u2014 now under HGV"
     },
     {
-      "id": "ivh",
-      "name": "ILM Vacation Holdings (IVH / Vistana)",
+      "id": "vistana-corp",
+      "name": "ILM Vacation Holdings / Vistana (pre-MVW)",
+      "former_names": [
+        "Starwood Vacation Ownership",
+        "Sheraton Vacation Club",
+        "Westin Vacation Club"
+      ],
       "hq_country": "US",
       "hq_state": "FL",
       "hq_city": "Orlando",
       "website": "vistana.com",
-      "notes": "Acquired by Marriott Vacations Worldwide 2021",
-      "acquired": []
+      "notes": "Spun out from Marriott International's Starwood brands. Acquired by MVW 2021 for ~$1.5B.",
+      "acquired": [],
+      "status": "Acquired \u2014 now under MVW"
+    },
+    {
+      "id": "welk",
+      "name": "Welk Resorts (pre-MVW)",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "CA",
+      "hq_city": "San Diego",
+      "website": "welkresorts.com",
+      "notes": "Founded by Lawrence Welk. Acquired by MVW 2021. Converted to Hyatt Vacation Club brand.",
+      "acquired": [],
+      "status": "Acquired \u2014 now under MVW"
+    },
+    {
+      "id": "hyatt-vc-corp",
+      "name": "Hyatt Vacation Club (pre-MVW)",
+      "former_names": [
+        "Hyatt Residence Club"
+      ],
+      "hq_country": "US",
+      "hq_state": "IL",
+      "hq_city": "Chicago",
+      "website": "world.hyatt.com",
+      "notes": "Hyatt's timeshare brand. MVW took over sales/management 2021.",
+      "acquired": [],
+      "status": "Partnership/acquired \u2014 now under MVW"
+    },
+    {
+      "id": "grand-pacific",
+      "name": "Grand Pacific Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "CA",
+      "hq_city": "Carlsbad",
+      "website": "grandpacificresorts.com",
+      "notes": "Independent resort management. Also manages resorts for other developers.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "pueblo-bonito",
+      "name": "Pueblo Bonito Resorts",
+      "former_names": [],
+      "hq_country": "MX",
+      "hq_state": "Sinaloa",
+      "hq_city": "Los Cabos",
+      "website": "pueblobonito.com",
+      "notes": "Mexico-based luxury resort developer. Independent.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "vidanta",
+      "name": "Vidanta",
+      "former_names": [
+        "Grupo Situr",
+        "Mayan Resorts"
+      ],
+      "hq_country": "MX",
+      "hq_state": "Jalisco",
+      "hq_city": "Nuevo Vallarta",
+      "website": "vidanta.com",
+      "notes": "Largest resort developer in Mexico. Owned by Daniel Chavez Moran.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "palace-resorts",
+      "name": "Palace Resorts",
+      "former_names": [],
+      "hq_country": "MX",
+      "hq_state": "Quintana Roo",
+      "hq_city": "Cancun",
+      "website": "palaceresorts.com",
+      "notes": "Mexico-based all-inclusive and vacation club developer.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "manhattan-club",
+      "name": "The Manhattan Club",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "NY",
+      "hq_city": "New York City",
+      "website": "",
+      "notes": "Controversial NYC timeshare. Subject of NY AG lawsuit and settlement.",
+      "acquired": [],
+      "status": "Active \u2014 litigation history"
+    },
+    {
+      "id": "summer-bay",
+      "name": "Summer Bay Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Clermont",
+      "website": "summerbayresorts.com",
+      "notes": "",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "spinnaker",
+      "name": "Spinnaker Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "SC",
+      "hq_city": "Hilton Head",
+      "website": "spinnakerresorts.com",
+      "notes": "",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "legacy-vac",
+      "name": "Legacy Vacation Resorts",
+      "former_names": [
+        "Sunterra Resorts"
+      ],
+      "hq_country": "US",
+      "hq_state": "NJ",
+      "hq_city": "Red Bank",
+      "website": "legacyvacationresorts.com",
+      "notes": "Formerly Sunterra Resorts.",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "exploria",
+      "name": "Exploria Resorts",
+      "former_names": [
+        "US Family Vacations"
+      ],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Kissimmee",
+      "website": "exploriaresorts.com",
+      "notes": "",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "vac-village",
+      "name": "Vacation Village Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "FL",
+      "hq_city": "Fort Lauderdale",
+      "website": "vacationvillage.com",
+      "notes": "",
+      "acquired": [],
+      "status": "Active"
+    },
+    {
+      "id": "festiva",
+      "name": "Festiva Resorts",
+      "former_names": [],
+      "hq_country": "US",
+      "hq_state": "NC",
+      "hq_city": "Asheville",
+      "website": "festivaonline.com",
+      "notes": "Many properties now managed by Capital Vacations.",
+      "acquired": [],
+      "status": "Partially acquired \u2014 Capital Vacations"
+    },
+    {
+      "id": "embarc",
+      "name": "Embarc Resorts (HGV)",
+      "former_names": [
+        "DiamondRock"
+      ],
+      "hq_country": "US",
+      "hq_state": "NV",
+      "hq_city": "Las Vegas",
+      "website": "embarcresorts.com",
+      "notes": "Canadian resort brand under HGV umbrella post-Diamond acquisition.",
+      "acquired": [],
+      "status": "Active under HGV"
     }
   ],
   "brands": [
     {
       "id": "club-wyndham",
       "name": "Club Wyndham",
-      "parent_company_id": "wyndham",
+      "parent_company_id": "tnl",
       "exchange_company_ids": [
         "rci"
       ],
-      "notes": ""
+      "notes": "US-based points club"
     },
     {
       "id": "worldmark",
       "name": "WorldMark by Wyndham",
-      "parent_company_id": "wyndham",
+      "parent_company_id": "tnl",
       "exchange_company_ids": [
         "rci"
       ],
-      "notes": "Points-based club"
+      "notes": "Western US points club. Credits-based."
     },
     {
-      "id": "shell",
+      "id": "shell-brand",
       "name": "Shell Vacations Club",
-      "parent_company_id": "wyndham",
+      "parent_company_id": "tnl",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": "Acquired from Shell Vacations LLC."
+    },
+    {
+      "id": "margaritaville-vc",
+      "name": "Margaritaville Vacation Club",
+      "parent_company_id": "tnl",
       "exchange_company_ids": [
         "rci"
       ],
       "notes": ""
     },
     {
-      "id": "mvw",
+      "id": "mvc",
       "name": "Marriott Vacation Club",
-      "parent_company_id": "marriott",
+      "parent_company_id": "mvw",
       "exchange_company_ids": [
         "ii",
-        "rci"
+        "rci",
+        "mvc-exchange"
       ],
-      "notes": ""
+      "notes": "Core Marriott brand"
     },
     {
-      "id": "sheraton-vistana",
-      "name": "Sheraton Vistana Resorts",
-      "parent_company_id": "marriott",
+      "id": "sheraton-vc",
+      "name": "Sheraton Vacation Club",
+      "parent_company_id": "mvw",
       "exchange_company_ids": [
         "ii"
       ],
-      "notes": "Formerly IVH brand"
+      "notes": "Formerly Vistana / Starwood brand"
     },
     {
-      "id": "westin-vacations",
+      "id": "westin-vc",
       "name": "Westin Vacation Club",
-      "parent_company_id": "marriott",
+      "parent_company_id": "mvw",
       "exchange_company_ids": [
         "ii"
       ],
-      "notes": "Formerly IVH brand"
+      "notes": "Formerly Vistana / Starwood brand"
     },
     {
-      "id": "hgv",
+      "id": "ritz-vc",
+      "name": "The Ritz-Carlton Club",
+      "parent_company_id": "mvw",
+      "exchange_company_ids": [
+        "mvc-exchange"
+      ],
+      "notes": "Ultra-luxury tier"
+    },
+    {
+      "id": "hyatt-vc",
+      "name": "Hyatt Vacation Club",
+      "parent_company_id": "mvw",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "notes": "Formerly Hyatt Residence Club + Welk Resorts"
+    },
+    {
+      "id": "hgvc",
       "name": "Hilton Grand Vacations Club",
-      "parent_company_id": "hilton",
+      "parent_company_id": "hgv",
       "exchange_company_ids": [
         "rci",
-        "ii"
+        "ii",
+        "hgvc-club"
       ],
-      "notes": ""
+      "notes": "Core HGV brand"
     },
     {
-      "id": "bluegreen-brand",
-      "name": "Bluegreen Vacations",
-      "parent_company_id": "hilton",
+      "id": "hilton-club",
+      "name": "The Hilton Club",
+      "parent_company_id": "hgv",
       "exchange_company_ids": [
-        "rci"
+        "hgvc-club"
       ],
-      "notes": "Formerly standalone, now Hilton subsidiary"
+      "notes": "Urban/international luxury properties"
     },
     {
       "id": "diamond-brand",
       "name": "Diamond Resorts",
-      "parent_company_id": "hilton",
+      "parent_company_id": "hgv",
       "exchange_company_ids": [
         "ii"
       ],
-      "notes": "Formerly standalone, now Hilton subsidiary"
-    }
-  ],
-  "resorts": [
+      "notes": "Acquired by HGV 2021"
+    },
     {
-      "id": "cwb-001",
-      "name": "Club Wyndham Bonnet Creek",
-      "parent_company_id": "wyndham",
-      "brand_id": "club-wyndham",
-      "address": "9560 Via Encinas",
-      "city": "Orlando",
-      "state": "FL",
-      "country": "US",
-      "phone": "407-238-3800",
-      "website": "clubwyndham.com",
-      "lat": 28.3773,
-      "lng": -81.52,
-      "club_type": "Points",
+      "id": "bluegreen-brand",
+      "name": "Bluegreen Vacations",
+      "parent_company_id": "hgv",
       "exchange_company_ids": [
         "rci"
       ],
-      "original_developer": "Wyndham",
-      "current_owner_id": "wyndham",
-      "status": "Active",
-      "legacy_names": [],
-      "notes": "Adjacent to Walt Disney World"
+      "notes": "Acquired by HGV 2023"
     },
     {
-      "id": "mvw-001",
-      "name": "Marriott's Grand Vista",
-      "parent_company_id": "marriott",
-      "brand_id": "mvw",
-      "address": "8001 Vineland Ave",
-      "city": "Orlando",
-      "state": "FL",
-      "country": "US",
-      "phone": "407-238-7100",
-      "website": "marriottvacationclub.com",
-      "lat": 28.3902,
-      "lng": -81.4988,
-      "club_type": "Points / Fixed Week",
+      "id": "embarc-brand",
+      "name": "Embarc Resorts",
+      "parent_company_id": "hgv",
       "exchange_company_ids": [
-        "ii"
+        "hgvc-club"
       ],
-      "original_developer": "Marriott",
-      "current_owner_id": "marriott",
-      "status": "Active",
-      "legacy_names": [],
+      "notes": "Canadian properties post-Diamond acquisition"
+    },
+    {
+      "id": "westgate-brand",
+      "name": "Westgate Resorts",
+      "parent_company_id": "westgate",
+      "exchange_company_ids": [
+        "rci"
+      ],
       "notes": ""
     },
     {
-      "id": "hgv-001",
-      "name": "Hilton Grand Vacations at SeaWorld",
-      "parent_company_id": "hilton",
-      "brand_id": "hgv",
-      "address": "6924 Grand Vacations Way",
-      "city": "Orlando",
-      "state": "FL",
-      "country": "US",
-      "phone": "407-239-0100",
-      "website": "hiltongrandvacations.com",
-      "lat": 28.4197,
-      "lng": -81.4684,
-      "club_type": "Points",
+      "id": "hicc",
+      "name": "Holiday Inn Club Vacations",
+      "parent_company_id": "ihg-vc",
       "exchange_company_ids": [
         "rci",
         "ii"
       ],
-      "original_developer": "Hilton",
-      "current_owner_id": "hilton",
-      "status": "Active",
-      "legacy_names": [
-        "Hilton Grand Vacations Club at SeaWorld"
+      "notes": "Includes Orange Lake properties"
+    },
+    {
+      "id": "dvc-brand",
+      "name": "Disney Vacation Club",
+      "parent_company_id": "dvc",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "notes": "DVC points program"
+    },
+    {
+      "id": "capital-brand",
+      "name": "Capital Vacations",
+      "parent_company_id": "capital-vac",
+      "exchange_company_ids": [
+        "rci"
       ],
       "notes": ""
     },
     {
-      "id": "sv-001",
-      "name": "Sheraton Vistana Villages Resort Villas",
-      "parent_company_id": "marriott",
-      "brand_id": "sheraton-vistana",
+      "id": "gpr-brand",
+      "name": "Grand Pacific Resorts",
+      "parent_company_id": "grand-pacific",
+      "exchange_company_ids": [
+        "rci",
+        "ii",
+        "7across"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "pueblo-brand",
+      "name": "Pueblo Bonito Vacation Club",
+      "parent_company_id": "pueblo-bonito",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "vidanta-brand",
+      "name": "Grand Mayan / Mayan Palace",
+      "parent_company_id": "vidanta",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": "Multiple sub-brands"
+    },
+    {
+      "id": "palace-brand",
+      "name": "Palace Elite",
+      "parent_company_id": "palace-resorts",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "spinnaker-brand",
+      "name": "Spinnaker Resorts",
+      "parent_company_id": "spinnaker",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "legacy-brand",
+      "name": "Legacy Vacation Club",
+      "parent_company_id": "legacy-vac",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "summer-bay-brand",
+      "name": "Summer Bay Resorts",
+      "parent_company_id": "summer-bay",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "exploria-brand",
+      "name": "Exploria Resorts",
+      "parent_company_id": "exploria",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "vac-village-brand",
+      "name": "Vacation Village",
+      "parent_company_id": "vac-village",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "festiva-brand",
+      "name": "Festiva Resorts",
+      "parent_company_id": "festiva",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "manhattan-brand",
+      "name": "The Manhattan Club",
+      "parent_company_id": "manhattan-club",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "westgate-rv",
+      "name": "Westgate River Ranch",
+      "parent_company_id": "westgate",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "notes": ""
+    }
+  ],
+  "clubs": [
+    {
+      "id": "cw-points",
+      "name": "Club Wyndham Points",
+      "brand_id": "club-wyndham",
+      "parent_company_id": "tnl",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "wm-credits",
+      "name": "WorldMark Credits",
+      "brand_id": "worldmark",
+      "parent_company_id": "tnl",
+      "type": "Credits",
+      "notes": ""
+    },
+    {
+      "id": "mvc-points",
+      "name": "Marriott Vacation Club Destinations",
+      "brand_id": "mvc",
+      "parent_company_id": "mvw",
+      "type": "Points",
+      "notes": "MVC Destinations points program"
+    },
+    {
+      "id": "hrc-points",
+      "name": "Hyatt Residence Club Points",
+      "brand_id": "hyatt-vc",
+      "parent_company_id": "mvw",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "hgvc-points",
+      "name": "HGVC Club Points",
+      "brand_id": "hgvc",
+      "parent_company_id": "hgv",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "diamond-coll",
+      "name": "Diamond Resorts Collection",
+      "brand_id": "diamond-brand",
+      "parent_company_id": "hgv",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "bluegreen-points",
+      "name": "Bluegreen Vacation Club Points",
+      "brand_id": "bluegreen-brand",
+      "parent_company_id": "hgv",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "dvc-points",
+      "name": "Disney Vacation Club Points",
+      "brand_id": "dvc-brand",
+      "parent_company_id": "dvc",
+      "type": "Points",
+      "notes": ""
+    },
+    {
+      "id": "hicc-points",
+      "name": "Holiday Inn Vacation Club Points",
+      "brand_id": "hicc",
+      "parent_company_id": "ihg-vc",
+      "type": "Points",
+      "notes": ""
+    }
+  ],
+  "resorts": [
+    {
+      "id": "cw-smoky",
+      "name": "Wyndham Smoky Mountains",
+      "parent_company_id": "tnl",
+      "brand_id": "club-wyndham",
+      "club_id": "cw-points",
+      "address": "1500 Eagles Nest Way",
+      "city": "Sevierville",
+      "state": "TN",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Fairfield Residential",
+      "legacy_names": [
+        "Fairfield Smoky Mountains"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "cw-ocean-walk",
+      "name": "Wyndham Ocean Walk",
+      "parent_company_id": "tnl",
+      "brand_id": "club-wyndham",
+      "club_id": "cw-points",
+      "address": "300 N Atlantic Ave",
+      "city": "Daytona Beach",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Fairfield Residential",
+      "legacy_names": [
+        "Fairfield Ocean Walk"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "cw-bonnet-creek",
+      "name": "Wyndham Bonnet Creek Resort",
+      "parent_company_id": "tnl",
+      "brand_id": "club-wyndham",
+      "club_id": "cw-points",
+      "address": "9560 Via Encinas",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Wyndham",
+      "legacy_names": [],
+      "notes": "Adjacent to Walt Disney World"
+    },
+    {
+      "id": "cw-myrtle",
+      "name": "Wyndham Ocean Boulevard",
+      "parent_company_id": "tnl",
+      "brand_id": "club-wyndham",
+      "club_id": "cw-points",
+      "address": "1690 N Ocean Blvd",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Wyndham",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "wm-anaheim",
+      "name": "WorldMark Anaheim",
+      "parent_company_id": "tnl",
+      "brand_id": "worldmark",
+      "club_id": "wm-credits",
+      "address": "1401 S Harbor Blvd",
+      "city": "Anaheim",
+      "state": "CA",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Trendwest Resorts",
+      "legacy_names": [
+        "Trendwest Anaheim"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "wm-las-vegas",
+      "name": "WorldMark Las Vegas Boulevard",
+      "parent_company_id": "tnl",
+      "brand_id": "worldmark",
+      "club_id": "wm-credits",
+      "address": "265 E Harmon Ave",
+      "city": "Las Vegas",
+      "state": "NV",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Trendwest Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "mvc-grand-vista",
+      "name": "Marriott's Grand Vista",
+      "parent_company_id": "mvw",
+      "brand_id": "mvc",
+      "club_id": "mvc-points",
+      "address": "8001 Vineland Ave",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii",
+        "mvc-exchange"
+      ],
+      "status": "Active",
+      "original_developer": "Marriott",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "mvc-surf-watch",
+      "name": "Marriott's SurfWatch",
+      "parent_company_id": "mvw",
+      "brand_id": "mvc",
+      "club_id": "mvc-points",
+      "address": "22 Governors Ln",
+      "city": "Hilton Head",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Marriott",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "mvc-aruba",
+      "name": "Marriott's Aruba Ocean Club",
+      "parent_company_id": "mvw",
+      "brand_id": "mvc",
+      "club_id": "mvc-points",
+      "address": "J.E. Irausquin Blvd. 99",
+      "city": "Palm Beach",
+      "state": "",
+      "country": "AW",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Marriott",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "sheraton-desert",
+      "name": "Sheraton Desert Oasis",
+      "parent_company_id": "mvw",
+      "brand_id": "sheraton-vc",
+      "club_id": "mvc-points",
+      "address": "17700 N Hayden Rd",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "ITT Sheraton / Starwood",
+      "legacy_names": [
+        "Starwood Vacation Ownership Desert Oasis"
+      ],
+      "notes": "Formerly Vistana brand"
+    },
+    {
+      "id": "sheraton-vistana-villages",
+      "name": "Sheraton Vistana Villages",
+      "parent_company_id": "mvw",
+      "brand_id": "sheraton-vc",
+      "club_id": "mvc-points",
       "address": "12401 International Dr",
       "city": "Orlando",
       "state": "FL",
       "country": "US",
-      "phone": "407-238-5000",
-      "website": "vistana.com",
-      "lat": 28.4073,
-      "lng": -81.4673,
-      "club_type": "Points / Fixed Week",
       "exchange_company_ids": [
         "ii"
       ],
-      "original_developer": "ITT Sheraton",
-      "current_owner_id": "marriott",
       "status": "Active",
+      "original_developer": "ITT Sheraton",
       "legacy_names": [
         "Starwood Vistana Villages"
       ],
-      "notes": "Formerly under Starwood / IVH"
+      "notes": ""
     },
     {
-      "id": "bg-001",
+      "id": "westin-kierland",
+      "name": "Westin Kierland Villas",
+      "parent_company_id": "mvw",
+      "brand_id": "westin-vc",
+      "club_id": "mvc-points",
+      "address": "6902 E Greenway Pkwy",
+      "city": "Scottsdale",
+      "state": "AZ",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Starwood Vacation Ownership",
+      "legacy_names": [
+        "Westin Vacation Club Kierland"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "hyatt-piney",
+      "name": "Hyatt Vacation Club at Piney River Ranch",
+      "parent_company_id": "mvw",
+      "brand_id": "hyatt-vc",
+      "club_id": "hrc-points",
+      "address": "30 County Road 3",
+      "city": "Tindall",
+      "state": "CO",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Welk Resorts / Hyatt",
+      "legacy_names": [
+        "Welk Resorts River Ranch"
+      ],
+      "notes": "Welk property converted to Hyatt brand post-acquisition"
+    },
+    {
+      "id": "ritz-vail",
+      "name": "The Ritz-Carlton Club \u2014 Vail",
+      "parent_company_id": "mvw",
+      "brand_id": "ritz-vc",
+      "club_id": "mvc-points",
+      "address": "728 W Lionshead Circle",
+      "city": "Vail",
+      "state": "CO",
+      "country": "US",
+      "exchange_company_ids": [
+        "mvc-exchange"
+      ],
+      "status": "Active",
+      "original_developer": "Marriott / Ritz-Carlton",
+      "legacy_names": [],
+      "notes": "Ultra-luxury tier"
+    },
+    {
+      "id": "hgv-seaworld",
+      "name": "Hilton Grand Vacations Club at SeaWorld",
+      "parent_company_id": "hgv",
+      "brand_id": "hgvc",
+      "club_id": "hgvc-points",
+      "address": "6924 Grand Vacations Way",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Hilton",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "hgv-flamingo",
+      "name": "Hilton Grand Vacations on the Las Vegas Strip",
+      "parent_company_id": "hgv",
+      "brand_id": "hgvc",
+      "club_id": "hgvc-points",
+      "address": "2650 Las Vegas Blvd S",
+      "city": "Las Vegas",
+      "state": "NV",
+      "country": "US",
+      "exchange_company_ids": [
+        "hgvc-club"
+      ],
+      "status": "Active",
+      "original_developer": "Hilton",
+      "legacy_names": [
+        "HGV at Flamingo"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "hgv-anderson-ocean",
+      "name": "Hilton Grand Vacations at Anderson Ocean Club",
+      "parent_company_id": "hgv",
+      "brand_id": "hgvc",
+      "club_id": "hgvc-points",
+      "address": "2600 N Ocean Blvd",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "hgvc-club"
+      ],
+      "status": "Active",
+      "original_developer": "Hilton",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "diamond-mystic",
+      "name": "Mystic Dunes Resort",
+      "parent_company_id": "hgv",
+      "brand_id": "diamond-brand",
+      "club_id": "diamond-coll",
+      "address": "7600 Mystic Dunes Ln",
+      "city": "Celebration",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Diamond Resorts",
+      "legacy_names": [],
+      "notes": "Near Disney; formerly Diamond Resorts"
+    },
+    {
+      "id": "diamond-las-vegas",
+      "name": "Desert Blue (Las Vegas)",
+      "parent_company_id": "hgv",
+      "brand_id": "diamond-brand",
+      "club_id": "diamond-coll",
+      "address": "5765 W Tropicana Ave",
+      "city": "Las Vegas",
+      "state": "NV",
+      "country": "US",
+      "exchange_company_ids": [
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Diamond Resorts",
+      "legacy_names": [
+        "Diamond Resorts Desert Blue"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "bluegreen-fountains",
       "name": "Bluegreen Vacations Fountains Resort",
-      "parent_company_id": "hilton",
+      "parent_company_id": "hgv",
       "brand_id": "bluegreen-brand",
+      "club_id": "bluegreen-points",
       "address": "12001 International Dr",
       "city": "Orlando",
       "state": "FL",
       "country": "US",
-      "phone": "407-239-7100",
-      "website": "bluegreenvacations.com",
-      "lat": 28.4001,
-      "lng": -81.468,
-      "club_type": "Points",
       "exchange_company_ids": [
         "rci"
       ],
-      "original_developer": "Bluegreen",
-      "current_owner_id": "hilton",
       "status": "Active",
+      "original_developer": "Bluegreen",
       "legacy_names": [],
-      "notes": "Hilton subsidiary since 2023"
+      "notes": "HGV subsidiary since 2023"
+    },
+    {
+      "id": "bluegreen-smoky",
+      "name": "Bluegreen Vacations Smoky Mountain Getaway",
+      "parent_company_id": "hgv",
+      "brand_id": "bluegreen-brand",
+      "club_id": "bluegreen-points",
+      "address": "1020 Wears Valley Rd",
+      "city": "Pigeon Forge",
+      "state": "TN",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Bluegreen",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "wg-smoky",
+      "name": "Westgate Smoky Mountain Resort",
+      "parent_company_id": "westgate",
+      "brand_id": "westgate-brand",
+      "club_id": null,
+      "address": "915 Westgate Resorts Rd",
+      "city": "Gatlinburg",
+      "state": "TN",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Westgate Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "wg-las-vegas",
+      "name": "Westgate Las Vegas Resort & Casino",
+      "parent_company_id": "westgate",
+      "brand_id": "westgate-brand",
+      "club_id": null,
+      "address": "3000 Paradise Rd",
+      "city": "Las Vegas",
+      "state": "NV",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Westgate Resorts",
+      "legacy_names": [
+        "Las Vegas Hilton Timeshare"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "wg-orlando",
+      "name": "Westgate Vacation Villas",
+      "parent_company_id": "westgate",
+      "brand_id": "westgate-brand",
+      "club_id": null,
+      "address": "7700 Westgate Blvd",
+      "city": "Kissimmee",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Westgate Resorts",
+      "legacy_names": [],
+      "notes": "Largest timeshare resort in the world by unit count"
+    },
+    {
+      "id": "wg-myrtle",
+      "name": "Westgate Myrtle Beach Oceanfront Resort",
+      "parent_company_id": "westgate",
+      "brand_id": "westgate-brand",
+      "club_id": null,
+      "address": "415 S Ocean Blvd",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Westgate Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "hicc-orange-lake",
+      "name": "Holiday Inn Club Vacations at Orange Lake Resort",
+      "parent_company_id": "ihg-vc",
+      "brand_id": "hicc",
+      "club_id": "hicc-points",
+      "address": "8505 W Irlo Bronson Hwy",
+      "city": "Kissimmee",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Orange Lake Country Club",
+      "legacy_names": [
+        "Orange Lake Country Club Resort"
+      ],
+      "notes": "Flagship resort"
+    },
+    {
+      "id": "hicc-myrtle",
+      "name": "Holiday Inn Club Vacations South Beach Resort",
+      "parent_company_id": "ihg-vc",
+      "brand_id": "hicc",
+      "club_id": "hicc-points",
+      "address": "4002 S Ocean Blvd",
+      "city": "North Myrtle Beach",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Orange Lake",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "dvc-akv",
+      "name": "Disney's Animal Kingdom Villas",
+      "parent_company_id": "dvc",
+      "brand_id": "dvc-brand",
+      "club_id": "dvc-points",
+      "address": "2901 Osceola Pkwy",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Disney",
+      "legacy_names": [],
+      "notes": "Kidani Village & Jambo House"
+    },
+    {
+      "id": "dvc-bay-lake",
+      "name": "Bay Lake Tower at Disney's Contemporary Resort",
+      "parent_company_id": "dvc",
+      "brand_id": "dvc-brand",
+      "club_id": "dvc-points",
+      "address": "4600 N World Dr",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Disney",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "dvc-beach-club",
+      "name": "Disney's Beach Club Villas",
+      "parent_company_id": "dvc",
+      "brand_id": "dvc-brand",
+      "club_id": "dvc-points",
+      "address": "1800 Epcot Resorts Blvd",
+      "city": "Orlando",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Disney",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "spinnaker-hhI",
+      "name": "Spinnaker at Shipyard",
+      "parent_company_id": "spinnaker",
+      "brand_id": "spinnaker-brand",
+      "club_id": null,
+      "address": "44 Harbourside Ln",
+      "city": "Hilton Head",
+      "state": "SC",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Spinnaker Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "legacy-atlantic",
+      "name": "Legacy Vacation Club Atlantic Beach",
+      "parent_company_id": "legacy-vac",
+      "brand_id": "legacy-brand",
+      "club_id": null,
+      "address": "101 S 2nd Ave",
+      "city": "Atlantic Beach",
+      "state": "NJ",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Sunterra Resorts",
+      "legacy_names": [
+        "Sunterra Atlantic Beach"
+      ],
+      "notes": "Formerly Sunterra"
+    },
+    {
+      "id": "gpr-carmel",
+      "name": "Carmel Valley Ranch (Grand Pacific)",
+      "parent_company_id": "grand-pacific",
+      "brand_id": "gpr-brand",
+      "club_id": null,
+      "address": "1 Old Ranch Rd",
+      "city": "Carmel",
+      "state": "CA",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci",
+        "ii"
+      ],
+      "status": "Active",
+      "original_developer": "Grand Pacific Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "vidanta-nv",
+      "name": "Grand Mayan Nuevo Vallarta",
+      "parent_company_id": "vidanta",
+      "brand_id": "vidanta-brand",
+      "club_id": null,
+      "address": "Paseo de los Cocoteros",
+      "city": "Nuevo Vallarta",
+      "state": "Nayarit",
+      "country": "MX",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Mayan Resorts / Vidanta",
+      "legacy_names": [
+        "Mayan Palace Nuevo Vallarta"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "vidanta-los-cabos",
+      "name": "Grand Luxxe Residences Los Cabos",
+      "parent_company_id": "vidanta",
+      "brand_id": "vidanta-brand",
+      "club_id": null,
+      "address": "Libramiento Transpeninsular Km 6.3",
+      "city": "Los Cabos",
+      "state": "Baja California Sur",
+      "country": "MX",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Vidanta",
+      "legacy_names": [],
+      "notes": "Ultra-luxury tier"
+    },
+    {
+      "id": "pb-sunset",
+      "name": "Pueblo Bonito Sunset Beach Resort",
+      "parent_company_id": "pueblo-bonito",
+      "brand_id": "pueblo-brand",
+      "club_id": null,
+      "address": "Predio Para\u00edso Escondido",
+      "city": "Cabo San Lucas",
+      "state": "Baja California Sur",
+      "country": "MX",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Pueblo Bonito",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "palace-moon",
+      "name": "Moon Palace Cancun",
+      "parent_company_id": "palace-resorts",
+      "brand_id": "palace-brand",
+      "club_id": null,
+      "address": "Canc\u00fan-Chetumal Km 36.5",
+      "city": "Cancun",
+      "state": "Quintana Roo",
+      "country": "MX",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Palace Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "manhattan-55w",
+      "name": "The Manhattan Club",
+      "parent_company_id": "manhattan-club",
+      "brand_id": "manhattan-brand",
+      "club_id": null,
+      "address": "200 W 56th St",
+      "city": "New York City",
+      "state": "NY",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active \u2014 litigation history",
+      "original_developer": "Eichner",
+      "legacy_names": [],
+      "notes": "NY AG enforcement action. Disputed sales practices."
+    },
+    {
+      "id": "summer-bay-ck",
+      "name": "Summer Bay Orlando",
+      "parent_company_id": "summer-bay",
+      "brand_id": "summer-bay-brand",
+      "club_id": null,
+      "address": "25 Town Center Blvd",
+      "city": "Clermont",
+      "state": "FL",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Summer Bay Resorts",
+      "legacy_names": [],
+      "notes": ""
+    },
+    {
+      "id": "exploria-mtn",
+      "name": "Exploria Resorts Blue Ridge Village",
+      "parent_company_id": "exploria",
+      "brand_id": "exploria-brand",
+      "club_id": null,
+      "address": "150 Ramey Mountain Rd",
+      "city": "Blue Ridge",
+      "state": "GA",
+      "country": "US",
+      "exchange_company_ids": [
+        "rci"
+      ],
+      "status": "Active",
+      "original_developer": "Exploria Resorts",
+      "legacy_names": [],
+      "notes": ""
     }
   ],
   "acquisitions": [
     {
       "id": "acq-001",
-      "acquirer_id": "marriott",
-      "acquired_id": "ivh",
+      "acquirer_id": "mvw",
+      "acquired_id": "vistana-corp",
       "date": "2021-05",
-      "notes": "Acquired ILM Vacation Holdings (Vistana brands) for approximately $1.5B"
+      "price_approx": "$1.5B",
+      "notes": "MVW acquired ILM Vacation Holdings (Vistana Signature Experiences). Sheraton, Westin brands converted."
     },
     {
       "id": "acq-002",
-      "acquirer_id": "hilton",
-      "acquired_id": "diamond",
-      "date": "2021-08",
-      "notes": "Acquired Diamond Resorts for approximately $1.4B"
+      "acquirer_id": "mvw",
+      "acquired_id": "welk",
+      "date": "2021-09",
+      "price_approx": "$485M",
+      "notes": "MVW acquired Welk Resorts. Properties converted to Hyatt Vacation Club brand."
     },
     {
       "id": "acq-003",
-      "acquirer_id": "hilton",
-      "acquired_id": "bluegreen",
+      "acquirer_id": "hgv",
+      "acquired_id": "diamond-corp",
+      "date": "2021-08",
+      "price_approx": "$1.4B",
+      "notes": "HGV acquired Diamond Resorts International from Apollo Global Management."
+    },
+    {
+      "id": "acq-004",
+      "acquirer_id": "hgv",
+      "acquired_id": "bluegreen-corp",
       "date": "2023-09",
-      "notes": "Acquired Bluegreen Vacations for approximately $1.5B"
+      "price_approx": "$1.5B",
+      "notes": "HGV acquired Bluegreen Vacations. Bluegreen delisted from NYSE."
+    },
+    {
+      "id": "acq-005",
+      "acquirer_id": "tnl",
+      "acquired_id": "shell-brand",
+      "date": "2007-01",
+      "price_approx": "~$200M",
+      "notes": "Wyndham Destinations acquired Shell Vacations Club."
+    },
+    {
+      "id": "acq-006",
+      "acquirer_id": "capital-vac",
+      "acquired_id": "festiva",
+      "date": "2019-01",
+      "price_approx": "Undisclosed",
+      "notes": "Capital Vacations took over management/sales of Festiva Resorts portfolio."
+    },
+    {
+      "id": "acq-007",
+      "acquirer_id": "mvw",
+      "acquired_id": "hyatt-vc-corp",
+      "date": "2021-01",
+      "price_approx": "Partnership",
+      "notes": "MVW took over sales and management of Hyatt Vacation Club resorts under license agreement."
     }
   ]
 }
