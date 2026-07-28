@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.1",
   "exchange_companies": [
     {
       "id": "rci",
@@ -1527,6 +1527,506 @@
       "date": "2021-01",
       "price_approx": "Partnership",
       "notes": "MVW took over sales and management of Hyatt Vacation Club resorts under license agreement."
+    }
+  ],
+  "states": [
+    {
+      "code": "AL",
+      "name": "Alabama",
+      "type": "state",
+      "timeshare_market": "emerging"
+    },
+    {
+      "code": "AK",
+      "name": "Alaska",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "AZ",
+      "name": "Arizona",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "AR",
+      "name": "Arkansas",
+      "type": "state",
+      "timeshare_market": "emerging"
+    },
+    {
+      "code": "CA",
+      "name": "California",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "CO",
+      "name": "Colorado",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "CT",
+      "name": "Connecticut",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "DE",
+      "name": "Delaware",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "FL",
+      "name": "Florida",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "GA",
+      "name": "Georgia",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "HI",
+      "name": "Hawaii",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "ID",
+      "name": "Idaho",
+      "type": "state",
+      "timeshare_market": "emerging"
+    },
+    {
+      "code": "IL",
+      "name": "Illinois",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "IN",
+      "name": "Indiana",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "IA",
+      "name": "Iowa",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "KS",
+      "name": "Kansas",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "KY",
+      "name": "Kentucky",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "LA",
+      "name": "Louisiana",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "ME",
+      "name": "Maine",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MD",
+      "name": "Maryland",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MA",
+      "name": "Massachusetts",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MI",
+      "name": "Michigan",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MN",
+      "name": "Minnesota",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MS",
+      "name": "Mississippi",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "MO",
+      "name": "Missouri",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "MT",
+      "name": "Montana",
+      "type": "state",
+      "timeshare_market": "emerging"
+    },
+    {
+      "code": "NE",
+      "name": "Nebraska",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "NV",
+      "name": "Nevada",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "NH",
+      "name": "New Hampshire",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "NJ",
+      "name": "New Jersey",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "NM",
+      "name": "New Mexico",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "NY",
+      "name": "New York",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "NC",
+      "name": "North Carolina",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "ND",
+      "name": "North Dakota",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "OH",
+      "name": "Ohio",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "OK",
+      "name": "Oklahoma",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "OR",
+      "name": "Oregon",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "PA",
+      "name": "Pennsylvania",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "RI",
+      "name": "Rhode Island",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "SC",
+      "name": "South Carolina",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "SD",
+      "name": "South Dakota",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "TN",
+      "name": "Tennessee",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "TX",
+      "name": "Texas",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "UT",
+      "name": "Utah",
+      "type": "state",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "VT",
+      "name": "Vermont",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "VA",
+      "name": "Virginia",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "WA",
+      "name": "Washington",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "WV",
+      "name": "West Virginia",
+      "type": "state",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "WI",
+      "name": "Wisconsin",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "WY",
+      "name": "Wyoming",
+      "type": "state",
+      "timeshare_market": "secondary"
+    },
+    {
+      "code": "DC",
+      "name": "District of Columbia",
+      "type": "district",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "PR",
+      "name": "Puerto Rico",
+      "type": "territory",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "VI",
+      "name": "U.S. Virgin Islands",
+      "type": "territory",
+      "timeshare_market": "major"
+    },
+    {
+      "code": "GU",
+      "name": "Guam",
+      "type": "territory",
+      "timeshare_market": "emerging"
+    },
+    {
+      "code": "AS",
+      "name": "American Samoa",
+      "type": "territory",
+      "timeshare_market": "limited"
+    },
+    {
+      "code": "MP",
+      "name": "Northern Mariana Islands",
+      "type": "territory",
+      "timeshare_market": "limited"
+    }
+  ],
+  "countries": [
+    {
+      "code": "US",
+      "name": "United States",
+      "region": "North America"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "region": "North America"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "region": "North America"
+    },
+    {
+      "code": "AW",
+      "name": "Aruba",
+      "region": "Caribbean"
+    },
+    {
+      "code": "BB",
+      "name": "Barbados",
+      "region": "Caribbean"
+    },
+    {
+      "code": "BS",
+      "name": "Bahamas",
+      "region": "Caribbean"
+    },
+    {
+      "code": "JM",
+      "name": "Jamaica",
+      "region": "Caribbean"
+    },
+    {
+      "code": "DO",
+      "name": "Dominican Republic",
+      "region": "Caribbean"
+    },
+    {
+      "code": "LC",
+      "name": "St. Lucia",
+      "region": "Caribbean"
+    },
+    {
+      "code": "TC",
+      "name": "Turks and Caicos",
+      "region": "Caribbean"
+    },
+    {
+      "code": "KY",
+      "name": "Cayman Islands",
+      "region": "Caribbean"
+    },
+    {
+      "code": "VG",
+      "name": "British Virgin Islands",
+      "region": "Caribbean"
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "region": "Europe"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "region": "Europe"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "region": "Europe"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "region": "Europe"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "region": "Europe"
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "region": "Europe"
+    },
+    {
+      "code": "HR",
+      "name": "Croatia",
+      "region": "Europe"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "region": "Oceania"
+    },
+    {
+      "code": "NZ",
+      "name": "New Zealand",
+      "region": "Oceania"
+    },
+    {
+      "code": "FJ",
+      "name": "Fiji",
+      "region": "Oceania"
+    },
+    {
+      "code": "TH",
+      "name": "Thailand",
+      "region": "Asia"
+    },
+    {
+      "code": "ID",
+      "name": "Indonesia (Bali)",
+      "region": "Asia"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "region": "Asia"
+    },
+    {
+      "code": "ZA",
+      "name": "South Africa",
+      "region": "Africa"
+    },
+    {
+      "code": "AE",
+      "name": "United Arab Emirates",
+      "region": "Middle East"
+    },
+    {
+      "code": "EG",
+      "name": "Egypt",
+      "region": "Middle East"
+    },
+    {
+      "code": "CR",
+      "name": "Costa Rica",
+      "region": "Central America"
+    },
+    {
+      "code": "PA",
+      "name": "Panama",
+      "region": "Central America"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "region": "South America"
+    },
+    {
+      "code": "CO",
+      "name": "Colombia",
+      "region": "South America"
     }
   ]
 }
