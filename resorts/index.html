@@ -219,7 +219,7 @@ function render(view,id){
 // ── VIEWS ─────────────────────────────────────────────────────────────
 function viewDashboard(){
   var pcs=DB.parent_companies.length,brands=DB.brands.length,resorts=DB.resorts.length;
-  var states=[...new Set(DB.resorts.map(function(r){return r.state;}))].filter(Boolean).length;
+  var states=(DB.states&&DB.states.length)?DB.states.length:[...new Set(DB.resorts.map(function(r){return r.state;}))].filter(Boolean).length;
   return '<div class="page-header"><div><div class="page-title">Resort Intelligence Center</div><div class="page-sub">Vacation Ownership Industry Database</div></div></div>'
     +'<div class="stat-grid">'
     +statCard(resorts,'Resorts')+statCard(DB.brands.length,'Brands')+statCard(pcs,'Parent Companies')
@@ -385,6 +385,51 @@ function viewStateList(){
     +'</table></div>';
 }
 
+function viewStateList(){
+  // Use master states table; fall back to deriving from resort data
+  var masterStates=DB.states||[];
+  var resortCounts={};
+  DB.resorts.forEach(function(r){if(r.state){resortCounts[r.state]=(resortCounts[r.state]||0)+1;}});
+  
+  if(masterStates.length){
+    // Group by type
+    var groups={state:[],territory:[],district:[]};
+    masterStates.forEach(function(s){
+      var t=s.type||'state';
+      if(!groups[t])groups[t]=[];
+      groups[t].push(s);
+    });
+    var mkTable=function(arr){
+      return arr.map(function(s){
+        var n=resortCounts[s.code]||0;
+        var mkt=s.timeshare_market||'';
+        var mktColor=mkt==='major'?'var(--gold)':mkt==='secondary'?'#5a7a99':mkt==='emerging'?'#059669':'#d1d5db';
+        return'<tr><td><span class="row-link" onclick="nav('states',''+s.code+'')">'+s.code+' — '+s.name+'</span></td>'
+          +'<td><span style="font-size:10px;color:'+mktColor+';font-weight:700;text-transform:uppercase">'+mkt+'</span></td>'
+          +'<td style="font-weight:'+(n?'700':'400')+';color:'+(n?'var(--nb)':'#9ca3af')+'">'+n+'</td></tr>';
+      }).join('');
+    };
+    var total=Object.keys(resortCounts).filter(function(k){return k;}).reduce(function(a,k){return a+resortCounts[k];},0);
+    return'<div class="page-header"><div class="page-title">States & Territories</div>'
+      +'<div class="page-sub">'+masterStates.length+' jurisdictions · '+total+' resorts imported</div></div>'
+      +'<div class="tbl-wrap"><div class="tbl-hdr" style="padding:8px 16px"><div class="tbl-hdr-title">U.S. States (50)</div></div>'
+      +'<table><tr><th>State</th><th>Market</th><th>Resorts</th></tr>'+mkTable(groups.state||[])+'</table></div>'
+      +(groups.district&&groups.district.length?
+        '<div class="tbl-wrap" style="margin-top:12px"><div class="tbl-hdr" style="padding:8px 16px"><div class="tbl-hdr-title">District</div></div>'
+        +'<table><tr><th>Jurisdiction</th><th>Market</th><th>Resorts</th></tr>'+mkTable(groups.district)+'</table></div>':'')
+      +(groups.territory&&groups.territory.length?
+        '<div class="tbl-wrap" style="margin-top:12px"><div class="tbl-hdr" style="padding:8px 16px"><div class="tbl-hdr-title">U.S. Territories</div></div>'
+        +'<table><tr><th>Territory</th><th>Market</th><th>Resorts</th></tr>'+mkTable(groups.territory)+'</table></div>':'');
+  }
+  
+  // Fallback: derive from resort data
+  var sorted=Object.keys(resortCounts).sort();
+  return'<div class="page-header"><div class="page-title">States</div><div class="page-sub">Derived from imported resort data</div></div>'
+    +'<div class="tbl-wrap"><table><tr><th>State</th><th>Resorts</th></tr>'
+    +sorted.map(function(s){return'<tr><td><span class="row-link" onclick="nav('states',''+s+'')">'+s+'</span></td><td>'+resortCounts[s]+'</td></tr>';}).join('')
+    +'</table></div>';
+}
+
 function viewState(st){
   var rs=resortsByState(st);
   return'<button class="back-btn" onclick="nav(\'states\')">← Back</button>'
@@ -393,12 +438,36 @@ function viewState(st){
 }
 
 function viewCountryList(){
-  var cos={};
-  DB.resorts.forEach(function(r){if(r.country){if(!cos[r.country])cos[r.country]=0;cos[r.country]++;}});
-  var sorted=Object.keys(cos).sort();
+  var masterCountries=DB.countries||[];
+  var resortCounts={};
+  DB.resorts.forEach(function(r){if(r.country){resortCounts[r.country]=(resortCounts[r.country]||0)+1;}});
+  
+  if(masterCountries.length){
+    // Group by region
+    var regions={};
+    masterCountries.forEach(function(c){var r=c.region||'Other';if(!regions[r])regions[r]=[];regions[r].push(c);});
+    var regionOrder=['North America','Caribbean','Central America','South America','Europe','Africa','Middle East','Asia','Oceania','Other'];
+    var rows='';
+    regionOrder.forEach(function(rg){
+      if(!regions[rg]) return;
+      rows+='<tr><td colspan="3" style="background:var(--bg);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 12px">'+rg+'</td></tr>';
+      regions[rg].forEach(function(c){
+        var n=resortCounts[c.code]||0;
+        rows+='<tr><td style="font-family:monospace;font-size:11px;color:var(--muted)">'+c.code+'</td>'
+          +'<td>'+c.name+'</td>'
+          +'<td style="font-weight:'+(n?'700':'400')+';color:'+(n?'var(--nb)':'#9ca3af')+'">'+n+'</td></tr>';
+      });
+    });
+    return'<div class="page-header"><div class="page-title">Countries</div>'
+      +'<div class="page-sub">'+masterCountries.length+' countries · grouped by region</div></div>'
+      +'<div class="tbl-wrap"><table><tr><th>Code</th><th>Country</th><th>Resorts</th></tr>'+rows+'</table></div>';
+  }
+  
+  // Fallback
+  var sorted=Object.keys(resortCounts).sort();
   return'<div class="page-header"><div class="page-title">Countries</div></div>'
-    +'<div class="tbl-wrap"><table><tr><th>Country Code</th><th>Resorts</th></tr>'
-    +sorted.map(function(c){return'<tr><td>'+c+'</td><td>'+cos[c]+'</td></tr>';}).join('')
+    +'<div class="tbl-wrap"><table><tr><th>Country</th><th>Resorts</th></tr>'
+    +sorted.map(function(c){return'<tr><td>'+c+'</td><td>'+resortCounts[c]+'</td></tr>';}).join('')
     +'</table></div>';
 }
 
