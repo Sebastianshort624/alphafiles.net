@@ -1,0 +1,1467 @@
+{
+  "schema_version": "1.0",
+  "categories": [
+    {
+      "id": "financial",
+      "name": "Financial",
+      "icon": "\ud83d\udcb0",
+      "desc": "Cost, price, payment, and money objections",
+      "color": "#059669"
+    },
+    {
+      "id": "spouse",
+      "name": "Spouse / Decision Maker",
+      "icon": "\ud83d\udc65",
+      "desc": "Third party, spouse, attorney, family involvement",
+      "color": "#7c3aed"
+    },
+    {
+      "id": "trust",
+      "name": "Trust & Credibility",
+      "icon": "\ud83d\udd12",
+      "desc": "Skepticism, scam concerns, verification requests",
+      "color": "#dc2626"
+    },
+    {
+      "id": "timing",
+      "name": "Timing",
+      "icon": "\u23f1",
+      "desc": "Not now, think about it, call back later",
+      "color": "#d97706"
+    },
+    {
+      "id": "competition",
+      "name": "Competition",
+      "icon": "\u2696\ufe0f",
+      "desc": "Other companies, attorneys, cheaper alternatives",
+      "color": "#0284c7"
+    },
+    {
+      "id": "alternatives",
+      "name": "Exit Alternatives",
+      "icon": "\ud83d\udeaa",
+      "desc": "Sell, rent, donate, give to kids, stop paying",
+      "color": "#ea580c"
+    },
+    {
+      "id": "emotional",
+      "name": "Emotional",
+      "icon": "\u2764\ufe0f",
+      "desc": "Embarrassment, shame, fear of judgment",
+      "color": "#db2777"
+    },
+    {
+      "id": "process",
+      "name": "Process & Logistics",
+      "icon": "\u2699\ufe0f",
+      "desc": "How it works, timeline, what happens next",
+      "color": "#475569"
+    }
+  ],
+  "objections": [
+    {
+      "id": "fin-001",
+      "category": "financial",
+      "subcategory": "affordability",
+      "trigger_phrase": "I can't afford it",
+      "aliases": [
+        "It's too expensive",
+        "The price is too high",
+        "That's a lot of money"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "anxious",
+      "tags": [
+        "money",
+        "price",
+        "cost",
+        "afford"
+      ],
+      "why_they_say_it": "They are comparing the Alpha fee to a short-term budget, not comparing it to the long-term cost of staying in the timeshare. They may not have mentally accepted that they have a problem worth solving, or they may genuinely be cash-flow constrained.",
+      "underlying_concern": "Am I spending money to solve a problem I could just ignore? Will this work? Do I have the cash flow right now?",
+      "discovery_questions": [
+        "Can I ask \u2014 when you say you can't afford it, is it more of a timing issue, or does the fee feel too high compared to what you'd get back?",
+        "If the fee weren't a factor, would you want to move forward today?",
+        "What are you currently paying per year in maintenance fees alone?",
+        "What would it mean financially if you were free of this timeshare in the next 12 months?"
+      ],
+      "acknowledgment": "I completely understand. This is a real financial decision and I wouldn't want you to do anything that doesn't make sense for your budget.",
+      "recommended_response": "Let me reframe this for a second. You're currently spending [X] per year on maintenance fees alone \u2014 money that's going out the door with nothing in return. Over the next five years, that's [5Y cost]. What we're offering is a way to stop that bleeding permanently. The fee is a one-time investment to eliminate an obligation that's costing you more every single year it continues. Does that math make sense?",
+      "follow_up_questions": [
+        "If you didn't have to worry about where the money was coming from today, is there any other reason you'd hesitate?",
+        "Would a payment plan make this more manageable for your budget?"
+      ],
+      "common_mistakes": [
+        "Immediately discounting the price \u2014 this devalues the service and sets a bad precedent.",
+        "Not quantifying the long-term cost of staying in the timeshare.",
+        "Accepting 'I can't afford it' at face value without probing whether it's truly financial or something else.",
+        "Apologizing for the price."
+      ],
+      "supporting_points": [
+        "The maintenance fee grows at ~8%/year per ARDA data \u2014 the problem gets more expensive every year.",
+        "A written refund provision means they lose nothing if we don't succeed.",
+        "One-time fee vs. perpetual obligation \u2014 the math almost always favors action."
+      ],
+      "related_objections": [
+        "fin-002",
+        "fin-003",
+        "fin-007"
+      ],
+      "roleplay_example": "Client: 'I just don't have that kind of money right now.' Closer: 'I hear you \u2014 let me ask you something. What are you paying in maintenance fees right now each year?' Client: '$2,400.' Closer: 'So in five years that's $12,000 or more, because that number goes up every year. What we're asking is a fraction of that to make the whole thing go away permanently. Does that change how you're looking at the number?'"
+    },
+    {
+      "id": "fin-002",
+      "category": "financial",
+      "subcategory": "delay",
+      "trigger_phrase": "I need to wait until payday",
+      "aliases": [
+        "I get paid next week",
+        "I'll have the money in two weeks",
+        "Wait until the first of the month"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "willing",
+      "tags": [
+        "timing",
+        "money",
+        "cash",
+        "payday"
+      ],
+      "why_they_say_it": "They are essentially saying yes \u2014 they want to move forward but have a short-term cash flow constraint. This is one of the easiest objections to handle because the client has mentally committed.",
+      "underlying_concern": "I actually want to do this but I don't have the cash available right now.",
+      "discovery_questions": [
+        "That's completely workable \u2014 when is your next payday exactly?",
+        "Would using a credit card today let you move forward and then pay it off when you get paid?"
+      ],
+      "acknowledgment": "Absolutely \u2014 I don't want you to do anything that creates a short-term stress.",
+      "recommended_response": "Good news \u2014 we can lock in your enrollment today and process the payment when you're ready. That way you're protected and we can get the ball rolling on your case. Or if you have a credit card available, many of our clients use that to start immediately and settle it on payday. Which works better for you?",
+      "follow_up_questions": [
+        "If we schedule a follow-up call for [payday date], can I count on you being ready to go?",
+        "Is there any other concern besides the timing of the payment?"
+      ],
+      "common_mistakes": [
+        "Not setting a specific callback date and time.",
+        "Treating this as a soft objection and letting them off the hook \u2014 they said yes, lock it in.",
+        "Failing to offer the credit card alternative."
+      ],
+      "supporting_points": [
+        "If they're willing, offer to complete all paperwork now and schedule payment processing for their payday."
+      ],
+      "related_objections": [
+        "fin-001",
+        "fin-006"
+      ],
+      "roleplay_example": "Client: 'I'd love to do this but I get paid Friday.' Closer: 'Perfect \u2014 we can actually get your paperwork started today and process payment Friday. Does that work?'"
+    },
+    {
+      "id": "fin-003",
+      "category": "financial",
+      "subcategory": "price_negotiation",
+      "trigger_phrase": "Can you lower the price?",
+      "aliases": [
+        "Is there any flexibility on the fee?",
+        "Can I get a discount?",
+        "That's more than I expected"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "negotiating",
+      "tags": [
+        "discount",
+        "price",
+        "negotiate",
+        "fee"
+      ],
+      "why_they_say_it": "They're interested but testing whether there's room. Some clients habitually negotiate. Others genuinely feel the price is out of range.",
+      "underlying_concern": "I want value \u2014 am I getting the best deal I can? Is the price firm?",
+      "discovery_questions": [
+        "Can I ask what number you had in mind?",
+        "Is the fee the only thing between you and moving forward today?"
+      ],
+      "acknowledgment": "I appreciate you being direct about that. You're entitled to ask.",
+      "recommended_response": "I want to be honest with you \u2014 our fee structure is what it is because of what's included: the full documentation, the group filing, the credit protection, and the written refund provision. What I can do is make sure you're in the payment option that works best for your budget. But the fee itself reflects the level of service we provide. What I'll tell you is that clients who've gone to cheaper companies often find themselves starting over with us later \u2014 and paying twice.",
+      "follow_up_questions": [
+        "If I can show you how the numbers make sense, would you be ready to move forward today?",
+        "What would make you feel confident that this fee is worth it?"
+      ],
+      "common_mistakes": [
+        "Immediately capitulating \u2014 it devalues the service and trains the client to keep pushing.",
+        "Getting defensive about the fee.",
+        "Not redirecting to value instead of price."
+      ],
+      "supporting_points": [
+        "Never discount without manager approval. Redirect to value and payment options first."
+      ],
+      "related_objections": [
+        "fin-001",
+        "fin-008"
+      ],
+      "roleplay_example": "Client: 'Can you do $500 off?' Closer: 'I hear you. Let me ask \u2014 if the fee was exactly where it is right now, is there any other reason you'd hesitate?' Client: 'No, I guess not.' Closer: 'Then let's make the payment option work for you and get you enrolled today.'"
+    },
+    {
+      "id": "fin-004",
+      "category": "financial",
+      "subcategory": "financing",
+      "trigger_phrase": "Is there financing available?",
+      "aliases": [
+        "Can I make payments?",
+        "Do you have a payment plan?",
+        "I'd need to pay over time"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "interested",
+      "tags": [
+        "payment",
+        "financing",
+        "plan",
+        "installment"
+      ],
+      "why_they_say_it": "They want to move forward but need help with cash flow. This is a buying signal dressed as a question.",
+      "underlying_concern": "I want to do this but I can't write one check for the full amount.",
+      "discovery_questions": [
+        "What monthly amount would feel comfortable for your budget?",
+        "Are you asking because you'd prefer to spread it out, or is the total number the concern?"
+      ],
+      "acknowledgment": "Absolutely \u2014 we work with clients in different financial situations and we want to make this accessible.",
+      "recommended_response": "Yes \u2014 we offer payment options. Let me walk you through what we have available. [Present plan options.] The key thing to know is that the service and your protections are identical regardless of which payment structure you choose. Which option looks like the right fit?",
+      "follow_up_questions": [
+        "If we lock in your preferred payment schedule today, is there anything else we need to address?"
+      ],
+      "common_mistakes": [
+        "Not having payment options clearly memorized and ready to present.",
+        "Presenting too many options \u2014 offer two at most.",
+        "Making payment options sound like a concession rather than a standard offering."
+      ],
+      "supporting_points": [
+        "Payment plans are a legitimate option, not a discount. Present them confidently."
+      ],
+      "related_objections": [
+        "fin-001",
+        "fin-002"
+      ],
+      "roleplay_example": "Client: 'Do you guys do payment plans?' Closer: 'Yes \u2014 we actually have two options most of our clients use. Let me show you both and you can tell me which fits your budget.'"
+    },
+    {
+      "id": "fin-005",
+      "category": "financial",
+      "subcategory": "self_resolution",
+      "trigger_phrase": "Why can't I just stop paying?",
+      "aliases": [
+        "What if I just quit paying the maintenance fees?",
+        "I was thinking about defaulting",
+        "I'll just let them foreclose"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "resistant",
+      "tags": [
+        "default",
+        "stop paying",
+        "foreclosure",
+        "credit"
+      ],
+      "why_they_say_it": "They don't understand the consequences of unilateral default, or they've heard from someone online that it 'works.' They may be testing whether you'll validate a risky strategy.",
+      "underlying_concern": "Is there a free or low-cost way out that doesn't require hiring anyone?",
+      "discovery_questions": [
+        "Has someone advised you to do that, or is that a strategy you came up with on your own?",
+        "Do you know what typically happens to your credit when you default on a timeshare?",
+        "Are you aware of how resorts handle delinquency \u2014 foreclosure, collections, liens?"
+      ],
+      "acknowledgment": "That's a fair question. A lot of people wonder the same thing. Let me walk you through what actually happens.",
+      "recommended_response": "When you stop paying without a documented exit strategy in place, you don't just walk away. Here's what actually happens: the account goes delinquent, collections begin \u2014 some resorts are very aggressive \u2014 and the delinquency gets reported to all three credit bureaus. Some resorts will foreclose, which creates a public record that's much harder to resolve than a timeshare lien. You could also face a deficiency judgment. The difference with what we do is that we have documented grounds for exit, we issue a Mutual Release Letter that removes your name from the deed, and we contact the bureaus directly to correct the reporting. You're not just stopping payments \u2014 you're exiting with documentation.",
+      "follow_up_questions": [
+        "Knowing all of that, does it make sense why having protection in place matters?",
+        "What's your credit situation like right now \u2014 is it something you'd want to protect?"
+      ],
+      "common_mistakes": [
+        "Dismissing the question or getting condescending \u2014 the client is genuinely curious.",
+        "Failing to explain the REAL consequences clearly and factually.",
+        "Not pivoting back to the credit protection benefit of your service."
+      ],
+      "supporting_points": [
+        "FICO score impact of a timeshare default: 50\u2013150 point drop depending on existing score.",
+        "Some resorts sell delinquent accounts to third-party collectors who pursue aggressively.",
+        "Foreclosure creates a public record that affects future mortgage applications."
+      ],
+      "related_objections": [
+        "alt-005",
+        "pro-003"
+      ],
+      "roleplay_example": "Client: 'My buddy told me to just stop paying and nothing happens.' Closer: 'I hear that a lot. Can I ask \u2014 did your buddy's timeshare actually get resolved, or is he still in it? Because what actually happens when you stop paying is...'"
+    },
+    {
+      "id": "fin-006",
+      "category": "financial",
+      "subcategory": "credit_concern",
+      "trigger_phrase": "I'll use a credit card",
+      "aliases": [
+        "Can I put it on a card?",
+        "I'll charge it",
+        "I have a card with room on it"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "willing",
+      "tags": [
+        "credit card",
+        "payment",
+        "charge"
+      ],
+      "why_they_say_it": "They want to move forward and are self-solving the payment problem. Another buying signal.",
+      "underlying_concern": "None \u2014 they've decided to do this and are figuring out logistics.",
+      "discovery_questions": [
+        "Which card would you like to use?"
+      ],
+      "acknowledgment": "Absolutely.",
+      "recommended_response": "Sounds good \u2014 we accept all major cards. Let me walk you through the next steps so we can get your enrollment complete today.",
+      "follow_up_questions": [
+        "What's a good mailing address for your agreement?"
+      ],
+      "common_mistakes": [
+        "Treating this as anything other than a green light \u2014 they said yes, close."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "fin-002"
+      ],
+      "roleplay_example": "Client: 'I'll just put it on my Visa.' Closer: 'Perfect \u2014 we accept Visa. Let me get that information from you and we'll get you started.'"
+    },
+    {
+      "id": "fin-007",
+      "category": "financial",
+      "subcategory": "value",
+      "trigger_phrase": "I need to think about the money",
+      "aliases": [
+        "Let me look at my finances",
+        "I need to check my bank account",
+        "I have to see what I have"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "stalling",
+      "tags": [
+        "think",
+        "money",
+        "decide",
+        "budget"
+      ],
+      "why_they_say_it": "Often a polite way of stalling without committing. May indicate an unspoken objection \u2014 either trust, a spouse, or a genuine cash concern. Rarely a true financial analysis pause.",
+      "underlying_concern": "I'm not fully convinced yet, or I'm afraid to say the real reason I'm hesitating.",
+      "discovery_questions": [
+        "When you say you need to think about the money \u2014 is it the amount, or is there something else on your mind?",
+        "If the money wasn't a factor, would you be ready to move forward today?",
+        "What specifically would you be looking at in your finances to make this decision?"
+      ],
+      "acknowledgment": "That's a reasonable thing to say. I want you to feel good about this.",
+      "recommended_response": "Here's what I'd want you to think about when you look at your finances: what you're paying right now on maintenance fees, what that looks like in five years with an 8% annual increase, and what it would mean to have that gone permanently. Because what we're asking for is a one-time fee \u2014 and what you're looking at on the other side is a perpetual obligation that grows every year. So when you compare those two numbers, which direction does your budget tell you to go?",
+      "follow_up_questions": [
+        "Is there a specific number you need to see before you'd feel comfortable?",
+        "If everything else checked out, what would it take to feel okay about the investment today?"
+      ],
+      "common_mistakes": [
+        "Accepting 'I need to think about the money' and scheduling a callback without diagnosing the real objection.",
+        "Not using the costs-of-staying math to reframe the investment.",
+        "Not asking whether the money is truly the issue."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "fin-001",
+        "tim-001"
+      ],
+      "roleplay_example": "Client: 'I just need to look at my finances.' Closer: 'I understand \u2014 and I want to help you think about this the right way. Can I ask: when you look at your finances, what number would make you feel comfortable moving forward today?'"
+    },
+    {
+      "id": "sps-001",
+      "category": "spouse",
+      "subcategory": "absent_spouse",
+      "trigger_phrase": "I need to talk to my spouse",
+      "aliases": [
+        "I have to run this by my husband/wife",
+        "My partner isn't here",
+        "I can't decide without my spouse"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "deflecting",
+      "tags": [
+        "spouse",
+        "partner",
+        "husband",
+        "wife",
+        "decision"
+      ],
+      "why_they_say_it": "This is the most common stall in any sales environment. It can be a genuine requirement or a socially acceptable way to delay without confrontation. The client may not want to appear to make impulsive decisions, or may have a spouse who is more skeptical.",
+      "underlying_concern": "I don't feel empowered to make this decision alone, I want backup, or I'm using this as a socially acceptable exit.",
+      "discovery_questions": [
+        "Absolutely \u2014 and I want both of you involved. When would be a good time to get your spouse on the call with us?",
+        "Does your spouse know you've been looking into this? What's their perspective?",
+        "If your spouse were here right now and heard everything you heard, do you think they'd want to move forward?",
+        "Is there a specific concern you think they'd raise that I can help you address?"
+      ],
+      "acknowledgment": "I completely respect that. This is a family financial decision and it makes total sense to want to be aligned.",
+      "recommended_response": "Let's do this \u2014 why don't we schedule a time to get both of you on a call together? That way your spouse hears everything directly, can ask questions, and you can make this decision together. I'd rather do it right than rush you. What does your calendar look like in the next day or two?",
+      "follow_up_questions": [
+        "Before we schedule that call \u2014 is there anything you'd want me to address with your spouse specifically?",
+        "If you two talked tonight and they were on board, would you call me tomorrow?"
+      ],
+      "common_mistakes": [
+        "Accepting 'I need to talk to my spouse' and letting the client hang up without a commitment.",
+        "Not scheduling the three-way call immediately.",
+        "Badgering the client to decide without their spouse \u2014 this damages trust.",
+        "Failing to diagnose whether spouse objection is real or a proxy for another concern."
+      ],
+      "supporting_points": [
+        "Many spouses who weren't at the original presentation become the biggest advocates once they hear the full picture.",
+        "Offering a three-way call shows confidence and transparency."
+      ],
+      "related_objections": [
+        "sps-002",
+        "sps-003",
+        "tim-001"
+      ],
+      "roleplay_example": "Client: 'I'd need to talk to my wife first.' Closer: 'Of course. What would be the best time to get her on the call with us? I'll walk her through everything exactly as I did with you, and she can ask anything she wants.'"
+    },
+    {
+      "id": "sps-002",
+      "category": "spouse",
+      "subcategory": "attorney",
+      "trigger_phrase": "My attorney wants to review everything",
+      "aliases": [
+        "I need my lawyer to look at this",
+        "My attorney said don't sign anything",
+        "I want a legal opinion first"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "guarded",
+      "tags": [
+        "attorney",
+        "lawyer",
+        "legal",
+        "review"
+      ],
+      "why_they_say_it": "Either they genuinely have an attorney involved, or they're using a professional authority figure as a shield. Sometimes a previous bad experience with timeshare companies created this response as a reflex.",
+      "underlying_concern": "I'm afraid of signing something that binds me to something I don't understand. I want professional protection.",
+      "discovery_questions": [
+        "Of course \u2014 and we welcome that. Can I ask, does your attorney specialize in contract law or timeshare specifically?",
+        "Has your attorney been involved in your timeshare situation before today?",
+        "If your attorney reviews it and gives you the green light, would you be ready to move forward?"
+      ],
+      "acknowledgment": "I think having an attorney review major contracts is wise. We have nothing to hide.",
+      "recommended_response": "We'd be happy to have your attorney review our agreement \u2014 in fact, we'd encourage it. Our contract is straightforward: it states exactly what we'll do, what the timeline is, and what happens if we don't achieve the outcome. What I'd suggest is this: let's get the paperwork to you now, you send it to your attorney, and we set a follow-up for when they've had a chance to review it. Does 48 hours sound reasonable?",
+      "follow_up_questions": [
+        "Would it be helpful if I sent along a summary document that explains each section before your attorney looks at it?",
+        "Is there a specific part of our agreement you'd want them to focus on?"
+      ],
+      "common_mistakes": [
+        "Getting defensive or implying the attorney will slow things down.",
+        "Not setting a specific follow-up date.",
+        "Failing to ask if the attorney concern is the only remaining barrier.",
+        "Not having your agreement ready to send immediately."
+      ],
+      "supporting_points": [
+        "Clients who let an attorney review the agreement and proceed become some of the most committed clients.",
+        "A timeshare attorney may actually validate your approach."
+      ],
+      "related_objections": [
+        "sps-001",
+        "tru-001",
+        "cmp-004"
+      ],
+      "roleplay_example": "Client: 'My attorney wants to see it first.' Closer: 'Absolutely \u2014 let's get it to you right now. What's the best email address? And while I have you \u2014 if your attorney says it looks good, what's your timeline for moving forward?'"
+    },
+    {
+      "id": "sps-003",
+      "category": "spouse",
+      "subcategory": "family_member",
+      "trigger_phrase": "My son/daughter wants to be involved",
+      "aliases": [
+        "I want my kids to look at this",
+        "My daughter said don't do anything",
+        "My son handles our finances"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "cautious",
+      "tags": [
+        "family",
+        "kids",
+        "children",
+        "adult"
+      ],
+      "why_they_say_it": "Older clients often defer to adult children on financial decisions, especially if the child has been protective of them before. The adult child may have warned them about scams.",
+      "underlying_concern": "I trust my child's judgment and I'm afraid of making a mistake that disappoints them or validates their concern that I've been taken advantage of again.",
+      "discovery_questions": [
+        "That's wonderful that you have family looking out for you. What's your son/daughter's main concern about situations like this?",
+        "Has your child been involved in dealing with the timeshare before?",
+        "Would it help to get them on the call right now?"
+      ],
+      "acknowledgment": "It sounds like you have a great support system. That matters.",
+      "recommended_response": "Let's bring them in \u2014 seriously. I'd love to talk to your son/daughter directly. They'll have great questions, and I want them to hear exactly what we do and why. The more people in your corner who understand this, the better. Can we set up a call with all three of us?",
+      "follow_up_questions": [
+        "If your child approved this today, would you be ready to move forward?",
+        "What's one thing you'd want me to be able to show your child to make them comfortable?"
+      ],
+      "common_mistakes": [
+        "Treating the adult child as an obstacle instead of an ally.",
+        "Not offering to include them in the conversation.",
+        "Pressuring the client to decide without their child's input \u2014 this often backfires."
+      ],
+      "supporting_points": [
+        "Adult children who join the call and hear the full explanation often become the biggest advocates for moving forward."
+      ],
+      "related_objections": [
+        "sps-001",
+        "tru-001"
+      ],
+      "roleplay_example": "Client: 'My daughter told me not to sign anything without talking to her.' Closer: 'Smart daughter. Let's get her on the phone right now \u2014 is she available?'"
+    },
+    {
+      "id": "tru-001",
+      "category": "trust",
+      "subcategory": "scam_concern",
+      "trigger_phrase": "How do I know this isn't a scam?",
+      "aliases": [
+        "This sounds too good to be true",
+        "I've heard of timeshare exit scams",
+        "How do I know you're legitimate?"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "fearful",
+      "tags": [
+        "scam",
+        "legitimate",
+        "trust",
+        "fraud"
+      ],
+      "why_they_say_it": "They've either been defrauded before, read articles about exit company scams (which are real), or have a general distrust of companies that reach out about their timeshare. This is a valid and healthy concern.",
+      "underlying_concern": "I've already been taken advantage of once. I don't want it to happen again. Can I actually verify who you are?",
+      "discovery_questions": [
+        "That's a fair question and honestly the right one to ask. What would make you feel confident that we're the real deal?",
+        "Have you had a bad experience with a timeshare company before \u2014 exit company or developer?",
+        "Have you looked us up at all? What have you found?"
+      ],
+      "acknowledgment": "You're right to ask. The timeshare exit industry has real bad actors and I wouldn't trust a company that got defensive when you asked that question.",
+      "recommended_response": "Let me give you three things you can verify right now. First: look us up on the Better Business Bureau \u2014 we're A+ rated and we've been there since 1986. Second: look at our reviews on Yelp, ProvenExpert, and other independent platforms \u2014 not just our website. Third: our agreement includes a written refund provision. A company that's going to take your money and run doesn't put a money-back provision in writing. You can take that contract to an attorney before you sign it. Scams don't offer that.",
+      "follow_up_questions": [
+        "After you've had a chance to look us up, what would you need to see to feel confident?",
+        "Is there anything specific I can send you to verify our credentials?"
+      ],
+      "common_mistakes": [
+        "Getting defensive \u2014 this validates their fear.",
+        "Overwhelming them with information without letting them respond.",
+        "Not directing them to third-party verification immediately."
+      ],
+      "supporting_points": [
+        "BBB A+ since 1986 \u2014 one of the longest-standing timeshare exit firms.",
+        "FTC has issued guidance on exit scam red flags \u2014 none of them apply to Alpha.",
+        "The written refund provision is the key differentiator from fraudulent companies."
+      ],
+      "related_objections": [
+        "tru-002",
+        "tru-003",
+        "sps-002"
+      ],
+      "roleplay_example": "Client: 'I've heard about companies that take your money and disappear.' Closer: 'You're right to be cautious. Here's what I want you to do right now \u2014 go to BBB.org and search Alpha Timeshare Consultants. What do you find?'"
+    },
+    {
+      "id": "tru-002",
+      "category": "trust",
+      "subcategory": "prior_scam",
+      "trigger_phrase": "I've been scammed before",
+      "aliases": [
+        "I already paid a company and nothing happened",
+        "I tried this and got burned",
+        "I lost money to an exit company"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "wounded",
+      "tags": [
+        "scam",
+        "burned",
+        "prior",
+        "history",
+        "fraud"
+      ],
+      "why_they_say_it": "They have direct experience with fraud in this industry. Their guard is fully up. This is not a stall \u2014 it is earned skepticism that must be respected before it can be addressed.",
+      "underlying_concern": "Why should I believe this is any different? I've already lost money to people who sounded just like you.",
+      "discovery_questions": [
+        "I'm so sorry that happened. Can I ask \u2014 what did that company promise you and what actually occurred?",
+        "How much did you lose?",
+        "Did they have a BBB presence? A physical address?",
+        "What specifically would need to be different this time for you to feel safe moving forward?"
+      ],
+      "acknowledgment": "What happened to you is exactly what gives this industry a bad name, and it makes me angry too. You trusted someone with a real problem and they let you down. I want to take a different approach here.",
+      "recommended_response": "Here's how we're different in a way you can verify \u2014 not just take my word for. We've been in business since 1986. We're A+ rated on the BBB. You can read our reviews on independent platforms. And our contract includes a written refund provision \u2014 meaning if we don't achieve the outcome, you get your money back per the terms of the agreement. A company that's planning to defraud you doesn't put that in a signed contract. I'd also encourage you to share our agreement with an attorney before you commit. We welcome that.",
+      "follow_up_questions": [
+        "What specifically about what you just heard is different from what that previous company told you?",
+        "If you verified everything I just said and it all checked out, would you be open to moving forward?"
+      ],
+      "common_mistakes": [
+        "Moving too quickly past the emotional weight of being scammed.",
+        "Comparing yourself to the scam company too aggressively \u2014 let the evidence speak.",
+        "Not acknowledging the pain and anger before moving to logic.",
+        "Not asking what specifically the bad company did so you can address the specific fear."
+      ],
+      "supporting_points": [
+        "FTC has published timeshare exit scam warnings \u2014 none of the red flags apply here.",
+        "Offer to have them search you on BBB WHILE on the call.",
+        "Written refund provision in contract is a legally binding differentiator."
+      ],
+      "related_objections": [
+        "tru-001",
+        "tru-003"
+      ],
+      "roleplay_example": "Client: 'I paid $3,000 to another company two years ago and never heard from them again.' Closer: 'That's awful and I'm genuinely sorry. Can I ask \u2014 did they give you a written guarantee? A physical address? Were they on the BBB?' [Pause for answer.] 'Here's what's different about us...' "
+    },
+    {
+      "id": "tru-003",
+      "category": "trust",
+      "subcategory": "verify",
+      "trigger_phrase": "Can I verify your company?",
+      "aliases": [
+        "How can I look you up?",
+        "What's your BBB rating?",
+        "Do you have references?"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "cautious",
+      "tags": [
+        "verify",
+        "BBB",
+        "references",
+        "check"
+      ],
+      "why_they_say_it": "They're doing their due diligence. This is healthy and should be welcomed and encouraged.",
+      "underlying_concern": "I need third-party confirmation that you are who you say you are.",
+      "discovery_questions": [
+        "What would you like to look at? I can walk you through where to find us."
+      ],
+      "acknowledgment": "Absolutely \u2014 please do. We want you to verify us.",
+      "recommended_response": "Here's exactly where to find us. On the Better Business Bureau: search 'Alpha Timeshare Consultants.' We've held an A+ rating since 1986. On Yelp, ProvenExpert, and other independent review platforms, you'll find client reviews we don't control. Our website is alphatimeshareconsultants.com. And if you want references, I can connect you with past clients who've been through our process. What would be most useful to you right now?",
+      "follow_up_questions": [
+        "What did you find? Did everything check out?",
+        "Is there anything specific you'd want to see before you felt comfortable?"
+      ],
+      "common_mistakes": [
+        "Hesitating or seeming uncomfortable \u2014 you should welcome verification.",
+        "Providing only your own website as proof.",
+        "Not staying on the call while they look."
+      ],
+      "supporting_points": [
+        "Independent reviews on platforms you don't control are more credible than anything on your own website."
+      ],
+      "related_objections": [
+        "tru-001",
+        "tru-002"
+      ],
+      "roleplay_example": "Client: 'Can I look you up?' Closer: 'Of course \u2014 go to BBB.org right now. I'll wait. Search Alpha Timeshare Consultants. What do you see?'"
+    },
+    {
+      "id": "tim-001",
+      "category": "timing",
+      "subcategory": "think_about_it",
+      "trigger_phrase": "I need to think about it",
+      "aliases": [
+        "Let me sleep on it",
+        "I want to think this over",
+        "Give me some time"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "undecided",
+      "tags": [
+        "think",
+        "decide",
+        "time",
+        "consider"
+      ],
+      "why_they_say_it": "The most universal stall in sales. Almost never means they need more time to think \u2014 it means something is unresolved. Could be price, trust, a spouse, or a fear they haven't voiced.",
+      "underlying_concern": "There's something I'm not comfortable saying out loud yet. I need an exit without confrontation.",
+      "discovery_questions": [
+        "Of course \u2014 can I ask what specifically you'd be thinking about?",
+        "Is there a question I haven't answered that would help you decide?",
+        "If you were to say yes, what would need to be true for that to happen?"
+      ],
+      "acknowledgment": "I respect that. This is a real decision and I'd rather you make it with clarity than feel rushed.",
+      "recommended_response": "I understand wanting to think it through. The only thing I'd ask you to consider is this: nothing about your situation improves with time. Your maintenance fees go up every year. Your obligation stays the same. The time you spend thinking it over is time the resort continues charging you. What is it specifically that you're weighing? If I know what's on your mind, maybe I can help you resolve it right now.",
+      "follow_up_questions": [
+        "On a scale of 1 to 10, how ready do you feel to move forward \u2014 and what would it take to get you to a 10?",
+        "Is there one thing that, if resolved, would make this a yes?"
+      ],
+      "common_mistakes": [
+        "Accepting 'I need to think about it' without diagnosing the real concern.",
+        "Scheduling a callback without extracting what they'll be thinking about.",
+        "Pushing too hard \u2014 if they need to think, find the underlying objection.",
+        "Not using urgency anchored to cost (maintenance fees continuing to accrue)."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "tim-002",
+        "fin-007",
+        "sps-001"
+      ],
+      "roleplay_example": "Client: 'I just need to think about it.' Closer: 'I completely understand. Can I ask \u2014 on a scale of 1 to 10, where are you right now in terms of feeling ready? And what would a 10 look like?'"
+    },
+    {
+      "id": "tim-002",
+      "category": "timing",
+      "subcategory": "call_back",
+      "trigger_phrase": "Call me next week",
+      "aliases": [
+        "Try me again in a few weeks",
+        "Check back with me in a month",
+        "Not right now, maybe later"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "avoidant",
+      "tags": [
+        "callback",
+        "later",
+        "postpone",
+        "schedule"
+      ],
+      "why_they_say_it": "Classic deflection. They don't want to say no directly. 'Next week' usually means never unless you diagnose and address the real concern before hanging up.",
+      "underlying_concern": "I'm not ready to deal with this right now and I need to get off this call without confrontation.",
+      "discovery_questions": [
+        "Absolutely \u2014 before I let you go, can I ask: what specifically will be different next week that would make this easier to decide?",
+        "Is there something you need to put in place before we talk again?"
+      ],
+      "acknowledgment": "I can definitely follow up \u2014 I just want to make sure the follow-up call is worth your time.",
+      "recommended_response": "I'll put you down for next week. Before I do \u2014 I'd be doing you a disservice if I didn't ask: what specifically are you hoping to figure out between now and then? Because if I know that, I can either answer it now and save you the week, or make sure I have exactly the right information ready when I call back.",
+      "follow_up_questions": [
+        "If I solve [whatever they mention] before the end of today, would you be ready to move forward?",
+        "Is there anyone else whose input you're waiting for?"
+      ],
+      "common_mistakes": [
+        "Scheduling the callback without extracting the real reason.",
+        "Not setting a specific day and time for the callback.",
+        "Treating 'call me next week' as a warm lead when it's often a soft no."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "tim-001",
+        "tim-003"
+      ],
+      "roleplay_example": "Client: 'Call me next week.' Closer: 'I will \u2014 and I want to make sure that call is useful for you. What's going to be different next week? Is there something specific you're working through?'"
+    },
+    {
+      "id": "tim-003",
+      "category": "timing",
+      "subcategory": "busy",
+      "trigger_phrase": "Now isn't a good time",
+      "aliases": [
+        "I'm too busy right now",
+        "I have a lot going on",
+        "Bad timing"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "distracted",
+      "tags": [
+        "busy",
+        "time",
+        "schedule",
+        "priority"
+      ],
+      "why_they_say_it": "May be genuine \u2014 they're in the middle of something. Or it's a soft deflection because the conversation caught them off guard. Either way, don't fight it.",
+      "underlying_concern": "I wasn't ready for this conversation and I need space.",
+      "discovery_questions": [
+        "Completely understand. When would be a good time \u2014 literally today or tomorrow?",
+        "Is it the timing of the call or the timing of the decision?"
+      ],
+      "acknowledgment": "I don't want to catch you at a bad moment. Let's reschedule.",
+      "recommended_response": "No problem at all. Let me ask quickly before I let you go \u2014 is this a bad time for a call, or is this a bad time in your life to deal with the timeshare? Because those are different situations and I want to make sure I'm reaching back out when it'll actually be useful to you.",
+      "follow_up_questions": [
+        "When would be the best time to call you back this week?",
+        "Is there a specific day that tends to be better for conversations like this?"
+      ],
+      "common_mistakes": [
+        "Trying to push through when someone genuinely has bad timing \u2014 this burns the relationship.",
+        "Not locking down a specific callback time."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "tim-001",
+        "tim-002"
+      ],
+      "roleplay_example": "Client: 'This really isn't a good time.' Closer: 'Understood \u2014 let me ask real quick: is it just this minute, or is life generally too hectic to focus on this right now?' "
+    },
+    {
+      "id": "cmp-001",
+      "category": "competition",
+      "subcategory": "other_company",
+      "trigger_phrase": "I'm talking to another company",
+      "aliases": [
+        "I'm comparing companies",
+        "I'm looking at a few options",
+        "I need to shop around"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "evaluating",
+      "tags": [
+        "competitor",
+        "compare",
+        "shop",
+        "other"
+      ],
+      "why_they_say_it": "Either genuinely comparison shopping (rational behavior) or using another company as leverage to slow down the process. Either way, it's an invitation to differentiate.",
+      "underlying_concern": "I want to make sure I'm getting the best company, not just the first one I talk to.",
+      "discovery_questions": [
+        "That's smart. Can I ask what you've heard from them so far?",
+        "What's most important to you in choosing between companies \u2014 price, track record, guarantees?",
+        "What would make you choose us over anyone else?"
+      ],
+      "acknowledgment": "Comparing your options is the right approach. You should vet any company handling something this important.",
+      "recommended_response": "When you're comparing us, here are the three things I'd want you to ask every company: How long have you been in business? Are you on the BBB and what's your rating? And is there a written refund provision in your contract \u2014 not verbal, written? We've been in business since 1986, we're A+ rated, and every client gets a written service protection provision. Ask those three questions of every company on your list and see who measures up.",
+      "follow_up_questions": [
+        "What did they tell you about their company history and credentials?",
+        "If our credentials check out the way I'm describing, would we be your first call?"
+      ],
+      "common_mistakes": [
+        "Bashing competitors by name \u2014 unprofessional and often backfires.",
+        "Getting defensive about being compared.",
+        "Not arming the client with specific questions to expose weaker competitors."
+      ],
+      "supporting_points": [
+        "38+ years in business and A+ BBB rating are verifiable differentiators most competitors cannot match."
+      ],
+      "related_objections": [
+        "cmp-002",
+        "tru-001"
+      ],
+      "roleplay_example": "Client: 'I'm also talking to another company.' Closer: 'Smart. When you talk to them, ask these three questions...' [Give them the comparison framework that favors Alpha's strengths.]"
+    },
+    {
+      "id": "cmp-002",
+      "category": "competition",
+      "subcategory": "cheaper",
+      "trigger_phrase": "I found someone cheaper",
+      "aliases": [
+        "Another company quoted me less",
+        "They said they'd do it for half the price",
+        "I found a better deal"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "price-driven",
+      "tags": [
+        "cheaper",
+        "price",
+        "competitor",
+        "discount"
+      ],
+      "why_they_say_it": "A true price objection, or a negotiation tactic. If they genuinely found a lower price, you need to reframe the conversation around what the lower price gets them versus what you provide.",
+      "underlying_concern": "Why should I pay more when someone else says they can do the same thing for less?",
+      "discovery_questions": [
+        "Can I ask how long that company has been in business?",
+        "Do they have a written refund provision in their contract?",
+        "What's their BBB rating?",
+        "What exactly did they say they'd do for that price?"
+      ],
+      "acknowledgment": "A lower price is always attractive. I get it.",
+      "recommended_response": "Here's the question I'd ask yourself: what happens if the cheaper company doesn't get the job done? You're out that money, you're still in the timeshare, and now you're starting over. We've been doing this since 1986. We have a written refund provision so your investment is protected. The reason some companies charge less is because they offer less \u2014 less experience, less documentation, less accountability. What you're deciding isn't just which company costs less today. You're deciding which company is most likely to actually get this done.",
+      "follow_up_questions": [
+        "Would you be comfortable if I asked you to send me their contract so we can compare side by side?",
+        "If both companies were the same price, which would you choose?"
+      ],
+      "common_mistakes": [
+        "Matching the competitor's price without justification \u2014 devalues your service.",
+        "Attacking the competitor without facts.",
+        "Not reframing price as risk management."
+      ],
+      "supporting_points": [
+        "Clients who go with cheaper companies and fail often come back to Alpha and pay twice."
+      ],
+      "related_objections": [
+        "cmp-001",
+        "fin-003",
+        "tru-001"
+      ],
+      "roleplay_example": "Client: 'Company X said they'd do it for $2,000 less.' Closer: 'Can I ask \u2014 have you checked them on the BBB? How long have they been around? And do they have a written refund provision?' [Pause.] 'Because those are the things that determine whether you actually get out.'"
+    },
+    {
+      "id": "cmp-003",
+      "category": "competition",
+      "subcategory": "resort_help",
+      "trigger_phrase": "My resort said they can help me exit",
+      "aliases": [
+        "The resort has a deed-back program",
+        "They told me to call their exit department",
+        "The resort offered to take it back"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "misled",
+      "tags": [
+        "resort",
+        "deed-back",
+        "exit",
+        "program"
+      ],
+      "why_they_say_it": "The resort may have offered a deed-back, a resale program, or an in-house exit option. Clients who have been told this sometimes believe their problem is solved or nearly solved. The reality is almost always more complicated.",
+      "underlying_concern": "Maybe I don't need outside help \u2014 the resort said they'd handle it.",
+      "discovery_questions": [
+        "That's interesting \u2014 did they put anything in writing?",
+        "Did they tell you what the process looks like, what the timeline is, and what it costs?",
+        "Did they say anything about compensating you for what you paid, or just taking the timeshare back?",
+        "Are you still receiving maintenance fee bills?"
+      ],
+      "acknowledgment": "I'm glad they offered something. Let's look at what they actually offered versus what you need.",
+      "recommended_response": "Resort exit programs do exist, and sometimes they work \u2014 but here's what to watch out for. First, the resort's goal is to re-sell that unit, not necessarily to benefit you. Second, most deed-back programs require you to be current on all maintenance fees before they'll accept a deed-back \u2014 meaning you may owe money to exit through them. Third, they rarely provide credit bureau notification, so if anything hit your credit, it stays there. Fourth, the process often drags out for years. What we do is different: we document your case, we have group leverage, and we have a written refund provision. Can I ask what they specifically told you their program would do?",
+      "follow_up_questions": [
+        "Did they say anything about a fee or requirement to qualify?",
+        "What's the timeline they gave you?"
+      ],
+      "common_mistakes": [
+        "Dismissing the resort's offer without exploring what it actually includes.",
+        "Not asking diagnostic questions to expose the limitations of the resort's offer.",
+        "Coming across as threatened by the resort's program."
+      ],
+      "supporting_points": [
+        "Most deed-back programs require maintenance fees to be current.",
+        "Resort programs rarely address credit reporting.",
+        "Resort interest is to re-sell the unit, not to compensate the owner."
+      ],
+      "related_objections": [
+        "alt-001",
+        "cmp-004"
+      ],
+      "roleplay_example": "Client: 'The resort said they have a take-back program.' Closer: 'That's good news \u2014 can I ask a few questions about what they offered? Did they mention anything about being current on maintenance fees to qualify? And did they put it in writing?'"
+    },
+    {
+      "id": "cmp-004",
+      "category": "competition",
+      "subcategory": "attorney",
+      "trigger_phrase": "I have an attorney already",
+      "aliases": [
+        "My attorney is handling it",
+        "We hired a lawyer for this",
+        "My lawyer is looking into it"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "committed_elsewhere",
+      "tags": [
+        "attorney",
+        "lawyer",
+        "legal",
+        "already hired"
+      ],
+      "why_they_say_it": "They've already engaged someone. May be a general attorney not specialized in timeshare, or a timeshare-specific attorney. The distinction matters.",
+      "underlying_concern": "I'm already spending money on this \u2014 why would I pay you too?",
+      "discovery_questions": [
+        "What does your attorney specialize in \u2014 is it timeshare specifically, or general law?",
+        "What's the timeline they've given you?",
+        "Have they achieved any results yet or is it still early?",
+        "What does their fee structure look like?"
+      ],
+      "acknowledgment": "It sounds like you've already taken a step forward, which is great.",
+      "recommended_response": "A few things worth knowing: general practice attorneys often handle timeshare cases as one-offs, which means they don't have the group leverage or established relationships that come from volume. Also, attorney fees can be significant \u2014 hourly rates add up quickly on a process that can take 18\u201336 months. What we bring is group filing power, established documentation protocols, and a written refund provision. If your attorney's approach isn't producing results, we're worth a conversation. And if it is working well, that's great \u2014 keep going. Can I ask how long they've been at it?",
+      "follow_up_questions": [
+        "Is there a reason you'd consider looking at alternatives if things aren't moving?",
+        "What's your timeline expectation with them?"
+      ],
+      "common_mistakes": [
+        "Dismissing attorneys entirely \u2014 some do excellent work.",
+        "Not asking diagnostic questions to understand what the attorney is actually doing.",
+        "Not differentiating group leverage from individual legal action."
+      ],
+      "supporting_points": [
+        "Individual legal action vs. group filing power \u2014 the difference in leverage is substantial."
+      ],
+      "related_objections": [
+        "sps-002",
+        "cmp-001"
+      ],
+      "roleplay_example": "Client: 'I hired an attorney three months ago.' Closer: 'Good \u2014 is it a timeshare specialist? And have they given you a timeline? I ask because the approach matters a lot in terms of how long this takes.'"
+    },
+    {
+      "id": "alt-001",
+      "category": "alternatives",
+      "subcategory": "resale",
+      "trigger_phrase": "Can't I just sell it?",
+      "aliases": [
+        "I'll try to sell it",
+        "I'll list it online",
+        "I was going to put it on the market"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "hopeful",
+      "tags": [
+        "sell",
+        "resale",
+        "market",
+        "ebay",
+        "craigslist"
+      ],
+      "why_they_say_it": "They believe the timeshare has resale value because they paid tens of thousands for it. The secondary market reality is something most owners don't know.",
+      "underlying_concern": "If I paid $25,000 for this, shouldn't I be able to recover some of that?",
+      "discovery_questions": [
+        "Have you tried that already, or is it something you're considering?",
+        "Do you know what timeshares are selling for on the secondary market?",
+        "If I could show you what timeshares like yours actually sell for right now, would that change how you're thinking about this?"
+      ],
+      "acknowledgment": "That makes complete sense to think about. You paid real money for it.",
+      "recommended_response": "The secondary market for timeshares is unlike any other real estate market. You can look on eBay, Craigslist, or a site called RedWeek right now and find timeshares identical to yours listed for $1 \u2014 and they still don't sell. The reason: the market is flooded with owners who want out, and buyers know they can get any timeshare for almost nothing. Even if you listed it and someone bought it for $1, you'd still owe closing costs, transfer fees, and you'd have to find a legitimate buyer and attorney. It rarely resolves the underlying problem and it rarely closes. That's the reality of the secondary market today.",
+      "follow_up_questions": [
+        "Does that change how you're thinking about the sell option?",
+        "Would you like me to show you what units like yours are actually listed for right now?"
+      ],
+      "common_mistakes": [
+        "Not being factual about resale values \u2014 be direct but compassionate.",
+        "Not inviting them to look up the data themselves."
+      ],
+      "supporting_points": [
+        "eBay timeshare listings: $1 asking price, no bids \u2014 highly searchable.",
+        "RedWeek.com shows realistic secondary market pricing.",
+        "Transfer fees and closing costs can exceed any resale proceeds."
+      ],
+      "related_objections": [
+        "alt-002",
+        "alt-004",
+        "alt-005"
+      ],
+      "roleplay_example": "Client: 'I was thinking I could just sell it.' Closer: 'Let's look at that together right now. Pull up eBay and search for timeshares. What do you see?' [Walk them through the $1 listings.]"
+    },
+    {
+      "id": "alt-002",
+      "category": "alternatives",
+      "subcategory": "inheritance",
+      "trigger_phrase": "I'll give it to my kids",
+      "aliases": [
+        "My children can have it",
+        "I'll pass it down",
+        "I'll leave it in my estate"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "resigned",
+      "tags": [
+        "kids",
+        "heirs",
+        "estate",
+        "inherit",
+        "children"
+      ],
+      "why_they_say_it": "They've given up on resolving it and decided to defer the problem. They may not understand that their children can inherit a financial obligation, not an asset.",
+      "underlying_concern": "This is too hard to deal with. Maybe someone else can figure it out someday.",
+      "discovery_questions": [
+        "Have you talked to your kids about this? Do they know they would inherit the maintenance fee obligation?",
+        "Are your kids in a financial position to keep paying those fees every year?",
+        "Do you know that heirs have a 9-month window to disclaim an inheritance \u2014 including a timeshare?"
+      ],
+      "acknowledgment": "A lot of people plan that way. I want to make sure it's actually a benefit to your family and not an unintended burden.",
+      "recommended_response": "Here's something most people don't know. When you pass away, your timeshare doesn't just disappear \u2014 it passes with your estate. Your children inherit not just the asset but the maintenance fee obligation. And maintenance fees don't pause during probate \u2014 they start billing your estate immediately. If your kids don't know about the timeshare, or don't want it, they have exactly 9 months to formally disclaim it in writing or they're on the hook for it permanently. Most adult children don't want their parents' timeshare obligation. The most loving thing you can do is resolve it now rather than hand them a financial problem.",
+      "follow_up_questions": [
+        "Have you told your kids about the timeshare?",
+        "What do you think they'd say if you told them they were going to inherit the maintenance fees?"
+      ],
+      "common_mistakes": [
+        "Not using the emotional weight of leaving a burden vs. a gift.",
+        "Not explaining the 9-month disclaimer window.",
+        "Not addressing estate-level billing during probate."
+      ],
+      "supporting_points": [
+        "26 U.S.C. \u00a72518 \u2014 written disclaimer required within 9 months.",
+        "HOA liens attach automatically to deeded property.",
+        "Maintenance fees continue billing during probate."
+      ],
+      "related_objections": [
+        "alt-003",
+        "fin-005"
+      ],
+      "roleplay_example": "Client: 'I'll just leave it to my kids.' Closer: 'Have you told your kids about this? Because here's what they'd be inheriting \u2014 not the timeshare, but the annual maintenance fee obligation. Would they want that?'"
+    },
+    {
+      "id": "alt-003",
+      "category": "alternatives",
+      "subcategory": "rental",
+      "trigger_phrase": "I'll rent it out",
+      "aliases": [
+        "I'll rent the weeks",
+        "I'll use Airbnb",
+        "I can use it as a rental"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "resourceful",
+      "tags": [
+        "rent",
+        "rental",
+        "airbnb",
+        "vrbo",
+        "income"
+      ],
+      "why_they_say_it": "They're trying to find a way to offset costs. The rental strategy sounds logical in theory but has significant practical limitations most owners discover too late.",
+      "underlying_concern": "Maybe I can make this work financially by generating rental income.",
+      "discovery_questions": [
+        "Have you tried renting it before, or is this something you're planning to try?",
+        "Do you know whether your resort allows rental of your unit?",
+        "Are you in a fixed-week or points program \u2014 because that affects how rentable it is?"
+      ],
+      "acknowledgment": "That's a resourceful approach. Let's look at whether it actually works.",
+      "recommended_response": "Renting your timeshare sounds good in theory, but here's what most owners find in practice. First: many resorts prohibit or severely restrict third-party rentals in the HOA documents. Second: with points systems, you'd need to book weeks far in advance and then find tenants for specific dates. Third: the rental market for timeshare weeks is soft \u2014 there's a lot of supply from owners doing exactly what you're describing. And even if you do rent it, the rental income would need to exceed your maintenance fees, property taxes, and any listing fees. Most people who try this find it more trouble than it's worth. What's the maintenance fee you're paying right now?",
+      "follow_up_questions": [
+        "Have you checked your HOA rules about renting?",
+        "If the rental strategy doesn't work out, what's your backup plan?"
+      ],
+      "common_mistakes": [
+        "Not asking whether they've already tried and failed at renting.",
+        "Being dismissive \u2014 if they want to try renting, let them try, but plant the seed for what comes next."
+      ],
+      "supporting_points": [
+        "Most timeshare HOA agreements restrict third-party rentals.",
+        "RedWeek and SellMyTimeshare show the competitive rental market.",
+        "Net rental income rarely exceeds annual obligations."
+      ],
+      "related_objections": [
+        "alt-001",
+        "alt-004"
+      ],
+      "roleplay_example": "Client: 'I thought about renting it on Airbnb.' Closer: 'Have you checked your HOA docs to see if they allow that? A lot of people try and find out after the fact that the resort doesn't permit it.'"
+    },
+    {
+      "id": "alt-004",
+      "category": "alternatives",
+      "subcategory": "donation",
+      "trigger_phrase": "I'll donate it",
+      "aliases": [
+        "Can I donate it to charity?",
+        "I heard you can give it away",
+        "I found a donation company"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "searching",
+      "tags": [
+        "donate",
+        "charity",
+        "tax deduction",
+        "give away"
+      ],
+      "why_they_say_it": "They've heard about timeshare donation programs and believe it might be a solution, possibly with a tax benefit.",
+      "underlying_concern": "Is there a way to get rid of this that's free or comes with a tax benefit?",
+      "discovery_questions": [
+        "Have you looked into this? What specific program did you come across?",
+        "Did they tell you what the process looks like and what it costs?",
+        "Do you know if your timeshare qualifies for donation?"
+      ],
+      "acknowledgment": "Donation can work in some specific circumstances. Let me help you understand when it does and doesn't.",
+      "recommended_response": "Timeshare donation programs exist, but there are a few things to know. First: the IRS has strict rules on valuing timeshares for donation \u2014 most timeshares have very limited fair market value, so the tax deduction may be minimal. Second: many 'donation' programs charge upfront fees that exceed the value of any tax benefit. Third: charities rarely want timeshares because they come with maintenance fee obligations \u2014 they have to either use it or sell it immediately. Fourth: deeded timeshares require a legitimate transfer with legal documentation. Some of the donation companies are actually transfer companies charging fees. What's the specific program you found?",
+      "follow_up_questions": [
+        "Did they mention any upfront fees?",
+        "If the donation option doesn't pan out, what would you do next?"
+      ],
+      "common_mistakes": [
+        "Dismissing it outright \u2014 occasionally donation does work.",
+        "Not asking which specific company they found.",
+        "Not explaining the IRS valuation issue."
+      ],
+      "supporting_points": [
+        "IRS requires qualified appraisal for timeshare donations over $5,000.",
+        "Most charities refuse to accept timeshare donations.",
+        "Many 'donation' programs are transfer companies with upfront fees."
+      ],
+      "related_objections": [
+        "alt-001",
+        "fin-005"
+      ],
+      "roleplay_example": "Client: 'I heard I can donate it.' Closer: 'Did they mention any fees involved? And did they tell you what the tax deduction would actually be worth? Because the IRS has specific rules about this...'"
+    },
+    {
+      "id": "alt-005",
+      "category": "alternatives",
+      "subcategory": "default",
+      "trigger_phrase": "I'll just stop paying",
+      "aliases": [
+        "What if I quit paying?",
+        "I'm thinking about defaulting",
+        "I'll let them foreclose"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "fed_up",
+      "tags": [
+        "default",
+        "stop paying",
+        "foreclosure",
+        "credit"
+      ],
+      "why_they_say_it": "They're frustrated and looking for the easiest way out. They may have heard it 'works' from someone online or a friend. They may not understand the consequences.",
+      "underlying_concern": "There has to be a way out that doesn't cost me anything. What's the worst that can really happen?",
+      "discovery_questions": [
+        "Has someone advised you to do this?",
+        "Do you know what your credit score looks like right now?",
+        "Are you aware of what resorts typically do when an owner stops paying?"
+      ],
+      "acknowledgment": "I understand the frustration. Let me walk you through what actually happens.",
+      "recommended_response": "When you stop paying without a documented exit strategy in place, a few things typically happen. First: the resort reports the delinquency to all three credit bureaus \u2014 Equifax, Experian, TransUnion. Depending on your current score, this can drop it by 50 to 150 points or more. Second: many resorts sell delinquent accounts to third-party collection agencies that are very aggressive \u2014 calls, letters, potential lawsuits. Third: some resorts foreclose, which creates a public record that can affect future mortgage applications. The difference with what we do is that we create documented grounds for exit, we get a Mutual Release Letter signed, we have the deed transferred out of your name, and we contact the bureaus directly to address any reporting. You're not just stopping payments \u2014 you're exiting with documentation.",
+      "follow_up_questions": [
+        "Knowing all of that, does having documented exit protection change how you're looking at this?",
+        "What's your credit situation \u2014 is that something you'd want to protect through this process?"
+      ],
+      "common_mistakes": [
+        "Treating this as a simple financial objection \u2014 it's partly emotional (fed up) and partly misinformed.",
+        "Not explaining the specific credit consequences with facts.",
+        "Not differentiating what you do from simply defaulting."
+      ],
+      "supporting_points": [
+        "FICO impact of timeshare foreclosure: 50\u2013150 point drop.",
+        "Third-party collection agencies active in this space.",
+        "Deficiency judgments possible in some states."
+      ],
+      "related_objections": [
+        "fin-005",
+        "pro-003"
+      ],
+      "roleplay_example": "Client: 'I'm just going to stop paying.' Closer: 'What's your credit score right now?' [Pause.] 'Because here's what happens when you stop without documentation...'"
+    },
+    {
+      "id": "emo-001",
+      "category": "emotional",
+      "subcategory": "embarrassment",
+      "trigger_phrase": "I feel embarrassed",
+      "aliases": [
+        "I'm ashamed of this",
+        "I should have known better",
+        "I feel stupid for buying this"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "ashamed",
+      "tags": [
+        "embarrassed",
+        "shame",
+        "stupid",
+        "fooled"
+      ],
+      "why_they_say_it": "The timeshare purchase was often high-pressure, manipulative, and occurred during a vacation \u2014 a state of vulnerability. Feeling embarrassed or foolish is an extremely common emotional response that can prevent people from moving forward.",
+      "underlying_concern": "I don't want to admit I made a mistake this big. Telling anyone \u2014 even you \u2014 makes it real.",
+      "discovery_questions": [
+        "Can I ask what you remember about the presentation? How long was it?",
+        "Were you told things that turned out not to be true?",
+        "Did you feel like you could leave when you wanted to?"
+      ],
+      "acknowledgment": "I hear that. And I want to say something important: what happened to you was designed by professionals who do this for a living. The presentations are scripted, the sales teams are trained in high-pressure tactics, and the environment is engineered to produce a yes. That's not a character flaw on your part. That's manipulation.",
+      "recommended_response": "You're not the only one sitting in your exact situation. We work with people every week who feel exactly the way you do \u2014 accomplished, intelligent people who got caught in a system that's built to do this. What happened to you is documented by the FTC, the CFPB, and state attorneys general across the country. You were not foolish. You were targeted. And now you're taking steps to fix it. That's the opposite of foolish.",
+      "follow_up_questions": [
+        "Is there anyone in your life who knows about the timeshare?",
+        "Is the embarrassment part of what's made it hard to deal with this so far?"
+      ],
+      "common_mistakes": [
+        "Minimizing the emotion and jumping to the solution too quickly.",
+        "Making them feel like they should have known better.",
+        "Not validating the experience fully before moving to business."
+      ],
+      "supporting_points": [
+        "FTC has documented timeshare sales abuses extensively.",
+        "JFK Consumer Bill of Rights \u2014 violations are documented in the presentation itself.",
+        "Many clients feel relief when they understand it was systemic, not personal."
+      ],
+      "related_objections": [
+        "emo-002",
+        "emo-003"
+      ],
+      "roleplay_example": "Client: 'I feel like an idiot for signing that.' Closer: 'Can I push back on that for a second? How long was the presentation?' Client: '5 hours.' Closer: 'Five hours with professional salespeople in an environment designed to wear you down. That's not naivety \u2014 that's being human.'"
+    },
+    {
+      "id": "emo-002",
+      "category": "emotional",
+      "subcategory": "spouse_shame",
+      "trigger_phrase": "I don't want to upset my spouse",
+      "aliases": [
+        "My wife doesn't know how much we paid",
+        "My husband doesn't know about this",
+        "I don't want to tell them"
+      ],
+      "difficulty": "hard",
+      "emotional_state": "conflicted",
+      "tags": [
+        "spouse",
+        "shame",
+        "secret",
+        "upset",
+        "marriage"
+      ],
+      "why_they_say_it": "One spouse may have been more involved in the purchase decision, or the full cost may not have been disclosed within the marriage. There may be existing conflict about the timeshare.",
+      "underlying_concern": "Bringing this up with my spouse will cause conflict or reveal a secret I've been keeping.",
+      "discovery_questions": [
+        "Is your spouse aware that you're looking into this?",
+        "When you say you don't want to upset them \u2014 is it about the purchase decision or about addressing it now?",
+        "What do you think they'd say if they knew you were taking steps to resolve this?"
+      ],
+      "acknowledgment": "That's a delicate situation and I respect that you're navigating it carefully.",
+      "recommended_response": "Here's a reframe: right now, the timeshare is a problem that sits in the background of your life, costing money every year. Resolving it \u2014 even if it requires a difficult conversation \u2014 gives you both relief on the other side. Most spouses, when they hear 'I'm handling this and it will be done,' are relieved, not upset. The conversation about the original purchase is very different from 'I'm fixing it.' Would it be easier to present this to your spouse as the solution rather than reopening the original decision?",
+      "follow_up_questions": [
+        "What specifically are you afraid your spouse would be upset about?",
+        "Would it help if I was on a call with both of you to walk through it?"
+      ],
+      "common_mistakes": [
+        "Encouraging them to hide the resolution from their spouse.",
+        "Underestimating the real relationship dynamics.",
+        "Pushing too hard when the emotional situation is complex."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "sps-001",
+        "emo-001"
+      ],
+      "roleplay_example": "Client: 'My husband doesn't know how much we paid and I don't want him to find out.' Closer: 'What if the conversation isn't about what happened \u2014 but about the fact that you're fixing it? How would that land?'"
+    },
+    {
+      "id": "emo-003",
+      "category": "emotional",
+      "subcategory": "mistake_admission",
+      "trigger_phrase": "I don't want to admit I was taken advantage of",
+      "aliases": [
+        "It's embarrassing to say someone got me",
+        "I feel like a fool",
+        "I should have walked away"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "proud_ashamed",
+      "tags": [
+        "pride",
+        "taken advantage",
+        "fooled",
+        "mistake"
+      ],
+      "why_they_say_it": "Pride and self-image prevent them from acknowledging that they were manipulated. Coming forward to address it means acknowledging the original mistake.",
+      "underlying_concern": "Admitting this to myself or others is painful and I'd rather suppress it than confront it.",
+      "acknowledgment": "I want to say something that might reframe this for you. You didn't walk into a store and make a bad purchase. You were systematically targeted by a high-pressure operation that's had years to perfect its approach.",
+      "recommended_response": "Here's what I want you to know. The people who sold you that timeshare are professionals. They run 4-8 hour presentations specifically engineered to produce a yes from you. They're trained in objection handling, emotional manipulation, and creating artificial urgency. State AGs have sued these companies for exactly what they did to you. Being taken advantage of by professionals who spend their careers doing this isn't a reflection on your judgment \u2014 it's a reflection on their tactics. And the best thing you can do now is deal with it and move forward.",
+      "follow_up_questions": [
+        "Knowing all of that, does it change how you think about where you are today?",
+        "What would it mean to you to have this completely behind you?"
+      ],
+      "common_mistakes": [
+        "Moving too fast past the emotional wound.",
+        "Projecting \u2014 don't assume they feel ashamed if they haven't said it."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "emo-001",
+        "emo-002"
+      ],
+      "roleplay_example": "Client: 'I should have known better.' Closer: 'Can I challenge that idea for a second? What time of day did the presentation start, and when did you sign?' [Maps the manufactured urgency and fatigue.] 'Does that sound like a fair buying environment?'"
+    },
+    {
+      "id": "pro-001",
+      "category": "process",
+      "subcategory": "timeline",
+      "trigger_phrase": "How long will this take?",
+      "aliases": [
+        "What's the timeline?",
+        "When will it be done?",
+        "How many months?"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "impatient",
+      "tags": [
+        "timeline",
+        "time",
+        "how long",
+        "months",
+        "process"
+      ],
+      "why_they_say_it": "They want to know what they're committing to and want a clear expectation.",
+      "underlying_concern": "I don't want to be in limbo for years. What am I actually signing up for?",
+      "discovery_questions": [
+        "What timeline would you hope for, if you could choose?"
+      ],
+      "acknowledgment": "That's a fair and important question.",
+      "recommended_response": "Every case is different because every resort and situation is different. What I can tell you is our agreement has a 36-month window built in \u2014 and most cases resolve well before that. The more documented the situation, the stronger the position, and typically the faster the resolution. What I want you to focus on is this: the clock on your maintenance fees is also running. Every month you wait is another month of fees. So the sooner we begin building your case, the sooner the clock starts on your resolution.",
+      "follow_up_questions": [
+        "If this takes 18\u201324 months but your maintenance fees stop completely at that point, is that worth it?"
+      ],
+      "common_mistakes": [
+        "Overpromising on timeline \u2014 this causes serious issues later.",
+        "Giving a specific date without caveats.",
+        "Not using the 36-month window as a protective framing."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "pro-002"
+      ],
+      "roleplay_example": "Client: 'How long will this take?' Closer: 'Our agreement protects you for 36 months, but most cases resolve well before that. What timeline would make this feel worthwhile?'"
+    },
+    {
+      "id": "pro-002",
+      "category": "process",
+      "subcategory": "how_it_works",
+      "trigger_phrase": "How does this actually work?",
+      "aliases": [
+        "What exactly do you do?",
+        "Walk me through the process",
+        "What happens after I sign?"
+      ],
+      "difficulty": "easy",
+      "emotional_state": "curious",
+      "tags": [
+        "process",
+        "how",
+        "steps",
+        "next steps",
+        "what happens"
+      ],
+      "why_they_say_it": "They want to understand the mechanism before committing. This is a legitimate question and often a buying signal \u2014 they're mentally trying to picture themselves as a client.",
+      "underlying_concern": "What am I actually getting for this fee, and how does it produce the outcome I want?",
+      "discovery_questions": [
+        "What have you heard about how the process works, if anything?"
+      ],
+      "acknowledgment": "I love this question. Let me walk you through it step by step.",
+      "recommended_response": "Here's the sequence. First: we do a detailed intake of your ownership history \u2014 dates, what you were told, what the presentation was like, what's happened since. Second: our team reviews that information against federal and state consumer protection statutes to identify documented violations \u2014 misrepresentation, rescission issues, Regulation Z concerns. Third: we place you with a group of other owners with similar situations \u2014 this gives us collective leverage that an individual owner can't have on their own. Fourth: we present the documented case to the resort. Fifth: when the resort resolves the case, you receive the Mutual Release Letter \u2014 a signed legal document removing your name from the deed permanently. Sixth: if your credit was affected, we contact all three bureaus directly. Does that give you a clear picture of what we do?",
+      "follow_up_questions": [
+        "Is there any part of that you'd want me to go deeper on?",
+        "Does that process make sense given your situation?"
+      ],
+      "common_mistakes": [
+        "Giving a vague or incomplete explanation.",
+        "Using too much industry jargon.",
+        "Not checking in with the client as you go."
+      ],
+      "supporting_points": [],
+      "related_objections": [
+        "pro-001",
+        "tru-001"
+      ],
+      "roleplay_example": "Client: 'So what exactly do you guys do?' Closer: 'Let me walk you through it step by step...' [Use the 6-step process above and pause between steps.]"
+    },
+    {
+      "id": "pro-003",
+      "category": "process",
+      "subcategory": "credit_impact",
+      "trigger_phrase": "What happens to my credit?",
+      "aliases": [
+        "Will this affect my credit?",
+        "Is there a credit impact?",
+        "What about my credit score?"
+      ],
+      "difficulty": "medium",
+      "emotional_state": "cautious",
+      "tags": [
+        "credit",
+        "credit score",
+        "bureaus",
+        "FICO",
+        "impact"
+      ],
+      "why_they_say_it": "They're weighing the impact of participating in the exit process on their credit versus the impact of staying in the timeshare.",
+      "underlying_concern": "I don't want to damage my financial standing while trying to fix this.",
+      "discovery_questions": [
+        "Are you current on your timeshare payments right now?",
+        "Have you had any delinquencies with the resort?"
+      ],
+      "acknowledgment": "Great question \u2014 and the answer depends on where things stand right now.",
+      "recommended_response": "If you're current, the process itself doesn't create a negative credit event \u2014 you're exiting through documentation, not default. If there have been past delinquencies, we work directly with the credit bureaus after the resolution to address any reporting. That's part of the in-house credit protection that's been part of what we do since 1986. The contrast is this: if you try to exit by just stopping payments without documentation, THAT causes the credit damage. Our process is designed to avoid that.",
+      "follow_up_questions": [
+        "Have you had any missed payments or delinquencies with the resort?",
+        "Is your credit something you're actively protecting right now?"
+      ],
+      "common_mistakes": [
+        "Overpromising on credit restoration \u2014 be accurate.",
+        "Not asking about existing delinquencies first \u2014 this changes the answer."
+      ],
+      "supporting_points": [
+        "Direct bureau contact: Equifax, Experian, TransUnion.",
+        "Credit protection has been in-house since 1986.",
+        "Contrast with unilateral default consequences."
+      ],
+      "related_objections": [
+        "fin-005",
+        "alt-005"
+      ],
+      "roleplay_example": "Client: 'I'm worried about my credit.' Closer: 'That's a really important thing to protect. Are you current on your timeshare right now? Because that changes the answer...'"
+    }
+  ],
+  "submissions": [],
+  "stats": {
+    "total_objections": 31,
+    "categories": 8,
+    "last_updated": "2026-07"
+  }
+}
