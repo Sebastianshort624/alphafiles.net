@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Resort Intelligence Brief — AlphaFiles</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--nb:#1B3F6B;--gold:#C8A95A;--bg:#E6EEF9;--bgd:#d4e3f5;--border:#c5d8ee;--text:#1B3F6B;--muted:#5a7a99;--surface:#fff;--red:#dc2626;--green:#16a34a;--amber:#d97706}
+body{font-family:Inter,-apple-system,sans-serif;background:#f0f4f8;color:var(--text);font-size:13px}
+
+/* ── LAYOUT ─────────────────── */
+.brief-header{background:linear-gradient(135deg,var(--nb),#243860);padding:20px 24px;position:sticky;top:0;z-index:50}
+.brief-header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brief-resort-name{font-size:18px;font-weight:800;color:#fff}
+.brief-brand{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
+.brief-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.badge-gold{background:rgba(200,169,90,.2);color:#C8A95A;border:1px solid rgba(200,169,90,.3)}
+.badge-red{background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(220,38,38,.3)}
+.badge-green{background:rgba(22,163,74,.15);color:#86efac;border:1px solid rgba(22,163,74,.3)}
+.search-bar{width:100%;padding:8px 14px;border:1.5px solid rgba(255,255,255,.2);border-radius:7px;font-size:13px;font-family:Inter,sans-serif;color:#fff;background:rgba(255,255,255,.1);outline:none;margin-top:12px}
+.search-bar::placeholder{color:rgba(255,255,255,.4)}
+.search-bar:focus{border-color:var(--gold)}
+
+.tab-bar{background:var(--nb);border-bottom:2px solid rgba(200,169,90,.2);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{padding:9px 14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:Inter,sans-serif;transition:.12s}
+.tab:hover{color:rgba(255,255,255,.8)}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.content{max-width:900px;margin:0 auto;padding:16px}
+.section{display:none}.section.active{display:block}
+
+/* ── COMPONENTS ─────────────── */
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;margin-bottom:14px;overflow:hidden}
+.card-hdr{background:var(--bg);padding:10px 16px;font-size:11px;font-weight:800;color:var(--nb);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.card-body{padding:16px}
+
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{padding:8px 12px;background:var(--bg);border-radius:6px}
+.field-label{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.field-value{font-size:12px;font-weight:600;color:var(--nb)}
+
+/* Pain point chips */
+.chip-list{display:flex;flex-direction:column;gap:6px}
+.chip{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:6px;font-size:12px;line-height:1.4}
+.chip-check{background:#f0fdf4;border:1px solid #86efac;color:#166534}
+.chip-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.chip-info{background:var(--bg);border:1px solid var(--border);color:var(--nb)}
+.chip-icon{flex-shrink:0;font-size:13px;margin-top:1px}
+
+/* Question cards */
+.q-list{display:flex;flex-direction:column;gap:6px}
+.q-item{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-size:12px;font-style:italic;color:var(--nb)}
+.q-context{font-size:10px;font-style:normal;color:var(--muted);margin-top:3px}
+
+/* Fee timeline */
+.fee-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--bgd)}
+.fee-row:last-child{border-bottom:none}
+.fee-year{font-size:11px;font-weight:600;color:var(--muted);min-width:36px}
+.fee-bar-wrap{flex:1;height:12px;background:var(--bgd);border-radius:3px;overflow:hidden}
+.fee-bar{height:100%;background:var(--nb);border-radius:3px;transition:.4s}
+.fee-amount{font-size:11px;font-weight:700;color:var(--nb);min-width:50px;text-align:right}
+.fee-delta{font-size:10px;font-weight:600;color:var(--red);min-width:36px;text-align:right}
+
+/* Analytics */
+.metric{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center}
+.metric-n{font-size:28px;font-weight:800;color:var(--nb)}
+.metric-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.metric-trend{font-size:10px;font-weight:700;margin-top:3px}
+.trend-up{color:var(--red)}.trend-dn{color:var(--green)}
+
+/* Internal */
+.internal-card{background:linear-gradient(135deg,rgba(27,63,107,.04),rgba(27,63,107,.08));border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
+.pct-track{height:10px;background:var(--bgd);border-radius:5px;overflow:hidden;margin:6px 0}
+.pct-fill{height:100%;border-radius:5px;background:var(--nb)}
+
+/* Responsive */
+@media(max-width:600px){.field-grid{grid-template-columns:1fr}.metric-row{grid-template-columns:1fr 1fr}}
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.metric{border-right:1px solid var(--border)}.metric:last-child{border-right:none}
+</style>
+</head>
+<body>
+
+<div class="brief-header">
+  <div class="brief-header-top">
+    <div>
+      <div class="brief-resort-name" id="resort-title">Club Wyndham Bonnet Creek</div>
+      <div class="brief-brand">Club Wyndham · Travel + Leisure Co. · Orlando, FL</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="showSection('internal')" style="padding:6px 14px;background:var(--gold);color:var(--nb);border:none;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;font-family:Inter,sans-serif">Internal Brief</button>
+    </div>
+  </div>
+  <div class="brief-badges">
+    <span class="badge badge-gold">Points Program</span>
+    <span class="badge badge-red">High Fee Increases</span>
+    <span class="badge badge-red">ROFR Active</span>
+    <span class="badge badge-green">Deedback Available</span>
+    <span class="badge badge-gold">RCI + Interval</span>
+  </div>
+  <input class="search-bar" type="text" placeholder="Search a different resort..." id="resort-search" oninput="handleSearch(this.value)">
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showSection('profile')">🏢 Profile</button>
+  <button class="tab" onclick="showSection('ownership')">💰 Ownership</button>
+  <button class="tab" onclick="showSection('contracts')">📜 Contracts</button>
+  <button class="tab" onclick="showSection('exit')">⚖️ Exit</button>
+  <button class="tab" onclick="showSection('sales')">📞 Sales Intel</button>
+  <button class="tab" onclick="showSection('closing')">🎯 Closing</button>
+  <button class="tab" onclick="showSection('analytics')">📊 Analytics</button>
+  <button class="tab" onclick="showSection('internal')">🔒 Internal</button>
+  <button class="tab" onclick="showSection('kb')">📚 Knowledge Base</button>
+</div>
+
+<div class="content">
+
+<!-- ── PROFILE ───────────────────────────────── -->
+<div class="section active" id="s-profile">
+  <div class="card">
+    <div class="card-hdr">🏢 Resort Profile</div>
+    <div class="card-body">
+      <div class="field-grid">
+        <div class="field"><div class="field-label">Resort Name</div><div class="field-value">Club Wyndham Bonnet Creek</div></div>
+        <div class="field"><div class="field-label">Brand</div><div class="field-value">Club Wyndham</div></div>
+        <div class="field"><div class="field-label">Parent Company</div><div class="field-value">Travel + Leisure Co.</div></div>
+        <div class="field"><div class="field-label">Original Developer</div><div class="field-value">Fairfield Residential</div></div>
+        <div class="field"><div class="field-label">Current Owner</div><div class="field-value">Travel + Leisure Co. (Wyndham)</div></div>
+        <div class="field"><div class="field-label">Ownership Type</div><div class="field-value">Points (Club Wyndham)</div></div>
+        <div class="field"><div class="field-label">Resort Address</div><div class="field-value">9560 Via Encinas, Orlando, FL 32836</div></div>
+        <div class="field"><div class="field-label">Exchange Affiliations</div><div class="field-value">RCI · Interval International</div></div>
+        <div class="field"><div class="field-label">HOA Name</div><div class="field-value">Bonnet Creek Vacation Club HOA</div></div>
+        <div class="field"><div class="field-label">Management Company</div><div class="field-value">Wyndham Vacation Resorts, Inc.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">📋 Acquisition History</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-info"><span class="chip-icon">📅</span><span><b>1998:</b> Developed by Fairfield Residential as "Fairfield Bonnet Creek." Sold under deeded week format.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📅</span><span><b>2001:</b> Cendant Corporation acquired Fairfield Residential. Resort rebranded to Fairfield Resorts.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📅</span><span><b>2005:</b> Wyndham Hotel Group acquired Cendant. Rebranded to Wyndham Vacation Resorts.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📅</span><span><b>2018:</b> Wyndham Hotels & Resorts spun off. Vacation ownership retained as Wyndham Destinations.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📅</span><span><b>2021:</b> Wyndham Destinations rebranded to Travel + Leisure Co. Club Wyndham brand retained.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OWNERSHIP ──────────────────────────────── -->
+<div class="section" id="s-ownership">
+  <div class="card">
+    <div class="card-hdr">💰 Maintenance Fee History</div>
+    <div class="card-body">
+      <div style="margin-bottom:10px;padding:8px 12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:6px;font-size:12px;color:#991b1b">
+        ⚠️ Fees have increased <b>41% over 5 years</b> — well above industry average. Average annual increase: <b>7.1%/yr</b>
+      </div>
+      <div id="fee-timeline"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">📋 Ownership Terms</div>
+    <div class="card-body">
+      <div class="field-grid">
+        <div class="field"><div class="field-label">Transfer Fee</div><div class="field-value">$299 (internal) / Up to $895 (resale)</div></div>
+        <div class="field"><div class="field-label">Estoppel Required</div><div class="field-value">Yes — 5–10 business days, $50 fee</div></div>
+        <div class="field"><div class="field-label">ROFR</div><div class="field-value">Active — Wyndham exercises frequently</div></div>
+        <div class="field"><div class="field-label">Booking Window</div><div class="field-value">10 months (owners) / 13 months (VIP)</div></div>
+        <div class="field"><div class="field-label">Points Expiration</div><div class="field-value">Points expire Dec 31 if not used or banked</div></div>
+        <div class="field"><div class="field-label">Special Assessments</div><div class="field-value">$425 (2020 — HVAC), $380 (2022 — roof)</div></div>
+        <div class="field"><div class="field-label">Guest Usage</div><div class="field-value">Allowed — $99 guest certificate fee</div></div>
+        <div class="field"><div class="field-label">Points Banking</div><div class="field-value">Must bank before Dec 31 — one time only</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTRACTS ──────────────────────────────── -->
+<div class="section" id="s-contracts">
+  <div class="card">
+    <div class="card-hdr">📜 Contract Intelligence</div>
+    <div class="card-body">
+      <div class="field-grid">
+        <div class="field"><div class="field-label">State of Sale</div><div class="field-value">Florida</div></div>
+        <div class="field"><div class="field-label">Rescission Period</div><div class="field-value">10 calendar days (FL §721.10)</div></div>
+        <div class="field"><div class="field-label">Typical Contract Length</div><div class="field-value">Perpetual (deeded) / Points: in perpetuity</div></div>
+        <div class="field"><div class="field-label">Finance Options (orig.)</div><div class="field-value">In-house at 14–21% APR</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">⚠️ Common Contract Issues</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span>Verbal promises about availability not reflected in written contract — common complaint in FL AG filings</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span>Points devaluation over time — unit bookings now require more points than at purchase</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span>Upgrade pressure tactics — some owners report 4–6 upgrade "updates" before a purchase decision</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span>Owners with pre-2012 deeded weeks transitioned to points without clear written disclosure of fee changes</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span>Finance documents often signed separately from purchase contract — TILA disclosures challenged in several cases</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EXIT ───────────────────────────────────── -->
+<div class="section" id="s-exit">
+  <div class="card">
+    <div class="card-hdr">⚖️ Exit Options</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-check"><span class="chip-icon">✅</span><span><b>Ovation by Wyndham</b> — internal deed-back program. Requires loan paid in full. Typical wait: 6–18 months. Success rate varies.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✅</span><span><b>Deed-in-lieu</b> — available for fully paid accounts. Must have zero delinquency. Requires HOA estoppel and recording fees.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">ℹ️</span><span><b>Resale / Transfer</b> — ROFR makes resale difficult. eBay and Redweek sales routinely rejected by Wyndham at exercise price of $1. Resale value: typically $0–$100.</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>Rental programs</b> — internal rental programs return minimal value. Third-party rental scams frequently target Wyndham owners.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">📋 Exit Documentation Required</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-info"><span class="chip-icon">📄</span><span>Original deed or purchase contract</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📄</span><span>Last 2 maintenance fee statements</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📄</span><span>Loan payoff statement (if financed)</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📄</span><span>HOA estoppel letter (10 business days, $50–75 fee)</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📄</span><span>Government-issued ID for all titled owners</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>Common roadblock:</b> Outstanding loan balance blocks all exit paths. Ovation requires full payoff.</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>Common roadblock:</b> Delinquent fees — any past-due amount restarts the timeline.</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>Common roadblock:</b> Recent upgrade (within 18 months) — Wyndham flags these accounts.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SALES ───────────────────────────────────── -->
+<div class="section" id="s-sales">
+  <div class="card">
+    <div class="card-hdr">🔴 Top Pain Points — Wyndham Owners</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Maintenance fees increasing:</b> Average owner paying 40%+ more than at purchase. No end in sight.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Booking difficulty:</b> Peak seasons booked out at 13-month window. Non-VIP owners locked out of prime dates.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Points devaluation:</b> The same number of points books fewer nights than at purchase due to unit cost inflation.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Inheritance concern:</b> "My kids don't want this and I don't want to leave them with the debt."</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Loan balance exceeds value:</b> Financed at 14–21% APR. Resale value is $0. Psychological loss is significant.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Special assessments:</b> Unpredictable bills on top of annual fees. No vote on HOA decisions.</span></div>
+        <div class="chip chip-check"><span class="chip-icon">✓</span><span><b>Health / life change:</b> Retirement, mobility issues, or changing travel preferences make the product irrelevant.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">🔍 Suggested Discovery Questions</div>
+    <div class="card-body">
+      <div class="q-list">
+        <div class="q-item">"When was the last time you actually used your ownership?"<div class="q-context">Opens the usage gap — most owners haven't used it in 2+ years</div></div>
+        <div class="q-item">"Have your children told you they plan to keep it when you're gone?"<div class="q-context">Forces the inheritance conversation — usually they have not</div></div>
+        <div class="q-item">"What has your maintenance fee been over the last five years — do you track that?"<div class="q-context">Most don't. Showing the trend creates urgency</div></div>
+        <div class="q-item">"Have you tried selling it on eBay, Redweek, or through a resale company?"<div class="q-context">Reveals they've tried and failed — reinforces the no-resale reality</div></div>
+        <div class="q-item">"What would happen to your annual fees if you stopped paying?"<div class="q-context">Opens the credit conversation — they rarely understand the default pathway</div></div>
+        <div class="q-item">"Did anyone at the presentation mention what happens to your fees when you retire?"<div class="q-context">Surfaces the mismatch between what they were sold and what they own</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CLOSING ─────────────────────────────────── -->
+<div class="section" id="s-closing">
+  <div class="card">
+    <div class="card-hdr">❓ Common Owner Questions</div>
+    <div class="card-body">
+      <div class="q-list">
+        <div class="q-item">"Can I just leave this to my kids?"<div class="q-context">They can — but the obligation transfers with the deed. Most adult children will owe fees immediately after the owner's death.</div></div>
+        <div class="q-item">"If I stop paying, can they sue me?"<div class="q-context">Yes, but in practice most resorts pursue collection and credit reporting before litigation. Key: what state is the deed recorded in?</div></div>
+        <div class="q-item">"I paid $38,000 for this — I can't just walk away."<div class="q-context">Sunk cost objection. Reframe: "The question isn't what you paid — it's what you'll pay over the next 10 years to keep something you're not using."</div></div>
+        <div class="q-item">"Can't I sell it through Wyndham?"<div class="q-context">Wyndham's resale program (Ovation) returns no money — it's a deed-back, not a sale. ROFR means no third-party buyer ever completes.</div></div>
+        <div class="q-item">"What about renting it out?"<div class="q-context">Rental income rarely covers maintenance fees. Third-party rental programs are frequently scams. Address this directly.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">💬 Typical Objections + Responses</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-info"><span class="chip-icon">💬</span><span><b>"We might want to use it again."</b><br><span style="color:var(--muted)">→ "Understood — when was the last time you did? And if the fees keep going up, when does it stop making sense?"</span></span></div>
+        <div class="chip chip-info"><span class="chip-icon">💬</span><span><b>"I need to talk to my spouse first."</b><br><span style="color:var(--muted)">→ "Of course. What would make this an easier conversation for the two of you?"</span></span></div>
+        <div class="chip chip-info"><span class="chip-icon">💬</span><span><b>"I'm going to wait and see."</b><br><span style="color:var(--muted)">→ "What would have to change for waiting to stop being the right call? Because the fees won't wait."</span></span></div>
+        <div class="chip chip-info"><span class="chip-icon">💬</span><span><b>"My daughter said she might want to use it."</b><br><span style="color:var(--muted)">→ "Has she seen what the fees are? Let's walk through what that commitment would look like for her."</span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ANALYTICS ───────────────────────────────── -->
+<div class="section" id="s-analytics">
+  <div class="metric-row card" style="margin-bottom:14px">
+    <div class="metric"><div class="metric-n">B+</div><div class="metric-l">BBB Rating</div><div class="metric-trend trend-dn">↓ from A- (2021)</div></div>
+    <div class="metric"><div class="metric-n">847</div><div class="metric-l">BBB Complaints (12mo)</div><div class="metric-trend trend-up">↑ 18% YoY</div></div>
+    <div class="metric"><div class="metric-n">28yr</div><div class="metric-l">Resort Age</div><div class="metric-trend" style="color:var(--muted)">Est. 1996</div></div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">⚖️ Legal & Regulatory</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>2019 FL AG Investigation:</b> Deceptive sales practices allegations. Settled. Consumer refund program established.</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>2020 Class Action (FL):</b> Points devaluation without notice. Settled for $18M. Covers 2010–2019 purchasers.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">ℹ️</span><span><b>2023 FTC Review:</b> Industry-wide investigation into timeshare exit company interference. Wyndham named as complainant.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">📣 Consumer Complaint Trends</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-warn"><span class="chip-icon">📈</span><span><b>#1 — Maintenance fee increases</b> — 34% of all complaints</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">📈</span><span><b>#2 — Booking difficulty / availability</b> — 28%</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">📈</span><span><b>#3 — Exit program delays or denials</b> — 22%</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">📈</span><span><b>#4 — Misrepresentation at point of sale</b> — 16%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INTERNAL ─────────────────────────────────── -->
+<div class="section" id="s-internal">
+  <div style="padding:8px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;font-size:11px;color:#92400e;margin-bottom:14px">
+    🔒 Internal use only — not visible to clients
+  </div>
+  <div class="card">
+    <div class="card-hdr">📊 ATC Performance — Wyndham Bonnet Creek</div>
+    <div class="card-body">
+      <div class="field-grid">
+        <div class="internal-card"><div class="field-label">Close Rate</div><div style="font-size:24px;font-weight:800;color:var(--nb);margin:4px 0">38%</div><div class="pct-track"><div class="pct-fill" style="width:38%"></div></div><div style="font-size:10px;color:var(--muted)">Industry avg: 22%</div></div>
+        <div class="internal-card"><div class="field-label">Avg Sales Cycle</div><div style="font-size:24px;font-weight:800;color:var(--nb);margin:4px 0">16 days</div><div style="font-size:10px;color:var(--muted)">Faster than avg — owners motivated</div></div>
+        <div class="internal-card"><div class="field-label">Avg Contract Value</div><div style="font-size:24px;font-weight:800;color:var(--nb);margin:4px 0">$4,850</div><div style="font-size:10px;color:var(--muted)">Higher than portfolio avg ($4,200)</div></div>
+        <div class="internal-card"><div class="field-label">Consultations (YTD)</div><div style="font-size:24px;font-weight:800;color:var(--nb);margin:4px 0">47</div><div style="font-size:10px;color:var(--muted)">17 closed · 30 pending / lost</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">🏆 Top Discovery Questions (by close rate)</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-check"><span class="chip-icon">1.</span><span><b>"Have your children told you they plan to keep it?"</b> — Closes at 52% when this triggers a no or hesitation</span></div>
+        <div class="chip chip-check"><span class="chip-icon">2.</span><span><b>"What has the fee been each of the last 5 years?"</b> — Owners who've tracked it close at 61%</span></div>
+        <div class="chip chip-check"><span class="chip-icon">3.</span><span><b>"Have you tried selling it on eBay?"</b> — Resale failure confirmation closes at 48%</span></div>
+        <div class="chip chip-info"><span class="chip-icon">4.</span><span><b>"When was the last time you used it?"</b> — Good opener, 34% close — not a differentiator</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">📝 Coaching Notes</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-info"><span class="chip-icon">💡</span><span>Wyndham owners often defend the brand emotionally even when financially stuck. Let them tell you what they liked before asking what changed.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">💡</span><span>The ROFR argument is very effective — most owners tried eBay and got rejected. Ask this early.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">💡</span><span>The 2020 class action settlement is public knowledge — reference it when discussing deceptive practices if the owner was a pre-2019 buyer.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── KNOWLEDGE BASE ─────────────────────────── -->
+<div class="section" id="s-kb">
+  <div class="card">
+    <div class="card-hdr">📚 Frequently Asked Questions</div>
+    <div class="card-body">
+      <div class="q-list">
+        <div class="q-item">"What is a timeshare maintenance fee and why does it increase?"<div class="q-context">Maintenance fees cover HOA operating costs. Increases are voted on by the HOA board — owners have no direct veto. FL §721.15 governs annual budget disclosure requirements.</div></div>
+        <div class="q-item">"What does Wyndham's Ovation program actually do?"<div class="q-context">Ovation is a deed-back program — not a sale. The owner receives nothing in return. Eligibility requires: loan paid in full, no delinquent fees, account in good standing. Wait times vary from 6 to 24 months.</div></div>
+        <div class="q-item">"If I default, what happens?"<div class="q-context">Wyndham typically pursues: (1) collections agency referral, (2) negative credit reporting, (3) possible foreclosure on the deeded interest. Timeline: 30–90 days to collections, 6–18 months to foreclosure in FL. Credit impact: 100–200 pt drop.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr">⚖️ State Law — Florida</div>
+    <div class="card-body">
+      <div class="chip-list">
+        <div class="chip chip-info"><span class="chip-icon">📋</span><span><b>FL §721.10:</b> 10-calendar-day rescission period from contract execution OR receipt of public offering statement, whichever is later</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📋</span><span><b>FL §721.15:</b> HOA must provide annual budget to owners. Special assessments require 60-day notice.</span></div>
+        <div class="chip chip-info"><span class="chip-icon">📋</span><span><b>FL §721.855:</b> Timeshare plan termination — developer can vote to terminate if 100% of interests are conveyed or abandoned</span></div>
+        <div class="chip chip-warn"><span class="chip-icon">⚠️</span><span><b>Key note:</b> FL foreclosure is judicial. A contested foreclosure can take 3–5 years. This affects exit timelines.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ── FEE TIMELINE ─────────────────────────────────
+var fees=[
+  {year:"2019",amount:890},{year:"2020",amount:960},{year:"2021",amount:1050},
+  {year:"2022",amount:1130},{year:"2023",amount:1210},{year:"2024",amount:1255}
+];
+var maxFee=Math.max.apply(null,fees.map(function(f){return f.amount;}));
+var html=fees.map(function(f,i){
+  var delta=i>0?((f.amount-fees[i-1].amount)/fees[i-1].amount*100).toFixed(1):null;
+  return'<div class="fee-row"><div class="fee-year">'+f.year+'</div>'
+    +'<div class="fee-bar-wrap"><div class="fee-bar" style="width:'+(f.amount/maxFee*100)+'%"></div></div>'
+    +'<div class="fee-amount">$'+f.amount.toLocaleString()+'</div>'
+    +(delta?'<div class="fee-delta">+'+delta+'%</div>':'<div class="fee-delta"></div>')+'</div>';
+}).join('');
+document.getElementById('fee-timeline').innerHTML=html;
+
+// ── TAB SWITCHING ─────────────────────────────────
+function showSection(id){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  var el=document.getElementById('s-'+id);
+  if(el)el.classList.add('active');
+  event&&event.target&&event.target.classList.add('active');
+}
+
+// ── SEARCH (demo) ─────────────────────────────────
+var RESORTS=[
+  {name:"Club Wyndham Bonnet Creek",sub:"Club Wyndham · Orlando, FL"},
+  {name:"Marriott's Grand Vista",sub:"Marriott Vacation Club · Orlando, FL"},
+  {name:"Hilton Grand Vacations at SeaWorld",sub:"HGVC · Orlando, FL"},
+  {name:"Westgate Smoky Mountain Resort",sub:"Westgate · Gatlinburg, TN"},
+  {name:"Bluegreen Vacations Fountains",sub:"Bluegreen · Orlando, FL"}
+];
+var dropEl=null;
+function handleSearch(q){
+  if(dropEl){dropEl.remove();dropEl=null;}
+  if(!q||q.length<2)return;
+  var matches=RESORTS.filter(function(r){return r.name.toLowerCase().indexOf(q.toLowerCase())>=0;});
+  if(!matches.length)return;
+  dropEl=document.createElement('div');
+  dropEl.style.cssText='position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:7px;z-index:100;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15)';
+  matches.forEach(function(m){
+    var row=document.createElement('div');
+    row.style.cssText='padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--bgd)';
+    row.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--nb)">'+m.name+'</div><div style="font-size:11px;color:var(--muted)">'+m.sub+'</div>';
+    row.onclick=function(){
+      document.getElementById('brief-title')||document.querySelector('.brief-resort-name').textContent=m.name;
+      document.getElementById('resort-search').value='';
+      dropEl.remove();dropEl=null;
+    };
+    row.onmouseenter=function(){this.style.background='var(--bg)';};
+    row.onmouseleave=function(){this.style.background='';};
+    dropEl.appendChild(row);
+  });
+  var wrap=document.getElementById('resort-search').parentElement;
+  wrap.style.position='relative';
+  wrap.appendChild(dropEl);
+}
+</script>
+</body>
+</html>
