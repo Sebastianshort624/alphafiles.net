@@ -167,47 +167,12 @@ function loadDB(){
 }
 
 // Embedded seed — same structure as the JSON file
-var SEED_DB={
-  exchange_companies:[
-    {id:"rci",name:"RCI",website:"rci.com",notes:""},
-    {id:"ii",name:"Interval International",website:"intervalworld.com",notes:""},
-    {id:"sfo",name:"SFX Resorts",website:"sfxresorts.com",notes:""},
-    {id:"7across",name:"7Across",website:"7across.com",notes:""}
-  ],
-  parent_companies:[
-    {id:"wyndham",name:"Wyndham Destinations",hq_country:"US",hq_state:"TN",hq_city:"Nashville",website:"wyndhamdestinations.com",notes:"Formerly Cendant/Fairfield Resorts",acquired:[]},
-    {id:"marriott",name:"Marriott Vacations Worldwide",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"marriottvacationsworldwide.com",notes:"Spun off from Marriott International 2011",acquired:["ivh"]},
-    {id:"hilton",name:"Hilton Grand Vacations",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"hiltongrandvacations.com",notes:"Spun off from Hilton 2017",acquired:["diamond","bluegreen"]},
-    {id:"bluegreen",name:"Bluegreen Vacations",hq_country:"US",hq_state:"FL",hq_city:"Boca Raton",website:"bluegreenvacations.com",notes:"Acquired by Hilton Grand Vacations 2023",acquired:[]},
-    {id:"diamond",name:"Diamond Resorts International",hq_country:"US",hq_state:"NV",hq_city:"Las Vegas",website:"diamondresorts.com",notes:"Acquired by Hilton Grand Vacations 2021",acquired:[]},
-    {id:"ivh",name:"ILM Vacation Holdings (Vistana)",hq_country:"US",hq_state:"FL",hq_city:"Orlando",website:"vistana.com",notes:"Acquired by Marriott Vacations Worldwide 2021",acquired:[]}
-  ],
-  brands:[
-    {id:"club-wyndham",name:"Club Wyndham",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:""},
-    {id:"worldmark",name:"WorldMark by Wyndham",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:"Points-based club"},
-    {id:"shell",name:"Shell Vacations Club",parent_company_id:"wyndham",exchange_company_ids:["rci"],notes:""},
-    {id:"mvw",name:"Marriott Vacation Club",parent_company_id:"marriott",exchange_company_ids:["ii","rci"],notes:""},
-    {id:"sheraton-vistana",name:"Sheraton Vistana Resorts",parent_company_id:"marriott",exchange_company_ids:["ii"],notes:"Formerly IVH brand"},
-    {id:"westin-vacations",name:"Westin Vacation Club",parent_company_id:"marriott",exchange_company_ids:["ii"],notes:"Formerly IVH brand"},
-    {id:"hgv",name:"Hilton Grand Vacations Club",parent_company_id:"hilton",exchange_company_ids:["rci","ii"],notes:""},
-    {id:"bluegreen-brand",name:"Bluegreen Vacations",parent_company_id:"hilton",exchange_company_ids:["rci"],notes:"Formerly standalone"},
-    {id:"diamond-brand",name:"Diamond Resorts",parent_company_id:"hilton",exchange_company_ids:["ii"],notes:"Formerly standalone"}
-  ],
-  resorts:[
-    {id:"cwb-001",name:"Club Wyndham Bonnet Creek",parent_company_id:"wyndham",brand_id:"club-wyndham",address:"9560 Via Encinas",city:"Orlando",state:"FL",country:"US",phone:"407-238-3800",website:"clubwyndham.com",lat:28.3773,lng:-81.5200,club_type:"Points",exchange_company_ids:["rci"],original_developer:"Wyndham",current_owner_id:"wyndham",status:"Active",legacy_names:[],notes:"Adjacent to Walt Disney World"},
-    {id:"mvw-001",name:"Marriott's Grand Vista",parent_company_id:"marriott",brand_id:"mvw",address:"8001 Vineland Ave",city:"Orlando",state:"FL",country:"US",phone:"407-238-7100",website:"marriottvacationclub.com",lat:28.3902,lng:-81.4988,club_type:"Points / Fixed Week",exchange_company_ids:["ii"],original_developer:"Marriott",current_owner_id:"marriott",status:"Active",legacy_names:[],notes:""},
-    {id:"hgv-001",name:"Hilton Grand Vacations at SeaWorld",parent_company_id:"hilton",brand_id:"hgv",address:"6924 Grand Vacations Way",city:"Orlando",state:"FL",country:"US",phone:"407-239-0100",website:"hiltongrandvacations.com",lat:28.4197,lng:-81.4684,club_type:"Points",exchange_company_ids:["rci","ii"],original_developer:"Hilton",current_owner_id:"hilton",status:"Active",legacy_names:["Hilton Grand Vacations Club at SeaWorld"],notes:""},
-    {id:"sv-001",name:"Sheraton Vistana Villages",parent_company_id:"marriott",brand_id:"sheraton-vistana",address:"12401 International Dr",city:"Orlando",state:"FL",country:"US",phone:"407-238-5000",website:"vistana.com",lat:28.4073,lng:-81.4673,club_type:"Points / Fixed Week",exchange_company_ids:["ii"],original_developer:"ITT Sheraton",current_owner_id:"marriott",status:"Active",legacy_names:["Starwood Vistana Villages"],notes:"Formerly under Starwood / IVH"},
-    {id:"bg-001",name:"Bluegreen Vacations Fountains Resort",parent_company_id:"hilton",brand_id:"bluegreen-brand",address:"12001 International Dr",city:"Orlando",state:"FL",country:"US",phone:"407-239-7100",website:"bluegreenvacations.com",lat:28.4001,lng:-81.4680,club_type:"Points",exchange_company_ids:["rci"],original_developer:"Bluegreen",current_owner_id:"hilton",status:"Active",legacy_names:[],notes:"Hilton subsidiary since 2023"}
-  ],
-  acquisitions:[
-    {id:"acq-001",acquirer_id:"marriott",acquired_id:"ivh",date:"2021-05",notes:"Acquired ILM Vacation Holdings (Vistana) for ~$1.5B"},
-    {id:"acq-002",acquirer_id:"hilton",acquired_id:"diamond",date:"2021-08",notes:"Acquired Diamond Resorts for ~$1.4B"},
-    {id:"acq-003",acquirer_id:"hilton",acquired_id:"bluegreen",date:"2023-09",notes:"Acquired Bluegreen Vacations for ~$1.5B"}
-  ]
-};
-
+var SEED_DB={exchange_companies:[],parent_companies:[],brands:[],clubs:[],resorts:[],acquisitions:[]};
 // ── HELPERS ───────────────────────────────────────────────────────────
+
+function club(id){return byId(DB.clubs||[],id);}
+function resortsByClub(cId){return DB.resorts.filter(function(r){return r.club_id===cId;});}
+function resortsByBrandForPC(pcId){var bIds=DB.brands.filter(function(b){return b.parent_company_id===pcId;}).map(function(b){return b.id;});return DB.resorts.filter(function(r){return bIds.indexOf(r.brand_id)>=0;});}
 function byId(arr,id){return(arr||[]).find(function(x){return x.id===id;})||null;}
 function pc(id){return byId(DB.parent_companies,id);}
 function brand(id){return byId(DB.brands,id);}
@@ -242,6 +207,7 @@ function render(view,id){
   else if(view==='brands') v.innerHTML=id?viewBrand(id):viewBrandList();
   else if(view==='resorts') v.innerHTML=id?viewResort(id):viewResortList();
   else if(view==='exchange-companies') v.innerHTML=viewExcList();
+  else if(view==='clubs') v.innerHTML=viewClubList();
   else if(view==='states') v.innerHTML=id?viewState(id):viewStateList();
   else if(view==='countries') v.innerHTML=viewCountryList();
   else if(view==='search') v.innerHTML=viewSearch();
@@ -290,9 +256,10 @@ function viewPCList(){
 function viewPC(id){
   var p=pc(id); if(!p) return '<div class="empty"><div class="empty-icon">⚠️</div>Not found</div>';
   var acqs=DB.acquisitions.filter(function(a){return a.acquirer_id===id;});
-  var rs=resortsByPC(id), bs=brandsByPC(id);
+  var bs=brandsByPC(id);
+  var rs=resortsByBrandForPC(id);
   return '<button class="back-btn" onclick="nav(\'parent-companies\')">← Back</button>'
-    +'<div class="page-header"><div><div class="page-title">'+p.name+'</div><div class="page-sub">Parent Company · '+rs.length+' resorts · '+bs.length+' brands</div></div></div>'
+    +'<div class="page-header"><div><div class="page-title">'+p.name+'</div><div class="page-sub">'+rs.length+' resorts · '+bs.length+' brands'+(p.former_names&&p.former_names.length?' · fka: '+p.former_names.join(' / '):'')+'</div>'+(p.status&&p.status!=='Active'?'<div style="margin-top:4px"><span class="tag red">'+p.status+'</span></div>':'')+"</div></div>"
     +'<div class="detail-panel"><div class="detail-grid">'
     +df('HQ',p.hq_city+(p.hq_state?', '+p.hq_state:'')+' · '+p.hq_country)
     +df('Website',p.website?'<a href="https://'+p.website+'" target="_blank">'+p.website+'</a>':'—')
@@ -390,6 +357,15 @@ function viewResort(id){
     +'</div></div>';
 }
 
+function viewClubList(){
+  var clubs=DB.clubs||[];
+  if(!clubs.length)return '<div class="empty"><div class="empty-icon">No data</div>Import the v2 database to populate.</div>';
+  return '<div class="page-header"><div class="page-title">Points Programs & Clubs</div><div class="page-sub">'+clubs.length+' programs</div></div>'
+    +'<div class="tbl-wrap"><table><tr><th>Program</th><th>Parent Company</th><th>Brand</th><th>Type</th><th>Resorts</th></tr>'
+    +clubs.map(function(c){var p=pc(c.parent_company_id),b=brand(c.brand_id),rs=resortsByClub(c.id);
+      return'<tr><td style="font-weight:700">'+c.name+'</td><td>'+(p?p.name:'')+'</td><td>'+(b?b.name:'')+'</td><td><span class="tag gold">'+c.type+'</span></td><td>'+rs.length+'</td></tr>';
+    }).join('')+'</table></div>';
+}
 function viewExcList(){
   return'<div class="page-header"><div class="page-title">Exchange Companies</div></div>'
     +'<div class="card-grid">'
@@ -651,7 +627,7 @@ function processImport(){
 
 function updateStat(){
   var el=document.getElementById('sn-stat-block');
-  if(el) el.innerHTML='<b>'+DB.resorts.length+'</b> resorts · <b>'+DB.brands.length+'</b> brands<br><b>'+DB.parent_companies.length+'</b> companies';
+  if(el) el.innerHTML='<b>'+DB.resorts.length+'</b> resorts · <b>'+DB.brands.length+'</b> brands<br><b>'+DB.parent_companies.length+'</b> companies · <b>'+(DB.clubs||[]).length+'</b> clubs';
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────
