@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Objection Intelligence Library — AlphaFiles</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--nb:#1B3F6B;--gold:#C8A95A;--bg:#E6EEF9;--bgd:#d4e3f5;--border:#c5d8ee;--text:#1B3F6B;--muted:#5a7a99;--surface:#fff}
+body{font-family:Inter,-apple-system,sans-serif;background:#f4f7fb;color:var(--text);display:flex;min-height:100vh}
+
+#sidenav{width:240px;min-height:100vh;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100;overflow-y:auto}
+.sn-brand{background:linear-gradient(135deg,var(--nb),#243860);padding:14px 16px;border-bottom:2px solid var(--gold);flex-shrink:0}
+.sn-brand-title{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.sn-brand-sub{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:2px}
+.sn-search{padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sn-search input{width:100%;padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:11px;font-family:Inter,sans-serif;color:var(--nb);background:#fff;outline:none}
+.sn-search input:focus{border-color:var(--gold)}
+.sn-section{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px}
+.sn-item{display:flex;align-items:center;gap:9px;padding:7px 14px;font-size:11px;font-weight:600;color:var(--text);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;transition:.12s}
+.sn-item:hover{background:var(--bgd)}
+.sn-item.active{background:var(--bgd);border-left-color:var(--gold)}
+.sn-item .ic{width:18px;text-align:center;font-size:13px}
+.sn-badge{margin-left:auto;background:var(--nb);color:var(--gold);font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px}
+.sn-obj-item{padding:6px 14px 6px 32px;font-size:11px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sn-obj-item:hover{background:var(--bgd);color:var(--nb)}
+.sn-obj-item.active{background:var(--bgd);color:var(--nb);border-left-color:var(--gold)}
+
+#main{margin-left:240px;flex:1;padding:0;min-height:100vh}
+.page-wrap{padding:24px;max-width:1000px}
+
+/* HEADER */
+.page-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:22px;font-weight:700;color:var(--nb)}
+.page-sub{font-size:13px;color:var(--muted);margin-top:3px}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:22px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center}
+.stat-n{font-size:28px;font-weight:800;color:var(--nb)}
+.stat-l{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* CATEGORY CARDS */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:24px}
+.cat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:.15s;display:flex;gap:12px;align-items:flex-start}
+.cat-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(27,63,107,.1)}
+.cat-icon{font-size:24px;flex-shrink:0}
+.cat-name{font-size:13px;font-weight:700;color:var(--nb);margin-bottom:3px}
+.cat-desc{font-size:11px;color:var(--muted);line-height:1.5}
+.cat-count{font-size:11px;font-weight:700;color:var(--gold);margin-top:6px}
+
+/* OBJECTION LIST */
+.obj-list{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+.obj-list-hdr{padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.obj-list-hdr-t{font-size:12px;font-weight:700;color:var(--nb)}
+.obj-row{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #f0f4f8;cursor:pointer;gap:12px;transition:.1s}
+.obj-row:last-child{border-bottom:none}
+.obj-row:hover{background:#f8fafc}
+.obj-trigger{font-size:13px;font-weight:600;color:var(--nb);flex:1}
+.obj-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.difficulty{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.diff-easy{background:#f0fdf4;color:#166534}
+.diff-medium{background:#fffbeb;color:#92400e}
+.diff-hard{background:#fef2f2;color:#991b1b}
+.emotion-tag{font-size:10px;color:var(--muted)}
+
+/* OBJECTION DETAIL */
+.obj-detail{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.obj-detail-hdr{background:linear-gradient(135deg,var(--nb),#243860);padding:20px 24px}
+.obj-detail-cat{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.obj-detail-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.obj-detail-aliases{font-size:11px;color:rgba(255,255,255,.5);font-style:italic}
+.obj-meta-bar{display:flex;align-items:center;gap:10px;padding:12px 24px;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.obj-body{padding:24px}
+.section{margin-bottom:24px}
+.section:last-child{margin-bottom:0}
+.section-label{font-size:10px;font-weight:800;color:var(--nb);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-text{font-size:13px;color:#374151;line-height:1.8;background:#f8fafc;padding:14px 16px;border-radius:6px;border-left:3px solid var(--gold)}
+.section-list{list-style:none}
+.section-list li{font-size:13px;color:#374151;padding:7px 0;padding-left:20px;position:relative;border-bottom:1px solid #f3f4f6;line-height:1.6}
+.section-list li:last-child{border-bottom:none}
+.section-list li::before{content:"→";position:absolute;left:0;color:var(--gold);font-weight:700}
+.section-list.warn li::before{content:"✕";color:#dc2626}
+.section-list.check li::before{content:"✓";color:#059669}
+.roleplay-box{background:#0f1117;border-radius:8px;padding:18px 20px;font-size:12px;color:rgba(255,255,255,.8);line-height:1.9;white-space:pre-wrap;font-family:Inter,sans-serif}
+.roleplay-label{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.related-tags{display:flex;flex-wrap:wrap;gap:6px}
+.related-tag{padding:4px 12px;background:var(--bg);border:1px solid var(--border);border-radius:4px;font-size:11px;font-weight:600;color:var(--nb);cursor:pointer}
+.related-tag:hover{background:var(--bgd);border-color:var(--gold)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:var(--bg);color:var(--nb)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:11px;font-weight:700;color:var(--nb);cursor:pointer;background:#fff;margin-bottom:16px;font-family:Inter,sans-serif}
+.back-btn:hover{background:var(--bg)}
+
+/* SEARCH RESULTS */
+.search-result{padding:14px 16px;border-bottom:1px solid #f0f4f8;cursor:pointer;transition:.1s}
+.search-result:hover{background:#f8fafc}
+.search-result-trigger{font-size:13px;font-weight:700;color:var(--nb)}
+.search-result-preview{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+mark{background:rgba(200,169,90,.25);color:var(--nb);border-radius:2px;padding:0 2px}
+
+/* SUBMIT FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.form-field input,.form-field select,.form-field textarea{padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:Inter,sans-serif;color:var(--nb);outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold)}
+.btn{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;border:none}
+.btn-primary{background:var(--nb);color:var(--gold)}
+.btn-secondary{background:var(--bg);color:var(--nb);border:1.5px solid var(--border)}
+
+/* PRACTICE MODE */
+.practice-card{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.practice-prompt{background:linear-gradient(135deg,var(--nb),#243860);padding:24px;text-align:center}
+.practice-prompt-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.practice-prompt-text{font-size:20px;font-weight:700;color:#fff;line-height:1.4}
+.practice-input-area{padding:20px}
+.practice-input-area textarea{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-family:Inter,sans-serif;color:var(--nb);min-height:120px;resize:vertical;outline:none}
+.practice-input-area textarea:focus{border-color:var(--gold)}
+.practice-reveal{padding:0 20px 20px}
+.practice-reveal-btn{width:100%;padding:10px;background:var(--nb);color:var(--gold);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:14px}
+.reveal-content{display:none}
+.reveal-content.show{display:block}
+
+/* EMPTY */
+.empty{text-align:center;padding:48px 20px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;margin-bottom:8px}
+
+@media(max-width:700px){#sidenav{display:none}#main{margin-left:0}}
+</style>
+</head>
+<body>
+
+<nav id="sidenav">
+  <div class="sn-brand">
+    <div class="sn-brand-title">Objection Library</div>
+    <div class="sn-brand-sub">AlphaFiles · Closing Intelligence</div>
+  </div>
+  <div class="sn-search">
+    <input type="text" id="quick-search" placeholder="Search objections..." oninput="quickSearch(this.value)">
+  </div>
+  <div class="sn-section">Views</div>
+  <button class="sn-item active" id="nav-dashboard" onclick="nav('dashboard')"><span class="ic">⊞</span>Dashboard</button>
+  <button class="sn-item" id="nav-practice" onclick="nav('practice')"><span class="ic">🎯</span>Practice Mode</button>
+  <button class="sn-item" id="nav-submit" onclick="nav('submit')"><span class="ic">➕</span>Submit Objection</button>
+  <div class="sn-section">Categories</div>
+  <div id="cat-nav"></div>
+</nav>
+
+<main id="main">
+  <div id="view"></div>
+</main>
+
+<script>
+var DB=null;
+
+function loadDB(){
+  fetch('./db/objections_db.json').then(function(r){return r.json();}).then(function(d){DB=d;init();}).catch(function(){
+    var saved=localStorage.getItem('objections_db');
+    DB=saved?JSON.parse(saved):{categories:[],objections:[],submissions:[]};
+    init();
+  });
+}
+
+function init(){
+  buildCatNav();
+  nav('dashboard');
+}
+
+// ── HELPERS ────────────────────────────────────────────────────────────
+function catById(id){return(DB.categories||[]).find(function(c){return c.id===id;})||{};}
+function objById(id){return(DB.objections||[]).find(function(o){return o.id===id;})||null;}
+function objByCategory(catId){return(DB.objections||[]).filter(function(o){return o.category===catId;});}
+
+function buildCatNav(){
+  var nav=document.getElementById('cat-nav');
+  if(!nav||!DB)return;
+  nav.innerHTML=(DB.categories||[]).map(function(c){
+    var count=objByCategory(c.id).length;
+    return'<button class="sn-item" id="nav-cat-'+c.id+'" onclick="nav(\'cat\',\''+c.id+'\')">'
+      +'<span class="ic">'+c.icon+'</span>'+c.name
+      +'<span class="sn-badge">'+count+'</span></button>'
+      +'<div id="subnav-'+c.id+'"></div>';
+  }).join('');
+}
+
+function diffTag(d){
+  var map={easy:'diff-easy',medium:'diff-medium',hard:'diff-hard'};
+  return'<span class="difficulty '+(map[d]||'diff-medium')+'">'+d+'</span>';
+}
+
+// ── NAV ────────────────────────────────────────────────────────────────
+var currentCat=null;
+function nav(view,id){
+  document.querySelectorAll('.sn-item').forEach(function(el){el.classList.remove('active');});
+  var target=document.getElementById('nav-'+view+(id?'-'+id:''));
+  if(target)target.classList.add('active');
+  var v=document.getElementById('view');
+  if(view==='dashboard')v.innerHTML=viewDash();
+  else if(view==='cat'){currentCat=id;v.innerHTML=viewCat(id);}
+  else if(view==='obj')v.innerHTML=viewObj(id);
+  else if(view==='practice')v.innerHTML=viewPractice();
+  else if(view==='submit')v.innerHTML=viewSubmit();
+  else if(view==='search')v.innerHTML=viewSearch(id);
+}
+
+// ── VIEWS ─────────────────────────────────────────────────────────────
+function viewDash(){
+  var objs=DB.objections||[];
+  var hard=objs.filter(function(o){return o.difficulty==='hard';}).length;
+  var subs=DB.submissions?DB.submissions.length:0;
+  return'<div class="page-wrap">'
+    +'<div class="page-hdr"><div><div class="page-title">Objection Intelligence Library</div>'
+    +'<div class="page-sub">Comprehensive closing knowledge base for timeshare exit consulting</div></div>'
+    +'<button class="btn btn-primary" onclick="nav(\'practice\')">🎯 Practice Mode</button></div>'
+    +'<div class="stat-row">'
+    +sCard(objs.length,'Total Objections')+sCard((DB.categories||[]).length,'Categories')
+    +sCard(hard,'Hard Objections')+sCard(subs,'Team Submissions')+'</div>'
+    +'<div class="cat-grid">'+(DB.categories||[]).map(function(c){
+      var count=objByCategory(c.id).length;
+      return'<div class="cat-card" onclick="nav(\'cat\',\''+c.id+'\')">'
+        +'<div class="cat-icon">'+c.icon+'</div>'
+        +'<div><div class="cat-name">'+c.name+'</div>'
+        +'<div class="cat-desc">'+c.desc+'</div>'
+        +'<div class="cat-count">'+count+' objection'+(count!==1?'s':'')+'</div></div></div>';
+    }).join('')+'</div></div>';
+}
+
+function sCard(n,l){return'<div class="stat-card"><div class="stat-n">'+n+'</div><div class="stat-l">'+l+'</div></div>';}
+
+function viewCat(catId){
+  var cat=catById(catId);
+  var objs=objByCategory(catId);
+  return'<div class="page-wrap">'
+    +'<button class="back-btn" onclick="nav(\'dashboard\')">← Categories</button>'
+    +'<div class="page-hdr"><div>'
+    +'<div class="page-title">'+cat.icon+' '+cat.name+'</div>'
+    +'<div class="page-sub">'+cat.desc+' · '+objs.length+' objections</div>'
+    +'</div></div>'
+    +'<div class="obj-list">'
+    +'<div class="obj-list-hdr"><div class="obj-list-hdr-t">Objections</div></div>'
+    +objs.map(function(o){
+      return'<div class="obj-row" onclick="nav(\'obj\',\''+o.id+'\')">'
+        +'<div class="obj-trigger">"'+o.trigger_phrase+'"</div>'
+        +'<div class="obj-meta">'+diffTag(o.difficulty)
+        +(o.emotional_state?'<span class="emotion-tag">'+o.emotional_state+'</span>':'')+'</div>'
+        +'<div style="color:var(--muted);font-size:12px">→</div>'
+        +'</div>';
+    }).join('')+'</div></div>';
+}
+
+function viewObj(id){
+  var o=objById(id);
+  if(!o)return'<div class="page-wrap"><div class="empty">Objection not found</div></div>';
+  var cat=catById(o.category);
+  var related=(o.related_objections||[]).map(function(rid){var r=objById(rid);return r?'<span class="related-tag" onclick="nav(\'obj\',\''+rid+'\')">"'+r.trigger_phrase+'"</span>':'';}).join('');
+  return'<div class="page-wrap">'
+    +'<button class="back-btn" onclick="nav(\'cat\',\''+o.category+'\')">← '+cat.name+'</button>'
+    +'<div class="obj-detail">'
+    +'<div class="obj-detail-hdr">'
+    +'<div class="obj-detail-cat">'+cat.icon+' '+cat.name+'</div>'
+    +'<div class="obj-detail-title">"'+o.trigger_phrase+'"</div>'
+    +((o.aliases&&o.aliases.length)?'<div class="obj-detail-aliases">Also heard as: '+o.aliases.join(' · ')+'</div>':'')
+    +'</div>'
+    +'<div class="obj-meta-bar">'
+    +diffTag(o.difficulty)
+    +(o.emotional_state?'<span class="tag">😤 '+o.emotional_state+'</span>':'')
+    +(o.subcategory?'<span class="tag">'+o.subcategory+'</span>':'')
+    +((o.tags||[]).slice(0,3).map(function(t){return'<span class="tag">'+t+'</span>';}).join(''))
+    +'</div>'
+    +'<div class="obj-body">'
+    +sec('Why They Say It',o.why_they_say_it,'text')
+    +sec('Underlying Concern',o.underlying_concern,'text')
+    +sec('Discovery Questions',o.discovery_questions,'list')
+    +sec('Empathetic Acknowledgment',o.acknowledgment,'text')
+    +sec('Recommended Response',o.recommended_response,'text')
+    +sec('Follow-Up Questions',o.follow_up_questions,'list')
+    +sec('Common Mistakes to Avoid',o.common_mistakes,'warn')
+    +((o.supporting_points&&o.supporting_points.length)?sec('Supporting Points',o.supporting_points,'check'):'')
+    +(o.roleplay_example?'<div class="section"><div class="section-label">Role-Play Example</div><div class="roleplay-label">Scenario</div><div class="roleplay-box">'+o.roleplay_example+'</div></div>':'')
+    +(related?'<div class="section"><div class="section-label">Related Objections</div><div class="related-tags">'+related+'</div></div>':'')
+    +'</div></div></div>';
+}
+
+function sec(label,content,type){
+  if(!content||(Array.isArray(content)&&!content.length))return'';
+  if(type==='text')return'<div class="section"><div class="section-label">'+label+'</div><div class="section-text">'+content+'</div></div>';
+  if(type==='list')return'<div class="section"><div class="section-label">'+label+'</div><ul class="section-list">'+content.map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul></div>';
+  if(type==='warn')return'<div class="section"><div class="section-label">'+label+'</div><ul class="section-list warn">'+content.map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul></div>';
+  if(type==='check')return'<div class="section"><div class="section-label">'+label+'</div><ul class="section-list check">'+content.map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul></div>';
+  return'';
+}
+
+// ── PRACTICE MODE ──────────────────────────────────────────────────────
+var practiceObj=null;
+function viewPractice(){
+  var objs=DB.objections||[];
+  if(!objs.length)return'<div class="page-wrap"><div class="empty">No objections loaded</div></div>';
+  // Pick random or by filter
+  return'<div class="page-wrap">'
+    +'<div class="page-hdr"><div><div class="page-title">🎯 Practice Mode</div>'
+    +'<div class="page-sub">You hear the objection. Write your response. Then reveal the recommended answer.</div></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<select id="prac-filter" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:11px;font-family:Inter,sans-serif;color:var(--nb)">'
+    +'<option value="all">All Categories</option>'
+    +(DB.categories||[]).map(function(c){return'<option value="'+c.id+'">'+c.name+'</option>';}).join('')
+    +'</select>'
+    +'<button class="btn btn-primary" onclick="nextPractice()">Next Objection →</button>'
+    +'</div></div>'
+    +'<div id="practice-area">'+renderPractice(objs[Math.floor(Math.random()*objs.length)])+'</div></div>';
+}
+
+function nextPractice(){
+  var filter=document.getElementById('prac-filter').value;
+  var pool=(filter==='all'?DB.objections:DB.objections.filter(function(o){return o.category===filter;}));
+  if(!pool.length)return;
+  practiceObj=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('practice-area').innerHTML=renderPractice(practiceObj);
+}
+
+function renderPractice(o){
+  if(!o)return'';
+  return'<div class="practice-card">'
+    +'<div class="practice-prompt">'
+    +'<div class="practice-prompt-lbl">The client says...</div>'
+    +'<div class="practice-prompt-text">"'+o.trigger_phrase+'"</div>'
+    +'</div>'
+    +'<div class="practice-input-area">'
+    +'<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Your Response</div>'
+    +'<textarea placeholder="Write your response here before revealing the recommended answer..."></textarea>'
+    +'</div>'
+    +'<div class="practice-reveal">'
+    +'<button class="practice-reveal-btn" onclick="revealPractice(this)">Reveal Recommended Response →</button>'
+    +'<div class="reveal-content" id="rc">'
+    +sec('Acknowledgment',o.acknowledgment,'text')
+    +sec('Recommended Response',o.recommended_response,'text')
+    +sec('Follow-Up Questions',o.follow_up_questions,'list')
+    +sec('Common Mistakes',o.common_mistakes,'warn')
+    +(o.roleplay_example?'<div class="section"><div class="section-label">Full Role-Play</div><div class="roleplay-box">'+o.roleplay_example+'</div></div>':'')
+    +'<div style="margin-top:14px;display:flex;gap:8px">'
+    +'<button class="btn btn-primary" onclick="nextPractice()">Next Objection →</button>'
+    +'<button class="btn btn-secondary" onclick="nav(\'obj\',\''+o.id+'\')">Full Detail →</button>'
+    +'</div></div></div></div>';
+}
+
+function revealPractice(btn){
+  btn.style.display='none';
+  document.getElementById('rc').classList.add('show');
+}
+
+// ── QUICK SEARCH ───────────────────────────────────────────────────────
+function quickSearch(q){
+  var v=document.getElementById('view');
+  if(q.length<2){if(currentCat)v.innerHTML=viewCat(currentCat);else v.innerHTML=viewDash();return;}
+  q=q.toLowerCase();
+  var results=(DB.objections||[]).filter(function(o){
+    return(o.trigger_phrase+(o.aliases||[]).join(' ')+o.why_they_say_it
+      +o.recommended_response+(o.tags||[]).join(' ')+o.underlying_concern).toLowerCase().indexOf(q)>=0;
+  });
+  v.innerHTML='<div class="page-wrap">'
+    +'<div class="page-hdr"><div class="page-title">Search Results</div>'
+    +'<div class="page-sub">'+results.length+' result'+(results.length!==1?'s':'')+' for "'+q+'"</div></div>'
+    +(results.length?'<div class="obj-list"><div class="obj-list-hdr"><div class="obj-list-hdr-t">Matches</div></div>'
+      +results.map(function(o){
+        var preview=(o.underlying_concern||'').replace(new RegExp(q,'gi'),function(m){return'<mark>'+m+'</mark>';});
+        return'<div class="search-result" onclick="nav(\'obj\',\''+o.id+'\')"><div class="search-result-trigger">"'+o.trigger_phrase+'"</div>'
+          +(preview?'<div class="search-result-preview">'+preview+'</div>':'')
+          +'<div style="display:flex;gap:6px;margin-top:4px">'+diffTag(o.difficulty)
+          +'<span class="tag">'+catById(o.category).icon+' '+(catById(o.category).name||'')+'</span></div>'
+          +'</div>';
+      }).join('')+'</div>'
+      :'<div class="empty"><div class="empty-icon">🔍</div>No objections found for "'+q+'"</div>')
+    +'</div>';
+}
+
+// ── SUBMIT FORM ────────────────────────────────────────────────────────
+function viewSubmit(){
+  return'<div class="page-wrap">'
+    +'<div class="page-hdr"><div class="page-title">Submit Objection or Rebuttal</div>'
+    +'<div class="page-sub">Share what you\'re hearing in the field. Manager-reviewed before approval.</div></div>'
+    +'<div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:24px">'
+    +'<div class="form-grid">'
+    +'<div class="form-field" style="grid-column:1/-1"><label>Trigger Phrase *</label>'
+    +'<input type="text" id="sub-trigger" placeholder="Exactly what the client says..."></div>'
+    +'<div class="form-field"><label>Category</label><select id="sub-cat">'
+    +(DB.categories||[]).map(function(c){return'<option value="'+c.id+'">'+c.name+'</option>';}).join('')
+    +'</select></div>'
+    +'<div class="form-field"><label>Difficulty</label><select id="sub-diff"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div>'
+    +'<div class="form-field" style="grid-column:1/-1"><label>Recommended Response</label>'
+    +'<textarea id="sub-response" rows="4" placeholder="What you say when you hear this..."></textarea></div>'
+    +'<div class="form-field" style="grid-column:1/-1"><label>Why They Say It</label>'
+    +'<textarea id="sub-why" rows="3" placeholder="What\'s behind this objection..."></textarea></div>'
+    +'<div class="form-field" style="grid-column:1/-1"><label>Role-Play Example (optional)</label>'
+    +'<textarea id="sub-roleplay" rows="4" placeholder="Client says... Closer says..."></textarea></div>'
+    +'<div class="form-field"><label>Submitted By</label><input type="text" id="sub-name" placeholder="Your name"></div>'
+    +'<div class="form-field"><label>Win Rate (optional)</label><input type="text" id="sub-winrate" placeholder="e.g. 70%"></div>'
+    +'</div>'
+    +'<button class="btn btn-primary" onclick="submitObjection()" style="margin-top:8px">Submit for Review</button>'
+    +'<div id="sub-confirm" style="display:none;margin-top:12px;padding:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;font-size:12px;color:#166534">✓ Submitted — pending manager review. Thank you.</div>'
+    +'</div></div>';
+}
+
+function submitObjection(){
+  var trigger=document.getElementById('sub-trigger').value.trim();
+  if(!trigger){alert('Trigger phrase is required.');return;}
+  var sub={
+    id:'sub-'+Date.now(),
+    trigger_phrase:trigger,
+    category:document.getElementById('sub-cat').value,
+    difficulty:document.getElementById('sub-diff').value,
+    recommended_response:document.getElementById('sub-response').value,
+    why_they_say_it:document.getElementById('sub-why').value,
+    roleplay_example:document.getElementById('sub-roleplay').value,
+    submitted_by:document.getElementById('sub-name').value,
+    win_rate:document.getElementById('sub-winrate').value,
+    submitted_at:new Date().toISOString(),
+    approved:false
+  };
+  if(!DB.submissions)DB.submissions=[];
+  DB.submissions.push(sub);
+  localStorage.setItem('objections_db',JSON.stringify(DB));
+  document.getElementById('sub-confirm').style.display='block';
+  document.getElementById('sub-trigger').value='';
+}
+
+loadDB();
+</script>
+</body>
+</html>
