@@ -404,7 +404,7 @@ function viewStateList(){
         var n=resortCounts[s.code]||0;
         var mkt=s.timeshare_market||'';
         var mktColor=mkt==='major'?'var(--gold)':mkt==='secondary'?'#5a7a99':mkt==='emerging'?'#059669':'#d1d5db';
-        return'<tr><td><span class="row-link" onclick="nav('states',''+s.code+'')">'+s.code+' — '+s.name+'</span></td>'
+        return'<tr><td><span class="row-link" onclick="nav(\'states\',\''+s.code+'\')">'+s.code+' — '+s.name+'</span></td>'
           +'<td><span style="font-size:10px;color:'+mktColor+';font-weight:700;text-transform:uppercase">'+mkt+'</span></td>'
           +'<td style="font-weight:'+(n?'700':'400')+';color:'+(n?'var(--nb)':'#9ca3af')+'">'+n+'</td></tr>';
       }).join('');
@@ -426,7 +426,7 @@ function viewStateList(){
   var sorted=Object.keys(resortCounts).sort();
   return'<div class="page-header"><div class="page-title">States</div><div class="page-sub">Derived from imported resort data</div></div>'
     +'<div class="tbl-wrap"><table><tr><th>State</th><th>Resorts</th></tr>'
-    +sorted.map(function(s){return'<tr><td><span class="row-link" onclick="nav('states',''+s+'')">'+s+'</span></td><td>'+resortCounts[s]+'</td></tr>';}).join('')
+    +sorted.map(function(s){return'<tr><td><span class="row-link" onclick="nav(\'states\',\''+s+'\')">'+s+'</span></td><td>'+resortCounts[s]+'</td></tr>';}).join('')
     +'</table></div>';
 }
 
