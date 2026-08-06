@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Objection Center — AlphaFiles</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--nb:#1B3F6B;--gold:#C8A95A;--bg:#E6EEF9;--bgd:#d4e3f5;--border:#c5d8ee;--text:#1B3F6B;--muted:#5a7a99;--surface:#fff}
+body{font-family:Inter,-apple-system,sans-serif;background:#f4f7fb;color:var(--text);display:flex;min-height:100vh}
+
+/* ── SIDENAV ─────────────────────────────────── */
+#sidenav{width:220px;min-height:100vh;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;z-index:100;overflow-y:auto}
+.sn-brand{background:linear-gradient(135deg,var(--nb),#243860);padding:16px;border-bottom:2px solid var(--gold)}
+.sn-brand-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+.sn-brand-sub{font-size:9px;color:rgba(255,255,255,.45);letter-spacing:1px;margin-top:2px}
+.sn-section{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:12px 16px 4px}
+.sn-item{display:flex;align-items:center;gap:10px;padding:7px 16px;font-size:12px;font-weight:600;color:var(--text);text-decoration:none;cursor:pointer;border:none;background:none;width:100%;border-left:2px solid transparent;transition:.12s;text-align:left}
+.sn-item:hover{background:var(--bgd);color:var(--nb)}
+.sn-item.active{background:var(--bgd);color:var(--nb);border-left-color:var(--gold)}
+.sn-item .ic{width:16px;text-align:center;font-size:14px}
+.sn-stat{padding:12px 16px;margin-top:auto;border-top:1px solid var(--border);font-size:10px;color:var(--muted)}
+.sn-stat b{color:var(--nb)}
+.sn-kbd{padding:8px 16px 14px;font-size:9px;color:var(--muted);line-height:1.7}
+.sn-kbd kbd{background:#fff;border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:inherit;font-size:9px;color:var(--nb);font-weight:700}
+
+/* ── MAIN ─────────────────────────────────────── */
+#main{margin-left:220px;flex:1;padding:24px;min-height:100vh;max-width:1100px}
+
+/* ── HEADER ──────────────────────────────────── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.page-title{font-size:22px;font-weight:700;color:var(--nb)}
+.page-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.principle-banner{background:linear-gradient(135deg,var(--nb),#243860);color:#fff;border-radius:10px;padding:16px 20px;margin-bottom:22px;font-size:13px;line-height:1.6}
+.principle-banner b{color:var(--gold)}
+
+/* ── SEARCH BAR ──────────────────────────────── */
+.search-wrap{display:flex;gap:8px;margin-bottom:20px}
+.search-input{flex:1;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:Inter,sans-serif;color:var(--nb);background:#fff;outline:none}
+.search-input:focus{border-color:var(--gold)}
+.search-btn{padding:9px 18px;background:var(--nb);color:var(--gold);border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
+.search-hint{font-size:11px;color:var(--muted);margin:-12px 0 20px 4px}
+.search-hint kbd{background:#fff;border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-family:inherit;font-weight:700;color:var(--nb)}
+
+/* ── STAT CARDS ──────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center}
+.stat-n{font-size:32px;font-weight:800;color:var(--nb)}
+.stat-l{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+
+/* ── TABLE ───────────────────────────────────── */
+.tbl-wrap{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px}
+.tbl-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg)}
+.tbl-hdr-title{font-size:13px;font-weight:700;color:var(--nb)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--nb);color:var(--gold);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid #f0f4f8;vertical-align:top}
+tr:hover td{background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:var(--bg);color:var(--nb);border:1px solid var(--border)}
+.tag.gold{background:rgba(200,169,90,.1);color:#7a5c1e;border-color:rgba(200,169,90,.3)}
+.tag.green{background:#f0fdf4;color:#166534;border-color:#86efac}
+.tag.red{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+.row-link{color:var(--nb);text-decoration:none;font-weight:600;cursor:pointer}
+.row-link:hover{color:var(--gold);text-decoration:underline}
+
+/* ── CARDS ───────────────────────────────────── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:.15s;position:relative}
+.card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(27,63,107,.1);transform:translateY(-1px)}
+.card-name{font-size:14px;font-weight:700;color:var(--nb);margin-bottom:4px;padding-right:20px}
+.card-meta{font-size:11px;color:var(--muted);margin-bottom:10px}
+.card-stats{display:flex;gap:14px}
+.card-stat-n{font-size:20px;font-weight:800;color:var(--nb)}
+.card-stat-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.card-star{position:absolute;top:14px;right:14px;font-size:15px;cursor:pointer;color:var(--border)}
+.card-star.active{color:var(--gold)}
+.cat-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;cursor:pointer;transition:.15s;text-align:center}
+.cat-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(27,63,107,.1);transform:translateY(-2px)}
+.cat-card .ic{font-size:30px;margin-bottom:8px}
+.cat-card .nm{font-size:15px;font-weight:700;color:var(--nb);margin-bottom:4px}
+.cat-card .ds{font-size:11px;color:var(--muted);line-height:1.4}
+.cat-card .ct{font-size:10px;color:var(--gold);font-weight:700;margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── DETAIL PANEL ────────────────────────────── */
+.detail-panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.detail-field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+.detail-field span{font-size:13px;color:var(--nb)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:700;color:var(--nb);cursor:pointer;background:#fff;margin-bottom:16px;font-family:Inter,sans-serif}
+.back-btn:hover{background:var(--bg)}
+.section-title{font-size:12px;font-weight:800;color:var(--nb);text-transform:uppercase;letter-spacing:1px;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+.section-title .ic{font-size:14px}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--bg);border:1px solid var(--border);color:var(--nb);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600}
+.chip.feeling{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.chip.cause{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.q-list,.f-list,.fu-list{list-style:none}
+.q-list li{background:var(--bg);border-left:3px solid var(--gold);border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:var(--nb);font-style:italic}
+.f-list li{background:#f8fafc;border-left:3px solid var(--nb);border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:12.5px;color:var(--text);line-height:1.5}
+.fu-list li{padding:6px 0 6px 20px;position:relative;font-size:13px;color:var(--text)}
+.fu-list li:before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:700}
+.notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.note-field{display:flex;flex-direction:column;gap:6px}
+.note-field label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.note-field textarea{min-height:80px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12.5px;font-family:Inter,sans-serif;color:var(--text);outline:none;resize:vertical}
+.note-field textarea:focus{border-color:var(--gold)}
+.obj-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px}
+.obj-title{font-size:20px;font-weight:800;color:var(--nb)}
+.obj-actions{display:flex;gap:8px;align-items:center}
+.star-btn{background:none;border:1.5px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:14px;color:var(--border)}
+.star-btn.active{color:var(--gold);border-color:var(--gold)}
+.ai-coach-btn{background:linear-gradient(135deg,var(--nb),#243860);color:var(--gold);border:none;border-radius:6px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
+.ai-panel{background:#fbf8f0;border:1.5px solid var(--gold);border-radius:10px;padding:18px;margin:14px 0}
+.ai-panel-hdr{font-size:11px;font-weight:800;color:#7a5c1e;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.log-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+
+/* ── BUILDER / FORMS ─────────────────────────── */
+.builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.form-field input,.form-field select,.form-field textarea{padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-family:Inter,sans-serif;color:var(--nb);outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold)}
+.btn{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;border:none}
+.btn-primary{background:var(--nb);color:var(--gold)}
+.btn-secondary{background:var(--bg);color:var(--nb);border:1.5px solid var(--border)}
+.btn-danger{background:#fef2f2;color:#991b1b;border:1.5px solid #fca5a5}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.builder-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;flex-wrap:wrap}
+.btab{padding:8px 18px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:Inter,sans-serif}
+.btab.active{color:var(--nb);border-bottom-color:var(--gold)}
+
+/* ── CALCULATORS ─────────────────────────────── */
+.calc-tabs{display:flex;gap:4px;margin-bottom:18px;flex-wrap:wrap;border-bottom:2px solid var(--border)}
+.calc-panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:22px}
+.calc-inputs{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:18px}
+.calc-out-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin:18px 0}
+.calc-out{background:var(--bg);border-radius:8px;padding:14px;text-align:center}
+.calc-out-n{font-size:22px;font-weight:800;color:var(--nb)}
+.calc-out-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.term-btns{display:flex;gap:6px}
+.term-btn{padding:6px 14px;border:1.5px solid var(--border);border-radius:6px;background:#fff;color:var(--nb);font-size:12px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
+.term-btn.active{background:var(--nb);color:var(--gold);border-color:var(--nb)}
+.chart-wrap{margin-top:16px;background:#fbfdff;border:1px solid var(--border);border-radius:8px;padding:16px}
+
+/* ── STATS BARS ──────────────────────────────── */
+.chart-bar-wrap{margin-bottom:10px}
+.chart-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px}
+.chart-bar-track{height:14px;background:var(--bg);border-radius:4px;overflow:hidden}
+.chart-bar-fill{height:100%;background:var(--nb);border-radius:4px;transition:.4s}
+.chart-bar-fill.gold{background:var(--gold)}
+
+/* ── BREADCRUMB ──────────────────────────────── */
+.breadcrumb{font-size:11px;color:var(--muted);margin-bottom:12px}
+.breadcrumb a{color:var(--nb);cursor:pointer;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb span{margin:0 5px}
+
+/* ── EMPTY ───────────────────────────────────── */
+.empty{text-align:center;padding:48px 20px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:32px;margin-bottom:8px}
+
+@media(max-width:700px){
+  #sidenav{display:none}
+  #main{margin-left:0}
+  .detail-grid,.builder-grid,.notes-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="sidenav">
+  <div class="sn-brand">
+    <div class="sn-brand-title">Objection Center</div>
+    <div class="sn-brand-sub">AlphaFiles · Consultative Sales</div>
+  </div>
+
+  <div class="sn-section">Navigation</div>
+  <button class="sn-item" onclick="nav('home')"><span class="ic">🔍</span>Quick Search</button>
+  <button class="sn-item" onclick="nav('categories')"><span class="ic">🗂</span>Categories</button>
+  <button class="sn-item" onclick="nav('resorts')"><span class="ic">🏨</span>Resort Database</button>
+  <button class="sn-item" onclick="nav('calculators')"><span class="ic">🧮</span>Calculators</button>
+
+  <div class="sn-section">Categories</div>
+  <button class="sn-item" onclick="nav('category','money')"><span class="ic">💰</span>Money</button>
+  <button class="sn-item" onclick="nav('category','trust')"><span class="ic">🤝</span>Trust</button>
+  <button class="sn-item" onclick="nav('category','fear')"><span class="ic">⚠️</span>Fear</button>
+  <button class="sn-item" onclick="nav('category','timing')"><span class="ic">⏰</span>Timing</button>
+  <button class="sn-item" onclick="nav('category','family')"><span class="ic">👪</span>Family</button>
+
+  <div class="sn-section">My Workspace</div>
+  <button class="sn-item" onclick="nav('favorites')"><span class="ic">⭐</span>Favorites</button>
+  <button class="sn-item" onclick="nav('recent')"><span class="ic">🕐</span>Recently Used</button>
+  <button class="sn-item" onclick="nav('statistics')"><span class="ic">📊</span>Statistics</button>
+
+  <div class="sn-section">Admin</div>
+  <button class="sn-item" onclick="nav('builder')"><span class="ic">🔧</span>Builder Mode</button>
+
+  <div class="sn-kbd">
+    <div><kbd>/</kbd> focus search</div>
+    <div><kbd>Esc</kbd> back to search</div>
+    <div><kbd>F</kbd> favorite (on objection)</div>
+  </div>
+  <div class="sn-stat" id="sn-stat-block">Loading...</div>
+</nav>
+
+<main id="main">
+  <div id="view"></div>
+</main>
+
+<script>
+// ── DATA LAYER ────────────────────────────────────────────────────────
+var DB=null;
+function loadDB(){
+  fetch('./db/rebuttals_db.json')
+    .then(function(r){return r.json();})
+    .then(function(d){DB=d;afterLoad();})
+    .catch(function(){
+      var saved=localStorage.getItem('rebuttals_db');
+      DB=saved?JSON.parse(saved):SEED_DB;
+      afterLoad();
+    });
+}
+var SEED_DB={categories:[],objections:[],resorts:[]};
+function afterLoad(){
+  loadUserState();
+  init();
+}
+function saveDB(){localStorage.setItem('rebuttals_db',JSON.stringify(DB));}
+
+// user state: favorites, recent, per-objection stats overrides, notes
+var USTATE={favorites:[],recent:[]};
+function loadUserState(){
+  var s=localStorage.getItem('rebuttals_ustate');
+  if(s){try{USTATE=JSON.parse(s);}catch(e){}}
+  if(!USTATE.favorites)USTATE.favorites=[];
+  if(!USTATE.recent)USTATE.recent=[];
+}
+function saveUState(){localStorage.setItem('rebuttals_ustate',JSON.stringify(USTATE));}
+
+// ── HELPERS ───────────────────────────────────────────────────────────
+function byId(arr,id){return(arr||[]).find(function(x){return x.id===id;})||null;}
+function cat(id){return byId(DB.categories,id);}
+function obj(id){return byId(DB.objections,id);}
+function resort(id){return byId(DB.resorts,id);}
+function objectionsByCat(cid){return DB.objections.filter(function(o){return o.category===cid;});}
+function isFav(id){return USTATE.favorites.indexOf(id)>=0;}
+function toggleFav(id){
+  var i=USTATE.favorites.indexOf(id);
+  if(i>=0)USTATE.favorites.splice(i,1);else USTATE.favorites.push(id);
+  saveUState();
+}
+function pushRecent(id){
+  var r=USTATE.recent.filter(function(x){return x!==id;});
+  r.unshift(id);
+  USTATE.recent=r.slice(0,20);
+  saveUState();
+}
+function esc(s){return(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fmt$(n){return'$'+Math.round(n).toLocaleString();}
+
+// ── ROUTER ────────────────────────────────────────────────────────────
+var currentView='home';
+var currentObjId=null;
+var calcTab='cost-over-time';
+var calcTerm=10;
+var builderTab='objection';
+function nav(view,id){
+  currentView=view;
+  if(view==='objection'){currentObjId=id;pushRecent(id);}
+  document.querySelectorAll('.sn-item').forEach(function(el){
+    var m=el.getAttribute('onclick')||'';
+    var target=view==='objection'?'category':view;
+    el.classList.toggle('active', m.indexOf("nav('"+target+"'")>=0 || (view==='category'&&m.indexOf("'"+id+"'")>=0 && m.indexOf("nav('category'")>=0));
+  });
+  render(view,id);
+  window.scrollTo(0,0);
+  updateStat();
+}
+function render(view,id){
+  var v=document.getElementById('view');
+  if(view==='home') v.innerHTML=viewHome();
+  else if(view==='categories') v.innerHTML=viewCategories();
+  else if(view==='category') v.innerHTML=viewCategory(id);
+  else if(view==='objection') v.innerHTML=viewObjection(id);
+  else if(view==='resorts') v.innerHTML=viewResorts();
+  else if(view==='resort') v.innerHTML=viewResort(id);
+  else if(view==='calculators') v.innerHTML=viewCalculators();
+  else if(view==='statistics') v.innerHTML=viewStatistics();
+  else if(view==='favorites') v.innerHTML=viewFavorites();
+  else if(view==='recent') v.innerHTML=viewRecent();
+  else if(view==='builder') v.innerHTML=viewBuilder();
+  var sb=document.getElementById('global-search');
+  if(sb) sb.addEventListener('input',function(){renderSearchResults(sb.value);});
+}
+function updateStat(){
+  var el=document.getElementById('sn-stat-block');
+  if(!el||!DB)return;
+  el.innerHTML='<b>'+DB.objections.length+'</b> objections tracked<br><b>'+DB.resorts.length+'</b> resorts on file';
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────
+function searchAll(q){
+  q=(q||'').toLowerCase().trim();
+  if(!q)return[];
+  var results=[];
+  DB.objections.forEach(function(o){
+    var hay=[o.title,o.category].concat(o.keywords||[],o.feelings||[],o.root_causes||[]).join(' ').toLowerCase();
+    if(hay.indexOf(q)>=0) results.push({type:'objection',item:o,score:o.title.toLowerCase().indexOf(q)===0?2:1});
+  });
+  DB.resorts.forEach(function(r){
+    var hay=[r.name,r.developer,r.ownership_type].concat(r.locations||[],r.known_complaints||[]).join(' ').toLowerCase();
+    if(hay.indexOf(q)>=0) results.push({type:'resort',item:r,score:r.name.toLowerCase().indexOf(q)===0?2:1});
+  });
+  results.sort(function(a,b){return b.score-a.score;});
+  return results;
+}
+function renderSearchResults(q){
+  var el=document.getElementById('search-results');
+  if(!el)return;
+  var results=searchAll(q);
+  if(!q.trim()){el.innerHTML='';return;}
+  if(!results.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔍</div>No matches for "'+esc(q)+'". Try a different keyword.</div>';return;}
+  el.innerHTML='<div class="tbl-hdr-title" style="margin-bottom:10px">'+results.length+' result'+(results.length===1?'':'s')+'</div><div class="card-grid">'
+    +results.map(function(r){
+      if(r.type==='objection'){
+        var c=cat(r.item.category);
+        return'<div class="card" onclick="nav(\'objection\',\''+r.item.id+'\')">'
+          +'<div class="card-name">'+esc(r.item.title)+'</div>'
+          +'<div class="card-meta">'+(c?c.icon+' '+c.name:'')+'</div>'
+          +'<div class="chip-row">'+(r.item.keywords||[]).slice(0,3).map(function(k){return'<span class="chip">'+esc(k)+'</span>';}).join('')+'</div>'
+          +'</div>';
+      }else{
+        return'<div class="card" onclick="nav(\'resort\',\''+r.item.id+'\')">'
+          +'<div class="card-name">🏨 '+esc(r.item.name)+'</div>'
+          +'<div class="card-meta">'+esc(r.item.developer||'')+' · '+esc((r.item.locations||[]).join(', '))+'</div>'
+          +'</div>';
+      }
+    }).join('')+'</div>';
+}
+
+// ── VIEWS: HOME ───────────────────────────────────────────────────────
+function viewHome(){
+  var favCount=USTATE.favorites.length;
+  return '<div class="principle-banner">The first objection is rarely the real objection. <b>The goal isn\'t to overcome objections</b> — it\'s to uncover the real concern, build trust, educate with facts, and guide the client toward an informed decision.</div>'
+    +'<div class="page-header"><div><div class="page-title">Objection Center</div><div class="page-sub">Search by objection, keyword, resort, company, or fear</div></div></div>'
+    +'<input id="global-search" class="search-input" placeholder="Search: &quot;maintenance fees&quot;, &quot;inheritance&quot;, a resort name, &quot;credit&quot;..." autocomplete="off" oninput="renderSearchResults(this.value)">'
+    +'<div class="search-hint">Press <kbd>/</kbd> anywhere to jump here and start typing</div>'
+    +'<div id="search-results"></div>'
+    +'<div class="section-title"><span class="ic">🗂</span>Objection Categories</div>'
+    +'<div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">'
+    +DB.categories.map(function(c){
+      var n=objectionsByCat(c.id).length;
+      return'<div class="cat-card" onclick="nav(\'category\',\''+c.id+'\')"><div class="ic">'+c.icon+'</div><div class="nm">'+c.name+'</div><div class="ds">'+esc(c.desc)+'</div><div class="ct">'+n+' objections</div></div>';
+    }).join('')+'</div>'
+    +(favCount?('<div class="section-title"><span class="ic">⭐</span>Favorites</div>'+favoritesGrid()):'')
+    +(USTATE.recent.length?('<div class="section-title"><span class="ic">🕐</span>Recently Used</div>'+recentGrid(6)):'');
+}
+
+// ── VIEWS: CATEGORIES ────────────────────────────────────────────────
+function viewCategories(){
+  return '<div class="page-header"><div><div class="page-title">Objection Categories</div><div class="page-sub">Browse by the underlying theme of the objection</div></div></div>'
+    +'<div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">'
+    +DB.categories.map(function(c){
+      var n=objectionsByCat(c.id).length;
+      return'<div class="cat-card" onclick="nav(\'category\',\''+c.id+'\')"><div class="ic">'+c.icon+'</div><div class="nm">'+c.name+'</div><div class="ds">'+esc(c.desc)+'</div><div class="ct">'+n+' objections</div></div>';
+    }).join('')+'</div>';
+}
+function viewCategory(id){
+  var c=cat(id);
+  if(!c) return '<div class="empty">Category not found.</div>';
+  var items=objectionsByCat(id);
+  return breadcrumb([['Categories','categories'],[c.name,null]])
+    +'<div class="page-header"><div><div class="page-title">'+c.icon+' '+c.name+'</div><div class="page-sub">'+esc(c.desc)+' · '+items.length+' objections</div></div></div>'
+    +'<div class="card-grid">'+items.map(objCard).join('')+'</div>';
+}
+function objCard(o){
+  var fav=isFav(o.id);
+  return '<div class="card" onclick="nav(\'objection\',\''+o.id+'\')">'
+    +'<span class="card-star '+(fav?'active':'')+'" onclick="event.stopPropagation();toggleFavCard(this,\''+o.id+'\')">'+(fav?'★':'☆')+'</span>'
+    +'<div class="card-name">'+esc(o.title)+'</div>'
+    +'<div class="card-meta">Logged '+((o.stats&&o.stats.frequency)||0)+' times · '+((o.stats&&o.stats.resolved)||0)+' resolved</div>'
+    +'<div class="chip-row">'+(o.keywords||[]).slice(0,3).map(function(k){return'<span class="chip">'+esc(k)+'</span>';}).join('')+'</div>'
+    +'</div>';
+}
+function toggleFavCard(el,id){
+  toggleFav(id);
+  var nowFav=isFav(id);
+  el.classList.toggle('active',nowFav);
+  el.textContent=nowFav?'★':'☆';
+}
+
+// ── VIEWS: OBJECTION WORKSPACE ───────────────────────────────────────
+function viewObjection(id){
+  var o=obj(id);
+  if(!o) return '<div class="empty">Objection not found.</div>';
+  var c=cat(o.category);
+  var fav=isFav(o.id);
+  var st=o.stats||{frequency:0,resolved:0,avgCallLenMin:0};
+  var resolvedPct=st.frequency?Math.round(100*st.resolved/st.frequency):0;
+  return breadcrumb([['Categories','categories'],[c?c.name:'','category',c?c.id:null],[o.title,null]])
+    +'<div class="obj-header"><div><div class="obj-title">'+esc(o.title)+'</div>'
+    +'<div class="page-sub">'+(c?c.icon+' '+c.name:'')+'</div></div>'
+    +'<div class="obj-actions"><button class="star-btn '+(fav?'active':'')+'" onclick="toggleFav(\''+o.id+'\');nav(\'objection\',\''+o.id+'\')">'+(fav?'★ Favorited':'☆ Favorite')+'</button>'
+    +'<button class="ai-coach-btn" onclick="toggleAiCoach()">🎯 AI Coach</button></div></div>'
+
+    +'<div id="ai-coach-panel" style="display:none"></div>'
+
+    +'<div class="log-row">'
+    +'<button class="btn btn-secondary" onclick="logStat(\''+o.id+'\',\'frequency\')">📌 Log this objection ('+st.frequency+')</button>'
+    +'<button class="btn btn-secondary" onclick="logStat(\''+o.id+'\',\'resolved\')">✅ Mark resolved ('+st.resolved+' · '+resolvedPct+'%)</button>'
+    +'</div>'
+
+    +'<div class="section-title"><span class="ic">🎭</span>What They\'re Probably Feeling</div>'
+    +'<div class="chip-row">'+(o.feelings||[]).map(function(f){return'<span class="chip feeling">'+esc(f)+'</span>';}).join('')+'</div>'
+
+    +'<div class="section-title"><span class="ic">🔎</span>Likely Root Cause</div>'
+    +'<div class="chip-row">'+(o.root_causes||[]).map(function(f){return'<span class="chip cause">'+esc(f)+'</span>';}).join('')+'</div>'
+
+    +'<div class="section-title"><span class="ic">❓</span>Questions to Ask <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0">(not rebuttals)</span></div>'
+    +'<ul class="q-list">'+(o.questions||[]).map(function(q){return'<li>"'+esc(q)+'"</li>';}).join('')+'</ul>'
+
+    +'<div class="section-title"><span class="ic">📚</span>Supporting Facts <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0">(no legal conclusions — factual only)</span></div>'
+    +'<ul class="f-list">'+(o.facts&&o.facts.length?o.facts.map(function(f){return'<li>'+esc(f)+'</li>';}).join(''):'<li style="color:var(--muted);font-style:italic">No facts logged yet — add some in Builder Mode.</li>')+'</ul>'
+
+    +'<div class="section-title"><span class="ic">➡️</span>Follow-Up Ideas</div>'
+    +'<ul class="fu-list">'+(o.follow_ups||[]).map(function(f){return'<li>'+esc(f)+'</li>';}).join('')+'</ul>'
+
+    +'<div class="section-title"><span class="ic">📝</span>Personal Notes</div>'
+    +'<div class="notes-grid">'
+    +noteField(o.id,'mine','My Notes',o.notes&&o.notes.mine)
+    +noteField(o.id,'successful','Successful Approaches',o.notes&&o.notes.successful)
+    +noteField(o.id,'failed','Approaches That Failed',o.notes&&o.notes.failed)
+    +noteField(o.id,'stories','Stories / Analogies / Examples',o.notes&&o.notes.stories)
+    +'</div>';
+}
+function noteField(oid,key,label,val){
+  return '<div class="note-field"><label>'+label+'</label><textarea onchange="saveNote(\''+oid+'\',\''+key+'\',this.value)" placeholder="Type here — saved automatically...">'+esc(val||'')+'</textarea></div>';
+}
+function saveNote(oid,key,val){
+  var o=obj(oid);if(!o)return;
+  if(!o.notes)o.notes={};
+  o.notes[key]=val;
+  saveDB();
+}
+function logStat(oid,key){
+  var o=obj(oid);if(!o)return;
+  if(!o.stats)o.stats={frequency:0,resolved:0,avgCallLenMin:0};
+  o.stats[key]=(o.stats[key]||0)+1;
+  saveDB();
+  nav('objection',oid);
+}
+function toggleAiCoach(){
+  var p=document.getElementById('ai-coach-panel');
+  if(!p)return;
+  if(p.style.display==='none'){
+    p.style.display='block';
+    p.innerHTML=aiCoachContent(currentObjId);
+  }else{
+    p.style.display='none';
+  }
+}
+function aiCoachContent(oid){
+  var o=obj(oid);if(!o)return'';
+  var c=cat(o.category);
+  var frameworks={
+    money:'Slow down on price. Get them to define what "afford" or "expensive" actually means in their own words before responding — a vague money objection is often a stand-in for something else.',
+    trust:'Don\'t defend — get curious. Ask what specifically triggered the doubt, and let them do most of the talking about their own hesitation.',
+    fear:'Fear responds to calm, specific information, not reassurance. Ask what they\'ve heard and where, then address only that — don\'t over-explain.',
+    timing:'Timing objections are often a proxy. Separate genuine scheduling constraints from an unresolved concern by asking what, besides timing, is on their mind.',
+    family:'Treat the other decision-maker as a real stakeholder, not an obstacle. Help them prepare to have that conversation well, or offer to join it.'
+  };
+  return '<div class="ai-panel"><div class="ai-panel-hdr">🎯 AI Coach — Discovery-Based Approach</div>'
+    +'<div style="font-size:12.5px;color:var(--text);margin-bottom:12px;line-height:1.6">'+esc(frameworks[o.category]||'')+'</div>'
+    +'<div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Additional discovery questions to layer in</div>'
+    +'<ul class="q-list">'
+    +'<li>"What\'s the real hesitation underneath that?"</li>'
+    +'<li>"On a scale of 1 to 10, how confident do you feel about moving forward — and what would move that number up?"</li>'
+    +'<li>"If we solved that one thing today, is there anything else standing in the way?"</li>'
+    +'</ul>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic">This surfaces discovery questions in a Jeremy Miner-style consultative frame — not scripted pressure lines. Use judgment for the specific client on the line.</div>'
+    +'</div>';
+}
+
+// ── VIEWS: RESORTS ────────────────────────────────────────────────────
+function viewResorts(){
+  return '<div class="page-header"><div><div class="page-title">Resort Database</div><div class="page-sub">'+DB.resorts.length+' resorts on file</div></div>'
+    +'<button class="btn btn-primary" onclick="nav(\'builder\')">+ Add Resort</button></div>'
+    +'<input class="search-input" placeholder="Search resorts by name, developer, location, complaint..." oninput="filterResorts(this.value)" style="margin-bottom:16px">'
+    +'<div id="resort-list" class="card-grid">'+DB.resorts.map(resortCard).join('')+'</div>';
+}
+function resortCard(r){
+  return '<div class="card" onclick="nav(\'resort\',\''+r.id+'\')">'
+    +'<div class="card-name">🏨 '+esc(r.name)+'</div>'
+    +'<div class="card-meta">'+esc(r.developer||'—')+' · '+esc((r.locations||[]).join(', '))+'</div>'
+    +'<div class="chip-row"><span class="tag '+(r.deeded?'green':'gold')+'">'+(r.deeded?'Deeded':'Points/Club')+'</span></div>'
+    +'</div>';
+}
+function filterResorts(q){
+  q=(q||'').toLowerCase();
+  var el=document.getElementById('resort-list');
+  var filtered=DB.resorts.filter(function(r){
+    var hay=[r.name,r.developer,r.ownership_type].concat(r.locations||[],r.known_complaints||[]).join(' ').toLowerCase();
+    return hay.indexOf(q)>=0;
+  });
+  el.innerHTML=filtered.length?filtered.map(resortCard).join(''):'<div class="empty">No resorts match.</div>';
+}
+function viewResort(id){
+  var r=resort(id);
+  if(!r) return '<div class="empty">Resort not found.</div>';
+  var mfRows=(r.maintenance_fee_history||[]).map(function(h){return'<tr><td>'+h.year+'</td><td>'+fmt$(h.fee)+'</td></tr>';}).join('');
+  var mfChart=svgLineChart((r.maintenance_fee_history||[]).map(function(h){return{label:''+h.year,value:h.fee};}),'#1B3F6B');
+  return breadcrumb([['Resort Database','resorts'],[r.name,null]])
+    +'<div class="page-header"><div><div class="page-title">🏨 '+esc(r.name)+'</div><div class="page-sub">'+esc(r.developer||'')+' · '+esc((r.locations||[]).join(', '))+'</div></div></div>'
+    +'<div class="detail-panel"><div class="detail-grid">'
+    +df('Ownership Type',r.ownership_type)
+    +df('Deeded',r.deeded?'Yes':'No')
+    +df('Points-Based',r.points?'Yes':'No')
+    +df('Club',r.club||'—')
+    +'</div></div>'
+    +'<div class="section-title"><span class="ic">📈</span>Maintenance Fee History</div>'
+    +(mfRows?('<div class="tbl-wrap"><table><tr><th>Year</th><th>Annual Fee</th></tr>'+mfRows+'</table></div><div class="chart-wrap">'+mfChart+'</div>'):'<div class="empty">No fee history on file.</div>')
+    +'<div class="section-title"><span class="ic">⚠️</span>Known Complaints</div>'
+    +'<ul class="f-list">'+(r.known_complaints&&r.known_complaints.length?r.known_complaints.map(function(c){return'<li>'+esc(c)+'</li>';}).join(''):'<li style="color:var(--muted);font-style:italic">None on file.</li>')+'</ul>'
+    +'<div class="section-title"><span class="ic">🔁</span>Transfer Policies</div>'
+    +'<div class="detail-panel">'+esc(r.transfer_policies||'Not on file.')+'</div>'
+    +'<div class="section-title"><span class="ic">💵</span>Resale History</div>'
+    +'<div class="detail-panel">'+esc(r.resale_history||'Not on file.')+'</div>'
+    +'<div class="section-title"><span class="ic">📝</span>Internal Notes</div>'
+    +'<div class="note-field"><textarea onchange="saveResortNote(\''+r.id+'\',this.value)" placeholder="Internal notes — saved automatically...">'+esc(r.internal_notes||'')+'</textarea></div>';
+}
+function saveResortNote(id,val){
+  var r=resort(id);if(!r)return;
+  r.internal_notes=val;
+  saveDB();
+}
+function df(label,val){return '<div class="detail-field"><label>'+label+'</label><span>'+esc(val==null?'—':(''+val))+'</span></div>';}
+
+// ── SVG CHART HELPER ─────────────────────────────────────────────────
+function svgLineChart(points,color){
+  if(!points||!points.length) return '<div class="empty">No data to chart.</div>';
+  var w=640,h=180,pad=30;
+  var vals=points.map(function(p){return p.value;});
+  var max=Math.max.apply(null,vals)*1.1||1;
+  var min=Math.min(0,Math.min.apply(null,vals));
+  var stepX=(w-pad*2)/Math.max(1,points.length-1);
+  var scaleY=function(v){return h-pad-((v-min)/(max-min||1))*(h-pad*2);};
+  var pathD=points.map(function(p,i){var x=pad+i*stepX,y=scaleY(p.value);return(i===0?'M':'L')+x+','+y;}).join(' ');
+  var areaD=pathD+' L'+(pad+(points.length-1)*stepX)+','+(h-pad)+' L'+pad+','+(h-pad)+' Z';
+  var dots=points.map(function(p,i){var x=pad+i*stepX,y=scaleY(p.value);return'<circle cx="'+x+'" cy="'+y+'" r="3" fill="'+color+'"/>';}).join('');
+  var labels=points.map(function(p,i){var x=pad+i*stepX;return'<text x="'+x+'" y="'+(h-8)+'" font-size="9" fill="#5a7a99" text-anchor="middle">'+esc(p.label)+'</text>';}).join('');
+  var valLabels=points.map(function(p,i){var x=pad+i*stepX,y=scaleY(p.value);return'<text x="'+x+'" y="'+(y-8)+'" font-size="9" fill="'+color+'" text-anchor="middle" font-weight="700">'+Math.round(p.value).toLocaleString()+'</text>';}).join('');
+  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">'
+    +'<path d="'+areaD+'" fill="'+color+'" opacity="0.08"/>'
+    +'<path d="'+pathD+'" fill="none" stroke="'+color+'" stroke-width="2"/>'
+    +dots+valLabels+labels
+    +'</svg>';
+}
+function svgBarChart(points,colorA,colorB){
+  if(!points||!points.length) return '<div class="empty">No data to chart.</div>';
+  var w=640,h=200,pad=30,gap=10;
+  var vals=[];points.forEach(function(p){vals.push(p.a||0);if(p.b!=null)vals.push(p.b);});
+  var max=Math.max.apply(null,vals)*1.15||1;
+  var bw=(w-pad*2)/points.length;
+  var bars=points.map(function(p,i){
+    var x=pad+i*bw;
+    var hA=((p.a||0)/max)*(h-pad*2);
+    var barW=(p.b!=null)?(bw-gap)/2:(bw-gap);
+    var yA=h-pad-hA;
+    var out='<rect x="'+x+'" y="'+yA+'" width="'+barW+'" height="'+hA+'" fill="'+colorA+'"/>';
+    if(p.b!=null){
+      var hB=((p.b)/max)*(h-pad*2);
+      var yB=h-pad-hB;
+      out+='<rect x="'+(x+barW+2)+'" y="'+yB+'" width="'+barW+'" height="'+hB+'" fill="'+colorB+'"/>';
+    }
+    out+='<text x="'+(x+bw/2-gap/2)+'" y="'+(h-8)+'" font-size="9" fill="#5a7a99" text-anchor="middle">'+esc(p.label)+'</text>';
+    return out;
+  }).join('');
+  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">'+bars+'</svg>';
+}
+
+// ── VIEWS: CALCULATORS ────────────────────────────────────────────────
+var CALC_TABS=[
+  {id:'cost-over-time',name:'Cost Over Time'},
+  {id:'mf-inflation',name:'Maintenance Fee Inflation'},
+  {id:'opportunity-cost',name:'Opportunity Cost'},
+  {id:'loan-payoff',name:'Loan Payoff'},
+  {id:'total-ownership',name:'Total Ownership Cost'},
+  {id:'comparison',name:'Comparison vs Exiting'}
+];
+function viewCalculators(){
+  return '<div class="page-header"><div><div class="page-title">Calculators</div><div class="page-sub">Facts and figures, not pressure — walk the client through their own numbers</div></div></div>'
+    +'<div class="calc-tabs">'+CALC_TABS.map(function(t){return'<button class="btab '+(calcTab===t.id?'active':'')+'" onclick="setCalcTab(\''+t.id+'\')">'+t.name+'</button>';}).join('')+'</div>'
+    +'<div class="calc-panel" id="calc-panel">'+renderCalc(calcTab)+'</div>';
+}
+function setCalcTab(id){calcTab=id;var p=document.getElementById('calc-panel');if(p)p.innerHTML=renderCalc(id);var v=document.getElementById('view');if(v)v.querySelector('.calc-tabs')&&renderCalcTabsRefresh();}
+function renderCalcTabsRefresh(){
+  document.querySelectorAll('.calc-tabs .btab').forEach(function(el,i){el.classList.toggle('active',CALC_TABS[i].id===calcTab);});
+}
+function calcVal(id){var el=document.getElementById(id);return el?parseFloat(el.value)||0:0;}
+
+function renderCalc(id){
+  if(id==='cost-over-time')return calcCostOverTime();
+  if(id==='mf-inflation')return calcMfInflation();
+  if(id==='opportunity-cost')return calcOpportunityCost();
+  if(id==='loan-payoff')return calcLoanPayoff();
+  if(id==='total-ownership')return calcTotalOwnership();
+  if(id==='comparison')return calcComparison();
+  return '';
+}
+
+function calcCostOverTime(){
+  var years=calcTerm;
+  var out=runCostOverTime(15000,1200,5,years);
+  return '<div class="calc-inputs">'
+    +numField('cot-price','Purchase Price / Balance',15000)
+    +numField('cot-mf','Current Annual Maintenance Fee',1200)
+    +numField('cot-infl','Annual Fee Inflation %',5)
+    +'</div>'
+    +'<div class="term-btns">'+[10,20,30].map(function(t){return'<button class="term-btn '+(calcTerm===t?'active':'')+'" onclick="calcTerm='+t+';setCalcTab(\'cost-over-time\')">'+t+' yr</button>';}).join('')+'</div>'
+    +'<div class="btn-row" style="margin-top:14px"><button class="btn btn-primary" onclick="recalcCOT()">Recalculate</button></div>'
+    +'<div id="cot-output">'+cotOutput(out)+'</div>';
+}
+function runCostOverTime(price,mf,infl,years){
+  var rows=[],cum=price,fee=mf;
+  for(var y=1;y<=years;y++){
+    if(y>1)fee=fee*(1+infl/100);
+    cum+=fee;
+    rows.push({year:y,fee:fee,cumulative:cum});
+  }
+  return rows;
+}
+function cotOutput(rows){
+  var last=rows[rows.length-1];
+  var chartPts=rows.filter(function(r,i){return i%Math.ceil(rows.length/10)===0||i===rows.length-1;}).map(function(r){return{label:'Y'+r.year,value:r.cumulative};});
+  return '<div class="calc-out-grid">'
+    +calcOut(fmt$(last.cumulative),'Total Cost Over '+rows.length+' Years')
+    +calcOut(fmt$(last.fee),'Projected Annual Fee in Year '+rows.length)
+    +calcOut(fmt$(last.cumulative/rows.length),'Avg. Annual Cost')
+    +'</div>'
+    +'<div class="chart-wrap">'+svgLineChart(chartPts,'#1B3F6B')+'</div>';
+}
+function recalcCOT(){
+  var price=calcVal('cot-price'),mf=calcVal('cot-mf'),infl=calcVal('cot-infl');
+  var rows=runCostOverTime(price,mf,infl,calcTerm);
+  document.getElementById('cot-output').innerHTML=cotOutput(rows);
+}
+
+function calcMfInflation(){
+  var out=mfInflationRows(1200,5,15);
+  return '<div class="calc-inputs">'
+    +numField('mfi-current','Current Annual Fee',1200)
+    +numField('mfi-infl','Annual Inflation %',5)
+    +numField('mfi-years','Years to Project',15)
+    +'</div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="recalcMFI()">Recalculate</button></div>'
+    +'<div id="mfi-output">'+mfiOutput(out)+'</div>';
+}
+function mfInflationRows(current,infl,years){
+  var rows=[],fee=current;
+  for(var y=1;y<=years;y++){
+    if(y>1)fee=fee*(1+infl/100);
+    rows.push({year:y,fee:fee});
+  }
+  return rows;
+}
+function mfiOutput(rows){
+  var last=rows[rows.length-1];
+  var pts=rows.filter(function(r,i){return i%Math.max(1,Math.ceil(rows.length/10))===0||i===rows.length-1;}).map(function(r){return{label:'Y'+r.year,value:r.fee};});
+  return '<div class="calc-out-grid">'
+    +calcOut(fmt$(rows[0].fee),'Year 1 Fee')
+    +calcOut(fmt$(last.fee),'Year '+rows.length+' Fee')
+    +calcOut(Math.round((last.fee/rows[0].fee-1)*100)+'%','Total Increase')
+    +'</div><div class="chart-wrap">'+svgLineChart(pts,'#C8A95A')+'</div>';
+}
+function recalcMFI(){
+  var rows=mfInflationRows(calcVal('mfi-current'),calcVal('mfi-infl'),calcVal('mfi-years')||1);
+  document.getElementById('mfi-output').innerHTML=mfiOutput(rows);
+}
+
+function calcOpportunityCost(){
+  var out=opportunityCostCalc(1200,7,15);
+  return '<div class="calc-inputs">'
+    +numField('oc-annual','Annual Amount Instead Invested',1200)
+    +numField('oc-return','Est. Annual Investment Return %',7)
+    +numField('oc-years','Years',15)
+    +'</div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="recalcOC()">Recalculate</button></div>'
+    +'<div id="oc-output">'+ocOutput(out)+'</div>';
+}
+function opportunityCostCalc(annual,ret,years){
+  var rows=[],fv=0;
+  for(var y=1;y<=years;y++){
+    fv=fv*(1+ret/100)+annual;
+    rows.push({year:y,fv:fv});
+  }
+  return rows;
+}
+function ocOutput(rows){
+  var last=rows[rows.length-1];
+  var totalContributed=rows.length*calcVal('oc-annual')||0;
+  var pts=rows.filter(function(r,i){return i%Math.max(1,Math.ceil(rows.length/10))===0||i===rows.length-1;}).map(function(r){return{label:'Y'+r.year,value:r.fv};});
+  return '<div class="calc-out-grid">'
+    +calcOut(fmt$(last.fv),'Potential Value if Invested Instead')
+    +'</div><div class="chart-wrap">'+svgLineChart(pts,'#166534')+'</div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Illustrative only — actual investment returns are never guaranteed. Use to frame opportunity cost, not as a promise.</div>';
+}
+function recalcOC(){
+  var rows=opportunityCostCalc(calcVal('oc-annual'),calcVal('oc-return'),calcVal('oc-years')||1);
+  document.getElementById('oc-output').innerHTML=ocOutput(rows);
+}
+
+function calcLoanPayoff(){
+  var out=loanPayoffCalc(15000,14,400);
+  return '<div class="calc-inputs">'
+    +numField('lp-balance','Loan Balance',15000)
+    +numField('lp-apr','APR %',14)
+    +numField('lp-payment','Monthly Payment',400)
+    +'</div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="recalcLP()">Recalculate</button></div>'
+    +'<div id="lp-output">'+lpOutput(out)+'</div>';
+}
+function loanPayoffCalc(balance,apr,payment){
+  var rate=apr/100/12,bal=balance,months=0,totalInterest=0,rows=[];
+  if(payment<=bal*rate){return{months:null,totalInterest:null,rows:[]};}
+  while(bal>0&&months<600){
+    var interest=bal*rate;
+    var principal=Math.min(payment-interest,bal);
+    bal-=principal;
+    totalInterest+=interest;
+    months++;
+    if(months%6===0||bal<=0)rows.push({month:months,balance:Math.max(bal,0)});
+  }
+  return{months:months,totalInterest:totalInterest,rows:rows};
+}
+function lpOutput(res){
+  if(res.months==null)return '<div class="empty">Payment is too low to ever pay off this balance at that rate — increase the monthly payment.</div>';
+  var pts=res.rows.map(function(r){return{label:'M'+r.month,value:r.balance};});
+  return '<div class="calc-out-grid">'
+    +calcOut(res.months+' mo','Time to Payoff')
+    +calcOut((res.months/12).toFixed(1)+' yrs','Years to Payoff')
+    +calcOut(fmt$(res.totalInterest),'Total Interest Paid')
+    +'</div><div class="chart-wrap">'+svgLineChart(pts,'#991b1b')+'</div>';
+}
+function recalcLP(){
+  var res=loanPayoffCalc(calcVal('lp-balance'),calcVal('lp-apr'),calcVal('lp-payment'));
+  document.getElementById('lp-output').innerHTML=lpOutput(res);
+}
+
+function calcTotalOwnership(){
+  var out=totalOwnershipCalc(18000,4200,9500,1800);
+  return '<div class="calc-inputs">'
+    +numField('to-price','Original Purchase Price',18000)
+    +numField('to-interest','Total Finance Interest Paid',4200)
+    +numField('to-mf','Total Maintenance Fees Paid to Date',9500)
+    +numField('to-special','Special Assessments Paid',1800)
+    +'</div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="recalcTO()">Recalculate</button></div>'
+    +'<div id="to-output">'+toOutput(out)+'</div>';
+}
+function totalOwnershipCalc(price,interest,mf,special){
+  return{price:price,interest:interest,mf:mf,special:special,total:price+interest+mf+special};
+}
+function toOutput(o){
+  var pts=[{label:'Price',value:o.price},{label:'Interest',value:o.interest},{label:'MF Paid',value:o.mf},{label:'Assessments',value:o.special}];
+  return '<div class="calc-out-grid">'
+    +calcOut(fmt$(o.total),'Total Cost of Ownership to Date')
+    +'</div><div class="chart-wrap">'+svgBarChart(pts.map(function(p){return{label:p.label,a:p.value};}),'#1B3F6B')+'</div>';
+}
+function recalcTO(){
+  var o=totalOwnershipCalc(calcVal('to-price'),calcVal('to-interest'),calcVal('to-mf'),calcVal('to-special'));
+  document.getElementById('to-output').innerHTML=toOutput(o);
+}
+
+function calcComparison(){
+  var out=comparisonCalc(4500,15,1200,5);
+  return '<div class="calc-inputs">'
+    +numField('cmp-exitfee','Cost to Exit (Alpha Fee)',4500)
+    +numField('cmp-years','Remaining Years of Likely Ownership',15)
+    +numField('cmp-mf','Current Annual Maintenance Fee',1200)
+    +numField('cmp-infl','Annual Fee Inflation %',5)
+    +'</div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="recalcCMP()">Recalculate</button></div>'
+    +'<div id="cmp-output">'+cmpOutput(out)+'</div>';
+}
+function comparisonCalc(exitFee,years,mf,infl){
+  var rows=runCostOverTime(0,mf,infl,years);
+  var costToContinue=rows[rows.length-1].cumulative;
+  return{exitFee:exitFee,costToContinue:costToContinue,savings:costToContinue-exitFee,years:years};
+}
+function cmpOutput(o){
+  return '<div class="calc-out-grid">'
+    +calcOut(fmt$(o.exitFee),'Cost to Exit Now')
+    +calcOut(fmt$(o.costToContinue),'Projected Cost to Continue ('+o.years+' yrs)')
+    +calcOut(fmt$(o.savings),'Potential Savings by Exiting')
+    +'</div>'
+    +'<div class="chart-wrap">'+svgBarChart([{label:'Exit Now',a:o.exitFee},{label:'Keep Owning',a:o.costToContinue}],'#166534','#991b1b')+'</div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">This is a projection based on the inputs above, not a guarantee — walk the client through their own numbers rather than presenting this as certain.</div>';
+}
+function recalcCMP(){
+  var o=comparisonCalc(calcVal('cmp-exitfee'),calcVal('cmp-years')||1,calcVal('cmp-mf'),calcVal('cmp-infl'));
+  document.getElementById('cmp-output').innerHTML=cmpOutput(o);
+}
+
+function numField(id,label,def){
+  return '<div class="form-field"><label>'+label+'</label><input type="number" id="'+id+'" value="'+def+'"></div>';
+}
+function calcOut(n,l){return '<div class="calc-out"><div class="calc-out-n">'+n+'</div><div class="calc-out-l">'+l+'</div></div>';}
+
+// ── VIEWS: STATISTICS ─────────────────────────────────────────────────
+function viewStatistics(){
+  var os=DB.objections;
+  var totalLogged=os.reduce(function(a,o){return a+((o.stats&&o.stats.frequency)||0);},0);
+  var totalResolved=os.reduce(function(a,o){return a+((o.stats&&o.stats.resolved)||0);},0);
+  var byCat={};
+  DB.categories.forEach(function(c){byCat[c.id]={name:c.name,freq:0,resolved:0};});
+  os.forEach(function(o){
+    if(!byCat[o.category])return;
+    byCat[o.category].freq+=(o.stats&&o.stats.frequency)||0;
+    byCat[o.category].resolved+=(o.stats&&o.stats.resolved)||0;
+  });
+  var maxFreq=Math.max(1,os.reduce(function(a,o){return Math.max(a,(o.stats&&o.stats.frequency)||0);},0));
+  var topObjections=os.slice().sort(function(a,b){return((b.stats&&b.stats.frequency)||0)-((a.stats&&a.stats.frequency)||0);}).slice(0,8);
+  return '<div class="page-header"><div><div class="page-title">Statistics</div><div class="page-sub">Objection frequency and resolution, tracked from your logging</div></div></div>'
+    +'<div class="stat-grid">'
+    +statCard(totalLogged,'Total Logged')
+    +statCard(totalResolved,'Total Resolved')
+    +statCard(totalLogged?Math.round(100*totalResolved/totalLogged)+'%':'—','Overall Resolution Rate')
+    +statCard(os.length,'Objections Tracked')
+    +'</div>'
+    +'<div class="section-title"><span class="ic">🗂</span>By Category</div>'
+    +'<div class="tbl-wrap" style="padding:16px 16px 4px">'
+    +Object.keys(byCat).map(function(k){var c=byCat[k];var pct=c.freq?Math.round(100*c.resolved/c.freq):0;
+      return '<div class="chart-bar-wrap"><div class="chart-bar-label"><span>'+c.name+'</span><span>'+c.freq+' logged · '+pct+'% resolved</span></div>'
+        +'<div class="chart-bar-track"><div class="chart-bar-fill" style="width:'+(totalLogged?Math.round(100*c.freq/totalLogged):0)+'%"></div></div></div>';
+    }).join('')+'</div>'
+    +'<div class="section-title"><span class="ic">🔥</span>Most Frequent Objections</div>'
+    +'<div class="tbl-wrap" style="padding:16px 16px 4px">'
+    +(totalLogged?topObjections.map(function(o){var f=(o.stats&&o.stats.frequency)||0;
+      return '<div class="chart-bar-wrap"><div class="chart-bar-label"><span class="row-link" onclick="nav(\'objection\',\''+o.id+'\')">'+esc(o.title)+'</span><span>'+f+'</span></div>'
+        +'<div class="chart-bar-track"><div class="chart-bar-fill gold" style="width:'+Math.round(100*f/maxFreq)+'%"></div></div></div>';
+    }).join(''):'<div class="empty">No objections logged yet. Use "Log this objection" on any objection page to start tracking.</div>')
+    +'</div>';
+}
+function statCard(n,l){return '<div class="stat-card"><div class="stat-n">'+n+'</div><div class="stat-l">'+l+'</div></div>';}
+
+// ── VIEWS: FAVORITES / RECENT ────────────────────────────────────────
+function favoritesGrid(){
+  var items=USTATE.favorites.map(function(id){return obj(id);}).filter(Boolean);
+  if(!items.length)return '<div class="empty"><div class="empty-icon">⭐</div>No favorites pinned yet.</div>';
+  return '<div class="card-grid">'+items.map(objCard).join('')+'</div>';
+}
+function viewFavorites(){
+  return '<div class="page-header"><div><div class="page-title">⭐ Favorites</div><div class="page-sub">Objections you\'ve pinned for quick access</div></div></div>'
+    +favoritesGrid();
+}
+function recentGrid(limit){
+  var items=USTATE.recent.slice(0,limit||20).map(function(id){return obj(id);}).filter(Boolean);
+  if(!items.length)return '<div class="empty"><div class="empty-icon">🕐</div>Nothing viewed yet.</div>';
+  return '<div class="card-grid">'+items.map(objCard).join('')+'</div>';
+}
+function viewRecent(){
+  return '<div class="page-header"><div><div class="page-title">🕐 Recently Used</div><div class="page-sub">Last '+Math.min(20,USTATE.recent.length)+' objections viewed</div></div></div>'
+    +recentGrid(20);
+}
+
+// ── VIEWS: BUILDER MODE ──────────────────────────────────────────────
+function viewBuilder(){
+  var tabs=[['objection','+ Objection'],['resort','+ Resort']];
+  return '<div class="page-header"><div><div class="page-title">🔧 Builder Mode</div><div class="page-sub">Add new objections and resorts — no coding required</div></div></div>'
+    +'<div class="builder-tabs">'+tabs.map(function(t){return'<button class="btab '+(builderTab===t[0]?'active':'')+'" onclick="setBuilderTab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('')+'</div>'
+    +'<div id="builder-body">'+renderBuilderBody(builderTab)+'</div>';
+}
+function setBuilderTab(t){builderTab=t;var v=document.getElementById('view');if(v)v.innerHTML=viewBuilder();}
+function renderBuilderBody(tab){
+  if(tab==='objection')return builderObjectionForm();
+  if(tab==='resort')return builderResortForm();
+  return '';
+}
+function builderObjectionForm(){
+  return '<div class="builder-grid">'
+    +'<div class="form-field"><label>Title</label><input id="b-title" placeholder="e.g. Worried about resale value"></div>'
+    +'<div class="form-field"><label>Category</label><select id="b-cat">'+DB.categories.map(function(c){return'<option value="'+c.id+'">'+c.name+'</option>';}).join('')+'</select></div>'
+    +'<div class="form-field"><label>Keywords (comma separated)</label><input id="b-keywords" placeholder="resale, value, worth"></div>'
+    +'<div class="form-field"><label>Feelings (comma separated)</label><input id="b-feelings" placeholder="Worry, Regret"></div>'
+    +'<div class="form-field"><label>Likely Root Causes (comma separated)</label><input id="b-causes" placeholder="Money, Trust"></div>'
+    +'</div>'
+    +'<div class="form-field" style="margin-bottom:14px"><label>Questions to Ask (one per line)</label><textarea id="b-questions" rows="3" placeholder="What made resale value a concern for you?"></textarea></div>'
+    +'<div class="form-field" style="margin-bottom:14px"><label>Supporting Facts (one per line, factual only — no legal conclusions)</label><textarea id="b-facts" rows="3"></textarea></div>'
+    +'<div class="form-field" style="margin-bottom:18px"><label>Follow-Up Ideas (one per line)</label><textarea id="b-followups" rows="2"></textarea></div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="submitObjection()">💾 Add Objection</button></div>';
+}
+function submitObjection(){
+  var title=(document.getElementById('b-title').value||'').trim();
+  if(!title){alert('Title is required.');return;}
+  var id=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')+'-'+Math.random().toString(36).slice(2,5);
+  var splitLines=function(v){return(v||'').split('\n').map(function(s){return s.trim();}).filter(Boolean);};
+  var splitCommas=function(v){return(v||'').split(',').map(function(s){return s.trim();}).filter(Boolean);};
+  var o={
+    id:id,category:document.getElementById('b-cat').value,title:title,
+    keywords:splitCommas(document.getElementById('b-keywords').value),
+    feelings:splitCommas(document.getElementById('b-feelings').value),
+    root_causes:splitCommas(document.getElementById('b-causes').value),
+    questions:splitLines(document.getElementById('b-questions').value),
+    facts:splitLines(document.getElementById('b-facts').value),
+    follow_ups:splitLines(document.getElementById('b-followups').value),
+    notes:{mine:'',successful:'',failed:'',stories:''},
+    stats:{frequency:0,resolved:0,avgCallLenMin:0}
+  };
+  DB.objections.push(o);
+  saveDB();
+  nav('objection',id);
+}
+function builderResortForm(){
+  return '<div class="builder-grid">'
+    +'<div class="form-field"><label>Resort Name</label><input id="r-name" placeholder="Resort name"></div>'
+    +'<div class="form-field"><label>Developer</label><input id="r-dev" placeholder="Developer name"></div>'
+    +'<div class="form-field"><label>Locations (comma separated)</label><input id="r-loc" placeholder="City, State"></div>'
+    +'<div class="form-field"><label>Ownership Type</label><input id="r-own" placeholder="Deeded / Points / Club"></div>'
+    +'<div class="form-field"><label>Deeded?</label><select id="r-deeded"><option value="true">Yes</option><option value="false">No</option></select></div>'
+    +'<div class="form-field"><label>Points-Based?</label><select id="r-points"><option value="false">No</option><option value="true">Yes</option></select></div>'
+    +'<div class="form-field"><label>Club Name (if applicable)</label><input id="r-club"></div>'
+    +'</div>'
+    +'<div class="form-field" style="margin-bottom:14px"><label>Known Complaints (one per line)</label><textarea id="r-complaints" rows="3"></textarea></div>'
+    +'<div class="form-field" style="margin-bottom:14px"><label>Transfer Policies</label><textarea id="r-transfer" rows="2"></textarea></div>'
+    +'<div class="form-field" style="margin-bottom:18px"><label>Resale History</label><textarea id="r-resale" rows="2"></textarea></div>'
+    +'<div class="btn-row"><button class="btn btn-primary" onclick="submitResort()">💾 Add Resort</button></div>';
+}
+function submitResort(){
+  var name=(document.getElementById('r-name').value||'').trim();
+  if(!name){alert('Resort name is required.');return;}
+  var id=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')+'-'+Math.random().toString(36).slice(2,5);
+  var splitLines=function(v){return(v||'').split('\n').map(function(s){return s.trim();}).filter(Boolean);};
+  var splitCommas=function(v){return(v||'').split(',').map(function(s){return s.trim();}).filter(Boolean);};
+  var r={
+    id:id,name:name,developer:document.getElementById('r-dev').value,
+    locations:splitCommas(document.getElementById('r-loc').value),
+    ownership_type:document.getElementById('r-own').value,
+    deeded:document.getElementById('r-deeded').value==='true',
+    points:document.getElementById('r-points').value==='true',
+    club:document.getElementById('r-club').value,
+    maintenance_fee_history:[],
+    known_complaints:splitLines(document.getElementById('r-complaints').value),
+    transfer_policies:document.getElementById('r-transfer').value,
+    resale_history:document.getElementById('r-resale').value,
+    internal_notes:''
+  };
+  DB.resorts.push(r);
+  saveDB();
+  nav('resort',id);
+}
+
+// ── BREADCRUMB ────────────────────────────────────────────────────────
+function breadcrumb(items){
+  return '<div class="breadcrumb">'+items.map(function(it,i){
+    var label=it[0],view=it[1],id=it[2];
+    var last=(i===items.length-1);
+    if(last)return '<span style="color:var(--nb);font-weight:700">'+esc(label)+'</span>';
+    return '<a onclick="nav(\''+view+'\''+(id?",'"+id+"'":'')+')">'+esc(label)+'</a><span>›</span>';
+  }).join('')+'</div>';
+}
+
+// ── KEYBOARD SHORTCUTS ───────────────────────────────────────────────
+document.addEventListener('keydown',function(e){
+  var tag=(document.activeElement&&document.activeElement.tagName)||'';
+  var typing=(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT');
+  if(e.key==='/'&&!typing){
+    e.preventDefault();
+    if(currentView!=='home')nav('home');
+    setTimeout(function(){var s=document.getElementById('global-search');if(s)s.focus();},30);
+  }else if(e.key==='Escape'){
+    if(typing&&document.activeElement)document.activeElement.blur();
+    else nav('home');
+  }else if((e.key==='f'||e.key==='F')&&!typing&&currentView==='objection'&&currentObjId){
+    toggleFav(currentObjId);
+    nav('objection',currentObjId);
+  }
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────
+function init(){
+  var hash=window.location.hash.replace('#/','');
+  if(hash){
+    var parts=hash.split('/');
+    nav(parts[0],parts[1]);
+  }else{
+    nav('home');
+  }
+}
+window.onhashchange=function(){var h=window.location.hash.replace('#/','');if(h){var p=h.split('/');nav(p[0],p[1]);}};
+loadDB();
+</script>
+</body>
+</html>
