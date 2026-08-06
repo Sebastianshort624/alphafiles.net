@@ -1,0 +1,409 @@
+{
+  "schema_version": "1.0",
+  "categories": [
+    {"id":"money","name":"Money","icon":"💰","desc":"Cost, affordability, spousal financial decisions"},
+    {"id":"trust","name":"Trust","icon":"🤝","desc":"Legitimacy, skepticism, need for verification"},
+    {"id":"fear","name":"Fear","icon":"⚠️","desc":"Credit, legal, collections, inheritance, tax worry"},
+    {"id":"timing","name":"Timing","icon":"⏰","desc":"Not now, busy, waiting for a better moment"},
+    {"id":"family","name":"Family","icon":"👪","desc":"Needs approval or input from spouse, kids, or parents"}
+  ],
+  "objections": [
+    {
+      "id":"cant-afford-it","category":"money","title":"Can't afford it",
+      "keywords":["afford","money","tight","budget","expensive"],
+      "feelings":["Embarrassment","Overwhelm","Defensiveness"],
+      "root_causes":["Money","Lack of understanding of program cost","Fear of overcommitting"],
+      "questions":[
+        "When you say it's not affordable right now, is that about the fee itself, or about how it's structured?",
+        "What would need to be true for this to feel affordable?",
+        "Help me understand what 'afford' means for you here — is it the total, or the monthly?"
+      ],
+      "facts":[
+        "Timeshare exit fees are typically one-time or short-financed costs, distinct from perpetual annual maintenance fee obligations.",
+        "Maintenance fees on most timeshare contracts are contractually obligated for as long as the deed or membership is held, including by heirs unless formally released."
+      ],
+      "follow_ups":["Run True Cost of Ownership calculator together","Show comparison vs. continuing to own","Offer financing structure comparison"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"need-to-think-about-it","category":"money","title":"Need to think about it",
+      "keywords":["think about it","not sure","decide later","time to think"],
+      "feelings":["Uncertainty","Caution","Mild distrust"],
+      "root_causes":["Trust","Lack of certainty","Unresolved sub-objection they haven't voiced"],
+      "questions":[
+        "When you say you need to think about it, what specifically do you want to think through?",
+        "Of everything we covered, what's the one part that isn't sitting right yet?",
+        "If that one thing weren't a question mark anymore, would you feel ready to move forward?"
+      ],
+      "facts":[
+        "Most owners who defer a decision without naming a specific concern report the maintenance fee obligation continued to accrue in the interim."
+      ],
+      "follow_ups":["Ask a clarifying discovery question before ending the call","Offer a written summary of the plan to think over","Schedule a specific follow-up time, not 'later'"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"too-expensive","category":"money","title":"Too expensive",
+      "keywords":["too expensive","costly","price","high price"],
+      "feelings":["Sticker shock","Defensiveness"],
+      "root_causes":["Money","Comparing exit cost to wrong baseline (should compare to lifetime ownership cost)"],
+      "questions":[
+        "Expensive compared to what — the timeshare payments you're already making, or something else?",
+        "What number were you expecting, and where does that number come from?"
+      ],
+      "facts":[
+        "A cost comparison should weigh the exit fee against the total remaining lifetime cost of ownership, not against zero."
+      ],
+      "follow_ups":["Run Comparison vs Exiting calculator","Break total cost into a monthly-equivalent figure"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"need-to-talk-to-spouse","category":"money","title":"Need to talk to spouse",
+      "keywords":["spouse","wife","husband","talk to my"],
+      "feelings":["Caution","Desire for shared decision-making"],
+      "root_causes":["Family","Genuine need for joint financial decision","Sometimes a soft no"],
+      "questions":[
+        "What do you think your spouse's first question is going to be?",
+        "Would it help to get them on this call, or a follow-up call, so I can answer that directly?",
+        "Is there anything about this you're unsure how to explain to them?"
+      ],
+      "facts":[],
+      "follow_ups":["Offer a 3-way follow-up call","Send a written summary made for a spouse who wasn't on the call"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"want-to-save-money",
+      "category":"money","title":"Want to save money first",
+      "keywords":["save up","save money","don't have it right now"],
+      "feelings":["Practical caution","Some embarrassment about timing"],
+      "root_causes":["Money","Timing"],
+      "questions":[
+        "What's the timeline you're picturing to save that amount?",
+        "In that time, what happens with the maintenance fee bill that's still coming?"
+      ],
+      "facts":["Waiting to save toward an exit fee typically means the annual maintenance fee obligation continues to accrue in parallel."],
+      "follow_ups":["Show Maintenance Fee Inflation calculator for the waiting period","Discuss financing structures that don't require saving up front"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+
+    {
+      "id":"sounds-too-good","category":"trust","title":"Sounds too good to be true",
+      "keywords":["too good to be true","sounds like a scam","skeptical"],
+      "feelings":["Distrust","Guardedness","Past disappointment"],
+      "root_causes":["Trust","Prior bad experience with timeshare industry itself"],
+      "questions":[
+        "What have you tried before, or heard about, that didn't work out?",
+        "What would you need to see to feel confident this is legitimate?",
+        "What specifically feels too good — the process, the price, or the outcome?"
+      ],
+      "facts":[
+        "Timeshare owners are frequently targeted by unrelated resale and exit scams, which is a reasonable basis for caution and worth taking seriously rather than dismissing."
+      ],
+      "follow_ups":["Offer documentation and BBB profile","Offer to connect with a past client for a reference","Provide the process broken into concrete steps"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"never-heard-of-your-company","category":"trust","title":"Never heard of your company",
+      "keywords":["never heard of you","who are you","unfamiliar"],
+      "feelings":["Wariness","Need for social proof"],
+      "root_causes":["Trust","Lack of familiarity, not necessarily suspicion"],
+      "questions":[
+        "What sources do you usually trust to check out a company like this?",
+        "Would seeing our BBB profile and client reviews help?"
+      ],
+      "facts":[],
+      "follow_ups":["Share BBB rating and profile link","Share review sources","Offer company background in writing"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"need-to-research","category":"trust","title":"Need to research first",
+      "keywords":["research","look into it","google it","check reviews"],
+      "feelings":["Diligence","Caution"],
+      "root_causes":["Trust","Reasonable due diligence"],
+      "questions":[
+        "What specifically are you hoping to find when you research this?",
+        "Is there a particular concern driving the research, or is this just your normal process for a decision like this?"
+      ],
+      "facts":[],
+      "follow_ups":["Point to specific, verifiable sources rather than leaving it open-ended","Offer to follow up at a set time after they've had a chance to look"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"is-this-legit","category":"trust","title":"Is this legit?",
+      "keywords":["legit","legitimate","real company","is this real"],
+      "feelings":["Direct suspicion"],
+      "root_causes":["Trust"],
+      "questions":[
+        "What would answer that question for you — documentation, reviews, licensing, something else?",
+        "Has something specific made you doubt it, or is this just a standard check?"
+      ],
+      "facts":[],
+      "follow_ups":["Provide documentation directly, without defensiveness","Offer a reference client"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"want-attorney-review","category":"trust","title":"Want attorney review",
+      "keywords":["attorney","lawyer","legal review","have my lawyer look"],
+      "feelings":["Caution","Desire for independent verification"],
+      "root_causes":["Trust","Genuine legal diligence"],
+      "questions":[
+        "Is there a specific clause or concern you'd want an attorney to look at, or is this a general step you take on contracts?",
+        "Would it help if I sent the documents ahead so your attorney has time before we talk again?"
+      ],
+      "facts":["Reviewing exit or transfer documents with independent counsel before signing is a reasonable step for any contract of this kind."],
+      "follow_ups":["Send documents proactively","Schedule follow-up after their review window"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+
+    {
+      "id":"credit-damage","category":"fear","title":"Worried about credit damage",
+      "keywords":["credit","credit score","credit damage","hurt my credit"],
+      "feelings":["Fear","Anxiety about financial reputation"],
+      "root_causes":["Fear","Lack of understanding of how the exit process interacts with credit"],
+      "questions":[
+        "What have you heard specifically about credit and timeshare exits?",
+        "Is the concern about the exit process itself, or about what happens if the maintenance fees go unpaid?"
+      ],
+      "facts":[
+        "Unpaid maintenance fees or special assessments can be referred to collections by a resort or HOA, which can affect credit — this is a resort-side risk of nonpayment, not something the exit process itself causes.",
+        "Credit impact, when it occurs in these situations, generally traces to delinquency reporting by the resort or its collection agency, not to a properly documented, resort-acknowledged exit."
+      ],
+      "follow_ups":["Explain the documented exit process step-by-step","Clarify what would and would not appear on a credit report"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"lawsuit-fear","category":"fear","title":"Afraid of being sued",
+      "keywords":["lawsuit","sue","sued","legal action"],
+      "feelings":["Fear","Anxiety"],
+      "root_causes":["Fear","Confusion about resort remedies for nonpayment"],
+      "questions":[
+        "What specifically are you picturing when you think about a lawsuit?",
+        "Has a resort or collection agency already contacted you about this, or is this a concern about the future?"
+      ],
+      "facts":[
+        "Resorts and HOAs can pursue collection remedies for unpaid dues, which vary by state and by the resort's own governing documents.",
+        "A documented, acknowledged exit reduces ongoing exposure to future dues that could otherwise become collectible."
+      ],
+      "follow_ups":["Explain what the exit documentation covers","Discuss state-specific collection remedies if relevant to their resort"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"collections-fear","category":"fear","title":"Worried about collections",
+      "keywords":["collections","collection agency","debt collector"],
+      "feelings":["Fear","Stress"],
+      "root_causes":["Fear","Existing delinquency they haven't fully disclosed"],
+      "questions":[
+        "Have you already been contacted by a collections agency about this account?",
+        "What's the current status of your maintenance fee payments?"
+      ],
+      "facts":[
+        "Collections activity is generally tied to unpaid fees and typically escalates the longer an account stays delinquent."
+      ],
+      "follow_ups":["Get a clear, honest picture of current account standing before proceeding","Explain how the exit process addresses an existing delinquent account, if applicable"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"inheritance-fear","category":"fear","title":"Worried about passing it to heirs",
+      "keywords":["inheritance","heirs","kids","pass it on","leave it to my children"],
+      "feelings":["Guilt","Protectiveness toward family","Worry"],
+      "root_causes":["Fear","Genuine concern about family financial burden"],
+      "questions":[
+        "What made this become a concern for you — a conversation with family, something you read, or an estate planning step?",
+        "Do your heirs currently know they'd inherit this obligation?"
+      ],
+      "facts":[
+        "In most states, a deeded timeshare interest becomes part of the estate and can pass to heirs along with its ongoing maintenance fee obligation unless the heir formally disqualifies the inheritance.",
+        "There is generally a limited window after the owner's death during which an heir must act to disclaim the interest — the specific deadline is set by state probate law and the resort's own process."
+      ],
+      "follow_ups":["Walk through the specific state's disclaimer window if known","Provide the heirs estate-liability explanation"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"bankruptcy-fear","category":"fear","title":"Worried about bankruptcy implications",
+      "keywords":["bankruptcy","bankrupt","file for bankruptcy"],
+      "feelings":["Fear","Shame","Overwhelm"],
+      "root_causes":["Fear","Broader financial distress beyond just the timeshare"],
+      "questions":[
+        "Is the timeshare part of a bigger financial picture you're working through right now?",
+        "Have you spoken with a bankruptcy attorney about how a timeshare obligation would be treated?"
+      ],
+      "facts":[
+        "How a timeshare debt is treated in a bankruptcy filing depends on the type of filing and jurisdiction — this is a legal question best answered by a bankruptcy attorney, not a general rule."
+      ],
+      "follow_ups":["Avoid giving legal conclusions — recommend attorney consultation","Focus on what's factually documented about the contract itself"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"tax-implications-fear","category":"fear","title":"Worried about tax implications",
+      "keywords":["taxes","tax implications","IRS","1099"],
+      "feelings":["Fear","Confusion"],
+      "root_causes":["Fear","Lack of clarity on how debt relief or exit is treated for tax purposes"],
+      "questions":[
+        "What specifically have you heard about taxes and timeshare exits?",
+        "Is this about property tax, income tax, or something else?"
+      ],
+      "facts":[
+        "Tax treatment of debt relief or transfer arrangements can vary by individual circumstances — this is a question for a licensed tax professional, not a blanket answer."
+      ],
+      "follow_ups":["Recommend a CPA consultation for their specific situation","Provide only documented, factual process information"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+
+    {
+      "id":"call-me-later","category":"timing","title":"Call me later",
+      "keywords":["call later","call back","not now"],
+      "feelings":["Mild avoidance","Genuine busyness"],
+      "root_causes":["Timing","Sometimes a soft objection in disguise"],
+      "questions":[
+        "Is there a specific time today or tomorrow that's better, or is 'later' more open-ended right now?",
+        "Is there anything about what we discussed that's giving you pause, separate from timing?"
+      ],
+      "facts":[],
+      "follow_ups":["Lock a specific callback time, not an open-ended one","Send a short written recap before hanging up"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"too-busy","category":"timing","title":"Too busy right now",
+      "keywords":["busy","no time","in the middle of something"],
+      "feelings":["Distraction","Mild avoidance"],
+      "root_causes":["Timing","Genuine bandwidth constraint"],
+      "questions":[
+        "Would a shorter call at a set time work better than trying to finish this now?",
+        "On a scale of interest, how much do you want to solve this once time isn't the issue?"
+      ],
+      "facts":[],
+      "follow_ups":["Offer a tightly time-boxed follow-up (10-15 min)","Send materials to review on their own time"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"on-vacation","category":"timing","title":"Currently on vacation",
+      "keywords":["vacation","traveling","out of town"],
+      "feelings":["Distraction"],
+      "root_causes":["Timing"],
+      "questions":["When do you get back, and would that be a good time to pick this back up?"],
+      "facts":[],
+      "follow_ups":["Schedule a specific follow-up date after their return"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"holidays-timing","category":"timing","title":"Wants to wait until after the holidays",
+      "keywords":["holidays","after the new year","holiday season"],
+      "feelings":["Practical deferral"],
+      "root_causes":["Timing","Money — holiday spending pressure"],
+      "questions":[
+        "Is the holiday timing about your schedule, or about holiday spending making this feel like a lot right now?",
+        "What happens with maintenance fee billing between now and after the holidays?"
+      ],
+      "facts":[],
+      "follow_ups":["Show Maintenance Fee Inflation calculator for the deferral period","Set a firm specific follow-up date"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"need-paycheck","category":"timing","title":"Waiting for next paycheck",
+      "keywords":["paycheck","payday","get paid"],
+      "feelings":["Practical financial constraint"],
+      "root_causes":["Timing","Money"],
+      "questions":["When's the paycheck you're referring to, so we can plan around it directly rather than leave it open-ended?"],
+      "facts":[],
+      "follow_ups":["Discuss financing options that don't require full payment up front","Set specific follow-up date tied to pay date"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+
+    {
+      "id":"husband-approval","category":"family","title":"Needs husband's input",
+      "keywords":["husband","he needs to know","ask my husband"],
+      "feelings":["Respect for shared decision-making","Sometimes avoidance"],
+      "root_causes":["Family","Genuine joint-decision household"],
+      "questions":[
+        "What do you think his main question or concern is going to be?",
+        "Would a short call together work better than relaying secondhand?"
+      ],
+      "facts":[],
+      "follow_ups":["Offer a joint follow-up call","Prepare a written summary aimed at answering his likely questions"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"wife-approval","category":"family","title":"Needs wife's input",
+      "keywords":["wife","she needs to know","ask my wife"],
+      "feelings":["Respect for shared decision-making","Sometimes avoidance"],
+      "root_causes":["Family","Genuine joint-decision household"],
+      "questions":[
+        "What do you think her main question or concern is going to be?",
+        "Would a short call together work better than relaying secondhand?"
+      ],
+      "facts":[],
+      "follow_ups":["Offer a joint follow-up call","Prepare a written summary aimed at answering her likely questions"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"kids-college-fund","category":"family","title":"Worried about impact on kids' finances",
+      "keywords":["kids","children","college fund","kids' money"],
+      "feelings":["Protectiveness","Guilt"],
+      "root_causes":["Family","Money"],
+      "questions":[
+        "How does this fit into what you're already planning for your kids financially?",
+        "Is the concern about the cost of exiting, or about what happens if you keep paying maintenance fees for years to come?"
+      ],
+      "facts":[],
+      "follow_ups":["Run 10/20/30-year cost projection to compare with the exit cost"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    },
+    {
+      "id":"parents-decision","category":"family","title":"It's actually my parents' timeshare",
+      "keywords":["parents","my mom","my dad","parents' timeshare"],
+      "feelings":["Sense of responsibility","Sometimes urgency (aging parent)"],
+      "root_causes":["Family","Often tied to inheritance/estate planning concerns"],
+      "questions":[
+        "Are you managing this on their behalf, or are they part of the conversation too?",
+        "Is there a health or estate planning timeline driving this?"
+      ],
+      "facts":[],
+      "follow_ups":["Confirm who has legal authority to act on the account (POA, owner, etc.) before proceeding","Cross-reference with inheritance fear objection if relevant"],
+      "notes":{"mine":"","successful":"","failed":"","stories":""},
+      "stats":{"frequency":0,"resolved":0,"avgCallLenMin":0}
+    }
+  ],
+  "resorts": [
+    {
+      "id":"sample-resort-1","name":"[Sample] Coastal Dunes Resort","developer":"[Developer name]","locations":["Myrtle Beach, SC"],
+      "ownership_type":"Deeded","deeded":true,"points":false,"club":"",
+      "maintenance_fee_history":[{"year":2021,"fee":950},{"year":2022,"fee":1020},{"year":2023,"fee":1105},{"year":2024,"fee":1210},{"year":2025,"fee":1295}],
+      "known_complaints":["Rising special assessments reported by multiple owners","Difficulty reaching resort HOA by phone"],
+      "transfer_policies":"Requires resort-approved transfer form; resort charges an administrative transfer fee.",
+      "resale_history":"Public resale listings typically show low resale value relative to original purchase price.",
+      "internal_notes":""
+    },
+    {
+      "id":"sample-resort-2","name":"[Sample] Mountain View Points Club","developer":"[Developer name]","locations":["Gatlinburg, TN","Multiple affiliated locations"],
+      "ownership_type":"Points-based Club Membership","deeded":false,"points":true,"club":"[Sample] Mountain View Owners Club",
+      "maintenance_fee_history":[{"year":2021,"fee":1400},{"year":2022,"fee":1475},{"year":2023,"fee":1610},{"year":2024,"fee":1690},{"year":2025,"fee":1775}],
+      "known_complaints":["Point devaluation reported over time","Booking availability complaints during peak season"],
+      "transfer_policies":"Club membership transfer subject to board approval; right of first refusal may apply.",
+      "resale_history":"Points memberships generally have minimal secondary market value.",
+      "internal_notes":""
+    }
+  ]
+}
