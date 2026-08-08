@@ -104,6 +104,8 @@ body{font-family:"Inter",sans-serif;font-size:14px;background:var(--bg);color:#1
 /* Default to English until atcApplyLang() fires */
 body:not([data-lang]) .es-only { display: none !important; }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/vitals/assets/case-engine.js"></script>
 </head>
 <body>
 <style id="atc-sb-css">
@@ -1197,6 +1199,19 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
         <div class="ff"><label>Co-Owner Last</label><input id="v-col" oninput="autoSave()"></div>
       </div>
     </div>
+    <div class="pt" onclick="togglePS('owner-mail')"><div class="pt-ic" id="pto-owner-mail">+</div><span>Mailing Address, Date &amp; 2nd Email (for Agreement)</span></div>
+    <div class="ps" id="owner-mail">
+      <div class="frow" style="margin-bottom:8px">
+        <div class="ff"><label>Agreement Date</label><input id="v-agr-date" type="date" oninput="autoSave()"></div>
+        <div class="ff"><label>2nd Email</label><input id="v-email2" type="email" oninput="autoSave()"></div>
+      </div>
+      <div class="ff" style="margin-bottom:8px"><label>Mailing Address</label><input id="v-mail-addr" oninput="autoSave()"></div>
+      <div class="frow">
+        <div class="ff"><label>City</label><input id="v-owner-city" oninput="autoSave()"></div>
+        <div class="ff"><label>State</label><input id="v-owner-state" oninput="autoSave()"></div>
+        <div class="ff"><label>ZIP</label><input id="v-owner-zip" oninput="autoSave()"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1227,6 +1242,17 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
           <div><div style="font-size:16px;font-weight:800;color:#1B2A4A" id="us-years">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Years Owned</div></div>
           <div><div style="font-size:16px;font-weight:800;color:#1B2A4A" id="us-total-spent">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Total Spent on Vacations</div></div>
           <div><div style="font-size:16px;font-weight:800;color:#C8960C" id="us-cost-per-use">—</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#6b7280;margin-top:2px">Avg Cost / Vacation</div></div>
+        </div>
+      </div>
+      <div class="pt" onclick="togglePS('r1-agr')"><div class="pt-ic" id="pto-r1-agr">+</div><span>Ownership Type &amp; Usage Rights (for Agreement)</span></div>
+      <div class="ps" id="r1-agr">
+        <div class="frow" style="margin-bottom:8px">
+          <div class="ff"><label>Ownership Type</label><select id="v-r1-owntype" onchange="autoSave()"><option value="">Select...</option><option value="week">Week</option><option value="points">Points</option></select></div>
+          <div class="ff"><label>Usage Rights</label><select id="v-r1-usage" onchange="autoSave()"><option value="">Select...</option><option value="annual">Annual</option><option value="even">Even</option><option value="odd">Odd</option><option value="triennial">Triennial</option></select></div>
+        </div>
+        <div class="frow">
+          <div class="ff"><label>MTF Paid</label><select id="v-r1-mtffreq2" onchange="autoSave()"><option value="">Select...</option><option value="annually">Annually</option><option value="biennially">Biennially</option><option value="triennially">Triennially</option></select></div>
+          <div class="ff"><label>MTF Current?</label><select id="v-r1-mtfcurrent" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select></div>
         </div>
       </div>
     </div>
@@ -1447,6 +1473,123 @@ function _doNewC(){var fn=prompt("First name:");if(!fn)return;var ln=prompt("Las
     </div>
   </div>
 </div>
+
+<!-- CANCELLATION AGREEMENT — RESORTS 2-4, GENERAL, PAYMENT INFO -->
+<div class="card">
+  <div class="card-hdr">📄 Cancellation Agreement — Additional Resorts &amp; Info</div>
+  <div class="card-body">
+    <div id="resorts-234-mount"></div>
+
+    <div class="pt" onclick="togglePS('gen-block')"><div class="pt-ic" id="pto-gen-block">+</div><span>General</span></div>
+    <div class="ps" id="gen-block">
+      <div class="ff" style="margin-bottom:8px"><label>Own Any Other Timeshares?</label><select id="v-own-other" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+      <div class="ff"><label>Final Notes</label><textarea id="v-final-notes" oninput="autoSave()" style="min-height:50px"></textarea></div>
+    </div>
+
+    <div class="pt" onclick="togglePS('pay-block')"><div class="pt-ic" id="pto-pay-block">+</div><span>Payment Information</span></div>
+    <div class="ps" id="pay-block">
+      <div class="frow" style="margin-bottom:8px">
+        <div class="ff"><label>Down Payment Amount</label><input id="v-pay-down" type="number" oninput="autoSave()"></div>
+        <div class="ff"><label>Amount Being Financed</label><input id="v-pay-financed" type="number" oninput="autoSave()"></div>
+      </div>
+      <div class="frow" style="margin-bottom:8px">
+        <div class="ff"><label>2.5% Processing Charge</label><input id="v-pay-processing" type="number" oninput="autoSave()"></div>
+        <div class="ff"><label>Total Charged Today</label><input id="v-pay-total-today" type="number" oninput="autoSave()"></div>
+      </div>
+      <div class="frow" style="margin-bottom:8px">
+        <div class="ff"><label>Payment Terms</label><input id="v-pay-terms" oninput="autoSave()"></div>
+        <div class="ff"><label>Paid in Full?</label><select id="v-pay-paidinfull" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option></select></div>
+      </div>
+      <div style="font-size:11px;color:#9ca3af;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.4px">Card/CVV/routing/account numbers are intentionally not collected on this page for security reasons</div>
+      <div id="pm-mount"></div>
+    </div>
+
+    <div class="pt" onclick="togglePS('off-block')"><div class="pt-ic" id="pto-off-block">+</div><span>Official Use (Agreement Checkboxes)</span></div>
+    <div class="ps" id="off-block">
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="v-off-military" onchange="autoSave()"> Active Military</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="v-off-65plus" onchange="autoSave()"> 65+</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="v-off-paidfull" onchange="autoSave()"> Paid in Full</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="v-off-mortgage" onchange="autoSave()"> Mortgage</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" id="v-off-3rdparty" onchange="autoSave()"> 3rd Party Financing</label>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)">
+      <button onclick="generateCancellationPDF()" style="padding:10px 22px;background:#1B2A4A;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">📄 Generate Cancellation Agreement PDF</button>
+      <div id="pdf-gen-status" style="margin-top:10px;font-size:12px;color:#374151;display:none;line-height:1.6"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function resortExtraHTML(n){
+    return ''
+    +'<div class="pt" onclick="togglePS(\'r'+n+'-block\')"><div class="pt-ic" id="pto-r'+n+'-block">+</div><span>Resort #'+n+'</span></div>'
+    +'<div class="ps" id="r'+n+'-block">'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Resort Name</label><input id="v-r'+n+'-name" oninput="autoSave()"></div>'
+    +'<div class="ff"><label>Location (City, State)</label><input id="v-r'+n+'-loc" oninput="autoSave()"></div>'
+    +'</div>'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Paid Off?</label><select id="v-r'+n+'-paidoff" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select></div>'
+    +'<div class="ff"><label>Balance</label><input id="v-r'+n+'-balance" type="number" oninput="autoSave()"></div>'
+    +'<div class="ff"><label>Current?</label><select id="v-r'+n+'-current" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select></div>'
+    +'<div class="ff"><label>Payment Amount</label><input id="v-r'+n+'-payment" type="number" oninput="autoSave()"></div>'
+    +'</div>'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Ownership Type</label><select id="v-r'+n+'-owntype" onchange="autoSave()"><option value="">Select...</option><option value="week">Week</option><option value="points">Points</option></select></div>'
+    +'<div class="ff"><label>Usage Rights</label><select id="v-r'+n+'-usage" onchange="autoSave()"><option value="">Select...</option><option value="annual">Annual</option><option value="even">Even</option><option value="odd">Odd</option><option value="triennial">Triennial</option></select></div>'
+    +'</div>'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Maintenance Fee</label><input id="v-r'+n+'-mtf" type="number" oninput="autoSave()"></div>'
+    +'<div class="ff"><label>MTF Paid</label><select id="v-r'+n+'-mtffreq" onchange="autoSave()"><option value="">Select...</option><option value="annually">Annually</option><option value="biennially">Biennially</option><option value="triennially">Triennially</option></select></div>'
+    +'<div class="ff"><label>MTF Current?</label><select id="v-r'+n+'-mtfcurrent" onchange="autoSave()"><option value="">Select...</option><option value="yes">Yes</option><option value="no">No</option></select></div>'
+    +'</div>'
+    +'<div class="ff"><label>Notes</label><textarea id="v-r'+n+'-notes" oninput="autoSave()" style="min-height:40px"></textarea></div>'
+    +'</div>';
+  }
+  var mount=document.getElementById('resorts-234-mount');
+  if(mount) mount.innerHTML = resortExtraHTML(2)+resortExtraHTML(3)+resortExtraHTML(4);
+
+  function pmHTML(n){
+    if(n===4){
+      return ''
+      +'<div class="sec" style="margin-top:10px">Payment Method 4 — Financing</div>'
+      +'<div class="frow" style="margin-bottom:8px">'
+      +'<div class="ff"><label>Amount</label><input id="v-pm4-amount" type="number" oninput="autoSave()"></div>'
+      +'<div class="ff"><label>Financing Co.</label><input id="v-pm4-financing" oninput="autoSave()"></div>'
+      +'</div>'
+      +'<div class="frow" style="margin-bottom:8px">'
+      +'<div class="ff"><label>Accountholder Name</label><input id="v-pm4-acct" oninput="autoSave()"></div>'
+      +'<div class="ff"><label>Billing ZIP</label><input id="v-pm4-zip" oninput="autoSave()"></div>'
+      +'</div>'
+      +'<div class="frow" style="margin-bottom:8px">'
+      +'<div class="ff"><label>Amount Paid to Lender</label><input id="v-pm4-lenderpaid" type="number" oninput="autoSave()"></div>'
+      +'<div class="ff"><label>Monthly Payment</label><input id="v-pm4-monthly" type="number" oninput="autoSave()"></div>'
+      +'</div>'
+      +'<div class="frow">'
+      +'<div class="ff"><label># of Payments</label><input id="v-pm4-numpayments" type="number" oninput="autoSave()"></div>'
+      +'<div class="ff"><label>Starting Date</label><input id="v-pm4-starting" type="date" oninput="autoSave()"></div>'
+      +'</div>';
+    }
+    return ''
+    +'<div class="sec" style="margin-top:10px">Payment Method '+n+'</div>'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Amount</label><input id="v-pm'+n+'-amount" type="number" oninput="autoSave()"></div>'
+    +'<div class="ff"><label>Method</label><select id="v-pm'+n+'-type" onchange="autoSave()"><option value="">Select...</option><option value="visa">Visa</option><option value="mastercard">Mastercard</option><option value="discover">Discover</option><option value="check">Check</option></select></div>'
+    +'</div>'
+    +'<div class="frow" style="margin-bottom:8px">'
+    +'<div class="ff"><label>Accountholder Name</label><input id="v-pm'+n+'-acct" oninput="autoSave()"></div>'
+    +'<div class="ff"><label>Billing ZIP</label><input id="v-pm'+n+'-zip" oninput="autoSave()"></div>'
+    +'</div>'
+    +'<div class="ff"><label>Notes</label><input id="v-pm'+n+'-notes" oninput="autoSave()"></div>';
+  }
+  var pmMount=document.getElementById('pm-mount');
+  if(pmMount) pmMount.innerHTML = pmHTML(1)+pmHTML(2)+pmHTML(3)+pmHTML(4);
+})();
+</script>
 
 <!-- STAGE + TASKS -->
 <div class="card">
@@ -1733,41 +1876,12 @@ function populateFromCRM(){
   var raw=document.getElementById('crm-paste-box').value;
   if(!raw.trim()){alert('Paste CRM data first.');return;}
 
-  // Strip markdown links [text](url) -> text
-  var t=raw.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
-  // Strip bullet markers
-  t=t.replace(/^\s*[*\-]\s*/gm,'');
+  // Shared engine: owner info, Resort 1-4 agreement fields, general, non-sensitive payment fields
+  window.CaseEngine.runPopulateFromCRM(raw);
 
-  function field(names){
-    for(var ni=0;ni<names.length;ni++){
-      var nm=names[ni].replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-      // Try tab-delimited (Zoho copy-all): FieldName\tValue or FieldName\t\nValue
-      var m=t.match(new RegExp(nm+'[^\\t\\n]*\\t\\n?([^\\t\\n][^\\n]{0,150})','i'));
-      // Try newline-separated (browser paste): FieldName\nValue
-      if(!m) m=t.match(new RegExp(nm+'[^\\n]*\\n([^\\n]{1,150})','i'));
-      if(m&&m[1]){
-        var v=m[1].trim().replace(/^\$\s*/,'').replace(/,/g,'').replace(/\[([^\]]*)\]\([^)]*\)/g,'$1');
-        if(v&&v!=='-'&&v!=='N/A'&&v!=='NA') return v;
-      }
-    }
-    return '';
-  }
-
-  function setf(id,val){
-    if(!val) return;
-    var el=document.getElementById(id);
-    if(!el) return;
-    el.value=val;
-    el.dispatchEvent(new Event('input'));
-  }
-
-  setf('v-first',  field(['First Name']));
-  setf('v-last',   field(['Last Name']));
-  setf('v-email',  field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
-  setf('v-phone',  field(['Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
-  setf('v-resort', field(['R1-Resort Name']));
-  setf('v-rescity',field(['R1-Resort City']));
-  setf('v-loc',    field(['R1-Resort State']));
+  // Vitals-only extras (sales/calculator fields not part of the shared engine)
+  var field=window.CaseEngine.makeFieldGetter(raw);
+  var setf=window.CaseEngine.setf;
 
   var yr=field(['R1-Date Purchased']);
   var ym=yr.match(/(20\d{2}|19\d{2})/);
@@ -1776,26 +1890,25 @@ function populateFromCRM(){
   var pp=field(['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');
   if(pp) setf('v-pprice', pp);
 
-  var mf=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance']).replace(/[^0-9.]/g,'');
-  if(mf) setf('v-mtf', mf);
-
-  var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
-  var paid=ms.indexOf('paid')>-1;
-  if(paid){
-    setf('v-mtg','0');
-    var btn=document.getElementById('mt-pf'); if(btn) btn.click();
-  } else {
-    var mg=field(['R1-Monthly Mortgage payment','Monthly Mortgage']).replace(/[^0-9.]/g,'');
-    if(mg) setf('v-mtg', mg);
-    var bl=field(['R1-Balance Amount','Balance Amount']).replace(/[^0-9.]/g,'');
-    if(bl) setf('v-balance', bl);
-  }
-
   var fee=field(['R1-Amount Charging','Total Amount Charging','Recommended Pricing']).replace(/[^0-9.]/g,'');
   if(fee) setf('v-fee', fee);
 
-  var why=field(['R1-Why do they want out','Why do they want out']);
-  if(why) setf('v-why', why);
+  // Mortgage paid-off button state — drives Vitals' own mortgage/comparison
+  // calculators (case-assessment doesn't have this button UI; it uses the
+  // plain v-r1-paidoff select that the shared engine already set above).
+  // NOTE: fixed a pre-existing gap here — the button state previously only
+  // updated when the mortgage WAS paid off, silently leaving _mtgType at
+  // its 'pf' page-load default for every "owes" client unless the rep
+  // manually clicked a button. That default now getting read into the
+  // Cancellation Agreement's Paid Off checkbox made the gap load-bearing,
+  // so it's fixed here rather than left as-is.
+  var ms=field(['R1-Mortgage status','Mortgage status']).toLowerCase();
+  if(ms.indexOf('paid')>-1){
+    setf('v-mtg','0');
+    var btn=document.getElementById('mt-pf'); if(btn) btn.click();
+  } else if(ms){
+    var owBtn=document.getElementById('mt-ow'); if(owBtn) owBtn.click();
+  }
 
   // Preferred language
   var lang=field(['Preffered Language','Preferred Language']).toLowerCase();
@@ -1810,6 +1923,15 @@ function populateFromCRM(){
     try{calcComparison();}catch(e){}
   },150);
 }
+
+function generateCancellationPDF(){
+  return window.CaseEngine.generateCancellationPDF({
+    pdfUrl:'/vitals/assets/cancellation-agreement.pdf',
+    filenamePrefix:'Cancellation_Agreement',
+    statusElId:'pdf-gen-status'
+  });
+}
+window.generateCancellationPDF=generateCancellationPDF;
 
 function calcUsage(){
   var yearEl=document.getElementById('v-year');
@@ -2237,8 +2359,42 @@ function _ensureClient(){
   return slug;
 }
 
+// ── Cancellation Agreement PDF — extra field IDs not covered by the core
+// autoSave()/loadData() maps above. Persisted generically as d.pdfExtra so
+// this list can grow without touching the core save/load functions.
+var PDF_EXTRA_IDS = ['v-agr-date','v-email2','v-mail-addr','v-owner-city','v-owner-state','v-owner-zip',
+ 'v-r1-owntype','v-r1-usage','v-r1-mtffreq2','v-r1-mtfcurrent',
+ 'v-own-other','v-final-notes',
+ 'v-pay-down','v-pay-financed','v-pay-processing','v-pay-total-today','v-pay-terms','v-pay-paidinfull',
+ 'v-off-military','v-off-65plus','v-off-paidfull','v-off-mortgage','v-off-3rdparty'];
+[2,3,4].forEach(function(n){
+  PDF_EXTRA_IDS.push('v-r'+n+'-name','v-r'+n+'-loc','v-r'+n+'-paidoff','v-r'+n+'-balance','v-r'+n+'-current','v-r'+n+'-payment','v-r'+n+'-owntype','v-r'+n+'-usage','v-r'+n+'-mtf','v-r'+n+'-mtffreq','v-r'+n+'-mtfcurrent','v-r'+n+'-notes');
+});
+[1,2,3,4].forEach(function(n){
+  if(n===4){PDF_EXTRA_IDS.push('v-pm4-amount','v-pm4-financing','v-pm4-acct','v-pm4-zip','v-pm4-lenderpaid','v-pm4-monthly','v-pm4-numpayments','v-pm4-starting');}
+  else{PDF_EXTRA_IDS.push('v-pm'+n+'-amount','v-pm'+n+'-type','v-pm'+n+'-acct','v-pm'+n+'-zip','v-pm'+n+'-notes');}
+});
+function savePdfExtras(){
+  var s=ac(); if(!s) return; var all=ga(); if(!all[s]) return;
+  var extra={};
+  PDF_EXTRA_IDS.forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    var v = el.type==='checkbox' ? el.checked : el.value;
+    if(v!==''&&v!==false&&v!==undefined&&v!==null) extra[id]=v;
+  });
+  all[s].pdfExtra = Object.assign(all[s].pdfExtra||{}, extra);
+  sa(all);
+}
+function loadPdfExtras(){
+  var d=ad(); if(!d||!d.pdfExtra) return;
+  Object.keys(d.pdfExtra).forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    if(el.type==='checkbox') el.checked=!!d.pdfExtra[id]; else el.value=d.pdfExtra[id];
+  });
+}
+
 function autoSave(){
-  updateBanner();updateCRM();
+  updateBanner();updateCRM();savePdfExtras();
   clearTimeout(_timer);
   _timer=setTimeout(function(){
     var s=_ensureClient();if(!s)return;var all=ga();if(!all[s])all[s]={_created:Date.now()};
@@ -2343,6 +2499,7 @@ function loadData(){
   if(d.firstName||d.lastName){document.getElementById('sh-name').textContent=((d.firstName||'')+' '+(d.lastName||'')).trim();}
   if(d.resort)document.getElementById('sh-resort').textContent=d.resort;
   if(d.qualifyAnswer)setQualify(d.qualifyAnswer);
+  loadPdfExtras();
   calcTotals();updateBanner();updateCRM();buildTasks();buildMotScale();showThreat();updateProgress();calcMtgRemaining();calcPurchaseFinance();calcComparison();
 }
 
