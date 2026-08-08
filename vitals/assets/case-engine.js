@@ -553,9 +553,26 @@
     return {total:total, filled:filled, blank:blankList.length, blankList:blankList};
   }
 
+  // Public helper for callers that need a raw field(names) lookup outside
+  // runPopulateFromCRM's own field-setting loop (e.g. Vitals' extra sales
+  // fields below) — auto-detects tabular vs vertical input exactly like
+  // runPopulateFromCRM does internally, so a caller can never accidentally
+  // run the vertical-only parser against a tabular paste (that mismatch
+  // was a real bug: it silently produced garbage values instead of the
+  // correct ones when fed a Zoho export).
+  function makeSmartFieldGetter(rawText){
+    var table=detectTabularExport(rawText);
+    if(table){
+      var dummyDebug={matchedHeaders:{}};
+      return makeTableFieldGetter(table.headers, table.rows[0], dummyDebug);
+    }
+    return makeFieldGetter(rawText);
+  }
+
   global.CaseEngine = {
     setf: setf, setSel: setSel, yn: yn,
     makeFieldGetter: makeFieldGetter,
+    makeSmartFieldGetter: makeSmartFieldGetter,
     runPopulateFromCRM: runPopulateFromCRM,
     resortAgreementVals: resortAgreementVals,
     generateCancellationPDF: generateCancellationPDF,
