@@ -44,6 +44,71 @@
     return '';
   }
 
+  // Splits one line of a tab-delimited export into fields, honoring
+  // double-quoted segments (which may themselves contain literal tabs,
+  // commas, or newlines) the way Excel/Zoho/Sheets exports do.
+  function parseTsvLine(line){
+    var out=[], cur='', inQuotes=false;
+    for(var i=0;i<line.length;i++){
+      var c=line[i];
+      if(inQuotes){
+        if(c==='"'){
+          if(line[i+1]==='"'){ cur+='"'; i++; } else { inQuotes=false; }
+        } else { cur+=c; }
+      } else {
+        if(c==='"'){ inQuotes=true; }
+        else if(c==='\t'){ out.push(cur); cur=''; }
+        else { cur+=c; }
+      }
+    }
+    out.push(cur);
+    return out.map(function(s){return s.trim();});
+  }
+
+  // Detects a structured tabular export (Zoho-style: one header row, one
+  // or more data rows, tab-delimited) as opposed to the vertical
+  // "FieldName" / value-on-next-line format. Returns {headers, rows} or
+  // null. Detection is shape-based (many tab-separated columns on line 1,
+  // a similar count on line 2) rather than tied to specific header names,
+  // so it isn't broken by column reordering or an unfamiliar column set.
+  function detectTabularExport(rawText){
+    var lines=rawText.replace(/\r\n/g,'\n').split('\n').filter(function(l){return l.trim()!=='';});
+    if(lines.length<2) return null;
+    var headers=parseTsvLine(lines[0]);
+    if(headers.length<5) return null; // too few columns to be a real table export
+    var rows=[];
+    for(var i=1;i<lines.length;i++){
+      var cells=parseTsvLine(lines[i]);
+      // A real data row should roughly match the header column count —
+      // vertical-format pastes won't produce this (each line there is
+      // just "Label\tValue", i.e. 2 columns).
+      if(cells.length>=Math.max(3,Math.floor(headers.length*0.5))) rows.push(cells);
+    }
+    if(!rows.length) return null;
+    return {headers:headers, rows:rows};
+  }
+
+  // Builds a field(names) lookup against one row of a detected tabular
+  // export, matching header names case-insensitively/whitespace-loosely
+  // (never by column position), plus a debug tracker.
+  function makeTableFieldGetter(headers, row, debug){
+    var norm=function(s){return (s||'').toLowerCase().replace(/[\s_]+/g,' ').trim();};
+    var headerIndex={};
+    headers.forEach(function(h,i){ headerIndex[norm(h)]=i; });
+    return function(names){
+      for(var ni=0;ni<names.length;ni++){
+        var idx=headerIndex[norm(names[ni])];
+        if(idx!==undefined && row[idx]!==undefined){
+          debug.matchedHeaders[headers[idx]]=true;
+          var v=(row[idx]||'').trim();
+          if(v && v!=='-' && v!=='N/A' && v!=='NA'){ return v; }
+          return '';
+        }
+      }
+      return '';
+    };
+  }
+
   // Builds a field(names) lookup function scoped to one pasted CRM text blob.
   function makeFieldGetter(rawText){
     var t=rawText.replace(/\[([^\]]*)\]\([^)]*\)/g,'$1').replace(/^\s*[*\-]\s*/gm,'');
@@ -66,77 +131,126 @@
   // language toggle, mortgage-button UI) are left to the caller — this
   // covers Owner Info, Resorts 1-4 agreement fields, General, and the
   // non-sensitive Payment Information fields only.
+  //
+  // Supports two input shapes, auto-detected, both driving the exact same
+  // field-setting code below (so both produce the same normalized data):
+  //   MODE A — a structured tabular export (Zoho-style: one header row +
+  //            one data row, tab-delimited, matched by column NAME not
+  //            position, so column reordering doesn't break it)
+  //   MODE B — the original vertical "FieldName" / value-on-next-line
+  //            paste format
   function runPopulateFromCRM(rawText){
-    var field=makeFieldGetter(rawText);
+    var debug={mode:'', headersDetected:0, rowsDetected:0, matchedHeaders:{}, mapped:{}, unmapped:[], errors:[]};
+    var field;
+    try{
+      var table=detectTabularExport(rawText);
+      if(table){
+        debug.mode='zoho-table';
+        debug.headersDetected=table.headers.length;
+        debug.rowsDetected=table.rows.length;
+        field=makeTableFieldGetter(table.headers, table.rows[0], debug);
+      } else {
+        debug.mode='vertical';
+        field=makeFieldGetter(rawText);
+      }
+    }catch(e){
+      debug.errors.push('Detection/parse setup failed: '+((e&&e.message)||e));
+      field=makeFieldGetter(rawText); // fail safe to the original parser
+      debug.mode='vertical (fallback after error)';
+    }
 
-    setf('v-first', field(['First Name']));
-    setf('v-last',  field(['Last Name']));
-    setf('v-email', field(['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
-    setf('v-phone', field(['Phone','Primary Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
-    setf('v-co',  field(['Co-Owner First','Co Owner First Name']));
-    setf('v-col', field(['Co-Owner Last','Co Owner Last Name']));
-    setf('v-phone2', field(['Secondary Phone','2nd Phone']).replace(/\D/g,'').replace(/^1/,''));
-    setf('v-email2', field(['Email 2','2nd Email','Secondary Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
-    setf('v-mail-addr', field(['Mailing Address','Address']));
-    setf('v-owner-city', field(['Owner City','Client City']));
-    setf('v-owner-state', field(['Owner State','Client State']));
-    setf('v-owner-zip', field(['Zip Code','ZIP','Zip']));
+    // Wraps field(names) so every lookup this function makes is recorded
+    // for the debug report, regardless of which mode is active.
+    function F(label, names){
+      var v='';
+      try{ v=field(names); }
+      catch(e){ debug.errors.push(label+': '+((e&&e.message)||e)); }
+      if(v) debug.mapped[label]=v;
+      return v;
+    }
+
+    setf('v-first', F('First Name', ['First Name']));
+    setf('v-last',  F('Last Name', ['Last Name']));
+    setf('v-email', F('Email', ['Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+    setf('v-phone', F('Phone', ['Phone','Primary Phone','Plain Phone']).replace(/\D/g,'').replace(/^1/,''));
+    setf('v-co',  F('Co-owner First Name', ['Co-Owner First','Co Owner First Name','Co-owner First Name']));
+    setf('v-col', F('Co-owner Last Name', ['Co-Owner Last','Co Owner Last Name','Co-owner Last Name']));
+    setf('v-phone2', F('Secondary Phone', ['Secondary Phone','2nd Phone']).replace(/\D/g,'').replace(/^1/,''));
+    setf('v-email2', F('Email 2', ['Email 2','2nd Email','Secondary Email']).replace(/mailto:/gi,'').replace(/[<>]/g,''));
+    setf('v-mail-addr', F('Street', ['Street','Mailing Address','Address']));
+    setf('v-owner-city', F('City', ['City','Owner City','Client City']));
+    setf('v-owner-state', F('State', ['State','Owner State','Client State']));
+    setf('v-owner-zip', F('Zip Code', ['Zip Code','ZIP','Zip']));
 
     // Resort 1 — core fields (id convention shared with Vitals' existing
     // Resort/Mortgage cards; case-assessment's simpler layout uses the
     // same ids directly).
-    setf('v-resort', field(['R1-Resort Name','Resort 1','Resort Name']));
-    setf('v-rescity',field(['R1-Resort City','Resort City']));
-    setf('v-loc',    field(['R1-Resort State','Resort State','Location']));
-    var bal1=field(['R1-Balance Amount','Balance Amount','Balance']).replace(/[^0-9.]/g,'');
+    setf('v-resort', F('R1 Resort Name', ['R1-Resort Name','Resort 1','Resort Name']));
+    setf('v-rescity',F('R1 City', ['R1-Resort City','Resort City']));
+    setf('v-loc',    F('R1 State', ['R1-Resort State','Resort State','Location']));
+    var bal1=F('R1 Balance Amount', ['R1-Balance Amount','Balance Amount','Balance']).replace(/[^0-9.]/g,'');
     if(bal1) setf('v-balance', bal1);
-    var pay1=field(['R1-Monthly Mortgage payment','Monthly Mortgage','Payment Amount']).replace(/[^0-9.]/g,'');
+    var pay1=F('R1 Monthly Mortgage Payment', ['R1-Monthly Mortgage payment','Monthly Mortgage','Payment Amount']).replace(/[^0-9.]/g,'');
     if(pay1) setf('v-mtg', pay1);
-    var mtf1=field(['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance','Maintenance Fee']).replace(/[^0-9.]/g,'');
+    var mtf1=F('R1 Maintenance Fee', ['R1-Mait / Tax fees','R1-Mait','Mait / Tax fees','R1-Maintenance','Maintenance Fee','R1-Maintenance Fee']).replace(/[^0-9.]/g,'');
     if(mtf1) setf('v-mtf', mtf1);
-    setSel('v-r1-paidoff', yn(field(['R1-Mortgage status','Mortgage status','Paid Off'])));
-    setSel('v-r1-current', yn(field(['R1-Current','Current'])));
-    var r1own=field(['R1-Ownership Type','Ownership Type']).toLowerCase();
+    var r1price=F('R1 Purchase Price', ['R1-Purchase Price','Purchase Price']).replace(/[^0-9.]/g,'');
+    if(r1price) setf('v-pprice', r1price);
+    var r1dateP=F('R1 Date Purchased', ['R1-Date Purchased','Date Purchased']);
+    var r1ym=r1dateP.match(/(20\d{2}|19\d{2})/);
+    if(r1ym) setf('v-year', r1ym[1]);
+    setSel('v-r1-paidoff', yn(F('R1 Mortgage Status', ['R1-Mortgage status','R1-Mortgage Status','Mortgage status','Paid Off'])));
+    setSel('v-r1-current', yn(F('R1 Current', ['R1-Current','Current'])));
+    var r1own=F('R1 Ownership Type', ['R1-Ownership Type','Ownership Type','R1-Points or Weeks','Points or Weeks']).toLowerCase();
     if(r1own.indexOf('point')>-1) setSel('v-r1-owntype','points'); else if(r1own) setSel('v-r1-owntype','week');
-    setSel('v-r1-usage', field(['R1-Usage Rights','Usage Rights']));
-    setSel('v-r1-mtffreq2', field(['R1-Maintenance Fee Frequency','MTF Frequency']));
-    setSel('v-r1-mtfcurrent', yn(field(['R1-Maintenance Fee Current','MTF Current'])));
-    var why=field(['R1-Why do they want out','Why do they want out','Reason for Wanting Out']);
+    setSel('v-r1-usage', F('R1 Usage', ['R1-Usage Rights','R1-Usage','Usage Rights','Usage']));
+    setSel('v-r1-mtffreq2', F('R1 Maintenance Fee Frequency', ['R1-Maintenance Fee Frequency','MTF Frequency']));
+    setSel('v-r1-mtfcurrent', yn(F('R1 Current on Maintenance', ['R1-Maintenance Fee Current','MTF Current','R1-Current on Maintenance','Current on Maintenance'])));
+    var why=F('R1 Reason', ['R1-Why do they want out','Why do they want out','Reason for Wanting Out','R1-Reason','Reason']);
     if(why) setf('v-why', why);
 
     // Resorts 2-4 — identical field pattern, R2-/R3-/R4- prefixes
     [2,3,4].forEach(function(n){
       var p='R'+n+'-';
-      setf('v-r'+n+'-name', field([p+'Resort Name']));
-      var city=field([p+'Resort City']), state=field([p+'Resort State']);
+      setf('v-r'+n+'-name', F('R'+n+' Resort Name', [p+'Resort Name']));
+      var city=F('R'+n+' City', [p+'Resort City']), state=F('R'+n+' State', [p+'Resort State']);
       if(city||state) setf('v-r'+n+'-loc', [city,state].filter(Boolean).join(', '));
-      setSel('v-r'+n+'-paidoff', yn(field([p+'Mortgage status',p+'Paid Off'])));
-      var bal=field([p+'Balance Amount']).replace(/[^0-9.]/g,'');
+      setSel('v-r'+n+'-paidoff', yn(F('R'+n+' Mortgage Status', [p+'Mortgage status',p+'Mortgage Status',p+'Paid Off'])));
+      var bal=F('R'+n+' Balance Amount', [p+'Balance Amount']).replace(/[^0-9.]/g,'');
       if(bal) setf('v-r'+n+'-balance', bal);
-      var pay=field([p+'Monthly Mortgage payment']).replace(/[^0-9.]/g,'');
+      var pay=F('R'+n+' Monthly Mortgage Payment', [p+'Monthly Mortgage payment']).replace(/[^0-9.]/g,'');
       if(pay) setf('v-r'+n+'-payment', pay);
-      var mtf=field([p+'Mait / Tax fees',p+'Maintenance']).replace(/[^0-9.]/g,'');
+      var mtf=F('R'+n+' Maintenance Fee', [p+'Mait / Tax fees',p+'Maintenance',p+'Maintenance Fee']).replace(/[^0-9.]/g,'');
       if(mtf) setf('v-r'+n+'-mtf', mtf);
-      var own=field([p+'Ownership Type']).toLowerCase();
+      var own=F('R'+n+' Ownership Type', [p+'Ownership Type',p+'Points or Weeks']).toLowerCase();
       if(own.indexOf('point')>-1) setSel('v-r'+n+'-owntype','points'); else if(own) setSel('v-r'+n+'-owntype','week');
-      setSel('v-r'+n+'-usage', field([p+'Usage Rights']));
-      setSel('v-r'+n+'-mtffreq', field([p+'Maintenance Fee Frequency']));
-      setSel('v-r'+n+'-mtfcurrent', yn(field([p+'Maintenance Fee Current'])));
-      var notes=field([p+'Notes']);
+      setSel('v-r'+n+'-usage', F('R'+n+' Usage', [p+'Usage Rights',p+'Usage']));
+      setSel('v-r'+n+'-mtffreq', F('R'+n+' Maintenance Fee Frequency', [p+'Maintenance Fee Frequency']));
+      setSel('v-r'+n+'-mtfcurrent', yn(F('R'+n+' Current on Maintenance', [p+'Maintenance Fee Current',p+'Current on Maintenance'])));
+      var notes=F('R'+n+' Notes', [p+'Notes']);
       if(notes) setf('v-r'+n+'-notes', notes);
     });
 
-    setSel('v-own-other', yn(field(['Own Any Other Timeshares','Other Timeshares'])));
-    setf('v-final-notes', field(['Final Notes']));
+    setSel('v-own-other', yn(F('Own Any Other Timeshares', ['Own Any Other Timeshares','Other Timeshares'])));
+    setf('v-final-notes', F('Final Notes', ['Final Notes']));
 
-    var downPmt=field(['Down Payment Amount']).replace(/[^0-9.]/g,'');
+    var downPmt=F('Down Payment Amount', ['Down Payment Amount']).replace(/[^0-9.]/g,'');
     if(downPmt) setf('v-pay-down', downPmt);
-    var financed=field(['Amount Being Financed']).replace(/[^0-9.]/g,'');
+    var financed=F('Amount Being Financed', ['Amount Being Financed']).replace(/[^0-9.]/g,'');
     if(financed) setf('v-pay-financed', financed);
-    var terms=field(['Payment Terms']);
+    var terms=F('Payment Terms', ['Payment Terms']);
     if(terms) setf('v-pay-terms', terms);
 
-    return true;
+    // Unmapped headers — only meaningful in table mode. A header counts as
+    // "mapped" if any F() call successfully matched it (tracked inside
+    // makeTableFieldGetter), regardless of whether this page has a UI
+    // field to display that value in.
+    if(debug.mode==='zoho-table'){
+      debug.unmapped=table.headers.filter(function(h){ return !debug.matchedHeaders[h]; });
+    }
+
+    global.CaseEngine.lastImportDebug=debug;
+    return debug;
   }
 
   // ── PDF field map — reverse-engineered from the real AcroForm field
