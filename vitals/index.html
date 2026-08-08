@@ -1880,7 +1880,7 @@ function populateFromCRM(){
   window.CaseEngine.runPopulateFromCRM(raw);
 
   // Vitals-only extras (sales/calculator fields not part of the shared engine)
-  var field=window.CaseEngine.makeFieldGetter(raw);
+  var field=window.CaseEngine.makeSmartFieldGetter(raw);
   var setf=window.CaseEngine.setf;
 
   var yr=field(['R1-Date Purchased']);
